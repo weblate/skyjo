@@ -1,5 +1,5 @@
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
-import { GameStateManager } from "@/socketio/utils/GameStateManager.js"
+import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import {
   Constants as CoreConstants,
   type PlayPickCard,
@@ -33,7 +33,7 @@ export class GameService extends BaseService {
     const gameCode = socket.data.gameCode
 
     const game = await this.redis.getGame(gameCode)
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -87,7 +87,7 @@ export class GameService extends BaseService {
     const { game } = await this.checkPlayAuthorization(socket, [
       CoreConstants.TURN_STATUS.CHOOSE_A_PILE,
     ])
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     if (pile === "draw") game.drawCard()
     else game.pickFromDiscard()
@@ -109,7 +109,7 @@ export class GameService extends BaseService {
       CoreConstants.TURN_STATUS.REPLACE_A_CARD,
       CoreConstants.TURN_STATUS.THROW_OR_REPLACE,
     ])
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.replaceCard(column, row)
 
@@ -132,7 +132,7 @@ export class GameService extends BaseService {
     const { game } = await this.checkPlayAuthorization(socket, [
       CoreConstants.TURN_STATUS.THROW_OR_REPLACE,
     ])
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.discardCard(game.selectedCardValue!)
 
@@ -152,7 +152,7 @@ export class GameService extends BaseService {
     const { game, player } = await this.checkPlayAuthorization(socket, [
       CoreConstants.TURN_STATUS.TURN_A_CARD,
     ])
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.turnCard(player, column, row)
 
@@ -187,7 +187,7 @@ export class GameService extends BaseService {
         },
       )
     }
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.getPlayerById(socket.data.playerId)?.toggleReplay()
 

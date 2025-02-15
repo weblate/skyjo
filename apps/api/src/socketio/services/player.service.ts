@@ -1,5 +1,5 @@
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
-import { GameStateManager } from "@/socketio/utils/GameStateManager.js"
+import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { Constants as CoreConstants } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
 import type { LastGame } from "@skyjo/shared/validations"
@@ -22,7 +22,7 @@ export class PlayerService extends BaseService {
       })
     }
 
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
 
@@ -35,7 +35,7 @@ export class PlayerService extends BaseService {
   async onLeave(socket: SkyjoSocket) {
     try {
       const game = await this.redis.getGame(socket.data.gameCode)
-      const stateManager = new GameStateManager(game)
+      const stateManager = new GameStateTracker(game)
 
       const player = game.getPlayerById(socket.data.playerId)
       if (!player) {
@@ -69,7 +69,7 @@ export class PlayerService extends BaseService {
         })
 
         if (game.getConnectedPlayers().length === 0) {
-          this.removeGame(game)
+          await this.redis.removeGame(game.code)
         }
       }
 
@@ -131,7 +131,7 @@ export class PlayerService extends BaseService {
 
     const player = game.getPlayerById(reconnectData.playerId)!
 
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     player.socketId = socket.id
     player.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
@@ -160,7 +160,7 @@ export class PlayerService extends BaseService {
       })
     }
 
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     player.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
 

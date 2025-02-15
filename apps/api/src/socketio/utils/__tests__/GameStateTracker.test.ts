@@ -5,18 +5,18 @@ import {
   SkyjoPlayer,
 } from "@skyjo/core"
 import { beforeEach, describe, expect, it } from "vitest"
-import { GameStateManager } from "../GameStateManager.js"
+import { GameStateTracker } from "../GameStateTracker.js"
 
-describe("GameStateManager", () => {
+describe("GameStateTracker", () => {
   let game: Skyjo
-  let manager: GameStateManager
+  let manager: GameStateTracker
 
   beforeEach(() => {
     const player = new SkyjoPlayer()
     game = new Skyjo(player.id)
     game.addPlayer(player)
     game.stateVersion = 1
-    manager = new GameStateManager(game)
+    manager = new GameStateTracker(game)
   })
 
   describe("getChanges", () => {

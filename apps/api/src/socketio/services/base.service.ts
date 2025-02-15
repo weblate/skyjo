@@ -1,5 +1,5 @@
 import { Constants } from "@/constants.js"
-import { GameStateManager } from "@/socketio/utils/GameStateManager.js"
+import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { GameRepository } from "@skyjo/cache"
 import {
   Constants as CoreConstants,
@@ -69,7 +69,7 @@ export abstract class BaseService {
     socket: SkyjoSocket,
     params: {
       game: Skyjo
-      stateManager: GameStateManager
+      stateManager: GameStateTracker
     },
   ) {
     const operations = params.stateManager.getChanges()
@@ -133,7 +133,7 @@ export abstract class BaseService {
 
   protected async restartRound(socket: SkyjoSocket, game: Skyjo) {
     setTimeout(async () => {
-      const stateManager = new GameStateManager(game)
+      const stateManager = new GameStateTracker(game)
       game.startNewRound()
 
       await this.updateAndSendGame(socket, {
@@ -153,7 +153,7 @@ export abstract class BaseService {
       force: false,
     },
   ) {
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     const isConnected =
       player &&

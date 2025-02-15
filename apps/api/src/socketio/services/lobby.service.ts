@@ -1,6 +1,6 @@
 import { BaseService } from "@/socketio/services/base.service.js"
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
-import { GameStateManager } from "@/socketio/utils/GameStateManager.js"
+import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import {
   type CreatePlayer,
   Skyjo,
@@ -42,7 +42,7 @@ export class LobbyService extends BaseService {
 
   async onResetSettings(socket: SkyjoSocket) {
     const game = await this.redis.getGame(socket.data.gameCode)
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     if (!game.isAdmin(socket.data.playerId)) {
       throw new CError(
@@ -102,7 +102,7 @@ export class LobbyService extends BaseService {
 
     game.updatedAt = new Date()
 
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.settings.maxPlayers = maxPlayers
     game.updatedAt = new Date()
@@ -141,7 +141,7 @@ export class LobbyService extends BaseService {
       )
     }
 
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.settings.updateSettings(settings)
     game.updatedAt = new Date()
@@ -156,7 +156,7 @@ export class LobbyService extends BaseService {
     const game = await this.redis.getGame(socket.data.gameCode)
     if (game.settings.private) return
 
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.settings.isConfirmed = !game.settings.isConfirmed
     game.updatedAt = new Date()
@@ -182,7 +182,7 @@ export class LobbyService extends BaseService {
       })
     }
 
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.start()
 
@@ -230,7 +230,7 @@ export class LobbyService extends BaseService {
       )
     }
 
-    const stateManager = new GameStateManager(game)
+    const stateManager = new GameStateTracker(game)
 
     game.addPlayer(player)
     game.updatedAt = new Date()
