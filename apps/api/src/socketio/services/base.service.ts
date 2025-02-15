@@ -1,56 +1,20 @@
-import { Constants } from "@/constants.js"
 import { GameRepository } from "@/redis/game.repository.js"
+import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
+import { SocketManager } from "@/socketio/utils/SocketManager.js"
 import {
   Constants as CoreConstants,
   type Skyjo,
   type SkyjoPlayer,
 } from "@skyjo/core"
-import type {
-  ServerChatMessage,
-  ServerToClientEvents,
-} from "@skyjo/shared/types"
+import type { ServerChatMessage } from "@skyjo/shared/types"
+import { AfkQueueService } from "../../queues/AfkQueueService.js"
 import type { SkyjoSocket } from "../types/skyjoSocket.js"
 
 export abstract class BaseService {
   protected redis = new GameRepository()
-
-  protected sendToSocket<T extends keyof ServerToClientEvents>(
-    socket: SkyjoSocket,
-    params: {
-      event: T
-      data: Parameters<ServerToClientEvents[T]>
-    },
-  ) {
-    socket.emit(params.event, ...params.data)
-  }
-
-  protected sendToRoom<T extends keyof ServerToClientEvents>(
-    socket: SkyjoSocket,
-    params: {
-      room: string
-      event: T
-      data: Parameters<ServerToClientEvents[T]>
-    },
-  ) {
-    socket.to(params.room).emit(params.event, ...params.data)
-  }
-
-  protected sendToSocketAndRoom<T extends keyof ServerToClientEvents>(
-    socket: SkyjoSocket,
-    params: {
-      room: string
-      event: T
-      data: Parameters<ServerToClientEvents[T]>
-    },
-  ) {
-    this.sendToSocket(socket, params)
-    this.sendToRoom(socket, params)
-  }
-
-  protected async sendGameToSocket(socket: SkyjoSocket, game: Skyjo) {
-    this.sendToSocket(socket, { event: "game", data: [game.toJson()] })
-  }
+  protected afkQueue: AfkQueueService = new AfkQueueService()
+  protected socketManager = SocketManager.getInstance()
 
   protected async sendMissingStatesToSocket(
     socket: SkyjoSocket,
@@ -62,26 +26,36 @@ export abstract class BaseService {
       clientStateVersion + 1,
       game.stateVersion,
     )
-    this.sendToSocket(socket, { event: "game:fix", data: [states] })
+    this.socketManager.sendToSocket(socket, {
+      event: "game:fix",
+      data: [states],
+    })
   }
 
   protected async updateAndSendGame(
-    socket: SkyjoSocket,
-    params: {
-      game: Skyjo
-      stateManager: GameStateTracker
-    },
+    game: Skyjo,
+    stateManager: GameStateTracker,
   ) {
-    const operations = params.stateManager.getChanges()
+    const operations = stateManager.getChanges()
     if (!operations) return
 
-    await this.redis.updateGame(params.game, operations)
+    await this.redis.updateGame(game, operations)
 
-    this.sendToSocketAndRoom(socket, {
-      room: params.game.code,
+    this.socketManager.sendToRoom({
+      room: game.code,
       event: "game:update",
       data: [operations],
     })
+  }
+
+  protected async getGame(gameCode: string) {
+    const game = await this.redis.getGame(gameCode)
+
+    game.setOperationManager(
+      new GameOperationManager(this.redis, this.afkQueue, this.socketManager),
+    )
+
+    return game
   }
 
   protected async joinGame(
@@ -97,7 +71,7 @@ export abstract class BaseService {
       playerId: player.id,
     }
 
-    this.sendToSocket(socket, {
+    this.socketManager.sendToSocket(socket, {
       event: "game:join",
       data: [game.code, game.status, player.id],
     })
@@ -112,100 +86,12 @@ export abstract class BaseService {
       type: messageType,
     }
 
-    this.sendToSocketAndRoom(socket, {
+    this.socketManager.sendToRoom({
       room: game.code,
       event: "message:server",
       data: [message],
     })
 
     await this.redis.updateGame(game)
-  }
-
-  protected async finishTurn(socket: SkyjoSocket, game: Skyjo) {
-    game.nextTurn()
-
-    if (game.shouldRestartRound()) {
-      this.restartRound(socket, game)
-    }
-
-    await this.redis.updateGame(game)
-  }
-
-  protected async restartRound(socket: SkyjoSocket, game: Skyjo) {
-    setTimeout(async () => {
-      const stateManager = new GameStateTracker(game)
-      game.startNewRound()
-
-      await this.updateAndSendGame(socket, {
-        game,
-        stateManager,
-      })
-    }, Constants.NEW_ROUND_DELAY)
-  }
-
-  protected async handlePlayerDisconnection(
-    socket: SkyjoSocket,
-    game: Skyjo,
-    player: SkyjoPlayer,
-    params: {
-      force: boolean
-    } = {
-      force: false,
-    },
-  ) {
-    const stateManager = new GameStateTracker(game)
-
-    const isConnected =
-      player &&
-      player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED
-
-    if (isConnected && !params.force) return
-
-    player.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
-
-    if (game.isAdmin(player.id)) game.changeAdmin()
-
-    if (!game.isPlaying()) {
-      game.removePlayer(player.id)
-      await this.redis.removePlayer(game.code, player.id)
-
-      await this.updateAndSendGame(socket, {
-        game,
-        stateManager,
-      })
-      return
-    }
-
-    if (!game.hasMinPlayersConnected()) {
-      game.status = CoreConstants.GAME_STATUS.STOPPED
-
-      await this.updateAndSendGame(socket, {
-        game,
-        stateManager,
-      })
-      this.removeGame(game)
-      return
-    }
-
-    if (game.getCurrentPlayer()?.id === player.id) game.nextTurn()
-
-    if (game.isRoundTurningCards() && game.haveAllPlayersRevealedCards()) {
-      game.startRoundAfterInitialReveal()
-    }
-
-    game.checkEndOfRound()
-
-    if (game.shouldRestartRound()) {
-      this.restartRound(socket, game)
-    }
-
-    this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
-  }
-
-  protected async removeGame(game: Skyjo) {
-    this.redis.removeGame(game.code)
   }
 }

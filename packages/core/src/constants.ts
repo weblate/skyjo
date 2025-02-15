@@ -52,6 +52,8 @@ export class Constants {
     TURN: 5,
   } as const
 
+  static readonly NEW_ROUND_DELAY = 10000
+
   static readonly AVATARS = {
     BEE: "bee",
     CRAB: "crab",
@@ -99,6 +101,13 @@ export class Constants {
   static readonly KICK_VOTE_THRESHOLD = 0.6 // 60%
 
   static readonly KICK_VOTE_EXPIRATION_TIME = 30000 // 30 seconds
+
+  static readonly AFK_TIMEOUT = {
+    PUBLIC: 10000,
+    PRIVATE: 120000,
+    MAX_CONSECUTIVE: 2,
+    MAX_TOTAL: 3,
+  } as const
 }
 
 export type GameStatus =

@@ -267,40 +267,6 @@ importers:
         specifier: ^5.7.2
         version: 5.7.2
 
-  packages/cache:
-    dependencies:
-      '@skyjo/core':
-        specifier: workspace:*
-        version: link:../core
-      '@skyjo/error':
-        specifier: workspace:*
-        version: link:../error
-      '@skyjo/logger':
-        specifier: workspace:*
-        version: link:../logger
-      '@skyjo/state-operations':
-        specifier: workspace:*
-        version: link:../state-operations
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
-      redis:
-        specifier: ^4.7.0
-        version: 4.7.0
-      zod:
-        specifier: ^3.23.8
-        version: 3.23.8
-    devDependencies:
-      '@skyjo/ts-config':
-        specifier: workspace:*
-        version: link:../config/ts
-      '@types/node':
-        specifier: ^22.10.1
-        version: 22.10.1
-      typescript:
-        specifier: ^5.7.2
-        version: 5.7.2
-
   packages/config/ts: {}
 
   packages/core:

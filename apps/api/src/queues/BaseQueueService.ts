@@ -21,12 +21,12 @@ export abstract class BaseQueueService<T> {
     this.setupListeners()
   }
 
-  protected abstract processJob(job: T): Promise<void>
+  protected abstract processJob(data: T): Promise<void>
 
   private createWorker(): Worker<T> {
     return new Worker<T>(
       this.queueName,
-      async (job) => this.processJob(job.data),
+      async (job) => await this.processJob(job.data),
       {
         connection: {
           url: ENV.REDIS_URL,

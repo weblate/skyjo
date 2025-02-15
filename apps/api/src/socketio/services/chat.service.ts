@@ -9,7 +9,7 @@ export class ChatService extends BaseService {
     socket: SkyjoSocket,
     { username, message }: Omit<UserChatMessage, "id" | "type">,
   ) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
 
     if (!game.getPlayerById(socket.data.playerId)) {
       throw new CError(`Player try to send a message but is not found.`, {
@@ -37,7 +37,7 @@ export class ChatService extends BaseService {
   }
 
   async onWizz(socket: SkyjoSocket, targetUsername: string) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {

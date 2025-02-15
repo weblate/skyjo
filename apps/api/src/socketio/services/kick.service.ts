@@ -7,12 +7,12 @@ export class KickService extends BaseService {
   private readonly kickVotes: Map<string, KickVote> = new Map()
 
   async onInitiateKickVote(socket: SkyjoSocket, targetId: string) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     await this.initiateKickVote(socket, game, targetId)
   }
 
   async onVoteToKick(socket: SkyjoSocket, vote: boolean) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {

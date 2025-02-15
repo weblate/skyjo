@@ -133,16 +133,6 @@ export class GameRepository extends RedisClient {
     await this.deleteGame(code)
   }
 
-  async removePlayer(gameCode: string, playerId: string): Promise<void> {
-    const client = await RedisClient.getClient()
-
-    const key = this.getGameLatestStateKey(gameCode)
-    await client.json.del(key, `$.players[?(@.id == '${playerId}')]`)
-
-    const game = await this.getGame(gameCode)
-    if (!game.settings.private) await this.updateInPublicGames(game)
-  }
-
   //#region state
   async getGameStates(
     gameCode: string,

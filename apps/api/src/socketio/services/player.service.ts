@@ -7,7 +7,7 @@ import { BaseService } from "./base.service.js"
 
 export class PlayerService extends BaseService {
   async onConnectionLost(socket: SkyjoSocket) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
       throw new CError(`A player lost connection but is not in the game.`, {
@@ -26,15 +26,12 @@ export class PlayerService extends BaseService {
 
     player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
   }
 
   async onLeave(socket: SkyjoSocket) {
     try {
-      const game = await this.redis.getGame(socket.data.gameCode)
+      const game = await this.getGame(socket.data.gameCode)
       const stateManager = new GameStateTracker(game)
 
       const player = game.getPlayerById(socket.data.playerId)
@@ -61,12 +58,7 @@ export class PlayerService extends BaseService {
       if (!game.isPlaying()) {
         game.removePlayer(player.id)
 
-        game.restartGameIfAllPlayersWantReplay()
-
-        await this.updateAndSendGame(socket, {
-          game,
-          stateManager,
-        })
+        await this.updateAndSendGame(game, stateManager)
 
         if (game.getConnectedPlayers().length === 0) {
           await this.redis.removeGame(game.code)
@@ -74,7 +66,7 @@ export class PlayerService extends BaseService {
       }
 
       const message = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
-      this.sendToRoom(socket, {
+      this.socketManager.sendToRoom({
         room: game.code,
         event: "message:server",
         data: [
@@ -127,7 +119,7 @@ export class PlayerService extends BaseService {
       socket.id,
     )
 
-    const game = await this.redis.getGame(reconnectData.gameCode)
+    const game = await this.getGame(reconnectData.gameCode)
 
     const player = game.getPlayerById(reconnectData.playerId)!
 
@@ -136,16 +128,13 @@ export class PlayerService extends BaseService {
     player.socketId = socket.id
     player.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
 
     await this.joinGame(socket, game, player, true)
   }
 
   async onRecover(socket: SkyjoSocket) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
       throw new CError(`Player recover connection but is not in the game.`, {
@@ -164,9 +153,6 @@ export class PlayerService extends BaseService {
 
     player.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
   }
 }

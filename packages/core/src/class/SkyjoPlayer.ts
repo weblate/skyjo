@@ -119,6 +119,20 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
     return currentCount === count
   }
 
+  getFirstCardNotVisible() {
+    for (let colIndex = 0; colIndex < this.cards.length; colIndex++) {
+      for (
+        let rowIndex = 0;
+        rowIndex < this.cards[colIndex].length;
+        rowIndex++
+      ) {
+        if (!this.cards[colIndex][rowIndex].isVisible) {
+          return { column: colIndex, row: rowIndex }
+        }
+      }
+    }
+  }
+
   checkColumnsAndDiscard() {
     if (!this.cards[0] || this.cards[0].length <= 1) return []
 

@@ -32,7 +32,7 @@ export class LobbyService extends BaseService {
     gameCode: string,
     playerToCreate: CreatePlayer,
   ) {
-    const game = await this.redis.getGame(gameCode)
+    const game = await this.getGame(gameCode)
 
     const player = new SkyjoPlayer(playerToCreate, socket.id)
 
@@ -41,7 +41,7 @@ export class LobbyService extends BaseService {
   }
 
   async onResetSettings(socket: SkyjoSocket) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     const stateManager = new GameStateTracker(game)
 
     if (!game.isAdmin(socket.data.playerId)) {
@@ -76,14 +76,11 @@ export class LobbyService extends BaseService {
     )
     game.updatedAt = new Date()
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
   }
 
   async onUpdateMaxPlayers(socket: SkyjoSocket, maxPlayers: number) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     if (!game.isAdmin(socket.data.playerId)) {
       throw new CError(
         `Player try to change all game settings but is not the admin.`,
@@ -107,14 +104,11 @@ export class LobbyService extends BaseService {
     game.settings.maxPlayers = maxPlayers
     game.updatedAt = new Date()
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
   }
 
   async onUpdateSettings(socket: SkyjoSocket, settings: UpdateGameSettings) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     if (!game.isAdmin(socket.data.playerId)) {
       throw new CError(
         `Player try to change all game settings but is not the admin.`,
@@ -146,14 +140,11 @@ export class LobbyService extends BaseService {
     game.settings.updateSettings(settings)
     game.updatedAt = new Date()
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
   }
 
   async onToggleSettingsValidation(socket: SkyjoSocket) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     if (game.settings.private) return
 
     const stateManager = new GameStateTracker(game)
@@ -161,14 +152,11 @@ export class LobbyService extends BaseService {
     game.settings.isConfirmed = !game.settings.isConfirmed
     game.updatedAt = new Date()
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
   }
 
   async onGameStart(socket: SkyjoSocket) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     if (!game.isAdmin(socket.data.playerId)) {
       throw new CError(`Player try to start the game but is not the admin.`, {
         code: ErrorConstants.ERROR.NOT_ALLOWED,
@@ -188,10 +176,7 @@ export class LobbyService extends BaseService {
 
     Logger.info(`Game ${game.code} started.`)
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
   }
 
   //#region private methods
@@ -201,7 +186,10 @@ export class LobbyService extends BaseService {
     isPrivateGame: boolean,
   ) {
     const player = new SkyjoPlayer(playerToCreate, socket.id)
-    const game = new Skyjo(player.id, new SkyjoSettings(isPrivateGame))
+    const game = new Skyjo({
+      adminId: player.id,
+      settings: new SkyjoSettings(isPrivateGame),
+    })
 
     await this.redis.createGame(game)
 
@@ -235,10 +223,7 @@ export class LobbyService extends BaseService {
     game.addPlayer(player)
     game.updatedAt = new Date()
 
-    await this.updateAndSendGame(socket, {
-      game,
-      stateManager,
-    })
+    await this.updateAndSendGame(game, stateManager)
   }
   //#endregion
 }
