@@ -173,7 +173,9 @@ export class GameRepository extends RedisClient {
   }
 
   private deserializeGame(game: SkyjoDbFormat): Skyjo {
-    const skyjo = new Skyjo(game.adminId)
+    const skyjo = new Skyjo({
+      adminId: game.adminId,
+    })
     skyjo.populate(game)
 
     return skyjo

@@ -1,6 +1,6 @@
 import { Constants } from "@/constants.js"
+import { GameRepository } from "@/redis/game.repository.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import { GameRepository } from "@skyjo/cache"
 import {
   Constants as CoreConstants,
   type Skyjo,
