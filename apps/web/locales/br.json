@@ -23,7 +23,166 @@
           "content": "[Skyjoe] a vez distaget Skyjo."
         },
         "how-to-play": {
-          "title": "Penaos c'hoari Skyjo?"
+          "title": "Penaos c'hoari Skyjo?",
+          "content": "Evit c'hoari Skyjo, dasparzhit 12 kartenn da bep c'hoarier, dremm kuzhet. Ar pel eo kaout an nebeutañ a boentoù en ur dreiñ hag en ur eskemm kartoù. Bep tro, pigosit ur gartenn adalek ar pigos pe ar c'hartoù skoet, ha dibabit eskemm anezhi gant unan eus ho kartoù hewel. Ar c'hartoù niverennet a ouzhpenn poentoù, ar c'hartoù ispisial o deus galloudoù. Echuet eo ar c'hoari p'en deus unan eus ar c'hoarierien troet holl e gartoù. Ar c'hoarier gant an nebeutañ a boentoù a c'hounez. Gallout a rin mont da lenn <rules>ar reolennoù</rules> evit kaout muioc'h a ditouroù."
+        },
+        "how-to-win": {
+          "title": "Penaos gounit er Skyjo?",
+          "content": "Evit gounit er Skyjo, ar pep retañ eo kaout an nebeutañ a boentoù posupl. Evit dont a-benn e c'hallit kaout ur strategiezh kempouez etre kaout kartoù gant un talvoud izel, ha krouiñ bannoù gant an hevelep kartoù eno. Na droit ket ar c'hartoù estreget ma zo lañs warnoc'h gant ho kartoù hewel. Mirit ar c'hartoù hewel evit klask krouiñ bannoù ganto, kentoc'h eget gwellekaat anezho unan-hag-unan."
+        },
+        "play-classic-with-action": {
+          "title": "Posupl eo c'hoari Skyjo klasel gant ar Skyjo ober?",
+          "content": "Ya, trawalc'h eo deoc'h tennañ ar c'hartoù ober. M'emaoc'h war ar stumm enlinenn, diuzit ar stumm klasel da c'hoari Skyjo."
+        }
+      }
+    },
+    "Search": {
+      "head": {
+        "title": "Kavout ur c'hoariadenn Skyjo publik | Skyjo Online",
+        "description": "Klask a rit ur c'hoariadenn da vont enni? Merdeit ar c'hoariadennoù publik ha krogit da c'hoari Skyjo enlinenn diouzhtu gant c'hoarierien ha c'hoarierezed all. C'hoariit digoust bremañ!",
+        "keywords": "Skyjo, Syjo enlinenn, kavout ur c'hoariadenn,kejañ ur c'hoariadenn,c'hoariadennoù publik,liesc'hoarier enlinenn,c'hoari gant tu all,c'hoari prim,c'hoarioù enlinenn digoust,c'hoariadennoù digor,c'hoari kartoù enlinenn,c'hoari kartoù liesc'hoarier"
+      },
+      "header": {
+        "refresh": "Azgrenaat roll ar c'hoariadennoù",
+        "title": "C'hoariadennoù publik",
+        "create-button": {
+          "title": "Krouiñ ur c'hoariadenn bublik"
+        },
+        "back": "Distreiñ d'an degemer"
+      },
+      "tags": {
+        "title": "Siloù:",
+        "no-tags-available": "Tikedenn ebet hegerz",
+        "tag": {
+          "classic": "Klasel",
+          "column": "Bann",
+          "custom": "Personelaet",
+          "row": "Renk",
+          "long-game": "C'hoariadenn hir",
+          "short-game": "C'hoariadenn verr"
+        }
+      },
+      "no-games-found": "C'hoariadenn ebet kavet",
+      "game-of": "C'hoariadenn {name}"
+    },
+    "Create": {
+      "head": {
+        "title": "Krouiñ ur c'hoariadenn Skyjo | Skyjo Online",
+        "keywords": "Skyjo,Skyjo enlinenn,krouiñ ur c'hoariadenn,kregiñ ur c'hoariadenn,c'hoariadenn prevez, c'hoariadenn bublik,c'hoari gant mignoned,liesc'hoarier enlinenn,c'hoarioù enlinenn digoust,c'hoari personelaet",
+        "description": "Kregiñ ur c'hoariadenn Skyjo enlinenn! Krouiñ ur saloñs prevez pe publik, pedit ho mignoned ha c'hoariit Skyjo asambles. C'hoariit digoust bremañ!"
+      },
+      "loading-text": "O krouiñ ho c'hoariadenn…"
+    },
+    "Maintenance": {
+      "title": "Lec'hienn war drezalc'h",
+      "description": "Hizivaat a reomp al lec'hienn, klaskit en-dro diwezhatoc'h mar plij ganeoc'h.",
+      "github-alt": "Gwelet ar boneg tarzh war Github"
+    },
+    "NotFound": {
+      "title": "Fazi 404",
+      "description": "N'eus ket eus ar bajenn a glaskit.",
+      "go-back-to-homepage": "Distreiñ d'ar bennbajenn"
+    },
+    "Lobby": {
+      "title": "C'hoariadenn {name}",
+      "leave-to-home": "Mont d'ar bennbajenn",
+      "leave-to-public-game-list": "Distreiñ d'ar roll c'hoariadennoù publik",
+      "settings": {
+        "private": {
+          "tooltip": {
+            "on": "Prevez eo ar c'hoariadenn-mañ, n'eus nemet an dud gant an ere a c'hall dont-tre",
+            "off": "Publik eo ar c'hoariadenn-mañ, an holl a c'hall dont-tre ur wech kadarnaet an arventennoù-mañ"
+          }
+        },
+        "reset-settings": "Adderaouekaat an arventennoù",
+        "validate-settings": "Kadarnaat an arventennoù",
+        "max-players": {
+          "label": "Niver uhelañ a c'hoarierien",
+          "title": "Niver uhelañ a c'hoarierien: {number}"
+        },
+        "allow-skyjo-for-column": "Aotren ar Skyjo evit ar bannoù",
+        "nb-columns": {
+          "label": "Niver a vannoù",
+          "title": "$number a vannoù"
+        },
+        "nb-rows": {
+          "label": "Niver a renkoù",
+          "title": "$number renk"
+        },
+        "initial-turned-count": {
+          "label": "Niver a gartoù troet e deroù ur c'hoariadenn",
+          "title": "[number} a gartenn troet e deroù ar c'hoariadenn"
+        },
+        "score-to-end-game": {
+          "label": "Niver a boentoù evit echuiñ ar c'hoariadenn",
+          "title": "{number} a boentoù evit echuiñ ar c'hoariadenn"
+        },
+        "first-player-penalty-type": {
+          "label": "Kastiz evit ar c'hoarier⋅ez kentañ",
+          "placeholder": "Dibab un doare kastiz",
+          "item": {
+            "multiplier-only": "Lieskementer hepken",
+            "flat-only": "Kastiz plad hepken",
+            "flat-then-multiplier": "Kastiz plad ha lieskementer",
+            "multiplier-then-flat": "Lieskementer ha kastiz plad da c'houde"
+          },
+          "description": "Ar c'hastiz a zo arloet ma n'eo ket bet tizhet an niver a boentoù izelañ gant ar c'hoarier⋅ez kentañ troet holl h⋅e gartoù ganti⋅añ (na vez ket arloet mard eo izeloc'h pe kevatal ar gont evit 0)"
+        },
+        "first-player-flat-penalty": {
+          "title": "Kont ar c'hoarier⋅ez kentañ a vo kresket a {number} ma n'eo ket bihanoc'h strizh evit kontoù all ar c'hoariadenn",
+          "label": "Kastiz plad evit ar c'hoarier⋅ez kentañ"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Lieskementer kastiz evit kont ar c'hoarier⋅ez kentañ",
+          "title": "Kont ar c'hoarier⋅ez kentañ a vo lieskementet dre {number} ma n'eo ket bihanoc'h strizh eget kontoù all ar c'hoariadenn"
+        },
+        "validation-warning": "Arventennoù ar c'hoariadenn n'hall ket bezañ kemmet ur wech int bet kadarnaet",
+        "allow-skyjo-for-row": "Aotren ar Skyjo evit ar renkoù"
+      },
+      "waiting-admin-to-start": "O c'hortoz e vefe lañset ar c'hoari gant ar merour⋅ez",
+      "waiting-admin-to-confirm-game-settings": "O c'hortoz e vefe kadarnaet an arventennoù gant ar merour⋅ez",
+      "player-section": {
+        "title": "C'hoarierien {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Dibab un niver a c'hoarierien",
+          "item": "{value} c'hoarier⋅ez"
+        }
+      },
+      "start-game-button": "Kregiñ da c'hoari",
+      "go-back-to-settings": "Distreiñ d'an arventennoù"
+    },
+    "ResultsPage": {
+      "rank": "Renk",
+      "player": "C'hoarier⋅ez",
+      "score-per-round": "Kont dre droiad",
+      "total": "Hollad",
+      "player-want-to-replay": "C'hoarierien a fell dezho c'hoari en-dro:",
+      "replay-button": {
+        "cancel": "Chom hep c'hoari en-dro",
+        "replay": "C'hoari en-dro"
+      },
+      "title": "Disoc'hoù ar c'hoari",
+      "leave-button": "Kuitaat ar c'hoariadenn"
+    },
+    "PrivacyPolicy": {
+      "head": {
+        "title": "Reolennoù a-fet buhez prevez | Skyjo Online",
+        "keywords": "Skyjo enlinenn,reolennoù a-fet buhez prevez,gwarez ar roadennoù,buhez prevez ar c'hoarioù enlinenn,c'hoari diogel,roadennoù an implijer,RHGR,CCPA,surentez ar roadennoù",
+        "description": "Deskit hiroc'h diwar-benn engouestl Skyjo Online evit ho puhez prevez. Hor reolennoù a zespiz penaos e vez dastumet, implijet ha gwarezet ho roadennoù, en ur zoujañ ouzh an RHGR evit hor c'hoari kartoù enlinenn."
+      },
+      "content": {
+        "back": "Distreiñ d'ar bennbajenn",
+        "title": "Reolennoù a-fet buhez prevez",
+        "last-update": {
+          "text": "Hizivaet da ziwezhañ: {date}",
+          "date-format": "DD/MM/YYYY - HH:mm"
+        },
+        "information-we-collect": {
+          "anonymous-usage-data": {
+            "title": "Roadennoù implij dizanv",
+            "description": "Implij a reomp PostHog, un ostilh dielfennañ ar roadennoù dizanv diwar-benn implij hol lec'hienn web. Enkorfañ a ra:"
+          },
+          "title": "An titouroù a vez dastumet ganeomp"
         }
       }
     }
