@@ -33,6 +33,14 @@ export class GameService extends BaseService {
     const gameCode = socket.data.gameCode
 
     const game = await this.getGame(gameCode)
+
+    if (game.processingAfk) {
+      throw new CError(`Game is processing AFK.`, {
+        code: ErrorConstants.ERROR.NOT_ALLOWED,
+        shouldLog: false,
+      })
+    }
+
     const stateManager = new GameStateTracker(game)
 
     const player = game.getPlayerById(socket.data.playerId)
@@ -85,7 +93,7 @@ export class GameService extends BaseService {
     ])
     const stateManager = new GameStateTracker(game)
 
-    game.replaceCard(column, row)
+    await game.replaceCard({ column, row })
 
     await this.updateAndSendGame(game, stateManager)
   }
@@ -115,7 +123,7 @@ export class GameService extends BaseService {
     ])
     const stateManager = new GameStateTracker(game)
 
-    game.turnCard(player, column, row)
+    await game.turnCard({ player, column, row })
 
     await this.updateAndSendGame(game, stateManager)
   }
@@ -212,6 +220,13 @@ export class GameService extends BaseService {
     allowedStates: TurnStatus[],
   ) {
     const game = await this.getGame(socket.data.gameCode)
+
+    if (game.processingAfk) {
+      throw new CError(`Game is processing AFK.`, {
+        code: ErrorConstants.ERROR.NOT_ALLOWED,
+        shouldLog: false,
+      })
+    }
 
     // TODO remove this condition in 1.36.0 if game sync works and this error never happens in last versions
     if (
