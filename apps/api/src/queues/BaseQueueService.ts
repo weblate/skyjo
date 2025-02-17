@@ -1,6 +1,6 @@
 import { ENV } from "@env"
 import { Logger } from "@skyjo/logger"
-import { Queue, type QueueOptions, Worker } from "bullmq"
+import { Job, Queue, type QueueOptions, Worker } from "bullmq"
 
 export abstract class BaseQueueService<T> {
   private queueName: string
@@ -21,12 +21,12 @@ export abstract class BaseQueueService<T> {
     this.setupListeners()
   }
 
-  protected abstract processJob(data: T): Promise<void>
+  protected abstract processJob(job: Job<T>): Promise<void>
 
   private createWorker(): Worker<T> {
     return new Worker<T>(
       this.queueName,
-      async (job) => await this.processJob(job.data),
+      async (job) => await this.processJob(job),
       {
         connection: {
           url: ENV.REDIS_URL,
