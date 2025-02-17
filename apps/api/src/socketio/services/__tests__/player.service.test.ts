@@ -44,7 +44,7 @@ describe("PlayerService", () => {
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
-      const game = new Skyjo(opponent.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: opponent.id, settings: new SkyjoSettings(false) })
       game.addPlayer(opponent)
 
       socket.data.gameCode = game.code
@@ -68,7 +68,7 @@ describe("PlayerService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo(opponent.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: opponent.id, settings: new SkyjoSettings(false) })
       game.addPlayer(opponent)
 
       const player = new SkyjoPlayer(
@@ -93,7 +93,7 @@ describe("PlayerService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo(opponent.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: opponent.id, settings: new SkyjoSettings(false) })
       game.addPlayer(opponent)
 
       const player = new SkyjoPlayer(
@@ -142,7 +142,7 @@ describe("PlayerService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo(opponent.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: opponent.id, settings: new SkyjoSettings(false) })
       game.addPlayer(opponent)
 
       const player = new SkyjoPlayer(
@@ -183,7 +183,7 @@ describe("PlayerService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: player.id, settings: new SkyjoSettings(false) })
       game.addPlayer(player)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
@@ -217,7 +217,7 @@ describe("PlayerService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: player.id, settings: new SkyjoSettings(false) })
       game.addPlayer(player)
 
       const opponent = new SkyjoPlayer(
@@ -260,7 +260,7 @@ describe("PlayerService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: player.id, settings: new SkyjoSettings(false) })
       game.addPlayer(player)
 
       const opponent = new SkyjoPlayer(
@@ -300,7 +300,7 @@ describe("PlayerService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo(opponent.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: opponent.id, settings: new SkyjoSettings(false) })
       game.addPlayer(opponent)
 
       const opponent2 = new SkyjoPlayer(
@@ -340,7 +340,7 @@ describe("PlayerService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo(opponent.id, new SkyjoSettings(false))
+      const game = new Skyjo({ adminId: opponent.id, settings: new SkyjoSettings(false) })
       game.addPlayer(opponent)
 
       const opponent2 = new SkyjoPlayer(
