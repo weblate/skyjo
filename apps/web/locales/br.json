@@ -81,7 +81,7 @@
     "NotFound": {
       "title": "Fazi 404",
       "description": "N'eus ket eus ar bajenn a glaskit.",
-      "go-back-to-homepage": "Distreiñ d'ar bennbajenn"
+      "go-back-to-homepage": "Distreiñ d'an degemer"
     },
     "Lobby": {
       "title": "C'hoariadenn {name}",
@@ -171,7 +171,7 @@
         "description": "Deskit hiroc'h diwar-benn engouestl Skyjo Online evit ho puhez prevez. Hor reolennoù a zespiz penaos e vez dastumet, implijet ha gwarezet ho roadennoù, en ur zoujañ ouzh an RHGR evit hor c'hoari kartoù enlinenn."
       },
       "content": {
-        "back": "Distreiñ d'ar bennbajenn",
+        "back": "Distreiñ d'an degemer",
         "title": "Reolennoù a-fet buhez prevez",
         "last-update": {
           "text": "Hizivaet da ziwezhañ: {date}",
@@ -180,11 +180,448 @@
         "information-we-collect": {
           "anonymous-usage-data": {
             "title": "Roadennoù implij dizanv",
-            "description": "Implij a reomp PostHog, un ostilh dielfennañ ar roadennoù dizanv diwar-benn implij hol lec'hienn web. Enkorfañ a ra:"
+            "description": "Implij a reomp PostHog, un ostilh dielfennañ ar roadennoù dizanv diwar-benn implij hol lec'hienn web. Enkorfañ a ra:",
+            "items": "Gweloù ar bajenn;;buhez web (mentadoù digonusted);;Respont d'ar sontadegoù (ma tibabit kemer perzh)"
           },
-          "title": "An titouroù a vez dastumet ganeomp"
+          "title": "An titouroù a vez dastumet ganeomp",
+          "game-data": {
+            "title": "Roadennoù ar c'hoari",
+            "description": "Kadaviñ a reomp ent padennek:",
+            "items": "Anvioù arveriad ha dibab an avatar;;Elfennoù hag araokadenn ar c'hoari"
+          },
+          "local-storage-data": {
+            "title": "Roadennoù kadaviñ lec'hel",
+            "description": "Lakaat a reomp e kadaviñ lec'hel ar merdeer:",
+            "items": "Gwellvezioù yezh;;Gwellvezioù arventennoù ar c'hoari"
+          }
+        },
+        "how-we-use-your-information": {
+          "title": "Penaos e implijomp ho titouroù",
+          "items": "Gwellaat hol lec'hienn hag an arnod arveriad;;Dielfennañ patromoù arver ha digonusted;;Aesaat ar gameplay"
+        },
+        "data-storage-and-retention": {
+          "title": "Kadaviñ ha mirout ar roadennoù",
+          "items": "Ar roadennoù arver dizanv a zo kadavet war dafariadoù e Unvaniezh Europa ha miret e-pad ur bloaz d'ar muiañ;;Ar roadennoù c'hoari a zo kadavet en hon stlennvon e Frankfurt, Alamagn. Ar roadennoù-se a zo miret keit ha ma pad ur c'hoariadenn. Ur wech eo bet kuitaet ar c'hoariadenn gant an holl c'hoarierien eo dilamet ar roadennoù liammet;;An titouroù lakaet e kadaviñ lec'hel ho merdeer a chomo eno betek ma vo dilamet roadennoù ho merdeer"
+        },
+        "data-sharing": {
+          "title": "Rannañ ar roadennoù",
+          "description": "Ne rannomp ket ho roadennoù personel gant tredeoù. Ar roadennoù arver dizanv a zo keweriet gant PostHog, hor pourchaser dielfennadurioù."
+        },
+        "your-rights-and-choices": {
+          "title": "Ho kwirioù ha dibaboù",
+          "description": "Dre ma tastumomp roadennoù dizanv dreist-holl n'hallomp ket anavezout pe haeziñ titouroù personel resis un arveriad hiniennel. Ar gwirioù a-zeu a zo ganeoc'h avat:",
+          "items": "Kadaviñ lec'hel: gallout a rit dilemel kadaviñ lec'hel ho merdeer pa fell deoc'h evit dilemel ar gwellvezioù enrollet;;Diweredekaat an dielfennadurioù: gallout a rit diweredekaat dastum ar roadennoù dielfennañ en ur weredekaat an arventenn \"Na heuliañ\" en ho merdeer pe en ur arverañ merdeerioù buket war doujañ ar vuhez prevez hag a stank ar skriptoù dielfennañ;;Roadennoù ar c'hoari: roadennoù ar c'hoari a zo dilamet ent emgefreek pa vez kuitaet ur c'hoariadenn gant an holl c'hoarierien"
+        },
+        "childrens-privacy": {
+          "title": "Buhez prevez ar vugale",
+          "description": "N'eus bevenn oad ebet e Skyjo Online. Ne zastumomp ket roadennoù personel bugale dre ouiziegezh."
+        },
+        "changes-to-this-policy": {
+          "title": "Kemmoù er politikerezh-mañ",
+          "description": "Gallout a reomp hizivaat ar politikerezh-mañ a vare da vare. Ho kelaouiñ a raimp pa cheñcho en ur embann ar politikerezh nevez war ar bajenn-mañ."
+        },
+        "contact-us": {
+          "description": "M'ho peus goulennoù diwar-benn ar politikerezh a-fet buhez prevez, deuit e darempred ganeomp dre dafariad Discord ar c'hoari pe dre GitHub.",
+          "title": "Mont e darempred ganeomp"
         }
       }
+    },
+    "Rules": {
+      "head": {
+        "title": "Penaos c'hoari Skyjo | Skyjo Online",
+        "keywords": "Reolennoù Skyjo,penaos c'hoari Skyjo,c'hoari Skyjo,reolennoù ar c'hoari kartoù,c'hoari kartoù enlinenn,ditouroù ar c'hoari,sturlevr ar gameplay",
+        "description": "Deskit penaos c'hoari Skyjo gant hon sturlevr klok. Grit anaoudegezh gant ar reolennoù, ar strategiezhoù hag an tunioù evit mestroniañ ar c'hoari kartoù-mañ. C'hoariit Skyjo enlinenn gant ho mignoned bremañ!"
+      },
+      "title": "Reolennoù c'hoari Skyjo"
+    }
+  },
+  "components": {
+    "GameStoppedDialog": {
+      "title": "Paouezet eo bet ar c'hoariadenn",
+      "description": "Paouezet eo bet ar c'hoariadenn dre ma n'eus ket trawalc'h a c'hoarierien ken"
+    },
+    "OpponentBoard": {
+      "connection-lost": "Kollet eo bet ar c'hennask"
+    },
+    "Rules": {
+      "round-start": {
+        "choice-1": {
+          "content": "Ar c'hoarier⋅ez a rank eskemm ar gartenn-mañ gant unan eus h⋅e 12 kartenn ha lakaat anezhi war an tu hewel. Gallout a ra dibab evel ma fell dezhi⋅añ etre ar c'hartennoù kuzh hag ar re hewel. Ar c'hartennoù kuzh na rankont ket bezañ gwelet a-raok an eskemm. Ar gartenn eskemmet a zo pozet hewel er pakad diskarg.",
+          "title": "Dibab 1:",
+          "description": "Kemer ar gartenn troet en diskarg."
+        },
+        "choice-2": {
+          "content-1": "Ar c'hoarier⋅ez a c'hall sellet ouzh ar gartenn ha dibab ma fell dezhi⋅añ eskemm gant unan eus ar c'hartennoù dirazi⋅añ (kuzh pe hewel) pe diskargañ anezhi. Ma fell dezhi⋅añ mirout ar gartenn tennet e rank eskemm anezhi gant unan eus ar c'hartennoù dirazi⋅añ evel displeget en",
+          "title": "Dibab 2:",
+          "description": "Kemer ar gartenn gentañ tu kuzhet er pigos.",
+          "choice-1": "Dibab 1",
+          "content-2": "Ma ne fell ket dezhi⋅añ mirout ar gartenn tennet e rank lakaat anezhi er pakad diskarg ha treiñ unan eus h⋅e gartennoù kuzhet."
+        },
+        "title": "Penn-kentañ un droiad",
+        "choice": "dibab {number}",
+        "content-1": "Ar c'hoarier⋅ez a c'hall dibab ar gartenn gentañ troet en diskarg",
+        "content-2": "pe ar gartenn kuzhet kentañ er pigos",
+        "end-of-turn": "Echuiñ a ra neuze h⋅e dro ha d'ar c'hoarier⋅ez all eo da c'hoari (gant roud ar bizied)."
+      },
+      "end-of-game": {
+        "title": "Fin ar c'hoariadenn",
+        "content": "E dibenn pep troiad e vez ouzhpennet poentoù pep c'hoarier⋅ez d'ar gont hollek tapet en troiadoù kent. Echuiñ a ra ar c'hoari ur wech tizhet 100 pe muioc'h gant ur c'hoarier⋅ez. Ar c'hoarier⋅ez gant ar gont izelañ a c'hounez ar c'hoariadenn."
+      },
+      "game-goal": {
+        "content": "Meur a droiad a zo er c'hoari Skyjo hag echuiñ a ra pa vez tizhet 100 poent pe muioc'h gant ur c'hoarier⋅ez. An hini en deus tapet an nebeutañ a boentoù a c'hounez ar c'hoariadenn.",
+        "title": "Pal ar c'hoari"
+      },
+      "round-preparation": {
+        "content-2": "Pep c'hoarier⋅ez a lak e 12 kartenn e pevar bann teir c'hartenn tu kuzhet dirazi⋅añ. Pep c'hoarier⋅ez a dro div gartenn dibabet ganti⋅añ.",
+        "title": "Prientiñ un droiad",
+        "content-1": "Da gentañ penn, pep c'hoarier a resev 12 kartenn dasparzhet en tu kuzhet. Da c'houde, ur gartenn er pigos a zo troet war an tu hewel e kreiz an daol, penn-kentañ ar pakad diskarg an hini eo. Ar c'hartennoù a chom a zo lakaet e-kichen, tu kuzhet ha sevel a reont ar pigos."
+      },
+      "special-rule": {
+        "content": "Ma zo teir c'hartenn peurheñvel gant ur c'hoarier⋅ez en ur bann eo diskarget an teir c'hartenn-se gant ar c'hoarier⋅ez en ul lakaat anezho war an diskarg. M'eo bet tapet ur bann kartennoù peurheñvel goude un eskemm gant ur gartenn eus ar pigos pe an diskarg e rank bezañ lakaet an teir c'hartenn peurheñvel war ar pakad diskarg goude ar gartenn eskemmet.",
+        "title": "Reolenn ispisial:"
+      },
+      "scoring": {
+        "first-to-finish": {
+          "content": "Ma n'eus ket bet an niver izelañ strizh a boentoù gant ar c'hoarier⋅ez echuet an droiad ganti⋅añ (an hini kentañ o vezañ troet holl h⋅e gartennoù), daougementet eo neuze h⋅e niver a boentoù evit an droiad-se.",
+          "note": {
+            "title": "Diwallit:",
+            "content": "ar reolenn-se n'eo nemet ma vez merket poentoù pozitivel!"
+          }
+        },
+        "title": "Kontañ ar poentoù",
+        "description": "Ar c'hoarierien a zo c'hoazh kartennoù kuzhet ganto a rank treiñ anezho. Pep c'hoarier a gont e boentoù.",
+        "list": {
+          "content-1": "M'eo pozitivel an hollad a boentoù e vez ouzhpennet da gont an troiadoù kent.",
+          "content-2": "M'eo negativel an hollad e vo tennet deus kont an troiadoù kent."
+        },
+        "example": {
+          "title": "Skouer:",
+          "content": "ar c'hoarier⋅ez A a ziskouez holl e gartennoù hag echuiñ a ra na droiad. E dibenn an droiad en deus bet 10 poent, ar c'hoarier⋅ez B, 24 foent hag ar c'hoarier⋅ez C 10 poent ivez. Ar c'hoarier⋅ez A n'eus ket bet an niver a boentoù izelañ strizh, daougementet eo e boentoù da 20 neuze."
+        }
+      },
+      "cards-section-title": "{number} a gartoù c'hoari:",
+      "round-end": {
+        "title": "Fin an droiad",
+        "content-1": "P'eo bet diskouezet holl h⋅e gartennoù gant ur c'hoarier⋅ez eo bet c'hoariet e dro diwezhañ ganti⋅añ.",
+        "content-2": "An holl c'hoarierien all a c'hoari ur wech ouzhpenn evit echuiñ tro an daol."
+      }
+    },
+    "SettingsDialog": {
+      "general": {
+        "title": "Hollek",
+        "language": "Yezh",
+        "language-warn": "Kemmañ war ar bajenn degemer hepken",
+        "appearance": "Neuz"
+      },
+      "display": {
+        "chat": {
+          "chat-notification-size": {
+            "values": {
+              "normal": "Ordinal",
+              "big": "Bras",
+              "small": "Bihan"
+            },
+            "label": "Ment rebuzadurioù ar flapva"
+          },
+          "title": "Flapva",
+          "chat-visibility": "Hewelusted ar flapva"
+        },
+        "title": "Skrammañ",
+        "mobile": {
+          "title": "Hezoug",
+          "switch-to-player-who-is-playing": "Mont d'ar c'hoari⋅ez o c'hoari ent emgefreek",
+          "show-preview-opponents-cards": "Diskouez alberz kartennoù an enebourien e roll an enebourien"
+        },
+        "game-board": {
+          "title": "Taol-c'hoari",
+          "size": {
+            "label": "Ment ho taol-c'hoari",
+            "big-warning": "Gallout a ra terriñ ar skrammañ war hezoug",
+            "values": {
+              "normal": "Ordinal",
+              "big": "Bras"
+            }
+          }
+        }
+      },
+      "title": "Arventennoù",
+      "audio": {
+        "title": "Son",
+        "toggle": {
+          "label": "Gweredekaat ar son"
+        },
+        "volume": {
+          "label": "Ampled ({volume}%)"
+        }
+      }
+    },
+    "KickVote": {
+      "vote-against-you-succeeded": {
+        "description": "Ar c'hoarierien o deus mouezhiet evit skarzhañ ac'hanoc'h eus ar c'hoariadenn.",
+        "title": "Skarzhet hoc'h bet"
+      },
+      "player-has-not-voted": {
+        "kick-button": {
+          "alt": "Mouezhiañ evit skarzhañ {playerName}",
+          "label": "Skarzhañ"
+        },
+        "title": "Mouezhiañ evit skarzhañ {playerName}",
+        "description": "{initiatorName} a fell dezhi⋅añ skarzhañ {playerName}",
+        "ignore-button": {
+          "alt": "Tremen ar mouezhiadeg evit skarzhañ {playerName}",
+          "label": "Tremen"
+        }
+      },
+      "vote-against-you": {
+        "description": "{initiatorName} en/he deus goulennet ur vouezhiadeg evit skarzhañ ac'hanoc'h.",
+        "title": "Mouezhioù evit skarzhañ ac'hanoc'h"
+      },
+      "player-has-voted": {
+        "title": "Mouezhiañ evit skarzhañ {playerName}",
+        "description": "Mouezhiet ho peus {vote, select, true {evit} false {a-enep} other {vote}}"
+      },
+      "vote-failed": {
+        "title": "Ar vouezhiadeg evit skarzhañ {playerName} zo c'hwitet",
+        "description": "N'eus ket trawalc'h a vouezhioù evit skarzhañ {playerName}"
+      },
+      "vote-against-you-failed": {
+        "title": "N'hoc'h ket bet skarzhet",
+        "description": "N'eus ket trawalc'h a vouezhioù evit skarhzañ ac'hanoc'h"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} a zo bet skarzhet",
+        "description": "Ar vouezhiadeg evit skarzhañ {playerName} a zo bet gounezet."
+      }
+    },
+    "ScoreTable": {
+      "round": "Troiad",
+      "name": "Anv",
+      "total": "Hollad"
+    },
+    "AppearanceSelect": {
+      "light": "Sklaer",
+      "dark": "Teñval",
+      "system": "Reizhiad"
+    },
+    "Chat": {
+      "title": "Flapva"
+    },
+    "ChatForm": {
+      "button-title": "Kas",
+      "message-too-long": {
+        "description": "Re hir eo ar gemennadenn (200 arouez d'ar muiañ)"
+      },
+      "message-input-placeholder": "Kemennadenn"
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} a gemennadennoù anlennet"
+    },
+    "CopyLink": {
+      "button-title": "Eilañ an ere",
+      "message": "Ere eilet!"
+    },
+    "DiscardPile": {
+      "title": "Pakad an diskarg",
+      "throw": "Diskargañ"
+    },
+    "DrawPile": {
+      "title": "Pakad ar pigos"
+    },
+    "Footer": {
+      "explanation": "Petra eo Skyjo?",
+      "rules": "Reolennoù ar c'hoari",
+      "home": "Degemer",
+      "release-notes": "Notennoù ermaeziañ",
+      "privacy-policy": "Politikerezh a-fet buhez prevez",
+      "disclaimer": {
+        "not-affiliated": "N'eo ket liammet al lec'hienn-mañ gant krouerien pe dasparzherien Skyjo",
+        "rights-owned": "Holl wirioù ha mekanikoù c'hoari Skyjo a zo perc'hennet gant an aozerien Alexander Bernhardt ha Magilano"
+      },
+      "attribution": {
+        "avatars": "Skeudennoù avatar krouet gant Freepik - Flaticon"
+      },
+      "buy-game": "Prenañ ar c'hoari"
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Adkennaskañ d'ar c'hoariadenn",
+      "join-game-button": "Mont er c'hoariadenn",
+      "find-game-button": "Kavout ur c'hoariadenn",
+      "create-game-button": "Krouiñ ur c'hoariadenn {type, select, private {brevez} public {bublik} other {dianav}}"
+    },
+    "GameRules": {
+      "button-title": "Diskouez reolennoù ar c'hoariadenn",
+      "title": "Reolennoù ar c'hoariadenn",
+      "allow-skyjo-for-column": "Skyjo bann aotreet: {value, select, true {ya} false {n'eo ket} other {dianav}}",
+      "allow-skyjo-for-row": "Skyjo renk aotreet : {value, select, true {ya} false {n'eo ket} other {dianav}}",
+      "card-per-column": "Niver a vannoù: {value}",
+      "card-per-row": "Niver a renkoù {value}",
+      "score-to-end-game": "Niver a boentoù evit echuiñ ar c'hoariadenn: {value}",
+      "first-player-penalty-type": {
+        "label": "Kastiz evit ar c'hoarier⋅ez kentañ ma n'eus ket graet an niver izelañ a boentoù: ",
+        "2": "Kastiz plad hepken",
+        "1": "Lieskementer hepken",
+        "4": "Lieskementer ha kastiz plad da c'houde",
+        "3": "Kastiz plad ha lieskementer da c'houde"
+      },
+      "first-player-multiplier-penalty": "Lieskementer kastiz: {value}",
+      "first-player-flat-penalty": "Kastiz plad: {value}",
+      "initial-turned-count": "Niver a gartoù da dreiñ en deroù: {value}"
+    },
+    "LanguageCombobox": {
+      "no-language-found": "Yezh ebet kavet",
+      "locale": {
+        "de": "Deutsch",
+        "en": "English",
+        "es": "Español",
+        "fr": "Français",
+        "it": "Italiano"
+      },
+      "select-language": "Dibab ar yezh",
+      "search-language": "Klask ur yezh"
+    },
+    "MenuDropdown": {
+      "button": {
+        "aria-label": "Lañser"
+      },
+      "rules": "Reolennoù",
+      "discord": "Discord",
+      "settings": "Arventennoù"
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Enebourien:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "C'hwi"
+    },
+    "PWABanner": {
+      "title": "Stailhit Skyjo war ho trevnad!",
+      "Safari": "Stokit an arlun evit rannañ, hag ouzhpennit 'Lakaat en Dock' evit staliañ",
+      "Chrome": "Klikit war ar bouton \"Staliañ\" evit staliañ",
+      "FirefoxAndroid": "Stokit an arlun lañser, ha 'ouzhpennañ d'ar skramm degemer' evit staliañ",
+      "ChromeAndroid": "Stokit an arlun lañser, ha 'ouzhpennañ d'ar skramm degemer' evit staliañ",
+      "SamsungBrowser": "Pouezit war an arlun lañser, ha \"ouzhpennañ d'ar bajenn\" ha \"skramm degemer\" evit staliañ",
+      "ChromeIOS": "Stokit an arlun rannañ, dibunit ha stokit \"ouzhpennañ d'ar skramm degemer\" evit staliañ",
+      "FirefoxIOS": "Stokit an arlun lañser, an arlun rannañ da c'houde, dibunit ha stokit 'Ouzhpennañ d'ar skramm degemer' evit staliañ",
+      "SafariIOS": "Stokit an arlun rannañ, dibunit ha stokit 'ouzhpennañ d'ar skramm degemer' evit staliañ",
+      "install-button": {
+        "title": "Staliañ an arload",
+        "content": "Staliañ"
+      }
+    },
+    "RulesDialog": {
+      "title": "Reolennoù ar c'hoari",
+      "trigger": {
+        "aria-label": "Diskouez reolennoù ar c'hoari"
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Diskouez taolenn ar gontoù"
+    },
+    "ScoreDialog": {
+      "title": "Kont",
+      "description": "{name} en/he deus gounezet gant {score} a boentoù!"
+    },
+    "ScoreSheet": {
+      "see-scores": "Gwelet ar kontoù"
+    },
+    "Avatar": {
+      "context-menu": {
+        "kick": "Skarzhañ",
+        "mute": "Mudañ",
+        "unmute": "Divudañ"
+      }
+    },
+    "EndRoundDialog": {
+      "title": "Fin an droiad",
+      "description": "Kregiñ a raio an droiad kentañ a-benn un nebeud eilennoù…"
+    },
+    "ChatMessage": {
+      "separator": ": "
+    }
+  },
+  "utils": {
+    "avatar": {
+      "crab": "krank",
+      "turtle": "baot",
+      "elephant": "olifant",
+      "bee": "gwenanenn",
+      "dog": "ki",
+      "eagle": "erer",
+      "fox": "louarn",
+      "frog": "ran",
+      "jellyfish": "Morgaoulenn",
+      "koala": "koala",
+      "octopus": "morgazh",
+      "penguin": "erev",
+      "toucan": "toukan",
+      "whale": "balum",
+      "owl": "kaouenn"
+    },
+    "skyjo": {
+      "turn": {
+        "replaceACard": "Eskemmit ur gartenn",
+        "chooseAPile": "Dibab ur bern",
+        "throwOrReplace": "Eskemmit pe diskargit",
+        "turnACard": "Troit ur gartenn"
+      },
+      "waiting": "O c'hortoz ar c'hoarierien",
+      "turn-cards": "Troit {number} a gartennoù",
+      "waiting-opponents-to-turn-cards": "O c'hortoz e trofe {nbOpponents} enebour {number} a gartennoù",
+      "player-turn": "Tro {playerName} an hini eo",
+      "last-turn": "Tro diwezhañ!",
+      "game-stopped": "C'hoariadenn harzhet",
+      "round-over": "Troiad echuet",
+      "game-ended": "C'hoariadenn echuet!"
+    },
+    "chat": {
+      "player-reconnection-expired": "{username} a zo bet skarzhet abalamour eo diamzeret h⋅e brantad adkennaskañ",
+      "player-joined": "{username} a zo deuet-tre",
+      "player-left": "{username} a zo aet kuit",
+      "player-left-can-reconnect": "{username} a zo aet kuit ha [time} eilenn en/he deus evit dont en-dro",
+      "player-timeout": "{username} en/he deus kollet ar c'hennask",
+      "player-timeout-can-reconnect": "{username} en/he deus kollet ar c'hennask ha {time} eilenn en/he deus evit adkennaskañ",
+      "player-reconnect": "{username} a zo adkennasket",
+      "argument-required": "Un arguzenn pe meur a hini a zo goulennet gant an urzhiad: {command}",
+      "player-already-muted": "Mudet eo {username} endeo",
+      "player-muted": "Mudet eo bet {username}",
+      "player-not-muted": "N'eo ket mudet {username}",
+      "player-unmuted": "Divudet eo bet {username}",
+      "wizz-sent": "Kaset ho peus ur wizz da {targetUsername}!",
+      "wizz-self": "Wizzet hoc'h bet gant {initiatorUsername}!",
+      "wizz-other": "{initiatorUsername} en/he deus wizzet {targetUsername}!"
+    },
+    "socket": {
+      "error": {
+        "cannot-reconnect": {
+          "description": "N'eo ket posupl ken adkennaskañ d'ar c'hoariadenn, diamzeret eo ar prantad adkennaskañ"
+        },
+        "timeout": {
+          "description": "An dafariad a lak kalzik a amzer da respont. Gallout a rit klask adkargañ ar bajenn ha klask en-dro."
+        },
+        "game-not-found": {
+          "description": "N'eus ket eus ar c'hoariadenn a glaskit"
+        },
+        "game-is-full": {
+          "description": "Leun eo ar c'hoariadenn, n'hallit ket mont-tre"
+        },
+        "game-already-started": {
+          "description": "Kroget eo dija ar c'hoariadenn"
+        }
+      }
+    }
+  },
+  "contexts": {
+    "SocketContext": {
+      "reconnection": "Adkennasket gant berzh",
+      "recover-error": {
+        "game-not-found": {
+          "title": "N'eo ket bet kavet ar c'hoariadenn",
+          "description": "Ar c'hoariadenn a glaskit mont-tre enni n'eus ket anezhi ken"
+        }
+      },
+      "connection-lost": "Kollet eo bet ar c'hennask. O klask adkennaskañ..."
     }
   }
 }
