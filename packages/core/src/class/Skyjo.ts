@@ -60,6 +60,8 @@ export class Skyjo implements SkyjoInterface {
   roundNumber: number = 1
   firstToFinishPlayerId: string | null = null
 
+  processingAfk: boolean = false
+
   createdAt: Date
   updatedAt: Date
   stateVersion: number = 0
@@ -149,12 +151,18 @@ export class Skyjo implements SkyjoInterface {
     this.players.push(player)
   }
 
-  removePlayer(playerId: string) {
-    if (this.getCurrentPlayer()?.id === playerId) this.finishTurn()
+  async removePlayer(playerId: string) {
+    if (this.isPlaying() && this.getCurrentPlayer()?.id === playerId) {
+      await this.finishTurn({ wasAfk: false })
+    }
 
     this.players = this.players.filter((player) => player.id !== playerId)
 
-    if (this.isRoundTurningCards() && this.haveAllPlayersRevealedCards()) {
+    if (
+      this.isPlaying() &&
+      this.isRoundTurningCards() &&
+      this.haveAllPlayersRevealedCards()
+    ) {
       this.startRoundAfterInitialReveal()
     }
   }
@@ -175,19 +183,18 @@ export class Skyjo implements SkyjoInterface {
   }
 
   //#region status
-  /* istanbul ignore else --@preserve */
   isInLobby() {
     return this.status === Constants.GAME_STATUS.LOBBY
   }
-  /* istanbul ignore else --@preserve */
+
   isPlaying() {
     return this.status === Constants.GAME_STATUS.PLAYING
   }
-  /* istanbul ignore else --@preserve */
+
   isFinished() {
     return this.status === Constants.GAME_STATUS.FINISHED
   }
-  /* istanbul ignore else --@preserve */
+
   isStopped() {
     return this.status === Constants.GAME_STATUS.STOPPED
   }
@@ -281,35 +288,58 @@ export class Skyjo implements SkyjoInterface {
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.PICK_FROM_DISCARD_PILE
   }
 
-  discardCard(value: number) {
+  discardSelectedCard(value: number) {
     this.discardPile.push(value)
     this.selectedCardValue = null
+  }
+
+  discardCard(value: number) {
+    this.discardSelectedCard(value)
 
     this.turnStatus = Constants.TURN_STATUS.TURN_A_CARD
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.THROW
   }
 
-  replaceCard(column: number, row: number) {
+  async replaceCard({
+    column,
+    row,
+    wasAfk,
+  }: {
+    column: number
+    row: number
+    wasAfk?: boolean
+  }) {
     const player = this.getCurrentPlayer()
+
     const oldCardValue = player.cards[column][row].value
     player.replaceCard(column, row, this.selectedCardValue!)
-    this.selectedCardValue = null
-    this.discardCard(oldCardValue)
+
+    this.discardSelectedCard(oldCardValue)
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.REPLACE
 
-    this.finishTurn()
+    await this.finishTurn({ wasAfk })
   }
 
-  turnCard(player: SkyjoPlayer, column: number, row: number) {
+  async turnCard({
+    player,
+    column,
+    row,
+    wasAfk = true,
+  }: {
+    player: SkyjoPlayer
+    column: number
+    row: number
+    wasAfk?: boolean
+  }) {
     player.turnCard(column, row)
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
 
-    this.finishTurn()
+    await this.finishTurn({ wasAfk })
   }
 
-  async finishTurn(wasAfk: boolean = false) {
+  async finishTurn({ wasAfk = false }: { wasAfk?: boolean }) {
     const currentPlayer = this.getCurrentPlayer()
-    // await this.operationManager.cancelAfkTimer(this.code, currentPlayer.id)
+    await this.operationManager.cancelAfkTimer(this.code, currentPlayer.id)
 
     if (!wasAfk) currentPlayer.consecutiveAfkCount = 0
 
@@ -318,14 +348,14 @@ export class Skyjo implements SkyjoInterface {
     if (this.shouldStartNewRound()) {
       await this.operationManager.delayNewRound(
         this,
+        // istanbul ignore next --@preserve
         () => this.startNewRound(),
         Constants.NEW_ROUND_DELAY,
       )
     } else {
-      // await this.operationManager.startAfkTimer(this, currentPlayer.id)
+      const newCurrentPlayer = this.getCurrentPlayer()
+      await this.operationManager.startAfkTimer(this, newCurrentPlayer.id)
     }
-
-    await this.operationManager.updateGame(this)
   }
 
   togglePlayerReplay(playerId: string) {
@@ -571,8 +601,7 @@ export class Skyjo implements SkyjoInterface {
     if (cardsToDiscard.length > 0) {
       cardsToDiscard.forEach((card) => this.discardCard(card.value))
 
-      if (this.settings.allowSkyjoForColumn && this.settings.allowSkyjoForRow)
-        this.checkCardsToDiscard(player)
+      this.checkCardsToDiscard(player)
     }
   }
 
@@ -608,7 +637,6 @@ export class Skyjo implements SkyjoInterface {
     this.players = this.getConnectedPlayers()
   }
 
-  // TODO
   private checkFirstPlayerPenalty() {
     const lastScoreIndex = this.roundNumber - 1
     const firstToFinishPlayer = this.players.find(
@@ -708,7 +736,7 @@ export class Skyjo implements SkyjoInterface {
       this.setFirstPlayerToFinish(currentPlayer)
     }
 
-    if (this.roundPhase === Constants.ROUND_PHASE.LAST_LAP) {
+    if (this.isRoundInLastLap()) {
       currentPlayer.hasPlayedLastTurn = true
       this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
       currentPlayer.turnAllCards()
