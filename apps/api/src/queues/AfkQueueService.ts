@@ -60,17 +60,26 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
   async processJob(job: Job<AfkJobData>) {
     const { gameCode, playerId } = job.data
 
+    const game = await this.redis.getGameSafe(gameCode)
+    if (!game) {
+      await job.moveToCompleted("Game not found", job?.token ?? "success")
+      return
+    }
+
     try {
-      const game = await this.redis.getGame(gameCode)
       game.setOperationManager(
         new GameOperationManager(this.redis, this, this.socketManager),
       )
       await this.lockGame(game)
 
       const player = game.getPlayerById(playerId)
-      if (!player) throw new CError(ErrorConstants.ERROR.PLAYER_NOT_FOUND, {})
+      if (!player)
+        throw new CError("Player not found", {
+          code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
+        })
 
       const currentPlayer = game.getCurrentPlayer()
+
       if (currentPlayer?.id === playerId) {
         player.afkCount++
         player.consecutiveAfkCount++
@@ -85,16 +94,15 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
           await this.performAfkMove(game)
         }
       }
-
-      await this.unlockGame(game)
     } catch (error) {
       if (
         error instanceof CError &&
-        error.message === ErrorConstants.ERROR.GAME_NOT_FOUND
+        error.code === ErrorConstants.ERROR.PLAYER_NOT_FOUND
       ) {
-        await job.moveToCompleted("Game not found", job?.token ?? "success")
-        return
+        await job.moveToCompleted(error.message, job?.token ?? "success")
       }
+    } finally {
+      await this.unlockGame(game)
     }
   }
 
@@ -130,7 +138,11 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
     if (game.isAdmin(player.id)) game.changeAdmin()
 
     const socket = this.socketManager.getSocket(player.socketId)
-    if (!socket) throw new Error("Socket not found")
+    if (!socket) {
+      throw new CError("Socket not found", {
+        code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
+      })
+    }
 
     await this.kickSocket(socket)
 
