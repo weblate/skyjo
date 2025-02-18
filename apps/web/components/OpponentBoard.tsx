@@ -13,6 +13,7 @@ import { ClassValue } from "clsx"
 import { AlertTriangleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
+import { TurnTimer } from "./TurnTimer"
 
 type OpponentBoardProps = {
   opponent: SkyjoPlayerToJson
@@ -36,22 +37,27 @@ const OpponentBoard = ({
       )}
     >
       <ContextMenu>
-        <ContextMenuTrigger className="flex flex-col items-center">
-          <Image
-            src={`/avatars/${opponent.avatar}.svg`}
-            width={32}
-            height={32}
-            alt={ta(opponent.avatar)}
-            title={ta(opponent.avatar)}
-            className={cn(
-              "select-none dark:opacity-75",
-              isPlayerTurn && "animate-bounce",
+        <ContextMenuTrigger className="flex flex-col items-center mb-2">
+          <div className="relative">
+            {isPlayerTurn && (
+              <TurnTimer className="absolute top-2 left-[200%]" />
             )}
-            priority
-          />
+            <Image
+              src={`/avatars/${opponent.avatar}.svg`}
+              width={32}
+              height={32}
+              alt={ta(opponent.avatar)}
+              title={ta(opponent.avatar)}
+              className={cn(
+                "select-none dark:opacity-75",
+                isPlayerTurn && "animate-bounce",
+              )}
+              priority
+            />
+          </div>
           <p
             className={cn(
-              "text-center select-none text-sm text-black dark:text-dark-font mb-2 flex flex-row items-center gap-1",
+              "text-center select-none text-sm text-black dark:text-dark-font flex flex-row items-center gap-1",
               isPlayerTurn && "font-semibold",
             )}
           >
