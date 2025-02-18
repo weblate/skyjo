@@ -19,8 +19,9 @@ const turnTimerTextVariants = cva("text-sm", {
 
 type TurnTimerProps = {
   className?: string
+  turnStartTime: Date | null
 }
-const TurnTimer = ({ className }: TurnTimerProps) => {
+const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   const { game } = useSkyjo()
 
   let interval: NodeJS.Timeout | null = null
@@ -33,8 +34,10 @@ const TurnTimer = ({ className }: TurnTimerProps) => {
 
   useEffect(() => {
     if (interval) clearInterval(interval)
+    if (!turnStartTime) return
+
     const now = dayjs()
-    const elapsedTime = now.diff(game.turnStartTime, "ms")
+    const elapsedTime = now.diff(turnStartTime, "ms")
     setTimeLeft(turnTime - elapsedTime)
 
     interval = setInterval(() => {
@@ -51,8 +54,9 @@ const TurnTimer = ({ className }: TurnTimerProps) => {
     return () => {
       if (interval) clearInterval(interval)
     }
-  }, [game.turn])
+  }, [turnStartTime])
 
+  if (!turnStartTime) return null
   if (game.status !== CoreConstants.GAME_STATUS.PLAYING) return null
 
   const formattedTime = dayjs(timeLeft).format("mm:ss")

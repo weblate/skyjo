@@ -4,7 +4,7 @@ export interface GameOperationManagerInterface {
   updateGame(game: Skyjo): Promise<void>
   startAfkTimer(game: Skyjo, playerId: string): Promise<void>
   cancelAfkTimer(gameCode: string, playerId: string): Promise<void>
-  delayNewRound(game: Skyjo, callback: () => void, ms: number): Promise<void>
+  delayNewRound(game: Skyjo, callback: () => Promise<void>, ms: number): Promise<void>
 }
 
 export class DefaultGameOperationManager

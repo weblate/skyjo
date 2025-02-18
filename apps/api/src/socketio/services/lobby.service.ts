@@ -172,7 +172,7 @@ export class LobbyService extends BaseService {
 
     const stateManager = new GameStateTracker(game)
 
-    game.start()
+    await game.start()
 
     Logger.info(`Game ${game.code} started.`)
 

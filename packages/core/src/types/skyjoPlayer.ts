@@ -8,6 +8,7 @@ export type SkyjoPlayerToJson = {
   name: string
   socketId: string
   avatar: Avatar
+  turnStartTime: Date | null
   wantsReplay: boolean
   connectionStatus: ConnectionStatus
   score: number

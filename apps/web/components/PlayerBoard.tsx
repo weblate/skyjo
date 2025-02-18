@@ -37,9 +37,10 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
         size={settings.gameBoardSize}
       />
       <div className="relative">
-        {isPlayerTurn && (
-          <TurnTimer className="absolute bottom-2 left-[200%]" />
-        )}
+        <TurnTimer
+          className="absolute bottom-2 left-[200%]"
+          turnStartTime={player.turnStartTime}
+        />
         <Image
           src={`/avatars/${player.avatar}.svg`}
           width={32}

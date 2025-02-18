@@ -16,7 +16,6 @@ export type SkyjoToJson = {
   adminId: string
   players: SkyjoPlayerToJson[]
   turn: number
-  turnStartTime: Date
   settings: SkyjoSettingsToJson
   selectedCardValue: number | null
   roundPhase: RoundPhase
@@ -45,6 +44,7 @@ export type SkyjoDbFormat = {
     hasPlayedLastTurn: boolean
     afkCount: number
     consecutiveAfkCount: number
+    turnStartTime: Date | null
     cards: Array<
       Array<{
         id: string
@@ -54,7 +54,6 @@ export type SkyjoDbFormat = {
     >
   }[]
   turn: number
-  turnStartTime: Date
   discardPile: number[]
   drawPile: number[]
   settings: {

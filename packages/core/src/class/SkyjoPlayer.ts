@@ -20,6 +20,7 @@ interface SkyjoPlayerInterface {
   score: number
   wantsReplay: boolean
   hasPlayedLastTurn: boolean
+  turnStartTime: Date | null
 
   toggleReplay(): void
   setCards(cardsValue: number[], cardSettings: SkyjoSettings): void
@@ -47,7 +48,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
   scores: SkyjoPlayerScores = []
   hasPlayedLastTurn = false
   wantsReplay: boolean = false
-
+  turnStartTime: Date | null = null
   constructor(
     playerToCreate: CreatePlayer = {
       username: "",
@@ -72,6 +73,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
     this.hasPlayedLastTurn = player.hasPlayedLastTurn
     this.afkCount = player.afkCount
     this.consecutiveAfkCount = player.consecutiveAfkCount
+    this.turnStartTime = player.turnStartTime
 
     if (player.cards.length > 0) {
       this.cards = player.cards.map((column) =>
@@ -216,8 +218,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
   }
 
   reset() {
-    this.cards = []
-    this.hasPlayedLastTurn = false
+    this.resetRound()
     this.wantsReplay = false
     this.scores = []
     this.score = 0
@@ -226,6 +227,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
   resetRound() {
     this.cards = []
     this.hasPlayedLastTurn = false
+    this.turnStartTime = new Date()
   }
 
   toJson() {
@@ -238,6 +240,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
       wantsReplay: this.wantsReplay,
       connectionStatus: this.connectionStatus,
       scores: this.scores,
+      turnStartTime: this.turnStartTime,
       cards: this.cards.map((column) => column.map((card) => card.toJson())),
     } satisfies SkyjoPlayerToJson
   }

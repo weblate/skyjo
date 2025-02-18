@@ -148,7 +148,7 @@ export class GameService extends BaseService {
     }
     const stateManager = new GameStateTracker(game)
 
-    game.togglePlayerReplay(socket.data.playerId)
+    await game.togglePlayerReplay(socket.data.playerId)
 
     await this.updateAndSendGame(game, stateManager)
   }

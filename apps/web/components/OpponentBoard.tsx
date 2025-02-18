@@ -39,9 +39,10 @@ const OpponentBoard = ({
       <ContextMenu>
         <ContextMenuTrigger className="flex flex-col items-center mb-2">
           <div className="relative">
-            {isPlayerTurn && (
-              <TurnTimer className="absolute top-2 left-[200%]" />
-            )}
+            <TurnTimer
+              className="absolute top-2 left-[200%]"
+              turnStartTime={opponent.turnStartTime}
+            />
             <Image
               src={`/avatars/${opponent.avatar}.svg`}
               width={32}

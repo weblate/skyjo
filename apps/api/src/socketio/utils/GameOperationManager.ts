@@ -23,11 +23,15 @@ export class GameOperationManager implements GameOperationManagerInterface {
     await this.afkQueue.cancelTimer(gameCode, playerId)
   }
 
-  async delayNewRound(game: Skyjo, callback: () => void, ms: number): Promise<void> {
+  async delayNewRound(
+    game: Skyjo,
+    callback: () => Promise<void>,
+    ms: number,
+  ): Promise<void> {
     setTimeout(async () => {
       const stateManager = new GameStateTracker(game)
 
-      callback()
+      await callback()
 
       const operations = stateManager.getChanges()
       if (!operations) return
