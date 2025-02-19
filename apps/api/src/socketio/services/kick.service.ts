@@ -1,4 +1,5 @@
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { Constants as CoreConstants, KickVote, type Skyjo } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
 import { BaseService } from "./base.service.js"
@@ -132,7 +133,7 @@ export class KickService extends BaseService {
 
     this.kickVotes.set(game.id, kickVote)
 
-    this.sendToSocketAndRoom(socket, {
+    this.socketManager.sendToRoom({
       room: game.code,
       event: "kick:vote",
       data: [kickVote.toJson()],
@@ -166,14 +167,14 @@ export class KickService extends BaseService {
         const playerToKick = game.getPlayerById(kickVote.targetId)
         if (!playerToKick) return
 
-        this.sendToSocketAndRoom(socket, {
+        this.socketManager.sendToRoom({
           room: game.code,
           event: "kick:vote-failed",
           data: [playerToKick.id, playerToKick.name],
         })
       }
     } else {
-      this.sendToSocketAndRoom(socket, {
+      this.socketManager.sendToRoom({
         room: game.code,
         event: "kick:vote",
         data: [kickVote.toJson()],
@@ -204,14 +205,15 @@ export class KickService extends BaseService {
       )
     }
 
-    this.sendToSocketAndRoom(socket, {
+    const operationManager = new GameStateTracker(game)
+
+    await game.disconnectPlayer(playerToKick)
+
+    await this.updateAndSendGame(game, operationManager)
+    this.socketManager.sendToRoom({
       room: game.code,
       event: "kick:vote-success",
       data: [playerToKick.id, playerToKick.name],
-    })
-
-    await this.handlePlayerDisconnection(socket, game, playerToKick, {
-      force: true,
     })
   }
   //#endregion

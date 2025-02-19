@@ -164,6 +164,29 @@ export class Skyjo implements SkyjoInterface {
     }
   }
 
+  async disconnectPlayer(player: SkyjoPlayer) {
+    player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+    if (this.isAdmin(player.id)) this.changeAdmin()
+
+    const socket = this.operationManager.getSocket(player.socketId)
+    if (!socket) {
+      throw new CError("Socket not found", {
+        code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
+      })
+    }
+
+    await this.operationManager.removeSocket(socket)
+
+    if (!this.isPlaying()) {
+      await this.removePlayer(player.id)
+    } else if (!this.hasMinPlayersConnected()) {
+      this.status = Constants.GAME_STATUS.STOPPED
+
+      await this.operationManager.removeGame(this.code)
+    }
+  }
+
   isAdmin(playerId: string) {
     return this.adminId === playerId
   }

@@ -1,5 +1,5 @@
 import { GameRepository } from "@/redis/game.repository.js"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
@@ -89,7 +89,7 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
             CoreConstants.AFK_TIMEOUT.MAX_CONSECUTIVE ||
           player.afkCount >= CoreConstants.AFK_TIMEOUT.MAX_TOTAL
         ) {
-          await this.handlePlayerDisconnection(game, player)
+          await this.disconnectPlayer(game, player)
         } else {
           await this.performAfkMove(game)
         }
@@ -124,35 +124,10 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
     return `afk:${gameCode}:${playerId}`
   }
 
-  private async kickSocket(socket: SkyjoSocket) {
-    // TODO send un kick plutôt
-    socket.leave(socket.data.gameCode)
-    socket.emit("leave:success")
-  }
-
-  private async handlePlayerDisconnection(game: Skyjo, player: SkyjoPlayer) {
+  private async disconnectPlayer(game: Skyjo, player: SkyjoPlayer) {
     const stateManager = new GameStateTracker(game)
 
-    player.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
-
-    if (game.isAdmin(player.id)) game.changeAdmin()
-
-    const socket = this.socketManager.getSocket(player.socketId)
-    if (!socket) {
-      throw new CError("Socket not found", {
-        code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
-      })
-    }
-
-    await this.kickSocket(socket)
-
-    if (!game.isPlaying()) {
-      await game.removePlayer(player.id)
-    } else if (!game.hasMinPlayersConnected()) {
-      game.status = CoreConstants.GAME_STATUS.STOPPED
-
-      await this.redis.removeGame(game.code)
-    }
+    await game.disconnectPlayer(player)
 
     await this.updateAndSendGame(game, stateManager)
   }
