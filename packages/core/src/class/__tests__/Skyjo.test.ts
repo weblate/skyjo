@@ -71,7 +71,7 @@ describe("Skyjo", () => {
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
         turnStartTime: new Date(),
-        roundPhase: Constants.ROUND_PHASE.TURN_CARDS,
+        roundPhase: Constants.ROUND_PHASE.REVEAL_CARDS,
         roundNumber: 1,
         discardPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         drawPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -121,7 +121,7 @@ describe("Skyjo", () => {
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         turnStartTime: new Date(),
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
-        roundPhase: Constants.ROUND_PHASE.TURN_CARDS,
+        roundPhase: Constants.ROUND_PHASE.REVEAL_CARDS,
         roundNumber: 1,
         discardPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         drawPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -252,7 +252,7 @@ describe("Skyjo", () => {
     it("should remove the player and finish player turn if it's the current player", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.turn = 1
-      game.roundPhase = Constants.ROUND_PHASE.TURN_CARDS
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
 
       await game.removePlayer(opponent.id)
 
@@ -263,7 +263,7 @@ describe("Skyjo", () => {
 
     it("should remove the player and set the round phase to MAIN if all players have revealed cards", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
-      game.roundPhase = Constants.ROUND_PHASE.TURN_CARDS
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
 
       player.cards = [
         [
@@ -388,8 +388,8 @@ describe("Skyjo", () => {
 
   describe("Round phase checker", () => {
     it("correctly identifies turning cards phase", () => {
-      game.roundPhase = Constants.ROUND_PHASE.TURN_CARDS
-      expect(game.isRoundTurningCards()).toBe(true)
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+      expect(game.isRoundRevealCards()).toBe(true)
       expect(game.isRoundInMain()).toBe(false)
       expect(game.isRoundInLastLap()).toBe(false)
       expect(game.isRoundOver()).toBe(false)
@@ -397,7 +397,7 @@ describe("Skyjo", () => {
 
     it("correctly identifies main phase", () => {
       game.roundPhase = Constants.ROUND_PHASE.MAIN
-      expect(game.isRoundTurningCards()).toBe(false)
+      expect(game.isRoundRevealCards()).toBe(false)
       expect(game.isRoundInMain()).toBe(true)
       expect(game.isRoundInLastLap()).toBe(false)
       expect(game.isRoundOver()).toBe(false)
@@ -405,7 +405,7 @@ describe("Skyjo", () => {
 
     it("correctly identifies last lap phase", () => {
       game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
-      expect(game.isRoundTurningCards()).toBe(false)
+      expect(game.isRoundRevealCards()).toBe(false)
       expect(game.isRoundInMain()).toBe(false)
       expect(game.isRoundInLastLap()).toBe(true)
       expect(game.isRoundOver()).toBe(false)
@@ -413,7 +413,7 @@ describe("Skyjo", () => {
 
     it("correctly identifies over phase", () => {
       game.roundPhase = Constants.ROUND_PHASE.OVER
-      expect(game.isRoundTurningCards()).toBe(false)
+      expect(game.isRoundRevealCards()).toBe(false)
       expect(game.isRoundInMain()).toBe(false)
       expect(game.isRoundInLastLap()).toBe(false)
       expect(game.isRoundOver()).toBe(true)
@@ -450,7 +450,7 @@ describe("Skyjo", () => {
       game.start()
 
       expect(game.isPlaying()).toBeTruthy()
-      expect(game.isRoundTurningCards()).toBeTruthy()
+      expect(game.isRoundRevealCards()).toBeTruthy()
     })
 
     it("should start the game and set the round status to playing if there is no card to turn at the beginning of the game", () => {
@@ -493,7 +493,7 @@ describe("Skyjo", () => {
 
     it("should not reveal card if player has already revealed the card count", () => {
       game.status = Constants.GAME_STATUS.PLAYING
-      game.roundPhase = Constants.ROUND_PHASE.TURN_CARDS
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       game.settings.initialTurnedCount = 2
 
       player.cards = [
@@ -508,7 +508,7 @@ describe("Skyjo", () => {
 
     it("should reveal a card", () => {
       game.status = Constants.GAME_STATUS.PLAYING
-      game.roundPhase = Constants.ROUND_PHASE.TURN_CARDS
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       game.settings.initialTurnedCount = 2
 
       player.cards = [
@@ -523,7 +523,7 @@ describe("Skyjo", () => {
 
     it("should reveal a card and start round in main phase", () => {
       game.status = Constants.GAME_STATUS.PLAYING
-      game.roundPhase = Constants.ROUND_PHASE.TURN_CARDS
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       game.settings.initialTurnedCount = 2
 
       player.cards = [
@@ -753,7 +753,9 @@ describe("Skyjo", () => {
       expect(operationManager.updateGame).toHaveBeenCalledTimes(0)
       expect(operationManager.delayNewRound).toHaveBeenCalledTimes(1)
       expect(operationManager.startAfkTimer).toHaveBeenCalledTimes(0)
-      expect(game.roundPhase).toBe<RoundPhase>(Constants.ROUND_PHASE.TURN_CARDS)
+      expect(game.roundPhase).toBe<RoundPhase>(
+        Constants.ROUND_PHASE.REVEAL_CARDS,
+      )
     })
   })
 
@@ -813,7 +815,7 @@ describe("Skyjo", () => {
       expect(gameToJson).toStrictEqual({
         code: game.code,
         status: Constants.GAME_STATUS.LOBBY,
-        roundPhase: Constants.ROUND_PHASE.TURN_CARDS,
+        roundPhase: Constants.ROUND_PHASE.REVEAL_CARDS,
         adminId: player.id,
         players: game.players.map((player) => player.toJson()),
         selectedCardValue: null,

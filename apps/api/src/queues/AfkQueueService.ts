@@ -158,7 +158,7 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
   }
 
   private async performAfkMove(game: Skyjo) {
-    if (game.isRoundTurningCards()) {
+    if (game.isRoundRevealCards()) {
       await this.performAfkMoveInTurningCards(game)
     } else if (game.isRoundInMain() || game.isRoundInLastLap()) {
       await this.performDefaultAfkMove(game)

@@ -54,7 +54,7 @@ export class Skyjo implements SkyjoInterface {
   selectedCardValue: number | null = null
   turnStatus: TurnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
   lastTurnStatus: LastTurnStatus = Constants.LAST_TURN_STATUS.TURN
-  roundPhase: RoundPhase = Constants.ROUND_PHASE.TURN_CARDS
+  roundPhase: RoundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
   roundNumber: number = 1
   firstToFinishPlayerId: string | null = null
 
@@ -157,7 +157,7 @@ export class Skyjo implements SkyjoInterface {
 
     if (
       this.isPlaying() &&
-      this.isRoundTurningCards() &&
+      this.isRoundRevealCards() &&
       this.haveAllPlayersRevealedCards()
     ) {
       this.startRoundAfterInitialReveal()
@@ -198,8 +198,8 @@ export class Skyjo implements SkyjoInterface {
   //#endregion
 
   //#region roundPhase
-  isRoundTurningCards() {
-    return this.roundPhase === Constants.ROUND_PHASE.TURN_CARDS
+  isRoundRevealCards() {
+    return this.roundPhase === Constants.ROUND_PHASE.REVEAL_CARDS
   }
 
   isRoundInMain() {
@@ -249,7 +249,7 @@ export class Skyjo implements SkyjoInterface {
   revealCard(player: SkyjoPlayer, column: number, row: number) {
     if (
       !this.isPlaying() ||
-      !this.isRoundTurningCards() ||
+      !this.isRoundRevealCards() ||
       player.hasRevealedCardCount(this.settings.initialTurnedCount)
     )
       return
@@ -511,7 +511,7 @@ export class Skyjo implements SkyjoInterface {
       this.roundPhase = Constants.ROUND_PHASE.MAIN
       await this.finishTurn({ wasAfk: false })
     } else {
-      this.roundPhase = Constants.ROUND_PHASE.TURN_CARDS
+      this.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       this.getConnectedPlayers().forEach(async (player) => {
         await this.operationManager.startAfkTimer(this, player.id)
       })

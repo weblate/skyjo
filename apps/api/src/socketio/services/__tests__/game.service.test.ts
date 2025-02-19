@@ -208,7 +208,7 @@ describe("GameService", () => {
 
       expect(player.hasRevealedCardCount(2)).toBeTruthy()
       expect(game.isPlaying()).toBeTruthy()
-      expect(game.isRoundTurningCards()).toBeTruthy()
+      expect(game.isRoundRevealCards()).toBeTruthy()
     })
 
     it("should reveal the card", async () => {
@@ -244,7 +244,7 @@ describe("GameService", () => {
 
       expect(player.hasRevealedCardCount(2)).toBeTruthy()
       expect(game.isPlaying()).toBeTruthy()
-      expect(game.isRoundTurningCards()).toBeTruthy()
+      expect(game.isRoundRevealCards()).toBeTruthy()
     })
   })
 
@@ -1050,7 +1050,7 @@ describe("GameService", () => {
       vi.runAllTimers()
 
       updateGameSpy.mockImplementationOnce(async (game: Skyjo) => {
-        expect(game.isRoundTurningCards()).toBeTruthy()
+        expect(game.isRoundRevealCards()).toBeTruthy()
         expect(game.isPlaying()).toBeTruthy()
       })
 
