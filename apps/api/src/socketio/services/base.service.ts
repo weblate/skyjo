@@ -8,13 +8,17 @@ import {
   type SkyjoPlayer,
 } from "@skyjo/core"
 import type { ServerChatMessage } from "@skyjo/shared/types"
-import { AfkQueueService } from "../../queues/AfkQueueService.js"
+import { PlayerAfkQueueService } from "../../queues/PlayerAfkQueueService.js"
+import { RevealCardsAfkQueueService } from "../../queues/RevealCardsAfkQueueService.js"
 import type { SkyjoSocket } from "../types/skyjoSocket.js"
 
 export abstract class BaseService {
   protected redis = new GameRepository()
-  protected afkQueue: AfkQueueService = new AfkQueueService()
   protected socketManager = SocketManager.getInstance()
+
+  protected afkQueue: PlayerAfkQueueService = new PlayerAfkQueueService()
+  protected revealCardsAfkQueue: RevealCardsAfkQueueService =
+    new RevealCardsAfkQueueService()
 
   protected async sendMissingStatesToSocket(
     socket: SkyjoSocket,
@@ -52,7 +56,12 @@ export abstract class BaseService {
     const game = await this.redis.getGame(gameCode)
 
     game.setOperationManager(
-      new GameOperationManager(this.redis, this.afkQueue, this.socketManager),
+      new GameOperationManager({
+        redis: this.redis,
+        playerAfkQueue: this.afkQueue,
+        revealCardsAfkQueue: this.revealCardsAfkQueue,
+        socketManager: this.socketManager,
+      }),
     )
 
     return game

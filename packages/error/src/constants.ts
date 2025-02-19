@@ -17,6 +17,7 @@ export class Constants {
     STATE_VERSION_BEHIND: "state-version-behind",
     STATE_VERSION_NULL: "state-version-null",
     TOO_MANY_REQUESTS: "too-many-requests",
+    GAME_ALREADY_PROCESSING_AFK: "game-already-processing-afk",
   } as const
 }
 export type Error = (typeof Constants.ERROR)[keyof typeof Constants.ERROR]

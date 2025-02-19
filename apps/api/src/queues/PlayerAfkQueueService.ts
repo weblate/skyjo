@@ -9,17 +9,17 @@ import { CError, Constants as ErrorConstants } from "@skyjo/error"
 import type { Job } from "bullmq"
 import { BaseQueueService } from "./BaseQueueService.js"
 
-export type AfkJobData = {
+export type PlayerAfkJobData = {
   gameCode: string
   playerId: string
 }
 
-export class AfkQueueService extends BaseQueueService<AfkJobData> {
+export class PlayerAfkQueueService extends BaseQueueService<PlayerAfkJobData> {
   protected redis = new GameRepository()
   protected socketManager = SocketManager.getInstance()
 
   constructor() {
-    super("afk-timer", {
+    super("player-afk-timer", {
       defaultJobOptions: {
         attempts: 3,
         backoff: {
@@ -57,7 +57,7 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
     await this.queue.remove(jobId)
   }
 
-  async processJob(job: Job<AfkJobData>) {
+  async processJob(job: Job<PlayerAfkJobData>) {
     const { gameCode, playerId } = job.data
 
     const game = await this.redis.getGameSafe(gameCode)
@@ -68,7 +68,11 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
 
     try {
       game.setOperationManager(
-        new GameOperationManager(this.redis, this, this.socketManager),
+        new GameOperationManager({
+          redis: this.redis,
+          playerAfkQueue: this,
+          socketManager: this.socketManager,
+        }),
       )
       await this.lockGame(game)
 
@@ -133,34 +137,6 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
   }
 
   private async performAfkMove(game: Skyjo) {
-    if (game.isRoundRevealCards()) {
-      await this.performAfkMoveInTurningCards(game)
-    } else if (game.isRoundInMain() || game.isRoundInLastLap()) {
-      await this.performDefaultAfkMove(game)
-    }
-  }
-
-  private async performAfkMoveInTurningCards(game: Skyjo) {
-    const stateManager = new GameStateTracker(game)
-
-    const currentPlayer = game.getCurrentPlayer()
-    const initialTurnedCount = game.settings.initialTurnedCount
-
-    while (!currentPlayer.hasRevealedCardCount(initialTurnedCount)) {
-      const cardToRevealCoords = currentPlayer.getFirstCardNotVisible()
-      if (!cardToRevealCoords) break
-
-      game.revealCard(
-        currentPlayer,
-        cardToRevealCoords.column,
-        cardToRevealCoords.row,
-      )
-    }
-
-    await this.updateAndSendGame(game, stateManager)
-  }
-
-  private async performDefaultAfkMove(game: Skyjo) {
     const stateManager = new GameStateTracker(game)
 
     const currentPlayer = game.getCurrentPlayer()
@@ -196,6 +172,12 @@ export class AfkQueueService extends BaseQueueService<AfkJobData> {
   }
 
   private async lockGame(game: Skyjo) {
+    if (game.processingAfk) {
+      throw new CError("Game is already processing afk", {
+        code: ErrorConstants.ERROR.GAME_ALREADY_PROCESSING_AFK,
+      })
+    }
+
     game.processingAfk = true
     await this.redis.updateGame(game)
   }

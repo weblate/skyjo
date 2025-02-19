@@ -358,7 +358,10 @@ export class Skyjo implements SkyjoInterface {
   async finishTurn({ wasAfk = false }: { wasAfk?: boolean }) {
     const currentPlayer = this.getCurrentPlayer()
     currentPlayer.turnStartTime = null
-    await this.operationManager.cancelAfkTimer(this.code, currentPlayer.id)
+    await this.operationManager.cancelPlayerAfkTimer(
+      this.code,
+      currentPlayer.id,
+    )
 
     if (!wasAfk) currentPlayer.consecutiveAfkCount = 0
 
@@ -374,7 +377,7 @@ export class Skyjo implements SkyjoInterface {
     } else {
       const newCurrentPlayer = this.getCurrentPlayer()
       newCurrentPlayer.turnStartTime = new Date()
-      await this.operationManager.startAfkTimer(this, newCurrentPlayer.id)
+      await this.operationManager.startPlayerAfkTimer(this, newCurrentPlayer.id)
     }
   }
 
@@ -535,9 +538,7 @@ export class Skyjo implements SkyjoInterface {
       await this.finishTurn({ wasAfk: false })
     } else {
       this.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
-      this.getConnectedPlayers().forEach(async (player) => {
-        await this.operationManager.startAfkTimer(this, player.id)
-      })
+      this.operationManager.startRevealCardsAfkTimer(this)
     }
   }
 
