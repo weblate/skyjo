@@ -1,32 +1,31 @@
-import type { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
+import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { GameRepository } from "@/redis/game.repository.js"
-import type { SocketManager } from "@/socketio/utils/SocketManager.js"
+import { SocketManager } from "@/socketio/utils/SocketManager.js"
 import { type GameOperationManagerInterface, Skyjo } from "@skyjo/core"
 import type { Socket } from "socket.io"
 import { PlayerAfkQueueService } from "../../queues/PlayerAfkQueueService.js"
 import { GameStateTracker } from "./GameStateTracker.js"
 
 export class GameOperationManager implements GameOperationManagerInterface {
+  private static instance: GameOperationManager
+
   private redis?: GameRepository
   private playerAfkQueue?: PlayerAfkQueueService
   private revealCardsAfkQueue?: RevealCardsAfkQueueService
   private socketManager?: SocketManager
 
-  constructor({
-    redis,
-    playerAfkQueue,
-    revealCardsAfkQueue,
-    socketManager,
-  }: {
-    redis?: GameRepository
-    playerAfkQueue?: PlayerAfkQueueService
-    revealCardsAfkQueue?: RevealCardsAfkQueueService
-    socketManager?: SocketManager
-  }) {
-    this.redis = redis
-    this.playerAfkQueue = playerAfkQueue
-    this.revealCardsAfkQueue = revealCardsAfkQueue
-    this.socketManager = socketManager
+  constructor() {
+    this.redis = new GameRepository()
+    this.playerAfkQueue = PlayerAfkQueueService.getInstance()
+    this.revealCardsAfkQueue = RevealCardsAfkQueueService.getInstance()
+    this.socketManager = SocketManager.getInstance()
+  }
+
+  public static getInstance(): GameOperationManager {
+    if (!GameOperationManager.instance) {
+      GameOperationManager.instance = new GameOperationManager()
+    }
+    return GameOperationManager.instance
   }
 
   //#region game storage actions

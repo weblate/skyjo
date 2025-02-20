@@ -16,9 +16,10 @@ export abstract class BaseService {
   protected redis = new GameRepository()
   protected socketManager = SocketManager.getInstance()
 
-  protected afkQueue: PlayerAfkQueueService = new PlayerAfkQueueService()
+  protected afkQueue: PlayerAfkQueueService =
+    PlayerAfkQueueService.getInstance()
   protected revealCardsAfkQueue: RevealCardsAfkQueueService =
-    new RevealCardsAfkQueueService()
+    RevealCardsAfkQueueService.getInstance()
 
   protected async sendMissingStatesToSocket(
     socket: SkyjoSocket,
@@ -55,14 +56,7 @@ export abstract class BaseService {
   protected async getGame(gameCode: string) {
     const game = await this.redis.getGame(gameCode)
 
-    game.setOperationManager(
-      new GameOperationManager({
-        redis: this.redis,
-        playerAfkQueue: this.afkQueue,
-        revealCardsAfkQueue: this.revealCardsAfkQueue,
-        socketManager: this.socketManager,
-      }),
-    )
+    game.setOperationManager(GameOperationManager.getInstance())
 
     return game
   }

@@ -1,40 +1,32 @@
-import { GameRepository } from "@/redis/game.repository.js"
-
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import { SocketManager } from "@/socketio/utils/SocketManager.js"
-import type { Skyjo, SkyjoPlayer } from "@skyjo/core"
+import type { Skyjo } from "@skyjo/core"
 import { Constants as CoreConstants } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
 import type { Job } from "bullmq"
-import { BaseQueueService } from "./BaseQueueService.js"
+import { BaseAfkQueueService } from "./BaseAfkQueueService.js"
 
 export type PlayerAfkJobData = {
   gameCode: string
   playerId: string
 }
 
-export class PlayerAfkQueueService extends BaseQueueService<PlayerAfkJobData> {
-  protected redis = new GameRepository()
-  protected socketManager = SocketManager.getInstance()
+export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData> {
+  private static instance: PlayerAfkQueueService
 
-  constructor() {
-    super("player-afk-timer", {
-      defaultJobOptions: {
-        attempts: 3,
-        backoff: {
-          type: "exponential",
-          delay: 1000,
-        },
-      },
-    })
+  private constructor() {
+    super("player-afk-timer")
+  }
+
+  public static getInstance(): PlayerAfkQueueService {
+    if (!PlayerAfkQueueService.instance) {
+      PlayerAfkQueueService.instance = new PlayerAfkQueueService()
+    }
+    return PlayerAfkQueueService.instance
   }
 
   public async startTimer(game: Skyjo, playerId: string): Promise<void> {
-    const timeoutDuration = game.settings.private
-      ? CoreConstants.AFK_TIMEOUT.PRIVATE
-      : CoreConstants.AFK_TIMEOUT.PUBLIC
-
+    const timeoutDuration = this.getAfkTimeout(game)
     const jobId = this.getJobId(game.code, playerId)
 
     await this.queue.add(
@@ -67,13 +59,7 @@ export class PlayerAfkQueueService extends BaseQueueService<PlayerAfkJobData> {
     }
 
     try {
-      game.setOperationManager(
-        new GameOperationManager({
-          redis: this.redis,
-          playerAfkQueue: this,
-          socketManager: this.socketManager,
-        }),
-      )
+      game.setOperationManager(GameOperationManager.getInstance())
       await this.lockGame(game)
 
       const player = game.getPlayerById(playerId)
@@ -85,16 +71,9 @@ export class PlayerAfkQueueService extends BaseQueueService<PlayerAfkJobData> {
       const currentPlayer = game.getCurrentPlayer()
 
       if (currentPlayer?.id === playerId) {
-        player.afkCount++
-        player.consecutiveAfkCount++
+        const disconnect = await this.increaseAfkCount(game, player)
 
-        if (
-          player.consecutiveAfkCount >=
-            CoreConstants.AFK_TIMEOUT.MAX_CONSECUTIVE ||
-          player.afkCount >= CoreConstants.AFK_TIMEOUT.MAX_TOTAL
-        ) {
-          await this.disconnectPlayer(game, player)
-        } else {
+        if (!disconnect) {
           await this.performAfkMove(game)
         }
       }
@@ -112,28 +91,8 @@ export class PlayerAfkQueueService extends BaseQueueService<PlayerAfkJobData> {
 
   //#region private methods
 
-  private async updateAndSendGame(game: Skyjo, stateManager: GameStateTracker) {
-    const operations = stateManager.getChanges()
-    if (!operations) return
-
-    await this.redis.updateGame(game, operations)
-    this.socketManager.sendToRoom({
-      room: game.code,
-      event: "game:update",
-      data: [operations],
-    })
-  }
-
   private getJobId(gameCode: string, playerId: string): string {
-    return `afk:${gameCode}:${playerId}`
-  }
-
-  private async disconnectPlayer(game: Skyjo, player: SkyjoPlayer) {
-    const stateManager = new GameStateTracker(game)
-
-    await game.disconnectPlayer(player)
-
-    await this.updateAndSendGame(game, stateManager)
+    return `game:${gameCode}:player:${playerId}`
   }
 
   private async performAfkMove(game: Skyjo) {
@@ -169,22 +128,6 @@ export class PlayerAfkQueueService extends BaseQueueService<PlayerAfkJobData> {
     }
 
     await this.updateAndSendGame(game, stateManager)
-  }
-
-  private async lockGame(game: Skyjo) {
-    if (game.processingAfk) {
-      throw new CError("Game is already processing afk", {
-        code: ErrorConstants.ERROR.GAME_ALREADY_PROCESSING_AFK,
-      })
-    }
-
-    game.processingAfk = true
-    await this.redis.updateGame(game)
-  }
-
-  private async unlockGame(game: Skyjo) {
-    game.processingAfk = false
-    await this.redis.updateGame(game)
   }
 
   //#endregion

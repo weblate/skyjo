@@ -160,7 +160,7 @@ export class Skyjo implements SkyjoInterface {
       this.isRoundRevealCards() &&
       this.haveAllPlayersRevealedCards()
     ) {
-      this.startRoundAfterInitialReveal()
+      await this.startRoundAfterInitialReveal()
     }
   }
 
@@ -269,7 +269,12 @@ export class Skyjo implements SkyjoInterface {
     await this.resetRound()
   }
 
-  revealCard(player: SkyjoPlayer, column: number, row: number) {
+  async revealCard({
+    player,
+    column,
+    row,
+    wasAfk = false,
+  }: { player: SkyjoPlayer; column: number; row: number; wasAfk?: boolean }) {
     if (
       !this.isPlaying() ||
       !this.isRoundRevealCards() ||
@@ -277,13 +282,17 @@ export class Skyjo implements SkyjoInterface {
     )
       return
 
+    if (!wasAfk) {
+      player.consecutiveAfkCount = 0
+    }
+
     player.turnCard(column, row)
 
     if (player.hasRevealedCardCount(this.settings.initialTurnedCount)) {
       player.turnStartTime = null
 
       if (this.haveAllPlayersRevealedCards())
-        this.startRoundAfterInitialReveal()
+        await this.startRoundAfterInitialReveal()
     }
   }
 
@@ -538,7 +547,7 @@ export class Skyjo implements SkyjoInterface {
       await this.finishTurn({ wasAfk: false })
     } else {
       this.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
-      this.operationManager.startRevealCardsAfkTimer(this)
+      await this.operationManager.startRevealCardsAfkTimer(this)
     }
   }
 
@@ -560,7 +569,7 @@ export class Skyjo implements SkyjoInterface {
     this.discardPile = [lastCardOfDiscardPile]
   }
 
-  private setFirstPlayerToStart() {
+  private async setFirstPlayerToStart() {
     const playersScore = this.players.map((player, i) => {
       if (player.connectionStatus === Constants.CONNECTION_STATUS.DISCONNECTED)
         return undefined
@@ -600,6 +609,7 @@ export class Skyjo implements SkyjoInterface {
     this.turn = playerToStart!.index
     const currentPlayer = this.getCurrentPlayer()
     currentPlayer.turnStartTime = new Date()
+    await this.operationManager.startPlayerAfkTimer(this, currentPlayer.id)
   }
 
   private haveAllPlayersRevealedCards() {
@@ -608,9 +618,9 @@ export class Skyjo implements SkyjoInterface {
     )
   }
 
-  private startRoundAfterInitialReveal() {
+  private async startRoundAfterInitialReveal() {
     this.roundPhase = Constants.ROUND_PHASE.MAIN
-    this.setFirstPlayerToStart()
+    await this.setFirstPlayerToStart()
   }
 
   private checkCardsToDiscard(player: SkyjoPlayer) {

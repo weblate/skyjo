@@ -57,7 +57,7 @@ export class GameService extends BaseService {
       })
     }
 
-    game.revealCard(player, column, row)
+    await game.revealCard({ player, column, row })
 
     await this.updateAndSendGame(game, stateManager)
   }
