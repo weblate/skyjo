@@ -222,6 +222,8 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
     this.wantsReplay = false
     this.scores = []
     this.score = 0
+    this.afkCount = 0
+    this.consecutiveAfkCount = 0
   }
 
   resetRound() {
