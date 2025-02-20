@@ -5,13 +5,12 @@ import { cn } from "@/lib/utils"
 import { Constants as CoreConstants } from "@skyjo/core"
 import { cva } from "class-variance-authority"
 import dayjs from "dayjs"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const turnTimerTextVariants = cva("text-sm", {
   variants: {
     timeLeft: {
       danger: "text-red-500 dark:text-red-400",
-      warning: "text-yellow-500 dark:text-yellow-400",
       normal: "text-black dark:text-dark-font",
     },
   },
@@ -23,8 +22,7 @@ type TurnTimerProps = {
 }
 const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   const { game } = useSkyjo()
-
-  let interval: NodeJS.Timeout | null = null
+  const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const turnTime = game.settings.private
     ? CoreConstants.AFK_TIMEOUT.PRIVATE
@@ -33,35 +31,34 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   const [timeLeft, setTimeLeft] = useState<number>(turnTime)
 
   useEffect(() => {
-    if (interval) clearInterval(interval)
+    if (intervalRef.current) clearInterval(intervalRef.current)
+
     if (!turnStartTime) return
 
     const now = dayjs()
     const elapsedTime = now.diff(turnStartTime, "ms")
     setTimeLeft(turnTime - elapsedTime)
 
-    interval = setInterval(() => {
-      if (timeLeft <= 0 && interval) {
-        clearInterval(interval)
-        return
-      }
-
+    intervalRef.current = setInterval(() => {
       setTimeLeft((prev) => {
-        return Math.max(0, prev - 1000)
+        const newTime = Math.max(0, prev - 1000)
+        if (newTime <= 0) {
+          clearInterval(intervalRef.current!)
+        }
+        return newTime
       })
     }, 1000)
 
     return () => {
-      if (interval) clearInterval(interval)
+      if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [turnStartTime])
+  }, [turnStartTime, turnTime])
 
   if (!turnStartTime) return null
   if (game.status !== CoreConstants.GAME_STATUS.PLAYING) return null
 
   const formattedTime = dayjs(timeLeft).format("mm:ss")
-  const timeLeftVariant =
-    timeLeft <= 10000 ? "danger" : timeLeft <= 15000 ? "warning" : "normal"
+  const timeLeftVariant = timeLeft <= 10000 ? "danger" : "normal"
 
   return (
     <span
