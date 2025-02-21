@@ -538,6 +538,20 @@
         "description": "Les joueurs ont voté pour vous expulser de la partie."
       }
     },
+    "AfkKick": {
+      "warning": {
+        "title": "Inactivité détectée",
+        "description": "Vous allez être expulsé de la partie si vous restez inactif."
+      },
+      "kicked": {
+        "title": "Expulsé pour inactivité",
+        "description": "Vous avez été expulsé de la partie pour trop d'AFK."
+      },
+      "player-kicked": {
+        "title": "Joueur expulsé",
+        "description": "{playerName} a été expulsé de la partie pour trop d'AFK."
+      }
+    },
     "AppearanceSelect": {
       "light": "Clair",
       "system": "Système",

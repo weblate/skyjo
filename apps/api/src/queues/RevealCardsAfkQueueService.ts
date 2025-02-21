@@ -71,6 +71,7 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
         const disconnect = await this.increaseAfkCount(game, player)
         if (!disconnect) {
           await this.performAfkMove(game, player)
+          this.warnPlayer(player)
         }
       }
 

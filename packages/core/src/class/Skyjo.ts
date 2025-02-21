@@ -171,7 +171,7 @@ export class Skyjo implements SkyjoInterface {
 
     const socket = this.operationManager.getSocket(player.socketId)
     if (socket) {
-      await this.operationManager.removeSocket(socket)
+      await this.operationManager.kickSocket(socket)
     }
 
     if (!this.isPlaying()) {

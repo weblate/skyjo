@@ -127,6 +127,8 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       })
     }
 
+    this.warnPlayer(currentPlayer)
+
     await this.updateAndSendGame(game, stateManager)
   }
 

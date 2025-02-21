@@ -1,3 +1,4 @@
+import type { ServerToClientAfkEvents } from "./events/afk.js"
 import type {
   ClientToServerChatEvents,
   ServerToClientChatEvents,
@@ -27,11 +28,13 @@ export type ClientToServerEvents = ClientToServerGameEvents &
   ClientToServerPlayerEvents &
   ClientToServerSettingsEvents
 
-export type ServerToClientEvents = ServerToClientChatEvents &
-  ServerToClientGameEvents &
-  ServerToClientKickEvents &
-  ServerToClientLobbyEvents &
-  ServerToClientPlayerEvents
+export interface ServerToClientEvents
+  extends ServerToClientGameEvents,
+    ServerToClientChatEvents,
+    ServerToClientKickEvents,
+    ServerToClientLobbyEvents,
+    ServerToClientPlayerEvents,
+    ServerToClientAfkEvents {}
 
 export type SocketData = {
   gameCode: string

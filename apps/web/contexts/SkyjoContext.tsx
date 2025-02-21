@@ -3,6 +3,7 @@
 import { useToast } from "@/components/ui/use-toast"
 import { useChat } from "@/contexts/ChatContext"
 import { useSocket } from "@/contexts/SocketContext"
+import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
 import { useRouter } from "@/i18n/routing"
 import { getCurrentUser, getOpponents, isAdmin } from "@/lib/skyjo"
 import { Opponents } from "@/types/opponents"
@@ -70,6 +71,7 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
   const { sendMessage, setChat } = useChat()
   const router = useRouter()
   const { dismiss: dismissToast } = useToast()
+  const { showAfkWarning, showAfkKick, showPlayerAfkKick } = useAfkKickToasts()
 
   const [game, setGame] = useState<SkyjoToJson>()
 
@@ -83,11 +85,15 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
     if (!gameCode || !socket) return
 
     initGameListeners()
+    initAfkListeners()
 
     // first time we get the game, we don't have a state version
     socket.emit("get", null, true)
 
-    return destroyGameListeners
+    return () => {
+      destroyGameListeners()
+      destroyAfkListeners()
+    }
   }, [socket, gameCode])
 
   useEffect(() => {
@@ -187,6 +193,26 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
     socket!.off("game", onGameReceive)
     socket!.off("game:update", onGameUpdate)
     socket!.off("game:fix", onGameFix)
+  }
+  //#endregion
+
+  //#region afk
+  const initAfkListeners = () => {
+    socket!.on("kick:afk-warning", showAfkWarning)
+    socket!.on("kick:afk", onAfkKick)
+    socket!.on("kick:player-afk", showPlayerAfkKick)
+  }
+
+  const destroyAfkListeners = () => {
+    socket!.off("kick:afk-warning", showAfkWarning)
+    socket!.off("kick:afk", onAfkKick)
+    socket!.off("kick:player-afk", showPlayerAfkKick)
+  }
+
+  const onAfkKick = () => {
+    clearLastGame()
+    showAfkKick()
+    router.replace("/")
   }
   //#endregion
 

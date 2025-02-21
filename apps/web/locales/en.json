@@ -540,6 +540,20 @@
         "title": "You have been kicked",
         "description": "The players have voted to kick you out of the game."
       }
+    },
+    "AfkKick": {
+      "warning": {
+        "title": "AFK Warning",
+        "description": "You will be kicked from the game if you remain inactive."
+      },
+      "kicked": {
+        "title": "Kicked for Inactivity",
+        "description": "You have been kicked from the game due to being AFK too many times."
+      },
+      "player-kicked": {
+        "title": "Player Kicked",
+        "description": "{playerName} has been kicked from the game due to inactivity."
+      }
     }
   },
   "utils": {

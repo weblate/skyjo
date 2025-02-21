@@ -1,3 +1,4 @@
+export * from "./afk.js"
 export * from "./chat.js"
 export * from "./game.js"
 export * from "./kick.js"

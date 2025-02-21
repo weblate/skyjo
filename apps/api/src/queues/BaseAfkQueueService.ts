@@ -55,9 +55,23 @@ export abstract class BaseAfkQueueService<
     return false
   }
 
+  protected warnPlayer(player: SkyjoPlayer) {
+    const socket = this.socketManager.getSocket(player.socketId)
+    if (socket) {
+      socket.volatile.emit("kick:afk-warning")
+    }
+  }
+
   protected async disconnectPlayer(game: Skyjo, player: SkyjoPlayer) {
     const stateManager = new GameStateTracker(game)
     await game.disconnectPlayer(player)
+
+    this.socketManager.sendToRoom({
+      room: game.code,
+      event: "kick:player-afk",
+      data: [player.name],
+    })
+
     await this.updateAndSendGame(game, stateManager)
   }
 
