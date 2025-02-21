@@ -170,13 +170,9 @@ export class Skyjo implements SkyjoInterface {
     if (this.isAdmin(player.id)) this.changeAdmin()
 
     const socket = this.operationManager.getSocket(player.socketId)
-    if (!socket) {
-      throw new CError("Socket not found", {
-        code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
-      })
+    if (socket) {
+      await this.operationManager.removeSocket(socket)
     }
-
-    await this.operationManager.removeSocket(socket)
 
     if (!this.isPlaying()) {
       await this.removePlayer(player.id)

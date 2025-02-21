@@ -8,7 +8,7 @@ export interface GameOperationManagerInterface {
   startPlayerAfkTimer(game: Skyjo, playerId: string): Promise<void>
   cancelPlayerAfkTimer(gameCode: string, playerId: string): Promise<void>
 
-  getSocket(socketId: string): unknown
+  getSocket(socketId: string): unknown | undefined
   removeSocket(socket: unknown): Promise<void>
 
   delayNewRound(
@@ -27,8 +27,8 @@ export class DefaultGameOperationManager
   async startPlayerAfkTimer(): Promise<void> {}
   async cancelPlayerAfkTimer(): Promise<void> {}
 
-  async getSocket(): Promise<unknown> {
-    return null
+  getSocket() {
+    return undefined
   }
   async removeSocket(): Promise<void> {}
 
