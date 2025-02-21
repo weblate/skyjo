@@ -335,7 +335,7 @@
       "settings": "Paramètres"
     },
     "OpponentBoard": {
-      "connection-lost": "Connexion perdue"
+      "disconnected": "Le joueur a quitté la partie. Un bot jouera pour lui pendant les prochains tours jusqu'à sa reconnexion."
     },
     "OpponentsMobileView": {
       "opponents-list": {

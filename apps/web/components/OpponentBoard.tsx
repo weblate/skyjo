@@ -10,7 +10,7 @@ import {
 import { cn } from "@/lib/utils"
 import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
 import { ClassValue } from "clsx"
-import { AlertTriangleIcon } from "lucide-react"
+import { UserXIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { TurnTimer } from "./TurnTimer"
@@ -64,14 +64,14 @@ const OpponentBoard = ({
           >
             {opponent.name}
             {opponent.connectionStatus ===
-              CoreConstants.CONNECTION_STATUS.LOST && (
+              CoreConstants.CONNECTION_STATUS.LEAVE && (
               <TooltipProvider delayDuration={200}>
                 <Tooltip>
                   <TooltipTrigger className="relative">
-                    <AlertTriangleIcon size={16} className="text-yellow-700" />
+                    <UserXIcon size={16} className="text-yellow-600" />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{to("connection-lost")}</p>
+                    <p>{to("disconnected")}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>

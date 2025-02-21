@@ -219,9 +219,7 @@
     "PlayerBoard": {
       "you": "Tú"
     },
-    "OpponentBoard": {
-      "connection-lost": "Conexión perdida"
-    },
+    "OpponentBoard": {},
     "OpponentsMobileView": {
       "opponents-list": {
         "title": "Contrincantes:"
