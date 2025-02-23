@@ -409,10 +409,6 @@
         "avatars": "Avatars creados por Freepik - Flaticon"
       }
     },
-    "GameStoppedDialog": {
-      "description": "La partida se ha detenido porque no hay suficientes jugadores",
-      "title": "Partida detenida"
-    },
     "RulesDialog": {
       "title": "Reglas del juego",
       "trigger": {

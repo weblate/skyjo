@@ -310,10 +310,6 @@
       "first-player-multiplier-penalty": "Multiplicateur de pénalité : {value}",
       "first-player-flat-penalty": "Pénalité plate : {value}"
     },
-    "GameStoppedDialog": {
-      "title": "La partie s'est arrêtée",
-      "description": "La partie a été arrêtée car il n'y a plus assez de joueurs"
-    },
     "LanguageCombobox": {
       "select-language": "Sélectionner la langue",
       "search-language": "Rechercher une langue",

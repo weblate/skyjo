@@ -132,7 +132,7 @@ export class GameService extends BaseService {
     await this.checkStateVersion(socket, clientStateVersion)
 
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isFinished()) {
+    if (!game.isFinished() && !game.isStopped()) {
       throw new CError(
         `Player try to replay but the game is not finished. This error should never happen.`,
         {
