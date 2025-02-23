@@ -10,6 +10,7 @@ export const useAfkKickToasts = () => {
       title: t("warning.title"),
       description: t("warning.description"),
       variant: "warn",
+      duration: 15000,
     })
   }
 
@@ -18,6 +19,7 @@ export const useAfkKickToasts = () => {
       title: t("kicked.title"),
       description: t("kicked.description"),
       variant: "destructive",
+      duration: 15000,
     })
   }
 
@@ -25,7 +27,7 @@ export const useAfkKickToasts = () => {
     toast({
       title: t("player-kicked.title", { playerName }),
       description: t("player-kicked.description", { playerName }),
-      duration: 5000,
+      duration: 15000,
     })
   }
 
