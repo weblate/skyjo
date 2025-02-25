@@ -60,6 +60,14 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
 
     try {
       game.setOperationManager(GameOperationManager.getInstance())
+      if (!game.isPlaying() || !game.isRoundInMain()) {
+        await job.moveToCompleted(
+          "Game is not in main round",
+          job?.token ?? "success",
+        )
+        return
+      }
+
       await this.lockGame(game)
 
       const player = game.getPlayerById(playerId)

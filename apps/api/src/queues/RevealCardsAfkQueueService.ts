@@ -50,7 +50,7 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
 
     try {
       game.setOperationManager(GameOperationManager.getInstance())
-      if (!game.isRoundRevealCards()) {
+      if (!game.isPlaying() || !game.isRoundRevealCards()) {
         await job.moveToCompleted(
           "Game is not in reveal cards round",
           job?.token ?? "success",
