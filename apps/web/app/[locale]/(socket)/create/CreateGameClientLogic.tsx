@@ -23,6 +23,7 @@ const CreateGameClientLogic = () => {
   const { socket, createGame } = useSocket()
   const searchParams = useSearchParams()
   const t = useTranslations("pages.Create")
+  const [loading, setLoading] = useState(false)
 
   const [card, setCard] = useState<SkyjoCardToJson>(generateRandomCard(true))
 
@@ -37,7 +38,11 @@ const CreateGameClientLogic = () => {
     }, 1800)
 
     const player = getUser()
-    createGame(player, isPrivate)
+
+    if (!loading) {
+      createGame(player, isPrivate)
+      setLoading(true)
+    }
   }, [socket, isPrivate])
 
   return (
