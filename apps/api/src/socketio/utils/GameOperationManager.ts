@@ -45,7 +45,6 @@ export class GameOperationManager implements GameOperationManagerInterface {
   }
 
   async kickSocket(socket: Socket): Promise<void> {
-    socket.emit("kick:afk")
     socket.leave(socket.data.gameCode)
   }
   //#endregion

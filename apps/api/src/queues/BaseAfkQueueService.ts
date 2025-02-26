@@ -64,7 +64,16 @@ export abstract class BaseAfkQueueService<
 
   protected async disconnectPlayer(game: Skyjo, player: SkyjoPlayer) {
     const stateManager = new GameStateTracker(game)
+
     await game.disconnectPlayer(player)
+
+    const socket = this.socketManager.getSocket(player.socketId)
+    if (socket) {
+      this.socketManager.sendToSocket(socket, {
+        event: "kick:afk",
+        data: [],
+      })
+    }
 
     this.socketManager.sendToRoom({
       room: game.code,
