@@ -1,8 +1,8 @@
-import type { Toast, ToastReturn } from "@/components/ui/use-toast"
 import { GameStatus } from "@skyjo/core"
 import { Constants as CoreConstants } from "@skyjo/core"
 import { ErrorJoinMessage } from "@skyjo/shared/types"
 import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
+import { toast } from "sonner"
 
 export const handleGameJoinSuccess = (
   code: string,
@@ -26,12 +26,9 @@ export const handleGameJoinSuccess = (
 export const handleGameJoinError = (
   message: ErrorJoinMessage,
   router: AppRouterInstance,
-  toast: ({ ...props }: Toast) => ToastReturn,
   errorMessages: Record<ErrorJoinMessage, string>,
 ) => {
-  toast({
-    description: errorMessages[message],
-    variant: "destructive",
+  toast.error(errorMessages[message], {
     duration: 5000,
   })
 

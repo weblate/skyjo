@@ -1,6 +1,5 @@
 "use client"
 
-import { useToast } from "@/components/ui/use-toast"
 import { usePathname, useRouter } from "@/i18n/routing"
 import {
   addReconnectionDateToLastGame,
@@ -35,6 +34,7 @@ import {
 } from "react"
 import { Socket, io } from "socket.io-client"
 import customParser from "socket.io-msgpack-parser"
+import { toast } from "sonner"
 
 dayjs.extend(utc)
 
@@ -53,7 +53,6 @@ type SocketContext = {
 const SocketContext = createContext<SocketContext | undefined>(undefined)
 
 const SocketProvider = ({ children }: PropsWithChildren) => {
-  const { toast } = useToast()
   const t = useTranslations("contexts.SocketContext")
   const tSocketError = useTranslations("utils.socket.error")
   const router = useRouter()
@@ -115,17 +114,12 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   }, [socket])
 
   //#region listeners
-  const onConnect = () => {
+  const onConnect = async () => {
     if (socket!.recovered) {
-      console.log("Socket reconnected")
-      toast({
-        title: (
-          <span className="flex items-center gap-2 font-medium">
-            <WifiIcon className="w-5 h-5 text-emerald-600" />
-            {t("reconnection")}
-          </span>
-        ),
+      toast.success(t("reconnection"), {
         duration: 2000,
+        icon: <WifiIcon className="w-5 h-5 text-emerald-600" />,
+        id: "socket-reconnection",
       })
     } else console.log("Socket connected")
   }
@@ -134,15 +128,10 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     if (reason === "ping timeout") addReconnectionDateToLastGame()
 
     if (socket?.active) {
-      toast({
-        title: (
-          <span className="flex items-center gap-2 font-medium">
-            <WifiOffIcon className="w-5 h-5" />
-            {t("connection-lost")}
-          </span>
-        ),
-        variant: "warn",
-        duration: 5000,
+      toast.warning(t("connection-lost"), {
+        duration: Infinity,
+        icon: <WifiOffIcon className="w-5 h-5" />,
+        id: "socket-connection-lost",
       })
     }
   }
@@ -155,11 +144,9 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     console.log("onRecoverError", message)
     if (message === "game-not-found") {
       router.replace("/")
-      toast({
-        title: t("recover-error.game-not-found.title"),
+      toast.error(t("recover-error.game-not-found.title"), {
         description: t("recover-error.game-not-found.description"),
         duration: 5000,
-        variant: "warn",
       })
     }
   }
@@ -187,9 +174,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
       socket.timeout(10000).emit("create", player, isPrivate)
     } catch {
-      toast({
-        description: tSocketError("timeout.description"),
-        variant: "destructive",
+      toast.error(tSocketError("timeout.description"), {
         duration: 5000,
       })
     }
@@ -212,9 +197,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     try {
       socket.timeout(10000).emit("join", { gameCode, player })
     } catch {
-      toast({
-        description: tSocketError("timeout.description"),
-        variant: "destructive",
+      toast.error(tSocketError("timeout.description"), {
         duration: 5000,
       })
       onError()
@@ -240,9 +223,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   }
 
   const onJoinGameError = (message: ErrorJoinMessage) => {
-    toast({
-      description: joinErrorDescription[message],
-      variant: "destructive",
+    toast.error(joinErrorDescription[message], {
       duration: 5000,
     })
 
@@ -273,9 +254,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     try {
       socket!.timeout(10000).emit("reconnect", lastGame)
     } catch {
-      toast({
-        description: tSocketError("timeout.description"),
-        variant: "destructive",
+      toast.error(tSocketError("timeout.description"), {
         duration: 5000,
       })
       errorCallback()
@@ -285,9 +264,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const onReconnectError = (message: ErrorReconnectMessage) => {
     clearLastGame()
 
-    toast({
-      description: reconnectErrorDescription[message],
-      variant: "destructive",
+    toast.error(reconnectErrorDescription[message], {
       duration: 5000,
     })
 

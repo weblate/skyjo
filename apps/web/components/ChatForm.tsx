@@ -4,7 +4,6 @@ import { AutoCompleteChoice, Autocomplete } from "@/components/ui/autocomplete"
 import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
-import { useToast } from "@/components/ui/use-toast"
 import { useChat } from "@/contexts/ChatContext"
 import { useSkyjo } from "@/contexts/SkyjoContext"
 import { cn } from "@/lib/utils"
@@ -12,7 +11,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { SendIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
-import { useForm } from "react-hook-form"
+import { FieldErrors, useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 
 const chatFormSchema = z.object({
@@ -24,7 +24,6 @@ type ChatFormProps = {
 }
 
 const ChatForm = ({ chatOpen }: ChatFormProps) => {
-  const { toast } = useToast()
   const { player, opponents } = useSkyjo()
   const {
     sendMessage,
@@ -182,23 +181,25 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
   const onSubmit = (values: z.infer<typeof chatFormSchema>) => {
     if (!values.message) return
 
-    if (values.message.length > 200) {
-      toast({
-        description: t("message-too-long.description"),
-        variant: "destructive",
-        duration: 3000,
-      })
+    const [command, ...args] = values.message.split(" ")
+    if (command.startsWith("/")) {
+      handleCommand(command, args.join(" "))
     } else {
-      const [command, ...args] = values.message.split(" ")
-      if (command.startsWith("/")) {
-        handleCommand(command, args.join(" "))
-      } else {
-        sendMessage(player.name, values.message)
-        clearUnreadMessages()
-      }
+      sendMessage(player.name, values.message)
+      clearUnreadMessages()
     }
 
     form.reset()
+  }
+
+  const handleSubmitError = (
+    error: FieldErrors<z.infer<typeof chatFormSchema>>,
+  ) => {
+    if (error.message?.type === "too_big") {
+      toast.error(t("message-too-long.description"), {
+        duration: 300000,
+      })
+    }
   }
 
   const handleCommand = (command: string, args: string) => {
@@ -220,7 +221,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
   return (
     <Form {...form}>
       <form
-        onSubmit={form.handleSubmit(onSubmit)}
+        onSubmit={form.handleSubmit(onSubmit, handleSubmitError)}
         className="flex flex-row items-end w-full gap-2 relative"
       >
         <FormField

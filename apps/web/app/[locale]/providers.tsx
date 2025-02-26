@@ -1,6 +1,5 @@
 "use client"
 
-import { Toaster } from "@/components/ui/toaster"
 import RulesProvider from "@/contexts/RulesContext"
 import SettingsProvider from "@/contexts/SettingsContext"
 import UserProvider from "@/contexts/UserContext"
@@ -10,6 +9,7 @@ import { LazyMotion, domAnimation } from "framer-motion"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
 import { PropsWithChildren } from "react"
+import { Toaster } from "sonner"
 
 if (typeof window !== "undefined" && process.env.NEXT_PUBLIC_POSTHOG_KEY) {
   posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY, {
@@ -42,10 +42,29 @@ const Providers = ({ children, locale }: ProvidersProps) => {
                 {children}
               </LazyMotion>
             </UserProvider>
-            <Toaster />
           </SettingsProvider>
         </RulesProvider>
-        <Toaster />
+        <Toaster
+          toastOptions={{
+            closeButton: false,
+            classNames: {
+              toast:
+                "!border-2 !border-black dark:!border-dark-border !bg-white dark:!bg-dark-body",
+              title: "!text-sm !font-semibold !text-black dark:!text-dark-font",
+              description:
+                "!text-sm !opacity-90 !text-black dark:!text-dark-font",
+              icon: "!text-black dark:!text-dark-font",
+            },
+          }}
+          icons={{
+            success: null,
+            error: null,
+            loading: null,
+            info: null,
+            warning: null,
+          }}
+          position="bottom-right"
+        />
       </QueryClientProvider>
     </PostHogProvider>
   )

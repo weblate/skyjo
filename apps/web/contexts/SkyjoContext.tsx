@@ -1,6 +1,5 @@
 "use client"
 
-import { useToast } from "@/components/ui/use-toast"
 import { useChat } from "@/contexts/ChatContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
@@ -33,6 +32,7 @@ import {
   useState,
 } from "react"
 import { Socket } from "socket.io-client"
+import { toast } from "sonner"
 
 dayjs.extend(utc)
 
@@ -70,7 +70,6 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
   const { socket } = useSocket()
   const { sendMessage, setChat } = useChat()
   const router = useRouter()
-  const { dismiss: dismissToast } = useToast()
   const { showAfkWarning, showAfkKick, showPlayerAfkKick } = useAfkKickToasts()
 
   const [game, setGame] = useState<SkyjoToJson>()
@@ -310,7 +309,7 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
   }
 
   const leave = () => {
-    dismissToast()
+    toast.dismiss()
     socket!.emit("leave")
   }
 

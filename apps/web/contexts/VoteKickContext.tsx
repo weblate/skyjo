@@ -1,4 +1,3 @@
-import { useToast } from "@/components/ui/use-toast"
 import { useSkyjo } from "@/contexts/SkyjoContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useKickVoteToasts } from "@/hooks/useKickVoteToasts"
@@ -26,7 +25,6 @@ const VoteKickContext = createContext<VoteKickContext | undefined>(undefined)
 export const VoteKickProvider = ({ children }: PropsWithChildren) => {
   const { socket } = useSocket()
   const { game, player } = useSkyjo()
-  const { dismiss } = useToast()
   const router = useRouter()
   const {
     showVoteInitiated,
@@ -39,7 +37,8 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     showVoteAgainstYouSucceeded,
   } = useKickVoteToasts()
 
-  const [kickVoteInProgress, setKickVoteInProgress] = useState(false)
+  const [kickVote, setKickVote] = useState<KickVoteToJson | null>(null)
+  const kickVoteInProgress = kickVote !== null
 
   useEffect(() => {
     if (!game || !socket) return
@@ -47,11 +46,11 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     initKickVoteListeners()
 
     return destroyKickVoteListeners
-  }, [socket, game])
+  }, [socket, game, kickVote])
 
   //#region listeners
   const onKickVote = (kickVote: KickVoteToJson) => {
-    setKickVoteInProgress(true)
+    setKickVote(kickVote)
 
     const isPlayerToKick = kickVote.targetId === player.id
     const hasVoted = kickVote.votes.find((v) => v.playerId === player.id)
@@ -65,7 +64,7 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     playerToKickId: string,
     playerToKickName: string,
   ) => {
-    setKickVoteInProgress(false)
+    setKickVote(null)
 
     const isPlayerToKick = playerToKickId === player.id
 
@@ -77,8 +76,7 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     playerToKickId: string,
     playerToKickName: string,
   ) => {
-    setKickVoteInProgress(false)
-
+    setKickVote(null)
     const isPlayerToKick = playerToKickId === player.id
 
     console.log("onKickVoteSuccess", playerToKickId, player.id)
@@ -104,8 +102,6 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
 
   //#region actions
   const initiateKickVote = (targetId: string) => {
-    setKickVoteInProgress(true)
-
     socket!.emit("kick:initiate-vote", { targetId })
     const playerToKick = game?.players.find((p) => p.socketId === targetId)
     if (!playerToKick) return
@@ -113,9 +109,12 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     showVoteInitiated(playerToKick.name)
   }
 
-  const voteToKick = (vote: boolean) => {
-    socket!.emit("kick:vote", { vote })
-    if (!vote) dismiss()
+  const voteToKick = async (vote: boolean) => {
+    if (!kickVote) return
+
+    socket!.emit("kick:vote", {
+      vote,
+    })
   }
 
   const actions = {
