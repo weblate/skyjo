@@ -8,7 +8,6 @@ import {
   Constants,
   GameStatus,
   type LastTurnStatus,
-  RoundPhase,
   type TurnStatus,
 } from "../../constants.js"
 import type { SkyjoDbFormat } from "../../types/skyjo.js"
@@ -37,9 +36,13 @@ describe("Skyjo", () => {
     settings = new SkyjoSettings()
     game = new Skyjo({ adminId: player.id, settings })
     operationManager = {
-      cancelAfkTimer: vi.fn(),
       updateGame: vi.fn(),
-      startAfkTimer: vi.fn(),
+      removeGame: vi.fn(),
+      startRevealCardsAfkTimer: vi.fn(),
+      startPlayerAfkTimer: vi.fn(),
+      cancelPlayerAfkTimer: vi.fn(),
+      getSocket: vi.fn(),
+      kickSocket: vi.fn(),
       delayNewRound: vi.fn(),
     }
     game.setOperationManager(operationManager)
@@ -70,7 +73,6 @@ describe("Skyjo", () => {
         turn: 0,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
-        turnStartTime: new Date(),
         roundPhase: Constants.ROUND_PHASE.REVEAL_CARDS,
         roundNumber: 1,
         discardPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
@@ -119,7 +121,6 @@ describe("Skyjo", () => {
         status: Constants.GAME_STATUS.LOBBY,
         turn: 0,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
-        turnStartTime: new Date(),
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
         roundPhase: Constants.ROUND_PHASE.REVEAL_CARDS,
         roundNumber: 1,
@@ -136,6 +137,7 @@ describe("Skyjo", () => {
             connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
             afkCount: 0,
             consecutiveAfkCount: 0,
+            turnStartTime: new Date(),
             score: 10,
             scores: [5, 5],
             wantsReplay: true,
@@ -185,6 +187,9 @@ describe("Skyjo", () => {
       expect(game.players[0].score).toBe(gameDb.players[0].score)
       expect(game.players[0].wantsReplay).toBe(gameDb.players[0].wantsReplay)
       expect(game.players[0].cards).toStrictEqual(gameDb.players[0].cards)
+      expect(game.players[0].turnStartTime).toStrictEqual(
+        gameDb.players[0].turnStartTime,
+      )
     })
   })
 
@@ -439,15 +444,15 @@ describe("Skyjo", () => {
   })
 
   describe("start", () => {
-    it("should not start the game if min players is not reached", () => {
+    it("should not start the game if min players is not reached", async () => {
       game.removePlayer(opponent.id)
-      expect(() => game.start()).toThrowCErrorWithCode(
+      await expect(game.start()).toThrowCErrorWithCode(
         ErrorConstants.ERROR.TOO_FEW_PLAYERS,
       )
     })
 
-    it("should start the game with default settings", () => {
-      game.start()
+    it("should start the game with default settings", async () => {
+      await game.start()
 
       expect(game.isPlaying()).toBeTruthy()
       expect(game.isRoundRevealCards()).toBeTruthy()
@@ -465,14 +470,14 @@ describe("Skyjo", () => {
   describe("revealCard", () => {
     it("should not reveal card if the game is not playing", () => {
       game.status = Constants.GAME_STATUS.LOBBY
-      game.revealCard(player, 0, 0)
+      game.revealCard({ player, column: 0, row: 0 })
 
       player.cards = [
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard(player, 0, 0)
+      game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeFalsy()
     })
@@ -486,7 +491,7 @@ describe("Skyjo", () => {
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard(player, 0, 0)
+      game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeFalsy()
     })
@@ -501,7 +506,7 @@ describe("Skyjo", () => {
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard(player, 0, 0)
+      game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeFalsy()
     })
@@ -516,7 +521,7 @@ describe("Skyjo", () => {
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard(player, 0, 0)
+      game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeTruthy()
     })
@@ -535,7 +540,7 @@ describe("Skyjo", () => {
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard(player, 0, 0)
+      game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeTruthy()
       expect(game.isRoundInMain()).toBeTruthy()
@@ -667,8 +672,8 @@ describe("Skyjo", () => {
   })
 
   describe("turnCard", () => {
-    it("should turn card", () => {
-      game.start()
+    it("should turn card", async () => {
+      await game.start()
       const card = player.cards[0][0]
       expect(card.isVisible).toBeFalsy()
 
@@ -685,10 +690,10 @@ describe("Skyjo", () => {
     })
   })
 
-  describe("finishTurn", () => {
+  describe("finishTurn", async () => {
     it("should finish turn without afk", async () => {
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       // act like a replace
       game.turnStatus = Constants.TURN_STATUS.REPLACE_A_CARD
@@ -697,7 +702,8 @@ describe("Skyjo", () => {
 
       await game.finishTurn({ wasAfk: false })
 
-      expect(operationManager.cancelAfkTimer).toHaveBeenCalledTimes(1)
+      // Start the game with initialTurnedCount at 0 will trigger finishTurn. That's why cancelPlayerAfkTimer is called 2 times
+      expect(operationManager.cancelPlayerAfkTimer).toHaveBeenCalledTimes(2)
       expect(operationManager.updateGame).toHaveBeenCalledTimes(0)
       expect(player.consecutiveAfkCount).toBe(0)
       expect(game.turn).toBe(1)
@@ -707,12 +713,13 @@ describe("Skyjo", () => {
       expect(game.lastTurnStatus).toBe<LastTurnStatus>(
         Constants.LAST_TURN_STATUS.REPLACE,
       )
-      expect(operationManager.startAfkTimer).toHaveBeenCalledTimes(1)
+      // 2 times because the first time is when the game starts and the second time is when the player finishes the turn
+      expect(operationManager.startPlayerAfkTimer).toHaveBeenCalledTimes(2)
     })
 
     it("should finish turn with afk", async () => {
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       // act like a replace does by afk function
       player.consecutiveAfkCount = 1
@@ -723,7 +730,8 @@ describe("Skyjo", () => {
 
       await game.finishTurn({ wasAfk: true })
 
-      expect(operationManager.cancelAfkTimer).toHaveBeenCalledTimes(1)
+      // Start the game with initialTurnedCount at 0 will trigger finishTurn. That's why cancelPlayerAfkTimer is called 2 times
+      expect(operationManager.cancelPlayerAfkTimer).toHaveBeenCalledTimes(2)
       expect(operationManager.updateGame).toHaveBeenCalledTimes(0)
       expect(player.consecutiveAfkCount).toBe(1)
       expect(game.turn).toBe(1)
@@ -733,52 +741,108 @@ describe("Skyjo", () => {
       expect(game.lastTurnStatus).toBe<LastTurnStatus>(
         Constants.LAST_TURN_STATUS.REPLACE,
       )
-      expect(operationManager.startAfkTimer).toHaveBeenCalledTimes(1)
+      // 2 times because the first time is when the game starts and the second time is when the player finishes the turn
+      expect(operationManager.startPlayerAfkTimer).toHaveBeenCalledTimes(2)
     })
 
-    it("should finish turn and start a new round", async () => {
-      game.status = Constants.GAME_STATUS.PLAYING
-      game.roundPhase = Constants.ROUND_PHASE.OVER
+    it("should finish turn in last lap phase and end round when all players have played", async () => {
+      game.settings.initialTurnedCount = 0
+      await game.start()
+      game.turn = 0
 
-      game["nextTurn"] = vi.fn()
+      // Set up last lap scenario
+      game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
+      player.hasPlayedLastTurn = false
+      opponent.hasPlayedLastTurn = true
 
-      // simulate the call of the function
-      operationManager.delayNewRound = vi
-        .fn()
-        .mockImplementation(() => game["startNewRound"]())
+      // Mock shouldEndRound to return true after player's turn is marked
+      const shouldEndRoundSpy = vi
+        .spyOn(game as any, "shouldEndRound")
+        .mockImplementation(() => {
+          // This will be true after player.hasPlayedLastTurn is set to true
+          return player.hasPlayedLastTurn && opponent.hasPlayedLastTurn
+        })
+
+      const endRoundSpy = vi
+        .spyOn(game as any, "endRound")
+        .mockImplementation(() => {})
 
       await game.finishTurn({ wasAfk: false })
 
-      expect(operationManager.cancelAfkTimer).toHaveBeenCalledTimes(1)
-      expect(operationManager.updateGame).toHaveBeenCalledTimes(0)
-      expect(operationManager.delayNewRound).toHaveBeenCalledTimes(1)
-      expect(operationManager.startAfkTimer).toHaveBeenCalledTimes(0)
-      expect(game.roundPhase).toBe<RoundPhase>(
-        Constants.ROUND_PHASE.REVEAL_CARDS,
-      )
+      // Verify player's turn is marked as played
+      expect(player.hasPlayedLastTurn).toBe(true)
+
+      // Verify all cards are turned
+      expect(player.cards.flat().every((card) => card.isVisible)).toBe(true)
+
+      // Verify shouldEndRound was called
+      expect(shouldEndRoundSpy).toHaveBeenCalled()
+
+      // Verify endRound was called
+      expect(endRoundSpy).toHaveBeenCalled()
+
+      // Verify turn is passed to next player
+      expect(game.turn).toBe(1)
+    })
+
+    it("should finish turn in last lap phase but not end round when not all players have played", async () => {
+      game.settings.initialTurnedCount = 0
+      await game.start()
+      game.turn = 0
+
+      // Set up last lap scenario
+      game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
+      player.hasPlayedLastTurn = false
+      opponent.hasPlayedLastTurn = false
+
+      // Mock shouldEndRound to return false
+      const shouldEndRoundSpy = vi
+        .spyOn(game as any, "shouldEndRound")
+        .mockReturnValue(false)
+
+      const endRoundSpy = vi
+        .spyOn(game as any, "endRound")
+        .mockImplementation(() => {})
+
+      await game.finishTurn({ wasAfk: false })
+
+      // Verify player's turn is marked as played
+      expect(player.hasPlayedLastTurn).toBe(true)
+
+      // Verify all cards are turned
+      expect(player.cards.flat().every((card) => card.isVisible)).toBe(true)
+
+      // Verify shouldEndRound was called
+      expect(shouldEndRoundSpy).toHaveBeenCalled()
+
+      // Verify endRound was not called
+      expect(endRoundSpy).not.toHaveBeenCalled()
+
+      // Verify turn is passed to next player
+      expect(game.turn).toBe(1)
     })
   })
 
   describe("togglePlayerReplay", () => {
-    it("should not toggle player replay if player is not in the game", () => {
-      game.togglePlayerReplay("playerId")
+    it("should not toggle player replay if player is not in the game", async () => {
+      await game.togglePlayerReplay("playerId")
 
       expect(player.wantsReplay).toBeFalsy()
     })
 
-    it("should toggle player replay", () => {
+    it("should toggle player replay", async () => {
       player.wantsReplay = false
 
-      game.togglePlayerReplay(player.id)
+      await game.togglePlayerReplay(player.id)
 
       expect(player.wantsReplay).toBeTruthy()
     })
 
-    it("should toggle player replay and start a new game", () => {
+    it("should toggle player replay and start a new game", async () => {
       player.wantsReplay = false
       opponent.wantsReplay = true
 
-      game.togglePlayerReplay(player.id)
+      await game.togglePlayerReplay(player.id)
 
       expect(player.wantsReplay).toBeFalsy()
       expect(opponent.wantsReplay).toBeFalsy()
@@ -823,7 +887,6 @@ describe("Skyjo", () => {
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
         turn: 0,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
-        turnStartTime: game.turnStartTime,
         settings: game.settings.toJson(),
         stateVersion: game.stateVersion,
         updatedAt: game.updatedAt,
@@ -849,7 +912,6 @@ describe("Skyjo", () => {
         roundNumber: game.roundNumber,
         roundPhase: game.roundPhase,
         turn: game.turn,
-        turnStartTime: game.turnStartTime,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
         players: [
@@ -867,6 +929,7 @@ describe("Skyjo", () => {
             connectionStatus: player.connectionStatus,
             afkCount: player.afkCount,
             consecutiveAfkCount: player.consecutiveAfkCount,
+            turnStartTime: player.turnStartTime,
             hasPlayedLastTurn: player.hasPlayedLastTurn,
             score: player.score,
             scores: player.scores,
@@ -887,6 +950,7 @@ describe("Skyjo", () => {
             connectionStatus: opponent.connectionStatus,
             afkCount: opponent.afkCount,
             consecutiveAfkCount: opponent.consecutiveAfkCount,
+            turnStartTime: opponent.turnStartTime,
             hasPlayedLastTurn: opponent.hasPlayedLastTurn,
             score: opponent.score,
             scores: opponent.scores,
@@ -912,7 +976,765 @@ describe("Skyjo", () => {
         stateVersion: game.stateVersion,
         createdAt: game.createdAt,
         updatedAt: game.updatedAt,
-      })
+      } satisfies SkyjoDbFormat)
+    })
+  })
+
+  describe("multiplierPenalty", () => {
+    it("should multiply positive score by penalty multiplier", () => {
+      const score = 10
+      game.settings.firstPlayerMultiplierPenalty = 2
+
+      const result = game["multiplierPenalty"](score)
+
+      expect(result).toBe(20)
+    })
+
+    it("should not change negative score", () => {
+      const score = -5
+      game.settings.firstPlayerMultiplierPenalty = 2
+
+      const result = game["multiplierPenalty"](score)
+
+      expect(result).toBe(-5)
+    })
+  })
+
+  describe("flatPenalty", () => {
+    it("should add flat penalty to score", () => {
+      const score = 10
+      game.settings.firstPlayerFlatPenalty = 5
+
+      const result = game["flatPenalty"](score)
+
+      expect(result).toBe(15)
+    })
+  })
+
+  describe("shouldEndGame", () => {
+    it("should return true when a player's score exceeds the score to end game", () => {
+      game.settings.scoreToEndGame = 100
+      player.score = 110
+
+      const result = game["shouldEndGame"]()
+
+      expect(result).toBe(true)
+    })
+
+    it("should return false when no player's score exceeds the score to end game", () => {
+      game.settings.scoreToEndGame = 100
+      player.score = 90
+      opponent.score = 95
+
+      const result = game["shouldEndGame"]()
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe("endGame", () => {
+    it("should set the game status to finished and round phase to over", () => {
+      game["endGame"]()
+
+      expect(game.status).toBe(Constants.GAME_STATUS.FINISHED)
+      expect(game.roundPhase).toBe(Constants.ROUND_PHASE.OVER)
+    })
+  })
+
+  describe("shouldEndRound", () => {
+    it("should return true when all connected players have played their last turn", () => {
+      player.hasPlayedLastTurn = true
+      opponent.hasPlayedLastTurn = true
+
+      const result = game["shouldEndRound"]()
+
+      expect(result).toBe(true)
+    })
+
+    it("should return false when not all connected players have played their last turn", () => {
+      player.hasPlayedLastTurn = true
+      opponent.hasPlayedLastTurn = false
+
+      const result = game["shouldEndRound"]()
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe("endRound", () => {
+    it("should turn all cards, check cards to discard, calculate final scores, and set round phase to over", () => {
+      // Spy on methods
+      const turnAllCardsSpy = vi.spyOn(player, "turnAllCards")
+      const checkCardsToDiscardSpy = vi.spyOn(
+        game as any,
+        "checkCardsToDiscard",
+      )
+      const finalRoundScoreSpy = vi.spyOn(player, "finalRoundScore")
+      const checkFirstPlayerPenaltySpy = vi.spyOn(
+        game as any,
+        "checkFirstPlayerPenalty",
+      )
+
+      game["endRound"]()
+
+      expect(turnAllCardsSpy).toHaveBeenCalled()
+      expect(checkCardsToDiscardSpy).toHaveBeenCalled()
+      expect(finalRoundScoreSpy).toHaveBeenCalled()
+      expect(checkFirstPlayerPenaltySpy).toHaveBeenCalled()
+      expect(game.roundPhase).toBe(Constants.ROUND_PHASE.OVER)
+    })
+
+    it("should end the game if shouldEndGame returns true", () => {
+      vi.spyOn(game as any, "shouldEndGame").mockReturnValue(true)
+      const endGameSpy = vi.spyOn(game as any, "endGame")
+
+      game["endRound"]()
+
+      expect(endGameSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe("checkFirstPlayerPenalty", () => {
+    beforeEach(() => {
+      game.roundNumber = 1
+      player.scores = [10]
+      opponent.scores = [5]
+      game.firstToFinishPlayerId = player.id
+    })
+
+    it("should not apply penalty if firstToFinishPlayerId is not set", () => {
+      game.firstToFinishPlayerId = null
+      const recalculateScoreSpy = vi.spyOn(player, "recalculateScore")
+
+      game["checkFirstPlayerPenalty"]()
+
+      expect(recalculateScoreSpy).not.toHaveBeenCalled()
+      expect(player.scores[0]).toBe(10)
+    })
+
+    it("should not apply penalty if firstToFinishPlayer has a string score", () => {
+      player.scores = ["-"]
+      const recalculateScoreSpy = vi.spyOn(player, "recalculateScore")
+
+      game["checkFirstPlayerPenalty"]()
+
+      expect(recalculateScoreSpy).not.toHaveBeenCalled()
+      expect(player.scores[0]).toBe("-")
+    })
+
+    it("should not apply penalty if no other player has a lower score", () => {
+      opponent.scores = [15]
+      const recalculateScoreSpy = vi.spyOn(player, "recalculateScore")
+
+      game["checkFirstPlayerPenalty"]()
+
+      expect(recalculateScoreSpy).not.toHaveBeenCalled()
+      expect(player.scores[0]).toBe(10)
+    })
+
+    it("should apply multiplier penalty when penalty type is MULTIPLIER_ONLY", () => {
+      game.settings.firstPlayerPenaltyType =
+        Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY
+      game.settings.firstPlayerMultiplierPenalty = 2
+
+      game["checkFirstPlayerPenalty"]()
+
+      expect(player.scores[0]).toBe(20)
+    })
+
+    it("should apply flat penalty when penalty type is FLAT_ONLY", () => {
+      game.settings.firstPlayerPenaltyType =
+        Constants.FIRST_PLAYER_PENALTY_TYPE.FLAT_ONLY
+      game.settings.firstPlayerFlatPenalty = 5
+
+      game["checkFirstPlayerPenalty"]()
+
+      expect(player.scores[0]).toBe(15)
+    })
+
+    it("should apply flat then multiplier penalty when penalty type is FLAT_THEN_MULTIPLIER", () => {
+      game.settings.firstPlayerPenaltyType =
+        Constants.FIRST_PLAYER_PENALTY_TYPE.FLAT_THEN_MULTIPLIER
+      game.settings.firstPlayerFlatPenalty = 5
+      game.settings.firstPlayerMultiplierPenalty = 2
+
+      game["checkFirstPlayerPenalty"]()
+
+      expect(player.scores[0]).toBe(30) // (10 + 5) * 2
+    })
+
+    it("should apply multiplier then flat penalty when penalty type is MULTIPLIER_THEN_FLAT", () => {
+      game.settings.firstPlayerPenaltyType =
+        Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_THEN_FLAT
+      game.settings.firstPlayerFlatPenalty = 5
+      game.settings.firstPlayerMultiplierPenalty = 2
+
+      game["checkFirstPlayerPenalty"]()
+
+      expect(player.scores[0]).toBe(25) // (10 * 2) + 5
+    })
+  })
+
+  describe("hasPlayerFinished", () => {
+    it("should return true when all player cards are visible", () => {
+      player.cards = [
+        [new SkyjoCard(1, true), new SkyjoCard(2, true)],
+        [new SkyjoCard(3, true), new SkyjoCard(4, true)],
+      ]
+
+      const result = game["hasPlayerFinished"](player)
+
+      expect(result).toBe(true)
+    })
+
+    it("should return false when not all player cards are visible", () => {
+      player.cards = [
+        [new SkyjoCard(1, true), new SkyjoCard(2, false)],
+        [new SkyjoCard(3, true), new SkyjoCard(4, true)],
+      ]
+
+      const result = game["hasPlayerFinished"](player)
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe("shouldSetFirstPlayerToFinish", () => {
+    it("should return true when player has finished and firstToFinishPlayerId is not set", () => {
+      game.firstToFinishPlayerId = null
+      vi.spyOn(game as any, "hasPlayerFinished").mockReturnValue(true)
+
+      const result = game["shouldSetFirstPlayerToFinish"](player)
+
+      expect(result).toBe(true)
+    })
+
+    it("should return false when player has not finished", () => {
+      game.firstToFinishPlayerId = null
+      vi.spyOn(game as any, "hasPlayerFinished").mockReturnValue(false)
+
+      const result = game["shouldSetFirstPlayerToFinish"](player)
+
+      expect(result).toBe(false)
+    })
+
+    it("should return false when firstToFinishPlayerId is already set", () => {
+      game.firstToFinishPlayerId = "somePlayerId"
+      vi.spyOn(game as any, "hasPlayerFinished").mockReturnValue(true)
+
+      const result = game["shouldSetFirstPlayerToFinish"](player)
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe("setFirstPlayerToFinish", () => {
+    it("should set firstToFinishPlayerId and change round phase to LAST_LAP", () => {
+      game.firstToFinishPlayerId = null
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+
+      game["setFirstPlayerToFinish"](player)
+
+      expect(game.firstToFinishPlayerId).toBe(player.id)
+      expect(game.roundPhase).toBe(Constants.ROUND_PHASE.LAST_LAP)
+    })
+  })
+
+  describe("getNextTurn", () => {
+    it("should return the next turn index", () => {
+      game.turn = 0
+
+      const result = game["getNextTurn"]()
+
+      expect(result).toBe(1)
+    })
+
+    it("should skip disconnected players", () => {
+      game.turn = 0
+      opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      const thirdPlayer = new SkyjoPlayer(
+        { username: "player3", avatar: Constants.AVATARS.TURTLE },
+        "socketId789",
+      )
+      game.addPlayer(thirdPlayer)
+
+      const result = game["getNextTurn"]()
+
+      expect(result).toBe(2)
+    })
+
+    it("should wrap around to the beginning of the player list", () => {
+      game.turn = 1
+
+      const result = game["getNextTurn"]()
+
+      expect(result).toBe(0)
+    })
+  })
+
+  describe("removeDisconnectedPlayers", () => {
+    it("should remove disconnected players", () => {
+      opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      game["removeDisconnectedPlayers"]()
+
+      expect(game.players).toHaveLength(1)
+      expect(game.players[0]).toBe(player)
+    })
+
+    it("should not remove connected players", () => {
+      game["removeDisconnectedPlayers"]()
+
+      expect(game.players).toHaveLength(2)
+    })
+  })
+
+  describe("checkCardsToDiscard", () => {
+    it("should discard cards when allowSkyjoForColumn is true and there are columns to discard", () => {
+      game.settings.allowSkyjoForColumn = true
+      game.settings.allowSkyjoForRow = false
+
+      const columnsToDiscard = [
+        new SkyjoCard(5),
+        new SkyjoCard(5),
+        new SkyjoCard(5),
+      ]
+
+      // Mock the player's checkColumnsAndDiscard to return cards first time, then empty array
+      const checkColumnsSpy = vi
+        .spyOn(player, "checkColumnsAndDiscard")
+        .mockReturnValueOnce(columnsToDiscard)
+        .mockReturnValue([])
+
+      vi.spyOn(player, "checkRowsAndDiscard").mockReturnValue([])
+
+      // Mock the discardCard method
+      const discardCardSpy = vi
+        .spyOn(game, "discardCard")
+        .mockImplementation(() => {})
+
+      // Don't mock the checkCardsToDiscard method itself
+      game["checkCardsToDiscard"](player)
+
+      expect(checkColumnsSpy).toHaveBeenCalledTimes(2)
+      expect(discardCardSpy).toHaveBeenCalledTimes(3)
+      expect(discardCardSpy).toHaveBeenCalledWith(5)
+    })
+
+    it("should discard cards when allowSkyjoForRow is true and there are rows to discard", () => {
+      game.settings.allowSkyjoForColumn = false
+      game.settings.allowSkyjoForRow = true
+
+      const rowsToDiscard = [
+        new SkyjoCard(7),
+        new SkyjoCard(7),
+        new SkyjoCard(7),
+      ]
+
+      vi.spyOn(player, "checkColumnsAndDiscard").mockReturnValue([])
+
+      // Mock the player's checkRowsAndDiscard to return cards first time, then empty array
+      const checkRowsSpy = vi
+        .spyOn(player, "checkRowsAndDiscard")
+        .mockReturnValueOnce(rowsToDiscard)
+        .mockReturnValue([])
+
+      // Mock the discardCard method
+      const discardCardSpy = vi
+        .spyOn(game, "discardCard")
+        .mockImplementation(() => {})
+
+      // Don't mock the checkCardsToDiscard method itself
+      game["checkCardsToDiscard"](player)
+
+      expect(checkRowsSpy).toHaveBeenCalledTimes(2)
+      expect(discardCardSpy).toHaveBeenCalledTimes(3)
+      expect(discardCardSpy).toHaveBeenCalledWith(7)
+    })
+
+    it("should discard cards from both columns and rows when both settings are true", () => {
+      game.settings.allowSkyjoForColumn = true
+      game.settings.allowSkyjoForRow = true
+
+      const columnsToDiscard = [new SkyjoCard(5), new SkyjoCard(5)]
+      const rowsToDiscard = [new SkyjoCard(7), new SkyjoCard(7)]
+
+      // First call returns cards, second call returns empty array
+      vi.spyOn(player, "checkColumnsAndDiscard")
+        .mockReturnValueOnce(columnsToDiscard)
+        .mockReturnValue([])
+
+      vi.spyOn(player, "checkRowsAndDiscard")
+        .mockReturnValueOnce(rowsToDiscard)
+        .mockReturnValue([])
+
+      // Mock the discardCard method
+      const discardCardSpy = vi
+        .spyOn(game, "discardCard")
+        .mockImplementation(() => {})
+
+      // Don't mock the checkCardsToDiscard method itself
+      game["checkCardsToDiscard"](player)
+
+      expect(discardCardSpy).toHaveBeenCalledTimes(4)
+      expect(discardCardSpy).toHaveBeenCalledWith(5)
+      expect(discardCardSpy).toHaveBeenCalledWith(7)
+    })
+
+    it("should not discard any cards when no cards to discard", () => {
+      game.settings.allowSkyjoForColumn = true
+      game.settings.allowSkyjoForRow = true
+
+      vi.spyOn(player, "checkColumnsAndDiscard").mockReturnValue([])
+      vi.spyOn(player, "checkRowsAndDiscard").mockReturnValue([])
+
+      const discardCardSpy = vi.spyOn(game, "discardCard")
+
+      game["checkCardsToDiscard"](player)
+
+      expect(discardCardSpy).not.toHaveBeenCalled()
+    })
+
+    it("should recursively check for more cards to discard", () => {
+      game.settings.allowSkyjoForColumn = true
+      game.settings.allowSkyjoForRow = false
+
+      // First call returns cards, second call returns empty array
+      const firstCallCards = [new SkyjoCard(5), new SkyjoCard(5)]
+      const checkColumnsSpy = vi
+        .spyOn(player, "checkColumnsAndDiscard")
+        .mockReturnValueOnce(firstCallCards)
+        .mockReturnValue([])
+
+      // Mock the discardCard method
+      vi.spyOn(game, "discardCard").mockImplementation(() => {})
+
+      // Spy on the checkCardsToDiscard method to verify it's called recursively
+      const checkCardsToDiscardSpy = vi.spyOn(
+        game as any,
+        "checkCardsToDiscard",
+      )
+
+      game["checkCardsToDiscard"](player)
+
+      expect(checkColumnsSpy).toHaveBeenCalledTimes(2)
+      expect(checkCardsToDiscardSpy).toHaveBeenCalledTimes(2)
+    })
+  })
+
+  describe("haveAllPlayersRevealedCards", () => {
+    it("should return true when all players have revealed the required number of cards", () => {
+      game.settings.initialTurnedCount = 2
+
+      player.cards = [
+        [
+          new SkyjoCard(1, true),
+          new SkyjoCard(2, true),
+          new SkyjoCard(3, false),
+        ],
+        [
+          new SkyjoCard(4, false),
+          new SkyjoCard(5, false),
+          new SkyjoCard(6, false),
+        ],
+      ]
+
+      opponent.cards = [
+        [
+          new SkyjoCard(7, true),
+          new SkyjoCard(8, true),
+          new SkyjoCard(9, false),
+        ],
+        [
+          new SkyjoCard(10, false),
+          new SkyjoCard(11, false),
+          new SkyjoCard(12, false),
+        ],
+      ]
+
+      const result = game["haveAllPlayersRevealedCards"]()
+
+      expect(result).toBe(true)
+    })
+
+    it("should return false when not all players have revealed the required number of cards", () => {
+      game.settings.initialTurnedCount = 2
+
+      player.cards = [
+        [
+          new SkyjoCard(1, true),
+          new SkyjoCard(2, true),
+          new SkyjoCard(3, false),
+        ],
+        [
+          new SkyjoCard(4, false),
+          new SkyjoCard(5, false),
+          new SkyjoCard(6, false),
+        ],
+      ]
+
+      opponent.cards = [
+        [
+          new SkyjoCard(7, true),
+          new SkyjoCard(8, false),
+          new SkyjoCard(9, false),
+        ],
+        [
+          new SkyjoCard(10, false),
+          new SkyjoCard(11, false),
+          new SkyjoCard(12, false),
+        ],
+      ]
+
+      const result = game["haveAllPlayersRevealedCards"]()
+
+      expect(result).toBe(false)
+    })
+  })
+
+  describe("startRoundAfterInitialReveal", () => {
+    it("should set round phase to MAIN and set the first player to start", async () => {
+      const setFirstPlayerToStartSpy = vi
+        .spyOn(game as any, "setFirstPlayerToStart")
+        .mockResolvedValue(undefined)
+
+      await game["startRoundAfterInitialReveal"]()
+
+      expect(game.roundPhase).toBe(Constants.ROUND_PHASE.MAIN)
+      expect(setFirstPlayerToStartSpy).toHaveBeenCalled()
+    })
+  })
+
+  describe("setFirstPlayerToStart", () => {
+    beforeEach(() => {
+      vi.spyOn(
+        game["operationManager"],
+        "startPlayerAfkTimer",
+      ).mockResolvedValue()
+    })
+
+    it("should set the player with the highest score as the first player", async () => {
+      // Setup players with different scores
+      const player1 = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new SkyjoPlayer(
+        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Mock currentScoreArray to return different scores
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([1, 2, 3]) // Sum: 6
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 4, 5]) // Sum: 12
+
+      await game["setFirstPlayerToStart"]()
+
+      // Player2 has higher score, so should be first
+      expect(game.turn).toBe(1)
+    })
+
+    it("should handle tie by choosing player with highest card", async () => {
+      // Setup players with tied scores but different max values
+      const player1 = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new SkyjoPlayer(
+        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Mock currentScoreArray to return tied scores but different max values
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([2, 3, 4]) // Sum: 9, Max: 4
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
+
+      await game["setFirstPlayerToStart"]()
+
+      // Player1 has higher max card, so should be first
+      expect(game.turn).toBe(0)
+    })
+
+    it("should handle complete tie by randomizing", async () => {
+      // Setup players with identical scores
+      const player1 = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new SkyjoPlayer(
+        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Mock currentScoreArray to return identical scores
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
+
+      // Mock Math.random to return a predictable value
+      const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0.1) // Will select first player
+
+      await game["setFirstPlayerToStart"]()
+
+      // Should select player based on random value
+      expect(game.turn).toBe(0)
+      expect(randomSpy).toHaveBeenCalled()
+
+      // Reset and test with different random value
+      randomSpy.mockReset()
+      randomSpy.mockReturnValue(0.6) // Will select second player
+
+      await game["setFirstPlayerToStart"]()
+
+      // Should select player based on random value
+      expect(game.turn).toBe(1)
+    })
+
+    it("should skip disconnected players", async () => {
+      // Setup players with one disconnected
+      const player1 = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new SkyjoPlayer(
+        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      player1.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      game.players = [player1, player2]
+
+      // Mock currentScoreArray for the connected player
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([1, 2, 3])
+
+      await game["setFirstPlayerToStart"]()
+
+      // Should skip disconnected player and select player2
+      expect(game.turn).toBe(1)
+    })
+
+    it("should handle case when no players have scores", async () => {
+      // Setup players with no scores
+      const player1 = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+
+      game.players = [player1]
+
+      // Mock currentScoreArray to return empty array
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([])
+
+      await game["setFirstPlayerToStart"]()
+
+      // Should default to first player
+      expect(game.turn).toBe(0)
+    })
+  })
+
+  describe("disconnectPlayer", () => {
+    beforeEach(() => {
+      vi.spyOn(game["operationManager"], "getSocket").mockReturnValue(undefined)
+      vi.spyOn(game["operationManager"], "kickSocket").mockResolvedValue()
+      vi.spyOn(game["operationManager"], "removeGame").mockResolvedValue()
+      vi.spyOn(game, "removePlayer").mockResolvedValue()
+    })
+
+    it("should set player connection status to disconnected", async () => {
+      const player = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      game.players = [player]
+
+      await game.disconnectPlayer(player)
+
+      expect(player.connectionStatus).toBe(
+        Constants.CONNECTION_STATUS.DISCONNECTED,
+      )
+    })
+
+    it("should change admin if disconnected player is admin", async () => {
+      const player1 = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new SkyjoPlayer(
+        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+      game.adminId = player1.id
+
+      const changeAdminSpy = vi.spyOn(game, "changeAdmin")
+
+      await game.disconnectPlayer(player1)
+
+      expect(changeAdminSpy).toHaveBeenCalled()
+    })
+
+    it("should kick socket if it exists", async () => {
+      const player = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      game.players = [player]
+
+      const mockSocket = { id: "socket1" } as any
+      vi.spyOn(game["operationManager"], "getSocket").mockReturnValue(
+        mockSocket,
+      )
+      const kickSocketSpy = vi.spyOn(game["operationManager"], "kickSocket")
+
+      await game.disconnectPlayer(player)
+
+      expect(kickSocketSpy).toHaveBeenCalledWith(mockSocket)
+    })
+
+    it("should remove player if game is not playing", async () => {
+      const player = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      game.players = [player]
+      game.status = Constants.GAME_STATUS.LOBBY
+
+      const removePlayerSpy = vi.spyOn(game, "removePlayer")
+
+      await game.disconnectPlayer(player)
+
+      expect(removePlayerSpy).toHaveBeenCalledWith(player.id)
+    })
+
+    it("should stop game and remove it if not enough connected players", async () => {
+      const player1 = new SkyjoPlayer(
+        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new SkyjoPlayer(
+        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+      game.status = Constants.GAME_STATUS.PLAYING
+
+      // Mock hasMinPlayersConnected to return false
+      vi.spyOn(game, "hasMinPlayersConnected").mockReturnValue(false)
+
+      const removeGameSpy = vi.spyOn(game["operationManager"], "removeGame")
+
+      await game.disconnectPlayer(player1)
+
+      expect(game.status).toBe(Constants.GAME_STATUS.STOPPED)
+      expect(removeGameSpy).toHaveBeenCalledWith(game.code)
     })
   })
 })

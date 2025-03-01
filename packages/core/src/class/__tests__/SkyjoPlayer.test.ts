@@ -41,6 +41,9 @@ describe("SkyjoPlayer", () => {
       socketId: TEST_SOCKET_ID,
       connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
       hasPlayedLastTurn: false,
+      afkCount: 0,
+      consecutiveAfkCount: 0,
+      turnStartTime: null,
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
@@ -66,6 +69,9 @@ describe("SkyjoPlayer", () => {
       socketId: TEST_SOCKET_ID,
       connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
       hasPlayedLastTurn: false,
+      afkCount: 0,
+      consecutiveAfkCount: 0,
+      turnStartTime: null,
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
@@ -409,11 +415,36 @@ describe("SkyjoPlayer", () => {
         cards: player.cards.map((column) =>
           column.map((card) => card.toJson()),
         ),
+        turnStartTime: null,
         score: 0,
         scores: [],
         wantsReplay: false,
         connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
       })
+    })
+  })
+
+  describe("getFirstCardNotVisible", () => {
+    it("should return the position of the first card that is not visible", () => {
+      player.cards = [
+        [new SkyjoCard(1, true), new SkyjoCard(2, false)],
+        [new SkyjoCard(3, true), new SkyjoCard(4, true)],
+      ]
+      
+      const result = player.getFirstCardNotVisible()
+      
+      expect(result).toEqual({ column: 0, row: 1 })
+    })
+    
+    it("should return undefined if all cards are visible", () => {
+      player.cards = [
+        [new SkyjoCard(1, true), new SkyjoCard(2, true)],
+        [new SkyjoCard(3, true), new SkyjoCard(4, true)],
+      ]
+      
+      const result = player.getFirstCardNotVisible()
+      
+      expect(result).toBeUndefined()
     })
   })
 

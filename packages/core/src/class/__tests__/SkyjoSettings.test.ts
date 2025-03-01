@@ -157,4 +157,29 @@ describe("SkyjoSettings", () => {
       firstPlayerFlatPenalty: 0,
     })
   })
+
+  describe("constructor", () => {
+    it("should create settings with default values", () => {
+      const settings = new SkyjoSettings()
+      
+      expect(settings.private).toBe(false)
+      expect(settings.isConfirmed).toBe(false)
+      expect(settings.maxPlayers).toBe(Constants.DEFAULT_GAME_SETTINGS.MAX_PLAYERS)
+    })
+    
+    it("should create settings with private game", () => {
+      const settings = new SkyjoSettings(true)
+      
+      expect(settings.private).toBe(true)
+      expect(settings.isConfirmed).toBe(true)
+    })
+    
+    it("should create settings with custom maxPlayers", () => {
+      const customMaxPlayers = 4
+      const settings = new SkyjoSettings(false, customMaxPlayers)
+      
+      expect(settings.private).toBe(false)
+      expect(settings.maxPlayers).toBe(customMaxPlayers)
+    })
+  })
 })
