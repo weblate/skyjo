@@ -1,4 +1,3 @@
-import { mockRedis, mockSocket } from "@/socketio/services/__tests__/_mock.js"
 import { GameService } from "@/socketio/services/game.service.js"
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
 import {
@@ -10,6 +9,7 @@ import {
   type TurnStatus,
 } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import { mockRedis, mockSocket } from "@tests/_mock.js"
 import { TEST_SOCKET_ID, TEST_UNKNOWN_GAME_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 

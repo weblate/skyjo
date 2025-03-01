@@ -1,4 +1,3 @@
-import { mockRedis, mockSocket } from "@/socketio/services/__tests__/_mock.js"
 import { LobbyService } from "@/socketio/services/lobby.service.js"
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
 import {
@@ -10,6 +9,7 @@ import {
 } from "@skyjo/core"
 import { Constants as ErrorConstants } from "@skyjo/error"
 import type { UpdateGameSettings } from "@skyjo/shared/validations"
+import { mockRedis, mockSocket } from "@tests/_mock.js"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -235,7 +235,10 @@ describe("LobbyService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(true))
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(true),
+      })
       // custom settings
       game.settings.cardPerColumn = 1
       game.settings.cardPerRow = 1
@@ -323,7 +326,10 @@ describe("LobbyService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(true))
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(true),
+      })
       game.addPlayer(player)
 
       const opponent = new SkyjoPlayer(
@@ -486,7 +492,10 @@ describe("LobbyService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(true))
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(true),
+      })
       game.addPlayer(player)
 
       const opponent = new SkyjoPlayer(
@@ -586,7 +595,10 @@ describe("LobbyService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(true))
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(true),
+      })
       game.addPlayer(player)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id

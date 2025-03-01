@@ -1,4 +1,3 @@
-import { mockSocket } from "@/socketio/services/__tests__/_mock.js"
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
 import {
   Constants as CoreConstants,
@@ -7,6 +6,7 @@ import {
   SkyjoSettings,
 } from "@skyjo/core"
 import { Constants as ErrorConstants } from "@skyjo/error"
+import { mockSocket } from "@tests/_mock.js"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { ChatService } from "../chat.service.js"
@@ -75,7 +75,7 @@ describe("ChatService", () => {
         message: "Hello!",
       })
 
-      expect(socket.emit).toHaveBeenCalledOnce()
+      expect(socket.volatile.emit).toHaveBeenCalledOnce()
     })
   })
 

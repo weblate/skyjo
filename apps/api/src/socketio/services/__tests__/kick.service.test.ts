@@ -1,4 +1,3 @@
-import { mockRedis, mockSocket } from "@/socketio/services/__tests__/_mock.js"
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
 import {
   Constants as CoreConstants,
@@ -7,6 +6,7 @@ import {
   SkyjoSettings,
 } from "@skyjo/core"
 import { Constants as ErrorConstants } from "@skyjo/error"
+import { mockRedis, mockSocket } from "@tests/_mock.js"
 import { RANDOM_SOCKET_ID, TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { KickService } from "../kick.service.js"
@@ -42,7 +42,10 @@ describe("KickService", () => {
       RANDOM_SOCKET_ID(),
     )
 
-    game = new Skyjo(player.socketId, new SkyjoSettings())
+    game = new Skyjo({
+      adminId: player.socketId,
+      settings: new SkyjoSettings(),
+    })
     game.addPlayer(player)
     game.addPlayer(opponent1)
     opponent1Socket = mockSocket(opponent1.socketId)
