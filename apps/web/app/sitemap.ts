@@ -18,11 +18,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.9,
     },
     {
-      name: "create?private=true",
-      priority: 0.9,
-    },
-    {
-      name: "create?private=false",
+      name: "create",
       priority: 0.9,
     },
     {
