@@ -62,8 +62,6 @@ const ResultsPage = () => {
   }, [visibleRows.length])
 
   useEffect(() => {
-    if (game.status === CoreConstants.GAME_STATUS.STOPPED) return
-
     router.replace(getRedirectionUrl(game.code, game.status))
   }, [game.status])
 

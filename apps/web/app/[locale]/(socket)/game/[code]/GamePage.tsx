@@ -5,7 +5,6 @@ import DrawPile from "@/components/DrawPile"
 import EndRoundDialog from "@/components/EndRoundDialog"
 import GameInfo from "@/components/GameInfo"
 import { GameRules } from "@/components/GameRules"
-import GameStoppedDialog from "@/components/GameStoppedDialog"
 import MenuDropdown from "@/components/MenuDropdown"
 import OpponentBoard from "@/components/OpponentBoard"
 import OpponentsMobileView from "@/components/OpponentsMobileView"
@@ -42,11 +41,7 @@ const GamePage = () => {
   }, [isRulesOpen])
 
   useEffect(() => {
-    if (game.status === CoreConstants.GAME_STATUS.STOPPED) return
-
-    setTimeout(() => {
-      router.replace(getRedirectionUrl(game.code, game.status))
-    }, 2000)
+    router.replace(getRedirectionUrl(game.code, game.status))
   }, [game.status])
 
   return (
@@ -104,7 +99,6 @@ const GamePage = () => {
         {player && <PlayerBoard player={player} isPlayerTurn={isPlayerTurn} />}
       </div>
       <EndRoundDialog />
-      <GameStoppedDialog />
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { Constants as CoreConstants, KickVote, type Skyjo } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
 import { BaseService } from "./base.service.js"
@@ -7,12 +8,12 @@ export class KickService extends BaseService {
   private readonly kickVotes: Map<string, KickVote> = new Map()
 
   async onInitiateKickVote(socket: SkyjoSocket, targetId: string) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
     await this.initiateKickVote(socket, game, targetId)
   }
 
   async onVoteToKick(socket: SkyjoSocket, vote: boolean) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -132,12 +133,6 @@ export class KickService extends BaseService {
 
     this.kickVotes.set(game.id, kickVote)
 
-    this.sendToSocketAndRoom(socket, {
-      room: game.code,
-      event: "kick:vote",
-      data: [kickVote.toJson()],
-    })
-
     await this.checkKickVoteStatus(socket, game, kickVote)
 
     // Add timeout for vote expiration
@@ -164,16 +159,17 @@ export class KickService extends BaseService {
         await this.kickPlayer(socket, game, kickVote)
       } else {
         const playerToKick = game.getPlayerById(kickVote.targetId)
+        // istanbul ignore if --@preserve
         if (!playerToKick) return
 
-        this.sendToSocketAndRoom(socket, {
+        this.socketManager.sendToRoom({
           room: game.code,
           event: "kick:vote-failed",
           data: [playerToKick.id, playerToKick.name],
         })
       }
     } else {
-      this.sendToSocketAndRoom(socket, {
+      this.socketManager.sendToRoom({
         room: game.code,
         event: "kick:vote",
         data: [kickVote.toJson()],
@@ -204,15 +200,17 @@ export class KickService extends BaseService {
       )
     }
 
-    this.sendToSocketAndRoom(socket, {
+    const operationManager = new GameStateTracker(game)
+
+    this.socketManager.sendToRoom({
       room: game.code,
       event: "kick:vote-success",
       data: [playerToKick.id, playerToKick.name],
     })
 
-    await this.handlePlayerDisconnection(socket, game, playerToKick, {
-      force: true,
-    })
+    await game.disconnectPlayer(playerToKick)
+
+    await this.updateAndSendGame(game, operationManager)
   }
   //#endregion
 }

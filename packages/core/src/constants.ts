@@ -31,7 +31,7 @@ export class Constants {
   } as const
 
   static readonly ROUND_PHASE = {
-    TURN_CARDS: 1,
+    REVEAL_CARDS: 1,
     MAIN: 2,
     LAST_LAP: 3,
     OVER: 4,
@@ -51,6 +51,8 @@ export class Constants {
     REPLACE: 4,
     TURN: 5,
   } as const
+
+  static readonly NEW_ROUND_DELAY = 10000
 
   static readonly AVATARS = {
     BEE: "bee",
@@ -72,7 +74,7 @@ export class Constants {
 
   static readonly CONNECTION_STATUS = {
     CONNECTED: 1,
-    CONNECTION_LOST: 2,
+    LOST: 2,
     LEAVE: 3,
     DISCONNECTED: 4,
   } as const
@@ -89,10 +91,6 @@ export class Constants {
     PLAYER_JOINED: "player-joined",
     PLAYER_RECONNECT: "player-reconnect",
     PLAYER_LEFT: "player-left",
-    PLAYER_LEFT_CAN_RECONNECT: "player-left-can-reconnect",
-    PLAYER_TIMEOUT: "player-timeout",
-    PLAYER_TIMEOUT_CAN_RECONNECT: "player-timeout-can-reconnect",
-    PLAYER_RECONNECTION_EXPIRED: "player-reconnection-expired",
     WIZZ: "wizz",
   } as const
 
@@ -103,6 +101,13 @@ export class Constants {
   static readonly KICK_VOTE_THRESHOLD = 0.6 // 60%
 
   static readonly KICK_VOTE_EXPIRATION_TIME = 30000 // 30 seconds
+
+  static readonly AFK_TIMEOUT = {
+    PUBLIC: 30000,
+    PRIVATE: 120000,
+    MAX_CONSECUTIVE: 2,
+    MAX_TOTAL: 3,
+  } as const
 }
 
 export type GameStatus =

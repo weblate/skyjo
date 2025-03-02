@@ -5,18 +5,18 @@ import {
   SkyjoPlayer,
 } from "@skyjo/core"
 import { beforeEach, describe, expect, it } from "vitest"
-import { GameStateManager } from "../GameStateManager.js"
+import { GameStateTracker } from "../GameStateTracker.js"
 
-describe("GameStateManager", () => {
+describe("GameStateTracker", () => {
   let game: Skyjo
-  let manager: GameStateManager
+  let manager: GameStateTracker
 
   beforeEach(() => {
     const player = new SkyjoPlayer()
-    game = new Skyjo(player.id)
+    game = new Skyjo({ adminId: player.id })
     game.addPlayer(player)
     game.stateVersion = 1
-    manager = new GameStateManager(game)
+    manager = new GameStateTracker(game)
   })
 
   describe("getChanges", () => {
@@ -99,8 +99,7 @@ describe("GameStateManager", () => {
         const player = game.players[0]
         player.score = 10
         player.name = "John"
-        player.connectionStatus =
-          CoreConstants.CONNECTION_STATUS.CONNECTION_LOST
+        player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
         player.cards = [[new SkyjoCard(1)], [new SkyjoCard(2)]]
 
         expect(manager.getChanges()).toEqual({
@@ -109,7 +108,7 @@ describe("GameStateManager", () => {
               id: player.id,
               score: 10,
               name: "John",
-              connectionStatus: CoreConstants.CONNECTION_STATUS.CONNECTION_LOST,
+              connectionStatus: CoreConstants.CONNECTION_STATUS.LOST,
               cards: player.cards.map((row) =>
                 row.map((card) => card.toJson()),
               ),

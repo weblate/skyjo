@@ -7,6 +7,8 @@ import {
   type RoundPhase,
   type TurnStatus,
 } from "../constants.js"
+import { type GameOperationManagerInterface } from "./GameOperationManager.js"
+import { DefaultGameOperationManager } from "./GameOperationManager.js"
 import { SkyjoCard } from "./SkyjoCard.js"
 import { SkyjoPlayer } from "./SkyjoPlayer.js"
 import { SkyjoSettings } from "./SkyjoSettings.js"
@@ -31,7 +33,14 @@ interface SkyjoInterface {
   updatedAt: Date
 }
 
+export interface SkyjoConstructorParams {
+  adminId: string
+  settings?: SkyjoSettings
+}
+
 export class Skyjo implements SkyjoInterface {
+  private operationManager: GameOperationManagerInterface =
+    new DefaultGameOperationManager()
   id: string = crypto.randomUUID()
   code: string = Math.random().toString(36).substring(2, 10)
   adminId: string
@@ -45,24 +54,30 @@ export class Skyjo implements SkyjoInterface {
   selectedCardValue: number | null = null
   turnStatus: TurnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
   lastTurnStatus: LastTurnStatus = Constants.LAST_TURN_STATUS.TURN
-  roundPhase: RoundPhase = Constants.ROUND_PHASE.TURN_CARDS
+  roundPhase: RoundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
   roundNumber: number = 1
   firstToFinishPlayerId: string | null = null
+
+  processingAfk: boolean = false
 
   createdAt: Date
   updatedAt: Date
   stateVersion: number = 0
 
-  constructor(
-    adminPlayerId: string,
-    settings: SkyjoSettings = new SkyjoSettings(),
-  ) {
-    this.adminId = adminPlayerId
+  constructor({
+    adminId,
+    settings = new SkyjoSettings(),
+  }: SkyjoConstructorParams) {
+    this.adminId = adminId
     this.settings = settings
 
     const now = new Date()
     this.createdAt = now
     this.updatedAt = now
+  }
+
+  setOperationManager(operationManager: GameOperationManagerInterface) {
+    this.operationManager = operationManager
   }
 
   populate(game: SkyjoDbFormat) {
@@ -92,6 +107,10 @@ export class Skyjo implements SkyjoInterface {
     this.settings.populate(game.settings)
 
     return this
+  }
+
+  getLastDiscardCardValue() {
+    return this.discardPile[this.discardPile.length - 1]
   }
 
   getConnectedPlayers(playerIdsToExclude: string[] = []) {
@@ -129,8 +148,39 @@ export class Skyjo implements SkyjoInterface {
     this.players.push(player)
   }
 
-  removePlayer(playerId: string) {
+  async removePlayer(playerId: string) {
+    if (this.isPlaying() && this.getCurrentPlayer()?.id === playerId) {
+      await this.finishTurn({ wasAfk: false })
+    }
+
     this.players = this.players.filter((player) => player.id !== playerId)
+
+    if (
+      this.isPlaying() &&
+      this.isRoundRevealCards() &&
+      this.haveAllPlayersRevealedCards()
+    ) {
+      await this.startRoundAfterInitialReveal()
+    }
+  }
+
+  async disconnectPlayer(player: SkyjoPlayer) {
+    player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+    if (this.isAdmin(player.id)) this.changeAdmin()
+
+    const socket = this.operationManager.getSocket(player.socketId)
+    if (socket) {
+      await this.operationManager.kickSocket(socket)
+    }
+
+    if (!this.isPlaying()) {
+      await this.removePlayer(player.id)
+    } else if (!this.hasMinPlayersConnected()) {
+      this.status = Constants.GAME_STATUS.STOPPED
+
+      await this.operationManager.removeGame(this.code)
+    }
   }
 
   isAdmin(playerId: string) {
@@ -149,27 +199,26 @@ export class Skyjo implements SkyjoInterface {
   }
 
   //#region status
-  /* istanbul ignore else --@preserve */
   isInLobby() {
     return this.status === Constants.GAME_STATUS.LOBBY
   }
-  /* istanbul ignore else --@preserve */
+
   isPlaying() {
     return this.status === Constants.GAME_STATUS.PLAYING
   }
-  /* istanbul ignore else --@preserve */
+
   isFinished() {
     return this.status === Constants.GAME_STATUS.FINISHED
   }
-  /* istanbul ignore else --@preserve */
+
   isStopped() {
     return this.status === Constants.GAME_STATUS.STOPPED
   }
   //#endregion
 
   //#region roundPhase
-  isRoundTurningCards() {
-    return this.roundPhase === Constants.ROUND_PHASE.TURN_CARDS
+  isRoundRevealCards() {
+    return this.roundPhase === Constants.ROUND_PHASE.REVEAL_CARDS
   }
 
   isRoundInMain() {
@@ -196,7 +245,7 @@ export class Skyjo implements SkyjoInterface {
     )
   }
 
-  start() {
+  async start() {
     if (
       this.getConnectedPlayers().length <
       Constants.DEFAULT_GAME_SETTINGS.MIN_PLAYERS
@@ -213,24 +262,34 @@ export class Skyjo implements SkyjoInterface {
       )
     }
 
-    this.resetRound()
-    this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
-    if (this.settings.initialTurnedCount === 0)
-      this.roundPhase = Constants.ROUND_PHASE.MAIN
-
-    this.status = Constants.GAME_STATUS.PLAYING
-    this.turn = Math.floor(Math.random() * this.players.length)
+    await this.resetRound()
   }
 
-  haveAllPlayersRevealedCards() {
-    return this.getConnectedPlayers().every((player) =>
-      player.hasRevealedCardCount(this.settings.initialTurnedCount),
+  async revealCard({
+    player,
+    column,
+    row,
+    wasAfk = false,
+  }: { player: SkyjoPlayer; column: number; row: number; wasAfk?: boolean }) {
+    if (
+      !this.isPlaying() ||
+      !this.isRoundRevealCards() ||
+      player.hasRevealedCardCount(this.settings.initialTurnedCount)
     )
-  }
+      return
 
-  startRoundAfterInitialReveal() {
-    this.roundPhase = Constants.ROUND_PHASE.MAIN
-    this.setFirstPlayerToStart()
+    if (!wasAfk) {
+      player.consecutiveAfkCount = 0
+    }
+
+    player.turnCard(column, row)
+
+    if (player.hasRevealedCardCount(this.settings.initialTurnedCount)) {
+      player.turnStartTime = null
+
+      if (this.haveAllPlayersRevealedCards())
+        await this.startRoundAfterInitialReveal()
+    }
   }
 
   drawCard() {
@@ -252,99 +311,88 @@ export class Skyjo implements SkyjoInterface {
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.PICK_FROM_DISCARD_PILE
   }
 
-  discardCard(value: number) {
+  discardSelectedCard(value: number) {
     this.discardPile.push(value)
     this.selectedCardValue = null
+  }
+
+  discardCard(value: number) {
+    this.discardSelectedCard(value)
 
     this.turnStatus = Constants.TURN_STATUS.TURN_A_CARD
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.THROW
   }
 
-  replaceCard(column: number, row: number) {
+  async replaceCard({
+    column,
+    row,
+    wasAfk,
+  }: {
+    column: number
+    row: number
+    wasAfk?: boolean
+  }) {
     const player = this.getCurrentPlayer()
+
     const oldCardValue = player.cards[column][row].value
     player.replaceCard(column, row, this.selectedCardValue!)
-    this.selectedCardValue = null
-    this.discardCard(oldCardValue)
+
+    this.discardSelectedCard(oldCardValue)
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.REPLACE
+
+    await this.finishTurn({ wasAfk })
   }
 
-  turnCard(player: SkyjoPlayer, column: number, row: number) {
+  async turnCard({
+    player,
+    column,
+    row,
+    wasAfk = true,
+  }: {
+    player: SkyjoPlayer
+    column: number
+    row: number
+    wasAfk?: boolean
+  }) {
     player.turnCard(column, row)
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
+
+    await this.finishTurn({ wasAfk })
   }
 
-  getLastDiscardCardValue() {
-    return this.discardPile[this.discardPile.length - 1]
-  }
-
-  nextTurn() {
+  async finishTurn({ wasAfk = false }: { wasAfk?: boolean }) {
     const currentPlayer = this.getCurrentPlayer()
-
-    this.checkCardsToDiscard(currentPlayer)
-
-    this.checkAndSetFirstPlayerToFinish(currentPlayer)
-
-    if (this.roundPhase === Constants.ROUND_PHASE.LAST_LAP) {
-      currentPlayer.hasPlayedLastTurn = true
-      this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
-      currentPlayer.turnAllCards()
-
-      this.checkEndOfRound()
-    }
-
-    this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
-    this.turn = this.getNextTurn()
-  }
-
-  checkEndOfRound() {
-    const allPlayersHavePlayedLastTurn = this.getConnectedPlayers().every(
-      (player) => player.hasPlayedLastTurn,
+    currentPlayer.turnStartTime = null
+    await this.operationManager.cancelPlayerAfkTimer(
+      this.code,
+      currentPlayer.id,
     )
 
-    if (allPlayersHavePlayedLastTurn) this.endRound()
-  }
+    if (!wasAfk) currentPlayer.consecutiveAfkCount = 0
 
-  endRound() {
-    this.players.forEach((player) => {
-      player.turnAllCards()
-      this.checkCardsToDiscard(player)
-      player.finalRoundScore()
-    })
+    this.nextTurn()
 
-    this.checkFirstPlayerPenalty()
-
-    this.roundPhase = Constants.ROUND_PHASE.OVER
-
-    this.checkEndOfGame()
-  }
-
-  shouldRestartRound() {
-    return this.roundPhase === Constants.ROUND_PHASE.OVER && !this.isFinished()
-  }
-
-  startNewRound() {
-    this.roundNumber++
-    this.initializeRound()
-  }
-
-  restartGameIfAllPlayersWantReplay() {
-    if (this.getConnectedPlayers().every((player) => player.wantsReplay)) {
-      this.resetRound()
-      this.status = Constants.GAME_STATUS.LOBBY
-      this.stateVersion = 0
-      this.updatedAt = new Date()
-      this.turn = 0
-
-      // allow admin to change settings again
-      this.settings.isConfirmed = false
+    if (this.shouldStartNewRound()) {
+      await this.operationManager.delayNewRound(
+        this,
+        // istanbul ignore next --@preserve
+        async () => await this.startNewRound(),
+        Constants.NEW_ROUND_DELAY,
+      )
+    } else {
+      const newCurrentPlayer = this.getCurrentPlayer()
+      newCurrentPlayer.turnStartTime = new Date()
+      await this.operationManager.startPlayerAfkTimer(this, newCurrentPlayer.id)
     }
   }
 
-  resetRound() {
-    this.roundNumber = 1
-    this.resetPlayers()
-    this.initializeRound()
+  async togglePlayerReplay(playerId: string) {
+    const player = this.getPlayerById(playerId)
+    if (!player) return
+
+    player.toggleReplay()
+
+    if (this.shouldStartNewGame()) await this.startNewGame()
   }
 
   toJson() {
@@ -382,6 +430,9 @@ export class Skyjo implements SkyjoInterface {
         connectionStatus: player.connectionStatus,
         scores: player.scores,
         hasPlayedLastTurn: player.hasPlayedLastTurn,
+        afkCount: player.afkCount,
+        consecutiveAfkCount: player.consecutiveAfkCount,
+        turnStartTime: player.turnStartTime,
         cards: player.cards.map((column) =>
           column.map((card) => ({
             id: card.id,
@@ -422,6 +473,22 @@ export class Skyjo implements SkyjoInterface {
 
   //#region private methods
 
+  private shufflePile(pile: number[], times = 3): number[] {
+    const shuffledArray = [...pile]
+
+    for (let i = shuffledArray.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[shuffledArray[i], shuffledArray[j]] = [
+        shuffledArray[j],
+        shuffledArray[i],
+      ]
+    }
+
+    return times > 0
+      ? this.shufflePile(shuffledArray, times - 1)
+      : shuffledArray
+  }
+
   private initializeCardPiles() {
     const defaultCards = [
       ...Array(5).fill(-2),
@@ -458,24 +525,38 @@ export class Skyjo implements SkyjoInterface {
     })
   }
 
-  private initializeRound() {
+  private async initializeRound() {
     this.firstToFinishPlayerId = null
     this.selectedCardValue = null
+    this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
+    this.status = Constants.GAME_STATUS.PLAYING
     this.initializeCardPiles()
     this.resetRoundPlayers()
 
-    // Give to each player 12 cards
     this.givePlayersCards()
-
     // Turn first card from faceoff pile to discard pile
     this.discardPile.push(this.drawPile.shift()!)
 
-    this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
-
-    if (this.settings.initialTurnedCount === 0)
+    if (this.settings.initialTurnedCount === 0) {
       this.roundPhase = Constants.ROUND_PHASE.MAIN
-    else this.roundPhase = Constants.ROUND_PHASE.TURN_CARDS
+      await this.finishTurn({ wasAfk: false })
+    } else {
+      this.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+      await this.operationManager.startRevealCardsAfkTimer(this)
+    }
+  }
+
+  private resetPlayers() {
+    this.removeDisconnectedPlayers()
+
+    this.getConnectedPlayers().forEach((player) => player.reset())
+  }
+
+  private async resetRound() {
+    this.roundNumber = 1
+    this.resetPlayers()
+    await this.initializeRound()
   }
 
   private reloadDrawPile() {
@@ -484,7 +565,7 @@ export class Skyjo implements SkyjoInterface {
     this.discardPile = [lastCardOfDiscardPile]
   }
 
-  private setFirstPlayerToStart() {
+  private async setFirstPlayerToStart() {
     const playersScore = this.players.map((player, i) => {
       if (player.connectionStatus === Constants.CONNECTION_STATUS.DISCONNECTED)
         return undefined
@@ -522,6 +603,20 @@ export class Skyjo implements SkyjoInterface {
     }, playersScore[0])
 
     this.turn = playerToStart!.index
+    const currentPlayer = this.getCurrentPlayer()
+    currentPlayer.turnStartTime = new Date()
+    await this.operationManager.startPlayerAfkTimer(this, currentPlayer.id)
+  }
+
+  private haveAllPlayersRevealedCards() {
+    return this.getConnectedPlayers().every((player) =>
+      player.hasRevealedCardCount(this.settings.initialTurnedCount),
+    )
+  }
+
+  private async startRoundAfterInitialReveal() {
+    this.roundPhase = Constants.ROUND_PHASE.MAIN
+    await this.setFirstPlayerToStart()
   }
 
   private checkCardsToDiscard(player: SkyjoPlayer) {
@@ -537,21 +632,23 @@ export class Skyjo implements SkyjoInterface {
     if (cardsToDiscard.length > 0) {
       cardsToDiscard.forEach((card) => this.discardCard(card.value))
 
-      if (this.settings.allowSkyjoForColumn && this.settings.allowSkyjoForRow)
-        this.checkCardsToDiscard(player)
+      this.checkCardsToDiscard(player)
     }
   }
 
-  private checkAndSetFirstPlayerToFinish(player: SkyjoPlayer) {
-    // check if the player has turned all his cards
-    const hasPlayerFinished = player.hasRevealedCardCount(
-      player.cards.flat().length,
-    )
+  private hasPlayerFinished(player: SkyjoPlayer) {
+    return player.hasRevealedCardCount(player.cards.flat().length)
+  }
 
-    if (hasPlayerFinished && !this.firstToFinishPlayerId) {
-      this.firstToFinishPlayerId = player.id
-      this.roundPhase = Constants.ROUND_PHASE.LAST_LAP
-    }
+  private shouldSetFirstPlayerToFinish(player: SkyjoPlayer) {
+    const hasPlayerFinished = this.hasPlayerFinished(player)
+
+    return hasPlayerFinished && !this.firstToFinishPlayerId
+  }
+
+  private setFirstPlayerToFinish(player: SkyjoPlayer) {
+    this.firstToFinishPlayerId = player.id
+    this.roundPhase = Constants.ROUND_PHASE.LAST_LAP
   }
 
   private getNextTurn() {
@@ -569,12 +666,6 @@ export class Skyjo implements SkyjoInterface {
 
   private removeDisconnectedPlayers() {
     this.players = this.getConnectedPlayers()
-  }
-
-  private resetPlayers() {
-    this.removeDisconnectedPlayers()
-
-    this.getConnectedPlayers().forEach((player) => player.reset())
   }
 
   private checkFirstPlayerPenalty() {
@@ -634,31 +725,82 @@ export class Skyjo implements SkyjoInterface {
     return score + this.settings.firstPlayerFlatPenalty
   }
 
-  private checkEndOfGame() {
-    if (
-      this.getConnectedPlayers().some(
-        (player) => player.score >= this.settings.scoreToEndGame,
-      )
-    ) {
-      this.roundPhase = Constants.ROUND_PHASE.OVER
-      this.status = Constants.GAME_STATUS.FINISHED
-    }
+  private shouldEndGame() {
+    return this.getConnectedPlayers().some(
+      (player) => player.score >= this.settings.scoreToEndGame,
+    )
   }
 
-  private shufflePile(pile: number[], times = 3): number[] {
-    const shuffledArray = [...pile]
+  private endGame() {
+    this.roundPhase = Constants.ROUND_PHASE.OVER
+    this.status = Constants.GAME_STATUS.FINISHED
+  }
 
-    for (let i = shuffledArray.length - 1; i > 0; i--) {
-      const j = Math.floor(Math.random() * (i + 1))
-      ;[shuffledArray[i], shuffledArray[j]] = [
-        shuffledArray[j],
-        shuffledArray[i],
-      ]
+  private shouldEndRound() {
+    const allPlayersHavePlayedLastTurn = this.getConnectedPlayers().every(
+      (player) => player.hasPlayedLastTurn,
+    )
+
+    return allPlayersHavePlayedLastTurn
+  }
+
+  private endRound() {
+    this.players.forEach((player) => {
+      player.turnAllCards()
+      this.checkCardsToDiscard(player)
+      player.finalRoundScore()
+    })
+
+    this.checkFirstPlayerPenalty()
+
+    this.roundPhase = Constants.ROUND_PHASE.OVER
+
+    if (this.shouldEndGame()) this.endGame()
+  }
+
+  private nextTurn() {
+    const currentPlayer = this.getCurrentPlayer()
+
+    this.checkCardsToDiscard(currentPlayer)
+
+    if (this.shouldSetFirstPlayerToFinish(currentPlayer)) {
+      this.setFirstPlayerToFinish(currentPlayer)
     }
 
-    return times > 0
-      ? this.shufflePile(shuffledArray, times - 1)
-      : shuffledArray
+    if (this.isRoundInLastLap()) {
+      currentPlayer.hasPlayedLastTurn = true
+      this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
+      currentPlayer.turnAllCards()
+
+      if (this.shouldEndRound()) this.endRound()
+    }
+
+    this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
+    this.turn = this.getNextTurn()
+  }
+
+  private shouldStartNewRound() {
+    return this.roundPhase === Constants.ROUND_PHASE.OVER && !this.isFinished()
+  }
+
+  private async startNewRound() {
+    this.roundNumber++
+    await this.initializeRound()
+  }
+
+  private shouldStartNewGame() {
+    return this.getConnectedPlayers().every((player) => player.wantsReplay)
+  }
+
+  private async startNewGame() {
+    await this.resetRound()
+    this.status = Constants.GAME_STATUS.LOBBY
+    this.stateVersion = 0
+    this.updatedAt = new Date()
+    this.turn = 0
+
+    // allow admin to change settings again
+    this.settings.isConfirmed = false
   }
 
   //#endregion

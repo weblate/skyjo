@@ -1,4 +1,3 @@
-import { Constants as SharedConstants } from "@skyjo/shared/constants"
 import { LastGame } from "@skyjo/shared/validations"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
@@ -12,9 +11,7 @@ export const addReconnectionDateToLastGame = () => {
   if (!lastGameString) return
   const lastGame = JSON.parse(lastGameString) as LastGame
 
-  const maxDateToReconnect = dayjs()
-    .add(SharedConstants.CONNECTION_LOST_TIMEOUT_IN_MS, "milliseconds")
-    .format()
+  const maxDateToReconnect = dayjs().add(5, "minutes").format()
 
   localStorage.setItem(
     "lastGame",

@@ -219,9 +219,7 @@
     "PlayerBoard": {
       "you": "Tú"
     },
-    "OpponentBoard": {
-      "connection-lost": "Conexión perdida"
-    },
+    "OpponentBoard": {},
     "OpponentsMobileView": {
       "opponents-list": {
         "title": "Contrincantes:"
@@ -411,10 +409,6 @@
         "avatars": "Avatars creados por Freepik - Flaticon"
       }
     },
-    "GameStoppedDialog": {
-      "description": "La partida se ha detenido porque no hay suficientes jugadores",
-      "title": "Partida detenida"
-    },
     "RulesDialog": {
       "title": "Reglas del juego",
       "trigger": {
@@ -517,11 +511,7 @@
       "player-already-muted": "{username} ya está silenciado",
       "player-muted": "{username} está silenciado",
       "player-not-muted": "{username} no está silenciado",
-      "player-unmuted": "{username} ya no está silenciado",
-      "player-left-can-reconnect": "{username} abandonó el juego y tiene {time} segundos para reconectarse",
-      "player-timeout": "{username} perdió la conexión",
-      "player-timeout-can-reconnect": "{username} perdió la conexión y tiene {time} segundos para reconectarse",
-      "player-reconnection-expired": "{username} ha sido eliminado del juego porque el tiempo de reconexión ha expirado"
+      "player-unmuted": "{username} ya no está silenciado"
     },
     "avatar": {
       "bee": "abeja",

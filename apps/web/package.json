@@ -49,6 +49,7 @@
     "react-use": "^17.5.1",
     "socket.io-client": "^4.8.1",
     "socket.io-msgpack-parser": "^3.0.2",
+    "sonner": "^2.0.1",
     "tailwind-merge": "^2.5.5",
     "tailwindcss-animate": "^1.0.7",
     "vaul": "^1.1.1",

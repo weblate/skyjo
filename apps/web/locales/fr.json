@@ -307,10 +307,6 @@
       "first-player-multiplier-penalty": "Multiplicateur de pénalité : {value}",
       "first-player-flat-penalty": "Pénalité plate : {value}"
     },
-    "GameStoppedDialog": {
-      "title": "La partie s'est arrêtée",
-      "description": "La partie a été arrêtée car il n'y a plus assez de joueurs"
-    },
     "LanguageCombobox": {
       "select-language": "Sélectionner la langue",
       "search-language": "Rechercher une langue",
@@ -332,7 +328,7 @@
       "settings": "Paramètres"
     },
     "OpponentBoard": {
-      "connection-lost": "Connexion perdue"
+      "disconnected": "Le joueur a quitté la partie. Un bot jouera pour lui pendant les prochains tours jusqu'à sa reconnexion."
     },
     "OpponentsMobileView": {
       "opponents-list": {
@@ -535,6 +531,20 @@
         "description": "Les joueurs ont voté pour vous expulser de la partie."
       }
     },
+    "AfkKick": {
+      "warning": {
+        "title": "Inactivité détectée",
+        "description": "Vous allez être expulsé de la partie si vous restez inactif."
+      },
+      "kicked": {
+        "title": "Expulsé pour inactivité",
+        "description": "Vous avez été expulsé de la partie pour trop d'AFK."
+      },
+      "player-kicked": {
+        "title": "Joueur expulsé",
+        "description": "{playerName} a été expulsé de la partie pour trop d'AFK."
+      }
+    },
     "AppearanceSelect": {
       "light": "Clair",
       "system": "Système",
@@ -561,10 +571,6 @@
     "chat": {
       "player-joined": "{username} a rejoint la partie",
       "player-left": "{username} a quitté la partie",
-      "player-left-can-reconnect": "{username} a quitté la partie et dispose de {time} secondes pour se reconnecter",
-      "player-timeout": "{username} a perdu la connexion",
-      "player-timeout-can-reconnect": "{username} a perdu la connexion et dispose de {time} secondes pour se reconnecter",
-      "player-reconnection-expired": "{username} a été retiré du jeu car le temps de reconnexion a expiré",
       "player-reconnect": "{username} s'est reconnecté",
       "argument-required": "Un ou des arguments sont requis pour la commande : {command}",
       "player-already-muted": "{username} est déjà muet",

@@ -1,4 +1,3 @@
-import { mockSocket } from "@/socketio/services/__tests__/_mock.js"
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
 import {
   Constants as CoreConstants,
@@ -7,6 +6,7 @@ import {
   SkyjoSettings,
 } from "@skyjo/core"
 import { Constants as ErrorConstants } from "@skyjo/error"
+import { mockSocket } from "@tests/_mock.js"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { ChatService } from "../chat.service.js"
@@ -32,7 +32,10 @@ describe("ChatService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo(opponent.id, new SkyjoSettings(false))
+      const game = new Skyjo({
+        adminId: opponent.id,
+        settings: new SkyjoSettings(false),
+      })
       game.addPlayer(opponent)
 
       socket.data.gameCode = game.code
@@ -51,7 +54,10 @@ describe("ChatService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(false))
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
       game.addPlayer(player)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
@@ -69,7 +75,7 @@ describe("ChatService", () => {
         message: "Hello!",
       })
 
-      expect(socket.emit).toHaveBeenCalledOnce()
+      expect(socket.volatile.emit).toHaveBeenCalledOnce()
     })
   })
 
@@ -79,7 +85,10 @@ describe("ChatService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo(opponent.id, new SkyjoSettings(false))
+      const game = new Skyjo({
+        adminId: opponent.id,
+        settings: new SkyjoSettings(false),
+      })
       game.addPlayer(opponent)
 
       socket.data.gameCode = game.code
@@ -98,7 +107,10 @@ describe("ChatService", () => {
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo(player.id, new SkyjoSettings(false))
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
       game.addPlayer(player)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id

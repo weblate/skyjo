@@ -17,7 +17,7 @@ const GameInfo = () => {
 
     if (
       game.status === CoreConstants.GAME_STATUS.PLAYING &&
-      game.roundPhase === CoreConstants.ROUND_PHASE.TURN_CARDS
+      game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS
     ) {
       if (hasRevealedCardCount(player, game.settings.initialTurnedCount)) {
         return t("waiting-opponents-to-turn-cards", {
@@ -74,7 +74,7 @@ const GameInfo = () => {
           </m.p>
         )}
         {isPlayerTurn &&
-          (game.roundPhase === CoreConstants.ROUND_PHASE.TURN_CARDS ||
+          (game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS ||
             game.roundPhase === CoreConstants.ROUND_PHASE.MAIN ||
             game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP) && (
             <m.p

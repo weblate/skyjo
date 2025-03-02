@@ -1,4 +1,4 @@
-import { GameRepository } from "@skyjo/cache"
+import { GameRepository } from "@/redis/game.repository.js"
 import type { Skyjo, SkyjoPlayer } from "@skyjo/core"
 import type { PublicGame, PublicGameTag } from "@skyjo/shared/types"
 

@@ -9,7 +9,7 @@ export class ChatService extends BaseService {
     socket: SkyjoSocket,
     { username, message }: Omit<UserChatMessage, "id" | "type">,
   ) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
 
     if (!game.getPlayerById(socket.data.playerId)) {
       throw new CError(`Player try to send a message but is not found.`, {
@@ -32,12 +32,12 @@ export class ChatService extends BaseService {
       type: CoreConstants.USER_MESSAGE_TYPE,
     }
 
-    socket.to(game.code).emit("message", newMessage)
-    socket.emit("message", newMessage)
+    socket.to(game.code).volatile.emit("message", newMessage)
+    socket.volatile.emit("message", newMessage)
   }
 
   async onWizz(socket: SkyjoSocket, targetUsername: string) {
-    const game = await this.redis.getGame(socket.data.gameCode)
+    const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -52,6 +52,8 @@ export class ChatService extends BaseService {
       })
     }
 
-    socket.to(socket.data.gameCode).emit("wizz", targetUsername, player.name)
+    socket
+      .to(socket.data.gameCode)
+      .volatile.emit("wizz", targetUsername, player.name)
   }
 }

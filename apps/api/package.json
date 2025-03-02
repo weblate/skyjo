@@ -16,14 +16,15 @@
   "dependencies": {
     "@hono/node-server": "^1.13.7",
     "@hono/zod-validator": "^0.4.1",
-    "@skyjo/cache": "workspace:*",
     "@skyjo/core": "workspace:*",
     "@skyjo/error": "workspace:*",
     "@skyjo/logger": "workspace:*",
     "@skyjo/shared": "workspace:*",
     "@skyjo/state-operations": "workspace:*",
+    "bullmq": "^5.40.2",
     "hono": "^4.6.12",
     "rate-limiter-flexible": "^5.0.4",
+    "redis": "^4.7.0",
     "socket.io": "^4.8.1",
     "socket.io-msgpack-parser": "^3.0.2",
     "zod": "^3.23.8"

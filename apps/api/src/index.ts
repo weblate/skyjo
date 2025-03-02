@@ -6,15 +6,21 @@ import { Hono } from "hono"
 import "@env"
 
 const app = new Hono()
-
 const port = 3001
 
-const server = serve({
-  fetch: app.fetch,
-  port,
-})
+try {
+  const server = serve({
+    fetch: app.fetch,
+    port,
+  })
 
-initializeSocketServer(server)
-initializeHttpServer(app)
+  initializeSocketServer(server)
+  initializeHttpServer(app)
 
-Logger.info(`Server started on port ${port}`)
+  Logger.info(`Server started on port ${port}`)
+} catch (error) {
+  Logger.error("Failed to start server:", {
+    error,
+  })
+  process.exit(1)
+}

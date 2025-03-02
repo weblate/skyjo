@@ -1,4 +1,5 @@
 import { CardTable } from "@/components/CardTable"
+import { TurnTimer } from "@/components/TurnTimer"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSkyjo } from "@/contexts/SkyjoContext"
 import { cn } from "@/lib/utils"
@@ -18,7 +19,7 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
   const tp = useTranslations("components.PlayerBoard")
 
   const showSelectionAnimation =
-    game.roundPhase === CoreConstants.ROUND_PHASE.TURN_CARDS ||
+    game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS ||
     (isPlayerTurn &&
       (game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD ||
         game.turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD ||
@@ -35,18 +36,24 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
         showSelectionAnimation={showSelectionAnimation}
         size={settings.gameBoardSize}
       />
-      <Image
-        src={`/avatars/${player.avatar}.svg`}
-        width={32}
-        height={32}
-        alt={ta(player.avatar)}
-        title={ta(player.avatar)}
-        className={cn(
-          "mt-4 select-none dark:opacity-75",
-          isPlayerTurn && "animate-bounce",
-        )}
-        priority
-      />
+      <div className="relative">
+        <TurnTimer
+          className="absolute bottom-2 left-[200%]"
+          turnStartTime={player.turnStartTime}
+        />
+        <Image
+          src={`/avatars/${player.avatar}.svg`}
+          width={32}
+          height={32}
+          alt={ta(player.avatar)}
+          title={ta(player.avatar)}
+          className={cn(
+            "mt-4 select-none dark:opacity-75",
+            isPlayerTurn && "animate-bounce",
+          )}
+          priority
+        />
+      </div>
       <p
         className={cn(
           "text-center select-none text-sm text-black dark:text-dark-font",

@@ -3,6 +3,7 @@ export * from "./class/Skyjo.js"
 export * from "./class/SkyjoCard.js"
 export * from "./class/SkyjoPlayer.js"
 export * from "./class/SkyjoSettings.js"
+export * from "./class/GameOperationManager.js"
 
 export * from "./types/kickVote.js"
 export * from "./types/skyjo.js"

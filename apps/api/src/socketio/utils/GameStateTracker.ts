@@ -4,9 +4,8 @@ import {
   createStateOperations,
 } from "@skyjo/state-operations"
 
-export class GameStateManager {
+export class GameStateTracker {
   private previousState: SkyjoToJson
-
   private readonly game: Skyjo
 
   constructor(game: Skyjo) {

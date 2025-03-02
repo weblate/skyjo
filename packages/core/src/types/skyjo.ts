@@ -42,6 +42,9 @@ export type SkyjoDbFormat = {
     connectionStatus: ConnectionStatus
     scores: SkyjoPlayerScores
     hasPlayedLastTurn: boolean
+    afkCount: number
+    consecutiveAfkCount: number
+    turnStartTime: Date | null
     cards: Array<
       Array<{
         id: string

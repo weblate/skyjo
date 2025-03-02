@@ -1,6 +1,6 @@
+import { ENV } from "@env"
 import { Logger } from "@skyjo/logger"
 import { type RedisClientType, createClient } from "redis"
-import { ENV } from "../env.js"
 
 export abstract class RedisClient {
   private static instance: RedisClientType | null = null

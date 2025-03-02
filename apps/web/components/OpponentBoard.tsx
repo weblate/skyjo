@@ -10,9 +10,10 @@ import {
 import { cn } from "@/lib/utils"
 import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
 import { ClassValue } from "clsx"
-import { AlertTriangleIcon } from "lucide-react"
+import { UserXIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
+import { TurnTimer } from "./TurnTimer"
 
 type OpponentBoardProps = {
   opponent: SkyjoPlayerToJson
@@ -36,35 +37,41 @@ const OpponentBoard = ({
       )}
     >
       <ContextMenu>
-        <ContextMenuTrigger className="flex flex-col items-center">
-          <Image
-            src={`/avatars/${opponent.avatar}.svg`}
-            width={32}
-            height={32}
-            alt={ta(opponent.avatar)}
-            title={ta(opponent.avatar)}
-            className={cn(
-              "select-none dark:opacity-75",
-              isPlayerTurn && "animate-bounce",
-            )}
-            priority
-          />
+        <ContextMenuTrigger className="flex flex-col items-center mb-2">
+          <div className="relative">
+            <TurnTimer
+              className="absolute top-2 left-[200%]"
+              turnStartTime={opponent.turnStartTime}
+            />
+            <Image
+              src={`/avatars/${opponent.avatar}.svg`}
+              width={32}
+              height={32}
+              alt={ta(opponent.avatar)}
+              title={ta(opponent.avatar)}
+              className={cn(
+                "select-none dark:opacity-75",
+                isPlayerTurn && "animate-bounce",
+              )}
+              priority
+            />
+          </div>
           <p
             className={cn(
-              "text-center select-none text-sm text-black dark:text-dark-font mb-2 flex flex-row items-center gap-1",
+              "text-center select-none text-sm text-black dark:text-dark-font flex flex-row items-center gap-1",
               isPlayerTurn && "font-semibold",
             )}
           >
             {opponent.name}
             {opponent.connectionStatus ===
-              CoreConstants.CONNECTION_STATUS.CONNECTION_LOST && (
+              CoreConstants.CONNECTION_STATUS.LEAVE && (
               <TooltipProvider delayDuration={200}>
                 <Tooltip>
                   <TooltipTrigger className="relative">
-                    <AlertTriangleIcon size={16} className="text-yellow-700" />
+                    <UserXIcon size={16} className="text-yellow-600" />
                   </TooltipTrigger>
                   <TooltipContent>
-                    <p>{to("connection-lost")}</p>
+                    <p>{to("disconnected")}</p>
                   </TooltipContent>
                 </Tooltip>
               </TooltipProvider>
