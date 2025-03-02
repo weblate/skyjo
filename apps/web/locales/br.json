@@ -236,13 +236,6 @@
     }
   },
   "components": {
-    "GameStoppedDialog": {
-      "title": "Paouezet eo bet ar c'hoariadenn",
-      "description": "Paouezet eo bet ar c'hoariadenn dre ma n'eus ket trawalc'h a c'hoarierien ken"
-    },
-    "OpponentBoard": {
-      "connection-lost": "Kollet eo bet ar c'hennask"
-    },
     "Rules": {
       "round-start": {
         "choice-1": {
@@ -576,12 +569,8 @@
       "game-ended": "C'hoariadenn echuet!"
     },
     "chat": {
-      "player-reconnection-expired": "{username} a zo bet skarzhet abalamour eo diamzeret h⋅e brantad adkennaskañ",
       "player-joined": "{username} a zo deuet-tre",
       "player-left": "{username} a zo aet kuit",
-      "player-left-can-reconnect": "{username} a zo aet kuit ha [time} eilenn en/he deus evit dont en-dro",
-      "player-timeout": "{username} en/he deus kollet ar c'hennask",
-      "player-timeout-can-reconnect": "{username} en/he deus kollet ar c'hennask ha {time} eilenn en/he deus evit adkennaskañ",
       "player-reconnect": "{username} a zo adkennasket",
       "argument-required": "Un arguzenn pe meur a hini a zo goulennet gant an urzhiad: {command}",
       "player-already-muted": "Mudet eo {username} endeo",
