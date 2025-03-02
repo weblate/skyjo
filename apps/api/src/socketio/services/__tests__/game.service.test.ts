@@ -9,7 +9,12 @@ import {
   type TurnStatus,
 } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import { mockRedis, mockSocket } from "@tests/_mock.js"
+import {
+  mockGameOperationManager,
+  mockRedisInService,
+  mockSocket,
+  mockSocketManagerInService,
+} from "@tests/_mock.js"
 import { TEST_SOCKET_ID, TEST_UNKNOWN_GAME_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -19,7 +24,8 @@ describe("GameService", () => {
 
   beforeEach(() => {
     service = new GameService()
-    mockRedis(service)
+    mockRedisInService(service)
+    mockSocketManagerInService(service)
 
     socket = mockSocket()
   })
@@ -69,6 +75,54 @@ describe("GameService", () => {
       )
     })
 
+    it("should get the game if the client state version is null and it's the first time the client get the game", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        "socketId132312",
+      )
+      const newGame = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      newGame.addPlayer(player)
+      socket.data.gameCode = newGame.code
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(newGame))
+
+      await service.onGet(socket, null, true)
+
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        newGame,
+      )
+    })
+
+    it("should get the game if the client state version is null and throw if it's not the first time the client get the game", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        "socketId132312",
+      )
+      const newGame = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      newGame.addPlayer(player)
+      socket.data.gameCode = newGame.code
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(newGame))
+
+      await expect(
+        service.onGet(socket, null, false),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.STATE_VERSION_NULL)
+
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        newGame,
+      )
+    })
+
     it("should not get the game if the client state version is ahead of the server", async () => {
       const player = new SkyjoPlayer(
         { username: "player", avatar: CoreConstants.AVATARS.BEE },
@@ -89,7 +143,11 @@ describe("GameService", () => {
         service.onGet(socket, aheadStateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.STATE_VERSION_AHEAD)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", newGame.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        newGame,
+      )
     })
 
     it("should get the game if the client state version is behind the server", async () => {
@@ -114,7 +172,14 @@ describe("GameService", () => {
         service.onGet(socket, behindStateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.STATE_VERSION_BEHIND)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game:fix", [])
+      expect(service["socketManager"].sendToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket,
+        {
+          event: "game:fix",
+          data: [[]],
+        },
+      )
     })
   })
 
@@ -146,7 +211,39 @@ describe("GameService", () => {
       expect(socket.emit).not.toHaveBeenCalled()
     })
 
-    it("should throw if game is not started", async () => {
+    it("should do nothing if current game is processing reveal cards for AFK players", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      game.addPlayer(player)
+
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      const opponent = new SkyjoPlayer(
+        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socketId132312",
+      )
+      game.addPlayer(opponent)
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      game.processingAfk = true
+
+      await expect(
+        service.onRevealCard(socket, { column: 0, row: 0 }, game.stateVersion),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
+
+      expect(service["socketManager"].sendToSocket).not.toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).not.toHaveBeenCalled()
+    })
+
+    it("should do nothing if game is not started", async () => {
       const player = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
@@ -170,9 +267,10 @@ describe("GameService", () => {
 
       await expect(
         service.onRevealCard(socket, { column: 0, row: 0 }, game.stateVersion),
-      ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
+      ).resolves.not.toThrow()
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendToSocket).not.toHaveBeenCalled()
+      expect(game.status).toBe(CoreConstants.GAME_STATUS.LOBBY)
     })
 
     it("should not reveal the card if player already revealed the right card amount", async () => {
@@ -191,7 +289,7 @@ describe("GameService", () => {
         "socketId132312",
       )
       game.addPlayer(opponent)
-      game.start()
+      await game.start()
       player.turnCard(0, 0)
       player.turnCard(0, 1)
 
@@ -231,7 +329,7 @@ describe("GameService", () => {
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      game.start()
+      await game.start()
       player.turnCard(0, 0)
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -269,7 +367,7 @@ describe("GameService", () => {
       game.addPlayer(opponent2)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -279,6 +377,38 @@ describe("GameService", () => {
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_NOT_FOUND)
 
       expect(socket.emit).not.toHaveBeenCalled()
+    })
+
+    it("should throw if current game is processing afk player move", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      game.addPlayer(player)
+
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      const opponent = new SkyjoPlayer(
+        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socketId132312",
+      )
+      game.addPlayer(opponent)
+
+      game.processingAfk = true
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(
+        service.onPickCard(socket, { pile: "draw" }, game.stateVersion),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
+
+      expect(service["socketManager"].sendToSocket).not.toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).not.toHaveBeenCalled()
     })
 
     it("should throw if game is not started", async () => {
@@ -307,7 +437,11 @@ describe("GameService", () => {
         service.onPickCard(socket, { pile: "draw" }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should throw if it's not the player turn", async () => {
@@ -330,7 +464,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 1
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -339,7 +473,11 @@ describe("GameService", () => {
         service.onPickCard(socket, { pile: "draw" }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should throw if it's not the waited move", async () => {
@@ -362,7 +500,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       game.turnStatus = CoreConstants.TURN_STATUS.REPLACE_A_CARD
 
@@ -372,7 +510,11 @@ describe("GameService", () => {
         service.onPickCard(socket, { pile: "draw" }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.INVALID_TURN_STATE)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should pick a card from the draw pile", async () => {
@@ -395,7 +537,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -428,14 +570,14 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       await service.onPickCard(socket, { pile: "discard" }, game.stateVersion)
 
-      expect(socket.emit).toHaveBeenCalledOnce()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledOnce()
       expect(game.selectedCardValue).not.toBeNull()
       expect(game.turnStatus).toBe<TurnStatus>(
         CoreConstants.TURN_STATUS.REPLACE_A_CARD,
@@ -464,7 +606,7 @@ describe("GameService", () => {
       game.addPlayer(opponent2)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -476,6 +618,35 @@ describe("GameService", () => {
       expect(socket.emit).not.toHaveBeenCalled()
     })
 
+    it("should throw if current game is processing afk player move", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      game.addPlayer(player)
+
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      const opponent = new SkyjoPlayer(
+        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socketId132312",
+      )
+      game.addPlayer(opponent)
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(
+        service.onReplaceCard(socket, { column: 0, row: 0 }, game.stateVersion),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
+
+      expect(service["socketManager"].sendToSocket).not.toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).not.toHaveBeenCalled()
+    })
     it("should throw if game is not started", async () => {
       const player = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
@@ -502,7 +673,11 @@ describe("GameService", () => {
         service.onReplaceCard(socket, { column: 0, row: 0 }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should throw if it's not the player turn", async () => {
@@ -526,7 +701,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 1
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -535,7 +710,11 @@ describe("GameService", () => {
         service.onReplaceCard(socket, { column: 0, row: 2 }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should throw if it's not the waited move", async () => {
@@ -558,7 +737,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       game.turnStatus = CoreConstants.TURN_STATUS.CHOOSE_A_PILE
 
@@ -568,7 +747,11 @@ describe("GameService", () => {
         service.onReplaceCard(socket, { column: 0, row: 2 }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.INVALID_TURN_STATE)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should replace a card and finish the turn", async () => {
@@ -580,6 +763,8 @@ describe("GameService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
+
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
@@ -590,7 +775,7 @@ describe("GameService", () => {
       )
       game.addPlayer(opponent)
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       game.selectedCardValue = 0
       game.turnStatus = CoreConstants.TURN_STATUS.REPLACE_A_CARD
@@ -603,7 +788,7 @@ describe("GameService", () => {
         game.stateVersion,
       )
 
-      expect(socket.emit).toHaveBeenCalledTimes(2)
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledTimes(1)
       expect(game.selectedCardValue).toBeNull()
       expect(game.turn).toBe(1)
       expect(game.turnStatus).toBe<TurnStatus>(
@@ -633,7 +818,7 @@ describe("GameService", () => {
       game.addPlayer(opponent2)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -643,6 +828,38 @@ describe("GameService", () => {
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_NOT_FOUND)
 
       expect(socket.emit).not.toHaveBeenCalled()
+    })
+
+    it("should throw if current game is processing afk player move", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      game.addPlayer(player)
+
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      const opponent = new SkyjoPlayer(
+        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socketId132312",
+      )
+      game.addPlayer(opponent)
+
+      game.processingAfk = true
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(
+        service.onDiscardCard(socket, game.stateVersion),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
+
+      expect(service["socketManager"].sendToSocket).not.toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).not.toHaveBeenCalled()
     })
 
     it("should throw if game is not started", async () => {
@@ -671,7 +888,11 @@ describe("GameService", () => {
         service.onDiscardCard(socket, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should throw if it's not the player turn", async () => {
@@ -695,7 +916,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 1
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -704,7 +925,11 @@ describe("GameService", () => {
         service.onDiscardCard(socket, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should throw if it's not the waited move", async () => {
@@ -727,7 +952,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       game.turnStatus = CoreConstants.TURN_STATUS.CHOOSE_A_PILE
       game.selectedCardValue = 0
@@ -738,7 +963,11 @@ describe("GameService", () => {
         service.onDiscardCard(socket, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.INVALID_TURN_STATE)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should discard a card", async () => {
@@ -761,7 +990,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       game.turnStatus = CoreConstants.TURN_STATUS.THROW_OR_REPLACE
       game.selectedCardValue = 0
@@ -799,7 +1028,7 @@ describe("GameService", () => {
       game.addPlayer(opponent2)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -809,6 +1038,36 @@ describe("GameService", () => {
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_NOT_FOUND)
 
       expect(socket.emit).not.toHaveBeenCalled()
+    })
+
+    it("should throw if current game is processing afk player move", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      game.addPlayer(player)
+
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      const opponent = new SkyjoPlayer(
+        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socketId132312",
+      )
+      game.addPlayer(opponent)
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(
+        service.onTurnCard(socket, { column: 0, row: 0 }, game.stateVersion),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
+
+      expect(service["socketManager"].sendToSocket).not.toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).not.toHaveBeenCalled()
     })
 
     it("should throw if game is not started", async () => {
@@ -837,7 +1096,11 @@ describe("GameService", () => {
         service.onTurnCard(socket, { column: 0, row: 0 }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should throw if it's not player turn", async () => {
@@ -861,7 +1124,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 1
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -870,7 +1133,11 @@ describe("GameService", () => {
         service.onTurnCard(socket, { column: 0, row: 2 }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should throw if it's not the waited move", async () => {
@@ -893,7 +1160,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       game.turnStatus = CoreConstants.TURN_STATUS.REPLACE_A_CARD
 
@@ -903,7 +1170,11 @@ describe("GameService", () => {
         service.onTurnCard(socket, { column: 0, row: 2 }, game.stateVersion),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.INVALID_TURN_STATE)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(1, "game", game?.toJson())
+      expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket.id,
+        game,
+      )
     })
 
     it("should turn a card and finish the turn ", async () => {
@@ -915,6 +1186,7 @@ describe("GameService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
@@ -926,7 +1198,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
       game.turn = 0
       game.turnStatus = CoreConstants.TURN_STATUS.TURN_A_CARD
 
@@ -942,7 +1214,6 @@ describe("GameService", () => {
     })
 
     it("should turn a card, finish the turn and start a new round", async () => {
-      vi.useFakeTimers()
       const player = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
@@ -951,6 +1222,7 @@ describe("GameService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
@@ -962,7 +1234,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
 
       player.cards = [[new SkyjoCard(1), new SkyjoCard(1), new SkyjoCard(1)]]
       opponent.cards = [
@@ -985,17 +1257,9 @@ describe("GameService", () => {
 
       expect(game.isRoundOver()).toBeTruthy()
       expect(game.isPlaying()).toBeTruthy()
-
-      vi.runAllTimers()
-
-      expect(game.isRoundInMain()).toBeTruthy()
-      expect(game.isPlaying()).toBeTruthy()
-
-      vi.useRealTimers()
     })
 
     it("should turn a card, finish the turn and start a new round when first player to finish is disconnected", async () => {
-      vi.useFakeTimers()
       const player = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
@@ -1004,6 +1268,7 @@ describe("GameService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
@@ -1022,7 +1287,7 @@ describe("GameService", () => {
       game.addPlayer(opponent2)
 
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
 
       opponent.cards = [
         [new SkyjoCard(1, true), new SkyjoCard(1, true)],
@@ -1045,16 +1310,6 @@ describe("GameService", () => {
 
       expect(game.isRoundOver()).toBeTruthy()
       expect(game.isPlaying()).toBeTruthy()
-
-      const updateGameSpy = vi.spyOn(service["redis"], "updateGame")
-      vi.runAllTimers()
-
-      updateGameSpy.mockImplementationOnce(async (game: Skyjo) => {
-        expect(game.isRoundRevealCards()).toBeTruthy()
-        expect(game.isPlaying()).toBeTruthy()
-      })
-
-      vi.useRealTimers()
     })
   })
 
@@ -1102,14 +1357,14 @@ describe("GameService", () => {
       )
       game.addPlayer(opponent)
 
-      game.start()
+      await game.start()
       game.status = CoreConstants.GAME_STATUS.FINISHED
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       await service.onReplay(socket, game.stateVersion)
 
-      expect(socket.emit).toHaveBeenCalledOnce()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledOnce()
       expect(player.wantsReplay).toBeTruthy()
       expect(game.isFinished()).toBeTruthy()
     })
@@ -1123,6 +1378,7 @@ describe("GameService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
@@ -1134,7 +1390,7 @@ describe("GameService", () => {
       )
       game.addPlayer(opponent)
 
-      game.start()
+      await game.start()
       game.status = CoreConstants.GAME_STATUS.FINISHED
 
       opponent.wantsReplay = true
@@ -1143,7 +1399,7 @@ describe("GameService", () => {
 
       await service.onReplay(socket, game.stateVersion)
 
-      expect(socket.emit).toHaveBeenCalledOnce()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledOnce()
       game.players.forEach((player) => {
         expect(player.wantsReplay).toBeFalsy()
       })

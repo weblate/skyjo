@@ -460,7 +460,7 @@ describe("Skyjo", () => {
 
     it("should start the game and set the round status to playing if there is no card to turn at the beginning of the game", () => {
       game.settings.initialTurnedCount = 0
-      game.start()
+      await game.start()
 
       expect(game.isPlaying()).toBeTruthy()
       expect(game.isRoundInMain()).toBeTruthy()
@@ -549,7 +549,7 @@ describe("Skyjo", () => {
 
   describe("drawCard", () => {
     it("should draw card", () => {
-      game.start()
+      await game.start()
 
       expect(game.selectedCardValue).toBeNull()
       expect(game.turnStatus).toBe<TurnStatus>(
@@ -568,7 +568,7 @@ describe("Skyjo", () => {
     })
 
     it("should draw card and reload the draw pile", () => {
-      game.start()
+      await game.start()
 
       game["discardPile"] = [...game["drawPile"], ...game["discardPile"]]
       game["drawPile"] = []
@@ -603,7 +603,7 @@ describe("Skyjo", () => {
 
   describe("pickFromDiscard", () => {
     it("should not pick from discard if there is no card in the discard pile", () => {
-      game.start()
+      await game.start()
 
       game["discardPile"] = []
 
@@ -616,7 +616,7 @@ describe("Skyjo", () => {
     })
 
     it("should pick from discard", () => {
-      game.start()
+      await game.start()
 
       game["discardPile"].push(game["drawPile"].splice(0, 1)[0])
 
@@ -649,7 +649,7 @@ describe("Skyjo", () => {
 
   describe("replaceCard", () => {
     it("should replace a card", () => {
-      game.start()
+      await game.start()
 
       const oldCardValue = player.cards[0][0].value
       game.turn = 0
@@ -896,7 +896,7 @@ describe("Skyjo", () => {
 
   describe("serializeGame", () => {
     it("should serialize game", () => {
-      game.start()
+      await game.start()
 
       const gameSerialized = game.serializeGame()
       expect(gameSerialized).toStrictEqual({

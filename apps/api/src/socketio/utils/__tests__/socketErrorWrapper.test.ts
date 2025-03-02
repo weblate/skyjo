@@ -1,0 +1,127 @@
+import { CError } from "@skyjo/error"
+import { Logger } from "@skyjo/logger"
+import { beforeEach, describe, expect, it, vi } from "vitest"
+import { ZodError } from "zod"
+import { socketErrorWrapper } from "../socketErrorWrapper.js"
+
+// Mock the Logger
+vi.mock("@skyjo/logger", () => ({
+  Logger: {
+    cError: vi.fn(),
+    warn: vi.fn(),
+    error: vi.fn(),
+  },
+}))
+
+// Mock CError to ensure instanceof checks work correctly
+vi.mock("@skyjo/error", () => {
+  const originalModule = vi.importActual("@skyjo/error")
+  return {
+    ...originalModule,
+    CError: class CError extends Error {
+      shouldLog: boolean
+      constructor(message: string, options: any = {}) {
+        super(message)
+        this.name = "CError"
+        this.shouldLog = options.shouldLog !== false
+      }
+    }
+  }
+})
+
+describe("socketErrorWrapper", () => {
+  beforeEach(() => {
+    vi.clearAllMocks()
+  })
+
+  it("should execute the handler function without errors", async () => {
+    const handler = vi.fn().mockResolvedValue(undefined)
+    const wrappedHandler = socketErrorWrapper(handler)
+    
+    await wrappedHandler("arg1", "arg2")
+    
+    expect(handler).toHaveBeenCalledWith("arg1", "arg2")
+    expect(Logger.cError).not.toHaveBeenCalled()
+    expect(Logger.warn).not.toHaveBeenCalled()
+    expect(Logger.error).not.toHaveBeenCalled()
+  })
+  
+  it("should log CError with shouldLog=true using Logger.cError", async () => {
+    const error = new CError("Test error", { shouldLog: true })
+    const handler = vi.fn().mockRejectedValue(error)
+    const wrappedHandler = socketErrorWrapper(handler)
+    
+    await wrappedHandler("arg1", "arg2")
+    
+    expect(handler).toHaveBeenCalledWith("arg1", "arg2")
+    expect(Logger.cError).toHaveBeenCalledWith(error)
+    expect(Logger.warn).not.toHaveBeenCalled()
+    expect(Logger.error).not.toHaveBeenCalled()
+  })
+  
+  it("should not log CError with shouldLog=false", async () => {
+    // Create a CError with shouldLog explicitly set to false
+    const error = new CError("Test error", { shouldLog: false })
+    
+    const handler = vi.fn().mockRejectedValue(error)
+    const wrappedHandler = socketErrorWrapper(handler)
+    
+    await wrappedHandler("arg1", "arg2")
+    
+    expect(handler).toHaveBeenCalledWith("arg1", "arg2")
+    expect(Logger.cError).not.toHaveBeenCalled()
+    expect(Logger.warn).not.toHaveBeenCalled()
+    expect(Logger.error).not.toHaveBeenCalled()
+  })
+  
+  it("should log ZodError using Logger.warn", async () => {
+    // Create a ZodError
+    const zodError = new ZodError([
+      {
+        code: "invalid_type",
+        expected: "string",
+        received: "number",
+        path: ["name"],
+        message: "Expected string, received number",
+      },
+    ])
+    
+    const handler = vi.fn().mockRejectedValue(zodError)
+    const wrappedHandler = socketErrorWrapper(handler)
+    
+    await wrappedHandler("arg1", "arg2")
+    
+    expect(handler).toHaveBeenCalledWith("arg1", "arg2")
+    expect(Logger.cError).not.toHaveBeenCalled()
+    expect(Logger.warn).toHaveBeenCalledWith("Zod error: Expected string, received number", {
+      zodError: zodError.errors[0],
+    })
+    expect(Logger.error).not.toHaveBeenCalled()
+  })
+  
+  it("should log regular Error using Logger.error", async () => {
+    const error = new Error("Regular error")
+    const handler = vi.fn().mockRejectedValue(error)
+    const wrappedHandler = socketErrorWrapper(handler)
+    
+    await wrappedHandler("arg1", "arg2")
+    
+    expect(handler).toHaveBeenCalledWith("arg1", "arg2")
+    expect(Logger.cError).not.toHaveBeenCalled()
+    expect(Logger.warn).not.toHaveBeenCalled()
+    expect(Logger.error).toHaveBeenCalledWith("Regular error", { error })
+  })
+  
+  it("should log unexpected errors using Logger.error", async () => {
+    const error = "Not an error object"
+    const handler = vi.fn().mockRejectedValue(error)
+    const wrappedHandler = socketErrorWrapper(handler)
+    
+    await wrappedHandler("arg1", "arg2")
+    
+    expect(handler).toHaveBeenCalledWith("arg1", "arg2")
+    expect(Logger.cError).not.toHaveBeenCalled()
+    expect(Logger.warn).not.toHaveBeenCalled()
+    expect(Logger.error).toHaveBeenCalledWith("Unexpected error", { error })
+  })
+}) 

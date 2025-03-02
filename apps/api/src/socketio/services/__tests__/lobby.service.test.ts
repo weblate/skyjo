@@ -9,7 +9,12 @@ import {
 } from "@skyjo/core"
 import { Constants as ErrorConstants } from "@skyjo/error"
 import type { UpdateGameSettings } from "@skyjo/shared/validations"
-import { mockRedis, mockSocket } from "@tests/_mock.js"
+import {
+  mockGameOperationManager,
+  mockRedisInService,
+  mockSocket,
+  mockSocketManagerInService,
+} from "@tests/_mock.js"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 
@@ -19,7 +24,8 @@ describe("LobbyService", () => {
 
   beforeEach(() => {
     service = new LobbyService()
-    mockRedis(service)
+    mockRedisInService(service)
+    mockSocketManagerInService(service)
 
     socket = mockSocket()
   })
@@ -37,11 +43,42 @@ describe("LobbyService", () => {
 
       await service.onCreate(socket, player)
 
-      expect(socket.emit).toHaveBeenCalledWith(
-        "game:join",
-        socket.data.gameCode,
-        CoreConstants.GAME_STATUS.LOBBY,
-        socket.data.playerId,
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(1, {
+        room: socket.data.gameCode,
+        event: "game:update",
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            addPlayers: [
+              expect.objectContaining({
+                id: socket.data.playerId,
+              }),
+            ],
+          }),
+        ]),
+      })
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(2, {
+        room: socket.data.gameCode,
+        event: "message:server",
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            type: CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED,
+            username: player.username,
+          }),
+        ]),
+      })
+
+      expect(service["socketManager"].sendToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket,
+        {
+          event: "game:join",
+          data: [
+            socket.data.gameCode,
+            CoreConstants.GAME_STATUS.LOBBY,
+            socket.data.playerId,
+          ],
+        },
       )
     })
 
@@ -53,12 +90,42 @@ describe("LobbyService", () => {
 
       await service.onCreate(socket, player, false)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(1, {
+        room: socket.data.gameCode,
+        event: "game:update",
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            addPlayers: [
+              expect.objectContaining({
+                id: socket.data.playerId,
+              }),
+            ],
+          }),
+        ]),
+      })
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(2, {
+        room: socket.data.gameCode,
+        event: "message:server",
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            type: CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED,
+            username: player.username,
+          }),
+        ]),
+      })
+
+      expect(service["socketManager"].sendToSocket).toHaveBeenNthCalledWith(
         1,
-        "game:join",
-        socket.data.gameCode,
-        CoreConstants.GAME_STATUS.LOBBY,
-        socket.data.playerId,
+        socket,
+        {
+          event: "game:join",
+          data: [
+            socket.data.gameCode,
+            CoreConstants.GAME_STATUS.LOBBY,
+            socket.data.playerId,
+          ],
+        },
       )
     })
   })
@@ -115,7 +182,7 @@ describe("LobbyService", () => {
       game.addPlayer(opponent)
       game.addPlayer(opponent2)
 
-      game.start()
+      await game.start()
 
       const player: CreatePlayer = {
         username: "player2",
@@ -154,20 +221,42 @@ describe("LobbyService", () => {
       await service.onJoin(socket, game.code, player)
 
       expect(game.players.length).toBe(2)
-      expect(socket.emit).toHaveBeenNthCalledWith(
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(1, {
+        room: socket.data.gameCode,
+        event: "game:update",
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            addPlayers: [
+              expect.objectContaining({
+                id: socket.data.playerId,
+              }),
+            ],
+          }),
+        ]),
+      })
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(2, {
+        room: socket.data.gameCode,
+        event: "message:server",
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            type: CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED,
+            username: player.username,
+          }),
+        ]),
+      })
+
+      expect(service["socketManager"].sendToSocket).toHaveBeenNthCalledWith(
         1,
-        "game:join",
-        socket.data.gameCode,
-        CoreConstants.GAME_STATUS.LOBBY,
-        socket.data.playerId,
-      )
-      expect(socket.emit).toHaveBeenNthCalledWith(
-        2,
-        "message:server",
-        expect.objectContaining({
-          type: CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED,
-          username: player.username,
-        }),
+        socket,
+        {
+          event: "game:join",
+          data: [
+            socket.data.gameCode,
+            CoreConstants.GAME_STATUS.LOBBY,
+            socket.data.playerId,
+          ],
+        },
       )
     })
   })
@@ -265,7 +354,7 @@ describe("LobbyService", () => {
       expect(game.settings.toJson()).toStrictEqual(
         new SkyjoSettings(true, game.settings.maxPlayers).toJson(),
       )
-      expect(socket.emit).toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
 
     it("should reset game settings", async () => {
@@ -349,7 +438,7 @@ describe("LobbyService", () => {
         maxPlayers: newMaxPlayers,
       })
 
-      expect(socket.emit).toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
     it("should update max players settings if game is public and not confirmed", async () => {
       const player = new SkyjoPlayer(
@@ -380,7 +469,7 @@ describe("LobbyService", () => {
         maxPlayers: newMaxPlayers,
       })
 
-      expect(socket.emit).toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
     it("should update max players settings if game is public and confirmed", async () => {
       const player = new SkyjoPlayer(
@@ -411,7 +500,7 @@ describe("LobbyService", () => {
         maxPlayers: newMaxPlayers,
       })
 
-      expect(socket.emit).toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
   })
 
@@ -518,7 +607,7 @@ describe("LobbyService", () => {
         ...newSettings,
       })
 
-      expect(socket.emit).toHaveBeenCalled()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
 
     it("should change one game setting", async () => {
@@ -671,6 +760,8 @@ describe("LobbyService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
+
       game.addPlayer(player)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id

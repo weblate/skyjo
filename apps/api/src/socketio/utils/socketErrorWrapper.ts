@@ -11,15 +11,17 @@ export function socketErrorWrapper(
     try {
       await handler(...args)
     } catch (error) {
-      if (error instanceof CError && error.shouldLog) {
-        Logger.cError(error)
+      if (error instanceof CError) {
+        if (error.shouldLog) {
+          Logger.cError(error)
+        }
       } else if (error instanceof ZodError) {
         const errors = error.errors
 
         for (const error of errors) {
           Logger.warn(`Zod error: ${error.message}`, { zodError: error })
         }
-      } else if (error instanceof Error && !(error instanceof CError)) {
+      } else if (error instanceof Error) {
         Logger.error(error.message, { error })
       } else {
         Logger.error(`Unexpected error`, { error })

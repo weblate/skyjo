@@ -67,7 +67,8 @@ export class SocketManager {
       data: Parameters<ServerToClientEvents[T]>
     },
   ) {
-    socket.emit(params.event, ...params.data)
+    socket.
+    emit(params.event, ...params.data)
   }
   sendToRoom<T extends keyof ServerToClientEvents>(params: {
     room: string

@@ -1,5 +1,6 @@
 import type { BaseService } from "@/socketio/services/base.service.js"
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { Skyjo } from "@skyjo/core"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { vi } from "vitest"
 
@@ -21,7 +22,7 @@ export const mockSocket = (id: string = TEST_SOCKET_ID) => {
   } as unknown as SkyjoSocket
 }
 
-export const mockRedis = (service: BaseService) => {
+export const mockRedisInService = (service: BaseService) => {
   service["redis"].getGame = vi.fn(() =>
     Promise.reject(new Error("This is the default mock of getGame")),
   )
@@ -39,50 +40,20 @@ export const mockRedis = (service: BaseService) => {
   service["redis"].updatePlayerSocketId = vi.fn()
   service["redis"].removeGame = vi.fn()
 }
-export const mockGameRepository = () => {
-  vi.mock("../src/redis/game.repository.js", () => ({
-    GameRepository: vi.fn().mockImplementation(() => ({
-      getGame: vi.fn().mockResolvedValue({
-        code: "TEST123",
-        settings: { private: false },
-        setOperationManager: vi.fn(),
-        disconnectPlayer: vi.fn().mockResolvedValue(undefined),
-        processingAfk: false,
-        currentPlayer: { id: "player1", name: "Player 1" },
-        players: [
-          { id: "player1", name: "Player 1", socketId: "socket1" },
-          { id: "player2", name: "Player 2", socketId: "socket2" },
-        ],
-        findPlayerById: vi.fn().mockImplementation((id) => {
-          if (id === "player1")
-            return { id: "player1", name: "Player 1", socketId: "socket1" }
-          if (id === "player2")
-            return { id: "player2", name: "Player 2", socketId: "socket2" }
-          return null
-        }),
-      }),
-      updateGame: vi.fn().mockResolvedValue(undefined),
-    })),
-  }))
-}
-export const mockSocketManager = () => {
-  // virer ça et mock come le redis pour juste l'injecter dans le service
-  vi.mock("@/socketio/utils/SocketManager.js", () => ({
-    SocketManager: {
-      getInstance: vi.fn().mockReturnValue({
-        getSocket: vi.fn().mockReturnValue({
-          volatile: {
-            emit: vi.fn(),
-          },
-        }),
-        getIO: vi.fn().mockReturnValue({
-          ...mockSocket(),
-        }),
-        sendToSocket: vi.fn(),
-        sendToRoom: vi.fn(),
-      }),
+export const mockSocketManagerInService = (service: BaseService) => {
+  service["socketManager"].getIO = vi.fn().mockReturnValue({
+    ...mockSocket(),
+  })
+  service["socketManager"].getSocket = vi.fn().mockReturnValue({
+    volatile: {
+      emit: vi.fn(),
     },
-  }))
+  })
+  service["socketManager"].isInitialized = vi.fn().mockReturnValue(true)
+  service["socketManager"].sendGameToSocket = vi.fn()
+  service["socketManager"].sendToRoom = vi.fn()
+  service["socketManager"].sendToSocket = vi.fn()
+  service["socketManager"].setIO = vi.fn()
 }
 export const mockBullMQ = () => {
   vi.mock("bullmq", () => {
@@ -107,19 +78,65 @@ export const mockBullMQ = () => {
     }
   })
 }
-export const mockGameOperationManager = () => {
-  vi.mock("@/socketio/utils/GameOperationManager.js", () => ({
-    GameOperationManager: {
-      getInstance: vi.fn().mockReturnValue({}),
+export const mockGameOperationManager = (game: Skyjo) => {
+  const instance = vi.fn().mockReturnValue({
+    updateGame: vi.fn().mockResolvedValue(undefined),
+    removeGame: vi.fn().mockResolvedValue(undefined),
+    startRevealCardsAfkTimer: vi.fn().mockResolvedValue(undefined),
+    startPlayerAfkTimer: vi.fn().mockResolvedValue(undefined),
+    cancelPlayerAfkTimer: vi.fn().mockResolvedValue(undefined),
+    getSocket: vi.fn().mockReturnValue(mockSocket()),
+    kickSocket: vi.fn().mockResolvedValue(undefined),
+    delayNewRound: vi.fn(),
+
+    redis: {
+      getGame: vi.fn(() =>
+        Promise.reject(new Error("This is the default mock of getGame")),
+      ),
+      getPublicGames: vi.fn(() =>
+        Promise.reject(new Error("This is the default mock of getPublicGames")),
+      ),
+      canReconnectPlayer: vi.fn(() =>
+        Promise.reject(
+          new Error("This is the default mock of canReconnectPlayer"),
+        ),
+      ),
+      createGame: vi.fn(),
+      updateGame: vi.fn(),
+      updatePlayer: vi.fn(),
+      updatePlayerSocketId: vi.fn(),
+      removeGame: vi.fn(),
     },
-  }))
+    socketManager: {
+      getIO: vi.fn().mockReturnValue({
+        ...mockSocket(),
+      }),
+      getSocket: vi.fn().mockReturnValue(mockSocket()),
+      isInitialized: vi.fn().mockReturnValue(true),
+      sendGameToSocket: vi.fn(),
+      sendToRoom: vi.fn(),
+      sendToSocket: vi.fn(),
+      setIO: vi.fn(),
+    },
+    playerAfkQueue: {
+      startTimer: vi.fn().mockResolvedValue(undefined),
+      cancelTimer: vi.fn().mockResolvedValue(undefined),
+    },
+    revealCardsAfkQueue: {
+      startTimer: vi.fn().mockResolvedValue(undefined),
+      cancelTimer: vi.fn().mockResolvedValue(undefined),
+    },
+  })
+
+  game.setOperationManager = instance
+  return instance
 }
-export const mockGameStateTracker = () => {
-  vi.mock("@/socketio/utils/GameStateTracker.js", () => ({
+export const mockGameStateTracker = (game: Skyjo) => {
+  return {
     GameStateTracker: {
       getChanges: vi.fn().mockReturnValue(null),
       previousState: {},
-      game: {},
+      game,
     },
-  }))
+  }
 }

@@ -133,12 +133,6 @@ export class KickService extends BaseService {
 
     this.kickVotes.set(game.id, kickVote)
 
-    this.socketManager.sendToRoom({
-      room: game.code,
-      event: "kick:vote",
-      data: [kickVote.toJson()],
-    })
-
     await this.checkKickVoteStatus(socket, game, kickVote)
 
     // Add timeout for vote expiration
@@ -165,6 +159,7 @@ export class KickService extends BaseService {
         await this.kickPlayer(socket, game, kickVote)
       } else {
         const playerToKick = game.getPlayerById(kickVote.targetId)
+        // istanbul ignore if --@preserve
         if (!playerToKick) return
 
         this.socketManager.sendToRoom({

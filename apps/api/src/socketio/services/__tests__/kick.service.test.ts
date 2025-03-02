@@ -6,7 +6,13 @@ import {
   SkyjoSettings,
 } from "@skyjo/core"
 import { Constants as ErrorConstants } from "@skyjo/error"
-import { mockRedis, mockSocket } from "@tests/_mock.js"
+import {
+  mockGameOperationManager,
+  mockGameStateTracker,
+  mockRedisInService,
+  mockSocket,
+  mockSocketManagerInService,
+} from "@tests/_mock.js"
 import { RANDOM_SOCKET_ID, TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { KickService } from "../kick.service.js"
@@ -25,7 +31,8 @@ describe("KickService", () => {
 
   beforeEach(() => {
     service = new KickService()
-    mockRedis(service)
+    mockRedisInService(service)
+    mockSocketManagerInService(service)
 
     socket = mockSocket()
 
@@ -46,6 +53,8 @@ describe("KickService", () => {
       adminId: player.socketId,
       settings: new SkyjoSettings(),
     })
+    mockGameStateTracker(game)
+    mockGameOperationManager(game)
     game.addPlayer(player)
     game.addPlayer(opponent1)
     opponent1Socket = mockSocket(opponent1.socketId)
@@ -137,6 +146,8 @@ describe("KickService", () => {
 
     it("should add a vote to the kick vote and broadcast the vote", async () => {
       await service.onInitiateKickVote(opponent1Socket, opponent2.id)
+      const kickVote = service["kickVotes"].get(game.id)
+      const oldKickVoteJson = structuredClone(kickVote?.toJson())
 
       const opponent3 = new SkyjoPlayer(
         { username: "opponent3", avatar: CoreConstants.AVATARS.DOG },
@@ -144,15 +155,29 @@ describe("KickService", () => {
       )
       game.addPlayer(opponent3)
 
+      const opponent4 = new SkyjoPlayer(
+        { username: "opponent4", avatar: CoreConstants.AVATARS.JELLYFISH },
+        RANDOM_SOCKET_ID(),
+      )
+      game.addPlayer(opponent4)
+
+      expect(kickVote?.["votes"].length).toBe(1)
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(1, {
+        room: game.code,
+        event: "kick:vote",
+        data: [oldKickVoteJson],
+      })
+
       await service.onVoteToKick(socket, true)
 
-      const kickVote = service["kickVotes"].get(game.id)
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledTimes(2)
+
       expect(kickVote?.["votes"].length).toBe(2)
-      expect(socket.emit).toHaveBeenNthCalledWith(
-        1,
-        "kick:vote",
-        expect.objectContaining(kickVote?.toJson()),
-      )
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(2, {
+        room: game.code,
+        event: "kick:vote",
+        data: [kickVote?.toJson()],
+      })
     })
 
     it("should add a vote to the kick vote, try to kick the player but throw because player is not in the game", async () => {
@@ -185,49 +210,65 @@ describe("KickService", () => {
 
       await service.onVoteToKick(socket, true)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(
-        1,
-        "kick:vote-success",
-        opponent2.id,
-        opponent2.name,
-      )
-      expect(socket.emit).toHaveBeenNthCalledWith(
-        2,
-        "game:update",
-        expect.objectContaining({
-          removePlayers: [opponent2.id],
-        }),
-      )
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(1, {
+        room: game.code,
+        event: "kick:vote",
+        data: expect.arrayContaining([]),
+      })
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(2, {
+        room: game.code,
+        event: "kick:vote-success",
+        data: [opponent2.id, opponent2.name],
+      })
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(3, {
+        room: game.code,
+        event: "game:update",
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            removePlayers: [opponent2.id],
+          }),
+        ]),
+      })
 
       expect(service["kickVotes"].get(game.id)).toBeUndefined()
       expect(game.players.find((p) => p.id === opponent2.id)).toBeUndefined()
     })
 
-    it("should add a vote to the kick vote, broadcast the success and not remove the player if game is in progress", async () => {
+    it("should add a vote to the kick vote, broadcast the success and set the player connection status to disconnected if game is in progress", async () => {
       game.status = CoreConstants.GAME_STATUS.PLAYING
 
       await service.onInitiateKickVote(opponent1Socket, opponent2.id)
 
       await service.onVoteToKick(socket, true)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(
-        1,
-        "kick:vote-success",
-        opponent2.id,
-        opponent2.name,
-      )
-      expect(socket.emit).toHaveBeenNthCalledWith(
-        2,
-        "game:update",
-        expect.objectContaining({
-          updatePlayers: [
-            {
-              connectionStatus: CoreConstants.CONNECTION_STATUS.DISCONNECTED,
-              id: opponent2.id,
-            },
-          ],
-        }),
-      )
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(1, {
+        room: game.code,
+        event: "kick:vote",
+        data: expect.arrayContaining([]),
+      })
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(2, {
+        room: game.code,
+        event: "kick:vote-success",
+        data: [opponent2.id, opponent2.name],
+      })
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(3, {
+        room: game.code,
+        event: "game:update",
+        data: expect.arrayContaining([
+          expect.objectContaining({
+            updatePlayers: [
+              {
+                connectionStatus: CoreConstants.CONNECTION_STATUS.DISCONNECTED,
+                id: opponent2.id,
+              },
+            ],
+          }),
+        ]),
+      })
 
       expect(service["kickVotes"].get(game.id)).toBeUndefined()
 
@@ -245,12 +286,17 @@ describe("KickService", () => {
 
       await service.onVoteToKick(socket, false)
 
-      expect(socket.emit).toHaveBeenNthCalledWith(
-        1,
-        "kick:vote-failed",
-        opponent2.id,
-        opponent2.name,
-      )
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(1, {
+        room: game.code,
+        event: "kick:vote",
+        data: expect.arrayContaining([]),
+      })
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenNthCalledWith(2, {
+        room: game.code,
+        event: "kick:vote-failed",
+        data: [opponent2.id, opponent2.name],
+      })
 
       expect(service["kickVotes"].get(game.id)).toBeUndefined()
 
