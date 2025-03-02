@@ -3,7 +3,7 @@ import { Logger } from "@skyjo/logger"
 import { Job, Queue, type QueueOptions, Worker } from "bullmq"
 
 export abstract class BaseQueueService<T> {
-  private queueName: string
+  private readonly queueName: string
   protected queue: Queue<T>
   protected worker: Worker<T>
 

@@ -9,10 +9,10 @@ import { GameStateTracker } from "./GameStateTracker.js"
 export class GameOperationManager implements GameOperationManagerInterface {
   private static instance: GameOperationManager
 
-  private redis?: GameRepository
-  private playerAfkQueue?: PlayerAfkQueueService
-  private revealCardsAfkQueue?: RevealCardsAfkQueueService
-  private socketManager?: SocketManager
+  private readonly redis?: GameRepository
+  private readonly playerAfkQueue?: PlayerAfkQueueService
+  private readonly revealCardsAfkQueue?: RevealCardsAfkQueueService
+  private readonly socketManager?: SocketManager
 
   constructor() {
     this.redis = new GameRepository()

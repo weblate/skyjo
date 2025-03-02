@@ -21,16 +21,30 @@ export interface GameOperationManagerInterface {
 export class DefaultGameOperationManager
   implements GameOperationManagerInterface
 {
-  async updateGame(): Promise<void> {}
-  async removeGame(): Promise<void> {}
-  async startRevealCardsAfkTimer(): Promise<void> {}
-  async startPlayerAfkTimer(): Promise<void> {}
-  async cancelPlayerAfkTimer(): Promise<void> {}
+  async updateGame(): Promise<void> {
+    /* Placeholder that should not be called */
+  }
+  async removeGame(): Promise<void> {
+    /* Placeholder that should not be called */
+  }
+  async startRevealCardsAfkTimer(): Promise<void> {
+    /* Placeholder that should not be called */
+  }
+  async startPlayerAfkTimer(): Promise<void> {
+    /* Placeholder that should not be called */
+  }
+  async cancelPlayerAfkTimer(): Promise<void> {
+    /* Placeholder that should not be called */
+  }
 
   getSocket() {
     return undefined
   }
-  async kickSocket(): Promise<void> {}
+  async kickSocket(): Promise<void> {
+    /* Placeholder that should not be called */
+  }
 
-  async delayNewRound(): Promise<void> {}
+  async delayNewRound(): Promise<void> {
+    /* Placeholder that should not be called */
+  }
 }
