@@ -458,7 +458,7 @@ describe("Skyjo", () => {
       expect(game.isRoundRevealCards()).toBeTruthy()
     })
 
-    it("should start the game and set the round status to playing if there is no card to turn at the beginning of the game", () => {
+    it("should start the game and set the round status to playing if there is no card to turn at the beginning of the game", async () => {
       game.settings.initialTurnedCount = 0
       await game.start()
 
@@ -548,7 +548,7 @@ describe("Skyjo", () => {
   })
 
   describe("drawCard", () => {
-    it("should draw card", () => {
+    it("should draw card", async () => {
       await game.start()
 
       expect(game.selectedCardValue).toBeNull()
@@ -567,7 +567,7 @@ describe("Skyjo", () => {
       )
     })
 
-    it("should draw card and reload the draw pile", () => {
+    it("should draw card and reload the draw pile", async () => {
       await game.start()
 
       game["discardPile"] = [...game["drawPile"], ...game["discardPile"]]
@@ -602,7 +602,7 @@ describe("Skyjo", () => {
   })
 
   describe("pickFromDiscard", () => {
-    it("should not pick from discard if there is no card in the discard pile", () => {
+    it("should not pick from discard if there is no card in the discard pile", async () => {
       await game.start()
 
       game["discardPile"] = []
@@ -615,7 +615,7 @@ describe("Skyjo", () => {
       )
     })
 
-    it("should pick from discard", () => {
+    it("should pick from discard", async () => {
       await game.start()
 
       game["discardPile"].push(game["drawPile"].splice(0, 1)[0])
@@ -648,7 +648,7 @@ describe("Skyjo", () => {
   })
 
   describe("replaceCard", () => {
-    it("should replace a card", () => {
+    it("should replace a card", async () => {
       await game.start()
 
       const oldCardValue = player.cards[0][0].value
@@ -895,7 +895,7 @@ describe("Skyjo", () => {
   })
 
   describe("serializeGame", () => {
-    it("should serialize game", () => {
+    it("should serialize game", async () => {
       await game.start()
 
       const gameSerialized = game.serializeGame()
