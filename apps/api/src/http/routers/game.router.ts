@@ -11,8 +11,8 @@ const gameService = new GameService()
 
 const publicGamesRateLimiter = new RateLimiterMemory({
   keyPrefix: "public-games",
-  points: 5,
-  duration: 8,
+  points: 20,
+  duration: 30,
 })
 
 gameRouter.get(
