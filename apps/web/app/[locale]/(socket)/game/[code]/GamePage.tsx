@@ -41,7 +41,9 @@ const GamePage = () => {
   }, [isRulesOpen])
 
   useEffect(() => {
-    router.replace(getRedirectionUrl(game.code, game.status))
+    setTimeout(() => {
+      router.replace(getRedirectionUrl(game.code, game.status))
+    }, 2000)
   }, [game.status])
 
   return (
