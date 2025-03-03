@@ -31,11 +31,11 @@ export class SocketManager {
       cors: {
         origin: ENV.ORIGINS,
       },
-      pingInterval: 20000,
-      pingTimeout: 40000,
-      upgradeTimeout: 20000,
+      pingInterval: 10000,
+      pingTimeout: 20000,
+      upgradeTimeout: 10000,
       connectionStateRecovery: {
-        maxDisconnectionDuration: 180000,
+        maxDisconnectionDuration: 60000,
         skipMiddlewares: true,
       },
     })
@@ -67,8 +67,7 @@ export class SocketManager {
       data: Parameters<ServerToClientEvents[T]>
     },
   ) {
-    socket.
-    emit(params.event, ...params.data)
+    socket.emit(params.event, ...params.data)
   }
   sendToRoom<T extends keyof ServerToClientEvents>(params: {
     room: string
