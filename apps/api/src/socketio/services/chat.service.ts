@@ -16,7 +16,7 @@ export class ChatService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
           game,
-          socket,
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -45,7 +45,7 @@ export class ChatService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
           game,
-          socket,
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },

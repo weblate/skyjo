@@ -49,8 +49,7 @@ export class GameService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
           game,
-          socket,
-
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -139,7 +138,7 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           meta: {
             game,
-            socket,
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -241,7 +240,7 @@ export class GameService extends BaseService {
           level: "error",
           meta: {
             game,
-            socket,
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -255,7 +254,7 @@ export class GameService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
           game,
-          socket,
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -272,8 +271,7 @@ export class GameService extends BaseService {
           level: "error",
           meta: {
             game,
-            socket,
-            player,
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -291,8 +289,7 @@ export class GameService extends BaseService {
           level: "error",
           meta: {
             game,
-            socket,
-            player,
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },

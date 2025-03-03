@@ -13,11 +13,6 @@ export interface CErrorOptions {
 }
 
 interface CErrorMeta {
-  socket?: {
-    id: unknown
-    data: unknown
-    recovered: unknown
-  } | null
   [key: string]: unknown
 }
 
@@ -43,20 +38,7 @@ export class CError extends Error {
     if (rest.shouldLog) this.shouldLog = rest.shouldLog
 
     if (meta) {
-      const { socket, ...rest } = meta
-      this.meta = rest
-
-      if (socket && typeof socket === "object") {
-        this.meta.socket = {
-          id: null,
-          data: null,
-          recovered: null,
-        }
-
-        if ("id" in socket) this.meta.socket.id = socket.id
-        if ("data" in socket) this.meta.socket.data = socket.data
-        if ("recovered" in socket) this.meta.socket.recovered = socket.recovered
-      }
+      this.meta = meta
 
       // Capture stack trace
       if (Error.captureStackTrace) {

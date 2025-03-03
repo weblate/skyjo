@@ -24,7 +24,7 @@ export class KickService extends BaseService {
           level: "warn",
           meta: {
             game,
-            socket,
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -41,8 +41,7 @@ export class KickService extends BaseService {
           level: "warn",
           meta: {
             game,
-            socket,
-            player,
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -56,8 +55,7 @@ export class KickService extends BaseService {
         level: "warn",
         meta: {
           game,
-          socket,
-          player,
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -84,7 +82,7 @@ export class KickService extends BaseService {
           level: "warn",
           meta: {
             game,
-            socket,
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -101,8 +99,8 @@ export class KickService extends BaseService {
           level: "warn",
           meta: {
             game,
-            socket,
-            initiator,
+            socketId: socket.id,
+            initiatorId: initiator.id,
             targetId,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -119,9 +117,9 @@ export class KickService extends BaseService {
           level: "warn",
           meta: {
             game,
-            socket,
-            initiator,
-            target,
+            socketId: socket.id,
+            initiatorId: initiator.id,
+            targetId,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -191,7 +189,7 @@ export class KickService extends BaseService {
           level: "warn",
           meta: {
             game,
-            socket,
+            socketId: socket.id,
             targetId: kickVote.targetId,
             gameCode: game.code,
             playerId: socket.data.playerId,

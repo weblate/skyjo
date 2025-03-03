@@ -15,7 +15,7 @@ export class PlayerService extends BaseService {
         level: "error",
         meta: {
           game,
-          socket,
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -43,7 +43,7 @@ export class PlayerService extends BaseService {
             level: "warn",
             meta: {
               game,
-              socket,
+              socketId: socket.id,
               gameCode: game.code,
               playerId: socket.data.playerId,
             },
@@ -106,7 +106,7 @@ export class PlayerService extends BaseService {
           code: ErrorConstants.ERROR.CANNOT_RECONNECT,
           level: "warn",
           meta: {
-            socket,
+            socketId: socket.id,
             gameCode: reconnectData.gameCode,
             playerId: reconnectData.playerId,
           },
@@ -143,7 +143,7 @@ export class PlayerService extends BaseService {
         level: "error",
         meta: {
           game,
-          socket,
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
