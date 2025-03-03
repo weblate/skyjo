@@ -29,6 +29,7 @@ describe("Skyjo", () => {
   let operationManager: GameOperationManagerInterface
 
   beforeEach(() => {
+    vi.clearAllMocks()
     player = new SkyjoPlayer(
       { username: "player1", avatar: Constants.AVATARS.BEE },
       TEST_SOCKET_ID,
@@ -1639,13 +1640,6 @@ describe("Skyjo", () => {
   })
 
   describe("disconnectPlayer", () => {
-    beforeEach(() => {
-      vi.spyOn(game["operationManager"], "getSocket").mockReturnValue(undefined)
-      vi.spyOn(game["operationManager"], "kickSocket").mockResolvedValue()
-      vi.spyOn(game["operationManager"], "removeGame").mockResolvedValue()
-      vi.spyOn(game, "removePlayer").mockResolvedValue()
-    })
-
     it("should set player connection status to disconnected", async () => {
       const player = new SkyjoPlayer(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
@@ -1678,6 +1672,8 @@ describe("Skyjo", () => {
       await game.disconnectPlayer(player1)
 
       expect(changeAdminSpy).toHaveBeenCalled()
+
+      changeAdminSpy.mockClear()
     })
 
     it("should kick socket if it exists", async () => {
@@ -1696,6 +1692,8 @@ describe("Skyjo", () => {
       await game.disconnectPlayer(player)
 
       expect(kickSocketSpy).toHaveBeenCalledWith(mockSocket)
+
+      kickSocketSpy.mockClear()
     })
 
     it("should remove player if game is not playing", async () => {
@@ -1711,30 +1709,28 @@ describe("Skyjo", () => {
       await game.disconnectPlayer(player)
 
       expect(removePlayerSpy).toHaveBeenCalledWith(player.id)
+
+      removePlayerSpy.mockClear()
     })
 
-    it("should stop game and remove it if not enough connected players", async () => {
-      const player1 = new SkyjoPlayer(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new SkyjoPlayer(
-        { username: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
+    it("should stop game if not enough connected players", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
 
-      // Mock hasMinPlayersConnected to return false
-      vi.spyOn(game, "hasMinPlayersConnected").mockReturnValue(false)
+      await game.disconnectPlayer(player)
+
+      expect(game.status).toBe(Constants.GAME_STATUS.STOPPED)
+    })
+
+    it("should remove game if no more players", async () => {
+      game.players = [player]
 
       const removeGameSpy = vi.spyOn(game["operationManager"], "removeGame")
 
-      await game.disconnectPlayer(player1)
+      await game.disconnectPlayer(player)
 
-      expect(game.status).toBe(Constants.GAME_STATUS.STOPPED)
       expect(removeGameSpy).toHaveBeenCalledWith(game.code)
+
+      removeGameSpy.mockClear()
     })
   })
 })

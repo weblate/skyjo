@@ -10,7 +10,12 @@ import {
 } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
 import type { LastGame } from "@skyjo/shared/validations"
-import { mockRedisInService, mockSocket, mockSocketManagerInService } from "@tests/_mock.js"
+import {
+  mockGameOperationManager,
+  mockRedisInService,
+  mockSocket,
+  mockSocketManagerInService,
+} from "@tests/_mock.js"
 import {
   RANDOM_SOCKET_ID,
   TEST_SOCKET_ID,
@@ -44,7 +49,7 @@ describe("PlayerService", () => {
       )
     })
 
-    it("should set the player connection status to lost", async () => {
+    it("should set the player connection status to lost when game is playing", async () => {
       const player = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
@@ -58,6 +63,9 @@ describe("PlayerService", () => {
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
+      // Set game to playing state
+      game.status = CoreConstants.GAME_STATUS.PLAYING
+
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       await service.onConnectionLost(socket)
@@ -65,6 +73,58 @@ describe("PlayerService", () => {
       expect(game.players[0].connectionStatus).toBe(
         CoreConstants.CONNECTION_STATUS.LOST,
       )
+    })
+
+    it("should disconnect the player when game is in lobby", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      mockGameOperationManager(game)
+
+      game.addPlayer(player)
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      game.status = CoreConstants.GAME_STATUS.LOBBY
+
+      const disconnectPlayerSpy = vi.spyOn(game, "disconnectPlayer")
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await service.onConnectionLost(socket)
+
+      expect(disconnectPlayerSpy).toHaveBeenCalledWith(player)
+    })
+
+    it("should disconnect the player when game is stopped", async () => {
+      const player = new SkyjoPlayer(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Skyjo({
+        adminId: player.id,
+        settings: new SkyjoSettings(false),
+      })
+      mockGameOperationManager(game)
+
+      game.addPlayer(player)
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      game.status = CoreConstants.GAME_STATUS.STOPPED
+
+      const disconnectPlayerSpy = vi.spyOn(game, "disconnectPlayer")
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await service.onConnectionLost(socket)
+
+      expect(disconnectPlayerSpy).toHaveBeenCalledWith(player)
     })
   })
 
@@ -119,6 +179,8 @@ describe("PlayerService", () => {
         adminId: opponent.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
+
       game.addPlayer(opponent)
 
       const player = new SkyjoPlayer(
@@ -147,6 +209,8 @@ describe("PlayerService", () => {
         adminId: opponent.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
+
       game.addPlayer(opponent)
 
       const player = new SkyjoPlayer(
@@ -199,6 +263,8 @@ describe("PlayerService", () => {
         adminId: opponent.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
+
       game.addPlayer(opponent)
 
       const player = new SkyjoPlayer(
@@ -241,15 +307,21 @@ describe("PlayerService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
+
       game.addPlayer(player)
+
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      const removeGameSpy = vi.spyOn(game["operationManager"], "removeGame")
 
       await service.onLeave(socket)
 
-      expect(service["redis"].removeGame).toHaveBeenCalledWith(game.code)
+      expect(removeGameSpy).toHaveBeenCalledWith(game.code)
+
+      removeGameSpy.mockClear()
     })
   })
 
@@ -263,6 +335,8 @@ describe("PlayerService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
+
       game.addPlayer(player)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
@@ -300,6 +374,8 @@ describe("PlayerService", () => {
         adminId: player.id,
         settings: new SkyjoSettings(false),
       })
+      mockGameOperationManager(game)
+
       game.addPlayer(player)
 
       const opponent = new SkyjoPlayer(

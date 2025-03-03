@@ -24,7 +24,24 @@ export class PlayerService extends BaseService {
 
     const stateManager = new GameStateTracker(game)
 
-    player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+    if (!game.isPlaying()) {
+      await game.disconnectPlayer(player)
+      const message = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
+      this.socketManager.sendToRoom({
+        room: game.code,
+        event: "message:server",
+        data: [
+          {
+            id: crypto.randomUUID(),
+            username: player.name,
+            message,
+            type: message,
+          },
+        ],
+      })
+    } else {
+      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+    }
 
     await this.updateAndSendGame(game, stateManager)
   }
@@ -51,19 +68,7 @@ export class PlayerService extends BaseService {
         )
       }
 
-      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LEAVE
-
-      if (game.isAdmin(player.id)) game.changeAdmin()
-
-      if (!game.isPlaying()) {
-        game.removePlayer(player.id)
-
-        if (game.players.length === 0) {
-          await this.redis.removeGame(game.code)
-          await socket.leave(game.code)
-          return
-        }
-      }
+      await game.disconnectPlayer(player, CoreConstants.CONNECTION_STATUS.LEAVE)
 
       const message = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
       this.socketManager.sendToRoom({

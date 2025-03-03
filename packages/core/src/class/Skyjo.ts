@@ -1,6 +1,7 @@
 import type { SkyjoDbFormat, SkyjoToJson } from "@/types/skyjo.js"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
 import {
+  type ConnectionStatus,
   Constants,
   type GameStatus,
   type LastTurnStatus,
@@ -164,8 +165,11 @@ export class Skyjo implements SkyjoInterface {
     }
   }
 
-  async disconnectPlayer(player: SkyjoPlayer) {
-    player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+  async disconnectPlayer(
+    player: SkyjoPlayer,
+    status: ConnectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED,
+  ) {
+    player.connectionStatus = status
 
     if (this.isAdmin(player.id)) this.changeAdmin()
 
@@ -178,7 +182,9 @@ export class Skyjo implements SkyjoInterface {
       await this.removePlayer(player.id)
     } else if (!this.hasMinPlayersConnected()) {
       this.status = Constants.GAME_STATUS.STOPPED
+    }
 
+    if (this.players.length === 0) {
       await this.operationManager.removeGame(this.code)
     }
   }
