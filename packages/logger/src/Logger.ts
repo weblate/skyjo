@@ -1,7 +1,26 @@
 import { SeqTransport } from "@datalust/winston-seq"
 import { CError } from "@skyjo/error"
+import { parse, stringify } from "flatted"
 import { createLogger, format, transports } from "winston"
 import { ENV } from "../env.js"
+
+/**
+ * Process metadata to safely handle circular references using flatted
+ */
+const processMeta = (
+  meta?: Record<string, unknown>,
+): Record<string, unknown> | undefined => {
+  if (!meta) return undefined
+
+  try {
+    return parse(stringify(meta)) as Record<string, unknown>
+  } catch (error) {
+    return {
+      serialization_error: `Failed to serialize metadata: ${error instanceof Error ? error.message : String(error)}`,
+      metadata_keys: Object.keys(meta),
+    }
+  }
+}
 
 export class Logger {
   private static readonly winstonLogger = createLogger({
@@ -58,41 +77,31 @@ export class Logger {
   static debug(message: string, meta?: Record<string, unknown>) {
     if (!Logger.shouldLog()) return
 
-    Logger.winstonLogger.debug(message, {
-      ...meta,
-    })
+    Logger.winstonLogger.debug(message, processMeta(meta))
   }
 
   static info(message: string, meta?: Record<string, unknown>) {
     if (!Logger.shouldLog()) return
 
-    Logger.winstonLogger.info(message, {
-      ...meta,
-    })
+    Logger.winstonLogger.info(message, processMeta(meta))
   }
 
   static warn(message: string, meta?: Record<string, unknown>) {
     if (!Logger.shouldLog()) return
 
-    Logger.winstonLogger.warn(message, {
-      ...meta,
-    })
+    Logger.winstonLogger.warn(message, processMeta(meta))
   }
 
   static error(message: string, meta?: Record<string, unknown>) {
     if (!Logger.shouldLog()) return
 
-    Logger.winstonLogger.error(message, {
-      ...meta,
-    })
+    Logger.winstonLogger.error(message, processMeta(meta))
   }
 
   static critical(message: string, meta?: Record<string, unknown>) {
     if (!Logger.shouldLog()) return
 
-    Logger.winstonLogger.crit(message, {
-      ...meta,
-    })
+    Logger.winstonLogger.crit(message, processMeta(meta))
   }
 
   static cError(error: CError, meta?: Record<string, unknown>) {
