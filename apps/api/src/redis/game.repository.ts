@@ -48,6 +48,7 @@ export class GameRepository extends RedisClient {
       gameCodes.map(async (code) => {
         const game = await this.getGameSafe(code)
         if (!game) await this.removeFromPublicGames(code)
+        else if (game.players.length === 0) await this.removeGame(code)
 
         return game
       }),
