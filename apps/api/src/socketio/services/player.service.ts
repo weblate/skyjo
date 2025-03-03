@@ -58,8 +58,10 @@ export class PlayerService extends BaseService {
       if (!game.isPlaying()) {
         game.removePlayer(player.id)
 
-        if (game.getConnectedPlayers().length === 0) {
+        if (game.players.length === 0) {
           await this.redis.removeGame(game.code)
+          await socket.leave(game.code)
+          return
         }
       }
 

@@ -193,7 +193,8 @@ export class GameRepository extends RedisClient {
       !game.settings.private &&
       game.isInLobby() &&
       !game.isFull() &&
-      game.settings.isConfirmed
+      game.settings.isConfirmed &&
+      game.getConnectedPlayers().length > 0
     )
   }
 
