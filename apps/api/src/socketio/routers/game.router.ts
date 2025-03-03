@@ -19,12 +19,12 @@ const instance = new GameService()
 
 const gameRateLimiter = new RateLimiterMemory({
   keyPrefix: "game",
-  points: 5,
+  points: 10,
   duration: 5,
 })
 const replayRateLimiter = new RateLimiterMemory({
   keyPrefix: "replay",
-  points: 5,
+  points: 6,
   duration: 5,
 })
 
