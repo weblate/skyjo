@@ -40,7 +40,6 @@ services:
       --appendfsync everysec
       --io-threads 4
       --tcp-keepalive 300
-      --activedefrag yes
       --maxclients 10000
       --timeout 300
       --tcp-backlog 511
