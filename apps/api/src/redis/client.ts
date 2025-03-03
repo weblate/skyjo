@@ -1,51 +1,126 @@
 import { ENV } from "@env"
 import { Logger } from "@skyjo/logger"
-import { type RedisClientType, createClient } from "redis"
+import { createClient } from "redis"
+
+type RedisClientInstance = ReturnType<typeof createClient>
 
 export abstract class RedisClient {
-  private static instance: RedisClientType | null = null
+  private static instance: RedisClientInstance | null = null
+  private static connectionPromise: Promise<RedisClientInstance> | null = null
+  private static connectionAttempts = 0
+  private static readonly MAX_CONNECTION_ATTEMPTS = 5
+  private static isConnecting = false
 
-  protected static async getClient(): Promise<RedisClientType> {
-    if (!this.instance) {
-      this.instance = createClient({
-        url: ENV.REDIS_URL,
-        socket: {
-          connectTimeout: 5000,
-          reconnectStrategy: (retries) => {
-            console.log(`Redis reconnect attempt ${retries}`)
-            if (retries > 3) {
-              console.log("Redis connection failed after 3 retries")
-              return new Error("Redis connection failed after 3 retries")
-            }
-            return Math.min(retries * 100, 3000)
-          },
-        },
-      })
+  protected static async getClient(): Promise<RedisClientInstance> {
+    if (this.instance?.isOpen) return this.instance
 
-      // Add error handling
-      this.instance.on("error", (err) => {
-        Logger.error("Redis Client Error", { error: err })
-        // Cleanup the instance on error
-        this.instance = null
-      })
-
-      try {
-        await this.instance.connect()
-      } catch (error) {
-        Logger.error("Redis Connection Error", { error })
-        this.instance = null
-        throw error
-      }
+    if (this.isConnecting && this.connectionPromise) {
+      return this.connectionPromise
     }
 
-    return this.instance
+    this.isConnecting = true
+    this.connectionPromise = this.createConnection()
+
+    try {
+      this.instance = await this.connectionPromise
+      this.connectionAttempts = 0
+      return this.instance
+    } finally {
+      this.isConnecting = false
+      this.connectionPromise = null
+    }
   }
 
-  // Add cleanup method
+  private static async createConnection(): Promise<RedisClientInstance> {
+    if (this.instance) {
+      try {
+        await this.disconnect()
+      } catch (error) {
+        Logger.warn("Error disconnecting existing Redis client", { error })
+      }
+      this.instance = null
+    }
+
+    this.connectionAttempts++
+
+    if (this.connectionAttempts > this.MAX_CONNECTION_ATTEMPTS) {
+      this.connectionAttempts = 0
+      throw new Error(
+        `Failed to connect to Redis after ${this.MAX_CONNECTION_ATTEMPTS} attempts`,
+      )
+    }
+
+    Logger.info("Creating new Redis connection")
+
+    const client = createClient({
+      url: ENV.REDIS_URL,
+      socket: {
+        connectTimeout: 2000,
+        reconnectStrategy: (retries) => {
+          Logger.info(`Redis reconnect attempt ${retries}`)
+          if (retries > 3) {
+            Logger.error("Redis connection failed after 3 retries")
+            return new Error("Redis connection failed after 3 retries")
+          }
+          return Math.min(retries * 50, 1000)
+        },
+      },
+      commandsQueueMaxLength: 5000,
+    })
+
+    client.on("error", (err) => {
+      Logger.error("Redis Client Error", { error: err })
+    })
+
+    client.on("reconnecting", () => {
+      Logger.info("Redis client reconnecting")
+    })
+
+    client.on("ready", () => {
+      Logger.info("Redis client ready")
+    })
+
+    client.on("end", () => {
+      Logger.info("Redis client connection closed")
+      if (this.instance === client) {
+        this.instance = null
+      }
+    })
+
+    try {
+      await client.connect()
+      return client
+    } catch (error) {
+      Logger.error("Redis Connection Error", { error })
+      try {
+        await client.quit().catch(() => {
+          // Ignore quit errors
+        })
+      } catch {
+        // Ignore quit errors
+      }
+      throw error
+    }
+  }
+
   public static async disconnect(): Promise<void> {
     if (this.instance) {
-      await this.instance.quit()
-      this.instance = null
+      try {
+        if (this.instance.isOpen) {
+          await this.instance.quit()
+        }
+      } catch (error) {
+        Logger.warn("Error during Redis disconnect", { error })
+        try {
+          await this.instance.disconnect()
+        } catch (disconnectError) {
+          Logger.error("Failed to disconnect Redis client", {
+            error: disconnectError,
+          })
+        }
+      } finally {
+        this.instance = null
+      }
     }
   }
 }
