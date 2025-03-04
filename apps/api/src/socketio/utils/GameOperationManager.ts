@@ -54,6 +54,10 @@ export class GameOperationManager implements GameOperationManagerInterface {
     await this.revealCardsAfkQueue?.startTimer(game)
   }
 
+  async cancelRevealCardsAfkTimer(gameCode: string): Promise<void> {
+    await this.revealCardsAfkQueue?.cancelTimer(gameCode)
+  }
+
   async startPlayerAfkTimer(game: Skyjo, playerId: string): Promise<void> {
     await this.playerAfkQueue?.startTimer(game, playerId)
   }

@@ -1,6 +1,12 @@
 import { ENV } from "@env"
 import { Logger } from "@skyjo/logger"
-import { Job, Queue, type QueueOptions, Worker } from "bullmq"
+import {
+  Job,
+  Queue,
+  type QueueOptions,
+  Worker,
+  type WorkerOptions,
+} from "bullmq"
 
 export abstract class BaseQueueService<T> {
   private readonly queueName: string
@@ -21,9 +27,9 @@ export abstract class BaseQueueService<T> {
     this.setupListeners()
   }
 
-  protected abstract processJob(job: Job<T>): Promise<void>
+  protected abstract processJob(jobData: Job<T>): Promise<void>
 
-  private createWorker(): Worker<T> {
+  private createWorker(options: Partial<WorkerOptions> = {}): Worker<T> {
     return new Worker<T>(
       this.queueName,
       async (job) => await this.processJob(job),
@@ -31,6 +37,9 @@ export abstract class BaseQueueService<T> {
         connection: {
           url: ENV.REDIS_URL,
         },
+        removeOnComplete: { count: 0 },
+        concurrency: 3,
+        ...options,
       },
     )
   }
@@ -39,22 +48,20 @@ export abstract class BaseQueueService<T> {
     this.worker.on("failed", (job, error) => {
       if (job?.attemptsMade && job?.attemptsMade < job?.opts.attempts!) {
         Logger.warn(
-          `${this.queueName} job ${job.id} failed, attempt ${job.attemptsMade} of ${job.opts.attempts}:`,
+          `${this.queueName} job ${job.id} failed, attempt ${job.attemptsMade} of ${job.opts.attempts}`,
           { error },
         )
       } else {
-        Logger.error(`${this.queueName} job ${job?.id} failed permanently:`, {
+        Logger.error(`${this.queueName} job ${job?.id} failed permanently`, {
           error,
         })
       }
     })
 
     this.worker.on("completed", (job) => {
-      if (job.attemptsMade > 0) {
-        Logger.info(
-          `${this.queueName} job ${job.id} completed successfully after ${job.attemptsMade} retries`,
-        )
-      }
+      Logger.info(
+        `${this.queueName} job ${job.id} completed successfully after ${job.attemptsMade} retries`,
+      )
     })
   }
 

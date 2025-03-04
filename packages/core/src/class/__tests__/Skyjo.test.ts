@@ -41,6 +41,7 @@ describe("Skyjo", () => {
       removeGame: vi.fn(),
       startRevealCardsAfkTimer: vi.fn(),
       startPlayerAfkTimer: vi.fn(),
+      cancelRevealCardsAfkTimer: vi.fn(),
       cancelPlayerAfkTimer: vi.fn(),
       getSocket: vi.fn(),
       kickSocket: vi.fn(),
@@ -469,21 +470,21 @@ describe("Skyjo", () => {
   })
 
   describe("revealCard", () => {
-    it("should not reveal card if the game is not playing", () => {
+    it("should not reveal card if the game is not playing", async () => {
       game.status = Constants.GAME_STATUS.LOBBY
-      game.revealCard({ player, column: 0, row: 0 })
+      await game.revealCard({ player, column: 0, row: 0 })
 
       player.cards = [
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard({ player, column: 0, row: 0 })
+      await game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeFalsy()
     })
 
-    it("should not reveal card if the game is not in round turning cards phase", () => {
+    it("should not reveal card if the game is not in round turning cards phase", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.roundPhase = Constants.ROUND_PHASE.MAIN
 
@@ -492,12 +493,12 @@ describe("Skyjo", () => {
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard({ player, column: 0, row: 0 })
+      await game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeFalsy()
     })
 
-    it("should not reveal card if player has already revealed the card count", () => {
+    it("should not reveal card if player has already revealed the card count", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       game.settings.initialTurnedCount = 2
@@ -507,12 +508,12 @@ describe("Skyjo", () => {
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard({ player, column: 0, row: 0 })
+      await game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeFalsy()
     })
 
-    it("should reveal a card", () => {
+    it("should reveal a card", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       game.settings.initialTurnedCount = 2
@@ -522,12 +523,12 @@ describe("Skyjo", () => {
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard({ player, column: 0, row: 0 })
+      await game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeTruthy()
     })
 
-    it("should reveal a card and start round in main phase", () => {
+    it("should reveal a card and start round in main phase", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       game.settings.initialTurnedCount = 2
@@ -541,10 +542,13 @@ describe("Skyjo", () => {
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      game.revealCard({ player, column: 0, row: 0 })
+      await game.revealCard({ player, column: 0, row: 0 })
 
       expect(player.cards[0][0].isVisible).toBeTruthy()
       expect(game.isRoundInMain()).toBeTruthy()
+      expect(operationManager.cancelRevealCardsAfkTimer).toHaveBeenCalledWith(
+        game.code,
+      )
     })
   })
 

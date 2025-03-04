@@ -83,6 +83,7 @@ export const mockGameOperationManager = (game: Skyjo) => {
     updateGame: vi.fn().mockResolvedValue(undefined),
     removeGame: vi.fn().mockResolvedValue(undefined),
     startRevealCardsAfkTimer: vi.fn().mockResolvedValue(undefined),
+    cancelRevealCardsAfkTimer: vi.fn().mockResolvedValue(undefined),
     startPlayerAfkTimer: vi.fn().mockResolvedValue(undefined),
     cancelPlayerAfkTimer: vi.fn().mockResolvedValue(undefined),
     getSocket: vi.fn().mockReturnValue(mockSocket()),

@@ -5,6 +5,8 @@ import { serve } from "@hono/node-server"
 import { Logger } from "@skyjo/logger"
 import { Hono } from "hono"
 import "@env"
+import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
+import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 
 const app = new Hono()
 const port = 3001
@@ -14,6 +16,21 @@ const gracefulShutdown = async (signal: string) => {
   Logger.info(`Received ${signal}, starting graceful shutdown...`)
 
   try {
+    if (PlayerAfkQueueService.exists()) {
+      Logger.info("Cleaning up PlayerAfkQueueService...")
+      const playerAfkQueueService = PlayerAfkQueueService.getInstance()
+
+      await playerAfkQueueService.cleanup()
+    }
+
+    if (RevealCardsAfkQueueService.exists()) {
+      Logger.info("Cleaning up RevealCardsAfkQueueService...")
+      const revealCardsAfkQueueService =
+        RevealCardsAfkQueueService.getInstance()
+
+      await revealCardsAfkQueueService.cleanup()
+    }
+
     if (server) {
       Logger.info("Closing HTTP server...")
       await new Promise<void>((resolve) => {

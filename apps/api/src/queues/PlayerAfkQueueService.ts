@@ -25,6 +25,10 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     return PlayerAfkQueueService.instance
   }
 
+  public static exists(): boolean {
+    return PlayerAfkQueueService.instance !== null
+  }
+
   public async startTimer(game: Skyjo, playerId: string): Promise<void> {
     const timeoutDuration = this.getAfkTimeout(game)
     const jobId = this.getJobId(game.code, playerId)
@@ -53,28 +57,16 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     const { gameCode, playerId } = job.data
 
     const game = await this.redis.getGameSafe(gameCode)
-    if (!game) {
-      await job.moveToCompleted("Game not found", job?.token ?? "success")
-      return
-    }
+    if (!game) return
 
     try {
       game.setOperationManager(GameOperationManager.getInstance())
-      if (!game.isPlaying() || !game.isRoundInMain()) {
-        await job.moveToCompleted(
-          "Game is not in main round",
-          job?.token ?? "success",
-        )
-        return
-      }
+      if (!game.isPlaying() || !game.isRoundInMain()) return
 
       await this.lockGame(game)
 
       const player = game.getPlayerById(playerId)
-      if (!player)
-        throw new CError("Player not found", {
-          code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
-        })
+      if (!player) return
 
       const currentPlayer = game.getCurrentPlayer()
 
@@ -90,8 +82,13 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
         error instanceof CError &&
         error.code === ErrorConstants.ERROR.PLAYER_NOT_FOUND
       ) {
-        await job.moveToCompleted(error.message, job?.token ?? "success")
+        return
       }
+
+      await job.moveToFailed(
+        error instanceof Error ? error : new Error(String(error)),
+        job?.token ?? "failed",
+      )
     } finally {
       await this.unlockGame(game)
     }
@@ -115,7 +112,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
     const cardCoords = currentPlayer.getFirstCardNotVisible()
-    if (!cardCoords) throw new Error("SHOULD NOT HAPPEN")
+    if (!cardCoords) throw new Error("No card to reveal. SHOULD NOT HAPPEN")
 
     if (
       game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE ||

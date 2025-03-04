@@ -23,6 +23,7 @@ vi.mock("@/queues/RevealCardsAfkQueueService.js", () => ({
   RevealCardsAfkQueueService: {
     getInstance: vi.fn().mockReturnValue({
       startTimer: vi.fn().mockResolvedValue(undefined),
+      cancelTimer: vi.fn().mockResolvedValue(undefined),
     }),
   },
 }))
@@ -119,6 +120,15 @@ describe("GameOperationManager", () => {
     })
   })
 
+  describe("cancelRevealCardsAfkTimer", () => {
+    it("should call revealCardsAfkQueue.cancelTimer with the game code", async () => {
+      await gameOperationManager.cancelRevealCardsAfkTimer("TEST123")
+      expect(
+        gameOperationManager["revealCardsAfkQueue"]?.cancelTimer,
+      ).toHaveBeenCalledWith("TEST123")
+    })
+  })
+
   describe("startPlayerAfkTimer", () => {
     it("should call playerAfkQueue.startTimer with the game and player id", async () => {
       const mockGame = { id: "game-id" } as any
@@ -142,35 +152,35 @@ describe("GameOperationManager", () => {
     it("should call the callback after the delay and do nothing since they are no changes", async () => {
       // Create a mock instance with null changes for this test only
       const mockTrackerInstance = {
-        getChanges: vi.fn().mockReturnValue(null)
-      };
-      
+        getChanges: vi.fn().mockReturnValue(null),
+      }
+
       // Mock the constructor to return our mock instance
-      vi.mocked(GameStateTracker).mockImplementationOnce(() => 
-        mockTrackerInstance as unknown as GameStateTracker
-      );
-      
+      vi.mocked(GameStateTracker).mockImplementationOnce(
+        () => mockTrackerInstance as unknown as GameStateTracker,
+      )
+
       const mockGame = {
         code: "TEST123",
         id: "game-id",
-      } as any;
+      } as any
 
-      const callback = vi.fn().mockResolvedValue(undefined);
+      const callback = vi.fn().mockResolvedValue(undefined)
 
-      gameOperationManager.delayNewRound(mockGame, callback, 1000);
+      gameOperationManager.delayNewRound(mockGame, callback, 1000)
 
-      vi.advanceTimersByTime(1000);
+      vi.advanceTimersByTime(1000)
 
-      await vi.runAllTimersAsync();
+      await vi.runAllTimersAsync()
 
-      expect(callback).toHaveBeenCalledTimes(1);
-      expect(GameStateTracker).toHaveBeenCalledWith(mockGame);
-      expect(mockTrackerInstance.getChanges).toHaveBeenCalled();
-      expect(gameOperationManager["redis"]?.updateGame).not.toHaveBeenCalled();
+      expect(callback).toHaveBeenCalledTimes(1)
+      expect(GameStateTracker).toHaveBeenCalledWith(mockGame)
+      expect(mockTrackerInstance.getChanges).toHaveBeenCalled()
+      expect(gameOperationManager["redis"]?.updateGame).not.toHaveBeenCalled()
       expect(
-        gameOperationManager["socketManager"]?.sendToRoom
-      ).not.toHaveBeenCalled();
-    });
+        gameOperationManager["socketManager"]?.sendToRoom,
+      ).not.toHaveBeenCalled()
+    })
 
     it("should call the callback after the delay and update the game", async () => {
       const mockGame = {

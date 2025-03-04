@@ -21,19 +21,23 @@ export abstract class BaseAfkQueueService<
   constructor(queueName: string) {
     super(queueName, {
       defaultJobOptions: {
-        attempts: 3,
+        attempts: 2,
         backoff: {
-          type: "exponential",
+          type: "fixed",
           delay: 1000,
         },
+        removeOnComplete: true,
+        removeOnFail: true,
       },
     })
   }
 
   protected getAfkTimeout(game: Skyjo): number {
-    return game.settings.private
+    const timeout = game.settings.private
       ? CoreConstants.AFK_TIMEOUT.PRIVATE
       : CoreConstants.AFK_TIMEOUT.PUBLIC
+
+    return timeout + 2000 // 2 seconds grace period
   }
 
   protected isAfk(player: SkyjoPlayer) {

@@ -621,6 +621,7 @@ export class Skyjo implements SkyjoInterface {
   }
 
   private async startRoundAfterInitialReveal() {
+    await this.operationManager.cancelRevealCardsAfkTimer(this.code)
     this.roundPhase = Constants.ROUND_PHASE.MAIN
     await this.setFirstPlayerToStart()
   }

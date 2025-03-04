@@ -23,6 +23,10 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
     return RevealCardsAfkQueueService.instance
   }
 
+  public static exists(): boolean {
+    return RevealCardsAfkQueueService.instance !== null
+  }
+
   public async startTimer(game: Skyjo): Promise<void> {
     const timeoutDuration = this.getAfkTimeout(game)
     const jobId = this.getJobId(game.code)
@@ -39,25 +43,21 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
     )
   }
 
+  public async cancelTimer(gameCode: string): Promise<void> {
+    const jobId = this.getJobId(gameCode)
+    await this.queue.remove(jobId)
+  }
+
   async processJob(job: Job<RevealCardsAfkJobData>) {
     const { gameCode } = job.data
 
     const game = await this.redis.getGameSafe(gameCode)
-    if (!game) {
-      await job.moveToCompleted("Game not found", job?.token ?? "success")
-      return
-    }
+    if (!game) return
 
     try {
-      game.setOperationManager(GameOperationManager.getInstance())
-      if (!game.isPlaying() || !game.isRoundRevealCards()) {
-        await job.moveToCompleted(
-          "Game is not in reveal cards round",
-          job?.token ?? "success",
-        )
-        return
-      }
       await this.lockGame(game)
+      game.setOperationManager(GameOperationManager.getInstance())
+      if (!game.isPlaying() || !game.isRoundRevealCards()) return
 
       const stateManager = new GameStateTracker(game)
 
@@ -76,13 +76,20 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
       }
 
       await this.updateAndSendGame(game, stateManager)
+
+      // await job.moveToCompleted("Success", job?.token ?? "success")
     } catch (error) {
       if (
         error instanceof CError &&
         error.code === ErrorConstants.ERROR.PLAYER_NOT_FOUND
       ) {
-        await job.moveToCompleted(error.message, job?.token ?? "success")
+        return
       }
+
+      await job.moveToFailed(
+        error instanceof Error ? error : new Error(String(error)),
+        job?.token ?? "failed",
+      )
     } finally {
       await this.unlockGame(game)
     }
