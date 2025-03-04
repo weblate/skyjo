@@ -129,7 +129,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
     if (socket?.active) {
       toast.warning(t("connection-lost"), {
-        duration: Infinity,
+        duration: 3000,
         icon: <WifiOffIcon className="w-5 h-5" />,
         id: "socket-connection-lost",
       })
