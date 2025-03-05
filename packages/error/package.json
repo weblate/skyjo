@@ -16,7 +16,9 @@
     "build": "tsc",
     "biome:check": "pnpm biome check --write ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "flatted": "^3.3.3"
+  },
   "devDependencies": {
     "@skyjo/ts-config": "workspace:*",
     "@types/node": "^22.10.1",

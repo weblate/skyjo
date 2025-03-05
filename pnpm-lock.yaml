@@ -304,6 +304,10 @@ importers:
         version: 2.1.6(@types/node@22.10.1)(@vitest/ui@2.1.6)(terser@5.36.0)
 
   packages/error:
+    dependencies:
+      flatted:
+        specifier: ^3.3.3
+        version: 3.3.3
     devDependencies:
       '@skyjo/ts-config':
         specifier: workspace:*
@@ -2230,9 +2234,6 @@ packages:
   fill-range@7.1.1:
     resolution: {integrity: sha512-YsGpe3WHLK8ZYi4tWDg2Jy3ebRz2rXowDxnld4bkQB00cc/1Zw9AWnC0i9ztDJitivtQvaI9KaLyKrc+hBW0yg==}
     engines: {node: '>=8'}
-
-  flatted@3.3.1:
-    resolution: {integrity: sha512-X8cqMLLie7KsNUDSdzeN8FYK9rEt4Dt67OsG/DNGnYTSDBG4uFAJFBnUeiV+zCVAvwFy56IjM9sH51jVaEhNxw==}
 
   flatted@3.3.3:
     resolution: {integrity: sha512-GX+ysw4PBCz0PzosHDepZGANEuFCMLrnRTiEy9McGjmkCQYwRq4A/X786G/fjM/+OjsWSU1ZrY5qyARZmO/uwg==}
@@ -4866,7 +4867,7 @@ snapshots:
     dependencies:
       '@vitest/utils': 2.1.6
       fflate: 0.8.2
-      flatted: 3.3.1
+      flatted: 3.3.3
       pathe: 1.1.2
       sirv: 3.0.0
       tinyglobby: 0.2.10
@@ -5359,8 +5360,6 @@ snapshots:
   fill-range@7.1.1:
     dependencies:
       to-regex-range: 5.0.1
-
-  flatted@3.3.1: {}
 
   flatted@3.3.3: {}
 

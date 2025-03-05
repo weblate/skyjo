@@ -1,3 +1,4 @@
+import { parse, stringify } from "flatted"
 import type { Error as ThrownError } from "./constants.js"
 
 type CErrorLevel = "debug" | "info" | "warn" | "error" | "critical"
@@ -38,7 +39,7 @@ export class CError extends Error {
     if (rest.shouldLog) this.shouldLog = rest.shouldLog
 
     if (meta) {
-      this.meta = meta
+      this.meta = parse(stringify(meta))
 
       // Capture stack trace
       if (Error.captureStackTrace) {
