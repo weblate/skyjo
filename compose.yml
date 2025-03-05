@@ -89,6 +89,15 @@ services:
     volumes:
       - seq-data:/data
 
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    volumes:
+      - ./uptime-kuma-data:/app/data
+    ports:
+      - 3002:3001
+    restart: always
+
 networks:
   internal:
     internal: true
@@ -97,3 +106,4 @@ networks:
 volumes:
   redis-data:
   seq-data:
+  uptime-kuma-data:
