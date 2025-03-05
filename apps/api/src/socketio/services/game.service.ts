@@ -48,7 +48,7 @@ export class GameService extends BaseService {
       throw new CError(`Player try to reveal a card but is not found.`, {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
-          game,
+          game: game.toJson(),
           socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
@@ -137,7 +137,7 @@ export class GameService extends BaseService {
         {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -170,8 +170,10 @@ export class GameService extends BaseService {
         {
           code: ErrorConstants.ERROR.STATE_VERSION_NULL,
           meta: {
-            gameCode: game.code,
+            game: game.toJson(),
+            socketId: socket.id,
             serverStateVersion: game.stateVersion,
+            gameCode: game.code,
             playerId: socket.data.playerId,
           },
         },
@@ -186,6 +188,8 @@ export class GameService extends BaseService {
         {
           code: ErrorConstants.ERROR.STATE_VERSION_AHEAD,
           meta: {
+            game: game.toJson(),
+            socketId: socket.id,
             clientStateVersion,
             serverStateVersion: game.stateVersion,
             gameCode: game.code,
@@ -204,6 +208,8 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.STATE_VERSION_BEHIND,
           level: "warn",
           meta: {
+            game: game.toJson(),
+            socketId: socket.id,
             clientStateVersion,
             serverStateVersion: game.stateVersion,
             gameCode: game.code,
@@ -239,7 +245,7 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "error",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -253,7 +259,7 @@ export class GameService extends BaseService {
       throw new CError(`Player try to play but is not found.`, {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
-          game,
+          game: game.toJson(),
           socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
@@ -270,7 +276,7 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "error",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -288,7 +294,7 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.INVALID_TURN_STATE,
           level: "error",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,

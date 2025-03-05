@@ -51,7 +51,7 @@ export class LobbyService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -88,7 +88,7 @@ export class LobbyService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -116,7 +116,7 @@ export class LobbyService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -162,7 +162,7 @@ export class LobbyService extends BaseService {
         code: ErrorConstants.ERROR.NOT_ALLOWED,
         level: "warn",
         meta: {
-          game,
+          game: game.toJson(),
           socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
@@ -206,9 +206,9 @@ export class LobbyService extends BaseService {
         `Player try to join a game but the game is not in the lobby.`,
         {
           code: ErrorConstants.ERROR.GAME_ALREADY_STARTED,
-          level: "warn",
+          level: "info",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,

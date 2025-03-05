@@ -23,7 +23,7 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -40,7 +40,7 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.NO_KICK_VOTE_IN_PROGRESS,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -54,7 +54,7 @@ export class KickService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_ALREADY_VOTED,
         level: "warn",
         meta: {
-          game,
+          game: game.toJson(),
           socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
@@ -81,7 +81,7 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -98,7 +98,7 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             initiatorId: initiator.id,
             targetId,
@@ -116,7 +116,7 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.KICK_VOTE_IN_PROGRESS,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             initiatorId: initiator.id,
             targetId,
@@ -188,7 +188,7 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
           level: "warn",
           meta: {
-            game,
+            game: game.toJson(),
             socketId: socket.id,
             targetId: kickVote.targetId,
             gameCode: game.code,

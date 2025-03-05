@@ -14,7 +14,7 @@ export class PlayerService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         level: "error",
         meta: {
-          game,
+          game: game.toJson(),
           socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
@@ -59,7 +59,7 @@ export class PlayerService extends BaseService {
             code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
             level: "warn",
             meta: {
-              game,
+              game: game.toJson(),
               socketId: socket.id,
               gameCode: game.code,
               playerId: socket.data.playerId,
@@ -147,7 +147,7 @@ export class PlayerService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         level: "error",
         meta: {
-          game,
+          game: game.toJson(),
           socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,

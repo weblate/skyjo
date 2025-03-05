@@ -137,10 +137,9 @@ export class Skyjo implements SkyjoInterface {
     if (this.isFull()) {
       throw new CError("Cannot add player, game is full", {
         code: ErrorConstants.ERROR.GAME_IS_FULL,
-        level: "warn",
+        level: "info",
         meta: {
-          game: this,
-          player,
+          game: this.toJson(),
           gameCode: this.code,
           playerId: player.id,
         },
@@ -261,9 +260,9 @@ export class Skyjo implements SkyjoInterface {
         `Game cannot start with less than ${Constants.DEFAULT_GAME_SETTINGS.MIN_PLAYERS} players`,
         {
           code: ErrorConstants.ERROR.TOO_FEW_PLAYERS,
-          level: "warn",
+          level: "info",
           meta: {
-            game: this,
+            game: this.toJson(),
           },
         },
       )
