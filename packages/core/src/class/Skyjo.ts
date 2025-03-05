@@ -98,6 +98,7 @@ export class Skyjo implements SkyjoInterface {
     this.firstToFinishPlayerId = game.firstToFinishPlayerId
 
     this.stateVersion = game.stateVersion
+    this.processingAfk = game.processingAfk
     this.createdAt = game.createdAt
     this.updatedAt = game.updatedAt
 
@@ -471,6 +472,7 @@ export class Skyjo implements SkyjoInterface {
       turnStatus: this.turnStatus,
       lastTurnStatus: this.lastTurnStatus,
       firstToFinishPlayerId: this.firstToFinishPlayerId,
+      processingAfk: this.processingAfk,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       stateVersion: this.stateVersion,

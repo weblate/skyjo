@@ -100,6 +100,7 @@ describe("Skyjo", () => {
         },
 
         stateVersion: 0,
+        processingAfk: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -169,6 +170,7 @@ describe("Skyjo", () => {
         },
 
         stateVersion: 0,
+        processingAfk: false,
         createdAt: new Date(),
         updatedAt: new Date(),
       }
@@ -979,6 +981,7 @@ describe("Skyjo", () => {
           firstPlayerFlatPenalty: 0,
         },
         stateVersion: game.stateVersion,
+        processingAfk: game.processingAfk,
         createdAt: game.createdAt,
         updatedAt: game.updatedAt,
       } satisfies SkyjoDbFormat)

@@ -79,4 +79,5 @@ export type SkyjoDbFormat = {
   stateVersion: number
   createdAt: Date
   updatedAt: Date
+  processingAfk: boolean
 }
