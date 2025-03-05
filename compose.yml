@@ -96,8 +96,6 @@ services:
       - ./uptime-kuma-data:/app/data
     ports:
       - 3002:3001
-    environment:
-      - BASE_PATH=/uptime-kuma
     restart: always
 
 networks:
