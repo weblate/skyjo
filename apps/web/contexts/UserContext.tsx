@@ -59,7 +59,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
   }, [preferredUsername, preferredAvatarIndex])
 
   const getAvatar = () => {
-    return AVATARS_ARRAY[avatarIndex]
+    return AVATARS_ARRAY[avatarIndex] || CoreConstants.AVATARS.BEE
   }
 
   const saveUserInLocalStorage = () => {
