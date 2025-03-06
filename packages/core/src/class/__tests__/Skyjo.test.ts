@@ -905,7 +905,7 @@ describe("Skyjo", () => {
     it("should serialize game", async () => {
       await game.start()
 
-      const gameSerialized = game.serializeGame()
+      const gameSerialized = game.serialize()
       expect(gameSerialized).toStrictEqual({
         id: game.id,
         adminId: player.id,

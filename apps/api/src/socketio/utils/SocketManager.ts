@@ -31,12 +31,8 @@ export class SocketManager {
       cors: {
         origin: ENV.ORIGINS,
       },
-      pingInterval: 10000,
-      pingTimeout: 20000,
-      upgradeTimeout: 10000,
       connectionStateRecovery: {
-        maxDisconnectionDuration: 60000,
-        skipMiddlewares: true,
+        maxDisconnectionDuration: 120000,
       },
     })
 

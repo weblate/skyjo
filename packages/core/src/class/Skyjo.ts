@@ -419,7 +419,7 @@ export class Skyjo implements SkyjoInterface {
     } satisfies SkyjoToJson
   }
 
-  serializeGame() {
+  serialize() {
     return {
       id: this.id,
       code: this.code,

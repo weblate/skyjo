@@ -176,7 +176,7 @@ export class GameRepository extends RedisClient {
     const client = await RedisClient.getClient()
 
     const key = this.getGameLatestStateKey(game.code)
-    const json = game.serializeGame()
+    const json = game.serialize()
 
     await client.json.set(key, "$", json)
 

@@ -15,7 +15,7 @@ export class ChatService extends BaseService {
       throw new CError(`Player try to send a message but is not found.`, {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
-          game: game.toJson(),
+          game: game.serialize(),
           socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
