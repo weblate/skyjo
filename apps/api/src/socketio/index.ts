@@ -14,7 +14,12 @@ export const initializeSocketServer = (server: ServerType) => {
   const io = socketManager.getIO()
 
   io.engine.on("connection_error", (error) => {
-    Logger.error("Socket connection error", { error })
+    Logger.error("Socket connection error", {
+      error: error.message,
+      query: error.req?._query,
+      context: error.context,
+      code: error.code,
+    })
   })
 
   io.on("connection", (socket: SkyjoSocket) => {
