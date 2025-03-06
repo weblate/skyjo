@@ -19,14 +19,6 @@ services:
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
       - NODE_OPTIONS=--max-old-space-size=4096 --max-http-header-size=16384 --expose-gc --use-largepages=silent
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: "1.5"
-          memory: "12G"
-        reservations:
-          cpus: "0.5"
-          memory: "8G"
 
   redis:
     image: redis/redis-stack-server:latest
@@ -60,24 +52,11 @@ services:
     environment:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     restart: always
-    deploy:
-      resources:
-        limits:
-          cpus: "1.5"
-          memory: "12G"
-        reservations:
-          cpus: "0.5"
-          memory: "8G"
 
   seq:
     image: datalust/seq:latest
     ports:
       - "5341:80"
-    deploy:
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: "2G"
     networks:
       - internal
       - external
