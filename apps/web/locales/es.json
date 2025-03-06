@@ -125,8 +125,13 @@
           },
           "local-storage-data": {
             "title": "Datos de almacenamiento local",
-            "description": "Guardamos en el almacenamiento local de su navegador:",
-            "items": "Preferencias de idioma;;Sus ajustes en el juego"
+            "description": "Almacenamos en el almacenamiento local de su navegador:",
+            "items": "Preferencias de idioma;;Preferencias de configuración del juego"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "Utilizamos cookies esenciales para permitir la funcionalidad básica de nuestro sitio web:",
+            "items": "Cookies de sesión: Utilizamos una cookie de sesión (skyjo-io) para mantener su conexión a nuestros servidores de juego. Esta cookie es esencial para el funcionamiento del juego y caduca después de 24 horas;;Estas cookies no le rastrean a través de sitios web y solo se utilizan para proporcionar el servicio que ha solicitado"
           }
         },
         "how-we-use-your-information": {

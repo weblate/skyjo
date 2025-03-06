@@ -91,8 +91,13 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     console.log("Connecting to socket", process.env.NEXT_PUBLIC_API_URL)
     const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
       autoConnect: true,
+      rememberUpgrade: true,
+      reconnection: true,
       reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
+      reconnectionDelayMax: 2000,
+      reconnectionAttempts: 10,
+      timeout: 20000,
+      withCredentials: true,
       parser: customParser,
     })
 
@@ -252,7 +257,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.once("game:join", onJoinGameSuccess)
 
     try {
-      socket!.timeout(10000).emit("reconnect", lastGame)
+      socket.timeout(10000).emit("reconnect", lastGame)
     } catch {
       toast.error(tSocketError("timeout.description"), {
         duration: 5000,

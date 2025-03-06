@@ -6,6 +6,7 @@ import type {
   ClientToServerEvents,
   ServerToClientEvents,
 } from "@skyjo/shared/types"
+import dayjs from "dayjs"
 import { Server } from "socket.io"
 import customParser from "socket.io-msgpack-parser"
 
@@ -30,9 +31,19 @@ export class SocketManager {
       transports: ["polling", "websocket"],
       cors: {
         origin: ENV.ORIGINS,
+        credentials: true,
       },
       connectionStateRecovery: {
-        maxDisconnectionDuration: 120000,
+        maxDisconnectionDuration: 300000,
+        skipMiddlewares: false,
+      },
+      pingTimeout: 20000,
+      pingInterval: 25000,
+      cookie: {
+        name: "skyjo-io",
+        httpOnly: true,
+        sameSite: "strict",
+        expires: dayjs().add(1, "day").toDate(),
       },
     })
 

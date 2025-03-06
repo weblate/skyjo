@@ -189,11 +189,15 @@
             "description": "We temporarily store:",
             "items": "Usernames and avatar choices;;Game elements and progress"
           },
-
           "local-storage-data": {
             "title": "Local Storage Data",
             "description": "We store in your browser's local storage:",
             "items": "Language preferences;;Game settings preferences"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "We use essential cookies to enable core functionality of our website:",
+            "items": "Session cookies: We use a session cookie (skyjo-io) to maintain your connection to our game servers. This cookie is essential for the functionality of the game and expires after 24 hours;;These cookies do not track you across websites and are only used to provide the service you have requested"
           }
         },
         "how-we-use-your-information": {

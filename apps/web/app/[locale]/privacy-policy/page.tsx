@@ -2,7 +2,7 @@ import { Link } from "@/i18n/routing"
 import dayjs from "dayjs"
 import { useTranslations } from "next-intl"
 
-const LAST_PAGE_UPDATED_DATE = dayjs("2025-01-27 18:56:00")
+const LAST_PAGE_UPDATED_DATE = dayjs("2025-03-06 21:00:00")
 
 const RulesPage = () => {
   const t = useTranslations("pages.PrivacyPolicy.content")
@@ -25,6 +25,7 @@ const RulesPage = () => {
         <RenderSubSection section="information-we-collect.anonymous-usage-data" />
         <RenderSubSection section="information-we-collect.game-data" />
         <RenderSubSection section="information-we-collect.local-storage-data" />
+        <RenderSubSection section="information-we-collect.cookies" />
       </section>
       <RenderSection section="how-we-use-your-information" />
       <RenderSection section="data-storage-and-retention" />
