@@ -51,7 +51,7 @@ export class LobbyService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game: game.toJson(),
+            game: game.serialize(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -88,7 +88,7 @@ export class LobbyService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game: game.toJson(),
+            game: game.serialize(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -116,7 +116,7 @@ export class LobbyService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game: game.toJson(),
+            game: game.serialize(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -162,7 +162,7 @@ export class LobbyService extends BaseService {
         code: ErrorConstants.ERROR.NOT_ALLOWED,
         level: "warn",
         meta: {
-          game: game.toJson(),
+          game: game.serialize(),
           socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
@@ -208,7 +208,7 @@ export class LobbyService extends BaseService {
           code: ErrorConstants.ERROR.GAME_ALREADY_STARTED,
           level: "info",
           meta: {
-            game: game.toJson(),
+            game: game.serialize(),
             socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
