@@ -1,10 +1,14 @@
 <p align="center">
   <a href="https://www.skyjo.online">
-    <img src="https://www.skyjo.online/svg/logo.svg" alt="Skyjo Online" width="400" />
+    <picture>
+      <source media="(prefers-color-scheme: dark)" srcset="https://www.skyjo.online/svg/logo-white.svg">
+      <img alt="Skyjo Online logo"  width="400" src="https://www.skyjo.online/svg/logo.svg">
+    </picture>
   </a>
 </p>
 
 <p align="center">
+  <img alt="Uptime" src="https://uptime.skyjo.online/api/badge/4/status">
   <img alt="Sonar Quality Gate (branch)" src="https://img.shields.io/sonar/quality_gate/maxentr_skyjo/trunk?server=https%3A%2F%2Fsonarcloud.io">
   <img alt="Sonar Tech Debt (branch)" src="https://img.shields.io/sonar/tech_debt/maxentr_skyjo/trunk?server=https%3A%2F%2Fsonarcloud.io">
   <img alt="Weblate project translated" src="https://img.shields.io/weblate/progress/skyjo-online">
@@ -52,11 +56,13 @@ This project is set up as a monorepo using [Turborepo](https://turbo.build/repo)
 ## Installation guide
 
 ### Prerequisites
+
 - [Node.js](https://nodejs.org/en/) (v22.10.0)
 - [pnpm](https://pnpm.io/) (v9.14.4)
 - [Docker](https://www.docker.com/) (v27.X.X)
 
 ### Installation steps
+
 1. Install dependencies:
    ```bash
    pnpm install
@@ -74,24 +80,28 @@ This project is set up as a monorepo using [Turborepo](https://turbo.build/repo)
 To start the necessary services and clients:
 
 To start Redis, Seq, and the API server in detached mode:
+
 ```bash
 docker compose up -d
 ```
 
 Run the web client with:
-   ```bash
-   pnpm dev --filter @skyjo/web
-   ```
+
+```bash
+pnpm dev --filter @skyjo/web
+```
 
 ### Running the API without docker
 
 In `apps/api/.env`, set:
+
 ```env
 # Replace `REDIS_PASSWORD` with your Redis password
 REDIS_URL=redis://:REDIS_PASSWORD@localhost:6379
 ```
 
 Start the API server locally:
+
 ```bash
 pnpm dev --filter @skyjo/api
 ```
