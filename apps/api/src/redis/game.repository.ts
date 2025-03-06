@@ -5,6 +5,7 @@ import {
   type SkyjoPlayerToJson,
 } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import { Logger } from "@skyjo/logger"
 import { type SkyjoOperation } from "@skyjo/state-operations"
 import { RedisClient } from "./client.js"
 export class GameRepository extends RedisClient {
@@ -20,7 +21,7 @@ export class GameRepository extends RedisClient {
   async createGame(game: Skyjo) {
     const existingGame = await this.getGameSafe(game.code)
     if (existingGame) {
-      throw new CError("A game with this code already exists in cache", {
+      throw new CError("A game with this code already exists in redis", {
         code: ErrorConstants.ERROR.GAME_ALREADY_EXISTS,
         meta: { gameCode: game.code },
       })
@@ -66,6 +67,9 @@ export class GameRepository extends RedisClient {
     try {
       return await this.getGame(code, false)
     } catch {
+      Logger.debug(`Game ${code} not found in redis`, {
+        gameCode: code,
+      })
       return null
     }
   }
@@ -76,7 +80,7 @@ export class GameRepository extends RedisClient {
 
     const game = (await client.json.get(key)) as SkyjoDbFormat | null
     if (!game) {
-      throw new CError("Game not found in cache", {
+      throw new CError("Game not found in redis", {
         level: "warn",
         shouldLog: logError,
         code: ErrorConstants.ERROR.GAME_NOT_FOUND,
@@ -238,7 +242,15 @@ export class GameRepository extends RedisClient {
     }
 
     if (keys.length > 0) {
+      Logger.info(`Deleting ${keys.length} keys for game ${gameCode}`, {
+        gameCode,
+        keys,
+      })
       await client.unlink(keys)
+    } else {
+      Logger.error(`No keys to delete for game ${gameCode}`, {
+        gameCode,
+      })
     }
   }
 

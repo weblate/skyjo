@@ -3,6 +3,7 @@ import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import type { Skyjo } from "@skyjo/core"
 import { Constants as CoreConstants } from "@skyjo/core"
 import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import { Logger } from "@skyjo/logger"
 import type { Job } from "bullmq"
 import { BaseAfkQueueService } from "./BaseAfkQueueService.js"
 
@@ -16,6 +17,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
 
   private constructor() {
     super("player-afk-timer")
+    Logger.info("PlayerAfkQueueService singleton initialized")
   }
 
   public static getInstance(): PlayerAfkQueueService {
@@ -32,6 +34,16 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
   public async startTimer(game: Skyjo, playerId: string): Promise<void> {
     const timeoutDuration = this.getAfkTimeout(game)
     const jobId = this.getJobId(game.code, playerId)
+
+    Logger.info(
+      `Starting AFK timer for player ${playerId} in game ${game.code}`,
+      {
+        gameCode: game.code,
+        playerId,
+        timeoutDuration,
+        jobId,
+      },
+    )
 
     await this.queue.add(
       jobId,
@@ -50,24 +62,61 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
 
   public async cancelTimer(gameCode: string, playerId: string): Promise<void> {
     const jobId = this.getJobId(gameCode, playerId)
+
+    Logger.info(
+      `Cancelling AFK timer for player ${playerId} in game ${gameCode}`,
+      {
+        gameCode,
+        playerId,
+        jobId,
+      },
+    )
+
     await this.queue.remove(jobId)
   }
 
   async processJob(job: Job<PlayerAfkJobData>) {
     const { gameCode, playerId } = job.data
 
+    Logger.info(
+      `Processing AFK job for player ${playerId} in game ${gameCode}`,
+      {
+        gameCode,
+        playerId,
+        jobId: job.id,
+      },
+    )
+
     const game = await this.redis.getGameSafe(gameCode)
     if (!game) return
 
     try {
       game.setOperationManager(GameOperationManager.getInstance())
-      if (!game.isPlaying() || !game.isRoundInMain()) return
+      if (!game.isPlaying() || !game.isRoundInMain()) {
+        Logger.debug(
+          `Game ${gameCode} is not in playing state or not in main round, skipping AFK job`,
+          {
+            gameCode,
+            playerId,
+            jobId: job.id,
+            isPlaying: game.isPlaying(),
+            isRoundInMain: game.isRoundInMain(),
+          },
+        )
+        return
+      }
 
       await this.lockGame(game)
 
       const player = game.getPlayerById(playerId)
-      if (!player) return
-
+      if (!player) {
+        Logger.debug(`Player ${playerId} not found in game ${gameCode}`, {
+          gameCode,
+          playerId,
+          jobId: job.id,
+        })
+        return
+      }
       const currentPlayer = game.getCurrentPlayer()
 
       if (currentPlayer?.id === playerId) {
@@ -104,6 +153,15 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     const stateManager = new GameStateTracker(game)
 
     const currentPlayer = game.getCurrentPlayer()
+    Logger.info(
+      `Performing AFK move for player ${currentPlayer.id} (${currentPlayer.name}) in game ${game.code}`,
+      {
+        gameCode: game.code,
+        playerId: currentPlayer.id,
+        playerName: currentPlayer.name,
+        turnStatus: game.turnStatus,
+      },
+    )
 
     if (game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE) {
       game.drawCard()
@@ -111,6 +169,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       await this.updateAndSendGame(game, stateManager)
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
+
     const cardCoords = currentPlayer.getFirstCardNotVisible()
     if (!cardCoords) throw new Error("No card to reveal. SHOULD NOT HAPPEN")
 
@@ -135,6 +194,15 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     this.warnPlayer(currentPlayer)
 
     await this.updateAndSendGame(game, stateManager)
+
+    Logger.info(
+      `AFK move completed for player ${currentPlayer.id} (${currentPlayer.name}) in game ${game.code}`,
+      {
+        gameCode: game.code,
+        playerId: currentPlayer.id,
+        playerName: currentPlayer.name,
+      },
+    )
   }
 
   //#endregion
