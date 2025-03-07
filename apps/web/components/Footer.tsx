@@ -17,6 +17,13 @@ const Footer = () => {
             {t("explanation")}
           </Link>
           <FooterRulesLink text={t("rules")} />
+          <Link
+            href="https://status.skyjo.online"
+            target="_blank"
+            className="text-black dark:text-dark-font underline"
+          >
+            {t("status")}
+          </Link>
         </div>
         <div className="flex flex-col justify-center items-center gap-3 md:gap-4">
           <Link href="/" className="text-black dark:text-dark-font underline">
