@@ -2,6 +2,7 @@
 
 import { useChat } from "@/contexts/ChatContext"
 import { useSocket } from "@/contexts/SocketContext"
+import { useUser } from "@/contexts/UserContext"
 import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
 import { useRouter } from "@/i18n/routing"
 import { getCurrentUser, getOpponents, isAdmin } from "@/lib/skyjo"
@@ -68,14 +69,15 @@ interface SkyjoProviderProps extends PropsWithChildren {
 
 const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
   const { socket } = useSocket()
+  const { playerId } = useUser()
   const { sendMessage, setChat } = useChat()
   const router = useRouter()
   const { showAfkWarning, showAfkKick, showPlayerAfkKick } = useAfkKickToasts()
 
   const [game, setGame] = useState<SkyjoToJson>()
 
-  const player = getCurrentUser(game?.players, socket?.id ?? "")
-  const opponents = getOpponents(game?.players, socket?.id ?? "")
+  const player = getCurrentUser(game?.players, playerId)
+  const opponents = getOpponents(game?.players, playerId)
 
   const admin = isAdmin(game, player?.id)
   const stateVersion = game?.stateVersion ?? -99

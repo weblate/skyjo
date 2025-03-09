@@ -7,13 +7,13 @@ import {
 
 export const getCurrentUser = (
   players: SkyjoToJson["players"] | undefined,
-  socketId: string,
+  playerId: string,
 ) => {
   if (!players) {
     return undefined
   }
 
-  return players.find((player) => player.socketId === socketId)
+  return players.find((player) => player.id === playerId)
 }
 
 export const getConnectedPlayers = (
@@ -31,7 +31,7 @@ export const getConnectedPlayers = (
 
 export const getOpponents = (
   players: SkyjoToJson["players"] | undefined,
-  socketId: string,
+  playerId: string,
 ): Opponents => {
   if (!players) {
     return [[], [], []]
@@ -40,7 +40,7 @@ export const getOpponents = (
   const connectedPlayers = getConnectedPlayers(players)
 
   const playerIndex = connectedPlayers.findIndex(
-    (player) => player.socketId === socketId,
+    (player) => player.id === playerId,
   )
 
   const connectedOpponents = [
@@ -119,7 +119,7 @@ export const getNextPlayerIndex = (
   game: SkyjoToJson,
   currentPlayer: SkyjoPlayerToJson,
 ): number => {
-  const opponents = getOpponents(game.players, currentPlayer.socketId).flat()
+  const opponents = getOpponents(game.players, currentPlayer.id).flat()
 
   if (opponents.length === 0) {
     return -1

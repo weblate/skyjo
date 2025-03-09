@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@/contexts/UserContext"
 import { usePathname, useRouter } from "@/i18n/routing"
 import {
   addReconnectionDateToLastGame,
@@ -58,6 +59,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const { setPlayerId } = useUser()
 
   const [socket, setSocket] = useState<SkyjoSocket | null>(null)
 
@@ -221,6 +223,8 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
         playerId,
       }),
     )
+
+    setPlayerId(playerId)
 
     if (status === CoreConstants.GAME_STATUS.LOBBY)
       router.replace(`/game/${code}/lobby`)
