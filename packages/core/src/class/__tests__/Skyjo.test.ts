@@ -1728,7 +1728,7 @@ describe("Skyjo", () => {
       expect(game.status).toBe(Constants.GAME_STATUS.STOPPED)
     })
 
-    it("should remove game if no more players", async () => {
+    it("should remove game if no more players and game is not playing", async () => {
       game.players = [player]
 
       const removeGameSpy = vi.spyOn(game["operationManager"], "removeGame")
@@ -1736,6 +1736,19 @@ describe("Skyjo", () => {
       await game.disconnectPlayer(player)
 
       expect(removeGameSpy).toHaveBeenCalledWith(game.code)
+
+      removeGameSpy.mockClear()
+    })
+
+    it("should not remove game if no more players and game is playing", async () => {
+      game.players = [player]
+      game.status = Constants.GAME_STATUS.PLAYING
+
+      const removeGameSpy = vi.spyOn(game["operationManager"], "removeGame")
+
+      await game.disconnectPlayer(player)
+
+      expect(removeGameSpy).not.toHaveBeenCalled()
 
       removeGameSpy.mockClear()
     })

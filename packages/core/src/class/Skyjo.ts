@@ -180,12 +180,12 @@ export class Skyjo implements SkyjoInterface {
 
     if (!this.isPlaying()) {
       await this.removePlayer(player.id)
+
+      if (this.players.length === 0) {
+        await this.operationManager.removeGame(this.code)
+      }
     } else if (!this.hasMinPlayersConnected()) {
       this.status = Constants.GAME_STATUS.STOPPED
-    }
-
-    if (this.players.length === 0) {
-      await this.operationManager.removeGame(this.code)
     }
   }
 
