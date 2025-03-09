@@ -21,6 +21,7 @@
     "@skyjo/logger": "workspace:*",
     "@skyjo/shared": "workspace:*",
     "@skyjo/state-operations": "workspace:*",
+    "@socket.io/redis-adapter": "^8.3.0",
     "bullmq": "^5.40.2",
     "dayjs": "^1.11.13",
     "hono": "^4.6.12",

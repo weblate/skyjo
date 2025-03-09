@@ -8,6 +8,7 @@ import { lobbyRouter } from "./routers/lobby.router.js"
 import { playerRouter } from "./routers/player.router.js"
 import type { SkyjoSocket } from "./types/skyjoSocket.js"
 import { SocketManager } from "./utils/SocketManager.js"
+
 export const initializeSocketServer = (server: ServerType) => {
   const socketManager = SocketManager.getInstance()
   socketManager.setIO(server as HttpServer)

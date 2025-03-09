@@ -24,6 +24,21 @@ vi.mock("socket.io", () => {
   }
 })
 
+vi.mock("@socket.io/redis-adapter", () => ({
+  createAdapter: vi.fn(),
+}))
+
+vi.mock("redis", () => ({
+  createClient: vi.fn().mockImplementation(() => ({
+    on: vi.fn(),
+    duplicate: vi.fn().mockReturnValue({
+      on: vi.fn(),
+      connect: vi.fn(),
+    }),
+    connect: vi.fn(),
+  })),
+}))
+
 describe("SocketManager", () => {
   let socketManager: SocketManager
   let httpServer: HttpServer

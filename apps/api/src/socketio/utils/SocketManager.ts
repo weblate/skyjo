@@ -2,11 +2,14 @@ import { Server as HttpServer } from "http"
 import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
 import { ENV } from "@env"
 import type { Skyjo } from "@skyjo/core"
+import { Logger } from "@skyjo/logger"
 import type {
   ClientToServerEvents,
   ServerToClientEvents,
 } from "@skyjo/shared/types"
+import { createAdapter } from "@socket.io/redis-adapter"
 import dayjs from "dayjs"
+import { createClient } from "redis"
 import { Server } from "socket.io"
 import customParser from "socket.io-msgpack-parser"
 
@@ -25,6 +28,30 @@ export class SocketManager {
 
   setIO(server: HttpServer): void {
     if (this.io) return
+
+    // Create Redis clients for the adapter
+    const pubClient = createClient({ url: ENV.REDIS_URL })
+    const subClient = pubClient.duplicate()
+
+    // Handle Redis client errors
+    pubClient.on("error", (err) => {
+      Logger.error("Redis Pub Client Error", { error: err })
+    })
+
+    subClient.on("error", (err) => {
+      Logger.error("Redis Sub Client Error", { error: err })
+    })
+
+    // Connect to Redis
+    Promise.all([pubClient.connect(), subClient.connect()])
+      .then(() => {
+        Logger.info("Redis clients connected for Socket.IO adapter")
+      })
+      .catch((err) => {
+        Logger.error("Failed to connect Redis clients for Socket.IO adapter", {
+          error: err,
+        })
+      })
 
     const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
       parser: customParser,
@@ -45,6 +72,7 @@ export class SocketManager {
         sameSite: "strict",
         expires: dayjs().add(1, "day").toDate(),
       },
+      adapter: createAdapter(pubClient, subClient),
     })
 
     this.io = io
