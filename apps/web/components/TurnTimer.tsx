@@ -1,10 +1,12 @@
 "use client"
 
+import { TimerDisplayMode, useSettings } from "@/contexts/SettingsContext"
 import { useSkyjo } from "@/contexts/SkyjoContext"
 import { cn } from "@/lib/utils"
 import { Constants as CoreConstants } from "@skyjo/core"
 import { cva } from "class-variance-authority"
 import dayjs from "dayjs"
+import { AnimatePresence, m } from "framer-motion"
 import { useEffect, useRef, useState } from "react"
 
 const turnTimerTextVariants = cva("text-sm", {
@@ -22,6 +24,9 @@ type TurnTimerProps = {
 }
 const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   const { game } = useSkyjo()
+  const {
+    settings: { timerDisplayMode },
+  } = useSettings()
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
   const turnTime = game.settings.private
@@ -33,7 +38,9 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   useEffect(() => {
     if (intervalRef.current) clearInterval(intervalRef.current)
 
-    if (!turnStartTime) return
+    if (!turnStartTime || timerDisplayMode === TimerDisplayMode.NEVER) {
+      return
+    }
 
     const now = dayjs()
     const elapsedTime = now.diff(turnStartTime, "ms")
@@ -52,23 +59,52 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
     return () => {
       if (intervalRef.current) clearInterval(intervalRef.current)
     }
-  }, [turnStartTime, turnTime])
-
-  if (!turnStartTime) return null
-  if (game.status !== CoreConstants.GAME_STATUS.PLAYING) return null
+  }, [turnStartTime, turnTime, timerDisplayMode])
 
   const formattedTime = dayjs(timeLeft).format("mm:ss")
   const timeLeftVariant = timeLeft <= 10000 ? "danger" : "normal"
 
+  const shouldShowTimer = () => {
+    if (
+      !turnStartTime ||
+      game.status !== CoreConstants.GAME_STATUS.PLAYING ||
+      timerDisplayMode === TimerDisplayMode.NEVER
+    ) {
+      return false
+    }
+    if (timerDisplayMode === TimerDisplayMode.ALWAYS) return true
+
+    // Smart mode logic
+    const halfTime = turnTime / 2
+    const timeElapsed = turnTime - timeLeft
+
+    // If the timer is last 15 seconds, show it
+    const isLastFifteenSeconds = timeLeft <= 15000
+
+    // If the timer is after half time to half time + 5 seconds, show it
+    const isAfterHalfTime =
+      timeElapsed >= halfTime && timeElapsed <= halfTime + 10000
+
+    return isLastFifteenSeconds || isAfterHalfTime
+  }
+
   return (
-    <span
-      className={cn(
-        turnTimerTextVariants({ timeLeft: timeLeftVariant }),
-        className,
+    <AnimatePresence>
+      {shouldShowTimer() && (
+        <m.span
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.3 }}
+          className={cn(
+            turnTimerTextVariants({ timeLeft: timeLeftVariant }),
+            className,
+          )}
+        >
+          {timeLeft > 0 ? formattedTime : "00:00"}
+        </m.span>
       )}
-    >
-      {timeLeft > 0 ? formattedTime : "00:00"}
-    </span>
+    </AnimatePresence>
   )
 }
 

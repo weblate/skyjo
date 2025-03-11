@@ -471,14 +471,23 @@
             }
           }
         },
-        "game-board": {
-          "title": "Plateau de jeu",
-          "size": {
+        "gameplay": {
+          "title": "Jeu",
+          "gameboard-size": {
             "label": "Taille de votre plateau de jeu",
             "big-warning": "Peut casser l'affichage sur mobile",
             "values": {
               "normal": "Normal",
               "big": "Grand"
+            }
+          },
+          "timer": {
+            "label": "Mode d'affichage du chronomètre",
+            "description": "Le mode intelligent affiche le chronomètre à mi-temps et les 15 dernières secondes.",
+            "modes": {
+              "never": "Jamais",
+              "smart": "Intelligente",
+              "always": "Toujours"
             }
           }
         }

@@ -300,18 +300,7 @@
             }
           }
         },
-        "title": "Mostrar",
-        "game-board": {
-          "title": "Tablero de juego",
-          "size": {
-            "label": "Tamaño de tu tablero de juego",
-            "values": {
-              "normal": "Normal",
-              "big": "Grande"
-            },
-            "big-warning": "Puede hacer que se muestre de forma correcta en el móvil"
-          }
-        }
+        "title": "Mostrar"
       },
       "title": "Ajustes"
     },

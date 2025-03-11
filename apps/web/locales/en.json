@@ -476,14 +476,23 @@
             }
           }
         },
-        "game-board": {
-          "title": "Game board",
-          "size": {
+        "gameplay": {
+          "title": "Gameplay",
+          "gameboard-size": {
             "label": "Size of your game board",
             "big-warning": "Can break display on mobile",
             "values": {
               "normal": "Normal",
               "big": "Big"
+            }
+          },
+          "timer": {
+            "label": "Timer display mode",
+            "description": "Smart mode displays the timer at half-time and the last 15 seconds.",
+            "modes": {
+              "never": "Never",
+              "smart": "Smart",
+              "always": "Always"
             }
           }
         }
