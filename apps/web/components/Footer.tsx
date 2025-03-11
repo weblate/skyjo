@@ -81,6 +81,9 @@ const Footer = () => {
           {t("disclaimer.rights-owned")}
         </p>
         <p className="text-center text-black dark:text-dark-font text-sm">
+          {t("disclaimer.responsible-content")}
+        </p>
+        <p className="text-center text-black dark:text-dark-font text-sm">
           {t("attribution.avatars")}
         </p>
       </div>
