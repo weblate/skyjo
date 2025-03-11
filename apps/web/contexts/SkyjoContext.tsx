@@ -181,6 +181,31 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
     ) {
       if (game?.settings.private) router.replace("/")
       else router.replace("/search")
+    } else if (game?.status === CoreConstants.GAME_STATUS.PLAYING) {
+      reconnect()
+      socket?.on("game:join", () => {
+        socket.emit("get", game.stateVersion)
+      })
+    }
+  }
+
+  const MAX_RECONNECT_BACKOFF_MS = 3000
+  const reconnect = (attempt = 1, backoffMs = 1000) => {
+    try {
+      console.log(`Reconnection attempt ${attempt} (delay: ${backoffMs}ms)`)
+
+      socket!.timeout(5000).emit("reconnect", {
+        gameCode: game?.code,
+        playerId: player?.id,
+      })
+    } catch (error) {
+      console.error("Error reconnecting", error)
+
+      const nextBackoff = Math.min(backoffMs * 1.5, MAX_RECONNECT_BACKOFF_MS)
+
+      setTimeout(() => {
+        reconnect(attempt + 1, nextBackoff)
+      }, backoffMs)
     }
   }
 
