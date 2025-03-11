@@ -156,6 +156,23 @@ export const useKickVoteToasts = () => {
       id: voteAgainstYouSucceededToastId,
     })
   }
+
+  const showYouKickPlayer = async (playerToKickName: string) => {
+    await dismissAllKickVoteToasts()
+
+    toast(t("you-kick-player.title", { playerName: playerToKickName }))
+  }
+
+  const showAdminKick = async (playerToKickName: string) => {
+    await dismissAllKickVoteToasts()
+
+    toast(t("admin-kick.title", { playerName: playerToKickName }))
+  }
+  const showAdminKickYou = async () => {
+    await dismissAllKickVoteToasts()
+
+    toast(t("admin-kick-you.title"))
+  }
   //#region helpers
   const getPlayerToKick = (targetId: string) => {
     return game?.players.find((p) => p.id === targetId)
@@ -184,5 +201,8 @@ export const useKickVoteToasts = () => {
     showVoteFailed,
     showVoteSucceeded,
     showVoteAgainstYouSucceeded,
+    showYouKickPlayer,
+    showAdminKick,
+    showAdminKickYou,
   }
 }

@@ -550,6 +550,15 @@
       "vote-against-you-succeeded": {
         "title": "You have been kicked",
         "description": "The players have voted to kick you out of the game."
+      },
+      "you-kick-player": {
+        "title": "You have kicked {playerName}"
+      },
+      "admin-kick": {
+        "title": "{playerName} has been kicked from the game by the host"
+      },
+      "admin-kick-you": {
+        "title": "You have been kicked out of the game by the host"
       }
     },
     "AfkKick": {

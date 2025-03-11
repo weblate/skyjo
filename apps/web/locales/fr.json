@@ -545,6 +545,15 @@
       "vote-against-you-succeeded": {
         "title": "Vous avez été expulsé",
         "description": "Les joueurs ont voté pour vous expulser de la partie."
+      },
+      "you-kick-player": {
+        "title": "Vous avez expulsé {playerName}"
+      },
+      "admin-kick": {
+        "title": "{playerName} a été expulsé de la partie par l'hôte"
+      },
+      "admin-kick-you": {
+        "title": "Vous avez été expulsé de la partie par l'hôte"
       }
     },
     "AfkKick": {
