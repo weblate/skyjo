@@ -141,13 +141,13 @@ export const getNextPlayerIndex = (
   return nextOpponentIndex
 }
 
-export const isAdmin = (game?: SkyjoToJson, playerId?: string) => {
+export const isHost = (game?: SkyjoToJson, playerId?: string) => {
   if (!game || !playerId) return false
 
-  return playerId === game.adminId
+  return playerId === game.hostId
 }
 
-export const getAdmin = (game?: SkyjoToJson) => {
+export const getHost = (game?: SkyjoToJson) => {
   if (!game) return undefined
-  return game.players.find((player) => player.id === game.adminId)
+  return game.players.find((player) => player.id === game.hostId)
 }

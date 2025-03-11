@@ -13,7 +13,7 @@ import type { SkyjoSettingsToJson } from "./skyjoSettings.js"
 export type SkyjoToJson = {
   code: string
   status: GameStatus
-  adminId: string
+  hostId: string
   players: SkyjoPlayerToJson[]
   turn: number
   settings: SkyjoSettingsToJson
@@ -29,7 +29,7 @@ export type SkyjoToJson = {
 export type SkyjoDbFormat = {
   id: string
   code: string
-  adminId: string
+  hostId: string
   isFull: boolean
   status: GameStatus
   players: {

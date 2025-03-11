@@ -5,7 +5,7 @@ import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
 import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
 import { useRouter } from "@/i18n/routing"
-import { getCurrentUser, getOpponents, isAdmin } from "@/lib/skyjo"
+import { getCurrentUser, getOpponents, isHost } from "@/lib/skyjo"
 import { Opponents } from "@/types/opponents"
 import {
   addReconnectionDateToLastGame,
@@ -79,7 +79,7 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
   const player = getCurrentUser(game?.players, playerId)
   const opponents = getOpponents(game?.players, playerId)
 
-  const admin = isAdmin(game, player?.id)
+  const host = isHost(game, player?.id)
   const stateVersion = game?.stateVersion ?? -99
 
   useEffect(() => {
@@ -244,7 +244,7 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
 
   //#region actions
   const updateMaxPlayers = (maxPlayers: UpdateMaxPlayers) => {
-    if (!admin) return
+    if (!host) return
 
     socket!.emit("game:update-max-players", maxPlayers)
   }
@@ -253,7 +253,7 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
     key: T,
     value: UpdateGameSettings[T],
   ) => {
-    if (!admin) return
+    if (!host) return
 
     socket!.emit("game:update-settings", {
       [key]: value,
@@ -261,25 +261,25 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
   }
 
   const toggleSettingsValidation = () => {
-    if (!admin) return
+    if (!host) return
 
     socket!.emit("game:settings:toggle-validation")
   }
 
   const updateSettings = (settings: UpdateGameSettings) => {
-    if (!admin) return
+    if (!host) return
 
     socket!.emit("game:update-settings", settings)
   }
 
   const resetSettings = () => {
-    if (!admin) return
+    if (!host) return
 
     socket!.emit("game:reset-settings")
   }
 
   const startGame = () => {
-    if (!admin) return
+    if (!host) return
 
     socket!.emit("start")
   }

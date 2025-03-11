@@ -50,7 +50,7 @@ describe("KickService", () => {
     )
 
     game = new Skyjo({
-      adminId: player.socketId,
+      hostId: player.socketId,
       settings: new SkyjoSettings(),
     })
     mockGameStateTracker(game)
@@ -92,9 +92,9 @@ describe("KickService", () => {
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_NOT_FOUND)
     })
 
-    it("should directly kick the player if the initiator is the admin and the game is private", async () => {
+    it("should directly kick the player if the initiator is the host and the game is private", async () => {
       game.settings.private = true
-      game.adminId = player.id
+      game.hostId = player.id
 
       await service.onInitiateKickVote(socket, opponent2.id)
 
@@ -102,15 +102,15 @@ describe("KickService", () => {
 
       expect(service["socketManager"].sendToRoom).toHaveBeenCalledWith({
         room: game.code,
-        event: "kick:admin-kick",
+        event: "kick:host-kick",
         data: [opponent2.id, opponent2.name],
       })
       expect(game.players.find((p) => p.id === opponent2.id)).toBeUndefined()
     })
 
-    it("should initiate a kick vote if the initiator is the admin but the game is public", async () => {
+    it("should initiate a kick vote if the initiator is the host but the game is public", async () => {
       game.settings.private = false
-      game.adminId = player.id
+      game.hostId = player.id
 
       await service.onInitiateKickVote(socket, opponent2.id)
 
@@ -123,9 +123,9 @@ describe("KickService", () => {
       expect(game.players.find((p) => p.id === opponent2.id)).toBeDefined()
     })
 
-    it("should initiate a kick vote if the game is private but the initiator is not the admin", async () => {
+    it("should initiate a kick vote if the game is private but the initiator is not the host", async () => {
       game.settings.private = true
-      game.adminId = opponent1.id
+      game.hostId = opponent1.id
 
       await service.onInitiateKickVote(socket, opponent2.id)
 
@@ -237,16 +237,16 @@ describe("KickService", () => {
     })
 
     for (const key of Object.keys(CoreConstants.GAME_STATUS)) {
-      it(`should add a vote to the kick vote and broadcast the success and change the admin if target is the current admin in ${key}`, async () => {
+      it(`should add a vote to the kick vote and broadcast the success and change the host if target is the current host in ${key}`, async () => {
         game.status =
           CoreConstants.GAME_STATUS[
             key as keyof typeof CoreConstants.GAME_STATUS
           ]
-        game.adminId = opponent2.id
+        game.hostId = opponent2.id
         await service.onInitiateKickVote(socket, opponent2.id)
         await service.onVoteToKick(opponent1Socket, true)
 
-        expect(game.adminId).not.toBe(opponent2.id)
+        expect(game.hostId).not.toBe(opponent2.id)
       })
     }
 

@@ -109,12 +109,12 @@ export class KickService extends BaseService {
       )
     }
 
-    if (game.isAdmin(initiator.id) && game.settings.private) {
+    if (game.isHost(initiator.id) && game.settings.private) {
       const operationManager = new GameStateTracker(game)
 
       this.socketManager.sendToRoom({
         room: game.code,
-        event: "kick:admin-kick",
+        event: "kick:host-kick",
         data: [target.id, target.name],
       })
 

@@ -24,7 +24,7 @@ import {
 } from "@/components/ui/tooltip"
 import { useSkyjo } from "@/contexts/SkyjoContext"
 import { useRouter } from "@/i18n/routing"
-import { getAdmin, isAdmin } from "@/lib/skyjo"
+import { getHost, isHost } from "@/lib/skyjo"
 import { cn } from "@/lib/utils"
 import {
   Constants as CoreConstants,
@@ -55,7 +55,7 @@ const Lobby = ({ gameCode }: LobbyProps) => {
 
   const [isLoading, setIsLoading] = useState(false)
 
-  const admin = isAdmin(game, player?.id)
+  const host = isHost(game, player?.id)
   const hasMinPlayers = game.players.length < 2
   const nbCards = game.settings.cardPerColumn * game.settings.cardPerRow
   const maxInitialTurnedCount = nbCards === 1 ? 1 : nbCards - 1
@@ -95,12 +95,12 @@ const Lobby = ({ gameCode }: LobbyProps) => {
     timeoutStart = setTimeout(() => setIsLoading(false), 5000)
   }
 
-  const adminName = getAdmin(game)?.name ?? ""
-  const adminNameSliced =
-    adminName.length > 12 ? adminName.slice(0, 8) + "..." : adminName
+  const hostName = getHost(game)?.name ?? ""
+  const hostNameSliced =
+    hostName.length > 12 ? hostName.slice(0, 8) + "..." : hostName
 
   const disableInput =
-    !admin || (!game.settings.private && game.settings.isConfirmed)
+    !host || (!game.settings.private && game.settings.isConfirmed)
 
   const disableFlatPenalty =
     game.settings.firstPlayerPenaltyType ===
@@ -137,11 +137,11 @@ const Lobby = ({ gameCode }: LobbyProps) => {
               </button>
               <h2 className="text-black dark:text-dark-font text-center text-2xl">
                 {t("title", {
-                  name: adminNameSliced,
+                  name: hostNameSliced,
                 })}
               </h2>
               <TooltipProvider delayDuration={200}>
-                <Tooltip defaultOpen={admin}>
+                <Tooltip defaultOpen={host}>
                   <TooltipTrigger className="size-6 relative cursor-default text-black dark:text-dark-font">
                     {game.settings.private ? (
                       <LockIcon className="size-6" />
@@ -442,7 +442,7 @@ const Lobby = ({ gameCode }: LobbyProps) => {
                 </div>
               </div>
             </div>
-            {admin && !game.settings.private && (
+            {host && !game.settings.private && (
               <div className="flex flex-row justify-center gap-1 mt-6 px-4 sm:px-8">
                 <TriangleAlertIcon className="size-5 text-red-500 dark:text-red-600" />
                 <p className="text-sm text-red-500 dark:text-red-600">
@@ -450,7 +450,7 @@ const Lobby = ({ gameCode }: LobbyProps) => {
                 </p>
               </div>
             )}
-            {admin ? (
+            {host ? (
               <div
                 className={cn(
                   "flex flex-col sm:flex-row justify-center items-center gap-4 lg:gap-8 px-4 sm:px-8 mb-4 sm:mb-8",
@@ -472,7 +472,7 @@ const Lobby = ({ gameCode }: LobbyProps) => {
                 ) : (
                   <Button
                     onClick={beforeStartGame}
-                    disabled={hasMinPlayers || !admin}
+                    disabled={hasMinPlayers || !host}
                     loading={isLoading}
                   >
                     {t("start-game-button")}
@@ -483,8 +483,8 @@ const Lobby = ({ gameCode }: LobbyProps) => {
               <p className="text-center text-black dark:text-dark-font mt-6 lg:mt-8 px-4 sm:px-8 mb-4 sm:mb-8">
                 {t(
                   game.settings.isConfirmed
-                    ? "waiting-admin-to-start"
-                    : "waiting-admin-to-confirm-game-settings",
+                    ? "waiting-host-to-start"
+                    : "waiting-host-to-confirm-game-settings",
                 )}
               </p>
             )}
@@ -496,7 +496,7 @@ const Lobby = ({ gameCode }: LobbyProps) => {
                 maxPlayers: game.settings.maxPlayers,
               })}
             </h3>
-            {admin && (
+            {host && (
               <Select
                 value={game.settings.maxPlayers.toString()}
                 onValueChange={(value) => actions.updateMaxPlayers(+value)}

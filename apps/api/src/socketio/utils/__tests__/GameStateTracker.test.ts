@@ -13,7 +13,7 @@ describe("GameStateTracker", () => {
 
   beforeEach(() => {
     const player = new SkyjoPlayer()
-    game = new Skyjo({ adminId: player.id })
+    game = new Skyjo({ hostId: player.id })
     game.addPlayer(player)
     game.stateVersion = 1
     manager = new GameStateTracker(game)

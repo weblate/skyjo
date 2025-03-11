@@ -20,7 +20,7 @@ interface SkyjoInterface {
   status: GameStatus
   players: SkyjoPlayer[]
   turn: number
-  adminId: string
+  hostId: string
   settings: SkyjoSettings
 
   selectedCardValue: number | null
@@ -35,7 +35,7 @@ interface SkyjoInterface {
 }
 
 export interface SkyjoConstructorParams {
-  adminId: string
+  hostId: string
   settings?: SkyjoSettings
 }
 
@@ -44,7 +44,7 @@ export class Skyjo implements SkyjoInterface {
     new DefaultGameOperationManager()
   id: string = crypto.randomUUID()
   code: string = Math.random().toString(36).substring(2, 10)
-  adminId: string
+  hostId: string
   settings: SkyjoSettings
   status: GameStatus = Constants.GAME_STATUS.LOBBY
   players: SkyjoPlayer[] = []
@@ -66,10 +66,10 @@ export class Skyjo implements SkyjoInterface {
   stateVersion: number = 0
 
   constructor({
-    adminId,
+    hostId,
     settings = new SkyjoSettings(),
   }: SkyjoConstructorParams) {
-    this.adminId = adminId
+    this.hostId = hostId
     this.settings = settings
 
     const now = new Date()
@@ -171,7 +171,7 @@ export class Skyjo implements SkyjoInterface {
   ) {
     player.connectionStatus = status
 
-    if (this.isAdmin(player.id)) this.changeAdmin()
+    if (this.isHost(player.id)) this.changeHost()
 
     const socket = this.operationManager.getSocket(player.socketId)
     if (socket) {
@@ -189,15 +189,15 @@ export class Skyjo implements SkyjoInterface {
     }
   }
 
-  isAdmin(playerId: string) {
-    return this.adminId === playerId
+  isHost(playerId: string) {
+    return this.hostId === playerId
   }
 
-  changeAdmin() {
-    const players = this.getConnectedPlayers([this.adminId])
+  changeHost() {
+    const players = this.getConnectedPlayers([this.hostId])
     if (players.length === 0) return
 
-    this.adminId = players[0].id
+    this.hostId = players[0].id
   }
 
   isFull() {
@@ -404,7 +404,7 @@ export class Skyjo implements SkyjoInterface {
   toJson() {
     return {
       code: this.code,
-      adminId: this.adminId,
+      hostId: this.hostId,
       status: this.status,
       players: this.players.map((player) => player.toJson()),
       turn: this.turn,
@@ -423,7 +423,7 @@ export class Skyjo implements SkyjoInterface {
     return {
       id: this.id,
       code: this.code,
-      adminId: this.adminId,
+      hostId: this.hostId,
       isFull: this.isFull(),
       status: this.status,
       players: this.players.map((player) => ({
@@ -807,7 +807,7 @@ export class Skyjo implements SkyjoInterface {
     this.updatedAt = new Date()
     this.turn = 0
 
-    // allow admin to change settings again
+    // allow host to change settings again
     this.settings.isConfirmed = false
   }
 

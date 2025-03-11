@@ -58,7 +58,7 @@ describe("GameService", () => {
         "socketId132312",
       )
       const newGame = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       newGame.addPlayer(player)
@@ -81,7 +81,7 @@ describe("GameService", () => {
         "socketId132312",
       )
       const newGame = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       newGame.addPlayer(player)
@@ -104,7 +104,7 @@ describe("GameService", () => {
         "socketId132312",
       )
       const newGame = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       newGame.addPlayer(player)
@@ -112,9 +112,9 @@ describe("GameService", () => {
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(newGame))
 
-      await expect(
-        service.onGet(socket, null, false),
-      ).toThrowCErrorWithCode(ErrorConstants.ERROR.STATE_VERSION_NULL)
+      await expect(service.onGet(socket, null, false)).toThrowCErrorWithCode(
+        ErrorConstants.ERROR.STATE_VERSION_NULL,
+      )
 
       expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
         1,
@@ -129,7 +129,7 @@ describe("GameService", () => {
         "socketId132312",
       )
       const newGame = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       newGame.addPlayer(player)
@@ -156,7 +156,7 @@ describe("GameService", () => {
         "socketId132312",
       )
       const newGame = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       newGame.addPlayer(player)
@@ -190,7 +190,7 @@ describe("GameService", () => {
         "socket2131123",
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -217,7 +217,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -249,7 +249,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -279,7 +279,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -315,7 +315,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
 
@@ -353,7 +353,7 @@ describe("GameService", () => {
         "socket456",
       )
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -385,7 +385,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -417,7 +417,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -450,7 +450,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -486,7 +486,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       socket.data.gameCode = game.code
@@ -523,7 +523,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       socket.data.gameCode = game.code
@@ -556,7 +556,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       socket.data.gameCode = game.code
@@ -592,7 +592,7 @@ describe("GameService", () => {
         "socket456",
       )
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -624,7 +624,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -653,7 +653,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -686,7 +686,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -723,7 +723,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       socket.data.gameCode = game.code
@@ -760,7 +760,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       mockGameOperationManager(game)
@@ -804,7 +804,7 @@ describe("GameService", () => {
         "socket456",
       )
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -836,7 +836,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -868,7 +868,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -901,7 +901,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -938,7 +938,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       socket.data.gameCode = game.code
@@ -976,7 +976,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       socket.data.gameCode = game.code
@@ -1014,7 +1014,7 @@ describe("GameService", () => {
         "socket456",
       )
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -1046,7 +1046,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -1076,7 +1076,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -1109,7 +1109,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -1146,7 +1146,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       socket.data.gameCode = game.code
@@ -1183,7 +1183,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       mockGameOperationManager(game)
@@ -1219,7 +1219,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       mockGameOperationManager(game)
@@ -1265,7 +1265,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       mockGameOperationManager(game)
@@ -1320,7 +1320,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -1343,7 +1343,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -1375,7 +1375,7 @@ describe("GameService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       mockGameOperationManager(game)

@@ -92,7 +92,7 @@ const PublicGameRow = ({
       <div className="flex flex-col gap-2">
         <div className="flex flex-col sm:flex-row sm:items-center gap-0 sm:gap-2">
           <p className="text-black dark:text-dark-font text-base">
-            {t("game-of", { name: game.adminName })}
+            {t("game-of", { name: game.hostName })}
           </p>
           <div className="flex flex-row items-center gap-1">
             {game.tags.map((tag) => (

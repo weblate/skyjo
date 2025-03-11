@@ -142,7 +142,7 @@ describe("LobbyService", () => {
       )
 
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.settings.maxPlayers = 2
@@ -175,7 +175,7 @@ describe("LobbyService", () => {
       )
 
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
 
@@ -205,7 +205,7 @@ describe("LobbyService", () => {
       )
 
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
 
@@ -262,14 +262,14 @@ describe("LobbyService", () => {
   })
 
   describe("onResetSettings", () => {
-    it("should throw if user is not admin", async () => {
+    it("should throw if user is not host", async () => {
       const opponent = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -296,7 +296,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -325,7 +325,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(true),
       })
       // custom settings
@@ -363,7 +363,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -382,14 +382,14 @@ describe("LobbyService", () => {
   })
 
   describe("onUpdateMaxPlayers", () => {
-    it("should throw if user is not admin", async () => {
+    it("should throw if user is not host", async () => {
       const opponent = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -416,7 +416,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(true),
       })
       game.addPlayer(player)
@@ -446,7 +446,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.settings.isConfirmed = false
@@ -477,7 +477,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.settings.isConfirmed = true
@@ -505,14 +505,14 @@ describe("LobbyService", () => {
   })
 
   describe("onUpdateSettings", () => {
-    it("should throw if user is not admin", async () => {
+    it("should throw if user is not host", async () => {
       const opponent = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -549,7 +549,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -582,7 +582,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(true),
       })
       game.addPlayer(player)
@@ -616,7 +616,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -647,7 +647,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -685,7 +685,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(true),
       })
       game.addPlayer(player)
@@ -707,7 +707,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -723,13 +723,13 @@ describe("LobbyService", () => {
   })
 
   describe("onGameStart", () => {
-    it("should throw if player is not admin", async () => {
+    it("should throw if player is not host", async () => {
       const opponent = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -757,7 +757,7 @@ describe("LobbyService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       mockGameOperationManager(game)

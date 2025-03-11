@@ -2,7 +2,7 @@ import { useSkyjo } from "@/contexts/SkyjoContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useKickVoteToasts } from "@/hooks/useKickVoteToasts"
 import { useRouter } from "@/i18n/routing"
-import { isAdmin } from "@/lib/skyjo"
+import { isHost } from "@/lib/skyjo"
 import { KickVoteToJson } from "@skyjo/core"
 import {
   PropsWithChildren,
@@ -37,8 +37,8 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     showVoteSucceeded,
     showVoteAgainstYouSucceeded,
     showYouKickPlayer,
-    showAdminKick,
-    showAdminKickYou,
+    showHostKick,
+    showHostKickYou,
   } = useKickVoteToasts()
 
   const [kickVote, setKickVote] = useState<KickVoteToJson | null>(null)
@@ -91,28 +91,28 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     } else showVoteSucceeded(playerToKickName)
   }
 
-  const onAdminKick = (playerKickId: string, playerKickName: string) => {
+  const onHostKick = (playerKickId: string, playerKickName: string) => {
     const isPlayerToKick = playerKickId === player.id
 
-    if (isAdmin(game, playerKickId)) {
+    if (isHost(game, playerKickId)) {
       showYouKickPlayer(playerKickName)
     } else if (isPlayerToKick) {
-      showAdminKickYou()
+      showHostKickYou()
       router.replace("/")
-    } else showAdminKick(playerKickName)
+    } else showHostKick(playerKickName)
   }
 
   const initKickVoteListeners = () => {
     socket!.on("kick:vote", onKickVote)
     socket!.on("kick:vote-success", onKickVoteSuccess)
-    socket!.on("kick:admin-kick", onAdminKick)
+    socket!.on("kick:host-kick", onHostKick)
     socket!.on("kick:vote-failed", onKickVoteFailed)
   }
 
   const destroyKickVoteListeners = () => {
     socket!.off("kick:vote", onKickVote)
     socket!.off("kick:vote-success", onKickVoteSuccess)
-    socket!.off("kick:admin-kick", onAdminKick)
+    socket!.off("kick:host-kick", onHostKick)
     socket!.off("kick:vote-failed", onKickVoteFailed)
   }
   //#endregion

@@ -8,7 +8,7 @@ export type PublicGameTag =
   | "long-game"
 
 export type PublicGame = Pick<Skyjo, "code"> & {
-  adminName: string
+  hostName: string
   maxPlayers: number
   players: Pick<SkyjoPlayerToJson, "name" | "avatar" | "id">[]
   tags: PublicGameTag[]

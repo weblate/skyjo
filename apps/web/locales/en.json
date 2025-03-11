@@ -141,8 +141,8 @@
         }
       },
       "start-game-button": "Start the game",
-      "waiting-admin-to-start": "Waiting for the admin to start the game",
-      "waiting-admin-to-confirm-game-settings": "Waiting for the admin to validate the settings",
+      "waiting-host-to-start": "Waiting for the host to start the game",
+      "waiting-host-to-confirm-game-settings": "Waiting for the host to validate the settings",
       "player-section": {
         "title": "Players {nbPlayers}/{maxPlayers}",
         "select": {
@@ -554,10 +554,10 @@
       "you-kick-player": {
         "title": "You have kicked {playerName}"
       },
-      "admin-kick": {
+      "host-kick": {
         "title": "{playerName} has been kicked from the game by the host"
       },
-      "admin-kick-you": {
+      "host-kick-you": {
         "title": "You have been kicked out of the game by the host"
       }
     },

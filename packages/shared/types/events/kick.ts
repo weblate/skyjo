@@ -13,5 +13,5 @@ export interface ServerToClientKickEvents {
     playerToKickName: string,
   ) => void
   "kick:vote-failed": (playerToKickId: string, playerToKickName: string) => void
-  "kick:admin-kick": (playerToKickId: string, playerToKickName: string) => void
+  "kick:host-kick": (playerToKickId: string, playerToKickName: string) => void
 }

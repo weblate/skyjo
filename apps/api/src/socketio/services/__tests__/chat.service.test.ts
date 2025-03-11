@@ -33,7 +33,7 @@ describe("ChatService", () => {
         "socket456",
       )
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -55,7 +55,7 @@ describe("ChatService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)
@@ -86,7 +86,7 @@ describe("ChatService", () => {
         "socket456",
       )
       const game = new Skyjo({
-        adminId: opponent.id,
+        hostId: opponent.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(opponent)
@@ -108,7 +108,7 @@ describe("ChatService", () => {
         TEST_SOCKET_ID,
       )
       const game = new Skyjo({
-        adminId: player.id,
+        hostId: player.id,
         settings: new SkyjoSettings(false),
       })
       game.addPlayer(player)

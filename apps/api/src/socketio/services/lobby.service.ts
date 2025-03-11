@@ -44,9 +44,9 @@ export class LobbyService extends BaseService {
     const game = await this.getGame(socket.data.gameCode)
     const stateManager = new GameStateTracker(game)
 
-    if (!game.isAdmin(socket.data.playerId)) {
+    if (!game.isHost(socket.data.playerId)) {
       throw new CError(
-        `Player try to change all game settings but is not the admin.`,
+        `Player try to change all game settings but is not the host.`,
         {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
@@ -81,9 +81,9 @@ export class LobbyService extends BaseService {
 
   async onUpdateMaxPlayers(socket: SkyjoSocket, maxPlayers: number) {
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isAdmin(socket.data.playerId)) {
+    if (!game.isHost(socket.data.playerId)) {
       throw new CError(
-        `Player try to change all game settings but is not the admin.`,
+        `Player try to change all game settings but is not the host.`,
         {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
@@ -109,9 +109,9 @@ export class LobbyService extends BaseService {
 
   async onUpdateSettings(socket: SkyjoSocket, settings: UpdateGameSettings) {
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isAdmin(socket.data.playerId)) {
+    if (!game.isHost(socket.data.playerId)) {
       throw new CError(
-        `Player try to change all game settings but is not the admin.`,
+        `Player try to change all game settings but is not the host.`,
         {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
@@ -157,8 +157,8 @@ export class LobbyService extends BaseService {
 
   async onGameStart(socket: SkyjoSocket) {
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isAdmin(socket.data.playerId)) {
-      throw new CError(`Player try to start the game but is not the admin.`, {
+    if (!game.isHost(socket.data.playerId)) {
+      throw new CError(`Player try to start the game but is not the host.`, {
         code: ErrorConstants.ERROR.NOT_ALLOWED,
         level: "warn",
         meta: {
@@ -187,7 +187,7 @@ export class LobbyService extends BaseService {
   ) {
     const player = new SkyjoPlayer(playerToCreate, socket.id)
     const game = new Skyjo({
-      adminId: player.id,
+      hostId: player.id,
       settings: new SkyjoSettings(isPrivateGame),
     })
 

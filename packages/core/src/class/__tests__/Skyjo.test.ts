@@ -35,7 +35,7 @@ describe("Skyjo", () => {
       TEST_SOCKET_ID,
     )
     settings = new SkyjoSettings()
-    game = new Skyjo({ adminId: player.id, settings })
+    game = new Skyjo({ hostId: player.id, settings })
     operationManager = {
       updateGame: vi.fn(),
       removeGame: vi.fn(),
@@ -69,7 +69,7 @@ describe("Skyjo", () => {
       const gameDb: SkyjoDbFormat = {
         id: crypto.randomUUID(),
         code: "code",
-        adminId: player.id,
+        hostId: player.id,
         isFull: false,
         status: Constants.GAME_STATUS.LOBBY,
         turn: 0,
@@ -104,21 +104,21 @@ describe("Skyjo", () => {
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-      game = new Skyjo({ adminId: player.id })
+      game = new Skyjo({ hostId: player.id })
       game.populate(gameDb)
 
       expect(game.id).toBe(gameDb.id)
       expect(game.code).toBe(gameDb.code)
       expect(game.status).toBe(gameDb.status)
       expect(game.turn).toBe(gameDb.turn)
-      expect(game.adminId).toBe(gameDb.adminId)
+      expect(game.hostId).toBe(gameDb.hostId)
       expect(structuredClone(game.settings)).toStrictEqual(gameDb.settings)
     })
 
     it("should populate the class with players", () => {
       const gameDb: SkyjoDbFormat = {
         id: crypto.randomUUID(),
-        adminId: player.id,
+        hostId: player.id,
         isFull: false,
         code: "code",
         status: Constants.GAME_STATUS.LOBBY,
@@ -175,14 +175,14 @@ describe("Skyjo", () => {
         updatedAt: new Date(),
       }
 
-      game = new Skyjo({ adminId: player.id })
+      game = new Skyjo({ hostId: player.id })
       game.populate(gameDb)
 
       expect(game.id).toBe(gameDb.id)
       expect(game.code).toBe(gameDb.code)
       expect(game.status).toBe(gameDb.status)
       expect(game.turn).toBe(gameDb.turn)
-      expect(game.adminId).toBe(gameDb.adminId)
+      expect(game.hostId).toBe(gameDb.hostId)
       expect(structuredClone(game.settings)).toStrictEqual(gameDb.settings)
       expect(game.players.length).toBe(1)
       expect(game.players[0].name).toBe(gameDb.players[0].name)
@@ -326,26 +326,26 @@ describe("Skyjo", () => {
     })
   })
 
-  describe("isAdmin", () => {
-    it("should check if the player is admin", () => {
-      expect(game.isAdmin(player.id)).toBeTruthy()
-      expect(game.isAdmin(opponent.id)).toBeFalsy()
+  describe("isHost", () => {
+    it("should check if the player is host", () => {
+      expect(game.isHost(player.id)).toBeTruthy()
+      expect(game.isHost(opponent.id)).toBeFalsy()
     })
   })
 
-  describe("changeAdmin", () => {
-    it("should not change admin if there is no connected players", () => {
+  describe("changeHost", () => {
+    it("should not change host if there is no connected players", () => {
       for (const player of game.players) {
         player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
       }
 
-      game.changeAdmin()
-      expect(game.adminId).toBe(player.id)
+      game.changeHost()
+      expect(game.hostId).toBe(player.id)
     })
 
-    it("should change admin", () => {
-      game.changeAdmin()
-      expect(game.adminId).toBe(opponent.id)
+    it("should change host", () => {
+      game.changeHost()
+      expect(game.hostId).toBe(opponent.id)
     })
   })
 
@@ -887,7 +887,7 @@ describe("Skyjo", () => {
         code: game.code,
         status: Constants.GAME_STATUS.LOBBY,
         roundPhase: Constants.ROUND_PHASE.REVEAL_CARDS,
-        adminId: player.id,
+        hostId: player.id,
         players: game.players.map((player) => player.toJson()),
         selectedCardValue: null,
         lastDiscardCardValue: game["discardPile"][["_discardPile"].length - 1],
@@ -908,7 +908,7 @@ describe("Skyjo", () => {
       const gameSerialized = game.serialize()
       expect(gameSerialized).toStrictEqual({
         id: game.id,
-        adminId: player.id,
+        hostId: player.id,
         code: game.code,
         status: game.status,
         isFull: game.isFull(),
@@ -1661,7 +1661,7 @@ describe("Skyjo", () => {
       )
     })
 
-    it("should change admin if disconnected player is admin", async () => {
+    it("should change host if disconnected player is host", async () => {
       const player1 = new SkyjoPlayer(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
@@ -1672,15 +1672,15 @@ describe("Skyjo", () => {
       )
 
       game.players = [player1, player2]
-      game.adminId = player1.id
+      game.hostId = player1.id
 
-      const changeAdminSpy = vi.spyOn(game, "changeAdmin")
+      const changeHostSpy = vi.spyOn(game, "changeHost")
 
       await game.disconnectPlayer(player1)
 
-      expect(changeAdminSpy).toHaveBeenCalled()
+      expect(changeHostSpy).toHaveBeenCalled()
 
-      changeAdminSpy.mockClear()
+      changeHostSpy.mockClear()
     })
 
     it("should kick socket if it exists", async () => {

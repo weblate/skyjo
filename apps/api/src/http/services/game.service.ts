@@ -33,7 +33,7 @@ export class GameService {
   private parsePublicGame(game: Skyjo): PublicGame {
     return {
       code: game.code,
-      adminName: game.players.find((p) => game.isAdmin(p.id))?.name ?? "",
+      hostName: game.players.find((p) => game.isHost(p.id))?.name ?? "",
       players: this.parsePublicGamePlayers(game.players),
       maxPlayers: game.settings.maxPlayers,
       tags: this.constructTagArray(game),

@@ -163,15 +163,15 @@ export const useKickVoteToasts = () => {
     toast(t("you-kick-player.title", { playerName: playerToKickName }))
   }
 
-  const showAdminKick = async (playerToKickName: string) => {
+  const showHostKick = async (playerToKickName: string) => {
     await dismissAllKickVoteToasts()
 
-    toast(t("admin-kick.title", { playerName: playerToKickName }))
+    toast(t("host-kick.title", { playerName: playerToKickName }))
   }
-  const showAdminKickYou = async () => {
+  const showHostKickYou = async () => {
     await dismissAllKickVoteToasts()
 
-    toast(t("admin-kick-you.title"))
+    toast(t("host-kick-you.title"))
   }
   //#region helpers
   const getPlayerToKick = (targetId: string) => {
@@ -202,7 +202,7 @@ export const useKickVoteToasts = () => {
     showVoteSucceeded,
     showVoteAgainstYouSucceeded,
     showYouKickPlayer,
-    showAdminKick,
-    showAdminKickYou,
+    showHostKick,
+    showHostKickYou,
   }
 }
