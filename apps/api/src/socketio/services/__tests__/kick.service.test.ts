@@ -92,6 +92,52 @@ describe("KickService", () => {
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_NOT_FOUND)
     })
 
+    it("should directly kick the player if the initiator is the admin and the game is private", async () => {
+      game.settings.private = true
+      game.adminId = player.id
+
+      await service.onInitiateKickVote(socket, opponent2.id)
+
+      expect(service["kickVotes"].get(game.id)).toBeUndefined()
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledWith({
+        room: game.code,
+        event: "kick:admin-kick",
+        data: [opponent2.id, opponent2.name],
+      })
+      expect(game.players.find((p) => p.id === opponent2.id)).toBeUndefined()
+    })
+
+    it("should initiate a kick vote if the initiator is the admin but the game is public", async () => {
+      game.settings.private = false
+      game.adminId = player.id
+
+      await service.onInitiateKickVote(socket, opponent2.id)
+
+      expect(service["kickVotes"].get(game.id)).toBeDefined()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledWith({
+        room: game.code,
+        event: "kick:vote",
+        data: [expect.any(Object)],
+      })
+      expect(game.players.find((p) => p.id === opponent2.id)).toBeDefined()
+    })
+
+    it("should initiate a kick vote if the game is private but the initiator is not the admin", async () => {
+      game.settings.private = true
+      game.adminId = opponent1.id
+
+      await service.onInitiateKickVote(socket, opponent2.id)
+
+      expect(service["kickVotes"].get(game.id)).toBeDefined()
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledWith({
+        room: game.code,
+        event: "kick:vote",
+        data: [expect.any(Object)],
+      })
+      expect(game.players.find((p) => p.id === opponent2.id)).toBeDefined()
+    })
+
     it("should initiate a kick vote", async () => {
       await service.onInitiateKickVote(socket, opponent2.id)
 

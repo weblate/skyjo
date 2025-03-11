@@ -109,6 +109,20 @@ export class KickService extends BaseService {
       )
     }
 
+    if (game.isAdmin(initiator.id) && game.settings.private) {
+      const operationManager = new GameStateTracker(game)
+
+      this.socketManager.sendToRoom({
+        room: game.code,
+        event: "kick:admin-kick",
+        data: [target.id, target.name],
+      })
+
+      await game.disconnectPlayer(target)
+      await this.updateAndSendGame(game, operationManager)
+      return
+    }
+
     if (this.kickVotes.has(game.id)) {
       throw new CError(
         `Cannot initiate a kick vote, a kick vote is already in progress for this game.`,
