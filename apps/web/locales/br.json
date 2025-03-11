@@ -139,8 +139,6 @@
         "validation-warning": "Arventennoù ar c'hoariadenn n'hall ket bezañ kemmet ur wech int bet kadarnaet",
         "allow-skyjo-for-row": "Aotren ar Skyjo evit ar renkoù"
       },
-      "waiting-admin-to-start": "O c'hortoz e vefe lañset ar c'hoari gant ar merour⋅ez",
-      "waiting-admin-to-confirm-game-settings": "O c'hortoz e vefe kadarnaet an arventennoù gant ar merour⋅ez",
       "player-section": {
         "title": "C'hoarierien {nbPlayers}/{maxPlayers}",
         "select": {
