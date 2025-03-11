@@ -299,6 +299,21 @@ const Lobby = ({ gameCode }: LobbyProps) => {
                   />
                 </div>
               </div>
+              <div className="flex flex-col gap-1">
+                <div className="flex flex-row items-center gap-2">
+                  <Switch
+                    id="show-current-score"
+                    checked={game.settings.showCurrentScore}
+                    onCheckedChange={(checked) =>
+                      actions.updateSingleSettings("showCurrentScore", checked)
+                    }
+                    disabled={disableInput}
+                  />
+                  <Label htmlFor="show-current-score">
+                    {t("settings.show-current-score.label")}
+                  </Label>
+                </div>
+              </div>
               <hr className="w-full border-black dark:border-dark-border my-3" />
               <div className="flex flex-col gap-1">
                 <Label htmlFor="first-player-penalty-type">

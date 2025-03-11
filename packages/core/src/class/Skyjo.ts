@@ -464,6 +464,7 @@ export class Skyjo implements SkyjoInterface {
           this.settings.firstPlayerMultiplierPenalty,
         firstPlayerPenaltyType: this.settings.firstPlayerPenaltyType,
         firstPlayerFlatPenalty: this.settings.firstPlayerFlatPenalty,
+        showCurrentScore: this.settings.showCurrentScore,
       },
       selectedCardValue: this.selectedCardValue,
       roundNumber: this.roundNumber,

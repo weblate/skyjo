@@ -69,6 +69,7 @@ export type SkyjoDbFormat = {
     firstPlayerMultiplierPenalty: number
     firstPlayerPenaltyType: FirstPlayerPenaltyType
     firstPlayerFlatPenalty: number
+    showCurrentScore: boolean
   }
   selectedCardValue: number | null
   roundNumber: number

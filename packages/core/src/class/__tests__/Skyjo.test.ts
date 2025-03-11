@@ -97,6 +97,7 @@ describe("Skyjo", () => {
           firstPlayerPenaltyType:
             Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
           firstPlayerFlatPenalty: 0,
+          showCurrentScore: false,
         },
 
         stateVersion: 0,
@@ -167,6 +168,7 @@ describe("Skyjo", () => {
           firstPlayerPenaltyType:
             Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
           firstPlayerFlatPenalty: 0,
+          showCurrentScore: false,
         },
 
         stateVersion: 0,
@@ -979,6 +981,7 @@ describe("Skyjo", () => {
           firstPlayerPenaltyType:
             Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
           firstPlayerFlatPenalty: 0,
+          showCurrentScore: false,
         },
         stateVersion: game.stateVersion,
         processingAfk: game.processingAfk,

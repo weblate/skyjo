@@ -151,3 +151,9 @@ export const getHost = (game?: SkyjoToJson) => {
   if (!game) return undefined
   return game.players.find((player) => player.id === game.hostId)
 }
+
+export const getCurrentScore = (player: SkyjoPlayerToJson) => {
+  return player.cards
+    .flat()
+    .reduce((acc, card) => (card.isVisible ? acc + card.value! : acc), 0)
+}

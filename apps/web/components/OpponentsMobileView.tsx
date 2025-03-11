@@ -4,6 +4,7 @@ import { UserAvatar } from "@/components/UserAvatar"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSkyjo } from "@/contexts/SkyjoContext"
 import {
+  getCurrentScore,
   getCurrentWhoHasToPlay,
   getNextPlayerIndex,
   isCurrentUserTurn,
@@ -143,6 +144,7 @@ const OpponentItem = ({
   const {
     settings: { showPreviewOpponentsCardsForMobile },
   } = useSettings()
+  const { game } = useSkyjo()
 
   return (
     <m.button
@@ -161,6 +163,11 @@ const OpponentItem = ({
         size="tiny"
         animate={isPlayerWhoHasToPlay}
       />
+      {game.settings.showCurrentScore && (
+        <p className="text-center select-none text-xs text-gray-500 dark:text-gray-400">
+          {getCurrentScore(opponent)}
+        </p>
+      )}
       {showPreviewOpponentsCardsForMobile && (
         <div className="flex flex-row gap-0.5">
           {opponent.cards.map((column, columnIndex) => (

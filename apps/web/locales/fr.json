@@ -116,6 +116,9 @@
           "label": "Nombre de cartes retournées au début de la partie",
           "title": "{number} cartes seront retournées au début de la partie"
         },
+        "show-current-score": {
+          "label": "Afficher le score des joueurs pendant la partie"
+        },
         "score-to-end-game": {
           "label": "Nombre de points pour finir la partie",
           "title": "{number} points seront nécessaires pour finir la partie"
@@ -305,11 +308,11 @@
       "initial-turned-count": "Nombre de cartes à retourner au début : {value}",
       "score-to-end-game": "Nombre de points pour finir la partie : {value}",
       "first-player-penalty-type": {
-        "label": "Pénalité pour le premier joueur si il n'a pas le plus petit nombre de points : ",
-        "1": "Multiplicateur seulement",
-        "2": "Pénalité plate seulement",
-        "3": "Pénalité plate puis multiplicateur",
-        "4": "Multiplicateur puis pénalité plate"
+        "label": "Type de pénalité pour le premier joueur s'il n'a pas le plus petit nombre de points : ",
+        "1": "Multiplicateur uniquement",
+        "2": "Fixe uniquement",
+        "3": "Fixe puis multiplicateur",
+        "4": "Multiplicateur puis fixe"
       },
       "first-player-multiplier-penalty": "Multiplicateur de pénalité : {value}",
       "first-player-flat-penalty": "Pénalité plate : {value}"

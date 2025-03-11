@@ -7,6 +7,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
+import { useSkyjo } from "@/contexts/SkyjoContext"
+import { getCurrentScore } from "@/lib/skyjo"
 import { cn } from "@/lib/utils"
 import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
 import { ClassValue } from "clsx"
@@ -28,6 +30,7 @@ const OpponentBoard = ({
 }: OpponentBoardProps) => {
   const ta = useTranslations("utils.avatar")
   const to = useTranslations("components.OpponentBoard")
+  const { game } = useSkyjo()
 
   return (
     <div
@@ -77,6 +80,11 @@ const OpponentBoard = ({
               </TooltipProvider>
             )}
           </p>
+          {game.settings.showCurrentScore && (
+            <p className="text-center select-none text-xs text-gray-500 dark:text-gray-400">
+              {getCurrentScore(opponent)}
+            </p>
+          )}
         </ContextMenuTrigger>
         <UserContextMenu player={opponent} />
       </ContextMenu>

@@ -13,6 +13,7 @@ type UpdateSettings = {
   firstPlayerMultiplierPenalty?: number
   firstPlayerFlatPenalty?: number
   firstPlayerPenaltyType?: FirstPlayerPenaltyType
+  showCurrentScore?: boolean
 }
 
 export interface SkyjoSettingsInterface {
@@ -48,6 +49,7 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
     Constants.DEFAULT_GAME_SETTINGS.FIRST_PLAYER_FLAT_PENALTY
   firstPlayerPenaltyType: FirstPlayerPenaltyType =
     Constants.DEFAULT_GAME_SETTINGS.FIRST_PLAYER_PENALTY_TYPE
+  showCurrentScore: boolean = Constants.DEFAULT_GAME_SETTINGS.SHOW_CURRENT_SCORE
 
   constructor(isPrivate: boolean = false, maxPlayers?: number) {
     this.private = isPrivate
@@ -68,6 +70,7 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
     this.firstPlayerMultiplierPenalty = settings.firstPlayerMultiplierPenalty
     this.firstPlayerFlatPenalty = settings.firstPlayerFlatPenalty
     this.firstPlayerPenaltyType = settings.firstPlayerPenaltyType
+    this.showCurrentScore = settings.showCurrentScore
 
     return this
   }
@@ -89,6 +92,7 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
       settings.firstPlayerFlatPenalty ?? this.firstPlayerFlatPenalty
     this.firstPlayerPenaltyType =
       settings.firstPlayerPenaltyType ?? this.firstPlayerPenaltyType
+    this.showCurrentScore = settings.showCurrentScore ?? this.showCurrentScore
 
     this.preventInvalidSettings()
   }
@@ -122,7 +126,9 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
       this.firstPlayerMultiplierPenalty ===
         Constants.DEFAULT_GAME_SETTINGS.FIRST_PLAYER_MULTIPLIER_PENALTY &&
       this.firstPlayerPenaltyType ===
-        Constants.DEFAULT_GAME_SETTINGS.FIRST_PLAYER_PENALTY_TYPE
+        Constants.DEFAULT_GAME_SETTINGS.FIRST_PLAYER_PENALTY_TYPE &&
+      this.showCurrentScore ===
+        Constants.DEFAULT_GAME_SETTINGS.SHOW_CURRENT_SCORE
     )
   }
 
@@ -140,6 +146,7 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
       firstPlayerMultiplierPenalty: this.firstPlayerMultiplierPenalty,
       firstPlayerFlatPenalty: this.firstPlayerFlatPenalty,
       firstPlayerPenaltyType: this.firstPlayerPenaltyType,
+      showCurrentScore: this.showCurrentScore,
     } satisfies SkyjoSettingsToJson
   }
 }

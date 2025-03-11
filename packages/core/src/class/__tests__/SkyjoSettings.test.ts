@@ -33,6 +33,9 @@ describe("SkyjoSettings", () => {
     expect(defaultSettings.maxPlayers).toBe(
       Constants.DEFAULT_GAME_SETTINGS.MAX_PLAYERS,
     )
+    expect(defaultSettings.showCurrentScore).toBe(
+      Constants.DEFAULT_GAME_SETTINGS.SHOW_CURRENT_SCORE,
+    )
   })
 
   it("should have the settings validation to true by default for private game", () => {
@@ -56,6 +59,7 @@ describe("SkyjoSettings", () => {
       firstPlayerFlatPenalty: 0,
       maxPlayers: 2,
       private: true,
+      showCurrentScore: true,
     }
 
     const settings = new SkyjoSettings(false).populate(dbGameSettings)
@@ -74,6 +78,7 @@ describe("SkyjoSettings", () => {
       cardPerColumn: 8,
       scoreToEndGame: 100,
       firstPlayerMultiplierPenalty: 2,
+      showCurrentScore: true,
     }
 
     settings.updateSettings(newSettings)
@@ -85,6 +90,7 @@ describe("SkyjoSettings", () => {
     expect(settings.cardPerColumn).toBe(8)
     expect(settings.scoreToEndGame).toBe(100)
     expect(settings.firstPlayerMultiplierPenalty).toBe(2)
+    expect(settings.showCurrentScore).toBeTruthy()
   })
 
   describe("preventInvalidSettings", () => {
@@ -155,29 +161,32 @@ describe("SkyjoSettings", () => {
       firstPlayerPenaltyType:
         Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
       firstPlayerFlatPenalty: 0,
+      showCurrentScore: false,
     })
   })
 
   describe("constructor", () => {
     it("should create settings with default values", () => {
       const settings = new SkyjoSettings()
-      
+
       expect(settings.private).toBe(false)
       expect(settings.isConfirmed).toBe(false)
-      expect(settings.maxPlayers).toBe(Constants.DEFAULT_GAME_SETTINGS.MAX_PLAYERS)
+      expect(settings.maxPlayers).toBe(
+        Constants.DEFAULT_GAME_SETTINGS.MAX_PLAYERS,
+      )
     })
-    
+
     it("should create settings with private game", () => {
       const settings = new SkyjoSettings(true)
-      
+
       expect(settings.private).toBe(true)
       expect(settings.isConfirmed).toBe(true)
     })
-    
+
     it("should create settings with custom maxPlayers", () => {
       const customMaxPlayers = 4
       const settings = new SkyjoSettings(false, customMaxPlayers)
-      
+
       expect(settings.private).toBe(false)
       expect(settings.maxPlayers).toBe(customMaxPlayers)
     })

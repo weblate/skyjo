@@ -16,6 +16,7 @@ export class Constants {
     FIRST_PLAYER_FLAT_PENALTY: 0,
     FIRST_PLAYER_PENALTY_TYPE:
       Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
+    SHOW_CURRENT_SCORE: false,
     CARDS: {
       PER_ROW: 3,
       PER_COLUMN: 4,

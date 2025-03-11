@@ -120,6 +120,9 @@
           "label": "Number of points to end the game",
           "title": "{number} points will be required to end the game"
         },
+        "show-current-score": {
+          "label": "Show current score of players during the game"
+        },
         "first-player-penalty-type": {
           "label": "First player penalty type",
           "description": "Penalty is applied if the first player to reveal all his cards does not have the smallest number of points (doesn't apply if score is less or equal to 0)",

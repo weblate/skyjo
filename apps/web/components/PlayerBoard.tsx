@@ -2,6 +2,7 @@ import { CardTable } from "@/components/CardTable"
 import { TurnTimer } from "@/components/TurnTimer"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSkyjo } from "@/contexts/SkyjoContext"
+import { getCurrentScore } from "@/lib/skyjo"
 import { cn } from "@/lib/utils"
 import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
 import { useTranslations } from "next-intl"
@@ -62,6 +63,11 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
       >
         {player.name} ({tp("you")})
       </p>
+      {game.settings.showCurrentScore && (
+        <p className="text-center select-none text-xs text-gray-500 dark:text-gray-400">
+          {getCurrentScore(player)}
+        </p>
+      )}
     </div>
   )
 }

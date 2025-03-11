@@ -14,4 +14,5 @@ export type SkyjoSettingsToJson = {
   firstPlayerMultiplierPenalty: number
   firstPlayerFlatPenalty: number
   firstPlayerPenaltyType: FirstPlayerPenaltyType
+  showCurrentScore: boolean
 }
