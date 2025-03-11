@@ -324,17 +324,6 @@
           "title": "Hezoug",
           "switch-to-player-who-is-playing": "Mont d'ar c'hoari⋅ez o c'hoari ent emgefreek",
           "show-preview-opponents-cards": "Diskouez alberz kartennoù an enebourien e roll an enebourien"
-        },
-        "game-board": {
-          "title": "Taol-c'hoari",
-          "size": {
-            "label": "Ment ho taol-c'hoari",
-            "big-warning": "Gallout a ra terriñ ar skrammañ war hezoug",
-            "values": {
-              "normal": "Ordinal",
-              "big": "Bras"
-            }
-          }
         }
       },
       "title": "Arventennoù",
