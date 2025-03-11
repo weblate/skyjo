@@ -1,3 +1,4 @@
+import Footer from "@/components/Footer"
 import { generateAlternatesLanguages } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Metadata } from "next"
@@ -44,5 +45,10 @@ export async function generateMetadata(props: CreateLayoutProps) {
 }
 
 export default async function CreateLayout({ children }: CreateLayoutProps) {
-  return children
+  return (
+    <>
+      {children}
+      <Footer />
+    </>
+  )
 }
