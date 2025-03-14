@@ -18,7 +18,13 @@ services:
       - NODE_ENV=production
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
       - NODE_OPTIONS=--max-old-space-size=4096 --max-http-header-size=16384 --expose-gc --use-largepages=silent
-    restart: always
+    restart: on-failure:5
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 5
+        window: 120s
 
   redis:
     image: redis/redis-stack-server:latest
