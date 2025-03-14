@@ -524,7 +524,8 @@
       "toucan": "tucán",
       "turtle": "tortuga",
       "whale": "ballena",
-      "owl": "búho"
+      "owl": "búho",
+      "cat": "gato"
     },
     "socket": {
       "error": {

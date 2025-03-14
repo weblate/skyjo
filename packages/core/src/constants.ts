@@ -71,6 +71,7 @@ export class Constants {
     TURTLE: "turtle",
     WHALE: "whale",
     OWL: "owl",
+    CAT: "cat",
   } as const
 
   static readonly CONNECTION_STATUS = {

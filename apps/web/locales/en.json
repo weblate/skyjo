@@ -624,7 +624,8 @@
       "toucan": "toucan",
       "turtle": "turtle",
       "whale": "whale",
-      "owl": "owl"
+      "owl": "owl",
+      "cat": "cat"
     },
     "socket": {
       "error": {
