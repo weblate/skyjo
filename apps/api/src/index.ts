@@ -53,6 +53,17 @@ const gracefulShutdown = async (signal: string) => {
 process.on("SIGTERM", () => gracefulShutdown("SIGTERM"))
 process.on("SIGINT", () => gracefulShutdown("SIGINT"))
 
+// Add these to your index.ts
+process.on("uncaughtException", (error) => {
+  Logger.error("Uncaught Exception:", { error })
+  gracefulShutdown("Uncaught Exception")
+})
+
+process.on("unhandledRejection", (reason, promise) => {
+  Logger.error("Unhandled Promise Rejection:", { reason, promise })
+  gracefulShutdown("Unhandled Promise Rejection")
+})
+
 try {
   server = serve({
     fetch: app.fetch,
