@@ -39,22 +39,32 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
       jobId,
     })
 
-    await this.queue.add(
-      jobId,
-      { gameCode: game.code },
-      {
-        delay: timeoutDuration,
+    try {
+      await this.queue.add(
         jobId,
-        removeOnComplete: true,
-        removeOnFail: true,
-      },
-    )
+        { gameCode: game.code },
+        {
+          delay: timeoutDuration,
+          jobId,
+          removeOnComplete: true,
+          removeOnFail: true,
+        },
+      )
 
-    Logger.debug(`Reveal cards AFK timer started for game ${game.code}`, {
-      gameCode: game.code,
-      timeoutDuration,
-      jobId,
-    })
+      Logger.debug(`Reveal cards AFK timer started for game ${game.code}`, {
+        gameCode: game.code,
+        timeoutDuration,
+        jobId,
+      })
+    } catch (error) {
+      Logger.error(
+        `Failed to start reveal cards AFK timer for game ${game.code}`,
+        {
+          gameCode: game.code,
+          error,
+        },
+      )
+    }
   }
 
   public async cancelTimer(gameCode: string): Promise<void> {
@@ -65,7 +75,22 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
       jobId,
     })
 
-    await this.queue.remove(jobId)
+    try {
+      await this.queue.remove(jobId)
+
+      Logger.debug(`Reveal cards AFK timer cancelled for game ${gameCode}`, {
+        gameCode,
+        jobId,
+      })
+    } catch (error) {
+      Logger.error(
+        `Failed to cancel reveal cards AFK timer for game ${gameCode}`,
+        {
+          gameCode,
+          error,
+        },
+      )
+    }
   }
 
   async processJob(job: Job<RevealCardsAfkJobData>) {

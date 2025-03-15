@@ -45,19 +45,38 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       },
     )
 
-    await this.queue.add(
-      jobId,
-      {
-        gameCode: game.code,
-        playerId: playerId,
-      },
-      {
-        delay: timeoutDuration,
+    try {
+      await this.queue.add(
         jobId,
-        removeOnComplete: true,
-        removeOnFail: true,
-      },
-    )
+        {
+          gameCode: game.code,
+          playerId: playerId,
+        },
+        {
+          delay: timeoutDuration,
+          jobId,
+          removeOnComplete: true,
+          removeOnFail: true,
+        },
+      )
+
+      Logger.info(
+        `AFK timer started for player ${playerId} in game ${game.code}`,
+        {
+          gameCode: game.code,
+          playerId,
+        },
+      )
+    } catch (error) {
+      Logger.error(
+        `Failed to start AFK timer for player ${playerId} in game ${game.code}`,
+        {
+          gameCode: game.code,
+          playerId,
+          error,
+        },
+      )
+    }
   }
 
   public async cancelTimer(gameCode: string, playerId: string): Promise<void> {
@@ -72,7 +91,14 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       },
     )
 
-    await this.queue.remove(jobId)
+    try {
+      await this.queue.remove(jobId)
+    } catch (error) {
+      Logger.error(
+        `Failed to cancel AFK timer for player ${playerId} in game ${gameCode}`,
+        { error },
+      )
+    }
   }
 
   async processJob(job: Job<PlayerAfkJobData>) {
