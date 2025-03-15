@@ -77,6 +77,8 @@ export type SkyjoDbFormat = {
   turnStatus: TurnStatus
   lastTurnStatus: LastTurnStatus
   firstToFinishPlayerId: string | null
+  bannedPlayerIds: string[]
+  bannedUsernames: string[]
   stateVersion: number
   createdAt: Date
   updatedAt: Date

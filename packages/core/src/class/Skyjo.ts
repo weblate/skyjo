@@ -29,6 +29,9 @@ interface SkyjoInterface {
   lastTurnStatus: LastTurnStatus
   roundPhase: RoundPhase
 
+  bannedPlayerIds: string[]
+  bannedUsernames: string[]
+
   stateVersion: number
   createdAt: Date
   updatedAt: Date
@@ -58,6 +61,9 @@ export class Skyjo implements SkyjoInterface {
   roundPhase: RoundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
   roundNumber: number = 1
   firstToFinishPlayerId: string | null = null
+
+  bannedPlayerIds: string[] = []
+  bannedUsernames: string[] = []
 
   processingAfk: boolean = false
 
@@ -96,6 +102,9 @@ export class Skyjo implements SkyjoInterface {
     this.roundNumber = game.roundNumber
 
     this.firstToFinishPlayerId = game.firstToFinishPlayerId
+
+    this.bannedPlayerIds = game.bannedPlayerIds
+    this.bannedUsernames = game.bannedUsernames
 
     this.stateVersion = game.stateVersion
     this.processingAfk = game.processingAfk
@@ -191,6 +200,28 @@ export class Skyjo implements SkyjoInterface {
 
   isHost(playerId: string) {
     return this.hostId === playerId
+  }
+
+  banPlayer(target: SkyjoPlayer) {
+    const playerId = target.id
+    if (!this.bannedPlayerIds.includes(playerId)) {
+      this.bannedPlayerIds.push(playerId)
+    }
+
+    const playerName = target.name
+    if (playerName && !this.bannedUsernames.includes(playerName)) {
+      this.bannedUsernames.push(playerName)
+    }
+  }
+
+  isPlayerBanned(player: SkyjoPlayer) {
+    const playerId = player.id
+    if (this.bannedPlayerIds.includes(playerId)) return true
+
+    const playerName = player.name
+    if (this.bannedUsernames.includes(playerName)) return true
+
+    return false
   }
 
   changeHost() {
@@ -472,10 +503,12 @@ export class Skyjo implements SkyjoInterface {
       turnStatus: this.turnStatus,
       lastTurnStatus: this.lastTurnStatus,
       firstToFinishPlayerId: this.firstToFinishPlayerId,
-      processingAfk: this.processingAfk,
+      bannedPlayerIds: this.bannedPlayerIds,
+      bannedUsernames: this.bannedUsernames,
+      stateVersion: this.stateVersion,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
-      stateVersion: this.stateVersion,
+      processingAfk: this.processingAfk,
     } satisfies SkyjoDbFormat
   }
 
