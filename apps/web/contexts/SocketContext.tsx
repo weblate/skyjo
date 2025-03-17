@@ -74,6 +74,9 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     [ErrorConstants.ERROR.GAME_IS_FULL]: tSocketError(
       "game-is-full.description",
     ),
+    [ErrorConstants.ERROR.PLAYER_BANNED]: tSocketError(
+      "player-banned.description",
+    ),
   }
 
   const reconnectErrorDescription: Record<ErrorReconnectMessage, string> = {
@@ -232,6 +235,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   }
 
   const onJoinGameError = (message: ErrorJoinMessage) => {
+    console.log("onJoinGameError", message)
     toast.error(joinErrorDescription[message], {
       duration: 5000,
     })

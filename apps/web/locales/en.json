@@ -513,6 +513,7 @@
     "Avatar": {
       "context-menu": {
         "kick": "Kick",
+        "ban": "Ban",
         "mute": "Mute",
         "unmute": "Unmute"
       }
@@ -643,6 +644,9 @@
         },
         "game-already-started": {
           "description": "The game has already started"
+        },
+        "player-banned": {
+          "description": "You have been banned from this game"
         }
       }
     }
@@ -657,6 +661,24 @@
       },
       "connection-lost": "Connection lost. Attempting to reconnect...",
       "reconnection": "Reconnection successful"
+    },
+    "BanContext": {
+      "not-allowed": {
+        "title": "You don't have permission to ban",
+        "description": "You don't have permission to ban a player"
+      },
+      "player-not-found": {
+        "title": "The player to ban does not exist",
+        "description": "The player to ban does not exist in the game"
+      },
+      "player-banned": {
+        "title": "{playerName} has been banned",
+        "description": "{playerName} has been banned by the host"
+      },
+      "you-were-banned": {
+        "title": "You have been banned",
+        "description": "You have been banned from the game by the host"
+      }
     }
   }
 }

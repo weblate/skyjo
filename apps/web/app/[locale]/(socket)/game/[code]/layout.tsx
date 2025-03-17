@@ -2,6 +2,7 @@
 
 import { Chat } from "@/components/Chat"
 import withAuth from "@/components/withAuth"
+import { BanProvider } from "@/contexts/BanContext"
 import ChatProvider from "@/contexts/ChatContext"
 import SkyjoProvider from "@/contexts/SkyjoContext"
 import { VoteKickProvider } from "@/contexts/VoteKickContext"
@@ -21,10 +22,12 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
     <ChatProvider>
       <SkyjoProvider gameCode={params.code}>
         <VoteKickProvider>
-          <div className="w-svh h-svh bg-body dark:bg-dark-body flex flex-row overflow-hidden">
-            {children}
-            <Chat className="z-40" />
-          </div>
+          <BanProvider>
+            <div className="w-svh h-svh bg-body dark:bg-dark-body flex flex-row overflow-hidden">
+              {children}
+              <Chat className="z-40" />
+            </div>
+          </BanProvider>
         </VoteKickProvider>
       </SkyjoProvider>
     </ChatProvider>

@@ -508,6 +508,7 @@
     "Avatar": {
       "context-menu": {
         "kick": "Expulser",
+        "ban": "Bannir",
         "mute": "Rendre muet",
         "unmute": "Rendre non muet"
       }
@@ -643,6 +644,9 @@
         },
         "game-already-started": {
           "description": "La partie a déjà commencé"
+        },
+        "player-banned": {
+          "description": "Vous avez été banni de cette partie"
         }
       }
     }
@@ -657,6 +661,24 @@
       },
       "connection-lost": "Connexion perdue. Tentative de reconnexion...",
       "reconnection": "Reconnexion réussie"
+    },
+    "BanContext": {
+      "not-allowed": {
+        "title": "Vous n'avez pas le droit de bannir",
+        "description": "Vous ne disposez pas des droits pour bannir un joueur"
+      },
+      "player-not-found": {
+        "title": "Le joueur à bannir n'existe pas",
+        "description": "Le joueur à bannir n'existe pas dans la partie"
+      },
+      "player-banned": {
+        "title": "{playerName} à été banni",
+        "description": "{playerName} à été banni de la partie par l'hôte"
+      },
+      "you-were-banned": {
+        "title": "Vous avez été banni",
+        "description": "Vous avez été banni de la partie par l'hôte"
+      }
     }
   }
 }
