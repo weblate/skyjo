@@ -46,7 +46,8 @@ const lobbyRouter = (socket: SkyjoSocket) => {
           error instanceof CError &&
           (error.code === ErrorConstants.ERROR.GAME_NOT_FOUND ||
             error.code === ErrorConstants.ERROR.GAME_ALREADY_STARTED ||
-            error.code === ErrorConstants.ERROR.GAME_IS_FULL)
+            error.code === ErrorConstants.ERROR.GAME_IS_FULL ||
+            error.code === ErrorConstants.ERROR.PLAYER_BANNED)
         ) {
           socket.emit("error:join", error.code satisfies ErrorJoinMessage)
         } else {

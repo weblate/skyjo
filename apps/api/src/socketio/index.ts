@@ -1,6 +1,7 @@
 import { Server as HttpServer } from "http"
 import type { ServerType } from "@hono/node-server"
 import { Logger } from "@skyjo/logger"
+import { banRouter } from "./routers/ban.router.js"
 import { chatRouter } from "./routers/chat.router.js"
 import { gameRouter } from "./routers/game.router.js"
 import { kickRouter } from "./routers/kick.router.js"
@@ -29,6 +30,7 @@ export const initializeSocketServer = (server: ServerType) => {
     gameRouter(socket)
     chatRouter(socket)
     kickRouter(socket)
+    banRouter(socket)
   })
 
   return io

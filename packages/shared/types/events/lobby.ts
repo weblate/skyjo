@@ -9,7 +9,7 @@ export interface ClientToServerLobbyEvents {
 
 export type ErrorJoinMessage = Extract<
   ThrownError,
-  "game-not-found" | "game-already-started" | "game-is-full"
+  "game-not-found" | "game-already-started" | "game-is-full" | "player-banned"
 >
 
 export interface ServerToClientLobbyEvents {

@@ -36,6 +36,20 @@ export class LobbyService extends BaseService {
 
     const player = new SkyjoPlayer(playerToCreate, socket.id)
 
+    if (game.isPlayerBanned(player)) {
+      throw new CError(`Player tried to join a game but is banned.`, {
+        code: ErrorConstants.ERROR.PLAYER_BANNED,
+        level: "info",
+        meta: {
+          game: game.serialize(),
+          socketId: socket.id,
+          gameCode: game.code,
+          playerId: player.id,
+          username: player.name,
+        },
+      })
+    }
+
     await this.addPlayerToGame(socket, game, player)
     await this.joinGame(socket, game, player)
   }
