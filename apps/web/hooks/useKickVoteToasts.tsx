@@ -169,8 +169,6 @@ export const useKickVoteToasts = () => {
     toast(t("host-kick.title", { playerName: playerToKickName }))
   }
   const showHostKickYou = async () => {
-    await dismissAllKickVoteToasts()
-
     toast(t("host-kick-you.title"))
   }
   //#region helpers
