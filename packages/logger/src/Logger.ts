@@ -86,6 +86,7 @@ export class Logger {
         },
         handleExceptions: true,
         handleRejections: true,
+        maxBatchingTime: 15000,
       }),
     ],
   })
