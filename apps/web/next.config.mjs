@@ -47,6 +47,10 @@ const nextConfig = {
     removeConsole:
       process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,
   },
+
+  images: {
+    minimumCacheTTL: 2678400,
+  },
 }
 
 export default withNextIntl(nextConfig)

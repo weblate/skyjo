@@ -20,10 +20,10 @@ type Manifest = MetadataRoute.Manifest & {
 
 export default function manifest(): Manifest {
   return {
-    name: "Skyjo",
+    name: "Skyjo Online | Free Multiplayer Card Game",
     short_name: "Skyjo",
     description:
-      "Enjoy the popular card game Skyjo online! Create private games to play with friends, or join public games to challenge players from around the globe.",
+      "Play Skyjo online for free! A fast-paced multiplayer card game where strategy meets fun. Challenge friends, flip cards, and aim for the lowest score to win!",
     start_url: "/",
     orientation: "portrait",
     display: "standalone",
