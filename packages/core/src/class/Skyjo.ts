@@ -835,6 +835,12 @@ export class Skyjo implements SkyjoInterface {
   }
 
   private async startNewGame() {
+    for (const player of this.players) {
+      await this.operationManager.cancelPlayerAfkTimer(this.code, player.id)
+    }
+
+    await this.operationManager.cancelRevealCardsAfkTimer(this.code)
+
     await this.resetRound()
     this.status = Constants.GAME_STATUS.LOBBY
     this.stateVersion = 0
