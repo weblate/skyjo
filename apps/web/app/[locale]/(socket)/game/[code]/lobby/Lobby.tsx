@@ -480,7 +480,7 @@ const Lobby = ({ gameCode }: LobbyProps) => {
                     {t("settings.reset-settings")}
                   </Button>
                 )}
-                {!game.settings.isConfirmed ? (
+                {!game.settings.isConfirmed && !game.settings.private ? (
                   <Button onClick={actions.toggleSettingsValidation}>
                     {t("settings.validate-settings")}
                   </Button>
