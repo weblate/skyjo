@@ -164,6 +164,34 @@ describe("LobbyService", () => {
       expect(socket.emit).not.toHaveBeenCalled()
     })
 
+    it("should throw if the player is banned", async () => {
+      const opponent = new SkyjoPlayer(
+        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+      )
+
+      const game = new Skyjo({
+        hostId: opponent.id,
+        settings: new SkyjoSettings(false),
+      })
+      game.addPlayer(opponent)
+
+      game.bannedUsernames = ["playerNameXX"]
+
+      const player: CreatePlayer = {
+        username: "playerNameXX",
+        avatar: CoreConstants.AVATARS.BEE,
+      }
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(
+        service.onJoin(socket, game.code, player),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_BANNED)
+
+      expect(socket.emit).not.toHaveBeenCalled()
+    })
+
     it("sould throw if game already started", async () => {
       const opponent = new SkyjoPlayer(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },

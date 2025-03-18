@@ -478,85 +478,142 @@ describe("Skyjo", () => {
   })
 
   describe("revealCard", () => {
-    it("should not reveal card if the game is not playing", async () => {
-      game.status = Constants.GAME_STATUS.LOBBY
-      await game.revealCard({ player, column: 0, row: 0 })
-
+    beforeEach(() => {
       player.cards = [
+        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
+        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
         [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
       ]
 
-      await game.revealCard({ player, column: 0, row: 0 })
-
-      expect(player.cards[0][0].isVisible).toBeFalsy()
+      opponent.cards = [
+        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
+        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
+        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
+        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
+      ]
     })
 
-    it("should not reveal card if the game is not in round turning cards phase", async () => {
+    it("should return early if the game is not playing", async () => {
+      game.status = Constants.GAME_STATUS.LOBBY
+
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 0,
+      })
+
+      expect(player.cards[0][0].isVisible).toBe(false)
+    })
+
+    it("should return early if not in REVEAL_CARDS phase", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.roundPhase = Constants.ROUND_PHASE.MAIN
 
-      player.cards = [
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-      ]
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 0,
+      })
 
-      await game.revealCard({ player, column: 0, row: 0 })
-
-      expect(player.cards[0][0].isVisible).toBeFalsy()
+      expect(player.cards[0][0].isVisible).toBe(false)
     })
 
-    it("should not reveal card if player has already revealed the card count", async () => {
+    it("should return early if player already revealed enough cards", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       game.settings.initialTurnedCount = 2
 
-      player.cards = [
-        [new SkyjoCard(10), new SkyjoCard(10, true), new SkyjoCard(10, true)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-      ]
+      player.cards[0][0].turnVisible()
+      player.cards[0][1].turnVisible()
 
-      await game.revealCard({ player, column: 0, row: 0 })
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 2,
+      })
 
-      expect(player.cards[0][0].isVisible).toBeFalsy()
+      expect(player.cards[0][2].isVisible).toBe(false)
     })
 
-    it("should reveal a card", async () => {
+    it("should reset consecutiveAfkCount when wasAfk is false", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
-      game.settings.initialTurnedCount = 2
+      player.consecutiveAfkCount = 2
 
-      player.cards = [
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-      ]
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 0,
+        wasAfk: false,
+      })
 
-      await game.revealCard({ player, column: 0, row: 0 })
-
-      expect(player.cards[0][0].isVisible).toBeTruthy()
+      expect(player.consecutiveAfkCount).toBe(0)
+      expect(player.cards[0][0].isVisible).toBe(true)
     })
 
-    it("should reveal a card and start round in main phase", async () => {
+    it("should not reset consecutiveAfkCount when wasAfk is true", async () => {
       game.status = Constants.GAME_STATUS.PLAYING
       game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
-      game.settings.initialTurnedCount = 2
+      player.consecutiveAfkCount = 2
 
-      player.cards = [
-        [new SkyjoCard(10), new SkyjoCard(10, true), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-      ]
-      opponent.cards = [
-        [new SkyjoCard(10, true), new SkyjoCard(10, true), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-      ]
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 1,
+        wasAfk: true,
+      })
 
-      await game.revealCard({ player, column: 0, row: 0 })
+      expect(player.consecutiveAfkCount).toBe(2)
+      expect(player.cards[0][1].isVisible).toBe(true)
+    })
 
-      expect(player.cards[0][0].isVisible).toBeTruthy()
-      expect(game.isRoundInMain()).toBeTruthy()
-      expect(operationManager.cancelRevealCardsAfkTimer).toHaveBeenCalledWith(
-        game.code,
+    it("should not start round after initial reveal if not all players revealed cards", async () => {
+      game.status = Constants.GAME_STATUS.PLAYING
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+      game.settings.initialTurnedCount = 1
+
+      const startRoundSpy = vi.spyOn(
+        game as any,
+        "startRoundAfterInitialReveal",
       )
+
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 0,
+      })
+
+      expect(player.cards[0][0].isVisible).toBe(true)
+      expect(startRoundSpy).not.toHaveBeenCalled()
+
+      startRoundSpy.mockRestore()
+    })
+
+    it("should start round after initial reveal if all players revealed required cards", async () => {
+      game.status = Constants.GAME_STATUS.PLAYING
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+      game.settings.initialTurnedCount = 1
+
+      const startRoundSpy = vi
+        .spyOn(game as any, "startRoundAfterInitialReveal")
+        .mockImplementation(async () => {})
+      const haveAllPlayersRevealedSpy = vi
+        .spyOn(game as any, "haveAllPlayersRevealedCards")
+        .mockReturnValue(true)
+
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 0,
+      })
+
+      expect(player.cards[0][0].isVisible).toBe(true)
+      expect(player.turnStartTime).toBe(null)
+      expect(startRoundSpy).toHaveBeenCalled()
+
+      startRoundSpy.mockRestore()
+      haveAllPlayersRevealedSpy.mockRestore()
     })
   })
 
@@ -1760,6 +1817,115 @@ describe("Skyjo", () => {
       expect(removeGameSpy).not.toHaveBeenCalled()
 
       removeGameSpy.mockClear()
+    })
+  })
+
+  // Add tests for ban feature
+  describe("banPlayer", () => {
+    it("should add player id to bannedPlayerIds if not already included", () => {
+      // Setup
+      const targetPlayer = new SkyjoPlayer(
+        { username: "target", avatar: Constants.AVATARS.BEE },
+        "targetSocketId",
+      )
+      game.addPlayer(targetPlayer)
+
+      // Execute
+      game.banPlayer(targetPlayer)
+
+      // Verify
+      expect(game.bannedPlayerIds).toContain(targetPlayer.id)
+      expect(game.bannedPlayerIds.length).toBe(1)
+    })
+
+    it("should not add player id to bannedPlayerIds if already included", () => {
+      // Setup
+      const targetPlayer = new SkyjoPlayer(
+        { username: "target", avatar: Constants.AVATARS.BEE },
+        "targetSocketId",
+      )
+      game.addPlayer(targetPlayer)
+      game.bannedPlayerIds.push(targetPlayer.id)
+
+      // Execute
+      game.banPlayer(targetPlayer)
+
+      // Verify
+      expect(game.bannedPlayerIds).toContain(targetPlayer.id)
+      expect(game.bannedPlayerIds.length).toBe(1)
+    })
+
+    it("should add player name to bannedUsernames if not already included", () => {
+      // Setup
+      const targetPlayer = new SkyjoPlayer(
+        { username: "target", avatar: Constants.AVATARS.BEE },
+        "targetSocketId",
+      )
+      game.addPlayer(targetPlayer)
+
+      // Execute
+      game.banPlayer(targetPlayer)
+
+      // Verify
+      expect(game.bannedUsernames).toContain(targetPlayer.name)
+      expect(game.bannedUsernames.length).toBe(1)
+    })
+
+    it("should not add player name to bannedUsernames if already included", () => {
+      // Setup
+      const targetPlayer = new SkyjoPlayer(
+        { username: "target", avatar: Constants.AVATARS.BEE },
+        "targetSocketId",
+      )
+      game.addPlayer(targetPlayer)
+      game.bannedUsernames.push(targetPlayer.name)
+
+      // Execute
+      game.banPlayer(targetPlayer)
+
+      // Verify
+      expect(game.bannedUsernames).toContain(targetPlayer.name)
+      expect(game.bannedUsernames.length).toBe(1)
+    })
+  })
+
+  describe("isPlayerBanned", () => {
+    it("should return true if player id is in bannedPlayerIds", () => {
+      // Setup
+      const targetPlayer = new SkyjoPlayer(
+        { username: "target", avatar: Constants.AVATARS.BEE },
+        "targetSocketId",
+      )
+      game.addPlayer(targetPlayer)
+      game.bannedPlayerIds.push(targetPlayer.id)
+
+      // Execute & Verify
+      expect(game.isPlayerBanned(targetPlayer)).toBe(true)
+    })
+
+    it("should return true if player name is in bannedUsernames", () => {
+      // Setup
+      const targetPlayer = new SkyjoPlayer(
+        { username: "target", avatar: Constants.AVATARS.BEE },
+        "targetSocketId",
+      )
+      game.addPlayer(targetPlayer)
+      game.bannedUsernames.push(targetPlayer.name)
+
+      // Execute & Verify
+      expect(game.isPlayerBanned(targetPlayer)).toBe(true)
+    })
+
+    it("should return false if player is not banned", () => {
+      // Setup
+      const targetPlayer = new SkyjoPlayer(
+        { username: "target", avatar: Constants.AVATARS.BEE },
+        "targetSocketId",
+      )
+      game.addPlayer(targetPlayer)
+
+      // Execute & Verify
+      expect(game.isPlayerBanned(targetPlayer)).toBe(false)
     })
   })
 })
