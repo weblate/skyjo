@@ -13,12 +13,11 @@ export const getGameInviteLink = (gameCode: string) => {
 
 export const getCurrentUrl = (route: string, locale?: string) => {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ""
-  const url =
-    locale && locale !== routing.defaultLocale
-      ? `${baseUrl}/${locale}/${route}`
-      : `${baseUrl}/${route}`
+  const path = route ? `/${route}` : ""
 
-  return url
+  return locale && locale !== routing.defaultLocale
+    ? `${baseUrl}/${locale}${path}`
+    : `${baseUrl}${path}`
 }
 
 export const getRedirectionUrl = (code: string, status: GameStatus) => {
