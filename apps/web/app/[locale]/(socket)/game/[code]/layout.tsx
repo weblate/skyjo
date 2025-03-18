@@ -23,7 +23,7 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
       <SkyjoProvider gameCode={params.code}>
         <VoteKickProvider>
           <BanProvider>
-            <div className="w-svh h-svh bg-body dark:bg-dark-body flex flex-row overflow-hidden">
+            <div className="w-svh h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
               {children}
               <Chat className="z-40" />
             </div>

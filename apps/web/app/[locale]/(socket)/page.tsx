@@ -34,7 +34,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
   return (
     <>
       <div className="bg-body dark:bg-dark-body flex flex-col">
-        <div className="relative h-dvh !p-6 bg-body dark:bg-dark-body flex items-center justify-center">
+        <div className="relative h-dvh !p-6 flex items-center justify-center">
           <PWABanner />
           <div className="absolute top-6 right-6 w-10 flex flex-col gap-4 z-10">
             <MenuDropdown />
@@ -81,7 +81,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
             </Link>
           )}
         </div>
-        <section className="container bg-body dark:bg-dark-body my-8 max-w-4xl flex flex-col items-center">
+        <section className="container my-8 max-w-4xl flex flex-col items-center">
           <h2
             id="explanation"
             className="text-center text-3xl text-black dark:text-dark-font pt-2 mb-4"
@@ -94,7 +94,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
           <RulesButton text={t("explanation.button")} />
         </section>
 
-        <section className="container bg-body dark:bg-dark-body mt-16 mb-32 max-w-4xl flex flex-col items-center">
+        <section className="container mt-16 mb-32 max-w-4xl flex flex-col items-center">
           <h2 className="text-center text-3xl text-black dark:text-dark-font mb-4">
             {t("faq.title")}
           </h2>
