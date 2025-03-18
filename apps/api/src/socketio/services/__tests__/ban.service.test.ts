@@ -81,23 +81,11 @@ describe("BanService", () => {
 
   describe("onBanPlayer", () => {
     it("should throw if the initiator is not the host", async () => {
-      // Set a different player as host
       game.hostId = opponent1.id
 
-      // Override the isHost check to return false
       vi.spyOn(game, "isHost").mockImplementation((playerId) => {
         return playerId === opponent1.id
       })
-
-      // Create the expected error
-      const expectedError = new CError(
-        "Player tried to ban another player but is not the host.",
-        {
-          code: ErrorConstants.BAN_ERROR.NOT_ALLOWED,
-          level: "info",
-          meta: expect.any(Object),
-        },
-      )
 
       await expect(
         service.onBanPlayer(socket, opponent2.id),
@@ -105,7 +93,6 @@ describe("BanService", () => {
     })
 
     it("should throw if the game is not private", async () => {
-      // Ensure game is public
       game.settings.private = false
 
       await expect(
@@ -114,7 +101,6 @@ describe("BanService", () => {
     })
 
     it("should throw if the targeted player is not in the game", async () => {
-      // Make game private
       game.settings.private = true
 
       vi.spyOn(game, "getPlayerById").mockImplementation((id) => {
