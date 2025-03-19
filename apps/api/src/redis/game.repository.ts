@@ -1,12 +1,12 @@
 import {
   Constants as CoreConstants,
-  Skyjo,
-  type SkyjoDbFormat,
-  type SkyjoPlayerToJson,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
-import { type SkyjoOperation } from "@skyjo/state-operations"
+  Game,
+  type GameDb,
+  type PlayerToJson,
+} from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import { Logger } from "@skymo/logger"
+import { type GameOperation } from "@skymo/state-operations"
 import { RedisClient } from "./client.js"
 export class GameRepository extends RedisClient {
   private static readonly GAME_PREFIX = "game"
@@ -18,7 +18,7 @@ export class GameRepository extends RedisClient {
   private static readonly PUBLIC_GAME_IN_LOBBY_TTL = 60 * 6 // 6 minutes
   private static readonly PUBLIC_GAMES_SORTED_SET = "public_games"
 
-  async createGame(game: Skyjo) {
+  async createGame(game: Game) {
     const existingGame = await this.getGameSafe(game.code)
     if (existingGame) {
       throw new CError("A game with this code already exists in redis", {
@@ -56,7 +56,7 @@ export class GameRepository extends RedisClient {
     )
 
     const filteredGames = games.filter(
-      (game): game is Skyjo =>
+      (game): game is Game =>
         game !== null && this.isGameEligibleToPublicGames(game),
     )
 
@@ -78,7 +78,7 @@ export class GameRepository extends RedisClient {
     const client = await RedisClient.getClient()
     const key = this.getGameLatestStateKey(code)
 
-    const game = (await client.json.get(key)) as SkyjoDbFormat | null
+    const game = (await client.json.get(key)) as GameDb | null
     if (!game) {
       throw new CError("Game not found in redis", {
         level: "warn",
@@ -103,7 +103,7 @@ export class GameRepository extends RedisClient {
     return player !== null
   }
 
-  async updateGame(game: Skyjo, operation?: SkyjoOperation) {
+  async updateGame(game: Game, operation?: GameOperation) {
     if (operation) await this.addGameState(game, operation)
 
     await this.setGame(game)
@@ -111,7 +111,7 @@ export class GameRepository extends RedisClient {
     if (!game.settings.private) await this.updateInPublicGames(game)
   }
 
-  async updatePlayer(gameCode: string, player: SkyjoPlayerToJson) {
+  async updatePlayer(gameCode: string, player: PlayerToJson) {
     const client = await RedisClient.getClient()
 
     const key = this.getGameLatestStateKey(gameCode)
@@ -143,15 +143,15 @@ export class GameRepository extends RedisClient {
     gameCode: string,
     fromStateVersion: number,
     toStateVersion: number,
-  ): Promise<SkyjoOperation[]> {
+  ): Promise<GameOperation[]> {
     const client = await RedisClient.getClient()
 
-    const states: SkyjoOperation[] = []
+    const states: GameOperation[] = []
 
     for (let i = fromStateVersion; i <= toStateVersion; i++) {
       const key = this.getGameStateKey(gameCode, i)
       const state = await client.json.get(key)
-      states.push(state as SkyjoOperation)
+      states.push(state as GameOperation)
     }
 
     return states
@@ -167,16 +167,16 @@ export class GameRepository extends RedisClient {
     return `${GameRepository.GAME_PREFIX}:${code}:${GameRepository.GAME_STATE_PREFIX}:${stateVersion}`
   }
 
-  private deserializeGame(game: SkyjoDbFormat): Skyjo {
-    const skyjo = new Skyjo({
-      hostId: game.hostId,
+  private deserializeGame(gameDb: GameDb): Game {
+    const game = new Game({
+      hostId: gameDb.hostId,
     })
-    skyjo.populate(game)
+    game.populate(gameDb)
 
-    return skyjo
+    return game
   }
 
-  private async setGame(game: Skyjo) {
+  private async setGame(game: Game) {
     const client = await RedisClient.getClient()
 
     const key = this.getGameLatestStateKey(game.code)
@@ -193,7 +193,7 @@ export class GameRepository extends RedisClient {
   }
 
   //#region public games
-  private isGameEligibleToPublicGames(game: Skyjo) {
+  private isGameEligibleToPublicGames(game: Game) {
     return (
       !game.settings.private &&
       game.isInLobby() &&
@@ -203,7 +203,7 @@ export class GameRepository extends RedisClient {
     )
   }
 
-  private async updateInPublicGames(game: Skyjo) {
+  private async updateInPublicGames(game: Game) {
     if (this.isGameEligibleToPublicGames(game)) {
       const client = await RedisClient.getClient()
 
@@ -222,7 +222,7 @@ export class GameRepository extends RedisClient {
   }
   //#endregion
 
-  private async addGameState(game: Skyjo, operation: SkyjoOperation) {
+  private async addGameState(game: Game, operation: GameOperation) {
     const client = await RedisClient.getClient()
 
     const key = this.getGameStateKey(game.code, game.stateVersion)

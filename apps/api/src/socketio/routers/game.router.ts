@@ -11,9 +11,9 @@ import {
   playRevealCard,
   playTurnCard,
   stateVersionSchema,
-} from "@skyjo/core"
+} from "@skymo/core"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+import type { GameSocket } from "../types/gameSocket.js"
 
 const instance = new GameService()
 
@@ -28,7 +28,7 @@ const replayRateLimiter = new RateLimiterMemory({
   duration: 5,
 })
 
-const gameRouter = (socket: SkyjoSocket) => {
+const gameRouter = (socket: GameSocket) => {
   socket.on(
     "get",
     socketErrorWrapper(

@@ -2,9 +2,9 @@
 
 import { Card } from "@/components/Card"
 import SelectedCard from "@/components/SelectedCard"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skyjo/core"
+import { Constants as CoreConstants } from "@skymo/core"
 import { useTranslations } from "next-intl"
 
 type DiscardPileProps = {
@@ -12,7 +12,7 @@ type DiscardPileProps = {
 }
 
 const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
-  const { game, actions } = useSkyjo()
+  const { game, actions } = useGame()
   const t = useTranslations("components.DiscardPile")
 
   const onClick = () => {

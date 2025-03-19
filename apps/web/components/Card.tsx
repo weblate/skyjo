@@ -1,7 +1,7 @@
 "use client"
 
 import { cn } from "@/lib/utils"
-import { SkyjoCardToJson } from "@skyjo/core"
+import { CardToJson } from "@skymo/core"
 import { VariantProps, cva } from "class-variance-authority"
 import { ClassValue } from "clsx"
 import { m, useAnimate, useAnimationControls } from "framer-motion"
@@ -88,7 +88,7 @@ const cardValue: Record<string, CardValue> = {
 }
 
 type CardProps = {
-  card: SkyjoCardToJson
+  card: CardToJson
   size?: VariantProps<typeof cardClass>["size"]
   onClick?: () => void
   className?: ClassValue

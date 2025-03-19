@@ -1,9 +1,9 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 
 const consumeSocketRateLimiter = (rateLimiter: RateLimiterMemory) => {
-  return async (socket: SkyjoSocket) => {
+  return async (socket: GameSocket) => {
     try {
       await rateLimiter.consume(socket.id)
     } catch {

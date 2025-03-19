@@ -1,20 +1,16 @@
 import { isDeepStrictEqual } from "util"
-import type {
-  SkyjoPlayerToJson,
-  SkyjoSettingsToJson,
-  SkyjoToJson,
-} from "@skyjo/core"
+import type { GameToJson, PlayerToJson, SettingsToJson } from "@skymo/core"
 import {
+  type GameOperation,
+  type GameUpdate,
   type PlayerUpdate,
-  type SkyjoOperation,
-  type SkyjoUpdate,
 } from "./types.js"
 
 export const createStateOperations = (
-  oldState: SkyjoToJson,
-  newState: SkyjoToJson,
-): SkyjoOperation => {
-  let ops: SkyjoOperation = {}
+  oldState: GameToJson,
+  newState: GameToJson,
+): GameOperation => {
+  let ops: GameOperation = {}
 
   const basicFieldsChanges = compareBasicFields(oldState, newState)
   if (basicFieldsChanges) ops.game = basicFieldsChanges
@@ -34,12 +30,12 @@ export const createStateOperations = (
 }
 
 const compareBasicFields = (
-  oldState: SkyjoToJson,
-  newState: SkyjoToJson,
-): SkyjoUpdate | undefined => {
-  let gameChanges: SkyjoUpdate = {}
+  oldState: GameToJson,
+  newState: GameToJson,
+): GameUpdate | undefined => {
+  let gameChanges: GameUpdate = {}
 
-  const keys = Object.keys(oldState) as Array<keyof SkyjoToJson>
+  const keys = Object.keys(oldState) as Array<keyof GameToJson>
   keys.forEach((key) => {
     if (key === "settings" || key === "players") return
     else if (!isDeepStrictEqual(oldState[key], newState[key])) {
@@ -62,12 +58,12 @@ const compareBasicFields = (
 }
 
 const compareSettings = (
-  oldSettings: SkyjoSettingsToJson,
-  newSettings: SkyjoSettingsToJson,
-): Partial<SkyjoSettingsToJson> | undefined => {
-  let settingsChanges: Partial<SkyjoSettingsToJson> = {}
+  oldSettings: SettingsToJson,
+  newSettings: SettingsToJson,
+): Partial<SettingsToJson> | undefined => {
+  let settingsChanges: Partial<SettingsToJson> = {}
 
-  const keys = Object.keys(oldSettings) as Array<keyof SkyjoSettingsToJson>
+  const keys = Object.keys(oldSettings) as Array<keyof SettingsToJson>
   keys.forEach((key) => {
     if (
       newSettings[key] !== undefined &&
@@ -86,10 +82,10 @@ const compareSettings = (
 }
 
 const createPlayerOperations = (
-  oldState: SkyjoToJson,
-  newState: SkyjoToJson,
-): Omit<SkyjoOperation, "game" | "settings"> | undefined => {
-  const ops: Omit<SkyjoOperation, "game" | "settings"> = {}
+  oldState: GameToJson,
+  newState: GameToJson,
+): Omit<GameOperation, "game" | "settings"> | undefined => {
+  const ops: Omit<GameOperation, "game" | "settings"> = {}
 
   oldState.players.forEach((oldPlayer) => {
     const newPlayer = newState.players.find((p) => p.id === oldPlayer.id)
@@ -115,13 +111,13 @@ const createPlayerOperations = (
 }
 
 const comparePlayer = (
-  oldPlayer: SkyjoPlayerToJson,
-  newPlayer: SkyjoPlayerToJson,
+  oldPlayer: PlayerToJson,
+  newPlayer: PlayerToJson,
 ): PlayerUpdate | undefined => {
   const playerId = oldPlayer.id
-  let playerChanges: Partial<SkyjoPlayerToJson> = {}
+  let playerChanges: Partial<PlayerToJson> = {}
 
-  const keys = Object.keys(oldPlayer) as Array<keyof SkyjoPlayerToJson>
+  const keys = Object.keys(oldPlayer) as Array<keyof PlayerToJson>
   keys.forEach((key) => {
     if (
       newPlayer[key] !== undefined &&

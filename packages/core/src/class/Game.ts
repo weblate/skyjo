@@ -1,5 +1,5 @@
-import type { SkyjoDbFormat, SkyjoToJson } from "@/types/skyjo.js"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import type { GameDb, GameToJson } from "@/types/game.js"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
 import {
   type ConnectionStatus,
   Constants,
@@ -8,20 +8,20 @@ import {
   type RoundPhase,
   type TurnStatus,
 } from "../constants.js"
+import { Card } from "./Card.js"
 import { type GameOperationManagerInterface } from "./GameOperationManager.js"
 import { DefaultGameOperationManager } from "./GameOperationManager.js"
-import { SkyjoCard } from "./SkyjoCard.js"
-import { SkyjoPlayer } from "./SkyjoPlayer.js"
-import { SkyjoSettings } from "./SkyjoSettings.js"
+import { Player } from "./Player.js"
+import { Settings } from "./Settings.js"
 
-interface SkyjoInterface {
+interface GameInterface {
   id: string
   code: string
   status: GameStatus
-  players: SkyjoPlayer[]
+  players: Player[]
   turn: number
   hostId: string
-  settings: SkyjoSettings
+  settings: Settings
 
   selectedCardValue: number | null
   firstToFinishPlayerId: string | null
@@ -37,20 +37,20 @@ interface SkyjoInterface {
   updatedAt: Date
 }
 
-export interface SkyjoConstructorParams {
+export interface GameConstructorParams {
   hostId: string
-  settings?: SkyjoSettings
+  settings?: Settings
 }
 
-export class Skyjo implements SkyjoInterface {
+export class Game implements GameInterface {
   private operationManager: GameOperationManagerInterface =
     new DefaultGameOperationManager()
   id: string = crypto.randomUUID()
   code: string = Math.random().toString(36).substring(2, 10)
   hostId: string
-  settings: SkyjoSettings
+  settings: Settings
   status: GameStatus = Constants.GAME_STATUS.LOBBY
-  players: SkyjoPlayer[] = []
+  players: Player[] = []
   turn: number = 0
   discardPile: number[] = []
   drawPile: number[] = []
@@ -71,10 +71,7 @@ export class Skyjo implements SkyjoInterface {
   updatedAt: Date
   stateVersion: number = 0
 
-  constructor({
-    hostId,
-    settings = new SkyjoSettings(),
-  }: SkyjoConstructorParams) {
+  constructor({ hostId, settings = new Settings() }: GameConstructorParams) {
     this.hostId = hostId
     this.settings = settings
 
@@ -87,7 +84,7 @@ export class Skyjo implements SkyjoInterface {
     this.operationManager = operationManager
   }
 
-  populate(game: SkyjoDbFormat) {
+  populate(game: GameDb) {
     this.id = game.id
     this.code = game.code
     this.status = game.status
@@ -111,9 +108,7 @@ export class Skyjo implements SkyjoInterface {
     this.createdAt = game.createdAt
     this.updatedAt = game.updatedAt
 
-    this.players = game.players.map((player) =>
-      new SkyjoPlayer().populate(player),
-    )
+    this.players = game.players.map((player) => new Player().populate(player))
 
     this.settings.populate(game.settings)
 
@@ -142,7 +137,7 @@ export class Skyjo implements SkyjoInterface {
     })
   }
 
-  addPlayer(player: SkyjoPlayer) {
+  addPlayer(player: Player) {
     if (this.isFull()) {
       throw new CError("Cannot add player, game is full", {
         code: ErrorConstants.ERROR.GAME_IS_FULL,
@@ -175,7 +170,7 @@ export class Skyjo implements SkyjoInterface {
   }
 
   async disconnectPlayer(
-    player: SkyjoPlayer,
+    player: Player,
     status: ConnectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED,
   ) {
     player.connectionStatus = status
@@ -202,7 +197,7 @@ export class Skyjo implements SkyjoInterface {
     return this.hostId === playerId
   }
 
-  banPlayer(target: SkyjoPlayer) {
+  banPlayer(target: Player) {
     const playerId = target.id
     if (!this.bannedPlayerIds.includes(playerId)) {
       this.bannedPlayerIds.push(playerId)
@@ -214,7 +209,7 @@ export class Skyjo implements SkyjoInterface {
     }
   }
 
-  isPlayerBanned(player: SkyjoPlayer) {
+  isPlayerBanned(player: Player) {
     const playerId = player.id
     if (this.bannedPlayerIds.includes(playerId)) return true
 
@@ -307,7 +302,7 @@ export class Skyjo implements SkyjoInterface {
     column,
     row,
     wasAfk = false,
-  }: { player: SkyjoPlayer; column: number; row: number; wasAfk?: boolean }) {
+  }: { player: Player; column: number; row: number; wasAfk?: boolean }) {
     if (
       !this.isPlaying() ||
       !this.isRoundRevealCards() ||
@@ -386,7 +381,7 @@ export class Skyjo implements SkyjoInterface {
     row,
     wasAfk = true,
   }: {
-    player: SkyjoPlayer
+    player: Player
     column: number
     row: number
     wasAfk?: boolean
@@ -447,7 +442,7 @@ export class Skyjo implements SkyjoInterface {
       settings: this.settings.toJson(),
       stateVersion: this.stateVersion,
       updatedAt: this.updatedAt,
-    } satisfies SkyjoToJson
+    } satisfies GameToJson
   }
 
   serialize() {
@@ -485,8 +480,8 @@ export class Skyjo implements SkyjoInterface {
         isConfirmed: this.settings.isConfirmed,
         private: this.settings.private,
         maxPlayers: this.settings.maxPlayers,
-        allowSkyjoForColumn: this.settings.allowSkyjoForColumn,
-        allowSkyjoForRow: this.settings.allowSkyjoForRow,
+        removeIdenticalColumn: this.settings.removeIdenticalColumn,
+        removeIdenticalRow: this.settings.removeIdenticalRow,
         initialTurnedCount: this.settings.initialTurnedCount,
         cardPerRow: this.settings.cardPerRow,
         cardPerColumn: this.settings.cardPerColumn,
@@ -509,7 +504,7 @@ export class Skyjo implements SkyjoInterface {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       processingAfk: this.processingAfk,
-    } satisfies SkyjoDbFormat
+    } satisfies GameDb
   }
 
   //#region private methods
@@ -661,13 +656,13 @@ export class Skyjo implements SkyjoInterface {
     await this.setFirstPlayerToStart()
   }
 
-  private checkCardsToDiscard(player: SkyjoPlayer) {
-    let cardsToDiscard: SkyjoCard[] = []
+  private checkCardsToDiscard(player: Player) {
+    let cardsToDiscard: Card[] = []
 
-    if (this.settings.allowSkyjoForColumn) {
+    if (this.settings.removeIdenticalColumn) {
       cardsToDiscard = player.checkColumnsAndDiscard()
     }
-    if (this.settings.allowSkyjoForRow) {
+    if (this.settings.removeIdenticalRow) {
       cardsToDiscard = cardsToDiscard.concat(player.checkRowsAndDiscard())
     }
 
@@ -678,17 +673,17 @@ export class Skyjo implements SkyjoInterface {
     }
   }
 
-  private hasPlayerFinished(player: SkyjoPlayer) {
+  private hasPlayerFinished(player: Player) {
     return player.hasRevealedCardCount(player.cards.flat().length)
   }
 
-  private shouldSetFirstPlayerToFinish(player: SkyjoPlayer) {
+  private shouldSetFirstPlayerToFinish(player: Player) {
     const hasPlayerFinished = this.hasPlayerFinished(player)
 
     return hasPlayerFinished && !this.firstToFinishPlayerId
   }
 
-  private setFirstPlayerToFinish(player: SkyjoPlayer) {
+  private setFirstPlayerToFinish(player: Player) {
     this.firstToFinishPlayerId = player.id
     this.roundPhase = Constants.ROUND_PHASE.LAST_LAP
   }

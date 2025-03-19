@@ -1,5 +1,5 @@
-import type { CreatePlayer, GameStatus, JoinGame } from "@skyjo/core"
-import type { Error as ThrownError } from "@skyjo/error"
+import type { CreatePlayer, GameStatus, JoinGame } from "@skymo/core"
+import type { Error as ThrownError } from "@skymo/error"
 
 export interface ClientToServerLobbyEvents {
   create: (player: CreatePlayer, isPrivate: boolean) => void

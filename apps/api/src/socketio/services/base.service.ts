@@ -2,15 +2,11 @@ import { GameRepository } from "@/redis/game.repository.js"
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
-import {
-  Constants as CoreConstants,
-  type Skyjo,
-  type SkyjoPlayer,
-} from "@skyjo/core"
-import type { ServerChatMessage } from "@skyjo/shared/types"
+import { Constants as CoreConstants, type Game, type Player } from "@skymo/core"
+import type { ServerChatMessage } from "@skymo/shared/types"
 import { PlayerAfkQueueService } from "../../queues/PlayerAfkQueueService.js"
 import { RevealCardsAfkQueueService } from "../../queues/RevealCardsAfkQueueService.js"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+import type { GameSocket } from "../types/gameSocket.js"
 
 export abstract class BaseService {
   protected redis = new GameRepository()
@@ -22,8 +18,8 @@ export abstract class BaseService {
     RevealCardsAfkQueueService.getInstance()
 
   protected async sendMissingStatesToSocket(
-    socket: SkyjoSocket,
-    game: Skyjo,
+    socket: GameSocket,
+    game: Game,
     clientStateVersion: number,
   ) {
     const states = await this.redis.getGameStates(
@@ -38,7 +34,7 @@ export abstract class BaseService {
   }
 
   protected async updateAndSendGame(
-    game: Skyjo,
+    game: Game,
     stateManager: GameStateTracker,
   ) {
     const operations = stateManager.getChanges()
@@ -62,9 +58,9 @@ export abstract class BaseService {
   }
 
   protected async joinGame(
-    socket: SkyjoSocket,
-    game: Skyjo,
-    player: SkyjoPlayer,
+    socket: GameSocket,
+    game: Game,
+    player: Player,
     reconnection: boolean = false,
   ) {
     await socket.join(game.code)

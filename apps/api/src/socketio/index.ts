@@ -1,13 +1,13 @@
 import { Server as HttpServer } from "http"
 import type { ServerType } from "@hono/node-server"
-import { Logger } from "@skyjo/logger"
+import { Logger } from "@skymo/logger"
 import { banRouter } from "./routers/ban.router.js"
 import { chatRouter } from "./routers/chat.router.js"
 import { gameRouter } from "./routers/game.router.js"
 import { kickRouter } from "./routers/kick.router.js"
 import { lobbyRouter } from "./routers/lobby.router.js"
 import { playerRouter } from "./routers/player.router.js"
-import type { SkyjoSocket } from "./types/skyjoSocket.js"
+import type { GameSocket } from "./types/gameSocket.js"
 import { SocketManager } from "./utils/SocketManager.js"
 
 export const initializeSocketServer = (server: ServerType) => {
@@ -24,7 +24,7 @@ export const initializeSocketServer = (server: ServerType) => {
     })
   })
 
-  io.on("connection", (socket: SkyjoSocket) => {
+  io.on("connection", (socket: GameSocket) => {
     lobbyRouter(socket)
     playerRouter(socket)
     gameRouter(socket)

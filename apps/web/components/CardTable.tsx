@@ -1,13 +1,13 @@
 import { Card } from "@/components/Card"
+import { useGame } from "@/contexts/GameContext"
 import { GameBoardSize } from "@/contexts/SettingsContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
 import {
   canTurnInitialCard,
   hasTurnedCard,
   isCurrentUserTurn,
-} from "@/lib/skyjo"
+} from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants, SkyjoCardToJson } from "@skyjo/core"
+import { CardToJson, Constants as CoreConstants } from "@skymo/core"
 import { cva } from "class-variance-authority"
 import { AnimatePresence, m } from "framer-motion"
 import { useEffect, useState } from "react"
@@ -22,7 +22,7 @@ const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
 })
 
 type CardTableProps = {
-  cards: SkyjoCardToJson[][]
+  cards: CardToJson[][]
   cardDisabled?: boolean
   showSelectionAnimation?: boolean
   size?: GameBoardSize
@@ -33,7 +33,7 @@ const CardTable = ({
   showSelectionAnimation = false,
   size = GameBoardSize.NORMAL,
 }: CardTableProps) => {
-  const { game, player, actions } = useSkyjo()
+  const { game, player, actions } = useGame()
   const numberOfRows = cards?.[0]?.length
   const [numberOfRowsForClass, setNumberOfRowsForClass] = useState<number>(
     game.settings.cardPerRow,

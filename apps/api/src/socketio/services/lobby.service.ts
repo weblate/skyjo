@@ -1,19 +1,14 @@
 import { BaseService } from "@/socketio/services/base.service.js"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import {
-  type CreatePlayer,
-  Skyjo,
-  SkyjoPlayer,
-  SkyjoSettings,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
-import type { UpdateGameSettings } from "@skyjo/shared/validations"
+import { type CreatePlayer, Game, Player, Settings } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import { Logger } from "@skymo/logger"
+import type { UpdateGameSettings } from "@skymo/shared/validations"
 
 export class LobbyService extends BaseService {
   async onCreate(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     playerToCreate: CreatePlayer,
     isPrivateGame = true,
   ) {
@@ -28,13 +23,13 @@ export class LobbyService extends BaseService {
   }
 
   async onJoin(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     gameCode: string,
     playerToCreate: CreatePlayer,
   ) {
     const game = await this.getGame(gameCode)
 
-    const player = new SkyjoPlayer(playerToCreate, socket.id)
+    const player = new Player(playerToCreate, socket.id)
 
     if (game.isPlayerBanned(player)) {
       throw new CError(`Player tried to join a game but is banned.`, {
@@ -54,7 +49,7 @@ export class LobbyService extends BaseService {
     await this.joinGame(socket, game, player)
   }
 
-  async onResetSettings(socket: SkyjoSocket) {
+  async onResetSettings(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const stateManager = new GameStateTracker(game)
 
@@ -84,7 +79,7 @@ export class LobbyService extends BaseService {
       )
     }
 
-    game.settings = new SkyjoSettings(
+    game.settings = new Settings(
       game.settings.private,
       game.settings.maxPlayers,
     )
@@ -93,7 +88,7 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onUpdateMaxPlayers(socket: SkyjoSocket, maxPlayers: number) {
+  async onUpdateMaxPlayers(socket: GameSocket, maxPlayers: number) {
     const game = await this.getGame(socket.data.gameCode)
     if (!game.isHost(socket.data.playerId)) {
       throw new CError(
@@ -121,7 +116,7 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onUpdateSettings(socket: SkyjoSocket, settings: UpdateGameSettings) {
+  async onUpdateSettings(socket: GameSocket, settings: UpdateGameSettings) {
     const game = await this.getGame(socket.data.gameCode)
     if (!game.isHost(socket.data.playerId)) {
       throw new CError(
@@ -157,7 +152,7 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onToggleSettingsValidation(socket: SkyjoSocket) {
+  async onToggleSettingsValidation(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     if (game.settings.private) return
 
@@ -169,7 +164,7 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onGameStart(socket: SkyjoSocket) {
+  async onGameStart(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     if (!game.isHost(socket.data.playerId)) {
       throw new CError(`Player try to start the game but is not the host.`, {
@@ -195,14 +190,14 @@ export class LobbyService extends BaseService {
 
   //#region private methods
   private async createGame(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     playerToCreate: CreatePlayer,
     isPrivateGame: boolean,
   ) {
-    const player = new SkyjoPlayer(playerToCreate, socket.id)
-    const game = new Skyjo({
+    const player = new Player(playerToCreate, socket.id)
+    const game = new Game({
       hostId: player.id,
-      settings: new SkyjoSettings(isPrivateGame),
+      settings: new Settings(isPrivateGame),
     })
 
     await this.redis.createGame(game)
@@ -211,9 +206,9 @@ export class LobbyService extends BaseService {
   }
 
   private async addPlayerToGame(
-    socket: SkyjoSocket,
-    game: Skyjo,
-    player: SkyjoPlayer,
+    socket: GameSocket,
+    game: Game,
+    player: Player,
   ) {
     if (!game.isInLobby()) {
       throw new CError(

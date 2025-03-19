@@ -1,11 +1,11 @@
-import type { SkyjoDbFormat } from "@/types/skyjo.js"
-import type { SkyjoSettingsToJson } from "@/types/skyjoSettings.js"
+import type { GameDb } from "@/types/game.js"
+import type { SettingsToJson } from "@/types/settings.js"
 import { Constants, type FirstPlayerPenaltyType } from "../constants.js"
 
 type UpdateSettings = {
   maxPlayers?: number
-  allowSkyjoForColumn?: boolean
-  allowSkyjoForRow?: boolean
+  removeIdenticalColumn?: boolean
+  removeIdenticalRow?: boolean
   initialTurnedCount?: number
   cardPerRow?: number
   cardPerColumn?: number
@@ -16,28 +16,28 @@ type UpdateSettings = {
   showCurrentScore?: boolean
 }
 
-export interface SkyjoSettingsInterface {
+export interface SettingsInterface {
   private: boolean
   maxPlayers: number
-  allowSkyjoForColumn: boolean
-  allowSkyjoForRow: boolean
+  removeIdenticalColumn: boolean
+  removeIdenticalRow: boolean
   initialTurnedCount: number
   cardPerRow: number
   cardPerColumn: number
 
   updateSettings(settings: UpdateSettings): void
   preventInvalidSettings(): void
-  toJson(): SkyjoSettingsToJson
+  toJson(): SettingsToJson
 }
 
-export class SkyjoSettings implements SkyjoSettingsInterface {
+export class Settings implements SettingsInterface {
   isConfirmed: boolean = false
   private: boolean = false
   maxPlayers: number = Constants.DEFAULT_GAME_SETTINGS.MAX_PLAYERS
-  allowSkyjoForColumn: boolean =
-    Constants.DEFAULT_GAME_SETTINGS.ALLOW_SKYJO_FOR_COLUMN
-  allowSkyjoForRow: boolean =
-    Constants.DEFAULT_GAME_SETTINGS.ALLOW_SKYJO_FOR_ROW
+  removeIdenticalColumn: boolean =
+    Constants.DEFAULT_GAME_SETTINGS.REMOVE_IDENTICAL_COLUMN
+  removeIdenticalRow: boolean =
+    Constants.DEFAULT_GAME_SETTINGS.REMOVE_IDENTICAL_ROW
   initialTurnedCount: number =
     Constants.DEFAULT_GAME_SETTINGS.CARDS.INITIAL_TURNED_COUNT
   cardPerRow: number = Constants.DEFAULT_GAME_SETTINGS.CARDS.PER_ROW
@@ -57,12 +57,12 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
     if (maxPlayers) this.maxPlayers = maxPlayers
   }
 
-  populate(settings: SkyjoDbFormat["settings"]) {
+  populate(settings: GameDb["settings"]) {
     this.isConfirmed = settings.isConfirmed
     this.private = settings.private
     this.maxPlayers = settings.maxPlayers
-    this.allowSkyjoForColumn = settings.allowSkyjoForColumn
-    this.allowSkyjoForRow = settings.allowSkyjoForRow
+    this.removeIdenticalColumn = settings.removeIdenticalColumn
+    this.removeIdenticalRow = settings.removeIdenticalRow
     this.initialTurnedCount = settings.initialTurnedCount
     this.cardPerRow = settings.cardPerRow
     this.cardPerColumn = settings.cardPerColumn
@@ -78,9 +78,10 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
   /* istanbul ignore next --@preserve */
   updateSettings(settings: UpdateSettings) {
     this.maxPlayers = settings.maxPlayers ?? this.maxPlayers
-    this.allowSkyjoForColumn =
-      settings.allowSkyjoForColumn ?? this.allowSkyjoForColumn
-    this.allowSkyjoForRow = settings.allowSkyjoForRow ?? this.allowSkyjoForRow
+    this.removeIdenticalColumn =
+      settings.removeIdenticalColumn ?? this.removeIdenticalColumn
+    this.removeIdenticalRow =
+      settings.removeIdenticalRow ?? this.removeIdenticalRow
     this.initialTurnedCount =
       settings.initialTurnedCount ?? this.initialTurnedCount
     this.cardPerRow = settings.cardPerRow ?? this.cardPerRow
@@ -113,10 +114,10 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
 
   isClassicSettings() {
     return (
-      this.allowSkyjoForColumn ===
-        Constants.DEFAULT_GAME_SETTINGS.ALLOW_SKYJO_FOR_COLUMN &&
-      this.allowSkyjoForRow ===
-        Constants.DEFAULT_GAME_SETTINGS.ALLOW_SKYJO_FOR_ROW &&
+      this.removeIdenticalColumn ===
+        Constants.DEFAULT_GAME_SETTINGS.REMOVE_IDENTICAL_COLUMN &&
+      this.removeIdenticalRow ===
+        Constants.DEFAULT_GAME_SETTINGS.REMOVE_IDENTICAL_ROW &&
       this.initialTurnedCount ===
         Constants.DEFAULT_GAME_SETTINGS.CARDS.INITIAL_TURNED_COUNT &&
       this.cardPerRow === Constants.DEFAULT_GAME_SETTINGS.CARDS.PER_ROW &&
@@ -137,8 +138,8 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
       isConfirmed: this.isConfirmed,
       private: this.private,
       maxPlayers: this.maxPlayers,
-      allowSkyjoForColumn: this.allowSkyjoForColumn,
-      allowSkyjoForRow: this.allowSkyjoForRow,
+      removeIdenticalColumn: this.removeIdenticalColumn,
+      removeIdenticalRow: this.removeIdenticalRow,
       initialTurnedCount: this.initialTurnedCount,
       cardPerRow: this.cardPerRow,
       cardPerColumn: this.cardPerColumn,
@@ -147,6 +148,6 @@ export class SkyjoSettings implements SkyjoSettingsInterface {
       firstPlayerFlatPenalty: this.firstPlayerFlatPenalty,
       firstPlayerPenaltyType: this.firstPlayerPenaltyType,
       showCurrentScore: this.showCurrentScore,
-    } satisfies SkyjoSettingsToJson
+    } satisfies SettingsToJson
   }
 }

@@ -1,5 +1,5 @@
-import { useSkyjo } from "@/contexts/SkyjoContext"
-import type { ChatMessage } from "@skyjo/shared/types"
+import { useGame } from "@/contexts/GameContext"
+import type { ChatMessage } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
 import { m } from "framer-motion"
 import { useTranslations } from "next-intl"
@@ -24,7 +24,7 @@ type ChatMessageProps = Readonly<ChatMessage> & {
 }
 
 const ChatMessage = ({ username, message, type }: ChatMessageProps) => {
-  const { game } = useSkyjo()
+  const { game } = useGame()
   const t = useTranslations("components.ChatMessage")
   const players = game?.players.map((p) => p.name)
 

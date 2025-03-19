@@ -1,25 +1,24 @@
 import { beforeEach, describe, expect, it } from "vitest"
-import { SkyjoSettings } from "../../class/SkyjoSettings.js"
 import { Constants } from "../../constants.js"
-import type { SkyjoDbFormat } from "../../types/skyjo.js"
+import type { GameDb } from "../../types/game.js"
+import { Settings } from "../Settings.js"
+let settings: Settings
 
-let settings: SkyjoSettings
-
-describe("SkyjoSettings", () => {
+describe("Settings", () => {
   beforeEach(() => {
-    settings = new SkyjoSettings()
+    settings = new Settings()
   })
 
   it("should return default settings", () => {
-    const defaultSettings = new SkyjoSettings()
+    const defaultSettings = new Settings()
 
     expect(defaultSettings.isConfirmed).toBeFalsy()
     expect(defaultSettings.private).toBeFalsy()
-    expect(defaultSettings.allowSkyjoForColumn).toBe(
-      Constants.DEFAULT_GAME_SETTINGS.ALLOW_SKYJO_FOR_COLUMN,
+    expect(defaultSettings.removeIdenticalColumn).toBe(
+      Constants.DEFAULT_GAME_SETTINGS.REMOVE_IDENTICAL_COLUMN,
     )
-    expect(defaultSettings.allowSkyjoForRow).toBe(
-      Constants.DEFAULT_GAME_SETTINGS.ALLOW_SKYJO_FOR_ROW,
+    expect(defaultSettings.removeIdenticalRow).toBe(
+      Constants.DEFAULT_GAME_SETTINGS.REMOVE_IDENTICAL_ROW,
     )
     expect(defaultSettings.initialTurnedCount).toBe(
       Constants.DEFAULT_GAME_SETTINGS.CARDS.INITIAL_TURNED_COUNT,
@@ -39,16 +38,16 @@ describe("SkyjoSettings", () => {
   })
 
   it("should have the settings validation to true by default for private game", () => {
-    const defaultSettings = new SkyjoSettings(true)
+    const defaultSettings = new Settings(true)
 
     expect(defaultSettings.isConfirmed).toBeTruthy()
   })
 
   it("should populate the class", () => {
-    const dbGameSettings: SkyjoDbFormat["settings"] = {
+    const dbGameSettings: GameDb["settings"] = {
       isConfirmed: true,
-      allowSkyjoForColumn: false,
-      allowSkyjoForRow: false,
+      removeIdenticalColumn: false,
+      removeIdenticalRow: false,
       initialTurnedCount: 4,
       cardPerRow: 3,
       cardPerColumn: 4,
@@ -62,7 +61,7 @@ describe("SkyjoSettings", () => {
       showCurrentScore: true,
     }
 
-    const settings = new SkyjoSettings(false).populate(dbGameSettings)
+    const settings = new Settings(false).populate(dbGameSettings)
 
     expect(structuredClone(settings)).toStrictEqual(dbGameSettings)
   })
@@ -71,8 +70,8 @@ describe("SkyjoSettings", () => {
     const newSettings = {
       isConfirmed: true,
       private: true,
-      allowSkyjoForColumn: true,
-      allowSkyjoForRow: true,
+      removeIdenticalColumn: true,
+      removeIdenticalRow: true,
       initialTurnedCount: 2,
       cardPerRow: 6,
       cardPerColumn: 8,
@@ -83,8 +82,8 @@ describe("SkyjoSettings", () => {
 
     settings.updateSettings(newSettings)
 
-    expect(settings.allowSkyjoForColumn).toBeTruthy()
-    expect(settings.allowSkyjoForRow).toBeTruthy()
+    expect(settings.removeIdenticalColumn).toBeTruthy()
+    expect(settings.removeIdenticalRow).toBeTruthy()
     expect(settings.initialTurnedCount).toBe(2)
     expect(settings.cardPerRow).toBe(6)
     expect(settings.cardPerColumn).toBe(8)
@@ -131,14 +130,14 @@ describe("SkyjoSettings", () => {
 
   describe("isClassicSettings", () => {
     it("should return true if the settings are classic", () => {
-      const settings = new SkyjoSettings()
+      const settings = new Settings()
 
       expect(settings.isClassicSettings()).toBeTruthy()
     })
 
     it("should return false if the settings are not classic", () => {
-      const settings = new SkyjoSettings()
-      settings.allowSkyjoForRow = true
+      const settings = new Settings()
+      settings.removeIdenticalRow = true
 
       expect(settings.isClassicSettings()).toBeFalsy()
     })
@@ -150,8 +149,8 @@ describe("SkyjoSettings", () => {
     expect(settingsToJson).toStrictEqual({
       isConfirmed: false,
       private: false,
-      allowSkyjoForColumn: true,
-      allowSkyjoForRow: false,
+      removeIdenticalColumn: true,
+      removeIdenticalRow: false,
       initialTurnedCount: 2,
       cardPerRow: 3,
       cardPerColumn: 4,
@@ -167,7 +166,7 @@ describe("SkyjoSettings", () => {
 
   describe("constructor", () => {
     it("should create settings with default values", () => {
-      const settings = new SkyjoSettings()
+      const settings = new Settings()
 
       expect(settings.private).toBe(false)
       expect(settings.isConfirmed).toBe(false)
@@ -177,7 +176,7 @@ describe("SkyjoSettings", () => {
     })
 
     it("should create settings with private game", () => {
-      const settings = new SkyjoSettings(true)
+      const settings = new Settings(true)
 
       expect(settings.private).toBe(true)
       expect(settings.isConfirmed).toBe(true)
@@ -185,7 +184,7 @@ describe("SkyjoSettings", () => {
 
     it("should create settings with custom maxPlayers", () => {
       const customMaxPlayers = 4
-      const settings = new SkyjoSettings(false, customMaxPlayers)
+      const settings = new Settings(false, customMaxPlayers)
 
       expect(settings.private).toBe(false)
       expect(settings.maxPlayers).toBe(customMaxPlayers)

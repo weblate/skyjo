@@ -4,10 +4,10 @@ import {
 } from "@/components/ui/context-menu"
 import { useBan } from "@/contexts/BanContext"
 import { useChat } from "@/contexts/ChatContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { useVoteKick } from "@/contexts/VoteKickContext"
-import { isHost } from "@/lib/skyjo"
-import { SkyjoPlayerToJson } from "@skyjo/core"
+import { isHost } from "@/lib/game"
+import { PlayerToJson } from "@skymo/core"
 import {
   MessageSquareIcon,
   MessageSquareOffIcon,
@@ -16,10 +16,10 @@ import {
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-const UserContextMenu = ({ player }: { player: SkyjoPlayerToJson }) => {
+const UserContextMenu = ({ player }: { player: PlayerToJson }) => {
   const { unmutePlayer, mutePlayer, mutedPlayers } = useChat()
   const { actions, kickVoteInProgress } = useVoteKick()
-  const { game, player: currentPlayer } = useSkyjo()
+  const { game, player: currentPlayer } = useGame()
   const { banPlayer } = useBan()
   const t = useTranslations("components.Avatar")
 

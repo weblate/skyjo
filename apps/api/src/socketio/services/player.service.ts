@@ -1,12 +1,12 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import { Constants as CoreConstants } from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import type { LastGame } from "@skyjo/shared/validations"
+import { Constants as CoreConstants } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { LastGame } from "@skymo/shared/validations"
 import { BaseService } from "./base.service.js"
 
 export class PlayerService extends BaseService {
-  async onConnectionLost(socket: SkyjoSocket) {
+  async onConnectionLost(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -46,7 +46,7 @@ export class PlayerService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onLeave(socket: SkyjoSocket) {
+  async onLeave(socket: GameSocket) {
     try {
       const game = await this.getGame(socket.data.gameCode)
       const stateManager = new GameStateTracker(game)
@@ -99,7 +99,7 @@ export class PlayerService extends BaseService {
     }
   }
 
-  async onReconnect(socket: SkyjoSocket, reconnectData: LastGame) {
+  async onReconnect(socket: GameSocket, reconnectData: LastGame) {
     const canReconnect = await this.redis.canReconnectPlayer(
       reconnectData.gameCode,
       reconnectData.playerId,
@@ -139,7 +139,7 @@ export class PlayerService extends BaseService {
     await this.joinGame(socket, game, player, true)
   }
 
-  async onRecover(socket: SkyjoSocket) {
+  async onRecover(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {

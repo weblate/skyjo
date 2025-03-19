@@ -5,7 +5,7 @@ import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
 import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
 import { useRouter } from "@/i18n/routing"
-import { getCurrentUser, getOpponents, isHost } from "@/lib/skyjo"
+import { getCurrentUser, getOpponents, isHost } from "@/lib/game"
 import { Opponents } from "@/types/opponents"
 import {
   addReconnectionDateToLastGame,
@@ -13,15 +13,15 @@ import {
 } from "@/utils/reconnection"
 import {
   Constants as CoreConstants,
+  GameToJson,
   PlayPickCard,
-  SkyjoPlayerToJson,
-  SkyjoToJson,
-} from "@skyjo/core"
-import { UpdateGameSettings, UpdateMaxPlayers } from "@skyjo/shared/validations"
+  PlayerToJson,
+} from "@skymo/core"
+import { UpdateGameSettings, UpdateMaxPlayers } from "@skymo/shared/validations"
 import {
-  type SkyjoOperation,
+  type GameOperation,
   applyStateOperations,
-} from "@skyjo/state-operations"
+} from "@skymo/state-operations"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import {
@@ -37,9 +37,9 @@ import { toast } from "sonner"
 
 dayjs.extend(utc)
 
-type SkyjoContext = {
-  game: SkyjoToJson
-  player: SkyjoPlayerToJson
+type GameContext = {
+  game: GameToJson
+  player: PlayerToJson
   opponents: Opponents
   actions: {
     updateMaxPlayers: (maxPlayers: UpdateMaxPlayers) => void
@@ -61,20 +61,20 @@ type SkyjoContext = {
   }
 }
 
-const SkyjoContext = createContext<SkyjoContext | undefined>(undefined)
+const GameContext = createContext<GameContext | undefined>(undefined)
 
-interface SkyjoProviderProps extends PropsWithChildren {
+interface GameProviderProps extends PropsWithChildren {
   gameCode: string
 }
 
-const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
+const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const { socket } = useSocket()
   const { playerId } = useUser()
   const { sendMessage, setChat } = useChat()
   const router = useRouter()
   const { showAfkWarning, showAfkKick, showPlayerAfkKick } = useAfkKickToasts()
 
-  const [game, setGame] = useState<SkyjoToJson>()
+  const [game, setGame] = useState<GameToJson>()
 
   const player = getCurrentUser(game?.players, playerId)
   const opponents = getOpponents(game?.players, playerId)
@@ -137,11 +137,11 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
 
   //#region listeners
   //#region game
-  const onGameReceive = (game: SkyjoToJson) => {
+  const onGameReceive = (game: GameToJson) => {
     setGame(game)
   }
 
-  const onGameUpdate = (operations: SkyjoOperation) => {
+  const onGameUpdate = (operations: GameOperation) => {
     console.log("onGameUpdate", operations)
     setGame((prev) => {
       if (!prev) return prev
@@ -151,7 +151,7 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
     })
   }
 
-  const onGameFix = (operations: SkyjoOperation[]) => {
+  const onGameFix = (operations: GameOperation[]) => {
     console.log("onGameFix", operations)
     setGame((prev) => {
       if (!prev) return prev
@@ -360,8 +360,8 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
 
   const providerValue = useMemo(
     () => ({
-      game: game as SkyjoToJson,
-      player: player as SkyjoPlayerToJson,
+      game: game as GameToJson,
+      player: player as PlayerToJson,
       opponents,
       actions,
     }),
@@ -371,17 +371,17 @@ const SkyjoProvider = ({ children, gameCode }: SkyjoProviderProps) => {
   if (!game || !player) return null
 
   return (
-    <SkyjoContext.Provider value={providerValue}>
+    <GameContext.Provider value={providerValue}>
       {children}
-    </SkyjoContext.Provider>
+    </GameContext.Provider>
   )
 }
 
-export const useSkyjo = () => {
-  const context = useContext(SkyjoContext)
+export const useGame = () => {
+  const context = useContext(GameContext)
   if (context === undefined) {
-    throw new Error("useSkyjo must be used within a SkyjoProvider")
+    throw new Error("useGame must be used within a GameProvider")
   }
   return context
 }
-export default SkyjoProvider
+export default GameProvider

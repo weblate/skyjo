@@ -7,10 +7,10 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useSkyjo } from "@/contexts/SkyjoContext"
-import { getCurrentScore } from "@/lib/skyjo"
+import { useGame } from "@/contexts/GameContext"
+import { getCurrentScore } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
+import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
 import { ClassValue } from "clsx"
 import { UserXIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -18,7 +18,7 @@ import Image from "next/image"
 import { TurnTimer } from "./TurnTimer"
 
 type OpponentBoardProps = {
-  opponent: SkyjoPlayerToJson
+  opponent: PlayerToJson
   isPlayerTurn: boolean
   className?: ClassValue
 }
@@ -30,7 +30,7 @@ const OpponentBoard = ({
 }: OpponentBoardProps) => {
   const ta = useTranslations("utils.avatar")
   const to = useTranslations("components.OpponentBoard")
-  const { game } = useSkyjo()
+  const { game } = useGame()
 
   return (
     <div

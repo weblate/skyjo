@@ -1,5 +1,5 @@
 import { ENV } from "@env"
-import { Logger } from "@skyjo/logger"
+import { Logger } from "@skymo/logger"
 import {
   Job,
   Queue,

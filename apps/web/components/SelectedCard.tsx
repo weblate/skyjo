@@ -1,7 +1,7 @@
 import { Card } from "@/components/Card"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skyjo/core"
+import { Constants as CoreConstants } from "@skymo/core"
 import { AnimatePresence, m } from "framer-motion"
 
 type SelectedCardProps = {
@@ -9,7 +9,7 @@ type SelectedCardProps = {
 }
 
 const SelectedCard = ({ show }: SelectedCardProps) => {
-  const { game } = useSkyjo()
+  const { game } = useGame()
 
   const pickFromDrawPile =
     game.lastTurnStatus === CoreConstants.LAST_TURN_STATUS.PICK_FROM_DRAW_PILE

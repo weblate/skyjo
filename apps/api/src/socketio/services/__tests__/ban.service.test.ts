@@ -1,12 +1,7 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import {
-  Constants as CoreConstants,
-  Skyjo,
-  SkyjoPlayer,
-  SkyjoSettings,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import { Constants as CoreConstants, Game, Player, Settings } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
 import {
   mockGameOperationManager,
   mockGameStateTracker,
@@ -17,19 +12,19 @@ import {
 import { RANDOM_SOCKET_ID, TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { BanService } from "../ban.service.js"
-import "@skyjo/error/test/expect-extend"
+import "@skymo/error/test/expect-extend"
 
 describe("BanService", () => {
   let service: BanService
-  let game: Skyjo
+  let game: Game
 
-  let player: SkyjoPlayer
-  let socket: SkyjoSocket
+  let player: Player
+  let socket: GameSocket
 
-  let opponent1: SkyjoPlayer
-  let opponent1Socket: SkyjoSocket
+  let opponent1: Player
+  let opponent1Socket: GameSocket
 
-  let opponent2: SkyjoPlayer
+  let opponent2: Player
 
   beforeEach(() => {
     service = new BanService()
@@ -38,22 +33,22 @@ describe("BanService", () => {
 
     socket = mockSocket()
 
-    player = new SkyjoPlayer(
+    player = new Player(
       { username: "player", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
-    opponent1 = new SkyjoPlayer(
+    opponent1 = new Player(
       { username: "opponent1", avatar: CoreConstants.AVATARS.CRAB },
       RANDOM_SOCKET_ID(),
     )
-    opponent2 = new SkyjoPlayer(
+    opponent2 = new Player(
       { username: "opponent2", avatar: CoreConstants.AVATARS.DOG },
       RANDOM_SOCKET_ID(),
     )
 
-    game = new Skyjo({
+    game = new Game({
       hostId: player.id,
-      settings: new SkyjoSettings(),
+      settings: new Settings(),
     })
     mockGameStateTracker(game)
     mockGameOperationManager(game)

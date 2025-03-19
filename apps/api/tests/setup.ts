@@ -1,5 +1,5 @@
 import { vi } from "vitest"
-import "@skyjo/error/test/expect-extend"
+import "@skymo/error/test/expect-extend"
 
 // Mock BullMQ to prevent actual Redis connections
 vi.mock("bullmq", () => {
@@ -28,7 +28,7 @@ vi.mock("bullmq", () => {
 
 vi.spyOn(process, "env", "get").mockReturnValue({
   NODE_ENV: "test",
-  APP_NAME: "skyjo-api",
+  APP_NAME: "skymo-api",
   ORIGINS: "e",
   GMAIL_EMAIL: "e",
   GMAIL_APP_PASSWORD: "e",

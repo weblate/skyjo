@@ -1,5 +1,5 @@
-import { CError } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
+import { CError } from "@skymo/error"
+import { Logger } from "@skymo/logger"
 import { ZodError } from "zod"
 
 export function socketErrorWrapper(

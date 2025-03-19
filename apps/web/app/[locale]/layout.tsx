@@ -35,10 +35,10 @@ export async function generateMetadata(props: LocaleLayoutProps) {
     description: t("description"),
     keywords: t("keywords").split(","),
     category: "game",
-    applicationName: "Skyjo",
+    applicationName: "Skymo",
     appleWebApp: {
       capable: true,
-      title: "Skyjo",
+      title: "Skymo",
       statusBarStyle: "default",
     },
     icons: [

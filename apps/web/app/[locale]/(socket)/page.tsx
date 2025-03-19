@@ -40,19 +40,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
             <MenuDropdown />
           </div>
           <div className="bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border px-10 md:px-16 py-6 mdh:md:py-12 rounded-xl md:w-3/6 max-w-2xl flex flex-col items-center">
-            <h1 className="mb-5">
-              <Image
-                src="/svg/logo.svg"
-                width={0}
-                height={0}
-                style={{ width: "auto", height: "2.5rem" }}
-                className="select-none dark:invert"
-                priority
-                loading="eager"
-                title="Skyjo"
-                alt="Skyjo"
-              />
-            </h1>
+            <h1 className="mb-5 font-shantell text-4xl">Skymo</h1>
             <IndexPage searchParams={searchParams} />
           </div>
           <div className="hidden mdh:sm:flex absolute bottom-6 left-6 right-6 z-10 items-center justify-center">
@@ -73,7 +61,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
           </Link>
           {process.env.npm_package_version && (
             <Link
-              href="https://github.com/maxentr/skyjo/releases/latest"
+              href="https://github.com/maxentr/skymo/releases/latest"
               target="_blank"
               className="absolute bottom-6 right-6 z-10 underline"
             >

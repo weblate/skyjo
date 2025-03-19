@@ -1,4 +1,4 @@
-import { Constants as CoreConstants } from "@skyjo/core"
+import { Constants as CoreConstants } from "@skymo/core"
 import { z } from "zod"
 
 export const updateMaxPlayersSchema = z
@@ -10,8 +10,8 @@ export const updateMaxPlayersSchema = z
 export type UpdateMaxPlayers = z.input<typeof updateMaxPlayersSchema>
 
 export const updateGameSettingsSchema = z.object({
-  allowSkyjoForColumn: z.boolean().optional(),
-  allowSkyjoForRow: z.boolean().optional(),
+  removeIdenticalColumn: z.boolean().optional(),
+  removeIdenticalRow: z.boolean().optional(),
   initialTurnedCount: z.number().int().min(0).optional(),
   cardPerRow: z
     .number()

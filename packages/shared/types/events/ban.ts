@@ -1,5 +1,5 @@
-import type { BanError } from "@skyjo/error"
-import type { BanPlayer } from "@skyjo/shared/validations"
+import type { BanError } from "@skymo/error"
+import type { BanPlayer } from "@skymo/shared/validations"
 
 export interface ClientToServerBanEvents {
   "ban:player": (data: BanPlayer) => void

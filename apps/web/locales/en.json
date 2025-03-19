@@ -1,8 +1,8 @@
 {
   "head": {
-    "title": "Skyjo Online | Free Multiplayer Card Game with Friends",
-    "description": "Play Skyjo online for free! A fast-paced multiplayer card game where strategy meets fun. Challenge friends, flip cards, and aim for the lowest score to win!",
-    "keywords": "Skyjo,Skyjo online,multiplayer game,card game,play with friends,free online games,online card games"
+    "title": "Skymo | Play Skyjo Card Game Online Free",
+    "description": "Play Skyjo online for free with Skymo! A fast-paced multiplayer card game where strategy meets fun. Challenge friends, flip cards, and aim for the lowest score to win!",
+    "keywords": "Skymo,Skyjo,Skyjo online,multiplayer game,card game,play with friends,free online games,online card games"
   },
   "pages": {
     "Index": {
@@ -38,9 +38,9 @@
     },
     "Search": {
       "head": {
-        "title": "Find public Skyjo games | Skyjo Online",
-        "description": "Looking for a Skyjo game to join? Browse available public games and start playing Skyjo online instantly with other players. Play for free now!",
-        "keywords": "Skyjo,Skyjo online,find game,join game,public games,online multiplayer,play with others,quick play,free online games,open games,online card game, multiplayer card game"
+        "title": "Find public Skymo games | Play Skyjo Online",
+        "description": "Looking for a Skymo game to join? Browse available public games and start playing Skyjo online instantly with other players. Play for free now!",
+        "keywords": "Skymo,Skyjo,Skyjo online,find game,join game,public games,online multiplayer,play with others,quick play,free online games,open games,online card game, multiplayer card game"
       },
       "header": {
         "back": "Back to homepage",
@@ -67,9 +67,9 @@
     },
     "Create": {
       "head": {
-        "title": "Create a Skyjo game | Skyjo Online",
-        "description": "Start a new Skyjo game online! Create private or public rooms, invite your friends, and enjoy the fun of Skyjo together. Play now for free!",
-        "keywords": "Skyjo,Skyjo online,create game,start game,private game,public game,play with friends,online multiplayer,free online games,custom game"
+        "title": "Create a Skymo game | Play Skyjo Online",
+        "description": "Start a new Skymo game online! Create private or public rooms, invite your friends, and enjoy the fun of Skyjo together. Play now for free!",
+        "keywords": "Skymo,Skyjo,Skyjo online,create game,start game,private game,public game,play with friends,online multiplayer,free online games,custom game"
       },
       "loading-text": "Creating your game…"
     },
@@ -102,8 +102,8 @@
           "label": "Maximum number of players",
           "title": "Maximum number of players: {number}"
         },
-        "allow-skyjo-for-column": "Allow Skyjo for column",
-        "allow-skyjo-for-row": "Allow Skyjo for row",
+        "remove-identical-column": "Remove column if identical cards",
+        "remove-identical-row": "Remove row if identical cards",
         "nb-columns": {
           "label": "Number of columns",
           "title": "$number columns"
@@ -169,9 +169,9 @@
     },
     "PrivacyPolicy": {
       "head": {
-        "title": "Privacy Policy | Skyjo Online - Free Multiplayer Card Game",
-        "description": "Privacy policy for Skyjo Online. Learn how we protect your data while you enjoy our card game. Transparent practices and secure gaming experience.",
-        "keywords": "Skyjo Online,privacy policy,data protection,online game privacy,secure gaming,user data,GDPR,CCPA,data security"
+        "title": "Privacy Policy | Skymo - Skyjo Online Card Game",
+        "description": "Privacy policy for Skymo. Learn how we protect your data while you enjoy our Skyjo card game. Transparent practices and secure gaming experience.",
+        "keywords": "Skymo,Skyjo,Skyjo Online,privacy policy,data protection,online game privacy,secure gaming,user data,GDPR,CCPA,data security"
       },
       "content": {
         "back": "Back to the home page",
@@ -200,7 +200,7 @@
           "cookies": {
             "title": "Cookies",
             "description": "We use essential cookies to enable core functionality of our website:",
-            "items": "Session cookies: We use a session cookie (skyjo-io) to maintain your connection to our game servers. This cookie is essential for the functionality of the game and expires after 24 hours;;These cookies do not track you across websites and are only used to provide the service you have requested"
+            "items": "Session cookies: We use a session cookie (skymo-io) to maintain your connection to our game servers. This cookie is essential for the functionality of the game and expires after 24 hours;;These cookies do not track you across websites and are only used to provide the service you have requested"
           }
         },
         "how-we-use-your-information": {
@@ -222,7 +222,7 @@
         },
         "childrens-privacy": {
           "title": "Children's Privacy",
-          "description": "Skyjo Online does not have any age restrictions. We do not knowingly collect personal information from children."
+          "description": "Skymo does not have any age restrictions. We do not knowingly collect personal information from children."
         },
         "changes-to-this-policy": {
           "title": "Changes to This Policy",
@@ -236,9 +236,9 @@
     },
     "Rules": {
       "head": {
-        "title": "How to play Skyjo | Skyjo Online",
-        "description": "Learn how to play Skyjo with our comprehensive guide. Discover the rules, strategies, and tips to master this fun online card game. Play Skyjo online with friends now!",
-        "keywords": "Skyjo rules,how to play Skyjo,Skyjo game,card game rules,online card game,game instructions,gameplay guide"
+        "title": "How to play Skymo | Skyjo Card Game Online",
+        "description": "Learn how to play Skyjo with our Skymo guide. Discover the rules, strategies, and tips to master this fun online card game. Play with friends now!",
+        "keywords": "Skymo,Skyjo,Skyjo rules,how to play Skyjo,Skyjo game,card game rules,online card game,game instructions,gameplay guide"
       },
       "title": "Skyjo game rules"
     }
@@ -306,8 +306,8 @@
     "GameRules": {
       "button-title": "Show game rules",
       "title": "Game rules",
-      "allow-skyjo-for-column": "Allow Skyjo for column: {value, select, true {yes} false {no} other {unknown}}",
-      "allow-skyjo-for-row": "Allow Skyjo for row: {value, select, true {yes} false {no} other {unknown}}",
+      "remove-identical-column": "Remove column if identical cards: {value, select, true {yes} false {no} other {unknown}}",
+      "remove-identical-row": "Remove row if identical cards: {value, select, true {yes} false {no} other {unknown}}",
       "card-per-column": "Number of columns: {value}",
       "card-per-row": "Number of rows: {value}",
       "initial-turned-count": "Number of cards to turn at the beginning: {value}",
@@ -354,7 +354,7 @@
       "you": "You"
     },
     "PWABanner": {
-      "title": "Install Skyjo Online on your device!",
+      "title": "Install Skymo on your device!",
       "Safari": "Tap the share icon, then 'Add to Dock' to install",
       "Chrome": "Click on the 'Install' button to install",
       "FirefoxAndroid": "Tap the menu icon, then 'Add to Home screen' to install",
@@ -581,7 +581,7 @@
     }
   },
   "utils": {
-    "skyjo": {
+    "skymo": {
       "waiting": "Waiting for players",
       "turn-cards": "Turn {number} card{number, plural, =1 {} other {s}}",
       "waiting-opponents-to-turn-cards": "Waiting for opponent{nbOpponents, plural, =1 {} other {s}} to turn {number} card{number, plural, =1 {} other {s}}",

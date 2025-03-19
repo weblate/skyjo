@@ -1,6 +1,6 @@
-# Skyjo API
+# Skymo API
 
-This is the API for the Skyjo game project. It is built with [Hono](https://hono.dev/) and [socket.io](https://socket.io/). The API is responsible for managing the game state and handling the communication between the different clients.
+This is the API for the Skymo game project, a Skyjo clone game project. It is built with [Hono](https://hono.dev/) and [socket.io](https://socket.io/). The API is responsible for managing the game state and handling the communication between the different clients.
 
 ## Development
 

@@ -1,19 +1,14 @@
-import {
-  Constants as CoreConstants,
-  Skyjo,
-  SkyjoCard,
-  SkyjoPlayer,
-} from "@skyjo/core"
+import { Card, Constants as CoreConstants, Game, Player } from "@skymo/core"
 import { beforeEach, describe, expect, it } from "vitest"
 import { GameStateTracker } from "../GameStateTracker.js"
 
 describe("GameStateTracker", () => {
-  let game: Skyjo
+  let game: Game
   let manager: GameStateTracker
 
   beforeEach(() => {
-    const player = new SkyjoPlayer()
-    game = new Skyjo({ hostId: player.id })
+    const player = new Player()
+    game = new Game({ hostId: player.id })
     game.addPlayer(player)
     game.stateVersion = 1
     manager = new GameStateTracker(game)
@@ -67,14 +62,14 @@ describe("GameStateTracker", () => {
       })
 
       it("detects multiple settings changes", () => {
-        game.settings.allowSkyjoForColumn = false
-        game.settings.allowSkyjoForRow = true
+        game.settings.removeIdenticalColumn = false
+        game.settings.removeIdenticalRow = true
         game.settings.initialTurnedCount = 10
 
         expect(manager.getChanges()).toEqual({
           settings: {
-            allowSkyjoForColumn: false,
-            allowSkyjoForRow: true,
+            removeIdenticalColumn: false,
+            removeIdenticalRow: true,
             initialTurnedCount: 10,
           },
           game: { stateVersion: 2 },
@@ -100,7 +95,7 @@ describe("GameStateTracker", () => {
         player.score = 10
         player.name = "John"
         player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
-        player.cards = [[new SkyjoCard(1)], [new SkyjoCard(2)]]
+        player.cards = [[new Card(1)], [new Card(2)]]
 
         expect(manager.getChanges()).toEqual({
           updatePlayers: [
@@ -120,7 +115,7 @@ describe("GameStateTracker", () => {
       })
 
       it("detects player additions", () => {
-        const newPlayer = new SkyjoPlayer()
+        const newPlayer = new Player()
         game.players.push(newPlayer)
 
         expect(manager.getChanges()).toEqual({
@@ -131,7 +126,7 @@ describe("GameStateTracker", () => {
       })
 
       it("detects player removals", () => {
-        const aPlayer = new SkyjoPlayer()
+        const aPlayer = new Player()
         game.addPlayer(aPlayer)
         manager.getChanges()
 

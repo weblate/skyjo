@@ -1,9 +1,9 @@
 import type { Avatar, ConnectionStatus } from "@/constants.js"
-import type { SkyjoCardToJson } from "./skyjoCard.js"
+import type { CardToJson } from "./card.js"
 
-export type SkyjoPlayerScores = (number | "-")[]
+export type PlayerScores = (number | "-")[]
 
-export type SkyjoPlayerToJson = {
+export type PlayerToJson = {
   id: string
   name: string
   socketId: string
@@ -12,6 +12,6 @@ export type SkyjoPlayerToJson = {
   wantsReplay: boolean
   connectionStatus: ConnectionStatus
   score: number
-  scores: SkyjoPlayerScores
-  cards: SkyjoCardToJson[][]
+  scores: PlayerScores
+  cards: CardToJson[][]
 }

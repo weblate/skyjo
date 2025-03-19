@@ -7,7 +7,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 
@@ -18,7 +18,7 @@ type ScoreDialogProps = {
 
 const ScoreDialog = ({ open, onOpenChange }: ScoreDialogProps) => {
   const t = useTranslations("components.ScoreDialog")
-  const { game } = useSkyjo()
+  const { game } = useGame()
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

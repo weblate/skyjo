@@ -4,7 +4,7 @@ import { Chat } from "@/components/Chat"
 import withAuth from "@/components/withAuth"
 import { BanProvider } from "@/contexts/BanContext"
 import ChatProvider from "@/contexts/ChatContext"
-import SkyjoProvider from "@/contexts/SkyjoContext"
+import GameProvider from "@/contexts/GameContext"
 import { VoteKickProvider } from "@/contexts/VoteKickContext"
 import { PropsWithChildren, use } from "react"
 
@@ -20,7 +20,7 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
 
   return (
     <ChatProvider>
-      <SkyjoProvider gameCode={params.code}>
+      <GameProvider gameCode={params.code}>
         <VoteKickProvider>
           <BanProvider>
             <div className="w-svh h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
@@ -29,7 +29,7 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
             </div>
           </BanProvider>
         </VoteKickProvider>
-      </SkyjoProvider>
+      </GameProvider>
     </ChatProvider>
   )
 }

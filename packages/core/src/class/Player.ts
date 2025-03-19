@@ -1,16 +1,13 @@
-import type { SkyjoDbFormat } from "@/types/skyjo.js"
-import type {
-  SkyjoPlayerScores,
-  SkyjoPlayerToJson,
-} from "@/types/skyjoPlayer.js"
+import type { GameDb } from "@/types/game.js"
+import type { PlayerScores, PlayerToJson } from "@/types/player.js"
 import type { CreatePlayer } from "@/validations/player.js"
 import { type Avatar, type ConnectionStatus, Constants } from "../constants.js"
-import { SkyjoCard } from "./SkyjoCard.js"
-import { SkyjoSettings } from "./SkyjoSettings.js"
+import { Card } from "./Card.js"
+import { Settings } from "./Settings.js"
 
-interface SkyjoPlayerInterface {
-  cards: SkyjoCard[][]
-  scores: SkyjoPlayerScores
+interface PlayerInterface {
+  cards: Card[][]
+  scores: PlayerScores
   readonly name: string
   readonly socketId: string
   readonly avatar: Avatar
@@ -23,19 +20,19 @@ interface SkyjoPlayerInterface {
   turnStartTime: Date | null
 
   toggleReplay(): void
-  setCards(cardsValue: number[], cardSettings: SkyjoSettings): void
+  setCards(cardsValue: number[], cardSettings: Settings): void
   turnCard(column: number, row: number): void
   replaceCard(column: number, row: number, value: number): void
   hasRevealedCardCount(count: number): boolean
-  checkColumnsAndDiscard(): SkyjoCard[]
-  checkRowsAndDiscard(): SkyjoCard[]
+  checkColumnsAndDiscard(): Card[]
+  checkRowsAndDiscard(): Card[]
   currentScoreArray(): number[]
   turnAllCards(): void
   recalculateScore(): void
   finalRoundScore(): void
-  toJson(): SkyjoPlayerToJson
+  toJson(): PlayerToJson
 }
-export class SkyjoPlayer implements SkyjoPlayerInterface {
+export class Player implements PlayerInterface {
   id: string = crypto.randomUUID()
   name: string
   socketId: string
@@ -43,9 +40,9 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
   connectionStatus: ConnectionStatus = Constants.CONNECTION_STATUS.CONNECTED
   afkCount: number = 0
   consecutiveAfkCount: number = 0 // Consecutive timeouts
-  cards: SkyjoCard[][] = []
+  cards: Card[][] = []
   score: number = 0
-  scores: SkyjoPlayerScores = []
+  scores: PlayerScores = []
   hasPlayedLastTurn = false
   wantsReplay: boolean = false
   turnStartTime: Date | null = null
@@ -61,7 +58,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
     this.avatar = playerToCreate.avatar
   }
 
-  populate(player: SkyjoDbFormat["players"][number]) {
+  populate(player: GameDb["players"][number]) {
     this.id = player.id
     this.name = player.name
     this.avatar = player.avatar
@@ -77,9 +74,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
 
     if (player.cards.length > 0) {
       this.cards = player.cards.map((column) =>
-        column.map(
-          (card) => new SkyjoCard(card.value, card.isVisible, card.id),
-        ),
+        column.map((card) => new Card(card.value, card.isVisible, card.id)),
       )
     }
 
@@ -90,14 +85,14 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
     this.wantsReplay = !this.wantsReplay
   }
 
-  setCards(cardsValue: number[], cardSettings: SkyjoSettings) {
+  setCards(cardsValue: number[], cardSettings: Settings) {
     this.cards = []
 
     for (let columnI = 0; columnI < cardSettings.cardPerColumn; columnI++) {
       this.cards.push([])
       for (let rowJ = 0; rowJ < cardSettings.cardPerRow; rowJ++) {
         const index = columnI * cardSettings.cardPerRow + rowJ
-        this.cards[columnI].push(new SkyjoCard(cardsValue[index]))
+        this.cards[columnI].push(new Card(cardsValue[index]))
       }
     }
   }
@@ -138,7 +133,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
   checkColumnsAndDiscard() {
     if (!this.cards[0] || this.cards[0].length <= 1) return []
 
-    const cardsToDiscard: SkyjoCard[] = []
+    const cardsToDiscard: Card[] = []
     this.cards.forEach((column, index) => {
       const allCardsAreTheSameAndVisible = column.every(
         (card) => card.value === column[0].value && card.isVisible,
@@ -155,7 +150,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
   checkRowsAndDiscard() {
     if (this.cards.length <= 1) return []
 
-    const cardsToDiscard: SkyjoCard[] = []
+    const cardsToDiscard: Card[] = []
 
     for (let rowIndex = 0; rowIndex < this.cards[0].length; rowIndex++) {
       const row = this.cards
@@ -244,7 +239,7 @@ export class SkyjoPlayer implements SkyjoPlayerInterface {
       scores: this.scores,
       turnStartTime: this.turnStartTime,
       cards: this.cards.map((column) => column.map((card) => card.toJson())),
-    } satisfies SkyjoPlayerToJson
+    } satisfies PlayerToJson
   }
 
   //#region private methods

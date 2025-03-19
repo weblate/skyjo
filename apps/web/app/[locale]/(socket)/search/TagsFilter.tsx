@@ -3,7 +3,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { PublicGameTag } from "@skyjo/shared/types"
+import { PublicGameTag } from "@skymo/shared/types"
 import { AnimatePresence } from "framer-motion"
 import { PlusCircleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"

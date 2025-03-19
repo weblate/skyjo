@@ -1,5 +1,5 @@
 import type { InitiateKickVote, VoteToKick } from "@/validations/kick.js"
-import type { KickVoteToJson } from "@skyjo/core"
+import type { KickVoteToJson } from "@skymo/core"
 
 export interface ClientToServerKickEvents {
   "kick:initiate-vote": (data: InitiateKickVote) => void

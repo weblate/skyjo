@@ -1,12 +1,12 @@
 import type { FirstPlayerPenaltyType } from "@/constants.js"
 
-export type SkyjoSettingsToJson = {
+export type SettingsToJson = {
   isConfirmed: boolean
   private: boolean
   maxPlayers: number
 
-  allowSkyjoForColumn: boolean
-  allowSkyjoForRow: boolean
+  removeIdenticalColumn: boolean
+  removeIdenticalRow: boolean
   initialTurnedCount: number
   cardPerRow: number
   cardPerColumn: number

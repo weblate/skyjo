@@ -39,4 +39,4 @@ describe("DefaultGameOperationManager", () => {
   it("should implement delayNewRound method", async () => {
     await expect(manager.delayNewRound()).resolves.toBeUndefined()
   })
-}) 
+})

@@ -1,9 +1,9 @@
 import { beforeEach, describe, expect, it } from "vitest"
-import { SkyjoCard } from "../../class/SkyjoCard.js"
-import { SkyjoPlayer } from "../../class/SkyjoPlayer.js"
-import { SkyjoSettings } from "../../class/SkyjoSettings.js"
 import { Constants } from "../../constants.js"
-import type { SkyjoDbFormat } from "../../types/skyjo.js"
+import type { GameDb } from "../../types/game.js"
+import { Card } from "../Card.js"
+import { Player } from "../Player.js"
+import { Settings } from "../Settings.js"
 
 let nbColumns: number
 let nbRows: number
@@ -13,19 +13,19 @@ const cardPerRow = 4
 
 const TEST_SOCKET_ID = "socketId123"
 
-describe("SkyjoPlayer", () => {
-  let player: SkyjoPlayer
+describe("Player", () => {
+  let player: Player
 
   beforeEach(() => {
-    player = new SkyjoPlayer(
+    player = new Player(
       { username: "username", avatar: Constants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     player.cards = [
-      [new SkyjoCard(0), new SkyjoCard(0), new SkyjoCard(0)],
-      [new SkyjoCard(0), new SkyjoCard(4), new SkyjoCard(6)],
-      [new SkyjoCard(0), new SkyjoCard(7), new SkyjoCard(3)],
-      [new SkyjoCard(0), new SkyjoCard(-1), new SkyjoCard(11)],
+      [new Card(0), new Card(0), new Card(0)],
+      [new Card(0), new Card(4), new Card(6)],
+      [new Card(0), new Card(7), new Card(3)],
+      [new Card(0), new Card(-1), new Card(11)],
     ]
 
     nbColumns = player.cards.length
@@ -34,7 +34,7 @@ describe("SkyjoPlayer", () => {
 
   //#region Player class
   it("should populate the class without cards", () => {
-    const dbPlayer: SkyjoDbFormat["players"][number] = {
+    const dbPlayer: GameDb["players"][number] = {
       id: crypto.randomUUID(),
       name: "name",
       avatar: Constants.AVATARS.BEE,
@@ -50,7 +50,7 @@ describe("SkyjoPlayer", () => {
       cards: [],
     }
 
-    const player = new SkyjoPlayer().populate(dbPlayer)
+    const player = new Player().populate(dbPlayer)
 
     expect(player.name).toBe(dbPlayer.name)
     expect(player.socketId).toBe(dbPlayer.socketId)
@@ -62,7 +62,7 @@ describe("SkyjoPlayer", () => {
   })
 
   it("should populate the class with cards", () => {
-    const dbPlayer: SkyjoDbFormat["players"][number] = {
+    const dbPlayer: GameDb["players"][number] = {
       id: crypto.randomUUID(),
       name: "name",
       avatar: Constants.AVATARS.BEE,
@@ -76,13 +76,13 @@ describe("SkyjoPlayer", () => {
       scores: [5, 5],
       wantsReplay: true,
       cards: [
-        [new SkyjoCard(0), new SkyjoCard(1), new SkyjoCard(2)],
-        [new SkyjoCard(3), new SkyjoCard(4), new SkyjoCard(5)],
-        [new SkyjoCard(6), new SkyjoCard(7), new SkyjoCard(8)],
+        [new Card(0), new Card(1), new Card(2)],
+        [new Card(3), new Card(4), new Card(5)],
+        [new Card(6), new Card(7), new Card(8)],
       ],
     }
 
-    const player = new SkyjoPlayer().populate(dbPlayer)
+    const player = new Player().populate(dbPlayer)
 
     expect(player.name).toBe(dbPlayer.name)
     expect(player.socketId).toBe(dbPlayer.socketId)
@@ -103,31 +103,28 @@ describe("SkyjoPlayer", () => {
 
   describe("set cards", () => {
     it("should set cards with default settings", () => {
-      player.setCards(
-        [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
-        new SkyjoSettings(),
-      )
+      player.setCards([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12], new Settings())
 
       expect(removeIdFromCards(player.cards)).toStrictEqual(
         removeIdFromCards([
-          [new SkyjoCard(1), new SkyjoCard(2), new SkyjoCard(3)],
-          [new SkyjoCard(4), new SkyjoCard(5), new SkyjoCard(6)],
-          [new SkyjoCard(7), new SkyjoCard(8), new SkyjoCard(9)],
-          [new SkyjoCard(10), new SkyjoCard(11), new SkyjoCard(12)],
+          [new Card(1), new Card(2), new Card(3)],
+          [new Card(4), new Card(5), new Card(6)],
+          [new Card(7), new Card(8), new Card(9)],
+          [new Card(10), new Card(11), new Card(12)],
         ]),
       )
     })
 
     it("should set cards with custom settings", () => {
-      const settings = new SkyjoSettings()
+      const settings = new Settings()
       settings.cardPerRow = 2
       settings.cardPerColumn = 2
       player.setCards([1, 2, 3, 4], settings)
 
       expect(removeIdFromCards(player.cards)).toStrictEqual(
         removeIdFromCards([
-          [new SkyjoCard(1), new SkyjoCard(2)],
-          [new SkyjoCard(3), new SkyjoCard(4)],
+          [new Card(1), new Card(2)],
+          [new Card(3), new Card(4)],
         ]),
       )
     })
@@ -168,12 +165,7 @@ describe("SkyjoPlayer", () => {
     const row = player["removeRow"](rowIndex)
 
     expect(removeIdFromCards(row)).toMatchObject(
-      removeIdFromCards([
-        new SkyjoCard(0),
-        new SkyjoCard(4),
-        new SkyjoCard(7),
-        new SkyjoCard(-1),
-      ]),
+      removeIdFromCards([new Card(0), new Card(4), new Card(7), new Card(-1)]),
     )
   })
 
@@ -213,10 +205,10 @@ describe("SkyjoPlayer", () => {
 
     it("should not remove a column if cards are visible but different", () => {
       player.cards = [
-        [new SkyjoCard(2, true), new SkyjoCard(1, true)],
-        [new SkyjoCard(3), new SkyjoCard(2)],
-        [new SkyjoCard(3), new SkyjoCard(1)],
-        [new SkyjoCard(3), new SkyjoCard(1)],
+        [new Card(2, true), new Card(1, true)],
+        [new Card(3), new Card(2)],
+        [new Card(3), new Card(1)],
+        [new Card(3), new Card(1)],
       ]
       const cards = player.checkColumnsAndDiscard()
 
@@ -226,10 +218,10 @@ describe("SkyjoPlayer", () => {
 
     it("should not remove a column if there is only one row", () => {
       player.cards = [
-        [new SkyjoCard(1)],
-        [new SkyjoCard(2)],
-        [new SkyjoCard(3)],
-        [new SkyjoCard(4)],
+        [new Card(1)],
+        [new Card(2)],
+        [new Card(3)],
+        [new Card(4)],
       ]
 
       const cards = player.checkColumnsAndDiscard()
@@ -264,10 +256,10 @@ describe("SkyjoPlayer", () => {
 
     it("should not remove a row if cards are visible but different", () => {
       player.cards = [
-        [new SkyjoCard(1, true), new SkyjoCard(2)],
-        [new SkyjoCard(3, true), new SkyjoCard(2)],
-        [new SkyjoCard(3, true), new SkyjoCard(1)],
-        [new SkyjoCard(3, true), new SkyjoCard(1)],
+        [new Card(1, true), new Card(2)],
+        [new Card(3, true), new Card(2)],
+        [new Card(3, true), new Card(1)],
+        [new Card(3, true), new Card(1)],
       ]
       const cards = player.checkRowsAndDiscard()
 
@@ -276,7 +268,7 @@ describe("SkyjoPlayer", () => {
     })
 
     it("should not remove a row if there is only one column", () => {
-      player.cards = [[new SkyjoCard(1, true), new SkyjoCard(1, true)]]
+      player.cards = [[new Card(1, true), new Card(1, true)]]
 
       const cards = player.checkRowsAndDiscard()
 
@@ -427,29 +419,29 @@ describe("SkyjoPlayer", () => {
   describe("getFirstCardNotVisible", () => {
     it("should return the position of the first card that is not visible", () => {
       player.cards = [
-        [new SkyjoCard(1, true), new SkyjoCard(2, false)],
-        [new SkyjoCard(3, true), new SkyjoCard(4, true)],
+        [new Card(1, true), new Card(2, false)],
+        [new Card(3, true), new Card(4, true)],
       ]
-      
+
       const result = player.getFirstCardNotVisible()
-      
+
       expect(result).toEqual({ column: 0, row: 1 })
     })
-    
+
     it("should return undefined if all cards are visible", () => {
       player.cards = [
-        [new SkyjoCard(1, true), new SkyjoCard(2, true)],
-        [new SkyjoCard(3, true), new SkyjoCard(4, true)],
+        [new Card(1, true), new Card(2, true)],
+        [new Card(3, true), new Card(4, true)],
       ]
-      
+
       const result = player.getFirstCardNotVisible()
-      
+
       expect(result).toBeUndefined()
     })
   })
 
   //#region function helpers
-  function removeIdFromCards(cards: SkyjoCard[] | SkyjoCard[][]) {
+  function removeIdFromCards(cards: Card[] | Card[][]) {
     const flattenedCards = cards.flat()
 
     return flattenedCards.map((card) => {
@@ -463,7 +455,7 @@ describe("SkyjoPlayer", () => {
   function deepCloneArray<T extends any[][]>(array: T) {
     return array.map((row) => {
       return row.map((card) => {
-        return new SkyjoCard(card.value, card.isVisible)
+        return new Card(card.value, card.isVisible)
       })
     })
   }

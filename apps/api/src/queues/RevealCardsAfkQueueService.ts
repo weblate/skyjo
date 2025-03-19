@@ -1,8 +1,8 @@
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import type { Skyjo, SkyjoPlayer } from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
+import type { Game, Player } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import { Logger } from "@skymo/logger"
 import type { Job } from "bullmq"
 import { BaseAfkQueueService } from "./BaseAfkQueueService.js"
 
@@ -29,7 +29,7 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
     return RevealCardsAfkQueueService.instance !== null
   }
 
-  public async startTimer(game: Skyjo): Promise<void> {
+  public async startTimer(game: Game): Promise<void> {
     const timeoutDuration = this.getAfkTimeout(game)
     const jobId = this.getJobId(game.code)
 
@@ -179,7 +179,7 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
     return `game:${gameCode}`
   }
 
-  private async performAfkMove(game: Skyjo, player: SkyjoPlayer) {
+  private async performAfkMove(game: Game, player: Player) {
     const initialTurnedCount = game.settings.initialTurnedCount
 
     Logger.info(

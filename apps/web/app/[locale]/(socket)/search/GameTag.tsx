@@ -1,4 +1,4 @@
-import type { PublicGameTag } from "@skyjo/shared/types"
+import type { PublicGameTag } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
 import { m } from "framer-motion"
 import { XIcon } from "lucide-react"

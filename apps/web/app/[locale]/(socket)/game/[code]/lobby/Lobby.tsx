@@ -22,15 +22,15 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { useRouter } from "@/i18n/routing"
-import { getHost, isHost } from "@/lib/skyjo"
+import { getHost, isHost } from "@/lib/game"
 import { cn } from "@/lib/utils"
 import {
   Constants as CoreConstants,
   type FirstPlayerPenaltyType,
-} from "@skyjo/core"
-import { UpdateGameSettings } from "@skyjo/shared/validations"
+} from "@skymo/core"
+import { UpdateGameSettings } from "@skymo/shared/validations"
 import { m } from "framer-motion"
 import {
   ArrowLeftIcon,
@@ -48,7 +48,7 @@ type LobbyProps = {
 
 const Lobby = ({ gameCode }: LobbyProps) => {
   const t = useTranslations("pages.Lobby")
-  const { player, game, actions } = useSkyjo()
+  const { player, game, actions } = useGame()
   const router = useRouter()
   const [gameSettingsLocalStorage, setGameSettingsLocalStorage] =
     useLocalStorage<UpdateGameSettings>("gameSettings")
@@ -161,30 +161,33 @@ const Lobby = ({ gameCode }: LobbyProps) => {
             <div className="flex flex-col gap-4 lg:gap-3 px-4 sm:px-8 overflow-y-scroll max-h-[30svh] lg:max-h-[50svh]">
               <div className="flex flex-row items-center gap-2">
                 <Switch
-                  id="skyjo-for-column"
-                  checked={game.settings.allowSkyjoForColumn}
+                  id="remove-identical-column"
+                  checked={game.settings.removeIdenticalColumn}
                   onCheckedChange={(checked) =>
-                    actions.updateSingleSettings("allowSkyjoForColumn", checked)
+                    actions.updateSingleSettings(
+                      "removeIdenticalColumn",
+                      checked,
+                    )
                   }
                   disabled={disableInput}
-                  title={t("settings.allow-skyjo-for-column")}
+                  title={t("settings.remove-identical-column")}
                 />
-                <Label htmlFor="skyjo-for-column">
-                  {t("settings.allow-skyjo-for-column")}
+                <Label htmlFor="remove-identical-column">
+                  {t("settings.remove-identical-column")}
                 </Label>
               </div>
               <div className="flex flex-row items-center gap-2">
                 <Switch
-                  id="skyjo-for-row"
-                  checked={game.settings.allowSkyjoForRow}
+                  id="remove-identical-row"
+                  checked={game.settings.removeIdenticalRow}
                   onCheckedChange={(checked) =>
-                    actions.updateSingleSettings("allowSkyjoForRow", checked)
+                    actions.updateSingleSettings("removeIdenticalRow", checked)
                   }
                   disabled={disableInput}
-                  title={t("settings.allow-skyjo-for-row")}
+                  title={t("settings.remove-identical-row")}
                 />
-                <Label htmlFor="skyjo-for-row">
-                  {t("settings.allow-skyjo-for-row")}
+                <Label htmlFor="remove-identical-row">
+                  {t("settings.remove-identical-row")}
                 </Label>
               </div>
               <div className="flex flex-col gap-1">

@@ -1,6 +1,6 @@
 services:
   api:
-    image: ghcr.io/maxentr/skyjo/api:latest
+    image: ghcr.io/maxentr/skymo/api:latest
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile

@@ -1,6 +1,6 @@
 import { GameRepository } from "@/redis/game.repository.js"
-import type { Skyjo, SkyjoPlayer } from "@skyjo/core"
-import type { PublicGame, PublicGameTag } from "@skyjo/shared/types"
+import type { Game, Player } from "@skymo/core"
+import type { PublicGame, PublicGameTag } from "@skymo/shared/types"
 
 export class GameService {
   private readonly gameRepository = new GameRepository()
@@ -12,25 +12,23 @@ export class GameService {
   }
 
   //#region private methods
-  private constructTagArray(game: Skyjo) {
+  private constructTagArray(game: Game) {
     const tags: PublicGameTag[] = []
 
     if (game.settings.isClassicSettings()) tags.push("classic")
-    if (game.settings.allowSkyjoForRow) tags.push("row")
-    if (game.settings.allowSkyjoForColumn) tags.push("column")
+    if (game.settings.removeIdenticalRow) tags.push("row")
+    if (game.settings.removeIdenticalColumn) tags.push("column")
     if (game.settings.scoreToEndGame > 100) tags.push("long-game")
     if (game.settings.scoreToEndGame < 100) tags.push("short-game")
 
     return tags
   }
 
-  private parsePublicGamePlayers(
-    players: SkyjoPlayer[],
-  ): PublicGame["players"] {
+  private parsePublicGamePlayers(players: Player[]): PublicGame["players"] {
     return players.map((p) => ({ id: p.id, avatar: p.avatar, name: p.name }))
   }
 
-  private parsePublicGame(game: Skyjo): PublicGame {
+  private parsePublicGame(game: Game): PublicGame {
     return {
       code: game.code,
       hostName: game.players.find((p) => game.isHost(p.id))?.name ?? "",
@@ -40,7 +38,7 @@ export class GameService {
     }
   }
 
-  private parsePublicGames(games: Skyjo[]): PublicGame[] {
+  private parsePublicGames(games: Game[]): PublicGame[] {
     return games.map((game) => this.parsePublicGame(game))
   }
   //#endregion

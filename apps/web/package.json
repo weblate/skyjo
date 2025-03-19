@@ -1,5 +1,5 @@
 {
-  "name": "@skyjo/web",
+  "name": "@skymo/web",
   "version": "1.48.0",
   "private": true,
   "scripts": {
@@ -24,10 +24,10 @@
     "@radix-ui/react-tabs": "^1.1.1",
     "@radix-ui/react-toast": "^1.2.2",
     "@radix-ui/react-tooltip": "^1.1.4",
-    "@skyjo/core": "workspace:*",
-    "@skyjo/error": "workspace:*",
-    "@skyjo/shared": "workspace:*",
-    "@skyjo/state-operations": "workspace:*",
+    "@skymo/core": "workspace:*",
+    "@skymo/error": "workspace:*",
+    "@skymo/shared": "workspace:*",
+    "@skymo/state-operations": "workspace:*",
     "@tanstack/react-query": "^5.62.7",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

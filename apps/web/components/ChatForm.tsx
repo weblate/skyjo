@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useChat } from "@/contexts/ChatContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SendIcon } from "lucide-react"
@@ -24,7 +24,7 @@ type ChatFormProps = {
 }
 
 const ChatForm = ({ chatOpen }: ChatFormProps) => {
-  const { player, opponents } = useSkyjo()
+  const { player, opponents } = useGame()
   const {
     sendMessage,
     clearUnreadMessages,

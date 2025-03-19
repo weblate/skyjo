@@ -1,19 +1,19 @@
-import type { Skyjo } from "@/class/Skyjo.js"
+import type { Game } from "@/class/Game.js"
 
 export interface GameOperationManagerInterface {
-  updateGame(game: Skyjo): Promise<void>
+  updateGame(game: Game): Promise<void>
   removeGame(gameCode: string): Promise<void>
 
-  startRevealCardsAfkTimer(game: Skyjo): Promise<void>
+  startRevealCardsAfkTimer(game: Game): Promise<void>
   cancelRevealCardsAfkTimer(gameCode: string): Promise<void>
-  startPlayerAfkTimer(game: Skyjo, playerId: string): Promise<void>
+  startPlayerAfkTimer(game: Game, playerId: string): Promise<void>
   cancelPlayerAfkTimer(gameCode: string, playerId: string): Promise<void>
 
   getSocket(socketId: string): unknown | undefined
   kickSocket(socket: unknown): Promise<void>
 
   delayNewRound(
-    game: Skyjo,
+    game: Game,
     callback: () => Promise<void>,
     ms: number,
   ): Promise<void>

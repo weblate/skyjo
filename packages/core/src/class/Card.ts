@@ -1,15 +1,15 @@
-import type { SkyjoCardToJson } from "@/types/skyjoCard.js"
+import type { CardToJson } from "@/types/card.js"
 
-interface SkyjoCardInterface {
+interface CardInterface {
   readonly id: string
   readonly value: number
   readonly isVisible: boolean
 
   turnVisible(): void
-  toJson(): SkyjoCardToJson
+  toJson(): CardToJson
 }
 
-export class SkyjoCard implements SkyjoCardInterface {
+export class Card implements CardInterface {
   id: string = crypto.randomUUID()
   value: number
   isVisible: boolean = false
@@ -29,6 +29,6 @@ export class SkyjoCard implements SkyjoCardInterface {
       id: this.id,
       value: this.isVisible ? this.value : undefined,
       isVisible: this.isVisible,
-    } satisfies SkyjoCardToJson
+    } satisfies CardToJson
   }
 }

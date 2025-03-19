@@ -11,20 +11,20 @@ import {
   TableHead,
   TableRow,
 } from "@/components/ui/table"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { useRouter } from "@/i18n/routing"
 import { cn, getRedirectionUrl } from "@/lib/utils"
-import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
+import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
 import { AnimatePresence, m } from "framer-motion"
 import { CheckCircle2Icon, XCircleIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 const ResultsPage = () => {
-  const { player, game, actions } = useSkyjo()
+  const { player, game, actions } = useGame()
   const router = useRouter()
   const t = useTranslations("pages.ResultsPage")
-  const [visibleRows, setVisibleRows] = useState<SkyjoPlayerToJson[]>([])
+  const [visibleRows, setVisibleRows] = useState<PlayerToJson[]>([])
 
   const sortedConnectedPlayers = game.players
     .filter(

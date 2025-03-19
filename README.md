@@ -1,39 +1,40 @@
 <p align="center">
   <a href="https://www.skyjo.online">
     <picture>
-      <source media="(prefers-color-scheme: dark)" srcset="https://www.skyjo.online/svg/logo-white.svg">
-      <img alt="Skyjo Online logo"  width="400" src="https://www.skyjo.online/svg/logo.svg">
+      <img alt="Skymo logo"  width="64" src="https://www.skyjo.online/android-chrome-192x192.png">
     </picture>
   </a>
 </p>
 
-<p align="center">
-  <img alt="Uptime" src="https://uptime.skyjo.online/api/badge/4/status">
-  <img alt="Sonar Quality Gate (branch)" src="https://img.shields.io/sonar/quality_gate/maxentr_skyjo/trunk?server=https%3A%2F%2Fsonarcloud.io">
-  <img alt="Sonar Tech Debt (branch)" src="https://img.shields.io/sonar/tech_debt/maxentr_skyjo/trunk?server=https%3A%2F%2Fsonarcloud.io">
-  <img alt="Weblate project translated" src="https://img.shields.io/weblate/progress/skyjo-online">
-  <img alt="GitHub License" src="https://img.shields.io/github/license/maxentr/skyjo">
-</p>
+# Skymo
 
-This repository contains the code of [skyjo.online](https://www.skyjo.online), the online version of the popular card game Skyjo.
+This repository contains the code of [Skymo](https://www.skymo.online), a Skyjo like online game.
+
+
+  <img alt="Uptime" src="https://uptime.skyjo.online/api/badge/4/status">
+  <img alt="Sonar Quality Gate (branch)" src="https://img.shields.io/sonar/quality_gate/maxentr_skymo/trunk?server=https%3A%2F%2Fsonarcloud.io">
+  <img alt="Sonar Tech Debt (branch)" src="https://img.shields.io/sonar/tech_debt/maxentr_skymo/trunk?server=https%3A%2F%2Fsonarcloud.io">
+  <img alt="Weblate project translated" src="https://img.shields.io/weblate/progress/skymo">
+  <img alt="GitHub License" src="https://img.shields.io/github/license/maxentr/skymo">
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
-- [What is Skyjo?](#what-is-skyjo)
-- [Project Structure](#project-structure)
-  - [Applications](#applications)
-  - [Packages](#packages)
-- [Installation guide](#installation-guide)
-  - [Prerequisites](#prerequisites)
-  - [Installation steps](#installation-steps)
-- [How to run the project](#how-to-run-the-project)
-  - [Running the API without docker](#running-the-api-without-docker)
-- [Localization](#localization)
+- [Skymo](#skymo)
+  - [Table of Contents](#table-of-contents)
+  - [What is Skyjo?](#what-is-skyjo)
+  - [Project Structure](#project-structure)
+    - [Applications](#applications)
+    - [Packages](#packages)
+  - [Installation guide](#installation-guide)
+    - [Prerequisites](#prerequisites)
+    - [Installation steps](#installation-steps)
+  - [How to run the project](#how-to-run-the-project)
+    - [Running the API without docker](#running-the-api-without-docker)
+  - [Localization](#localization)
 
 ## What is Skyjo?
 
-Skyjo is an engaging card game that combines strategy, luck, and quick thinking. For more information, visit [skyjo.online/rules](https://www.skyjo.online/rules).
+Skyjo is an engaging card game that combines strategy, luck, and quick thinking. For more information, visit [rules](https://www.skyjo.online/rules).
 
 ## Project Structure
 
@@ -48,7 +49,7 @@ This project is set up as a monorepo using [Turborepo](https://turbo.build/repo)
 
 - **cache**: Manages game caching using [Redis](https://redis.io/)
 - **config**: Centralized configuration files for the project
-- **core**: Core game logic for Skyjo
+- **core**: Core game logic
 - **error**: Custom error handling classes
 - **logger**: Custom logger implemented with [Winston](https://github.com/winstonjs/winston) for logging in [Seq](https://datalust.co/seq)
 - **shared**: Common types, utility functions, and [Zod](https://zod.dev/) schemas shared across applications
@@ -88,7 +89,7 @@ docker compose up -d
 Run the web client with:
 
 ```bash
-pnpm dev --filter @skyjo/web
+pnpm dev --filter @skymo/web
 ```
 
 ### Running the API without docker
@@ -103,13 +104,13 @@ REDIS_URL=redis://:REDIS_PASSWORD@localhost:6379
 Start the API server locally:
 
 ```bash
-pnpm dev --filter @skyjo/api
+pnpm dev --filter @skymo/api
 ```
 
 ## Localization
 
-Thanks to [Weblate](https://hosted.weblate.org/engage/skyjo-online/) for hosting our localization infrastructure! If you'd like Skyjo Online available in your language, consider contributing to the translation.
+Thanks to [Weblate](https://hosted.weblate.org/engage/skymo/) for hosting our localization infrastructure! If you'd like Skymo available in your language, consider contributing to the translation.
 
-<a href="https://hosted.weblate.org/engage/skyjo-online/">
-<img src="https://hosted.weblate.org/widget/skyjo-online/web/horizontal-auto.svg" alt="Translation status" />
+<a href="https://hosted.weblate.org/engage/skymo/">
+<img src="https://hosted.weblate.org/widget/skymo/web/horizontal-auto.svg" alt="Translation status" />
 </a>

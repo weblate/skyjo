@@ -2,7 +2,7 @@ name: Deploy API
 env:
   REGISTRY: ghcr.io
   IMAGE_NAME: "${{ github.repository }}/api"
-  DOCKER_NAME: "skyjo-api"
+  DOCKER_NAME: "api"
 
 on:
   push:
@@ -65,7 +65,12 @@ jobs:
           script: |
             echo ${{ secrets.GITHUB_TOKEN }} | docker login ${{ env.REGISTRY }} -u ${{ github.actor }} --password-stdin
 
-            cd skyjo
+            # check if the directory exists. If not, clone the repository
+            if [ ! -d "skymo" ]; then
+              git clone https://github.com/maxentr/skymo.git
+            fi
+
+            cd skymo
             git pull
             docker compose down api
             docker compose pull api

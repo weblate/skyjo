@@ -1,6 +1,6 @@
 import { ToastAction } from "@/components/ui/toast"
-import { useSkyjo } from "@/contexts/SkyjoContext"
-import { KickVoteToJson, Vote } from "@skyjo/core"
+import { useGame } from "@/contexts/GameContext"
+import { KickVoteToJson, Vote } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
 
@@ -14,7 +14,7 @@ export const voteAgainstYouFailedToastId = "vote-against-you-failed"
 export const voteAgainstYouSucceededToastId = "vote-against-you-succeeded"
 
 export const useKickVoteToasts = () => {
-  const { game, player } = useSkyjo()
+  const { game, player } = useGame()
   const t = useTranslations("components.KickVote")
 
   const showVoteInitiated = async (playerToKickName: string) => {

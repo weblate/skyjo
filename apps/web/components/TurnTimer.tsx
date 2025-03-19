@@ -1,9 +1,9 @@
 "use client"
 
+import { useGame } from "@/contexts/GameContext"
 import { TimerDisplayMode, useSettings } from "@/contexts/SettingsContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skyjo/core"
+import { Constants as CoreConstants } from "@skymo/core"
 import { cva } from "class-variance-authority"
 import dayjs from "dayjs"
 import { AnimatePresence, m } from "framer-motion"
@@ -23,7 +23,7 @@ type TurnTimerProps = {
   turnStartTime: Date | null
 }
 const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
-  const { game } = useSkyjo()
+  const { game } = useGame()
   const {
     settings: { timerDisplayMode },
   } = useSettings()

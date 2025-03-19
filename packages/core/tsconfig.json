@@ -1,5 +1,5 @@
 {
-  "extends": "@skyjo/ts-config/base-package.json",
+  "extends": "@skymo/ts-config/base-package.json",
   "include": ["src"],
   "exclude": ["node_modules", "dist", "./src/**/__tests__", "tests"],
   "compilerOptions": {

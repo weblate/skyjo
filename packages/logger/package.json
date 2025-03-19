@@ -1,5 +1,5 @@
 {
-  "name": "@skyjo/logger",
+  "name": "@skymo/logger",
   "description": "Used to log messages to the console and to the Seq server",
   "version": "1.48.0",
   "type": "module",
@@ -18,14 +18,14 @@
   },
   "dependencies": {
     "@datalust/winston-seq": "^2.0.0",
-    "@skyjo/error": "workspace:*",
+    "@skymo/error": "workspace:*",
     "dotenv": "^16.4.5",
     "flatted": "^3.3.3",
     "winston": "^3.17.0",
     "zod": "^3.23.8"
   },
   "devDependencies": {
-    "@skyjo/ts-config": "workspace:*",
+    "@skymo/ts-config": "workspace:*",
     "@types/node": "^22.10.1",
     "typescript": "^5.7.2"
   }

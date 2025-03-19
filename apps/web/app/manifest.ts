@@ -20,10 +20,10 @@ type Manifest = MetadataRoute.Manifest & {
 
 export default function manifest(): Manifest {
   return {
-    name: "Skyjo Online | Free Multiplayer Card Game",
-    short_name: "Skyjo",
+    name: "Skymo | Play Skyjo Card Game Online Free",
+    short_name: "Skymo",
     description:
-      "Play Skyjo online for free! A fast-paced multiplayer card game where strategy meets fun. Challenge friends, flip cards, and aim for the lowest score to win!",
+      "Play Skyjo online for free with Skymo! A fast-paced multiplayer card game where strategy meets fun. Challenge friends, flip cards, and aim for the lowest score to win!",
     start_url: "/",
     orientation: "portrait",
     display: "standalone",
@@ -55,29 +55,25 @@ export default function manifest(): Manifest {
     launch_handler: {
       client_mode: "auto",
     },
-    // TODO: add screenshots for native stores
-    // screenshots: [],
     edge_side_panel: {
       preferred_width: 400,
     },
     shortcuts: [
       {
-        name: "Search public games",
+        name: "Search public Skymo games",
         url: "/search",
-        description: "Search for public games to join",
+        description: "Search for public Skymo games to join",
       },
       {
-        name: "Create a private game",
+        name: "Create a private Skymo game",
         url: "/create?private=true",
-        description: "Create a private game to play with friends",
+        description: "Create a private Skymo game to play with friends",
       },
       {
-        name: "Create a public game",
+        name: "Create a public Skymo game",
         url: "/create?private=false",
-        description: "Create a public game to play with anyone",
+        description: "Create a public Skymo game to play with anyone",
       },
     ],
-    // TODO: add iarc rating id
-    // iarc_rating_id:
   }
 }

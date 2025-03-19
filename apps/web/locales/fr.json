@@ -1,8 +1,8 @@
 {
   "head": {
-    "title": "Skyjo Online | Jeu de Cartes Multijoueur Gratuit entre Amis",
-    "description": "Jouez à Skyjo en ligne gratuitement ! Un jeu de cartes stratégique et amusant. Défiez vos amis, retournez des cartes et visez le score le plus bas pour gagner !",
-    "keywords": "Skyjo,Skyjo en ligne,jeu multijoueur,jeu de cartes,jouer avec des amis,jeux en ligne gratuits,jeux de cartes en ligne"
+    "title": "Skymo | Jouer à Skyjo en ligne - Jeu de Cartes Multijoueur Gratuit",
+    "description": "Jouez à Skyjo en ligne gratuitement avec Skymo ! Un jeu de cartes stratégique et amusant. Défiez vos amis, retournez des cartes et visez le score le plus bas pour gagner !",
+    "keywords": "Skymo,Skyjo,Skyjo en ligne,jeu multijoueur,jeu de cartes,jouer avec des amis,jeux en ligne gratuits,jeux de cartes en ligne"
   },
   "pages": {
     "Index": {
@@ -38,9 +38,9 @@
     },
     "Search": {
       "head": {
-        "title": "Trouver des parties publiques de Skyjo | Skyjo Online",
-        "description": "Vous cherchez une partie de Skyjo à rejoindre ? Parcourez les parties publiques disponibles et commencez à jouer à Skyjo en ligne instantanément avec d'autres joueurs. Jouez gratuitement maintenant !",
-        "keywords": "Skyjo,Skyjo en ligne,trouver une partie,rejoindre une partie,parties publiques,multijoueur en ligne,jouer avec les autres,jeu rapide,jeux en ligne gratuits,parties ouvertes,jeu de cartes en ligne,jeu de cartes multijoueur"
+        "title": "Trouver des parties de Skymo | Jouer à Skyjo en ligne",
+        "description": "Vous cherchez une partie de Skymo à rejoindre ? Parcourez les parties disponibles et commencez à jouer à Skyjo en ligne instantanément avec d'autres joueurs.",
+        "keywords": "Skymo,Skyjo,Skyjo en ligne,trouver une partie,rejoindre une partie,parties publiques,multijoueur en ligne,jouer avec les autres,jeu rapide,jeux en ligne gratuits,parties ouvertes,jeu de cartes en ligne,jeu de cartes multijoueur"
       },
       "header": {
         "back": "Retour à la page d'accueil",
@@ -67,9 +67,9 @@
     },
     "Create": {
       "head": {
-        "title": "Créer une partie de Skyjo | Skyjo Online",
-        "description": "Démarrez une nouvelle partie de Skyjo en ligne ! Créez des salons privés ou publics, invitez vos amis et profitez du plaisir de Skyjo ensemble. Jouez maintenant gratuitement !",
-        "keywords": "Skyjo,Skyjo en ligne,créer une partie,démarrer une partie,partie privée,partie publique,jouer avec des amis,multijoueur en ligne,jeux en ligne gratuits,partie personnalisée"
+        "title": "Créer une partie de Skymo | Jouer à Skyjo en ligne",
+        "description": "Démarrez une nouvelle partie de Skymo ! Créez des salons privés ou publics, invitez vos amis et profitez du plaisir de Skyjo ensemble. Jouez maintenant gratuitement !",
+        "keywords": "Skymo,Skyjo,Skyjo en ligne,créer une partie,démarrer une partie,partie privée,partie publique,jouer avec des amis,multijoueur en ligne,jeux en ligne gratuits,partie personnalisée"
       },
       "loading-text": "Création de votre partie…"
     },
@@ -102,8 +102,8 @@
           "label": "Nombre maximum de joueurs",
           "title": "Nombre maximum de joueurs: {number}"
         },
-        "allow-skyjo-for-column": "Autoriser les Skyjo pour les colonnes",
-        "allow-skyjo-for-row": "Autoriser les Skyjo pour les lignes",
+        "remove-identical-column": "Supprimer la colonne si cartes identiques",
+        "remove-identical-row": "Supprimer la ligne si cartes identiques",
         "nb-columns": {
           "label": "Nombre de colonnes",
           "title": "$number colonnes"
@@ -169,9 +169,9 @@
     },
     "PrivacyPolicy": {
       "head": {
-        "title": "Politique de Confidentialité | Skyjo Online - Jeu de Cartes Multijoueur Gratuit",
-        "description": "Politique de confidentialité de Skyjo Online. Découvrez comment nous protégeons vos données pendant que vous jouez à notre jeu de cartes. Pratiques transparentes et sécurisées.",
-        "keywords": "Skyjo en ligne,politique de confidentialité,protection des données,confidentialité des jeux en ligne,jeu sécurisé,données utilisateur,RGPD,CCPA,sécurité des données"
+        "title": "Politique de Confidentialité | Skymo - Jeu de Cartes Skyjo",
+        "description": "Politique de confidentialité de Skymo. Découvrez comment nous protégeons vos données pendant que vous jouez à notre jeu de cartes Skyjo. Pratiques transparentes et sécurisées.",
+        "keywords": "Skymo,Skyjo,Skyjo en ligne,politique de confidentialité,protection des données,confidentialité des jeux en ligne,jeu sécurisé,données utilisateur"
       },
       "content": {
         "back": "Retour à l'accueil",
@@ -200,7 +200,7 @@
           "cookies": {
             "title": "Cookies",
             "description": "Nous utilisons des cookies essentiels pour permettre les fonctionnalités de base de notre site web :",
-            "items": "Cookies de session : Nous utilisons un cookie de session (skyjo-io) pour maintenir votre connexion à nos serveurs de jeu. Ce cookie est essentiel pour le fonctionnement du jeu et expire après 24 heures;;Ces cookies ne vous suivent pas à travers les sites web et sont uniquement utilisés pour fournir le service que vous avez demandé"
+            "items": "Cookies de session : Nous utilisons un cookie de session (skymo-io) pour maintenir votre connexion à nos serveurs de jeu. Ce cookie est essentiel pour le fonctionnement du jeu et expire après 24 heures;;Ces cookies ne vous suivent pas à travers les sites web et sont uniquement utilisés pour fournir le service que vous avez demandé"
           }
         },
         "how-we-use-your-information": {
@@ -222,7 +222,7 @@
         },
         "childrens-privacy": {
           "title": "Confidentialité des enfants",
-          "description": "Skyjo Online n'a pas de restrictions d'âge. Nous ne collectons pas sciemment d'informations personnelles auprès des enfants."
+          "description": "Skymo n'a pas de restrictions d'âge. Nous ne collectons pas sciemment d'informations personnelles auprès des enfants."
         },
         "changes-to-this-policy": {
           "title": "Modifications de cette politique",
@@ -236,9 +236,9 @@
     },
     "Rules": {
       "head": {
-        "title": "Règles du Skyjo | Comment Jouer - Guide Rapide et Complet",
-        "description": "Apprenez les règles du Skyjo en 5 minutes. Guide rapide pour maîtriser ce jeu de cartes amusant, retourner stratégiquement les cartes et viser le score le plus bas.",
-        "keywords": "règles de Skyjo,comment jouer à Skyjo,jeu Skyjo,règles du jeu de cartes,jeu de cartes en ligne,instructions du jeu,guide du gameplay"
+        "title": "Règles de Skymo | Comment Jouer au Skyjo - Guide Rapide",
+        "description": "Apprenez les règles du Skyjo avec Skymo en 5 minutes. Guide rapide pour maîtriser ce jeu de cartes amusant, retourner stratégiquement les cartes et viser le score le plus bas.",
+        "keywords": "Skymo,Skyjo,règles de Skyjo,comment jouer à Skyjo,jeu Skyjo,règles du jeu de cartes,jeu de cartes en ligne,instructions du jeu,guide du gameplay"
       },
       "title": "Règles du jeu Skyjo"
     }
@@ -301,8 +301,8 @@
     "GameRules": {
       "button-title": "Afficher les règles de la partie",
       "title": "Règles de la partie",
-      "allow-skyjo-for-column": "Skyjo de colonne autorisé : {value, select, true {oui} false {non} other {inconnu}}",
-      "allow-skyjo-for-row": "Skyjo de ligne autorisé : {value, select, true {oui} false {non} other {inconnu}}",
+      "remove-identical-column": "Skyjo de colonne autorisé : {value, select, true {oui} false {non} other {inconnu}}",
+      "remove-identical-row": "Skyjo de ligne autorisé : {value, select, true {oui} false {non} other {inconnu}}",
       "card-per-column": "Nombre de colonnes : {value}",
       "card-per-row": "Nombre de lignes : {value}",
       "initial-turned-count": "Nombre de cartes à retourner au début : {value}",
@@ -349,7 +349,7 @@
       "you": "Vous"
     },
     "PWABanner": {
-      "title": "Installer Skyjo Online sur votre appareil !",
+      "title": "Installer Skymo sur votre appareil !",
       "Safari": "Appuyez sur l'icône de partage, puis sur 'Ajouter au Dock' pour installer",
       "Chrome": "Cliquez sur le bouton 'Installer' pour installer",
       "FirefoxAndroid": "Appuyez sur l'icône du menu, puis sur 'Ajouter à l'écran d'accueil' pour installer",
@@ -581,7 +581,7 @@
     }
   },
   "utils": {
-    "skyjo": {
+    "skymo": {
       "waiting": "En attente de joueurs",
       "turn-cards": "Tournez {number} carte{number, plural, =1 {} other {s}}",
       "waiting-opponents-to-turn-cards": "En attente que {nbOpponents, plural, =1 {l'adversaire} other {les adversaires}} tourne{nbOpponents, plural, =1 {} other {nt}} {number} carte{number, plural, =1 {} other {s}}",

@@ -3,13 +3,13 @@
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
-import { Constants as CoreConstants, SystemMessageType } from "@skyjo/core"
+import { Constants as CoreConstants, SystemMessageType } from "@skymo/core"
 import {
   ChatMessage,
   ServerChatMessage,
   SystemChatMessage,
   UserChatMessage,
-} from "@skyjo/shared/types"
+} from "@skymo/shared/types"
 import { Howl } from "howler"
 import { useTranslations } from "next-intl"
 import {

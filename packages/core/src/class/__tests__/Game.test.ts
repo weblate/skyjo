@@ -1,17 +1,17 @@
-import { Constants as ErrorConstants } from "@skyjo/error"
+import { Constants as ErrorConstants } from "@skymo/error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import { Skyjo } from "../../class/Skyjo.js"
-import { SkyjoCard } from "../../class/SkyjoCard.js"
-import { SkyjoPlayer } from "../../class/SkyjoPlayer.js"
-import { SkyjoSettings } from "../../class/SkyjoSettings.js"
 import {
   Constants,
   GameStatus,
   type LastTurnStatus,
   type TurnStatus,
 } from "../../constants.js"
-import type { SkyjoDbFormat } from "../../types/skyjo.js"
-import "@skyjo/error/test/expect-extend"
+import type { GameDb } from "../../types/game.js"
+import { Card } from "../Card.js"
+import { Game } from "../Game.js"
+import { Player } from "../Player.js"
+import { Settings } from "../Settings.js"
+import "@skymo/error/test/expect-extend"
 import {
   DefaultGameOperationManager,
   GameOperationManagerInterface,
@@ -21,21 +21,21 @@ const TEST_SOCKET_ID = "socketId123"
 const TOTAL_CARDS = 150
 const CARDS_PER_PLAYER = 12
 
-describe("Skyjo", () => {
-  let game: Skyjo
-  let player: SkyjoPlayer
-  let settings: SkyjoSettings
-  let opponent: SkyjoPlayer
+describe("Game", () => {
+  let game: Game
+  let player: Player
+  let settings: Settings
+  let opponent: Player
   let operationManager: GameOperationManagerInterface
 
   beforeEach(() => {
     vi.clearAllMocks()
-    player = new SkyjoPlayer(
+    player = new Player(
       { username: "player1", avatar: Constants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
-    settings = new SkyjoSettings()
-    game = new Skyjo({ hostId: player.id, settings })
+    settings = new Settings()
+    game = new Game({ hostId: player.id, settings })
     operationManager = {
       updateGame: vi.fn(),
       removeGame: vi.fn(),
@@ -50,7 +50,7 @@ describe("Skyjo", () => {
     game.setOperationManager(operationManager)
     game.addPlayer(player)
 
-    opponent = new SkyjoPlayer(
+    opponent = new Player(
       { username: "opponent2", avatar: Constants.AVATARS.ELEPHANT },
       "socketId456",
     )
@@ -66,7 +66,7 @@ describe("Skyjo", () => {
 
   describe("populate", () => {
     it("should populate the class without players", () => {
-      const gameDb: SkyjoDbFormat = {
+      const gameDb: GameDb = {
         id: crypto.randomUUID(),
         code: "code",
         hostId: player.id,
@@ -89,8 +89,8 @@ describe("Skyjo", () => {
           isConfirmed: false,
           maxPlayers: 8,
           private: false,
-          allowSkyjoForColumn: true,
-          allowSkyjoForRow: false,
+          removeIdenticalColumn: true,
+          removeIdenticalRow: false,
           initialTurnedCount: 2,
           cardPerRow: 3,
           cardPerColumn: 4,
@@ -107,7 +107,7 @@ describe("Skyjo", () => {
         createdAt: new Date(),
         updatedAt: new Date(),
       }
-      game = new Skyjo({ hostId: player.id })
+      game = new Game({ hostId: player.id })
       game.populate(gameDb)
 
       expect(game.id).toBe(gameDb.id)
@@ -119,7 +119,7 @@ describe("Skyjo", () => {
     })
 
     it("should populate the class with players", () => {
-      const gameDb: SkyjoDbFormat = {
+      const gameDb: GameDb = {
         id: crypto.randomUUID(),
         hostId: player.id,
         isFull: false,
@@ -150,9 +150,9 @@ describe("Skyjo", () => {
             scores: [5, 5],
             wantsReplay: true,
             cards: [
-              [new SkyjoCard(0), new SkyjoCard(1), new SkyjoCard(2)],
-              [new SkyjoCard(3), new SkyjoCard(4), new SkyjoCard(5)],
-              [new SkyjoCard(6), new SkyjoCard(7), new SkyjoCard(8)],
+              [new Card(0), new Card(1), new Card(2)],
+              [new Card(3), new Card(4), new Card(5)],
+              [new Card(6), new Card(7), new Card(8)],
             ],
             hasPlayedLastTurn: false,
           },
@@ -162,8 +162,8 @@ describe("Skyjo", () => {
           isConfirmed: true,
           private: true,
           maxPlayers: 8,
-          allowSkyjoForColumn: true,
-          allowSkyjoForRow: false,
+          removeIdenticalColumn: true,
+          removeIdenticalRow: false,
           initialTurnedCount: 2,
           cardPerRow: 3,
           cardPerColumn: 4,
@@ -181,7 +181,7 @@ describe("Skyjo", () => {
         updatedAt: new Date(),
       }
 
-      game = new Skyjo({ hostId: player.id })
+      game = new Game({ hostId: player.id })
       game.populate(gameDb)
 
       expect(game.id).toBe(gameDb.id)
@@ -235,7 +235,7 @@ describe("Skyjo", () => {
   describe("addPlayer", () => {
     it("should add player", () => {
       settings.maxPlayers = 3
-      const newPlayer = new SkyjoPlayer(
+      const newPlayer = new Player(
         { username: "player3", avatar: Constants.AVATARS.TURTLE },
         "socketId789",
       )
@@ -246,7 +246,7 @@ describe("Skyjo", () => {
 
     it("should not add player if max players is reached", () => {
       settings.maxPlayers = 2
-      const newPlayer = new SkyjoPlayer(
+      const newPlayer = new Player(
         { username: "player3", avatar: Constants.AVATARS.TURTLE },
         "socketId789",
       )
@@ -281,49 +281,17 @@ describe("Skyjo", () => {
       game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
 
       player.cards = [
-        [
-          new SkyjoCard(10, false),
-          new SkyjoCard(10, true),
-          new SkyjoCard(10, true),
-        ],
-        [
-          new SkyjoCard(10, false),
-          new SkyjoCard(10, false),
-          new SkyjoCard(10, false),
-        ],
-        [
-          new SkyjoCard(10, false),
-          new SkyjoCard(10, false),
-          new SkyjoCard(10, false),
-        ],
-        [
-          new SkyjoCard(10, false),
-          new SkyjoCard(10, false),
-          new SkyjoCard(10, false),
-        ],
+        [new Card(10, false), new Card(10, true), new Card(10, true)],
+        [new Card(10, false), new Card(10, false), new Card(10, false)],
+        [new Card(10, false), new Card(10, false), new Card(10, false)],
+        [new Card(10, false), new Card(10, false), new Card(10, false)],
       ]
 
       opponent.cards = [
-        [
-          new SkyjoCard(9, false),
-          new SkyjoCard(9, true),
-          new SkyjoCard(9, true),
-        ],
-        [
-          new SkyjoCard(9, false),
-          new SkyjoCard(9, false),
-          new SkyjoCard(9, false),
-        ],
-        [
-          new SkyjoCard(9, false),
-          new SkyjoCard(9, false),
-          new SkyjoCard(9, false),
-        ],
-        [
-          new SkyjoCard(9, false),
-          new SkyjoCard(9, false),
-          new SkyjoCard(9, false),
-        ],
+        [new Card(9, false), new Card(9, true), new Card(9, true)],
+        [new Card(9, false), new Card(9, false), new Card(9, false)],
+        [new Card(9, false), new Card(9, false), new Card(9, false)],
+        [new Card(9, false), new Card(9, false), new Card(9, false)],
       ]
 
       await game.removePlayer(opponent.id)
@@ -480,17 +448,17 @@ describe("Skyjo", () => {
   describe("revealCard", () => {
     beforeEach(() => {
       player.cards = [
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
+        [new Card(10), new Card(10), new Card(10)],
+        [new Card(10), new Card(10), new Card(10)],
+        [new Card(10), new Card(10), new Card(10)],
+        [new Card(10), new Card(10), new Card(10)],
       ]
 
       opponent.cards = [
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
-        [new SkyjoCard(10), new SkyjoCard(10), new SkyjoCard(10)],
+        [new Card(10), new Card(10), new Card(10)],
+        [new Card(10), new Card(10), new Card(10)],
+        [new Card(10), new Card(10), new Card(10)],
+        [new Card(10), new Card(10), new Card(10)],
       ]
     })
 
@@ -1032,8 +1000,8 @@ describe("Skyjo", () => {
         ],
         settings: {
           isConfirmed: false,
-          allowSkyjoForColumn: true,
-          allowSkyjoForRow: false,
+          removeIdenticalColumn: true,
+          removeIdenticalRow: false,
           cardPerColumn: 4,
           cardPerRow: 3,
           initialTurnedCount: 2,
@@ -1050,7 +1018,7 @@ describe("Skyjo", () => {
         processingAfk: game.processingAfk,
         createdAt: game.createdAt,
         updatedAt: game.updatedAt,
-      } satisfies SkyjoDbFormat)
+      } satisfies GameDb)
     })
   })
 
@@ -1252,8 +1220,8 @@ describe("Skyjo", () => {
   describe("hasPlayerFinished", () => {
     it("should return true when all player cards are visible", () => {
       player.cards = [
-        [new SkyjoCard(1, true), new SkyjoCard(2, true)],
-        [new SkyjoCard(3, true), new SkyjoCard(4, true)],
+        [new Card(1, true), new Card(2, true)],
+        [new Card(3, true), new Card(4, true)],
       ]
 
       const result = game["hasPlayerFinished"](player)
@@ -1263,8 +1231,8 @@ describe("Skyjo", () => {
 
     it("should return false when not all player cards are visible", () => {
       player.cards = [
-        [new SkyjoCard(1, true), new SkyjoCard(2, false)],
-        [new SkyjoCard(3, true), new SkyjoCard(4, true)],
+        [new Card(1, true), new Card(2, false)],
+        [new Card(3, true), new Card(4, true)],
       ]
 
       const result = game["hasPlayerFinished"](player)
@@ -1326,7 +1294,7 @@ describe("Skyjo", () => {
     it("should skip disconnected players", () => {
       game.turn = 0
       opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
-      const thirdPlayer = new SkyjoPlayer(
+      const thirdPlayer = new Player(
         { username: "player3", avatar: Constants.AVATARS.TURTLE },
         "socketId789",
       )
@@ -1364,15 +1332,11 @@ describe("Skyjo", () => {
   })
 
   describe("checkCardsToDiscard", () => {
-    it("should discard cards when allowSkyjoForColumn is true and there are columns to discard", () => {
-      game.settings.allowSkyjoForColumn = true
-      game.settings.allowSkyjoForRow = false
+    it("should discard cards when removeIdenticalColumn is true and there are columns to discard", () => {
+      game.settings.removeIdenticalColumn = true
+      game.settings.removeIdenticalRow = false
 
-      const columnsToDiscard = [
-        new SkyjoCard(5),
-        new SkyjoCard(5),
-        new SkyjoCard(5),
-      ]
+      const columnsToDiscard = [new Card(5), new Card(5), new Card(5)]
 
       // Mock the player's checkColumnsAndDiscard to return cards first time, then empty array
       const checkColumnsSpy = vi
@@ -1395,15 +1359,11 @@ describe("Skyjo", () => {
       expect(discardCardSpy).toHaveBeenCalledWith(5)
     })
 
-    it("should discard cards when allowSkyjoForRow is true and there are rows to discard", () => {
-      game.settings.allowSkyjoForColumn = false
-      game.settings.allowSkyjoForRow = true
+    it("should discard cards when removeIdenticalRow is true and there are rows to discard", () => {
+      game.settings.removeIdenticalColumn = false
+      game.settings.removeIdenticalRow = true
 
-      const rowsToDiscard = [
-        new SkyjoCard(7),
-        new SkyjoCard(7),
-        new SkyjoCard(7),
-      ]
+      const rowsToDiscard = [new Card(7), new Card(7), new Card(7)]
 
       vi.spyOn(player, "checkColumnsAndDiscard").mockReturnValue([])
 
@@ -1427,11 +1387,11 @@ describe("Skyjo", () => {
     })
 
     it("should discard cards from both columns and rows when both settings are true", () => {
-      game.settings.allowSkyjoForColumn = true
-      game.settings.allowSkyjoForRow = true
+      game.settings.removeIdenticalColumn = true
+      game.settings.removeIdenticalRow = true
 
-      const columnsToDiscard = [new SkyjoCard(5), new SkyjoCard(5)]
-      const rowsToDiscard = [new SkyjoCard(7), new SkyjoCard(7)]
+      const columnsToDiscard = [new Card(5), new Card(5)]
+      const rowsToDiscard = [new Card(7), new Card(7)]
 
       // First call returns cards, second call returns empty array
       vi.spyOn(player, "checkColumnsAndDiscard")
@@ -1456,8 +1416,8 @@ describe("Skyjo", () => {
     })
 
     it("should not discard any cards when no cards to discard", () => {
-      game.settings.allowSkyjoForColumn = true
-      game.settings.allowSkyjoForRow = true
+      game.settings.removeIdenticalColumn = true
+      game.settings.removeIdenticalRow = true
 
       vi.spyOn(player, "checkColumnsAndDiscard").mockReturnValue([])
       vi.spyOn(player, "checkRowsAndDiscard").mockReturnValue([])
@@ -1470,11 +1430,11 @@ describe("Skyjo", () => {
     })
 
     it("should recursively check for more cards to discard", () => {
-      game.settings.allowSkyjoForColumn = true
-      game.settings.allowSkyjoForRow = false
+      game.settings.removeIdenticalColumn = true
+      game.settings.removeIdenticalRow = false
 
       // First call returns cards, second call returns empty array
-      const firstCallCards = [new SkyjoCard(5), new SkyjoCard(5)]
+      const firstCallCards = [new Card(5), new Card(5)]
       const checkColumnsSpy = vi
         .spyOn(player, "checkColumnsAndDiscard")
         .mockReturnValueOnce(firstCallCards)
@@ -1501,29 +1461,13 @@ describe("Skyjo", () => {
       game.settings.initialTurnedCount = 2
 
       player.cards = [
-        [
-          new SkyjoCard(1, true),
-          new SkyjoCard(2, true),
-          new SkyjoCard(3, false),
-        ],
-        [
-          new SkyjoCard(4, false),
-          new SkyjoCard(5, false),
-          new SkyjoCard(6, false),
-        ],
+        [new Card(1, true), new Card(2, true), new Card(3, false)],
+        [new Card(4, false), new Card(5, false), new Card(6, false)],
       ]
 
       opponent.cards = [
-        [
-          new SkyjoCard(7, true),
-          new SkyjoCard(8, true),
-          new SkyjoCard(9, false),
-        ],
-        [
-          new SkyjoCard(10, false),
-          new SkyjoCard(11, false),
-          new SkyjoCard(12, false),
-        ],
+        [new Card(7, true), new Card(8, true), new Card(9, false)],
+        [new Card(10, false), new Card(11, false), new Card(12, false)],
       ]
 
       const result = game["haveAllPlayersRevealedCards"]()
@@ -1535,29 +1479,13 @@ describe("Skyjo", () => {
       game.settings.initialTurnedCount = 2
 
       player.cards = [
-        [
-          new SkyjoCard(1, true),
-          new SkyjoCard(2, true),
-          new SkyjoCard(3, false),
-        ],
-        [
-          new SkyjoCard(4, false),
-          new SkyjoCard(5, false),
-          new SkyjoCard(6, false),
-        ],
+        [new Card(1, true), new Card(2, true), new Card(3, false)],
+        [new Card(4, false), new Card(5, false), new Card(6, false)],
       ]
 
       opponent.cards = [
-        [
-          new SkyjoCard(7, true),
-          new SkyjoCard(8, false),
-          new SkyjoCard(9, false),
-        ],
-        [
-          new SkyjoCard(10, false),
-          new SkyjoCard(11, false),
-          new SkyjoCard(12, false),
-        ],
+        [new Card(7, true), new Card(8, false), new Card(9, false)],
+        [new Card(10, false), new Card(11, false), new Card(12, false)],
       ]
 
       const result = game["haveAllPlayersRevealedCards"]()
@@ -1589,11 +1517,11 @@ describe("Skyjo", () => {
 
     it("should set the player with the highest score as the first player", async () => {
       // Setup players with different scores
-      const player1 = new SkyjoPlayer(
+      const player1 = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
-      const player2 = new SkyjoPlayer(
+      const player2 = new Player(
         { username: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
@@ -1612,11 +1540,11 @@ describe("Skyjo", () => {
 
     it("should handle tie by choosing player with highest card", async () => {
       // Setup players with tied scores but different max values
-      const player1 = new SkyjoPlayer(
+      const player1 = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
-      const player2 = new SkyjoPlayer(
+      const player2 = new Player(
         { username: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
@@ -1635,11 +1563,11 @@ describe("Skyjo", () => {
 
     it("should handle complete tie by randomizing", async () => {
       // Setup players with identical scores
-      const player1 = new SkyjoPlayer(
+      const player1 = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
-      const player2 = new SkyjoPlayer(
+      const player2 = new Player(
         { username: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
@@ -1671,11 +1599,11 @@ describe("Skyjo", () => {
 
     it("should skip disconnected players", async () => {
       // Setup players with one disconnected
-      const player1 = new SkyjoPlayer(
+      const player1 = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
-      const player2 = new SkyjoPlayer(
+      const player2 = new Player(
         { username: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
@@ -1695,7 +1623,7 @@ describe("Skyjo", () => {
 
     it("should handle case when no players have scores", async () => {
       // Setup players with no scores
-      const player1 = new SkyjoPlayer(
+      const player1 = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
@@ -1714,7 +1642,7 @@ describe("Skyjo", () => {
 
   describe("disconnectPlayer", () => {
     it("should set player connection status to disconnected", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
@@ -1728,11 +1656,11 @@ describe("Skyjo", () => {
     })
 
     it("should change host if disconnected player is host", async () => {
-      const player1 = new SkyjoPlayer(
+      const player1 = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
-      const player2 = new SkyjoPlayer(
+      const player2 = new Player(
         { username: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
@@ -1750,7 +1678,7 @@ describe("Skyjo", () => {
     })
 
     it("should kick socket if it exists", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
@@ -1770,7 +1698,7 @@ describe("Skyjo", () => {
     })
 
     it("should remove player if game is not playing", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
@@ -1824,7 +1752,7 @@ describe("Skyjo", () => {
   describe("banPlayer", () => {
     it("should add player id to bannedPlayerIds if not already included", () => {
       // Setup
-      const targetPlayer = new SkyjoPlayer(
+      const targetPlayer = new Player(
         { username: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
@@ -1840,7 +1768,7 @@ describe("Skyjo", () => {
 
     it("should not add player id to bannedPlayerIds if already included", () => {
       // Setup
-      const targetPlayer = new SkyjoPlayer(
+      const targetPlayer = new Player(
         { username: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
@@ -1857,7 +1785,7 @@ describe("Skyjo", () => {
 
     it("should add player name to bannedUsernames if not already included", () => {
       // Setup
-      const targetPlayer = new SkyjoPlayer(
+      const targetPlayer = new Player(
         { username: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
@@ -1873,7 +1801,7 @@ describe("Skyjo", () => {
 
     it("should not add player name to bannedUsernames if already included", () => {
       // Setup
-      const targetPlayer = new SkyjoPlayer(
+      const targetPlayer = new Player(
         { username: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
@@ -1892,7 +1820,7 @@ describe("Skyjo", () => {
   describe("isPlayerBanned", () => {
     it("should return true if player id is in bannedPlayerIds", () => {
       // Setup
-      const targetPlayer = new SkyjoPlayer(
+      const targetPlayer = new Player(
         { username: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
@@ -1905,7 +1833,7 @@ describe("Skyjo", () => {
 
     it("should return true if player name is in bannedUsernames", () => {
       // Setup
-      const targetPlayer = new SkyjoPlayer(
+      const targetPlayer = new Player(
         { username: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
@@ -1918,7 +1846,7 @@ describe("Skyjo", () => {
 
     it("should return false if player is not banned", () => {
       // Setup
-      const targetPlayer = new SkyjoPlayer(
+      const targetPlayer = new Player(
         { username: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )

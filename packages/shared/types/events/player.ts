@@ -1,5 +1,5 @@
 import type { LastGame } from "@/validations/reconnect.js"
-import type { Error as ThrownError } from "@skyjo/error"
+import type { Error as ThrownError } from "@skymo/error"
 export interface ClientToServerPlayerEvents {
   reconnect: (data: LastGame) => void
   leave: () => void

@@ -1,4 +1,4 @@
-import { CError } from "@skyjo/error"
+import { CError } from "@skymo/error"
 import { mockSocket } from "@tests/_mock.js"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 import { describe, expect, it, vi } from "vitest"

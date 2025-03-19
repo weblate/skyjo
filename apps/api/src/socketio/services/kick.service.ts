@@ -1,18 +1,18 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import { Constants as CoreConstants, KickVote, type Skyjo } from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import { Constants as CoreConstants, type Game, KickVote } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { BaseService } from "./base.service.js"
 
 export class KickService extends BaseService {
   private readonly kickVotes: Map<string, KickVote> = new Map()
 
-  async onInitiateKickVote(socket: SkyjoSocket, targetId: string) {
+  async onInitiateKickVote(socket: GameSocket, targetId: string) {
     const game = await this.getGame(socket.data.gameCode)
     await this.initiateKickVote(socket, game, targetId)
   }
 
-  async onVoteToKick(socket: SkyjoSocket, vote: boolean) {
+  async onVoteToKick(socket: GameSocket, vote: boolean) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
@@ -69,8 +69,8 @@ export class KickService extends BaseService {
 
   //#region private methods
   private async initiateKickVote(
-    socket: SkyjoSocket,
-    game: Skyjo,
+    socket: GameSocket,
+    game: Game,
     targetId: string,
   ) {
     const initiator = game.getPlayerById(socket.data.playerId)
@@ -154,8 +154,8 @@ export class KickService extends BaseService {
   }
 
   private async checkKickVoteStatus(
-    socket: SkyjoSocket,
-    game: Skyjo,
+    socket: GameSocket,
+    game: Game,
     kickVote: KickVote,
   ) {
     if (
@@ -189,11 +189,7 @@ export class KickService extends BaseService {
     }
   }
 
-  private async kickPlayer(
-    socket: SkyjoSocket,
-    game: Skyjo,
-    kickVote: KickVote,
-  ) {
+  private async kickPlayer(socket: GameSocket, game: Game, kickVote: KickVote) {
     const playerToKick = game.getPlayerById(kickVote.targetId)
     if (!playerToKick) {
       throw new CError(

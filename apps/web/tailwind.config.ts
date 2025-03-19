@@ -27,6 +27,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        shantell: ["Shantell Sans", "sans-serif"],
+      },
       screens: {
         smh: { raw: "(min-height: 600px)" },
         mdh: { raw: "(min-height: 690px)" },

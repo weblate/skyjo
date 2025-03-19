@@ -1,14 +1,14 @@
 "use client"
 
-import { useSkyjo } from "@/contexts/SkyjoContext"
-import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/skyjo"
-import { Constants as CoreConstants } from "@skyjo/core"
+import { useGame } from "@/contexts/GameContext"
+import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
+import { Constants as CoreConstants } from "@skymo/core"
 import { AnimatePresence, m } from "framer-motion"
 import { useTranslations } from "next-intl"
 
 const GameInfo = () => {
-  const { game, player, opponents } = useSkyjo()
-  const t = useTranslations("utils.skyjo")
+  const { game, player, opponents } = useGame()
+  const t = useTranslations("utils.skymo")
 
   const isPlayerTurn = isCurrentUserTurn(game, player)
 

@@ -1,4 +1,4 @@
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useRouter } from "@/i18n/routing"
 import { useTranslations } from "next-intl"
@@ -19,7 +19,7 @@ const BanContext = createContext<BanContext | undefined>(undefined)
 
 export const BanProvider = ({ children }: PropsWithChildren) => {
   const { socket } = useSocket()
-  const { player } = useSkyjo()
+  const { player } = useGame()
   const router = useRouter()
   const t = useTranslations("contexts.BanContext")
 

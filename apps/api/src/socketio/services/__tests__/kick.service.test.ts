@@ -1,11 +1,6 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
-import {
-  Constants as CoreConstants,
-  Skyjo,
-  SkyjoPlayer,
-  SkyjoSettings,
-} from "@skyjo/core"
-import { Constants as ErrorConstants } from "@skyjo/error"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
+import { Constants as CoreConstants, Game, Player, Settings } from "@skymo/core"
+import { Constants as ErrorConstants } from "@skymo/error"
 import {
   mockGameOperationManager,
   mockGameStateTracker,
@@ -19,15 +14,15 @@ import { KickService } from "../kick.service.js"
 
 describe("KickService", () => {
   let service: KickService
-  let game: Skyjo
+  let game: Game
 
-  let player: SkyjoPlayer
-  let socket: SkyjoSocket
+  let player: Player
+  let socket: GameSocket
 
-  let opponent1: SkyjoPlayer
-  let opponent1Socket: SkyjoSocket
+  let opponent1: Player
+  let opponent1Socket: GameSocket
 
-  let opponent2: SkyjoPlayer
+  let opponent2: Player
 
   beforeEach(() => {
     service = new KickService()
@@ -36,22 +31,22 @@ describe("KickService", () => {
 
     socket = mockSocket()
 
-    player = new SkyjoPlayer(
+    player = new Player(
       { username: "player", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
-    opponent1 = new SkyjoPlayer(
+    opponent1 = new Player(
       { username: "opponent1", avatar: CoreConstants.AVATARS.CRAB },
       RANDOM_SOCKET_ID(),
     )
-    opponent2 = new SkyjoPlayer(
+    opponent2 = new Player(
       { username: "opponent2", avatar: CoreConstants.AVATARS.DOG },
       RANDOM_SOCKET_ID(),
     )
 
-    game = new Skyjo({
+    game = new Game({
       hostId: player.socketId,
-      settings: new SkyjoSettings(),
+      settings: new Settings(),
     })
     mockGameStateTracker(game)
     mockGameOperationManager(game)
@@ -195,13 +190,13 @@ describe("KickService", () => {
       const kickVote = service["kickVotes"].get(game.id)
       const oldKickVoteJson = structuredClone(kickVote?.toJson())
 
-      const opponent3 = new SkyjoPlayer(
+      const opponent3 = new Player(
         { username: "opponent3", avatar: CoreConstants.AVATARS.DOG },
         RANDOM_SOCKET_ID(),
       )
       game.addPlayer(opponent3)
 
-      const opponent4 = new SkyjoPlayer(
+      const opponent4 = new Player(
         { username: "opponent4", avatar: CoreConstants.AVATARS.JELLYFISH },
         RANDOM_SOCKET_ID(),
       )

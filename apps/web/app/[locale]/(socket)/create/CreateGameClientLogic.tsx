@@ -3,12 +3,12 @@
 import { Card } from "@/components/Card"
 import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
-import { SkyjoCardToJson } from "@skyjo/core"
+import { CardToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
-const generateRandomCard = (isVisible: boolean): SkyjoCardToJson => {
+const generateRandomCard = (isVisible: boolean): CardToJson => {
   const value = isVisible ? Math.floor(Math.random() * 14) - 2 : undefined
 
   return {
@@ -25,7 +25,7 @@ const CreateGameClientLogic = () => {
   const t = useTranslations("pages.Create")
   const [loading, setLoading] = useState(false)
 
-  const [card, setCard] = useState<SkyjoCardToJson>(generateRandomCard(true))
+  const [card, setCard] = useState<CardToJson>(generateRandomCard(true))
 
   const privateQueryParam = searchParams.get("private")
 

@@ -1,11 +1,11 @@
 import { beforeEach, describe, expect, it } from "vitest"
-import { SkyjoCard } from "../../class/SkyjoCard.js"
+import { Card } from "../Card.js"
 
-let card: SkyjoCard
+let card: Card
 
-describe("SkyjoCard", () => {
+describe("Card", () => {
   beforeEach(() => {
-    card = new SkyjoCard(0)
+    card = new Card(0)
   })
 
   it("should create a new card", () => {
@@ -15,7 +15,7 @@ describe("SkyjoCard", () => {
 
   it("should create a new card with value, visibility and id defined in the constructor", () => {
     const id = crypto.randomUUID()
-    const card = new SkyjoCard(12, true, id)
+    const card = new Card(12, true, id)
     expect(card.value).toBe(12)
     expect(card.isVisible).toBeTruthy()
     expect(card.id).toBe(id)
@@ -30,14 +30,14 @@ describe("SkyjoCard", () => {
   })
 
   it("should return the card value", () => {
-    const card = new SkyjoCard(0)
+    const card = new Card(0)
 
     expect(card.value).toBe(0)
   })
 
   it("should return json with value as undefined if the card is not visible", () => {
     const id = crypto.randomUUID()
-    const card = new SkyjoCard(0, false, id)
+    const card = new Card(0, false, id)
 
     expect(card.toJson()).toMatchObject({
       id,
@@ -47,7 +47,7 @@ describe("SkyjoCard", () => {
   })
 
   it("should return json with value if card is visible", () => {
-    const card = new SkyjoCard(0, true)
+    const card = new Card(0, true)
 
     expect(card.toJson()).toMatchObject({
       value: 0,

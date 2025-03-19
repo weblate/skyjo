@@ -4,32 +4,32 @@ import {
   TEST_SOCKET_ID,
 } from "../../../tests/constants-test.js"
 import { Constants as CoreConstants } from "../../constants.js"
+import { Game } from "../Game.js"
 import { KickVote } from "../KickVote"
-import { Skyjo } from "../Skyjo.js"
-import { SkyjoPlayer } from "../SkyjoPlayer.js"
-import { SkyjoSettings } from "../SkyjoSettings.js"
+import { Player } from "../Player.js"
+import { Settings } from "../Settings.js"
 
 describe("KickVote", () => {
-  let game: Skyjo
-  let player: SkyjoPlayer
-  let opponent1: SkyjoPlayer
-  let opponent2: SkyjoPlayer
+  let game: Game
+  let player: Player
+  let opponent1: Player
+  let opponent2: Player
 
   beforeEach(() => {
-    player = new SkyjoPlayer(
+    player = new Player(
       { username: "player1", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
-    game = new Skyjo(player.id, new SkyjoSettings())
+    game = new Game({ hostId: player.id, settings: new Settings() })
     game.addPlayer(player)
 
-    opponent1 = new SkyjoPlayer(
+    opponent1 = new Player(
       { username: "opponent1", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     game.addPlayer(opponent1)
 
-    opponent2 = new SkyjoPlayer(
+    opponent2 = new Player(
       { username: "opponent2", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
@@ -78,7 +78,7 @@ describe("KickVote", () => {
     it("should return the required votes for a game with 3 players", () => {
       const vote = new KickVote(game, opponent1.id, player.id)
 
-      const player3 = new SkyjoPlayer(
+      const player3 = new Player(
         { username: "player3", avatar: CoreConstants.AVATARS.BEE },
         RANDOM_SOCKET_ID(),
       )

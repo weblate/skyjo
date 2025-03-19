@@ -1,8 +1,8 @@
 {
   "head": {
-    "keywords": "Skyjo,Skyjo en línea,juego multijugador,jugar con amigos,juegos en línea gratis,jugar Skyjo en línea",
-    "title": "Skyjo Online | Juego de Cartas Multijugador Gratis con Amigos",
-    "description": "¡Juega Skyjo online gratis! Un juego de cartas rápido y estratégico. Desafía a tus amigos, voltea cartas y consigue la puntuación más baja para ganar."
+    "keywords": "Skymo,Skyjo,Skyjo en línea,juego multijugador,jugar con amigos,juegos en línea gratis,jugar Skyjo en línea",
+    "title": "Skymo | Juega Skyjo en línea - Juego de Cartas Multijugador Gratis",
+    "description": "¡Juega Skyjo online gratis con Skymo! Un juego de cartas rápido y estratégico. Desafía a tus amigos, voltea cartas y consigue la puntuación más baja para ganar."
   },
   "pages": {
     "Index": {
@@ -55,8 +55,8 @@
           }
         },
         "reset-settings": "Restablecer los ajustes",
-        "allow-skyjo-for-column": "Permitir Skyjo para columna",
-        "allow-skyjo-for-row": "Permitir Skyjo para fila",
+        "remove-identical-column": "Remover columna si cartas idénticas",
+        "remove-identical-row": "Remover fila si cartas idénticas",
         "nb-columns": {
           "label": "Número de columnas",
           "title": "$número de columnas"
@@ -131,7 +131,7 @@
           "cookies": {
             "title": "Cookies",
             "description": "Utilizamos cookies esenciales para permitir la funcionalidad básica de nuestro sitio web:",
-            "items": "Cookies de sesión: Utilizamos una cookie de sesión (skyjo-io) para mantener su conexión a nuestros servidores de juego. Esta cookie es esencial para el funcionamiento del juego y caduca después de 24 horas;;Estas cookies no le rastrean a través de sitios web y solo se utilizan para proporcionar el servicio que ha solicitado"
+            "items": "Cookies de sesión: Utilizamos una cookie de sesión (skymo-io) para mantener su conexión a nuestros servidores de juego. Esta cookie es esencial para el funcionamiento del juego y caduca después de 24 horas;;Estas cookies no le rastrean a través de sitios web y solo se utilizan para proporcionar el servicio que ha solicitado"
           }
         },
         "how-we-use-your-information": {
@@ -165,9 +165,9 @@
         }
       },
       "head": {
-        "keywords": "Skyjo Online,política de privacidad,protección de datos,privacidad de juegos en línea,juego seguro,datos de usuario,cumplimiento del RGPD",
-        "title": "Política de Privacidad | Skyjo Online - Juego de Cartas Multiplayer",
-        "description": "Política de privacidad de Skyjo Online. Descubre cómo protegemos tus datos mientras disfrutas de nuestro juego de cartas. Prácticas transparentes y seguras."
+        "keywords": "Skymo,Skyjo Online,política de privacidad,protección de datos,privacidad de juegos en línea,juego seguro,datos de usuario,cumplimiento del RGPD",
+        "title": "Política de Privacidad | Skymo - Juego de Cartas Skyjo Multiplayer",
+        "description": "Política de privacidad de Skymo. Descubre cómo protegemos tus datos mientras disfrutas de nuestro juego de cartas Skyjo. Prácticas transparentes y seguras."
       }
     },
     "Rules": {
@@ -175,7 +175,7 @@
       "head": {
         "keywords": "Reglas de Skyjo, cómo jugar a Skyjo, juego Skyjo, multijugador en línea, juego de cartas gratuito, jugar con amigos, reglas del juego Skyjo",
         "description": "Aprende las reglas de Skyjo en 5 minutos. Guía rápida para dominar este divertido juego de cartas, voltear cartas estratégicamente y conseguir la menor puntuación. ¡Comienza a jugar ahora!",
-        "title": "Reglas de Skyjo | Cómo Jugar - Guía Rápida y Completa"
+        "title": "Skymo | Reglas de Skyjo - Cómo Jugar - Guía Rápida y Completa"
       }
     },
     "Search": {
@@ -378,7 +378,7 @@
       "ChromeIOS": "Pulse el icono de compartir, luego deslice y toque 'Agregar a la pantalla de inicio' para instalar",
       "FirefoxAndroid": "Toque el icono de menú y, a continuación, \"Añadir a la pantalla de inicio\" para instalar",
       "ChromeAndroid": "Toque el icono del menú, a continuación 'Añadir a la pantalla de inicio' para instalar",
-      "title": "¡Instala Skyjo en línea en tu dispositivo!",
+      "title": "¡Instala Skymo en tu dispositivo!",
       "FirefoxIOS": "Pulse el icono del menú, luego el icono de compartir, luego deslice y toque 'Agregar a la pantalla de inicio' para instalar",
       "install-button": {
         "title": "Instalar la aplicación",
@@ -474,8 +474,8 @@
     "GameRules": {
       "button-title": "Mostrar las reglas del juego",
       "title": "Reglas del juego",
-      "allow-skyjo-for-column": "Permitir Skyjo para columna: {value, select, true {si} false {no} other {desconocido}}",
-      "allow-skyjo-for-row": "Permitir Skyjo para la fila: {value, select, true {si} false {no} other {desconocido}}",
+      "remove-identical-column": "Remover columna si cartas idénticas: {value, select, true {si} false {no} other {desconocido}}",
+      "remove-identical-row": "Remover fila si cartas idénticas: {value, select, true {si} false {no} other {desconocido}}",
       "card-per-column": "Número de columnas: {value}",
       "card-per-row": "Número de filas: {value}",
       "initial-turned-count": "Número de cartas a girar al principio: {value}",
@@ -483,7 +483,7 @@
     }
   },
   "utils": {
-    "skyjo": {
+    "skymo": {
       "waiting": "Esperando a los jugadores",
       "turn": {
         "chooseAPile": "Elige una pila",

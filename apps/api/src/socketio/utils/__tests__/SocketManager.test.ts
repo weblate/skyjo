@@ -1,6 +1,6 @@
 import { Server as HttpServer } from "http"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
-import { Constants as ErrorConstants } from "@skyjo/error"
+import { Constants as ErrorConstants } from "@skymo/error"
 import { mockSocket } from "@tests/_mock.js"
 import { Server } from "socket.io"
 import { beforeEach, describe, expect, it, vi } from "vitest"

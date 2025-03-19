@@ -5,7 +5,7 @@ import {
   Constants as CoreConstants,
   CreatePlayer,
   createPlayer,
-} from "@skyjo/core"
+} from "@skymo/core"
 import {
   Dispatch,
   PropsWithChildren,

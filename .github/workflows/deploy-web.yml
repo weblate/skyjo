@@ -26,7 +26,7 @@ jobs:
       - name: Install Dependencies
         run: pnpm install
       - name: Build Project
-        run: pnpm build --filter @skyjo/web
+        run: pnpm build --filter @skymo/web
       - name: Set version env var in Vercel
         run: |
           TAG=${GITHUB_REF#refs/tags/v}

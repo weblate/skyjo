@@ -1,5 +1,5 @@
 {
-  "name": "@skyjo/error",
+  "name": "@skymo/error",
   "description": "An extension of the Node.js built-in Error class",
   "version": "1.48.0",
   "type": "module",
@@ -20,7 +20,7 @@
     "flatted": "^3.3.3"
   },
   "devDependencies": {
-    "@skyjo/ts-config": "workspace:*",
+    "@skymo/ts-config": "workspace:*",
     "@types/node": "^22.10.1",
     "typescript": "^5.7.2",
     "vitest": "^2.1.6"

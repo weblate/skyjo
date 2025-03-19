@@ -1,15 +1,15 @@
 import { PlayerService } from "@/socketio/services/player.service.js"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import {
+  Card,
   type ConnectionStatus,
   Constants as CoreConstants,
-  Skyjo,
-  SkyjoCard,
-  SkyjoPlayer,
-  SkyjoSettings,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import type { LastGame } from "@skyjo/shared/validations"
+  Game,
+  Player,
+  Settings,
+} from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { LastGame } from "@skymo/shared/validations"
 import {
   mockGameOperationManager,
   mockRedisInService,
@@ -25,7 +25,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("PlayerService", () => {
   let service: PlayerService
-  let socket: SkyjoSocket
+  let socket: GameSocket
 
   beforeEach(() => {
     service = new PlayerService()
@@ -37,9 +37,9 @@ describe("PlayerService", () => {
 
   describe("onConnectionLost", () => {
     it("should do nothing if player not found", async () => {
-      const game = new Skyjo({
+      const game = new Game({
         hostId: RANDOM_SOCKET_ID(),
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -50,13 +50,13 @@ describe("PlayerService", () => {
     })
 
     it("should set the player connection status to lost when game is playing", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: player.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
 
       game.addPlayer(player)
@@ -76,13 +76,13 @@ describe("PlayerService", () => {
     })
 
     it("should disconnect the player when game is in lobby", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: player.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
@@ -102,13 +102,13 @@ describe("PlayerService", () => {
     })
 
     it("should disconnect the player when game is stopped", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: player.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
@@ -144,19 +144,19 @@ describe("PlayerService", () => {
     })
 
     it("should throw if player is not in the game", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: opponent.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
       socket.data.gameCode = game.code
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
         "socketId9887",
       )
@@ -171,19 +171,19 @@ describe("PlayerService", () => {
     })
 
     it("should remove the player from the game if the game is in lobby", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: opponent.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
       game.addPlayer(opponent)
 
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
@@ -201,19 +201,19 @@ describe("PlayerService", () => {
     })
 
     it("should set the player to leave state and let the game goes", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: opponent.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
       game.addPlayer(opponent)
 
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
@@ -221,7 +221,7 @@ describe("PlayerService", () => {
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
         "socketId9887",
       )
@@ -229,14 +229,14 @@ describe("PlayerService", () => {
 
       await game.start()
 
-      player.cards[0][0] = new SkyjoCard(11)
-      player.cards[0][1] = new SkyjoCard(11)
+      player.cards[0][0] = new Card(11)
+      player.cards[0][1] = new Card(11)
 
-      opponent.cards[0][0] = new SkyjoCard(12)
-      opponent.cards[0][1] = new SkyjoCard(12)
+      opponent.cards[0][0] = new Card(12)
+      opponent.cards[0][1] = new Card(12)
 
-      opponent2.cards[0][0] = new SkyjoCard(11)
-      opponent2.cards[0][1] = new SkyjoCard(11)
+      opponent2.cards[0][0] = new Card(11)
+      opponent2.cards[0][1] = new Card(11)
 
       opponent.turnCard(0, 0)
       opponent.turnCard(0, 1)
@@ -255,19 +255,19 @@ describe("PlayerService", () => {
     })
 
     it("should remove the player if the game is finished", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: opponent.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
       game.addPlayer(opponent)
 
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
@@ -277,11 +277,11 @@ describe("PlayerService", () => {
 
       await game.start()
 
-      player.cards[0][0] = new SkyjoCard(11)
-      player.cards[0][1] = new SkyjoCard(11)
+      player.cards[0][0] = new Card(11)
+      player.cards[0][1] = new Card(11)
 
-      opponent.cards[0][0] = new SkyjoCard(12)
-      opponent.cards[0][1] = new SkyjoCard(12)
+      opponent.cards[0][0] = new Card(12)
+      opponent.cards[0][1] = new Card(12)
 
       opponent.turnCard(0, 0)
       opponent.turnCard(0, 1)
@@ -299,13 +299,13 @@ describe("PlayerService", () => {
     })
 
     it("should remove the player and the game if they are no more players", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: player.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
@@ -327,13 +327,13 @@ describe("PlayerService", () => {
 
   describe("onReconnect", () => {
     it("should throw if player cannot reconnect", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: player.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
@@ -341,7 +341,7 @@ describe("PlayerService", () => {
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -366,19 +366,19 @@ describe("PlayerService", () => {
     })
 
     it("should reconnect the player if in the time limit", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: player.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -414,17 +414,17 @@ describe("PlayerService", () => {
     })
 
     it("should reconnect the player if no time limit", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: player.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -457,23 +457,23 @@ describe("PlayerService", () => {
     it("should throw if player not found", async () => {
       vi.useFakeTimers()
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: opponent.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         "socketId9887",
       )
       game.addPlayer(opponent2)
 
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player3", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
@@ -483,8 +483,8 @@ describe("PlayerService", () => {
 
       await game.start()
 
-      opponent.cards = [[new SkyjoCard(1), new SkyjoCard(1)]]
-      opponent2.cards = [[new SkyjoCard(1), new SkyjoCard(1)]]
+      opponent.cards = [[new Card(1), new Card(1)]]
+      opponent2.cards = [[new Card(1), new Card(1)]]
 
       player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
 
@@ -500,23 +500,23 @@ describe("PlayerService", () => {
     })
 
     it("should set the player as connected and clear the disconnection timeout", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
+      const game = new Game({
         hostId: opponent.id,
-        settings: new SkyjoSettings(false),
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         "socketId9887",
       )
       game.addPlayer(opponent2)
 
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player3", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
@@ -526,8 +526,8 @@ describe("PlayerService", () => {
 
       await game.start()
 
-      opponent.cards = [[new SkyjoCard(1), new SkyjoCard(1)]]
-      opponent2.cards = [[new SkyjoCard(1), new SkyjoCard(1)]]
+      opponent.cards = [[new Card(1), new Card(1)]]
+      opponent2.cards = [[new Card(1), new Card(1)]]
 
       player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
 

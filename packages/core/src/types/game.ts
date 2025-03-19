@@ -7,16 +7,16 @@ import type {
   RoundPhase,
   TurnStatus,
 } from "@/constants.js"
-import type { SkyjoPlayerScores, SkyjoPlayerToJson } from "./skyjoPlayer.js"
-import type { SkyjoSettingsToJson } from "./skyjoSettings.js"
+import type { PlayerScores, PlayerToJson } from "./player.js"
+import type { SettingsToJson } from "./settings.js"
 
-export type SkyjoToJson = {
+export type GameToJson = {
   code: string
   status: GameStatus
   hostId: string
-  players: SkyjoPlayerToJson[]
+  players: PlayerToJson[]
   turn: number
-  settings: SkyjoSettingsToJson
+  settings: SettingsToJson
   selectedCardValue: number | null
   roundPhase: RoundPhase
   turnStatus: TurnStatus
@@ -26,7 +26,7 @@ export type SkyjoToJson = {
   updatedAt: Date
 }
 
-export type SkyjoDbFormat = {
+export type GameDb = {
   id: string
   code: string
   hostId: string
@@ -40,7 +40,7 @@ export type SkyjoDbFormat = {
     score: number
     wantsReplay: boolean
     connectionStatus: ConnectionStatus
-    scores: SkyjoPlayerScores
+    scores: PlayerScores
     hasPlayedLastTurn: boolean
     afkCount: number
     consecutiveAfkCount: number
@@ -60,8 +60,8 @@ export type SkyjoDbFormat = {
     isConfirmed: boolean
     private: boolean
     maxPlayers: number
-    allowSkyjoForColumn: boolean
-    allowSkyjoForRow: boolean
+    removeIdenticalColumn: boolean
+    removeIdenticalRow: boolean
     initialTurnedCount: number
     cardPerRow: number
     cardPerColumn: number

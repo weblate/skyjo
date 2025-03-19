@@ -1,5 +1,5 @@
 {
-  "name": "@skyjo/ts-config",
+  "name": "@skymo/ts-config",
   "description": "Typescript configuration for the project",
   "version": "1.48.0",
   "type": "module",

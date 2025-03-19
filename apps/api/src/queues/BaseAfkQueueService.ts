@@ -2,10 +2,10 @@ import { GameRepository } from "@/redis/game.repository.js"
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
-import type { Skyjo, SkyjoPlayer } from "@skyjo/core"
-import { Constants as CoreConstants } from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
+import type { Game, Player } from "@skymo/core"
+import { Constants as CoreConstants } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import { Logger } from "@skymo/logger"
 import { BaseQueueService } from "./BaseQueueService.js"
 
 export interface AfkJobData {
@@ -35,7 +35,7 @@ export abstract class BaseAfkQueueService<
     Logger.info(`BaseAfkQueueService initialized: ${queueName}`)
   }
 
-  protected getAfkTimeout(game: Skyjo): number {
+  protected getAfkTimeout(game: Game): number {
     const timeout = game.settings.private
       ? CoreConstants.AFK_TIMEOUT.PRIVATE
       : CoreConstants.AFK_TIMEOUT.PUBLIC
@@ -52,14 +52,14 @@ export abstract class BaseAfkQueueService<
     return finalTimeout
   }
 
-  protected isAfk(player: SkyjoPlayer) {
+  protected isAfk(player: Player) {
     return (
       player.consecutiveAfkCount >= CoreConstants.AFK_TIMEOUT.MAX_CONSECUTIVE ||
       player.afkCount >= CoreConstants.AFK_TIMEOUT.MAX_TOTAL
     )
   }
 
-  protected async increaseAfkCount(game: Skyjo, player: SkyjoPlayer) {
+  protected async increaseAfkCount(game: Game, player: Player) {
     player.afkCount++
     player.consecutiveAfkCount++
 
@@ -92,7 +92,7 @@ export abstract class BaseAfkQueueService<
     return false
   }
 
-  protected warnPlayer(player: SkyjoPlayer) {
+  protected warnPlayer(player: Player) {
     Logger.debug(
       `Sending AFK warning to player ${player.id} (${player.name})`,
       {
@@ -108,7 +108,7 @@ export abstract class BaseAfkQueueService<
     }
   }
 
-  protected async disconnectPlayer(game: Skyjo, player: SkyjoPlayer) {
+  protected async disconnectPlayer(game: Game, player: Player) {
     Logger.info(
       `Disconnecting AFK player ${player.id} (${player.name}) from game ${game.code}`,
       {
@@ -162,7 +162,7 @@ export abstract class BaseAfkQueueService<
   }
 
   protected async updateAndSendGame(
-    game: Skyjo,
+    game: Game,
     stateManager: GameStateTracker,
   ) {
     const operations = stateManager.getChanges()
@@ -185,7 +185,7 @@ export abstract class BaseAfkQueueService<
     })
   }
 
-  protected async lockGame(game: Skyjo) {
+  protected async lockGame(game: Game) {
     Logger.info(`Locking game ${game.code} for AFK processing`, {
       gameCode: game.code,
     })
@@ -201,7 +201,7 @@ export abstract class BaseAfkQueueService<
     await this.redis.updateGame(game)
   }
 
-  protected async unlockGame(game: Skyjo) {
+  protected async unlockGame(game: Game) {
     Logger.info(`Unlocking game ${game.code} from AFK processing`, {
       gameCode: game.code,
     })

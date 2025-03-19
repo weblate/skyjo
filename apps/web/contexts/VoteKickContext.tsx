@@ -1,9 +1,9 @@
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useKickVoteToasts } from "@/hooks/useKickVoteToasts"
 import { useRouter } from "@/i18n/routing"
-import { isHost } from "@/lib/skyjo"
-import { KickVoteToJson } from "@skyjo/core"
+import { isHost } from "@/lib/game"
+import { KickVoteToJson } from "@skymo/core"
 import {
   PropsWithChildren,
   createContext,
@@ -25,7 +25,7 @@ const VoteKickContext = createContext<VoteKickContext | undefined>(undefined)
 
 export const VoteKickProvider = ({ children }: PropsWithChildren) => {
   const { socket } = useSocket()
-  const { game, player } = useSkyjo()
+  const { game, player } = useGame()
   const router = useRouter()
   const {
     showVoteInitiated,

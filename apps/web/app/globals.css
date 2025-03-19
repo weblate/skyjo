@@ -2,6 +2,15 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  @font-face {
+    font-family: "Shantell Sans";
+    font-style: normal;
+    font-display: swap;
+    src: url(/fonts/ShantellSans.woff2) format("woff2");
+  }
+}
+
 body {
   padding: 0 !important;
   scroll-behavior: smooth !important;

@@ -1,6 +1,6 @@
 import type { BaseService } from "@/socketio/services/base.service.js"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
-import type { Skyjo } from "@skyjo/core"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
+import type { Game } from "@skymo/core"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { vi } from "vitest"
 
@@ -19,7 +19,7 @@ export const mockSocket = (id: string = TEST_SOCKET_ID) => {
     volatile: {
       emit: vi.fn(),
     },
-  } as unknown as SkyjoSocket
+  } as unknown as GameSocket
 }
 
 export const mockRedisInService = (service: BaseService) => {
@@ -78,7 +78,7 @@ export const mockBullMQ = () => {
     }
   })
 }
-export const mockGameOperationManager = (game: Skyjo) => {
+export const mockGameOperationManager = (game: Game) => {
   const instance = vi.fn().mockReturnValue({
     updateGame: vi.fn().mockResolvedValue(undefined),
     removeGame: vi.fn().mockResolvedValue(undefined),
@@ -132,7 +132,7 @@ export const mockGameOperationManager = (game: Skyjo) => {
   game.setOperationManager = instance
   return instance
 }
-export const mockGameStateTracker = (game: Skyjo) => {
+export const mockGameStateTracker = (game: Game) => {
   return {
     GameStateTracker: {
       getChanges: vi.fn().mockReturnValue(null),

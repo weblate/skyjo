@@ -10,17 +10,17 @@ import OpponentBoard from "@/components/OpponentBoard"
 import OpponentsMobileView from "@/components/OpponentsMobileView"
 import PlayerBoard from "@/components/PlayerBoard"
 import Scoreboard from "@/components/Scoreboard"
+import { useGame } from "@/contexts/GameContext"
 import { useRules } from "@/contexts/RulesContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
 import { useRouter } from "@/i18n/routing"
-import { isCurrentUserTurn } from "@/lib/skyjo"
+import { isCurrentUserTurn } from "@/lib/game"
 import { getRedirectionUrl } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skyjo/core"
+import { Constants as CoreConstants } from "@skymo/core"
 import { useEffect } from "react"
 import { useLocalStorage } from "react-use"
 
 const GamePage = () => {
-  const { game, player, opponents } = useSkyjo()
+  const { game, player, opponents } = useGame()
   const { openRules, isRulesOpen } = useRules()
   const router = useRouter()
   const [firstGame, setFirstGame] = useLocalStorage<boolean>("firstGame")

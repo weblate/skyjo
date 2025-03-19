@@ -1,12 +1,12 @@
 import { Opponents } from "@/types/opponents"
 import {
   Constants as CoreConstants,
-  SkyjoPlayerToJson,
-  SkyjoToJson,
-} from "@skyjo/core"
+  GameToJson,
+  PlayerToJson,
+} from "@skymo/core"
 
 export const getCurrentUser = (
-  players: SkyjoToJson["players"] | undefined,
+  players: GameToJson["players"] | undefined,
   playerId: string,
 ) => {
   if (!players) {
@@ -17,7 +17,7 @@ export const getCurrentUser = (
 }
 
 export const getConnectedPlayers = (
-  players: SkyjoToJson["players"] | undefined,
+  players: GameToJson["players"] | undefined,
 ) => {
   if (!players) {
     return []
@@ -30,7 +30,7 @@ export const getConnectedPlayers = (
 }
 
 export const getOpponents = (
-  players: SkyjoToJson["players"] | undefined,
+  players: GameToJson["players"] | undefined,
   playerId: string,
 ): Opponents => {
   if (!players) {
@@ -65,10 +65,7 @@ export const getOpponents = (
   }
 }
 
-export const isCurrentUserTurn = (
-  game?: SkyjoToJson,
-  player?: SkyjoPlayerToJson,
-) => {
+export const isCurrentUserTurn = (game?: GameToJson, player?: PlayerToJson) => {
   if (!player || !game) return false
   if (
     game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS &&
@@ -85,10 +82,7 @@ export const isCurrentUserTurn = (
   return game.players[game.turn].id === player.id
 }
 
-export const hasRevealedCardCount = (
-  player: SkyjoPlayerToJson,
-  count: number,
-) => {
+export const hasRevealedCardCount = (player: PlayerToJson, count: number) => {
   const currentCount = player.cards
     .flat()
     .filter((card) => card.isVisible).length
@@ -96,28 +90,28 @@ export const hasRevealedCardCount = (
   return currentCount === count
 }
 
-export const canTurnInitialCard = (game: SkyjoToJson) => {
+export const canTurnInitialCard = (game: GameToJson) => {
   return (
     game.status === CoreConstants.GAME_STATUS.PLAYING &&
     game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS
   )
 }
 
-export const hasTurnedCard = (player: SkyjoPlayerToJson, count: number) => {
+export const hasTurnedCard = (player: PlayerToJson, count: number) => {
   const visibleCards = player.cards.flat().filter((card) => card.isVisible)
 
   return visibleCards.length === count
 }
 
-export const getCurrentWhoHasToPlay = (game: SkyjoToJson) => {
+export const getCurrentWhoHasToPlay = (game: GameToJson) => {
   const players = getConnectedPlayers(game.players)
 
   return players.find((player) => player.id === game.players[game.turn].id)
 }
 
 export const getNextPlayerIndex = (
-  game: SkyjoToJson,
-  currentPlayer: SkyjoPlayerToJson,
+  game: GameToJson,
+  currentPlayer: PlayerToJson,
 ): number => {
   const opponents = getOpponents(game.players, currentPlayer.id).flat()
 
@@ -141,18 +135,18 @@ export const getNextPlayerIndex = (
   return nextOpponentIndex
 }
 
-export const isHost = (game?: SkyjoToJson, playerId?: string) => {
+export const isHost = (game?: GameToJson, playerId?: string) => {
   if (!game || !playerId) return false
 
   return playerId === game.hostId
 }
 
-export const getHost = (game?: SkyjoToJson) => {
+export const getHost = (game?: GameToJson) => {
   if (!game) return undefined
   return game.players.find((player) => player.id === game.hostId)
 }
 
-export const getCurrentScore = (player: SkyjoPlayerToJson) => {
+export const getCurrentScore = (player: PlayerToJson) => {
   return player.cards
     .flat()
     .reduce((acc, card) => (card.isVisible ? acc + card.value! : acc), 0)

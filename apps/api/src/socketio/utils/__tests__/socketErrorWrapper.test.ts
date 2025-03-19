@@ -1,11 +1,11 @@
-import { CError } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
+import { CError } from "@skymo/error"
+import { Logger } from "@skymo/logger"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { ZodError, ZodIssueCode } from "zod"
 import { socketErrorWrapper } from "../socketErrorWrapper.js"
 
 // Mock the Logger
-vi.mock("@skyjo/logger", () => ({
+vi.mock("@skymo/logger", () => ({
   Logger: {
     cError: vi.fn(),
     warn: vi.fn(),
@@ -14,8 +14,8 @@ vi.mock("@skyjo/logger", () => ({
 }))
 
 // Mock CError to ensure instanceof checks work correctly
-vi.mock("@skyjo/error", () => {
-  const originalModule = vi.importActual("@skyjo/error")
+vi.mock("@skymo/error", () => {
+  const originalModule = vi.importActual("@skymo/error")
   return {
     ...originalModule,
     CError: class CError extends Error {

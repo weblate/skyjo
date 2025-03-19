@@ -10,16 +10,16 @@ import {
   Constants as CoreConstants,
   CreatePlayer,
   GameStatus,
-} from "@skyjo/core"
-import { Constants as ErrorConstants } from "@skyjo/error"
+} from "@skymo/core"
+import { Constants as ErrorConstants } from "@skymo/error"
 import {
   ClientToServerEvents,
   ErrorJoinMessage,
   ErrorReconnectMessage,
   ErrorRecoverMessage,
   ServerToClientEvents,
-} from "@skyjo/shared/types"
-import { LastGame } from "@skyjo/shared/validations"
+} from "@skymo/shared/types"
+import { LastGame } from "@skymo/shared/validations"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import { WifiIcon, WifiOffIcon } from "lucide-react"
@@ -39,10 +39,10 @@ import { toast } from "sonner"
 
 dayjs.extend(utc)
 
-export type SkyjoSocket = Socket<ServerToClientEvents, ClientToServerEvents>
+export type GameSocket = Socket<ServerToClientEvents, ClientToServerEvents>
 
 type SocketContext = {
-  socket: SkyjoSocket | null
+  socket: GameSocket | null
   createGame: (player: CreatePlayer, isPrivate: boolean) => void
   joinGame: (
     player: CreatePlayer,
@@ -61,7 +61,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const searchParams = useSearchParams()
   const { setPlayerId } = useUser()
 
-  const [socket, setSocket] = useState<SkyjoSocket | null>(null)
+  const [socket, setSocket] = useState<GameSocket | null>(null)
 
   //#region error descriptions
   const joinErrorDescription: Record<ErrorJoinMessage, string> = {

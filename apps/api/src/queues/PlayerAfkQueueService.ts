@@ -1,9 +1,9 @@
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import type { Skyjo } from "@skyjo/core"
-import { Constants as CoreConstants } from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
+import type { Game } from "@skymo/core"
+import { Constants as CoreConstants } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import { Logger } from "@skymo/logger"
 import type { Job } from "bullmq"
 import { BaseAfkQueueService } from "./BaseAfkQueueService.js"
 
@@ -31,7 +31,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     return PlayerAfkQueueService.instance !== null
   }
 
-  public async startTimer(game: Skyjo, playerId: string): Promise<void> {
+  public async startTimer(game: Game, playerId: string): Promise<void> {
     const timeoutDuration = this.getAfkTimeout(game)
     const jobId = this.getJobId(game.code, playerId)
 
@@ -175,7 +175,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     return `game:${gameCode}:player:${playerId}`
   }
 
-  private async performAfkMove(game: Skyjo) {
+  private async performAfkMove(game: Game) {
     const stateManager = new GameStateTracker(game)
 
     const currentPlayer = game.getCurrentPlayer()

@@ -1,7 +1,7 @@
 import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
-import { type GameOperationManagerInterface, Skyjo } from "@skyjo/core"
+import { Game, type GameOperationManagerInterface } from "@skymo/core"
 import type { Socket } from "socket.io"
 import { PlayerAfkQueueService } from "../../queues/PlayerAfkQueueService.js"
 import { GameStateTracker } from "./GameStateTracker.js"
@@ -33,7 +33,7 @@ export class GameOperationManager implements GameOperationManagerInterface {
     await this.redis?.removeGame(gameCode)
   }
 
-  async updateGame(game: Skyjo): Promise<void> {
+  async updateGame(game: Game): Promise<void> {
     await this.redis?.updateGame(game)
   }
   //#endregion
@@ -50,7 +50,7 @@ export class GameOperationManager implements GameOperationManagerInterface {
   //#endregion
 
   //#region afk timer actions
-  async startRevealCardsAfkTimer(game: Skyjo): Promise<void> {
+  async startRevealCardsAfkTimer(game: Game): Promise<void> {
     await this.revealCardsAfkQueue?.startTimer(game)
   }
 
@@ -58,7 +58,7 @@ export class GameOperationManager implements GameOperationManagerInterface {
     await this.revealCardsAfkQueue?.cancelTimer(gameCode)
   }
 
-  async startPlayerAfkTimer(game: Skyjo, playerId: string): Promise<void> {
+  async startPlayerAfkTimer(game: Game, playerId: string): Promise<void> {
     await this.playerAfkQueue?.startTimer(game, playerId)
   }
 
@@ -72,7 +72,7 @@ export class GameOperationManager implements GameOperationManagerInterface {
   //#endregion
 
   async delayNewRound(
-    game: Skyjo,
+    game: Game,
     callback: () => Promise<void>,
     ms: number,
   ): Promise<void> {

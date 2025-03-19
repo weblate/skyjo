@@ -1,5 +1,5 @@
-import { Constants as CoreConstants, GameStatus } from "@skyjo/core"
-import { ErrorJoinMessage } from "@skyjo/shared/types"
+import { Constants as CoreConstants, GameStatus } from "@skymo/core"
+import { ErrorJoinMessage } from "@skymo/shared/types"
 import { type AppRouterInstance } from "next/dist/shared/lib/app-router-context.shared-runtime"
 import { toast } from "sonner"
 

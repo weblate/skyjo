@@ -1,5 +1,5 @@
 import { SeqTransport } from "@datalust/winston-seq"
-import { CError } from "@skyjo/error"
+import { CError } from "@skymo/error"
 import { parse, stringify } from "flatted"
 import { createLogger, format, transports } from "winston"
 import { ENV } from "../env.js"

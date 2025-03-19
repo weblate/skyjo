@@ -30,7 +30,7 @@ const Footer = () => {
             {t("home")}
           </Link>
           <Link
-            href="https://github.com/Maxentr/Skyjo/releases"
+            href="https://github.com/Maxentr/skymo/releases"
             target="_blank"
             className="text-black dark:text-dark-font underline"
           >

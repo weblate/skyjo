@@ -1,10 +1,10 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { BaseService } from "./base.service.js"
 
 export class BanService extends BaseService {
-  async onBanPlayer(socket: SkyjoSocket, targetId: string) {
+  async onBanPlayer(socket: GameSocket, targetId: string) {
     const game = await this.getGame(socket.data.gameCode)
 
     if (!game.isHost(socket.data.playerId)) {

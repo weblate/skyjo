@@ -1,8 +1,8 @@
 import { UserContextMenu } from "@/components/UserContextMenu"
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { SkyjoPlayerToJson } from "@skyjo/core"
+import { PlayerToJson } from "@skymo/core"
 import { VariantProps, cva } from "class-variance-authority"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
@@ -51,7 +51,7 @@ const textVariants = cva(
 )
 
 interface UserAvatarProps extends VariantProps<typeof containerVariants> {
-  player: SkyjoPlayerToJson
+  player: PlayerToJson
   allowContextMenu?: boolean
   showName?: boolean
   animate?: boolean
@@ -65,7 +65,7 @@ const UserAvatar = ({
   animate = false,
 }: UserAvatarProps) => {
   const tAvatar = useTranslations("utils.avatar")
-  const { player: currentPlayer } = useSkyjo()
+  const { player: currentPlayer } = useGame()
 
   const isCurrentPlayer = currentPlayer.socketId === player.socketId
   const disableContextMenu =

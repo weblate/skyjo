@@ -6,17 +6,17 @@ import {
   type JoinGame,
   createPlayer,
   joinGame,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import type { ErrorJoinMessage } from "@skyjo/shared/types"
+} from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { ErrorJoinMessage } from "@skymo/shared/types"
 import {
   type UpdateGameSettings,
   type UpdateMaxPlayers,
   updateGameSettingsSchema,
   updateMaxPlayersSchema,
-} from "@skyjo/shared/validations"
+} from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+import type { GameSocket } from "../types/gameSocket.js"
 
 const instance = new LobbyService()
 
@@ -26,7 +26,7 @@ const settingsRateLimiter = new RateLimiterMemory({
   duration: 5,
 })
 
-const lobbyRouter = (socket: SkyjoSocket) => {
+const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "create",
     socketErrorWrapper(async (player: CreatePlayer, isPrivate: boolean) => {

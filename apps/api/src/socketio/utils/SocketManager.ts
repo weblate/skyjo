@@ -1,12 +1,12 @@
 import { Server as HttpServer } from "http"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { ENV } from "@env"
-import type { Skyjo } from "@skyjo/core"
-import { Logger } from "@skyjo/logger"
+import type { Game } from "@skymo/core"
+import { Logger } from "@skymo/logger"
 import type {
   ClientToServerEvents,
   ServerToClientEvents,
-} from "@skyjo/shared/types"
+} from "@skymo/shared/types"
 import { createAdapter } from "@socket.io/redis-adapter"
 import dayjs from "dayjs"
 import { createClient } from "redis"
@@ -67,7 +67,7 @@ export class SocketManager {
       pingTimeout: 20000,
       pingInterval: 25000,
       cookie: {
-        name: "skyjo-io",
+        name: "skymo-io",
         httpOnly: true,
         sameSite: "strict",
         expires: dayjs().add(1, "day").toDate(),
@@ -89,14 +89,14 @@ export class SocketManager {
     return this.io !== null
   }
 
-  getSocket(playerId: string): SkyjoSocket | undefined {
+  getSocket(playerId: string): GameSocket | undefined {
     const io = this.getIO()
 
     return io.sockets.sockets.get(playerId)
   }
 
   sendToSocket<T extends keyof ServerToClientEvents>(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     params: {
       event: T
       data: Parameters<ServerToClientEvents[T]>
@@ -113,7 +113,7 @@ export class SocketManager {
     io.to(params.room).emit(params.event, ...params.data)
   }
 
-  sendGameToSocket(socketId: string, game: Skyjo) {
+  sendGameToSocket(socketId: string, game: Game) {
     const io = this.getIO()
     io.to(socketId).emit("game", game.toJson())
   }

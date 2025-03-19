@@ -1,20 +1,20 @@
 import { CardTable } from "@/components/CardTable"
 import { TurnTimer } from "@/components/TurnTimer"
+import { useGame } from "@/contexts/GameContext"
 import { useSettings } from "@/contexts/SettingsContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
-import { getCurrentScore } from "@/lib/skyjo"
+import { getCurrentScore } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
+import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 
 type PlayerBoardProps = {
-  player: SkyjoPlayerToJson
+  player: PlayerToJson
   isPlayerTurn: boolean
 }
 
 const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
-  const { game } = useSkyjo()
+  const { game } = useGame()
   const { settings } = useSettings()
   const ta = useTranslations("utils.avatar")
   const tp = useTranslations("components.PlayerBoard")
