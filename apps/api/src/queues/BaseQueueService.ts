@@ -22,8 +22,6 @@ export abstract class BaseQueueService<T> {
     this.queue = new Queue(queueName, {
       connection: {
         url: ENV.REDIS_URL,
-        maxRetriesPerRequest: 3,
-
         enableOfflineQueue: false,
       },
       ...options,
@@ -82,7 +80,6 @@ export abstract class BaseQueueService<T> {
       {
         connection: {
           url: ENV.REDIS_URL,
-          maxRetriesPerRequest: 3,
           enableOfflineQueue: false,
         },
         removeOnComplete: { count: 20, age: 15 * 60 },
