@@ -18,6 +18,7 @@ export class SocketManager {
   private io: Server<ClientToServerEvents, ServerToClientEvents> | null = null
   private pubClient: ReturnType<typeof createClient> | null = null
   private subClient: ReturnType<typeof createClient> | null = null
+  private initialized = false
 
   private constructor() {}
 
@@ -28,56 +29,74 @@ export class SocketManager {
     return SocketManager.instance
   }
 
-  setIO(server: HttpServer): void {
+  async setIO(server: HttpServer): Promise<void> {
     if (this.io) return
 
-    // Create Redis clients for the adapter
-    this.pubClient = createClient({ url: ENV.REDIS_URL })
-    this.subClient = this.pubClient.duplicate()
+    try {
+      Logger.info("Initializing Redis clients for Socket.IO adapter")
 
-    // Handle Redis client errors
-    this.pubClient.on("error", (err) => {
-      Logger.error("Redis Pub Client Error", { error: err })
-    })
-
-    this.subClient.on("error", (err) => {
-      Logger.error("Redis Sub Client Error", { error: err })
-    })
-
-    // Connect to Redis
-    Promise.all([this.pubClient.connect(), this.subClient.connect()])
-      .then(() => {
-        Logger.info("Redis clients connected for Socket.IO adapter")
-      })
-      .catch((err) => {
-        Logger.error("Failed to connect Redis clients for Socket.IO adapter", {
-          error: err,
-        })
+      this.pubClient = createClient({
+        url: ENV.REDIS_URL,
+        socket: {
+          reconnectStrategy: (retries) => {
+            Logger.info(`Redis Pub client reconnect attempt ${retries}`)
+            if (retries > 5) {
+              return new Error(
+                "Redis Pub client connection failed after 5 retries",
+              )
+            }
+            return Math.min(retries * 100, 3000)
+          },
+        },
       })
 
-    const io = new Server<ClientToServerEvents, ServerToClientEvents>(server, {
-      parser: customParser,
-      transports: ["polling", "websocket"],
-      cors: {
-        origin: ENV.ORIGINS,
-        credentials: true,
-      },
-      connectionStateRecovery: {
-        maxDisconnectionDuration: 300000,
-        skipMiddlewares: false,
-      },
-      pingTimeout: 20000,
-      pingInterval: 25000,
-      cookie: {
-        name: "skymo-io",
-        httpOnly: true,
-        sameSite: "strict",
-        expires: dayjs().add(1, "day").toDate(),
-      },
-      adapter: createAdapter(this.pubClient, this.subClient),
-    })
+      this.subClient = this.pubClient.duplicate()
 
-    this.io = io
+      this.pubClient.on("error", (err) => {
+        Logger.error("Redis Pub Client Error", { error: err })
+      })
+
+      this.subClient.on("error", (err) => {
+        Logger.error("Redis Sub Client Error", { error: err })
+      })
+
+      await Promise.all([this.pubClient.connect(), this.subClient.connect()])
+      Logger.info("Redis clients connected for Socket.IO adapter")
+
+      const io = new Server<ClientToServerEvents, ServerToClientEvents>(
+        server,
+        {
+          parser: customParser,
+          transports: ["polling", "websocket"],
+          cors: {
+            origin: ENV.ORIGINS,
+            credentials: true,
+          },
+          connectionStateRecovery: {
+            maxDisconnectionDuration: 300000,
+            skipMiddlewares: false,
+          },
+          pingTimeout: 20000,
+          pingInterval: 25000,
+          cookie: {
+            name: "skymo-io",
+            httpOnly: true,
+            sameSite: "strict",
+            expires: dayjs().add(1, "day").toDate(),
+          },
+          adapter: createAdapter(this.pubClient, this.subClient),
+        },
+      )
+
+      this.io = io
+      this.initialized = true
+      Logger.info("Socket.IO server initialized successfully")
+    } catch (error) {
+      Logger.error("Failed to initialize Socket.IO server", { error })
+
+      await this.cleanupRedisClients()
+      throw error
+    }
   }
 
   getIO(): Server<ClientToServerEvents, ServerToClientEvents> {
@@ -88,12 +107,11 @@ export class SocketManager {
   }
 
   isInitialized(): boolean {
-    return this.io !== null
+    return this.initialized
   }
 
   getSocket(playerId: string): GameSocket | undefined {
     const io = this.getIO()
-
     return io.sockets.sockets.get(playerId)
   }
 
@@ -104,8 +122,16 @@ export class SocketManager {
       data: Parameters<ServerToClientEvents[T]>
     },
   ) {
+    if (!socket.connected) {
+      Logger.debug(`Socket ${socket.id} is disconnected, skipping message`, {
+        socketId: socket.id,
+        event: params.event,
+      })
+      return
+    }
     socket.emit(params.event, ...params.data)
   }
+
   sendToRoom<T extends keyof ServerToClientEvents>(params: {
     room: string
     event: T
@@ -120,26 +146,8 @@ export class SocketManager {
     io.to(socketId).emit("game", game.toJson())
   }
 
-  async cleanup(): Promise<void> {
-    Logger.info("Cleaning up SocketManager resources")
-
-    if (this.io) {
-      try {
-        // Close all socket connections
-        const sockets = await this.io.fetchSockets()
-        for (const socket of sockets) {
-          socket.disconnect(true)
-        }
-
-        await new Promise<void>((resolve) => {
-          this.io?.close(() => resolve())
-        })
-
-        Logger.info("Socket.IO server closed")
-      } catch (error) {
-        Logger.error("Error closing Socket.IO server", { error })
-      }
-    }
+  private async cleanupRedisClients(): Promise<void> {
+    Logger.info("Cleaning up Redis adapter clients")
 
     if (this.pubClient) {
       try {
@@ -147,6 +155,8 @@ export class SocketManager {
         Logger.info("Redis pub client disconnected")
       } catch (error) {
         Logger.error("Error disconnecting Redis pub client", { error })
+      } finally {
+        this.pubClient = null
       }
     }
 
@@ -156,11 +166,44 @@ export class SocketManager {
         Logger.info("Redis sub client disconnected")
       } catch (error) {
         Logger.error("Error disconnecting Redis sub client", { error })
+      } finally {
+        this.subClient = null
+      }
+    }
+  }
+
+  async cleanup(): Promise<void> {
+    Logger.info("Cleaning up SocketManager resources")
+
+    if (this.io) {
+      try {
+        const sockets = await this.io.fetchSockets()
+        Logger.info(`Disconnecting ${sockets.length} active sockets`)
+
+        for (const socket of sockets) {
+          socket.disconnect(true)
+        }
+
+        this.io.disconnectSockets(true)
+
+        await new Promise<void>((resolve) => {
+          if (!this.io) {
+            resolve()
+            return
+          }
+          this.io.close(() => {
+            Logger.info("Socket.IO server closed")
+            resolve()
+          })
+        })
+      } catch (error) {
+        Logger.error("Error closing Socket.IO server", { error })
+      } finally {
+        this.io = null
       }
     }
 
-    this.io = null
-    this.pubClient = null
-    this.subClient = null
+    await this.cleanupRedisClients()
+    this.initialized = false
   }
 }

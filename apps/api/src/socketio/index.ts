@@ -10,28 +10,36 @@ import { playerRouter } from "./routers/player.router.js"
 import type { GameSocket } from "./types/gameSocket.js"
 import { SocketManager } from "./utils/SocketManager.js"
 
-export const initializeSocketServer = (server: ServerType) => {
-  const socketManager = SocketManager.getInstance()
-  socketManager.setIO(server as HttpServer)
-  const io = socketManager.getIO()
+export const initializeSocketServer = async (server: ServerType) => {
+  try {
+    Logger.info("Initializing Socket.IO server")
+    const socketManager = SocketManager.getInstance()
+    await socketManager.setIO(server as HttpServer)
+    const io = socketManager.getIO()
 
-  io.engine.on("connection_error", (error) => {
-    Logger.error("Socket connection error", {
-      error: error.message,
-      query: error.req?._query,
-      context: error.context,
-      code: error.code,
+    io.engine.on("connection_error", (error) => {
+      Logger.error("Socket connection error", {
+        error: error.message,
+        query: error.req?._query,
+        context: error.context,
+        code: error.code,
+      })
     })
-  })
 
-  io.on("connection", (socket: GameSocket) => {
-    lobbyRouter(socket)
-    playerRouter(socket)
-    gameRouter(socket)
-    chatRouter(socket)
-    kickRouter(socket)
-    banRouter(socket)
-  })
+    io.on("connection", (socket: GameSocket) => {
+      Logger.debug(`New socket connection: ${socket.id}`)
+      lobbyRouter(socket)
+      playerRouter(socket)
+      gameRouter(socket)
+      chatRouter(socket)
+      kickRouter(socket)
+      banRouter(socket)
+    })
 
-  return io
+    Logger.info("Socket.IO server initialized successfully")
+    return io
+  } catch (error) {
+    Logger.error("Failed to initialize Socket.IO server", { error })
+    throw error
+  }
 }

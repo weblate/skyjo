@@ -13,7 +13,6 @@ const app = new Hono()
 const port = 3001
 let server: ReturnType<typeof serve> | null = null
 
-// Memory usage monitoring
 const monitorMemoryUsage = () => {
   const formatMemoryUsage = (data: number) =>
     `${Math.round((data / 1024 / 1024) * 100) / 100} MB`
@@ -21,26 +20,26 @@ const monitorMemoryUsage = () => {
   const memoryData = process.memoryUsage()
 
   const memoryUsage = {
-    rss: formatMemoryUsage(memoryData.rss), // Total memory allocated for the process execution
-    heapTotal: formatMemoryUsage(memoryData.heapTotal), // Total size of the allocated heap
-    heapUsed: formatMemoryUsage(memoryData.heapUsed), // Actual memory used during the execution
-    external: formatMemoryUsage(memoryData.external), // Memory used by C++ objects bound to JavaScript objects
+    rss: formatMemoryUsage(memoryData.rss),
+    heapTotal: formatMemoryUsage(memoryData.heapTotal),
+    heapUsed: formatMemoryUsage(memoryData.heapUsed),
+    external: formatMemoryUsage(memoryData.external),
   }
 
-  Logger.info("Memory usage", { memoryUsage })
+  Logger.info(`Memory usage: ${JSON.stringify(memoryUsage)}`, {
+    memoryUsage,
+  })
 }
 
-// Start monitoring memory usage every 5 minutes
+// Start monitoring memory usage every minute
 const memoryMonitorInterval = setInterval(monitorMemoryUsage, 60 * 1000)
 
 const gracefulShutdown = async (signal: string) => {
   Logger.info(`Received ${signal}, starting graceful shutdown...`)
 
   try {
-    // Stop memory monitoring
     clearInterval(memoryMonitorInterval)
 
-    // Log final memory usage
     monitorMemoryUsage()
 
     if (PlayerAfkQueueService.exists()) {
@@ -58,7 +57,6 @@ const gracefulShutdown = async (signal: string) => {
       await revealCardsAfkQueueService.cleanup()
     }
 
-    // Clean up SocketManager
     Logger.info("Cleaning up SocketManager...")
     const socketManager = SocketManager.getInstance()
     if (socketManager.isInitialized()) {
@@ -68,12 +66,23 @@ const gracefulShutdown = async (signal: string) => {
     if (server) {
       Logger.info("Closing HTTP server...")
       await new Promise<void>((resolve) => {
-        server?.close(() => resolve())
+        if (!server) {
+          resolve()
+          return
+        }
+        server.close(() => resolve())
       })
     }
 
     Logger.info("Closing Redis connections...")
     await RedisClient.disconnect()
+
+    const forceExitTimeout = setTimeout(() => {
+      Logger.warn("Forcing process exit after timeout")
+      process.exit(0)
+    }, 5000)
+
+    forceExitTimeout.unref()
 
     Logger.info("Graceful shutdown completed")
     process.exit(0)
@@ -83,11 +92,9 @@ const gracefulShutdown = async (signal: string) => {
   }
 }
 
-// Register shutdown handlers
 process.on("SIGTERM", () => gracefulShutdown("SIGTERM"))
 process.on("SIGINT", () => gracefulShutdown("SIGINT"))
 
-// Add these to your index.ts
 process.on("uncaughtException", (error) => {
   Logger.error("Uncaught Exception:", { error })
   gracefulShutdown("Uncaught Exception")
@@ -98,22 +105,28 @@ process.on("unhandledRejection", (reason, promise) => {
   gracefulShutdown("Unhandled Promise Rejection")
 })
 
-try {
-  server = serve({
-    fetch: app.fetch,
-    port,
-  })
+const startServer = async () => {
+  try {
+    server = serve({
+      fetch: app.fetch,
+      port,
+    })
 
-  initializeSocketServer(server)
-  initializeHttpServer(app)
+    await initializeSocketServer(server)
+    initializeHttpServer(app)
 
-  // Log initial memory usage
-  monitorMemoryUsage()
+    monitorMemoryUsage()
 
-  Logger.info(`Server started on port ${port}`)
-} catch (error) {
-  Logger.error("Failed to start server:", {
-    error,
-  })
-  process.exit(1)
+    Logger.info(`Server started on port ${port}`)
+  } catch (error) {
+    Logger.error("Failed to start server:", {
+      error,
+    })
+    process.exit(1)
+  }
 }
+
+startServer().catch((error) => {
+  Logger.error("Error during server startup:", { error })
+  process.exit(1)
+})

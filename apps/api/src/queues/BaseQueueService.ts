@@ -12,6 +12,7 @@ export abstract class BaseQueueService<T> {
   private readonly queueName: string
   protected queue: Queue<T>
   protected worker: Worker<T>
+  private isShuttingDown = false
 
   constructor(queueName: string, options: Partial<QueueOptions> = {}) {
     this.queueName = queueName
@@ -21,6 +22,9 @@ export abstract class BaseQueueService<T> {
     this.queue = new Queue(queueName, {
       connection: {
         url: ENV.REDIS_URL,
+        maxRetriesPerRequest: 3,
+
+        enableOfflineQueue: false,
       },
       ...options,
     })
@@ -39,6 +43,14 @@ export abstract class BaseQueueService<T> {
     return new Worker<T>(
       this.queueName,
       async (job) => {
+        if (this.isShuttingDown) {
+          Logger.info(`Skipping job ${job.id} due to shutdown in progress`, {
+            jobId: job.id,
+            queueName: this.queueName,
+          })
+          return
+        }
+
         Logger.info(`Processing job ${job.id} from queue ${this.queueName}`, {
           jobId: job.id,
           queueName: this.queueName,
@@ -70,9 +82,11 @@ export abstract class BaseQueueService<T> {
       {
         connection: {
           url: ENV.REDIS_URL,
+          maxRetriesPerRequest: 3,
+          enableOfflineQueue: false,
         },
-        removeOnComplete: { count: 20, age: 15 * 60 }, // Keep max 20 completed jobs, remove after 15 minutes
-        removeOnFail: { count: 20, age: 15 * 60 }, // Keep max 20 failed jobs, remove after 15 minutes
+        removeOnComplete: { count: 20, age: 15 * 60 },
+        removeOnFail: { count: 20, age: 15 * 60 },
         concurrency: 3,
         ...options,
       },
@@ -136,12 +150,37 @@ export abstract class BaseQueueService<T> {
         queueName: this.queueName,
       })
     })
+
+    this.worker.on("error", (err) => {
+      Logger.error(`Worker error in queue ${this.queueName}`, {
+        error: err,
+        queueName: this.queueName,
+      })
+    })
+
+    this.worker.on("drained", () => {
+      Logger.debug(`Queue ${this.queueName} drained`, {
+        queueName: this.queueName,
+      })
+    })
   }
 
   public async cleanup(): Promise<void> {
     Logger.info(`Cleaning up queue service: ${this.queueName}`)
-    await this.worker.close()
-    await this.queue.close()
-    Logger.info(`Queue service cleaned up: ${this.queueName}`)
+    this.isShuttingDown = true
+
+    try {
+      await this.worker.close(true)
+      Logger.info(`Worker closed for queue: ${this.queueName}`)
+
+      await this.queue.drain()
+      await this.queue.close()
+      Logger.info(`Queue closed: ${this.queueName}`)
+    } catch (error) {
+      Logger.error(`Error during queue service cleanup: ${this.queueName}`, {
+        error,
+        queueName: this.queueName,
+      })
+    }
   }
 }
