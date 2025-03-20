@@ -10,12 +10,12 @@
 
 This repository contains the code of [Skymo](https://www.skymo.online), a Skyjo like online game.
 
-
+<p>
   <img alt="Uptime" src="https://uptime.skyjo.online/api/badge/4/status">
   <img alt="Sonar Quality Gate (branch)" src="https://img.shields.io/sonar/quality_gate/maxentr_skymo/trunk?server=https%3A%2F%2Fsonarcloud.io">
   <img alt="Sonar Tech Debt (branch)" src="https://img.shields.io/sonar/tech_debt/maxentr_skymo/trunk?server=https%3A%2F%2Fsonarcloud.io">
   <img alt="Weblate project translated" src="https://img.shields.io/weblate/progress/skymo">
-  <img alt="GitHub License" src="https://img.shields.io/github/license/maxentr/skymo">
+</p>
 
 ## Table of Contents
 
