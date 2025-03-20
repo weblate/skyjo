@@ -71,7 +71,8 @@ export abstract class BaseQueueService<T> {
         connection: {
           url: ENV.REDIS_URL,
         },
-        removeOnComplete: { count: 0 },
+        removeOnComplete: { count: 20, age: 15 * 60 }, // Keep max 20 completed jobs, remove after 15 minutes
+        removeOnFail: { count: 20, age: 15 * 60 }, // Keep max 20 failed jobs, remove after 15 minutes
         concurrency: 3,
         ...options,
       },
