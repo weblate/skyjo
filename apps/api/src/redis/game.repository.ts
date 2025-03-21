@@ -1,3 +1,4 @@
+import { ENV } from "@env"
 import {
   Constants as CoreConstants,
   Game,
@@ -7,7 +8,9 @@ import {
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import { type GameOperation } from "@skymo/state-operations"
+import { Queue } from "bullmq"
 import { RedisClient } from "./client.js"
+
 export class GameRepository extends RedisClient {
   private static readonly GAME_PREFIX = "game"
   private static readonly GAME_STATE_PREFIX = "state"
@@ -17,6 +20,21 @@ export class GameRepository extends RedisClient {
   private static readonly GAME_TTL = 60 * 10 // 10 minutes
   private static readonly PUBLIC_GAME_IN_LOBBY_TTL = 60 * 6 // 6 minutes
   private static readonly PUBLIC_GAMES_SORTED_SET = "public_games"
+
+  private static readonly CLEANUP_QUEUE = new Queue("game-cleanup", {
+    connection: {
+      url: ENV.REDIS_URL,
+      enableOfflineQueue: false,
+    },
+    defaultJobOptions: {
+      removeOnComplete: true,
+      attempts: 3,
+      backoff: {
+        type: "exponential",
+        delay: 1000,
+      },
+    },
+  })
 
   async createGame(game: Game) {
     const existingGame = await this.getGameSafe(game.code)
@@ -231,25 +249,21 @@ export class GameRepository extends RedisClient {
   }
 
   private async deleteGame(gameCode: string) {
-    const client = await RedisClient.getClient()
-    const keys = []
+    try {
+      await GameRepository.CLEANUP_QUEUE.add(
+        "cleanup",
+        { gameCode },
+        {
+          jobId: `cleanup-${gameCode}-${Date.now()}`,
+          removeOnComplete: true,
+        },
+      )
 
-    for await (const key of client.scanIterator({
-      MATCH: `${GameRepository.GAME_PREFIX}:${gameCode}:*`,
-      COUNT: 100,
-    })) {
-      keys.push(key)
-    }
-
-    if (keys.length > 0) {
-      Logger.info(`Deleting ${keys.length} keys for game ${gameCode}`, {
+      Logger.info(`Game ${gameCode} queued for cleanup`, { gameCode })
+    } catch (error) {
+      Logger.error(`Error queuing cleanup for game ${gameCode}`, {
         gameCode,
-        keys,
-      })
-      await client.unlink(keys)
-    } else {
-      Logger.error(`No keys to delete for game ${gameCode}`, {
-        gameCode,
+        error,
       })
     }
   }
