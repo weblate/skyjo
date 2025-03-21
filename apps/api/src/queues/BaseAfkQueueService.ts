@@ -24,7 +24,7 @@ export abstract class BaseAfkQueueService<
       defaultJobOptions: {
         attempts: 2,
         backoff: {
-          type: "fixed",
+          type: "exponential",
           delay: 1000,
         },
         removeOnComplete: true,

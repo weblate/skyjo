@@ -31,7 +31,6 @@ const monitorMemoryUsage = () => {
   })
 }
 
-// Start monitoring memory usage every minute
 const memoryMonitorInterval = setInterval(monitorMemoryUsage, 60 * 1000)
 
 const gracefulShutdown = async (signal: string) => {

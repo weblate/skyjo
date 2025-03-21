@@ -84,7 +84,11 @@ export abstract class BaseQueueService<T> {
         },
         removeOnComplete: { count: 20, age: 15 * 60 },
         removeOnFail: { count: 20, age: 15 * 60 },
-        concurrency: 3,
+        concurrency: 2,
+        limiter: {
+          max: 10,
+          duration: 1000,
+        },
         ...options,
       },
     )

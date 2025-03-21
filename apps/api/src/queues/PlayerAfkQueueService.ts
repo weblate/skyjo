@@ -56,7 +56,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
           delay: timeoutDuration,
           jobId,
           removeOnComplete: true,
-          removeOnFail: true,
+          removeOnFail: 50,
         },
       )
 

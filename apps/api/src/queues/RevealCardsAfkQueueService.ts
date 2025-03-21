@@ -47,7 +47,7 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
           delay: timeoutDuration,
           jobId,
           removeOnComplete: true,
-          removeOnFail: true,
+          removeOnFail: 50,
         },
       )
 
