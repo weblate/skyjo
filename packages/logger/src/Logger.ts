@@ -5,39 +5,18 @@ import { createLogger, format, transports } from "winston"
 import { ENV } from "../env.js"
 
 /**
- * Get current memory usage statistics
- */
-const getMemoryUsage = (): Record<string, unknown> => {
-  const memoryUsage = process.memoryUsage()
-  return {
-    rss: `${Math.round(memoryUsage.rss / 1024 / 1024)} MB`,
-    heapTotal: `${Math.round(memoryUsage.heapTotal / 1024 / 1024)} MB`,
-    heapUsed: `${Math.round(memoryUsage.heapUsed / 1024 / 1024)} MB`,
-    external: `${Math.round(memoryUsage.external / 1024 / 1024)} MB`,
-    arrayBuffers: `${Math.round(memoryUsage.arrayBuffers / 1024 / 1024)} MB`,
-    memoryUsagePercent: `${Math.round((memoryUsage.heapUsed / memoryUsage.heapTotal) * 100)}%`,
-  }
-}
-
-/**
  * Process metadata to safely handle circular references using flatted
  * and add memory usage information
  */
 const processMeta = (
   meta?: Record<string, unknown>,
 ): Record<string, unknown> | undefined => {
-  const memoryInfo = getMemoryUsage()
-  const metaWithMemory = meta
-    ? { ...meta, memory: memoryInfo }
-    : { memory: memoryInfo }
-
   try {
-    return parse(stringify(metaWithMemory)) as Record<string, unknown>
+    return parse(stringify(meta)) as Record<string, unknown>
   } catch (error) {
     return {
       serialization_error: `Failed to serialize metadata: ${error instanceof Error ? error.message : String(error)}`,
       metadata_keys: meta ? Object.keys(meta) : [],
-      memory: memoryInfo,
     }
   }
 }
