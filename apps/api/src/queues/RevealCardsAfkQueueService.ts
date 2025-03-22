@@ -192,9 +192,34 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
       },
     )
 
-    while (!player.hasRevealedCardCount(initialTurnedCount)) {
+    const maxAttempts = 12
+    let attempts = 0
+    const attemptedCards = new Set<string>()
+
+    while (
+      !player.hasRevealedCardCount(initialTurnedCount) &&
+      attempts < maxAttempts
+    ) {
       const cardToRevealCoords = player.getFirstCardNotVisible()
       if (!cardToRevealCoords) break
+
+      const cardKey = `${cardToRevealCoords.column},${cardToRevealCoords.row}`
+
+      if (attemptedCards.has(cardKey)) {
+        Logger.warn(
+          `Detected repeat attempt to reveal the same card at ${cardKey} for player ${player.id} in game ${game.code}`,
+          {
+            gameCode: game.code,
+            playerId: player.id,
+            playerName: player.name,
+            cardCoords: cardKey,
+          },
+        )
+        break
+      }
+
+      attemptedCards.add(cardKey)
+      attempts++
 
       Logger.info(
         `Revealing card at ${cardToRevealCoords.column},${cardToRevealCoords.row} for AFK player ${player.id} (${player.name}) in game ${game.code}`,
@@ -204,15 +229,44 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
           playerName: player.name,
           cardColumn: cardToRevealCoords.column,
           cardRow: cardToRevealCoords.row,
+          attemptNumber: attempts,
         },
       )
 
-      await game.revealCard({
-        player,
-        column: cardToRevealCoords.column,
-        row: cardToRevealCoords.row,
-        wasAfk: true,
-      })
+      try {
+        await game.revealCard({
+          player,
+          column: cardToRevealCoords.column,
+          row: cardToRevealCoords.row,
+          wasAfk: true,
+        })
+      } catch (error) {
+        Logger.error(
+          `Failed to reveal card at ${cardKey} for player ${player.id} in game ${game.code}`,
+          {
+            gameCode: game.code,
+            playerId: player.id,
+            error,
+          },
+        )
+        break
+      }
+    }
+
+    if (attempts >= maxAttempts) {
+      throw new CError(
+        `Hit maximum reveal attempts for AFK player ${player.id} in game ${game.code}`,
+        {
+          level: "warn",
+          code: ErrorConstants.ERROR.UNEXPECTED_ERROR,
+          meta: {
+            gameCode: game.code,
+            playerId: player.id,
+            playerName: player.name,
+            maxAttempts,
+          },
+        },
+      )
     }
 
     Logger.info(
@@ -221,6 +275,7 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
         gameCode: game.code,
         playerId: player.id,
         playerName: player.name,
+        attempts,
       },
     )
   }
