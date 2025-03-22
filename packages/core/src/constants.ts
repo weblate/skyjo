@@ -108,7 +108,7 @@ export class Constants {
     PUBLIC: 30000,
     PRIVATE: 120000,
     MAX_CONSECUTIVE: 2,
-    MAX_TOTAL: 3,
+    MAX_TOTAL: 4,
   } as const
 }
 
