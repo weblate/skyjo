@@ -43,6 +43,8 @@ jobs:
             type=ref,event=tag
 
       - name: Build and push Docker image to GitHub Container Registry
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
         uses: docker/build-push-action@v4
         with:
           context: .
