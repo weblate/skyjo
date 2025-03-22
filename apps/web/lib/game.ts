@@ -70,14 +70,16 @@ export const isCurrentUserTurn = (game?: GameToJson, player?: PlayerToJson) => {
   if (
     game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS &&
     game.status === CoreConstants.GAME_STATUS.PLAYING
-  )
-    return true
+  ) {
+    return !hasTurnedCard(player, game.settings.initialTurnedCount)
+  }
 
   if (
     game.status !== CoreConstants.GAME_STATUS.PLAYING ||
     game.roundPhase === CoreConstants.ROUND_PHASE.OVER
-  )
+  ) {
     return false
+  }
 
   return game.players[game.turn].id === player.id
 }
