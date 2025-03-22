@@ -1,7 +1,6 @@
 import type { GameDb, GameToJson } from "@/types/game.js"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import {
-  type ConnectionStatus,
   Constants,
   type GameStatus,
   type LastTurnStatus,
@@ -153,12 +152,31 @@ export class Game implements GameInterface {
     this.players.push(player)
   }
 
-  async removePlayer(playerId: string) {
-    if (this.isPlaying() && this.getCurrentPlayer()?.id === playerId) {
+  async setPlayerToLeave(player: Player) {
+    player.connectionStatus = Constants.CONNECTION_STATUS.LEAVE
+
+    if (!this.isPlaying()) {
+      await this.disconnectPlayer(player)
+    }
+  }
+
+  async disconnectPlayer(player: Player) {
+    player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+    const socket = this.operationManager.getSocket(player.socketId)
+    if (socket) {
+      await this.operationManager.kickSocket(socket)
+    }
+
+    if (this.isHost(player.id)) this.changeHost()
+
+    if (this.isPlaying() && this.getCurrentPlayer()?.id === player.id) {
       await this.finishTurn({ wasAfk: false })
     }
 
-    this.players = this.players.filter((player) => player.id !== playerId)
+    if (!this.isPlaying()) {
+      this.players = this.players.filter((p) => p.id !== player.id)
+    }
 
     if (
       this.isPlaying() &&
@@ -167,29 +185,13 @@ export class Game implements GameInterface {
     ) {
       await this.startRoundAfterInitialReveal()
     }
-  }
 
-  async disconnectPlayer(
-    player: Player,
-    status: ConnectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED,
-  ) {
-    player.connectionStatus = status
-
-    if (this.isHost(player.id)) this.changeHost()
-
-    const socket = this.operationManager.getSocket(player.socketId)
-    if (socket) {
-      await this.operationManager.kickSocket(socket)
+    if (this.isPlaying() && !this.hasMinPlayersConnected()) {
+      this.status = Constants.GAME_STATUS.STOPPED
     }
 
-    if (!this.isPlaying()) {
-      await this.removePlayer(player.id)
-
-      if (this.players.length === 0) {
-        await this.operationManager.removeGame(this.code)
-      }
-    } else if (!this.hasMinPlayersConnected()) {
-      this.status = Constants.GAME_STATUS.STOPPED
+    if (this.players.length === 0) {
+      await this.operationManager.removeGame(this.code)
     }
   }
 
@@ -413,8 +415,14 @@ export class Game implements GameInterface {
       )
     } else {
       const newCurrentPlayer = this.getCurrentPlayer()
-      newCurrentPlayer.turnStartTime = new Date()
-      await this.operationManager.startPlayerAfkTimer(this, newCurrentPlayer.id)
+
+      if (newCurrentPlayer) {
+        newCurrentPlayer.turnStartTime = new Date()
+        await this.operationManager.startPlayerAfkTimer(
+          this,
+          newCurrentPlayer.id,
+        )
+      }
     }
   }
 
@@ -638,10 +646,13 @@ export class Game implements GameInterface {
       return aSum > bSum ? a : b
     }, playersScore[0])
 
-    this.turn = playerToStart!.index
+    this.turn = playerToStart?.index ?? 0
     const currentPlayer = this.getCurrentPlayer()
-    currentPlayer.turnStartTime = new Date()
-    await this.operationManager.startPlayerAfkTimer(this, currentPlayer.id)
+
+    if (currentPlayer) {
+      currentPlayer.turnStartTime = new Date()
+      await this.operationManager.startPlayerAfkTimer(this, currentPlayer.id)
+    }
   }
 
   private haveAllPlayersRevealedCards() {
@@ -656,7 +667,9 @@ export class Game implements GameInterface {
     await this.setFirstPlayerToStart()
   }
 
-  private checkCardsToDiscard(player: Player) {
+  private checkCardsToDiscard(player: Player, maxDepth = 10) {
+    if (maxDepth <= 0) return // Prevent infinite recursion
+
     let cardsToDiscard: Card[] = []
 
     if (this.settings.removeIdenticalColumn) {
@@ -669,7 +682,7 @@ export class Game implements GameInterface {
     if (cardsToDiscard.length > 0) {
       cardsToDiscard.forEach((card) => this.discardCard(card.value))
 
-      this.checkCardsToDiscard(player)
+      this.checkCardsToDiscard(player, maxDepth - 1)
     }
   }
 
@@ -691,11 +704,16 @@ export class Game implements GameInterface {
   private getNextTurn() {
     let nextTurn = (this.turn + 1) % this.players.length
 
+    const startTurn = nextTurn
+
     while (
       this.players[nextTurn].connectionStatus ===
       Constants.CONNECTION_STATUS.DISCONNECTED
     ) {
       nextTurn = (nextTurn + 1) % this.players.length
+
+      // If we've checked all players and looped back to where we started, break
+      if (nextTurn === startTurn) break
     }
 
     return nextTurn

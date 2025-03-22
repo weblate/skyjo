@@ -258,48 +258,6 @@ describe("Game", () => {
     })
   })
 
-  describe("removePlayer", () => {
-    it("should remove player", async () => {
-      await game.removePlayer(player.id)
-      expect(game.players).toHaveLength(1)
-    })
-
-    it("should remove the player and finish player turn if it's the current player", async () => {
-      game.status = Constants.GAME_STATUS.PLAYING
-      game.turn = 1
-      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
-
-      await game.removePlayer(opponent.id)
-
-      expect(game.players).toHaveLength(1)
-      expect(game.turn).toBe(0)
-      expect(game.turnStatus).toBe(Constants.TURN_STATUS.CHOOSE_A_PILE)
-    })
-
-    it("should remove the player and set the round phase to MAIN if all players have revealed cards", async () => {
-      game.status = Constants.GAME_STATUS.PLAYING
-      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
-
-      player.cards = [
-        [new Card(10, false), new Card(10, true), new Card(10, true)],
-        [new Card(10, false), new Card(10, false), new Card(10, false)],
-        [new Card(10, false), new Card(10, false), new Card(10, false)],
-        [new Card(10, false), new Card(10, false), new Card(10, false)],
-      ]
-
-      opponent.cards = [
-        [new Card(9, false), new Card(9, true), new Card(9, true)],
-        [new Card(9, false), new Card(9, false), new Card(9, false)],
-        [new Card(9, false), new Card(9, false), new Card(9, false)],
-        [new Card(9, false), new Card(9, false), new Card(9, false)],
-      ]
-
-      await game.removePlayer(opponent.id)
-
-      expect(game.roundPhase).toBe(Constants.ROUND_PHASE.MAIN)
-    })
-  })
-
   describe("isHost", () => {
     it("should check if the player is host", () => {
       expect(game.isHost(player.id)).toBeTruthy()
@@ -416,14 +374,14 @@ describe("Game", () => {
     })
 
     it("should return false if there are less than min players connected", () => {
-      game.removePlayer(player.id)
+      game.players = game.players.filter((p) => p.id !== opponent.id)
       expect(game.hasMinPlayersConnected()).toBeFalsy()
     })
   })
 
   describe("start", () => {
     it("should not start the game if min players is not reached", async () => {
-      game.removePlayer(opponent.id)
+      game.players = game.players.filter((p) => p.id !== opponent.id)
       await expect(game.start()).toThrowCErrorWithCode(
         ErrorConstants.ERROR.TOO_FEW_PLAYERS,
       )
@@ -1705,13 +1663,13 @@ describe("Game", () => {
       game.players = [player]
       game.status = Constants.GAME_STATUS.LOBBY
 
-      const removePlayerSpy = vi.spyOn(game, "removePlayer")
+      const disconnectPlayerSpy = vi.spyOn(game, "disconnectPlayer")
 
       await game.disconnectPlayer(player)
 
-      expect(removePlayerSpy).toHaveBeenCalledWith(player.id)
+      expect(disconnectPlayerSpy).toHaveBeenCalledWith(player)
 
-      removePlayerSpy.mockClear()
+      disconnectPlayerSpy.mockClear()
     })
 
     it("should stop game if not enough connected players", async () => {

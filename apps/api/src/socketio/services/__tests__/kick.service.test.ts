@@ -224,7 +224,7 @@ describe("KickService", () => {
     it("should add a vote to the kick vote, try to kick the player but throw because player is not in the game", async () => {
       await service.onInitiateKickVote(opponent1Socket, opponent2.id)
 
-      game.removePlayer(opponent2.id)
+      game.players = game.players.filter((p) => p.id !== opponent2.id)
 
       await expect(service.onVoteToKick(socket, true)).toThrowCErrorWithCode(
         ErrorConstants.ERROR.PLAYER_NOT_FOUND,

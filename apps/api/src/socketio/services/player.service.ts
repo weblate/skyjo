@@ -68,7 +68,7 @@ export class PlayerService extends BaseService {
         )
       }
 
-      await game.disconnectPlayer(player, CoreConstants.CONNECTION_STATUS.LEAVE)
+      await game.setPlayerToLeave(player)
 
       const message = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
       this.socketManager.sendToRoom({

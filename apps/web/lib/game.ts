@@ -81,7 +81,7 @@ export const isCurrentUserTurn = (game?: GameToJson, player?: PlayerToJson) => {
     return false
   }
 
-  return game.players[game.turn].id === player.id
+  return game.players[game.turn]?.id === player.id
 }
 
 export const hasRevealedCardCount = (player: PlayerToJson, count: number) => {

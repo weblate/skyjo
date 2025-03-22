@@ -130,7 +130,7 @@ describe("GameStateTracker", () => {
         game.addPlayer(aPlayer)
         manager.getChanges()
 
-        game.removePlayer(aPlayer.id)
+        game.players = game.players.filter((p) => p.id !== aPlayer.id)
 
         expect(manager.getChanges()).toEqual({
           removePlayers: [aPlayer.id],
