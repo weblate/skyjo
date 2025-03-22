@@ -46,6 +46,9 @@ export class GameOperationManager implements GameOperationManagerInterface {
 
   async kickSocket(socket: Socket): Promise<void> {
     socket.leave(socket.data.gameCode)
+    socket.emit("leave:success", {
+      gameCode: socket.data.gameCode,
+    })
   }
   //#endregion
 

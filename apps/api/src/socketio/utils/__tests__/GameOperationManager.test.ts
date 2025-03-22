@@ -1,3 +1,4 @@
+import { mockSocket } from "@tests/_mock.js"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { GameOperationManager } from "../GameOperationManager.js"
 import { GameStateTracker } from "../GameStateTracker.js"
@@ -31,7 +32,7 @@ vi.mock("@/queues/RevealCardsAfkQueueService.js", () => ({
 vi.mock("@/socketio/utils/SocketManager.js", () => ({
   SocketManager: {
     getInstance: vi.fn().mockReturnValue({
-      getSocket: vi.fn().mockReturnValue({ id: "socket-id" }),
+      getSocket: vi.fn().mockReturnValue(mockSocket("socket-id")),
       sendToRoom: vi.fn(),
     }),
   },
@@ -104,9 +105,13 @@ describe("GameOperationManager", () => {
           gameCode: "TEST123",
         },
         leave: vi.fn(),
+        emit: vi.fn(),
       } as any
       await gameOperationManager.kickSocket(mockSocket)
       expect(mockSocket.leave).toHaveBeenCalledWith("TEST123")
+      expect(mockSocket.emit).toHaveBeenCalledWith("leave:success", {
+        gameCode: "TEST123",
+      })
     })
   })
 
