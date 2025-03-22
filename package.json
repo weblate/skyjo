@@ -1,6 +1,6 @@
 {
   "name": "skymo",
-  "version": "1.49.0",
+  "version": "1.51.0",
   "private": true,
   "workspaces": ["apps/*", "packages/*"],
   "scripts": {
