@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=.env src/index.ts",
-    "build": "tsc --project tsconfig.prod.json && pnpx tsc-alias --project tsconfig.prod.json && pnpm run sentry:sourcemaps",
+    "build": "tsc --project tsconfig.prod.json && pnpx tsc-alias --project tsconfig.prod.json && if [ \"$SKIP_SENTRY\" != \"true\" ]; then pnpm run sentry:sourcemaps || echo 'Sentry upload failed but continuing build'; fi",
     "prod": "tsx dist/src/index.js",
     "biome:check": "pnpm biome check --write .",
     "test": "vitest",

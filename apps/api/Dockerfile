@@ -20,7 +20,10 @@ COPY --from=pruner /app/out/json/ .
 RUN pnpm i --ignore-scripts
 COPY --from=pruner /app/out/full/ .
 ENV SENTRY_AUTH_TOKEN=${SENTRY_AUTH_TOKEN}
-RUN pnpm run build --filter=${PROJECT}
+RUN if [ -z "$SENTRY_AUTH_TOKEN" ]; then \
+      export SKIP_SENTRY=true; \
+    fi && \
+    pnpm run build --filter=${PROJECT}
 
 ENV NODE_ENV=production
 RUN pnpm install --prod --ignore-scripts
