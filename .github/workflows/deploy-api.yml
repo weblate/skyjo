@@ -77,3 +77,15 @@ jobs:
             docker compose up -d api
 
             docker volume prune -f
+
+      - name: Create Sentry release
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+          SENTRY_ORG: skymo
+          SENTRY_PROJECT: api
+        run: |
+          curl -sL https://sentry.io/get-cli/ | bash
+          VERSION=$(sentry-cli releases propose-version)
+          sentry-cli releases new "$VERSION"
+          sentry-cli releases set-commits "$VERSION" --auto
+          sentry-cli releases finalize "$VERSION"

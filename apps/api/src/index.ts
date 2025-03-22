@@ -8,6 +8,8 @@ import "@env"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
 import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
+import * as Sentry from "@sentry/node"
+import "./instrument.js"
 
 const app = new Hono()
 const port = 3001
@@ -82,6 +84,11 @@ const gracefulShutdown = async (signal: string) => {
     }, 5000)
 
     forceExitTimeout.unref()
+
+    if (Sentry.profiler) {
+      Logger.info("Stopping Sentry profiler...")
+      Sentry.profiler.stopProfiler()
+    }
 
     Logger.info("Graceful shutdown completed")
     process.exit(0)

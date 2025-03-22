@@ -6,16 +6,20 @@
   "type": "module",
   "scripts": {
     "dev": "tsx watch --env-file=.env src/index.ts",
-    "build": "tsc --project tsconfig.prod.json && pnpx tsc-alias --project tsconfig.prod.json",
+    "build": "tsc --project tsconfig.prod.json && pnpx tsc-alias --project tsconfig.prod.json && pnpm run sentry:sourcemaps",
     "prod": "tsx dist/src/index.js",
     "biome:check": "pnpm biome check --write .",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
-    "test:ui": "vitest --ui --coverage.enabled=true"
+    "test:ui": "vitest --ui --coverage.enabled=true",
+    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org skymo --project api ./dist && sentry-cli sourcemaps upload --org skymo --project api ./dist"
   },
   "dependencies": {
     "@hono/node-server": "^1.13.7",
     "@hono/zod-validator": "^0.4.1",
+    "@sentry/cli": "^2.42.4",
+    "@sentry/node": "^9.8.0",
+    "@sentry/profiling-node": "^9.8.0",
     "@skymo/core": "workspace:*",
     "@skymo/error": "workspace:*",
     "@skymo/logger": "workspace:*",
