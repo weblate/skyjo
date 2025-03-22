@@ -123,6 +123,11 @@
             "description": "Almacenamos temporalmente:",
             "items": "Nombres de usuario y opciones del avatar;;Elementos del juego y progreso"
           },
+          "user-provided-information": {
+            "title": "Información proporcionada por el usuario",
+            "description": "Recopilamos:",
+            "items": "Envío de formularios de comentarios (incluyendo direcciones de correo electrónico opcionales)"
+          },
           "local-storage-data": {
             "title": "Datos de almacenamiento local",
             "description": "Almacenamos en el almacenamiento local de su navegador:",
@@ -140,7 +145,7 @@
         },
         "contact-us": {
           "title": "Contacta con nosotros",
-          "description": "Si tiene alguna pregunta sobre esta Política de privacidad, por favor contáctenos a través de nuestro servidor Discord o GitHub."
+          "description": "Si tiene alguna pregunta sobre esta Política de privacidad, por favor contáctenos a través de comentarios en la página web, servidor Discord o GitHub."
         },
         "changes-to-this-policy": {
           "description": "Podemos actualizar esta política de vez en cuando. Le notificaremos de cualquier cambio publicando la nueva política en esta página.",
@@ -218,8 +223,31 @@
         "aria-label": "Menú"
       },
       "rules": "Reglas",
+      "feedback": "Dejar un comentario",
       "discord": "Discord",
       "settings": "Ajustes"
+    },
+    "Feedback": {
+      "title": "Dejar un comentario",
+      "description": "Puedes escribir un comentario para ayudarnos a mejorar el juego.",
+      "toast": {
+        "success": {
+          "title": "¡Gracias por tu opinión!",
+          "description": "Tus ideas nos han ayudado a mejorar nuestra página web de juegos, y estamos verdaderamente agradecidos."
+        },
+        "error": {
+          "title": "Se ha producido un error, por favor inténtelo de nuevo."
+        }
+      },
+      "email-input": {
+        "placeholder": "example@example.com",
+        "label": "Tu correo electrónico (opcional)"
+      },
+      "message-input": {
+        "label": "Tu mensaje",
+        "placeholder": "Cuéntanos lo que piensas, notas o quieres…"
+      },
+      "button-title": "Enviar"
     },
     "PlayerBoard": {
       "you": "Tú"
@@ -389,6 +417,7 @@
       "SafariIOS": "Pulsa el icono de compartir, desplázate y pulsa \"Añadir a la pantalla de inicio\" para instalarlo"
     },
     "Footer": {
+      "feedback": "Dejar un comentario",
       "rules": "Reglas del juego",
       "release-notes": "Notas de la versión",
       "privacy-policy": "Política de privacidad",

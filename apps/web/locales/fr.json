@@ -192,6 +192,11 @@
             "description": "Nous stockons temporairement :",
             "items": "Noms d'utilisateur et choix d'avatar;;Éléments et progression du jeu"
           },
+          "user-provided-information": {
+            "title": "Informations fournies par l'utilisateur",
+            "description": "Nous collectons :",
+            "items": "Soumissions du formulaire de commentaire (y compris les adresses e-mail optionnelles)"
+          },
           "local-storage-data": {
             "title": "Données de stockage local",
             "description": "Nous stockons dans le stockage local de votre navigateur :",
@@ -205,7 +210,7 @@
         },
         "how-we-use-your-information": {
           "title": "Comment nous utilisons vos informations",
-          "items": "Améliorer notre site web et l'expérience utilisateur;;Analyser les modèles d'utilisation et les performances"
+          "items": "Améliorer notre site web et l'expérience utilisateur;;Analyser les modèles d'utilisation et les performances;;Répondre aux commentaires et aux demandes de support;;Faciliter le déroulement du jeu"
         },
         "data-storage-and-retention": {
           "title": "Stockage et conservation des données",
@@ -218,7 +223,7 @@
         "your-rights-and-choices": {
           "title": "Vos droits et choix",
           "description": "Étant donné que nous collectons principalement des données anonymes, nous ne pouvons pas identifier ou accéder à des informations personnelles spécifiques à un utilisateur individuel. Cependant, vous disposez des droits et choix suivants :",
-          "items": "Local storage : Vous pouvez effacer le stockage local de votre navigateur à tout moment pour supprimer les préférences enregistrées;;Désactivation des analyses : Vous pouvez désactiver la collecte de données d'analyse en activant le paramètre \"Ne pas suivre\" de votre navigateur ou en utilisant des navigateurs axés sur la confidentialité qui bloquent les scripts d'analyse;;Données de jeu : Les données relatives au jeu sont automatiquement supprimées lorsque tous les joueurs quittent une partie"
+          "items": "Local storage : Vous pouvez effacer le stockage local de votre navigateur à tout moment pour supprimer les préférences enregistrée;;Commentaire : Si vous avez soumis un commentaire avec une adresse e-mail, vous pouvez nous contacter pour demander sa suppression;;Désactivation des analyses : Vous pouvez désactiver la collecte de données d'analyse en activant le paramètre \"Ne pas suivre\" de votre navigateur ou en utilisant des navigateurs axés sur la confidentialité qui bloquent les scripts d'analyse;;Données de jeu : Les données relatives au jeu sont automatiquement supprimées lorsque tous les joueurs quittent une partie"
         },
         "childrens-privacy": {
           "title": "Confidentialité des enfants",
@@ -230,7 +235,7 @@
         },
         "contact-us": {
           "title": "Nous contacter",
-          "description": "Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le serveur Discord du jeu ou via GitHub."
+          "description": "Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de commentaire sur le site web, le serveur Discord du jeu ou via GitHub."
         }
       }
     },
@@ -275,7 +280,30 @@
       "title": "Fin de la manche",
       "description": "La manche suivante va commencer dans quelques secondes…"
     },
+    "Feedback": {
+      "title": "Laisser un commentaire",
+      "description": "Vous pouvez écrire un commentaire pour nous aider à améliorer le jeu.",
+      "toast": {
+        "success": {
+          "title": "Merci de nous avoir fait part de vos commentaires !",
+          "description": "Vos commentaires nous ont aidés à améliorer notre site web sur les jeux, et nous vous en sommes très reconnaissants."
+        },
+        "error": {
+          "title": "Une erreur est survenue, veuillez réessayer."
+        }
+      },
+      "email-input": {
+        "label": "Votre email (facultatif)",
+        "placeholder": "exemple@exemple.fr"
+      },
+      "message-input": {
+        "label": "Votre message",
+        "placeholder": "Dites-nous ce que vous pensez, remarquez ou souhaitez…"
+      },
+      "button-title": "Envoyer"
+    },
     "Footer": {
+      "feedback": "Laisser un commentaire",
       "buy-game": "Acheter le jeu",
       "explanation": "Qu'est-ce que Skyjo ?",
       "rules": "Règles du jeu",
@@ -334,6 +362,7 @@
         "aria-label": "Menu"
       },
       "rules": "Règles",
+      "feedback": "Laisser un commentaire",
       "discord": "Discord",
       "settings": "Paramètres"
     },

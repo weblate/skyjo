@@ -1,5 +1,6 @@
 "use client"
 
+import FeedbackProvider from "@/contexts/FeedbackContext"
 import RulesProvider from "@/contexts/RulesContext"
 import SettingsProvider from "@/contexts/SettingsContext"
 import UserProvider from "@/contexts/UserContext"
@@ -35,36 +36,39 @@ const Providers = ({ children, locale }: ProvidersProps) => {
   return (
     <PostHogProvider client={posthog}>
       <QueryClientProvider client={queryClient}>
-        <RulesProvider>
-          <SettingsProvider locale={locale}>
-            <UserProvider>
-              <LazyMotion strict features={domAnimation}>
-                {children}
-              </LazyMotion>
-            </UserProvider>
-          </SettingsProvider>
-        </RulesProvider>
-        <Toaster
-          toastOptions={{
-            closeButton: false,
-            classNames: {
-              toast:
-                "!border-2 !border-black dark:!border-dark-border !bg-white dark:!bg-dark-body",
-              title: "!text-sm !font-semibold !text-black dark:!text-dark-font",
-              description:
-                "!text-sm !opacity-90 !text-black dark:!text-dark-font",
-              icon: "!text-black dark:!text-dark-font",
-            },
-          }}
-          icons={{
-            success: null,
-            error: null,
-            loading: null,
-            info: null,
-            warning: null,
-          }}
-          position="bottom-right"
-        />
+        <FeedbackProvider>
+          <RulesProvider>
+            <SettingsProvider locale={locale}>
+              <UserProvider>
+                <LazyMotion strict features={domAnimation}>
+                  {children}
+                </LazyMotion>
+              </UserProvider>
+            </SettingsProvider>
+          </RulesProvider>
+          <Toaster
+            toastOptions={{
+              closeButton: false,
+              classNames: {
+                toast:
+                  "!border-2 !border-black dark:!border-dark-border !bg-white dark:!bg-dark-body",
+                title:
+                  "!text-sm !font-semibold !text-black dark:!text-dark-font",
+                description:
+                  "!text-sm !opacity-90 !text-black dark:!text-dark-font",
+                icon: "!text-black dark:!text-dark-font",
+              },
+            }}
+            icons={{
+              success: null,
+              error: null,
+              loading: null,
+              info: null,
+              warning: null,
+            }}
+            position="bottom-right"
+          />
+        </FeedbackProvider>
       </QueryClientProvider>
     </PostHogProvider>
   )
