@@ -48,8 +48,6 @@ const FeedbackForm = ({ setOpen }: FeedbackProps) => {
   const submitAction = async (values: z.infer<typeof feedbackSchema>) => {
     if (!values.message) return
 
-    await new Promise((resolve) => setTimeout(resolve, 2000))
-
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/feedbacks`,
       {

@@ -18,7 +18,7 @@ export class RedisClient {
   public static async getClient(): Promise<RedisClientInstance> {
     if (this.instance?.isOpen) return this.instance
 
-    if (this.isConnecting && this.connectionPromise) {
+    if (this.isConnecting && this.connectionPromise !== null) {
       return this.connectionPromise
     }
 
