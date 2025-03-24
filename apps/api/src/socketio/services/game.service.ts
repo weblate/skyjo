@@ -131,20 +131,8 @@ export class GameService extends BaseService {
     await this.checkStateVersion(socket, clientStateVersion)
 
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isFinished() && !game.isStopped()) {
-      throw new CError(
-        `Player try to replay but the game is not finished. This error should never happen.`,
-        {
-          code: ErrorConstants.ERROR.NOT_ALLOWED,
-          meta: {
-            game: game.serialize(),
-            socketId: socket.id,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
-          },
-        },
-      )
-    }
+    if (!game.isFinished() && !game.isStopped()) return
+
     const stateManager = new GameStateTracker(game)
 
     await game.togglePlayerReplay(socket.data.playerId)
