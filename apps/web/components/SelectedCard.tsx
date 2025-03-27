@@ -9,10 +9,17 @@ type SelectedCardProps = {
 }
 
 const SelectedCard = ({ show }: SelectedCardProps) => {
-  const { game } = useGame()
+  const { game, isActionPending, lastClickedPile } = useGame()
 
   const pickFromDrawPile =
     game.lastTurnStatus === CoreConstants.LAST_TURN_STATUS.PICK_FROM_DRAW_PILE
+
+  // Show loading state for the selected card when we're replacing a card
+  // but not when we're discarding the selected card
+  const isSelectedCardLoading =
+    isActionPending &&
+    game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE &&
+    lastClickedPile !== "discard" // Don't show loading when discarding
 
   return (
     <AnimatePresence>
@@ -65,6 +72,7 @@ const SelectedCard = ({ show }: SelectedCardProps) => {
               }}
               size="normal"
               disabled
+              loading={isSelectedCardLoading}
               flipAnimation={false}
             />
           </m.div>

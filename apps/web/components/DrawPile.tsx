@@ -18,22 +18,23 @@ type DrawPileProps = {
 }
 
 const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
-  const { game, actions } = useGame()
+  const { game, actions, isActionPending, lastClickedPile } = useGame()
   const t = useTranslations("components.DrawPile")
 
   const onClick = () => {
-    if (
-      isPlayerTurn &&
-      game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
-    ) {
+    if (isPlayerTurn && !isActionPending) {
       actions.pickCardFromPile("draw")
     }
   }
 
-  const canDrawCard =
-    isPlayerTurn && game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
-      ? "animate-scale"
-      : ""
+  // Determine if this draw pile should have the selection animation
+  const shouldAnimate =
+    isPlayerTurn &&
+    game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE &&
+    !isActionPending
+
+  // Determine if this draw pile should pulse when action is pendings
+  const isDrawLoading = isActionPending && lastClickedPile === "draw"
 
   return (
     <div className="relative">
@@ -46,7 +47,7 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
         title={t("title")}
         className={cn(
           "!shadow-[3px_3px_0px_0px_rgba(0,0,0)] !mdh:md:shadow-[4px_4px_0px_0px_rgba(0,0,0)]",
-          canDrawCard,
+          shouldAnimate ? "animate-scale" : "",
         )}
         disabled={
           !(
@@ -54,6 +55,7 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
             game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
           )
         }
+        loading={isDrawLoading}
         flipAnimation={false}
       />
     </div>

@@ -12,26 +12,38 @@ type DiscardPileProps = {
 }
 
 const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
-  const { game, actions } = useGame()
+  const { game, actions, isActionPending, lastClickedPile, pendingAction } =
+    useGame()
   const t = useTranslations("components.DiscardPile")
 
   const onClick = () => {
     if (
       isPlayerTurn &&
       game.lastDiscardCardValue !== undefined &&
+      !isActionPending &&
       game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
-    )
+    ) {
       actions.pickCardFromPile("discard")
+    }
   }
 
   const onDiscard = () => {
-    if (isPlayerTurn) actions.discardSelectedCard()
+    if (isPlayerTurn && !isActionPending) actions.discardSelectedCard()
   }
+
+  // Check if discard is loading - either when lastClickedPile is "discard"
+  // OR when the specific action is discarding a selected card
+  const isDiscardLoading =
+    isActionPending &&
+    (lastClickedPile === "discard" ||
+      pendingAction === "play:discard-selected-card")
 
   if (
     isPlayerTurn &&
     game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE
   ) {
+    const shouldAnimate = !isActionPending
+
     return (
       <Card
         card={{
@@ -41,8 +53,9 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
         }}
         onClick={onDiscard}
         title={t("throw")}
-        className="translate-y-1 animate-scale"
+        className={cn("translate-y-1", shouldAnimate ? "animate-scale" : "")}
         disabled={false}
+        loading={isDiscardLoading}
         flipAnimation={false}
       />
     )
@@ -57,6 +70,8 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
   const canDiscard =
     isPlayerTurn && game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
 
+  const shouldAnimate = canDiscard && !isActionPending
+
   return (
     <div className="relative">
       <SelectedCard
@@ -68,9 +83,10 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
         title={t("title")}
         className={cn(
           card.value === -99 ? "translate-y-1" : "translate-y-[2.5px]",
-          canDiscard ? "animate-scale" : "",
+          shouldAnimate ? "animate-scale" : "",
         )}
         disabled={!canDiscard}
+        loading={isDiscardLoading}
         flipAnimation={false}
       />
     </div>

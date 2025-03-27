@@ -95,6 +95,16 @@ const config = {
             scale: "1.05",
           },
         },
+        "loading-card": {
+          "0%, 100%": {
+            scale: "1",
+            opacity: "1",
+          },
+          "50%": {
+            scale: "1.1",
+            opacity: "0.5",
+          },
+        },
         "small-bounce": {
           "0%, 100%": {
             transform: "translateY(-10%)",
@@ -175,6 +185,7 @@ const config = {
         "small-scale": "small-scale 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "small-bounce": "small-bounce 1s infinite",
         wizz: "wizz 1s",
+        "loading-card": "loading-card 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },

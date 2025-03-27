@@ -7,10 +7,8 @@ import { AnimatePresence, m } from "framer-motion"
 import { useTranslations } from "next-intl"
 
 const GameInfo = () => {
-  const { game, player, opponents } = useGame()
+  const { game, player, opponents, isActionPending } = useGame()
   const t = useTranslations("utils.skymo")
-
-  const isPlayerTurn = isCurrentUserTurn(game, player)
 
   const getGameInfo = () => {
     if (!player || !game) return t("waiting")
@@ -45,6 +43,15 @@ const GameInfo = () => {
     }
   }
 
+  const isPlayerTurn = isCurrentUserTurn(game, player)
+
+  const gameInProgress =
+    game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS ||
+    game.roundPhase === CoreConstants.ROUND_PHASE.MAIN ||
+    game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP
+
+  const showGameInfo = gameInProgress && isPlayerTurn && !isActionPending
+
   return (
     <div className="absolute -top-6 sm:-top-8 lg:-top-11 text-center text-sm animate-scale flex flex-col items-center">
       <AnimatePresence>
@@ -73,34 +80,31 @@ const GameInfo = () => {
             {t("last-turn")}
           </m.p>
         )}
-        {isPlayerTurn &&
-          (game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS ||
-            game.roundPhase === CoreConstants.ROUND_PHASE.MAIN ||
-            game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP) && (
-            <m.p
-              key="game-info-text"
-              className="text-nowrap text-sm text-black dark:text-dark-font"
-              initial={{
-                scale: 0,
-              }}
-              animate={{
-                scale: 1,
-                transition: {
-                  duration: 0.3,
-                  ease: "easeInOut",
-                },
-              }}
-              exit={{
-                scale: 0,
-                transition: {
-                  duration: 0.5,
-                  ease: "easeInOut",
-                },
-              }}
-            >
-              {getGameInfo()}
-            </m.p>
-          )}
+        {showGameInfo && (
+          <m.p
+            key="game-info-text"
+            className="text-nowrap text-sm text-black dark:text-dark-font"
+            initial={{
+              scale: 0,
+            }}
+            animate={{
+              scale: 1,
+              transition: {
+                duration: 0.3,
+                ease: "easeInOut",
+              },
+            }}
+            exit={{
+              scale: 0,
+              transition: {
+                duration: 0.5,
+                ease: "easeInOut",
+              },
+            }}
+          >
+            {getGameInfo()}
+          </m.p>
+        )}
       </AnimatePresence>
     </div>
   )

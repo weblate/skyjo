@@ -37,6 +37,10 @@ const cardClass = cva(
         true: "",
         false: "",
       },
+      loading: {
+        true: " animate-loading-card",
+        false: "",
+      },
     },
   },
 )
@@ -96,6 +100,7 @@ type CardProps = {
   disabled?: boolean
   flipAnimation?: boolean
   exitAnimation?: boolean
+  loading?: boolean
 }
 const Card = ({
   card,
@@ -106,6 +111,7 @@ const Card = ({
   disabled = false,
   flipAnimation = true,
   exitAnimation = false,
+  loading = false,
 }: CardProps) => {
   const [scope, animate] = useAnimate()
   const { theme, systemTheme } = useTheme()
@@ -187,12 +193,13 @@ const Card = ({
           size,
           value: cardValue[value ?? "not-visible"],
           disabled,
+          loading,
         }),
         className,
       )}
       onClick={onClick}
       title={title}
-      disabled={disabled}
+      disabled={disabled || loading}
     >
       {value === -98 && <Trash2Icon className={throwIconClass({ size })} />}
       {card.isVisible && value !== null && value}

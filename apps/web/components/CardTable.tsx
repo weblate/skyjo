@@ -33,8 +33,12 @@ const CardTable = ({
   showSelectionAnimation = false,
   size = GameBoardSize.NORMAL,
 }: CardTableProps) => {
-  const { game, player, actions } = useGame()
+  const { game, player, actions, isActionPending } = useGame()
   const numberOfRows = cards?.[0]?.length
+  const [lastClickedPosition, setLastClickedPosition] = useState<{
+    column: number
+    row: number
+  } | null>(null)
   const [numberOfRowsForClass, setNumberOfRowsForClass] = useState<number>(
     game.settings.cardPerRow,
   )
@@ -48,6 +52,10 @@ const CardTable = ({
   const canTurnCard = game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD
 
   const onClick = (column: number, row: number) => {
+    if (isActionPending) return
+
+    setLastClickedPosition({ column, row })
+
     if (canTurnCardsAtBeginning) {
       actions.playRevealCard(column, row)
     } else if (isCurrentUserTurn(game, player)) {
@@ -59,6 +67,12 @@ const CardTable = ({
         actions.turnCard(column, row)
     }
   }
+
+  useEffect(() => {
+    if (!isActionPending) {
+      setLastClickedPosition(null)
+    }
+  }, [isActionPending])
 
   // wait 2 seconds to set the number of rows (it's the time it takes for the animation to finish)
   useEffect(() => {
@@ -89,18 +103,27 @@ const CardTable = ({
             const canBeSelected =
               ((canTurnCardsAtBeginning || canTurnCard) && !card.isVisible) ||
               canReplaceCard
+
+            const isCardLoading =
+              isActionPending &&
+              lastClickedPosition !== null &&
+              lastClickedPosition.column === columnIndex &&
+              lastClickedPosition.row === rowIndex
+
+            const shouldShowSelectionAnimation =
+              showSelectionAnimation && canBeSelected && !isActionPending
+
             return (
               <Card
                 key={card.id}
                 card={card}
                 onClick={() => onClick(columnIndex, rowIndex)}
                 className={
-                  showSelectionAnimation && canBeSelected
-                    ? "animate-small-scale"
-                    : ""
+                  shouldShowSelectionAnimation ? "animate-small-scale" : ""
                 }
                 size={size}
-                disabled={cardDisabled || !canBeSelected}
+                disabled={cardDisabled || !canBeSelected || isActionPending}
+                loading={isCardLoading}
                 flipAnimation={
                   game?.lastTurnStatus === CoreConstants.LAST_TURN_STATUS.TURN
                 }
