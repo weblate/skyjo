@@ -17,6 +17,7 @@ import {
   PlayPickCard,
   PlayerToJson,
 } from "@skymo/core"
+import { ClientToServerGameWithAckEvents } from "@skymo/shared/types"
 import { UpdateGameSettings, UpdateMaxPlayers } from "@skymo/shared/validations"
 import {
   type GameOperation,
@@ -41,6 +42,9 @@ type GameContext = {
   game: GameToJson
   player: PlayerToJson
   opponents: Opponents
+  isActionPending: boolean
+  pendingAction: string | null
+  lastClickedPile: "draw" | "discard" | null
   actions: {
     updateMaxPlayers: (maxPlayers: UpdateMaxPlayers) => void
     updateSingleSettings: <T extends keyof UpdateGameSettings>(
@@ -75,6 +79,13 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const { showAfkWarning, showAfkKick, showPlayerAfkKick } = useAfkKickToasts()
 
   const [game, setGame] = useState<GameToJson>()
+
+  const [pendingAction, setPendingAction] = useState<string | null>(null)
+  const [lastClickedPile, setLastClickedPile] = useState<
+    "draw" | "discard" | null
+  >(null)
+
+  const isActionPending = pendingAction !== null
 
   const player = getCurrentUser(game?.players, playerId)
   const opponents = getOpponents(game?.players, playerId)
@@ -143,6 +154,8 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
 
   const onGameUpdate = (operations: GameOperation) => {
     console.log("onGameUpdate", operations)
+    setPendingAction(null)
+    setLastClickedPile(null)
     setGame((prev) => {
       if (!prev) return prev
       const prevState = structuredClone(prev)
@@ -243,6 +256,21 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   //#endregion
 
   //#region actions
+  const ackCallback = (event: string) => (result: boolean) => {
+    console.log("ackCallback", event, result)
+    setPendingAction(event)
+  }
+  const sendWithAck = <
+    T extends keyof ClientToServerGameWithAckEvents,
+    D extends Parameters<ClientToServerGameWithAckEvents[T]>,
+  >(params: {
+    event: T
+    data: D
+  }) => {
+    if (isActionPending) return
+
+    socket!.emit(params.event, ...params.data)
+  }
   const updateMaxPlayers = (maxPlayers: UpdateMaxPlayers) => {
     if (!host) return
 
@@ -285,50 +313,67 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }
 
   const playRevealCard = (column: number, row: number) => {
-    socket!.emit(
-      "play:reveal-card",
-      {
-        column: column,
-        row: row,
-      },
-      stateVersion,
-    )
+    sendWithAck({
+      event: "play:reveal-card",
+      data: [
+        {
+          column: column,
+          row: row,
+        },
+        stateVersion,
+        ackCallback("play:reveal-card"),
+      ],
+    })
   }
 
   const pickCardFromPile = (pile: PlayPickCard["pile"]) => {
-    socket!.emit(
-      "play:pick-card",
-      {
-        pile,
-      },
-      stateVersion,
-    )
+    setLastClickedPile(pile)
+    sendWithAck({
+      event: "play:pick-card",
+      data: [
+        {
+          pile,
+        },
+        stateVersion,
+        ackCallback("play:pick-card"),
+      ],
+    })
   }
 
   const replaceCard = (column: number, row: number) => {
-    socket!.emit(
-      "play:replace-card",
-      {
-        column: column,
-        row: row,
-      },
-      stateVersion,
-    )
+    sendWithAck({
+      event: "play:replace-card",
+      data: [
+        {
+          column: column,
+          row: row,
+        },
+        stateVersion,
+        ackCallback("play:replace-card"),
+      ],
+    })
   }
 
   const discardSelectedCard = () => {
-    socket!.emit("play:discard-selected-card", stateVersion)
+    setLastClickedPile("discard")
+    sendWithAck({
+      event: "play:discard-selected-card",
+      data: [stateVersion, ackCallback("play:discard-selected-card")],
+    })
   }
 
   const turnCard = (column: number, row: number) => {
-    socket!.emit(
-      "play:turn-card",
-      {
-        column: column,
-        row: row,
-      },
-      stateVersion,
-    )
+    sendWithAck({
+      event: "play:turn-card",
+      data: [
+        {
+          column: column,
+          row: row,
+        },
+        stateVersion,
+        ackCallback("play:turn-card"),
+      ],
+    })
   }
 
   const replay = () => {
@@ -364,8 +409,11 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       player: player as PlayerToJson,
       opponents,
       actions,
+      isActionPending,
+      pendingAction,
+      lastClickedPile,
     }),
-    [game, opponents, player],
+    [game, opponents, player, isActionPending, pendingAction, lastClickedPile],
   )
 
   if (!game || !player) return null

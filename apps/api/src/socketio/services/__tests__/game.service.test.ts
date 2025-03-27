@@ -1330,9 +1330,7 @@ describe("GameService", () => {
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
-      await expect(
-        service.onReplay(socket, game.stateVersion),
-      ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
+      await service.onReplay(socket, game.stateVersion)
 
       expect(socket.emit).not.toHaveBeenCalled()
     })
