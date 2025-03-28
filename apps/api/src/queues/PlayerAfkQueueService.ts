@@ -118,7 +118,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
 
     try {
       game.setOperationManager(GameOperationManager.getInstance())
-      if (!game.isPlaying() || !game.isRoundInMain()) {
+      if (!game.isPlaying() || !game.isRoundMain()) {
         Logger.debug(
           `Game ${gameCode} is not in playing state or not in main round, skipping AFK job`,
           {
@@ -126,7 +126,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
             playerId,
             jobId: job.id,
             isPlaying: game.isPlaying(),
-            isRoundInMain: game.isRoundInMain(),
+            isRoundMain: game.isRoundMain(),
           },
         )
         return

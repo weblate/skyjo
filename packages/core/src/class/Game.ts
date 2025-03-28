@@ -255,11 +255,11 @@ export class Game implements GameInterface {
     return this.roundPhase === Constants.ROUND_PHASE.REVEAL_CARDS
   }
 
-  isRoundInMain() {
+  isRoundMain() {
     return this.roundPhase === Constants.ROUND_PHASE.MAIN
   }
 
-  isRoundInLastLap() {
+  isRoundLastLap() {
     return this.roundPhase === Constants.ROUND_PHASE.LAST_LAP
   }
 
@@ -822,7 +822,7 @@ export class Game implements GameInterface {
       this.setFirstPlayerToFinish(currentPlayer)
     }
 
-    if (this.isRoundInLastLap()) {
+    if (this.isRoundLastLap()) {
       currentPlayer.hasPlayedLastTurn = true
       this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
       currentPlayer.turnAllCards()

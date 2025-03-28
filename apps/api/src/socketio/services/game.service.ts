@@ -222,10 +222,7 @@ export class GameService extends BaseService {
     }
 
     // TODO remove this condition in 1.36.0 if game sync works and this error never happens in last versions
-    if (
-      !game.isPlaying() ||
-      (!game.isRoundInMain() && !game.isRoundInLastLap())
-    ) {
+    if (!game.isPlaying() || (!game.isRoundMain() && !game.isRoundLastLap())) {
       this.socketManager.sendGameToSocket(socket.id, game)
       throw new CError(
         `Player try to play but the game is not in playing state. This should not happen since the game sync was normally checked before. Sent game to the player to fix the issue.`,

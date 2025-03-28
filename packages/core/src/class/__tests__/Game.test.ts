@@ -331,32 +331,32 @@ describe("Game", () => {
     it("correctly identifies turning cards phase", () => {
       game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
       expect(game.isRoundRevealCards()).toBe(true)
-      expect(game.isRoundInMain()).toBe(false)
-      expect(game.isRoundInLastLap()).toBe(false)
+      expect(game.isRoundMain()).toBe(false)
+      expect(game.isRoundLastLap()).toBe(false)
       expect(game.isRoundOver()).toBe(false)
     })
 
     it("correctly identifies main phase", () => {
       game.roundPhase = Constants.ROUND_PHASE.MAIN
       expect(game.isRoundRevealCards()).toBe(false)
-      expect(game.isRoundInMain()).toBe(true)
-      expect(game.isRoundInLastLap()).toBe(false)
+      expect(game.isRoundMain()).toBe(true)
+      expect(game.isRoundLastLap()).toBe(false)
       expect(game.isRoundOver()).toBe(false)
     })
 
     it("correctly identifies last lap phase", () => {
       game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
       expect(game.isRoundRevealCards()).toBe(false)
-      expect(game.isRoundInMain()).toBe(false)
-      expect(game.isRoundInLastLap()).toBe(true)
+      expect(game.isRoundMain()).toBe(false)
+      expect(game.isRoundLastLap()).toBe(true)
       expect(game.isRoundOver()).toBe(false)
     })
 
     it("correctly identifies over phase", () => {
       game.roundPhase = Constants.ROUND_PHASE.OVER
       expect(game.isRoundRevealCards()).toBe(false)
-      expect(game.isRoundInMain()).toBe(false)
-      expect(game.isRoundInLastLap()).toBe(false)
+      expect(game.isRoundMain()).toBe(false)
+      expect(game.isRoundLastLap()).toBe(false)
       expect(game.isRoundOver()).toBe(true)
     })
   })
@@ -399,7 +399,7 @@ describe("Game", () => {
       await game.start()
 
       expect(game.isPlaying()).toBeTruthy()
-      expect(game.isRoundInMain()).toBeTruthy()
+      expect(game.isRoundMain()).toBeTruthy()
     })
   })
 
