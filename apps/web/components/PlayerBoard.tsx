@@ -4,7 +4,7 @@ import { useGame } from "@/contexts/GameContext"
 import { useSettings } from "@/contexts/SettingsContext"
 import { getCurrentScore } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
+import { PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 
@@ -14,23 +14,20 @@ type PlayerBoardProps = {
 }
 
 const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
-  const { game, isActionPending } = useGame()
+  const { game, isActionPending, roundPhase, turnStatus } = useGame()
   const { settings } = useSettings()
   const ta = useTranslations("utils.avatar")
   const tp = useTranslations("components.PlayerBoard")
 
-  // Determine when to show card selection animations
-  const isRevealPhase =
-    game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS
-
   const isActionablePlayerTurn =
     isPlayerTurn &&
     !isActionPending &&
-    (game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD ||
-      game.turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD ||
-      game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE)
+    (turnStatus.isTurnACard ||
+      turnStatus.isReplaceACard ||
+      turnStatus.isThrowOrReplace)
 
-  const showSelectionAnimation = isRevealPhase || isActionablePlayerTurn
+  const showSelectionAnimation =
+    roundPhase.isRevealCards || isActionablePlayerTurn
 
   return (
     <div

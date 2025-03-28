@@ -1,13 +1,9 @@
 import { Card } from "@/components/Card"
 import { useGame } from "@/contexts/GameContext"
 import { GameBoardSize } from "@/contexts/SettingsContext"
-import {
-  canTurnInitialCard,
-  hasTurnedCard,
-  isCurrentUserTurn,
-} from "@/lib/game"
+import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { CardToJson, Constants as CoreConstants } from "@skymo/core"
+import { CardToJson } from "@skymo/core"
 import { cva } from "class-variance-authority"
 import { AnimatePresence, m } from "framer-motion"
 import { useEffect, useState } from "react"
@@ -33,7 +29,16 @@ const CardTable = ({
   showSelectionAnimation = false,
   size = GameBoardSize.NORMAL,
 }: CardTableProps) => {
-  const { game, player, actions, isActionPending } = useGame()
+  const {
+    game,
+    player,
+    actions,
+    isActionPending,
+    gameStatus,
+    roundPhase,
+    turnStatus,
+    lastTurnStatus,
+  } = useGame()
   const numberOfRows = cards?.[0]?.length
   const [lastClickedPosition, setLastClickedPosition] = useState<{
     column: number
@@ -43,29 +48,28 @@ const CardTable = ({
     game.settings.cardPerRow,
   )
 
-  const canTurnCardsAtBeginning =
-    canTurnInitialCard(game) &&
-    !hasTurnedCard(player, game.settings.initialTurnedCount)
-  const canReplaceCard =
-    game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE ||
-    game.turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD
-  const canTurnCard = game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD
+  const canRevealCards =
+    gameStatus.isPlaying &&
+    roundPhase.isRevealCards &&
+    !hasRevealedCardCount(player, game.settings.initialTurnedCount)
 
-  const onClick = (column: number, row: number) => {
+  const canReplaceCard =
+    turnStatus.isThrowOrReplace || turnStatus.isReplaceACard
+
+  const canTurnCard = turnStatus.isTurnACard
+
+  const handleCardClick = (column: number, row: number) => {
     if (isActionPending) return
 
     setLastClickedPosition({ column, row })
 
-    if (canTurnCardsAtBeginning) {
-      actions.playRevealCard(column, row)
-    } else if (isCurrentUserTurn(game, player)) {
-      if (canReplaceCard) actions.replaceCard(column, row)
-      else if (
-        game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD &&
-        !cards[column][row].isVisible
-      )
-        actions.turnCard(column, row)
-    }
+    const isUserTurn = isCurrentUserTurn(game, player)
+    const isCardVisible = cards[column][row].isVisible
+
+    if (canRevealCards) actions.playRevealCard(column, row)
+    else if (isUserTurn && canReplaceCard) actions.replaceCard(column, row)
+    else if (isUserTurn && turnStatus.isTurnACard && !isCardVisible)
+      actions.turnCard(column, row)
   }
 
   useEffect(() => {
@@ -101,7 +105,7 @@ const CardTable = ({
         {cards.map((column, columnIndex) => {
           return column.map((card, rowIndex) => {
             const canBeSelected =
-              ((canTurnCardsAtBeginning || canTurnCard) && !card.isVisible) ||
+              ((canRevealCards || canTurnCard) && !card.isVisible) ||
               canReplaceCard
 
             const isCardLoading =
@@ -117,20 +121,15 @@ const CardTable = ({
               <Card
                 key={card.id}
                 card={card}
-                onClick={() => onClick(columnIndex, rowIndex)}
+                onClick={() => handleCardClick(columnIndex, rowIndex)}
                 className={
                   shouldShowSelectionAnimation ? "animate-small-scale" : ""
                 }
                 size={size}
                 disabled={cardDisabled || !canBeSelected || isActionPending}
                 loading={isCardLoading}
-                flipAnimation={
-                  game?.lastTurnStatus === CoreConstants.LAST_TURN_STATUS.TURN
-                }
-                exitAnimation={
-                  game.roundPhase === CoreConstants.ROUND_PHASE.MAIN ||
-                  game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP
-                }
+                flipAnimation={lastTurnStatus.isTurn}
+                exitAnimation={roundPhase.isMain || roundPhase.isLastLap}
               />
             )
           })

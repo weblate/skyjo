@@ -23,7 +23,7 @@ type TurnTimerProps = {
   turnStartTime: Date | null
 }
 const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
-  const { game } = useGame()
+  const { game, gameStatus } = useGame()
   const {
     settings: { timerDisplayMode },
   } = useSettings()
@@ -66,9 +66,9 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
 
   const shouldShowTimer = () => {
     if (
-      !turnStartTime ||
-      game.status !== CoreConstants.GAME_STATUS.PLAYING ||
-      timerDisplayMode === TimerDisplayMode.NEVER
+      timerDisplayMode === TimerDisplayMode.NEVER ||
+      !gameStatus.isPlaying ||
+      !turnStartTime
     ) {
       return false
     }

@@ -48,7 +48,7 @@ type LobbyProps = {
 
 const Lobby = ({ gameCode }: LobbyProps) => {
   const t = useTranslations("pages.Lobby")
-  const { player, game, actions } = useGame()
+  const { player, game, actions, gameStatus } = useGame()
   const router = useRouter()
   const [gameSettingsLocalStorage, setGameSettingsLocalStorage] =
     useLocalStorage<UpdateGameSettings>("gameSettings")
@@ -78,11 +78,11 @@ const Lobby = ({ gameCode }: LobbyProps) => {
   }, [])
 
   useEffect(() => {
-    if (game.status !== CoreConstants.GAME_STATUS.LOBBY) {
+    if (!gameStatus.isLobby) {
       clearTimeout(timeoutStart)
       router.replace(`/game/${gameCode}`)
     }
-  }, [game.status])
+  }, [gameStatus.isLobby])
 
   const beforeStartGame = () => {
     if (isLoading) return

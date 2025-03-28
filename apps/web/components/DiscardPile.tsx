@@ -4,7 +4,6 @@ import { Card } from "@/components/Card"
 import SelectedCard from "@/components/SelectedCard"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skymo/core"
 import { useTranslations } from "next-intl"
 
 type DiscardPileProps = {
@@ -12,8 +11,14 @@ type DiscardPileProps = {
 }
 
 const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
-  const { game, actions, isActionPending, lastClickedPile, pendingAction } =
-    useGame()
+  const {
+    game,
+    actions,
+    isActionPending,
+    lastClickedPile,
+    pendingAction,
+    turnStatus,
+  } = useGame()
   const t = useTranslations("components.DiscardPile")
 
   const onClick = () => {
@@ -21,7 +26,7 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
       isPlayerTurn &&
       game.lastDiscardCardValue !== undefined &&
       !isActionPending &&
-      game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
+      turnStatus.isChooseAPile
     ) {
       actions.pickCardFromPile("discard")
     }
@@ -38,10 +43,7 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
     (lastClickedPile === "discard" ||
       pendingAction === "play:discard-selected-card")
 
-  if (
-    isPlayerTurn &&
-    game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE
-  ) {
+  if (isPlayerTurn && turnStatus.isThrowOrReplace) {
     const shouldAnimate = !isActionPending
 
     return (
@@ -67,16 +69,13 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
     isVisible: game.lastDiscardCardValue !== undefined,
   }
 
-  const canDiscard =
-    isPlayerTurn && game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
+  const canDiscard = isPlayerTurn && turnStatus.isChooseAPile
 
   const shouldAnimate = canDiscard && !isActionPending
 
   return (
     <div className="relative">
-      <SelectedCard
-        show={game.turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD}
-      />
+      <SelectedCard show={turnStatus.isReplaceACard} />
       <Card
         card={card}
         onClick={onClick}

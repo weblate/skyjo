@@ -1,8 +1,12 @@
 import { Opponents } from "@/types/opponents"
 import {
   Constants as CoreConstants,
+  GameStatus,
   GameToJson,
+  LastTurnStatus,
   PlayerToJson,
+  RoundPhase,
+  TurnStatus,
 } from "@skymo/core"
 
 export const getCurrentUser = (
@@ -67,17 +71,11 @@ export const getOpponents = (
 
 export const isCurrentUserTurn = (game?: GameToJson, player?: PlayerToJson) => {
   if (!player || !game) return false
-  if (
-    game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS &&
-    game.status === CoreConstants.GAME_STATUS.PLAYING
-  ) {
-    return !hasTurnedCard(player, game.settings.initialTurnedCount)
+  if (isRoundRevealCards(game.roundPhase) && isGamePlaying(game.status)) {
+    return !hasRevealedCardCount(player, game.settings.initialTurnedCount)
   }
 
-  if (
-    game.status !== CoreConstants.GAME_STATUS.PLAYING ||
-    game.roundPhase === CoreConstants.ROUND_PHASE.OVER
-  ) {
+  if (!isGamePlaying(game.status) || isRoundOver(game.roundPhase)) {
     return false
   }
 
@@ -90,19 +88,6 @@ export const hasRevealedCardCount = (player: PlayerToJson, count: number) => {
     .filter((card) => card.isVisible).length
 
   return currentCount === count
-}
-
-export const canTurnInitialCard = (game: GameToJson) => {
-  return (
-    game.status === CoreConstants.GAME_STATUS.PLAYING &&
-    game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS
-  )
-}
-
-export const hasTurnedCard = (player: PlayerToJson, count: number) => {
-  const visibleCards = player.cards.flat().filter((card) => card.isVisible)
-
-  return visibleCards.length === count
 }
 
 export const getCurrentWhoHasToPlay = (game: GameToJson) => {
@@ -153,3 +138,83 @@ export const getCurrentScore = (player: PlayerToJson) => {
     .flat()
     .reduce((acc, card) => (card.isVisible ? acc + card.value! : acc), 0)
 }
+
+//#region round phases
+export const isRoundRevealCards = (roundPhase?: RoundPhase) => {
+  return roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS
+}
+
+export const isRoundMain = (roundPhase?: RoundPhase) => {
+  return roundPhase === CoreConstants.ROUND_PHASE.MAIN
+}
+
+export const isRoundLastLap = (roundPhase?: RoundPhase) => {
+  return roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP
+}
+
+export const isRoundOver = (roundPhase?: RoundPhase) => {
+  return roundPhase === CoreConstants.ROUND_PHASE.OVER
+}
+//#endregion
+
+//#region game status
+export const isGameLobby = (status?: GameStatus) => {
+  return status === CoreConstants.GAME_STATUS.LOBBY
+}
+
+export const isGamePlaying = (status?: GameStatus) => {
+  return status === CoreConstants.GAME_STATUS.PLAYING
+}
+
+export const isGameFinished = (status?: GameStatus) => {
+  return status === CoreConstants.GAME_STATUS.FINISHED
+}
+
+export const isGameStopped = (status?: GameStatus) => {
+  return status === CoreConstants.GAME_STATUS.STOPPED
+}
+//#endregion
+
+//#region turn status
+export const isTurnChooseAPile = (turnStatus?: TurnStatus) => {
+  return turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
+}
+
+export const isTurnThrowOrReplace = (turnStatus?: TurnStatus) => {
+  return turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE
+}
+
+export const isTurnTurnACard = (turnStatus?: TurnStatus) => {
+  return turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD
+}
+
+export const isTurnReplaceACard = (turnStatus?: TurnStatus) => {
+  return turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD
+}
+//#endregion
+
+//#region last turn status
+export const isLastTurnPickFromDrawPile = (lastTurnStatus?: LastTurnStatus) => {
+  return lastTurnStatus === CoreConstants.LAST_TURN_STATUS.PICK_FROM_DRAW_PILE
+}
+
+export const isLastTurnPickFromDiscardPile = (
+  lastTurnStatus?: LastTurnStatus,
+) => {
+  return (
+    lastTurnStatus === CoreConstants.LAST_TURN_STATUS.PICK_FROM_DISCARD_PILE
+  )
+}
+
+export const isLastTurnThrow = (lastTurnStatus?: LastTurnStatus) => {
+  return lastTurnStatus === CoreConstants.LAST_TURN_STATUS.THROW
+}
+
+export const isLastTurnReplace = (lastTurnStatus?: LastTurnStatus) => {
+  return lastTurnStatus === CoreConstants.LAST_TURN_STATUS.REPLACE
+}
+
+export const isLastTurnTurn = (lastTurnStatus?: LastTurnStatus) => {
+  return lastTurnStatus === CoreConstants.LAST_TURN_STATUS.TURN
+}
+//#endregion

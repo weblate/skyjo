@@ -2,21 +2,25 @@
 
 import { useGame } from "@/contexts/GameContext"
 import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
-import { Constants as CoreConstants } from "@skymo/core"
 import { AnimatePresence, m } from "framer-motion"
 import { useTranslations } from "next-intl"
 
 const GameInfo = () => {
-  const { game, player, opponents, isActionPending } = useGame()
+  const {
+    game,
+    player,
+    opponents,
+    isActionPending,
+    roundPhase,
+    gameStatus,
+    turnStatus,
+  } = useGame()
   const t = useTranslations("utils.skymo")
 
   const getGameInfo = () => {
     if (!player || !game) return t("waiting")
 
-    if (
-      game.status === CoreConstants.GAME_STATUS.PLAYING &&
-      game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS
-    ) {
+    if (gameStatus.isPlaying && roundPhase.isRevealCards) {
       if (hasRevealedCardCount(player, game.settings.initialTurnedCount)) {
         return t("waiting-opponents-to-turn-cards", {
           nbOpponents: opponents.flat().length,
@@ -29,33 +33,23 @@ const GameInfo = () => {
       }
     }
 
-    if (game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE) {
-      return t("turn.chooseAPile")
-    }
-    if (game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE) {
-      return t("turn.throwOrReplace")
-    }
-    if (game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD) {
-      return t("turn.turnACard")
-    }
-    if (game.turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD) {
-      return t("turn.replaceACard")
-    }
+    if (turnStatus.isChooseAPile) return t("turn.chooseAPile")
+    if (turnStatus.isThrowOrReplace) return t("turn.throwOrReplace")
+    if (turnStatus.isTurnACard) return t("turn.turnACard")
+    if (turnStatus.isReplaceACard) return t("turn.replaceACard")
   }
 
   const isPlayerTurn = isCurrentUserTurn(game, player)
 
   const gameInProgress =
-    game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS ||
-    game.roundPhase === CoreConstants.ROUND_PHASE.MAIN ||
-    game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP
+    roundPhase.isRevealCards || roundPhase.isMain || roundPhase.isLastLap
 
   const showGameInfo = gameInProgress && isPlayerTurn && !isActionPending
 
   return (
     <div className="absolute -top-6 sm:-top-8 lg:-top-11 text-center text-sm animate-scale flex flex-col items-center">
       <AnimatePresence>
-        {game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP && (
+        {roundPhase.isLastLap && (
           <m.p
             key="game-info-last-turn"
             initial={{

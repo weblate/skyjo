@@ -10,12 +10,12 @@ import {
   isCurrentUserTurn,
 } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
+import { PlayerToJson } from "@skymo/core"
 import { AnimatePresence, m } from "framer-motion"
 import { useEffect, useState } from "react"
 
 const OpponentsMobileView = () => {
-  const { opponents, game, player } = useGame()
+  const { opponents, game, player, gameStatus } = useGame()
   const {
     settings: { switchToPlayerWhoIsPlaying },
   } = useSettings()
@@ -53,11 +53,11 @@ const OpponentsMobileView = () => {
   }, [switchToPlayerWhoIsPlaying, game.turn, game.players])
 
   useEffect(() => {
-    if (game.status === CoreConstants.GAME_STATUS.PLAYING) {
+    if (gameStatus.isPlaying) {
       const nextPlayerIndex = getNextPlayerIndex(game, player)
       if (nextPlayerIndex !== -1) setSelectedOpponentIndex(nextPlayerIndex)
     }
-  }, [game.status])
+  }, [gameStatus.isPlaying])
 
   if (flattenOpponents.length === 0) return null
 

@@ -4,7 +4,6 @@ import { Card } from "@/components/Card"
 import SelectedCard from "@/components/SelectedCard"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skymo/core"
 import { useTranslations } from "next-intl"
 
 const DRAW_CARD = {
@@ -18,7 +17,7 @@ type DrawPileProps = {
 }
 
 const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
-  const { game, actions, isActionPending, lastClickedPile } = useGame()
+  const { actions, isActionPending, lastClickedPile, turnStatus } = useGame()
   const t = useTranslations("components.DrawPile")
 
   const onClick = () => {
@@ -29,18 +28,14 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
 
   // Determine if this draw pile should have the selection animation
   const shouldAnimate =
-    isPlayerTurn &&
-    game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE &&
-    !isActionPending
+    isPlayerTurn && turnStatus.isChooseAPile && !isActionPending
 
   // Determine if this draw pile should pulse when action is pendings
   const isDrawLoading = isActionPending && lastClickedPile === "draw"
 
   return (
     <div className="relative">
-      <SelectedCard
-        show={game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE}
-      />
+      <SelectedCard show={turnStatus.isThrowOrReplace} />
       <Card
         card={DRAW_CARD}
         onClick={onClick}
@@ -49,12 +44,7 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
           "!shadow-[3px_3px_0px_0px_rgba(0,0,0)] !mdh:md:shadow-[4px_4px_0px_0px_rgba(0,0,0)]",
           shouldAnimate ? "animate-scale" : "",
         )}
-        disabled={
-          !(
-            isPlayerTurn &&
-            game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
-          )
-        }
+        disabled={!isPlayerTurn || !turnStatus.isChooseAPile}
         loading={isDrawLoading}
         flipAnimation={false}
       />

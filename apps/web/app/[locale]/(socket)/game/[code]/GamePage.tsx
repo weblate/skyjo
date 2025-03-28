@@ -15,20 +15,17 @@ import { useRules } from "@/contexts/RulesContext"
 import { useRouter } from "@/i18n/routing"
 import { isCurrentUserTurn } from "@/lib/game"
 import { getRedirectionUrl } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skymo/core"
 import { useEffect } from "react"
 import { useLocalStorage } from "react-use"
 
 const GamePage = () => {
-  const { game, player, opponents } = useGame()
+  const { game, player, opponents, roundPhase } = useGame()
   const { openRules, isRulesOpen } = useRules()
   const router = useRouter()
   const [firstGame, setFirstGame] = useLocalStorage<boolean>("firstGame")
 
   const isPlayerTurn = isCurrentUserTurn(game, player)
-  const roundInProgress =
-    game.roundPhase === CoreConstants.ROUND_PHASE.MAIN ||
-    game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP
+  const roundInProgress = roundPhase.isMain || roundPhase.isLastLap
 
   const isFirstPlayerGame = firstGame ?? true
 

@@ -1,7 +1,6 @@
 import { Card } from "@/components/Card"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skymo/core"
 import { AnimatePresence, m } from "framer-motion"
 
 type SelectedCardProps = {
@@ -9,16 +8,14 @@ type SelectedCardProps = {
 }
 
 const SelectedCard = ({ show }: SelectedCardProps) => {
-  const { game, isActionPending, lastClickedPile } = useGame()
-
-  const pickFromDrawPile =
-    game.lastTurnStatus === CoreConstants.LAST_TURN_STATUS.PICK_FROM_DRAW_PILE
+  const { game, isActionPending, turnStatus, lastClickedPile, lastTurnStatus } =
+    useGame()
 
   // Show loading state for the selected card when we're replacing a card
   // but not when we're discarding the selected card
   const isSelectedCardLoading =
     isActionPending &&
-    game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE &&
+    turnStatus.isThrowOrReplace &&
     lastClickedPile !== "discard" // Don't show loading when discarding
 
   return (
@@ -27,16 +24,20 @@ const SelectedCard = ({ show }: SelectedCardProps) => {
         <m.div
           className={cn(
             "absolute top-0 z-10",
-            pickFromDrawPile ? "left-0" : "right-0",
+            lastTurnStatus.isPickFromDrawPile ? "left-0" : "right-0",
           )}
-          initial={pickFromDrawPile ? { rotateY: 180 } : { rotateY: 0 }}
+          initial={
+            lastTurnStatus.isPickFromDrawPile
+              ? { rotateY: 180 }
+              : { rotateY: 0 }
+          }
           animate={{
             rotateY: 0,
             transformStyle: "preserve-3d",
             transition: {
-              duration: pickFromDrawPile ? 0.175 : 0.1,
+              duration: lastTurnStatus.isPickFromDrawPile ? 0.175 : 0.1,
             },
-            rotate: pickFromDrawPile ? "-10deg" : "10deg",
+            rotate: lastTurnStatus.isPickFromDrawPile ? "-10deg" : "10deg",
             scale: 1.2,
           }}
           // exit={exit}
@@ -58,8 +59,8 @@ const SelectedCard = ({ show }: SelectedCardProps) => {
             animate={{
               opacity: 1,
               transition: {
-                duration: pickFromDrawPile ? 0.175 : 0,
-                delay: pickFromDrawPile ? 0.075 : 0,
+                duration: lastTurnStatus.isPickFromDrawPile ? 0.175 : 0,
+                delay: lastTurnStatus.isPickFromDrawPile ? 0.075 : 0,
               },
             }}
             className="absolute top-0 left-0 w-full h-full"

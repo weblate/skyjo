@@ -5,7 +5,28 @@ import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
 import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
 import { useRouter } from "@/i18n/routing"
-import { getCurrentUser, getOpponents, isHost } from "@/lib/game"
+import {
+  getCurrentUser,
+  getOpponents,
+  isGameFinished,
+  isGameLobby,
+  isGamePlaying,
+  isGameStopped,
+  isHost,
+  isLastTurnPickFromDiscardPile,
+  isLastTurnPickFromDrawPile,
+  isLastTurnReplace,
+  isLastTurnThrow,
+  isLastTurnTurn,
+  isRoundLastLap,
+  isRoundMain,
+  isRoundOver,
+  isRoundRevealCards,
+  isTurnChooseAPile,
+  isTurnReplaceACard,
+  isTurnThrowOrReplace,
+  isTurnTurnACard,
+} from "@/lib/game"
 import { Opponents } from "@/types/opponents"
 import {
   addReconnectionDateToLastGame,
@@ -62,6 +83,31 @@ type GameContext = {
     turnCard: (column: number, row: number) => void
     replay: () => void
     leave: () => void
+  }
+  roundPhase: {
+    isRevealCards: boolean
+    isMain: boolean
+    isLastLap: boolean
+    isOver: boolean
+  }
+  gameStatus: {
+    isLobby: boolean
+    isPlaying: boolean
+    isFinished: boolean
+    isStopped: boolean
+  }
+  turnStatus: {
+    isChooseAPile: boolean
+    isThrowOrReplace: boolean
+    isTurnACard: boolean
+    isReplaceACard: boolean
+  }
+  lastTurnStatus: {
+    isPickFromDrawPile: boolean
+    isPickFromDiscardPile: boolean
+    isThrow: boolean
+    isReplace: boolean
+    isTurn: boolean
   }
 }
 
@@ -403,6 +449,43 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }
   //#endregion
 
+  //#region round phases
+  const roundPhase = {
+    isRevealCards: isRoundRevealCards(game?.roundPhase),
+    isMain: isRoundMain(game?.roundPhase),
+    isLastLap: isRoundLastLap(game?.roundPhase),
+    isOver: isRoundOver(game?.roundPhase),
+  }
+  //#endregion
+
+  //#region game status
+  const gameStatus = {
+    isLobby: isGameLobby(game?.status),
+    isPlaying: isGamePlaying(game?.status),
+    isFinished: isGameFinished(game?.status),
+    isStopped: isGameStopped(game?.status),
+  }
+  //#endregion
+
+  //#region turn status
+  const turnStatus = {
+    isChooseAPile: isTurnChooseAPile(game?.turnStatus),
+    isThrowOrReplace: isTurnThrowOrReplace(game?.turnStatus),
+    isTurnACard: isTurnTurnACard(game?.turnStatus),
+    isReplaceACard: isTurnReplaceACard(game?.turnStatus),
+  }
+  //#endregion
+
+  //#region last turn status
+  const lastTurnStatus = {
+    isPickFromDrawPile: isLastTurnPickFromDrawPile(game?.lastTurnStatus),
+    isPickFromDiscardPile: isLastTurnPickFromDiscardPile(game?.lastTurnStatus),
+    isThrow: isLastTurnThrow(game?.lastTurnStatus),
+    isReplace: isLastTurnReplace(game?.lastTurnStatus),
+    isTurn: isLastTurnTurn(game?.lastTurnStatus),
+  }
+  //#endregion
+
   const providerValue = useMemo(
     () => ({
       game: game as GameToJson,
@@ -412,8 +495,23 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       isActionPending,
       pendingAction,
       lastClickedPile,
+      roundPhase,
+      gameStatus,
+      turnStatus,
+      lastTurnStatus,
     }),
-    [game, opponents, player, isActionPending, pendingAction, lastClickedPile],
+    [
+      game,
+      opponents,
+      player,
+      isActionPending,
+      pendingAction,
+      lastClickedPile,
+      roundPhase,
+      gameStatus,
+      turnStatus,
+      lastTurnStatus,
+    ],
   )
 
   if (!game || !player) return null
