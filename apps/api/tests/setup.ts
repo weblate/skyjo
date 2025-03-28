@@ -35,6 +35,5 @@ vi.spyOn(process, "env", "get").mockReturnValue({
   SEQ_URL: "e",
   SEQ_API_KEY: "e",
   REDIS_URL: "e",
-  SENTRY_AUTH_TOKEN: "e",
   npm_package_version: "-99",
 })
