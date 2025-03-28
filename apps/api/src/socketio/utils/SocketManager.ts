@@ -90,7 +90,7 @@ export class SocketManager {
 
       this.io = io
       this.initialized = true
-      Logger.info("Socket.IO server initialized successfully")
+      Logger.info("Socket.IO singleton initialized")
     } catch (error) {
       Logger.error("Failed to initialize Socket.IO server", { error })
 
