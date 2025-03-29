@@ -23,12 +23,12 @@ export class GameCleanupTask {
       if (client) {
         for await (const key of client.scanIterator({
           MATCH: pattern,
-          COUNT: 20,
+          COUNT: this.BATCH_SIZE,
         })) {
           await client.unlink(key)
           keyCount++
 
-          if (keyCount % 50 === 0) {
+          if (keyCount % this.YIELD_INTERVAL === 0) {
             await new Promise((r) => setTimeout(r, 0))
           }
         }
