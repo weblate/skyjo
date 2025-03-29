@@ -16,9 +16,9 @@ export class GameRepository extends RedisClient {
   private static readonly GAME_STATE_PREFIX = "state"
   private static readonly GAME_LATEST_STATE_SUFFIX = "latest"
 
-  private static readonly GAME_STATE_TTL = 60 * 5 // 4 minutes
-  private static readonly GAME_TTL = 60 * 10 // 10 minutes
-  private static readonly PUBLIC_GAME_IN_LOBBY_TTL = 60 * 6 // 6 minutes
+  private static readonly GAME_STATE_TTL = 300 // 5 minutes
+  private static readonly GAME_TTL = 600 // 10 minutes
+  private static readonly PUBLIC_GAME_IN_LOBBY_TTL = 360 // 6 minutes
   private static readonly PUBLIC_GAMES_SORTED_SET = "public_games"
 
   private static readonly CLEANUP_QUEUE = new Queue("game-cleanup", {
