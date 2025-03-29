@@ -36,7 +36,7 @@ export const createGameCleanupWorker = (): Worker => {
     {
       connection: {
         url: ENV.REDIS_URL,
-        enableOfflineQueue: false,
+        enableOfflineQueue: true,
       },
       removeOnComplete: {
         age: 3600,
