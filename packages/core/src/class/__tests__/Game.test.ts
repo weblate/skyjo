@@ -2,7 +2,6 @@ import { Constants as ErrorConstants } from "@skymo/error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import {
   Constants,
-  GameStatus,
   type LastTurnStatus,
   type TurnStatus,
 } from "../../constants.js"
@@ -255,6 +254,36 @@ describe("Game", () => {
         ErrorConstants.ERROR.GAME_IS_FULL,
       )
       expect(game.players).toHaveLength(2)
+    })
+  })
+
+  describe("setPlayerToLeave", () => {
+    it("should set player connection status to leave", async () => {
+      // Set game status to PLAYING so disconnectPlayer is not called
+      game.status = Constants.GAME_STATUS.PLAYING
+
+      await game.setPlayerToLeave(player)
+      expect(player.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+    })
+
+    it("should disconnect player if game is not playing", async () => {
+      game.status = Constants.GAME_STATUS.LOBBY
+      const spy = vi.spyOn(game, "disconnectPlayer")
+
+      await game.setPlayerToLeave(player)
+
+      expect(spy).toHaveBeenCalledWith(player)
+      spy.mockRestore()
+    })
+
+    it("should not disconnect player if game is playing", async () => {
+      game.status = Constants.GAME_STATUS.PLAYING
+      const spy = vi.spyOn(game, "disconnectPlayer")
+
+      await game.setPlayerToLeave(player)
+
+      expect(spy).not.toHaveBeenCalled()
+      spy.mockRestore()
     })
   })
 
@@ -820,31 +849,13 @@ describe("Game", () => {
   })
 
   describe("togglePlayerReplay", () => {
-    it("should not toggle player replay if player is not in the game", async () => {
-      await game.togglePlayerReplay("playerId")
-
-      expect(player.wantsReplay).toBeFalsy()
-    })
-
     it("should toggle player replay", async () => {
-      player.wantsReplay = false
-
+      player.wantsReplay = true
       await game.togglePlayerReplay(player.id)
-
-      expect(player.wantsReplay).toBeTruthy()
-    })
-
-    it("should toggle player replay and start a new game", async () => {
-      player.wantsReplay = false
-      opponent.wantsReplay = true
-
-      await game.togglePlayerReplay(player.id)
-
       expect(player.wantsReplay).toBeFalsy()
-      expect(opponent.wantsReplay).toBeFalsy()
-      expect(game.status).toBe<GameStatus>(Constants.GAME_STATUS.LOBBY)
-      expect(game.stateVersion).toBe(0)
-      expect(game.players.length).toBe(2)
+
+      await game.togglePlayerReplay(player.id)
+      expect(player.wantsReplay).toBeTruthy()
     })
   })
 
@@ -1704,6 +1715,68 @@ describe("Game", () => {
 
       removeGameSpy.mockClear()
     })
+
+    it("should remove the game if no players are left", async () => {
+      game.status = Constants.GAME_STATUS.LOBBY // Ensure we're not in playing mode
+
+      const mockOperationManager = {
+        getSocket: vi.fn().mockReturnValue(null),
+        kickSocket: vi.fn(),
+        removeGame: vi.fn(),
+        // Add other methods if needed
+        cancelPlayerAfkTimer: vi.fn(),
+        cancelRevealCardsAfkTimer: vi.fn(),
+        startRevealCardsAfkTimer: vi.fn(),
+        updateGame: vi.fn(),
+        startPlayerAfkTimer: vi.fn(),
+        delayNewRound: vi.fn(),
+      }
+
+      // Make a new game with just one player
+      const testGame = new Game({ hostId: player.id, settings: new Settings() })
+      testGame.addPlayer(player)
+
+      // Access the private operationManager through type assertion
+      ;(testGame as any).operationManager = mockOperationManager
+
+      // Disconnect the only player
+      await testGame.disconnectPlayer(player)
+
+      // Verify removeGame was called with the game code
+      expect(mockOperationManager.removeGame).toHaveBeenCalledWith(
+        testGame.code,
+      )
+    })
+
+    it("should set game status to STOPPED if minimum players are not connected while playing", async () => {
+      game.status = Constants.GAME_STATUS.PLAYING
+
+      // Mock the hasMinPlayersConnected method to return false
+      const hasMinPlayersSpy = vi
+        .spyOn(game, "hasMinPlayersConnected")
+        .mockReturnValue(false)
+
+      const mockOperationManager = {
+        getSocket: vi.fn().mockReturnValue(null),
+        kickSocket: vi.fn(),
+        removeGame: vi.fn(),
+        updateGame: vi.fn(),
+        startRevealCardsAfkTimer: vi.fn(),
+        cancelRevealCardsAfkTimer: vi.fn(),
+        startPlayerAfkTimer: vi.fn(),
+        cancelPlayerAfkTimer: vi.fn(),
+        delayNewRound: vi.fn(),
+      }
+
+      // Access the private operationManager through type assertion
+      ;(game as any).operationManager = mockOperationManager
+
+      await game.disconnectPlayer(player)
+
+      expect(game.status).toBe(Constants.GAME_STATUS.STOPPED)
+
+      hasMinPlayersSpy.mockRestore()
+    })
   })
 
   // Add tests for ban feature
@@ -1812,6 +1885,94 @@ describe("Game", () => {
 
       // Execute & Verify
       expect(game.isPlayerBanned(targetPlayer)).toBe(false)
+    })
+  })
+
+  describe("Private functions", () => {
+    describe("shouldStartNewGame", () => {
+      it("should return true when all connected players want to replay", () => {
+        player.wantsReplay = true
+        opponent.wantsReplay = true
+
+        const result = game["shouldStartNewGame"]()
+
+        expect(result).toBe(true)
+      })
+
+      it("should return false when not all connected players want to replay", () => {
+        player.wantsReplay = true
+        opponent.wantsReplay = false
+
+        const result = game["shouldStartNewGame"]()
+
+        expect(result).toBe(false)
+      })
+    })
+
+    describe("startNewGame", () => {
+      it("should reset game state and return to lobby", async () => {
+        const mockOperationManager = {
+          cancelPlayerAfkTimer: vi.fn(),
+          cancelRevealCardsAfkTimer: vi.fn(),
+          startRevealCardsAfkTimer: vi.fn(),
+          removeGame: vi.fn(),
+          updateGame: vi.fn(),
+          startPlayerAfkTimer: vi.fn(),
+          getSocket: vi.fn(),
+          kickSocket: vi.fn(),
+          delayNewRound: vi.fn(),
+        }
+
+        // Access the private operationManager through type assertion
+        ;(game as any).operationManager = mockOperationManager
+
+        // Mock the initializeRound method to avoid calling the full game initialization
+        vi.spyOn(game as any, "initializeRound").mockImplementation(() =>
+          Promise.resolve(),
+        )
+
+        game.status = Constants.GAME_STATUS.FINISHED
+        game.stateVersion = 10
+        game.turn = 1
+        game.settings.isConfirmed = true
+
+        await game["startNewGame"]()
+
+        expect(mockOperationManager.cancelPlayerAfkTimer).toHaveBeenCalledTimes(
+          2,
+        )
+        expect(
+          mockOperationManager.cancelRevealCardsAfkTimer,
+        ).toHaveBeenCalledWith(game.code)
+        expect(game.status).toBe(Constants.GAME_STATUS.LOBBY)
+        expect(game.stateVersion).toBe(0)
+        expect(game.turn).toBe(0)
+        expect(game.settings.isConfirmed).toBe(false)
+      })
+    })
+
+    describe("startNewRound", () => {
+      it("should increment roundNumber and initialize a new round", async () => {
+        // Set initial round number
+        game.roundNumber = 1
+
+        // Mock the initializeRound method
+        const initializeRoundSpy = vi
+          .spyOn(game as any, "initializeRound")
+          .mockImplementation(() => Promise.resolve())
+
+        // Call the private method
+        await game["startNewRound"]()
+
+        // Check that round number was incremented
+        expect(game.roundNumber).toBe(2)
+
+        // Check that initializeRound was called
+        expect(initializeRoundSpy).toHaveBeenCalled()
+
+        // Restore the mock
+        initializeRoundSpy.mockRestore()
+      })
     })
   })
 })

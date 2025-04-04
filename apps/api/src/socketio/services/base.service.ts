@@ -1,21 +1,26 @@
+import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
+import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
+import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { GameRepository } from "@/redis/game.repository.js"
+import { KickVoteRepository } from "@/redis/kickVote.repository.js"
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
 import { Constants as CoreConstants, type Game, type Player } from "@skymo/core"
 import type { ServerChatMessage } from "@skymo/shared/types"
-import { PlayerAfkQueueService } from "../../queues/PlayerAfkQueueService.js"
-import { RevealCardsAfkQueueService } from "../../queues/RevealCardsAfkQueueService.js"
 import type { GameSocket } from "../types/gameSocket.js"
 
 export abstract class BaseService {
   protected redis = new GameRepository()
+  protected kickVoteRepository = new KickVoteRepository()
   protected socketManager = SocketManager.getInstance()
 
   protected afkQueue: PlayerAfkQueueService =
     PlayerAfkQueueService.getInstance()
   protected revealCardsAfkQueue: RevealCardsAfkQueueService =
     RevealCardsAfkQueueService.getInstance()
+  protected kickVoteExpirationQueue: KickVoteExpirationQueueService =
+    KickVoteExpirationQueueService.getInstance()
 
   protected async sendMissingStatesToSocket(
     socket: GameSocket,

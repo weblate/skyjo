@@ -5,6 +5,7 @@ import { serve } from "@hono/node-server"
 import { Logger } from "@skymo/logger"
 import { Hono } from "hono"
 import "@env"
+import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
 import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
@@ -54,6 +55,14 @@ const gracefulShutdown = async (signal: string) => {
         RevealCardsAfkQueueService.getInstance()
 
       await revealCardsAfkQueueService.cleanup()
+    }
+
+    if (KickVoteExpirationQueueService.exists()) {
+      Logger.info("Cleaning up KickVoteExpirationQueueService...")
+      const kickVoteExpirationQueueService =
+        KickVoteExpirationQueueService.getInstance()
+
+      await kickVoteExpirationQueueService.cleanup()
     }
 
     Logger.info("Cleaning up SocketManager...")

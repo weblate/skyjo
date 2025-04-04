@@ -24,7 +24,7 @@ export class GameRepository extends RedisClient {
   private static readonly CLEANUP_QUEUE = new Queue("game-cleanup", {
     connection: {
       url: ENV.REDIS_URL,
-      enableOfflineQueue: false,
+      enableOfflineQueue: true,
     },
     defaultJobOptions: {
       removeOnComplete: true,

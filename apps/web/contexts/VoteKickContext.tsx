@@ -127,20 +127,24 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
   }
 
   const voteToKick = async (vote: boolean) => {
-    if (!kickVote) return
-
     socket!.emit("kick:vote", {
       vote,
     })
   }
 
-  const actions = {
-    initiateKickVote,
-    voteToKick,
-  }
+  const actions = useMemo(
+    () => ({
+      initiateKickVote,
+      voteToKick,
+    }),
+    [kickVote],
+  )
   //#endregion
 
-  const providerValue = useMemo(() => ({ kickVoteInProgress, actions }), [])
+  const providerValue = useMemo(
+    () => ({ kickVoteInProgress, actions }),
+    [kickVoteInProgress, actions],
+  )
 
   return (
     <VoteKickContext.Provider value={providerValue}>

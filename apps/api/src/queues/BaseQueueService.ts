@@ -22,7 +22,7 @@ export abstract class BaseQueueService<T> {
     this.queue = new Queue(queueName, {
       connection: {
         url: ENV.REDIS_URL,
-        enableOfflineQueue: false,
+        enableOfflineQueue: true,
       },
       ...options,
     })
@@ -80,7 +80,7 @@ export abstract class BaseQueueService<T> {
       {
         connection: {
           url: ENV.REDIS_URL,
-          enableOfflineQueue: false,
+          enableOfflineQueue: true,
         },
         removeOnComplete: { count: 20, age: 15 * 60 },
         removeOnFail: { count: 20, age: 15 * 60 },
@@ -154,7 +154,7 @@ export abstract class BaseQueueService<T> {
 
     this.worker.on("error", (err) => {
       Logger.error(`Worker error in queue ${this.queueName}`, {
-        error: err,
+        workerError: err,
         queueName: this.queueName,
       })
     })

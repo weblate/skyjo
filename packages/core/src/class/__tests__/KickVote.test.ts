@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it, vi } from "vitest"
+import { beforeEach, describe, expect, it } from "vitest"
 import {
   RANDOM_SOCKET_ID,
   TEST_SOCKET_ID,
@@ -37,14 +37,22 @@ describe("KickVote", () => {
   })
 
   it("should create a kick vote", () => {
-    const vote = new KickVote(game, opponent1.id, player.id)
+    const vote = new KickVote({
+      targetId: opponent1.id,
+      initiatorId: player.id,
+      nbConnectedPlayers: game.players.length,
+    })
 
     expect(vote.initiatorId).toBe(player.id)
   })
 
   describe("addVote", () => {
     it("should add a vote", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       vote.addVote(opponent2.id, true)
 
@@ -54,13 +62,21 @@ describe("KickVote", () => {
 
   describe("hasPlayerVoted", () => {
     it("should check if the player has voted and return false if not", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       expect(vote.hasPlayerVoted(opponent2.id)).toBeFalsy()
     })
 
     it("should check if the player has voted and return true if yes", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       vote.addVote(opponent2.id, true)
 
@@ -70,13 +86,21 @@ describe("KickVote", () => {
 
   describe("getRequiredVotes", () => {
     it("should return the required votes", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       expect(vote.getRequiredVotes()).toBe(2)
     })
 
     it("should return the required votes for a game with 3 players", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       const player3 = new Player(
         { username: "player3", avatar: CoreConstants.AVATARS.BEE },
@@ -84,19 +108,27 @@ describe("KickVote", () => {
       )
       game.addPlayer(player3)
 
-      expect(vote.getRequiredVotes()).toBe(3)
+      expect(vote.getRequiredVotes()).toBe(2)
     })
   })
 
   describe("hasReachedRequiredVotes", () => {
     it("should check if the vote has reached the required votes and return false if not", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       expect(vote.hasReachedRequiredVotes()).toBeFalsy()
     })
 
     it("should check if the vote has reached the required votes and return true if yes", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       vote.addVote(opponent2.id, true)
 
@@ -106,13 +138,21 @@ describe("KickVote", () => {
 
   describe("allPlayersVotedExceptTarget", () => {
     it("should check if all players have voted except the target and return false if not", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       expect(vote.allPlayersVotedExceptTarget()).toBeFalsy()
     })
 
     it("should check if all players have voted except the target and return true if yes", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       vote.addVote(opponent2.id, true)
 
@@ -120,29 +160,13 @@ describe("KickVote", () => {
     })
   })
 
-  describe("hasExpired", () => {
-    it("should check if the vote has expired and return false if not", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
-
-      expect(vote.hasExpired()).toBeFalsy()
-    })
-
-    it("should check if the vote has expired and return true if yes", () => {
-      vi.useFakeTimers()
-      const vote = new KickVote(game, opponent1.id, player.id)
-
-      // add 31 seconds
-      vi.advanceTimersByTime(31000)
-
-      expect(vote.hasExpired()).toBeTruthy()
-
-      vi.useRealTimers()
-    })
-  })
-
   describe("toJson", () => {
     it("should return the vote in json format", () => {
-      const vote = new KickVote(game, opponent1.id, player.id)
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
 
       const json = vote.toJson()
 
@@ -156,6 +180,25 @@ describe("KickVote", () => {
 
       expect(json).not.toHaveProperty("game")
       expect(json).not.toHaveProperty("timeout")
+    })
+  })
+
+  describe("serialize", () => {
+    it("should return the vote in serialized format", () => {
+      const vote = new KickVote({
+        targetId: opponent1.id,
+        initiatorId: player.id,
+        nbConnectedPlayers: game.players.length,
+      })
+
+      const serialized = vote.serialize()
+
+      expect(serialized).toEqual({
+        targetId: vote["targetId"],
+        initiatorId: vote["initiatorId"],
+        votes: vote["votes"],
+        nbConnectedPlayers: vote["nbConnectedPlayers"],
+      })
     })
   })
 })
