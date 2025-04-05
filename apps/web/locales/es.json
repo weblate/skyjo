@@ -79,11 +79,13 @@
         "validate-settings": "Validar los ajustes",
         "validation-warning": "Los ajustes de la partida no pueden modificarse una vez validados"
       },
-      "start-game-button": "Iniciar el juego",
+      "start-game-button": "Iniciar juego",
+      "cancel": "Cancelar",
+      "game-starting-in": "El juego comienza en {seconds}",
       "player-section": {
         "title": "Jugadores {nbPlayers}/{maxPlayers}"
       },
-      "waiting-host-to-confirm-game-settings": "Esperando a que el hostistrador valide la configuración",
+      "waiting-host-to-confirm-game-settings": "Esperando a que el anfitrión confirme la configuración",
       "title": "Partida de {name}",
       "leave-to-home": "Ir a la página de inicio",
       "leave-to-public-game-list": "Ir a la lista pública de partidas",

@@ -143,9 +143,11 @@
           "title": "Le score du premier joueur sera multiplié par {number} si il n'est pas strictement inférieur aux autres scores de la partie"
         }
       },
-      "start-game-button": "Commencer la partie",
+      "start-game-button": "Lancer la partie",
+      "cancel": "Annuler",
+      "game-starting-in": "La partie commence dans {seconds}",
       "waiting-host-to-start": "En attente du lancement de la partie par l'host",
-      "waiting-host-to-confirm-game-settings": "En attente de la validation des paramètres par l'host",
+      "waiting-host-to-confirm-game-settings": "En attente de la validation des paramètres par l'hôte",
       "player-section": {
         "title": "Joueurs {nbPlayers}/{maxPlayers}",
         "select": {

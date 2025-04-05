@@ -5,6 +5,8 @@ export interface ClientToServerLobbyEvents {
   create: (player: CreatePlayer, isPrivate: boolean) => void
   join: (data: JoinGame) => void
   start: () => void
+  "game:start-countdown": () => void
+  "game:cancel-countdown": () => void
 }
 
 export type ErrorJoinMessage = Extract<
@@ -15,4 +17,6 @@ export type ErrorJoinMessage = Extract<
 export interface ServerToClientLobbyEvents {
   "error:join": (message: ErrorJoinMessage) => void
   "game:join": (code: string, status: GameStatus, playerId: string) => void
+  "game:countdown-started": (endTimestamp: number) => void
+  "game:countdown-canceled": () => void
 }

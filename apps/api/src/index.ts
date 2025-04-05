@@ -5,6 +5,7 @@ import { serve } from "@hono/node-server"
 import { Logger } from "@skymo/logger"
 import { Hono } from "hono"
 import "@env"
+import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
 import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
@@ -65,6 +66,14 @@ const gracefulShutdown = async (signal: string) => {
       await kickVoteExpirationQueueService.cleanup()
     }
 
+    if (GameStartCountdownQueueService.exists()) {
+      Logger.info("Cleaning up GameStartCountdownQueueService...")
+      const gameStartCountdownQueueService =
+        GameStartCountdownQueueService.getInstance()
+
+      await gameStartCountdownQueueService.cleanup()
+    }
+
     Logger.info("Cleaning up SocketManager...")
     const socketManager = SocketManager.getInstance()
     if (socketManager.isInitialized()) {
@@ -122,6 +131,11 @@ const startServer = async () => {
 
     await initializeSocketServer(server)
     initializeHttpServer(app)
+
+    PlayerAfkQueueService.getInstance()
+    RevealCardsAfkQueueService.getInstance()
+    KickVoteExpirationQueueService.getInstance()
+    GameStartCountdownQueueService.getInstance()
 
     monitorMemoryUsage()
 

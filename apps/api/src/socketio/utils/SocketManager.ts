@@ -41,7 +41,7 @@ export class SocketManager {
           reconnectStrategy: (retries) => {
             Logger.info(`Redis Pub client reconnect attempt ${retries}`)
             if (retries > 5) {
-              return new Error(
+              throw new Error(
                 "Redis Pub client connection failed after 5 retries",
               )
             }

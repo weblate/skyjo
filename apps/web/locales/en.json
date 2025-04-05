@@ -102,8 +102,8 @@
           "label": "Maximum number of players",
           "title": "Maximum number of players: {number}"
         },
-        "remove-identical-column": "Remove column if identical cards",
-        "remove-identical-row": "Remove row if identical cards",
+        "remove-identical-column": "Remove identical columns",
+        "remove-identical-row": "Remove identical rows",
         "nb-columns": {
           "label": "Number of columns",
           "title": "$number columns"
@@ -113,15 +113,15 @@
           "title": "$number rows"
         },
         "initial-turned-count": {
-          "label": "Number of card turned at the beginning of a round",
-          "title": "{number} cards will be turned at the beginning of the game"
-        },
-        "score-to-end-game": {
-          "label": "Number of points to end the game",
-          "title": "{number} points will be required to end the game"
+          "label": "Number of cards initially revealed",
+          "title": "At the start of the game, {number} of your cards will be revealed"
         },
         "show-current-score": {
-          "label": "Show current score of players during the game"
+          "label": "Show the current score during the game"
+        },
+        "score-to-end-game": {
+          "label": "Score to end the game",
+          "title": "The game will end when a player reaches {number} points"
         },
         "first-player-penalty-type": {
           "label": "First player penalty type",
@@ -130,13 +130,13 @@
           "item": {
             "multiplier-only": "Multiplier only",
             "flat-only": "Flat only",
-            "flat-then-multiplier": "Flat then multiplier",
-            "multiplier-then-flat": "Multiplier then flat"
+            "flat-then-multiplier": "Flat then Multiplier",
+            "multiplier-then-flat": "Multiplier then Flat"
           }
         },
         "first-player-flat-penalty": {
-          "label": "First player flat penalty",
-          "title": "The score of the first player will be added by {number} if it is not strictly inferior to the other scores of the game"
+          "label": "First player score flat penalty",
+          "title": "An additional {number} points will be added to the score of the first player"
         },
         "first-player-multiplier-penalty": {
           "label": "First player score penalty multiplier",
@@ -144,6 +144,8 @@
         }
       },
       "start-game-button": "Start the game",
+      "cancel": "Cancel",
+      "game-starting-in": "Game starting in {seconds}",
       "waiting-host-to-start": "Waiting for the host to start the game",
       "waiting-host-to-confirm-game-settings": "Waiting for the host to validate the settings",
       "player-section": {

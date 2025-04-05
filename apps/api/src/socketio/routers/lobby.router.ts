@@ -98,6 +98,20 @@ const lobbyRouter = (socket: GameSocket) => {
       await instance.onGameStart(socket)
     }),
   )
+
+  socket.on(
+    "game:start-countdown",
+    socketErrorWrapper(async () => {
+      await instance.onStartCountdown(socket)
+    }),
+  )
+
+  socket.on(
+    "game:cancel-countdown",
+    socketErrorWrapper(async () => {
+      await instance.onCancelCountdown(socket)
+    }),
+  )
 }
 
 export { lobbyRouter }

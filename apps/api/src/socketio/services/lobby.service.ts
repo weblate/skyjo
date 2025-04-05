@@ -1,3 +1,4 @@
+import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { BaseService } from "@/socketio/services/base.service.js"
 import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
@@ -7,6 +8,8 @@ import { Logger } from "@skymo/logger"
 import type { UpdateGameSettings } from "@skymo/shared/validations"
 
 export class LobbyService extends BaseService {
+  private readonly countdownQueue = GameStartCountdownQueueService.getInstance()
+
   async onCreate(
     socket: GameSocket,
     playerToCreate: CreatePlayer,
@@ -186,6 +189,45 @@ export class LobbyService extends BaseService {
     Logger.info(`Game ${game.code} started.`)
 
     await this.updateAndSendGame(game, stateManager)
+  }
+
+  async onStartCountdown(socket: GameSocket) {
+    const game = await this.getGame(socket.data.gameCode)
+    if (!game.isHost(socket.data.playerId)) {
+      throw new CError(`Player tried to start countdown but is not the host.`, {
+        code: ErrorConstants.ERROR.NOT_ALLOWED,
+        level: "warn",
+        meta: {
+          game: game.serialize(),
+          socketId: socket.id,
+          gameCode: game.code,
+          playerId: socket.data.playerId,
+        },
+      })
+    }
+
+    await this.countdownQueue.startCountdown(game.code)
+  }
+
+  async onCancelCountdown(socket: GameSocket) {
+    const game = await this.getGame(socket.data.gameCode)
+    if (!game.isHost(socket.data.playerId)) {
+      throw new CError(
+        `Player tried to cancel countdown but is not the host.`,
+        {
+          code: ErrorConstants.ERROR.NOT_ALLOWED,
+          level: "warn",
+          meta: {
+            game: game.serialize(),
+            socketId: socket.id,
+            gameCode: game.code,
+            playerId: socket.data.playerId,
+          },
+        },
+      )
+    }
+
+    await this.countdownQueue.cancelCountdown(game.code)
   }
 
   //#region private methods
