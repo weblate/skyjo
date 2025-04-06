@@ -12,6 +12,7 @@
     "verbatimModuleSyntax": true,
     "strict": true,
     "noUncheckedIndexedAccess": true,
+    "strictNullChecks": true,
     "noImplicitOverride": true,
     "module": "NodeNext",
     "outDir": "dist",

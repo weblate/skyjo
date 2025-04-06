@@ -42,7 +42,7 @@ const GameInfo = () => {
   const isPlayerTurn = isCurrentUserTurn(game, player)
 
   const gameInProgress =
-    roundPhase.isRevealCards || roundPhase.isMain || roundPhase.isLastLap
+    roundPhase.isRevealCards ?? roundPhase.isMain ?? roundPhase.isLastLap
 
   const showGameInfo = gameInProgress && isPlayerTurn && !isActionPending
 

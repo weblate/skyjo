@@ -1,7 +1,7 @@
 import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { Constants as CoreConstants, Game, Player, Settings } from "@skymo/core"
-import { CError, Constants as ErrorConstants } from "@skymo/error"
+import { Constants as ErrorConstants } from "@skymo/error"
 import {
   mockGameOperationManager,
   mockGameStateTracker,

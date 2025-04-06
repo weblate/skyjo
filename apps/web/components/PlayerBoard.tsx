@@ -27,7 +27,7 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
       turnStatus.isThrowOrReplace)
 
   const showSelectionAnimation =
-    roundPhase.isRevealCards || isActionablePlayerTurn
+    roundPhase.isRevealCards ?? isActionablePlayerTurn
 
   return (
     <div

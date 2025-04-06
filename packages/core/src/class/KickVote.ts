@@ -11,7 +11,7 @@ export interface KickVoteConstructorParams {
 export class KickVote {
   targetId: string
   initiatorId: string
-  private votes: Vote[]
+  private readonly votes: Vote[]
   private readonly nbConnectedPlayers: number
 
   constructor({

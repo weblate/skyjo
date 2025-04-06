@@ -12,6 +12,7 @@
     "strict": true,
     "noImplicitOverride": true,
     "forceConsistentCasingInFileNames": true,
+    "strictNullChecks": true,
     "module": "NodeNext",
     "declaration": true,
     "composite": true,

@@ -269,7 +269,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
               title={t("settings.first-player-multiplier-penalty.title", {
                 number: game.settings.firstPlayerMultiplierPenalty,
               })}
-              disabled={disableInput || disableMultiplierPenalty}
+              disabled={disableInput ?? disableMultiplierPenalty}
             />
             <Input
               name={"first-player-multiplier-penalty"}
@@ -286,7 +286,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
               title={t("settings.first-player-multiplier-penalty.title", {
                 number: game.settings.firstPlayerMultiplierPenalty,
               })}
-              disabled={disableInput || disableMultiplierPenalty}
+              disabled={disableInput ?? disableMultiplierPenalty}
               className="w-16 text-center"
             />
           </div>
@@ -309,7 +309,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
               title={t("settings.first-player-flat-penalty.title", {
                 number: game.settings.firstPlayerFlatPenalty,
               })}
-              disabled={disableInput || disableFlatPenalty}
+              disabled={disableInput ?? disableFlatPenalty}
             />
             <Input
               name={"first-player-flat-penalty"}
@@ -327,7 +327,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
               title={t("settings.first-player-flat-penalty.title", {
                 number: game.settings.firstPlayerFlatPenalty,
               })}
-              disabled={disableInput || disableFlatPenalty}
+              disabled={disableInput ?? disableFlatPenalty}
               className="w-20 text-center"
             />
           </div>

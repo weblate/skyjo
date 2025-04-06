@@ -62,7 +62,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
   }, [preferredUsername, preferredAvatarIndex])
 
   const getAvatar = () => {
-    return AVATARS_ARRAY[avatarIndex] || CoreConstants.AVATARS.BEE
+    return AVATARS_ARRAY[avatarIndex] ?? CoreConstants.AVATARS.BEE
   }
 
   const saveUserInLocalStorage = () => {
@@ -74,7 +74,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
   }
 
   const getUser = () => {
-    return { username: username || "Ano", avatar: getAvatar() }
+    return { username: username ?? "Ano", avatar: getAvatar() }
   }
 
   const value = useMemo(

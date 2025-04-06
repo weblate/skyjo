@@ -121,7 +121,7 @@ describe("SocketManager", () => {
 
     // Reset the mock sockets map
     mockSocketsMap =
-      vi.mocked(Server).mock.results[0]?.value.sockets.sockets || new Map()
+      vi.mocked(Server).mock.results[0]?.value.sockets.sockets ?? new Map()
     mockSocketsMap.clear()
 
     // Mock implementation

@@ -81,7 +81,7 @@ export class Constants {
     DISCONNECTED: 4,
   } as const
 
-  static readonly USER_MESSAGE_TYPE = "message" as const
+  static readonly USER_MESSAGE_TYPE = "message"
 
   static readonly SYSTEM_MESSAGE_TYPE = {
     SYSTEM_MESSAGE: "system-message",

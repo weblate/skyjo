@@ -25,7 +25,7 @@ const GamePage = () => {
   const [firstGame, setFirstGame] = useLocalStorage<boolean>("firstGame")
 
   const isPlayerTurn = isCurrentUserTurn(game, player)
-  const roundInProgress = roundPhase.isMain || roundPhase.isLastLap
+  const roundInProgress = roundPhase.isMain ?? roundPhase.isLastLap
 
   const isFirstPlayerGame = firstGame ?? true
 

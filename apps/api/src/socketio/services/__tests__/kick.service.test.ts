@@ -46,7 +46,7 @@ describe("KickService", () => {
     // @ts-ignore - We're manually overriding the repository with a mock version
     service["kickVoteRepository"] = {
       getKickVote: vi.fn((gameCode: string) => {
-        return Promise.resolve(kickVotes.get(gameCode) || null)
+        return Promise.resolve(kickVotes.get(gameCode) ?? null)
       }),
       createKickVote: vi.fn((gameCode: string, kickVote: KickVote) => {
         if (kickVotes.has(gameCode)) {
