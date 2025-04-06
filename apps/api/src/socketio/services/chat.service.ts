@@ -32,6 +32,8 @@ export class ChatService extends BaseService {
       type: CoreConstants.USER_MESSAGE_TYPE,
     }
 
+    await this.messageRepository.storeMessage(game.code, newMessage)
+
     socket.to(game.code).volatile.emit("message", newMessage)
     socket.volatile.emit("message", newMessage)
   }

@@ -3,6 +3,7 @@ import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
 import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { KickVoteRepository } from "@/redis/kickVote.repository.js"
+import { MessageRepository } from "@/redis/message.repository.js"
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
@@ -21,6 +22,8 @@ export abstract class BaseService {
     RevealCardsAfkQueueService.getInstance()
   protected kickVoteExpirationQueue: KickVoteExpirationQueueService =
     KickVoteExpirationQueueService.getInstance()
+
+  protected messageRepository = new MessageRepository()
 
   protected async sendMissingStatesToSocket(
     socket: GameSocket,
@@ -89,6 +92,8 @@ export abstract class BaseService {
       message: messageType,
       type: messageType,
     }
+
+    await this.messageRepository.storeMessage(game.code, message)
 
     this.socketManager.sendToRoom({
       room: game.code,
