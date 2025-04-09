@@ -28,11 +28,11 @@ type ChatMessageProps = Readonly<ChatMessage> & {
 const ChatMessage = ({ username, message, type, id }: ChatMessageProps) => {
   const { game, opponents } = useGame()
   const t = useTranslations("components.ChatMessage")
-  const players = game?.players.map((p) => p.name) || []
+  const players = game?.players.map((p) => p.name) ?? []
 
   const getOpponentByName = (name?: string) => {
     if (!name || !opponents) return null
-    return opponents.flat().find((p) => p.name === name) || null
+    return opponents.flat().find((p) => p.name === name) ?? null
   }
 
   const highlightTags = (text: string) => {
