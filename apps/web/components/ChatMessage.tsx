@@ -1,3 +1,5 @@
+import { UserContextMenu } from "@/components/UserContextMenu"
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { useGame } from "@/contexts/GameContext"
 import type { ChatMessage } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
@@ -23,10 +25,15 @@ type ChatMessageProps = Readonly<ChatMessage> & {
   username?: string
 }
 
-const ChatMessage = ({ username, message, type }: ChatMessageProps) => {
-  const { game } = useGame()
+const ChatMessage = ({ username, message, type, id }: ChatMessageProps) => {
+  const { game, opponents } = useGame()
   const t = useTranslations("components.ChatMessage")
-  const players = game?.players.map((p) => p.name)
+  const players = game?.players.map((p) => p.name) || []
+
+  const getOpponentByName = (name?: string) => {
+    if (!name || !opponents) return null
+    return opponents.flat().find((p) => p.name === name) || null
+  }
 
   const highlightTags = (text: string) => {
     const parts = text.split(/(@[\w-]+)/)
@@ -41,6 +48,35 @@ const ChatMessage = ({ username, message, type }: ChatMessageProps) => {
       }
       return part
     })
+  }
+
+  const opponent = getOpponentByName(username)
+
+  if (type === "message" && username && opponent) {
+    return (
+      <ContextMenu>
+        <ContextMenuTrigger asChild>
+          <m.p
+            initial={{
+              opacity: 0.5,
+              translateY: 10,
+            }}
+            animate={{
+              opacity: 1,
+              translateY: 0,
+            }}
+            className={chatMessageClasses({ type })}
+          >
+            <span className="font-semibold">
+              {username}
+              {t("separator")}
+            </span>
+            {highlightTags(message)}
+          </m.p>
+        </ContextMenuTrigger>
+        <UserContextMenu player={opponent} reportMessageId={id} />
+      </ContextMenu>
+    )
   }
 
   return (

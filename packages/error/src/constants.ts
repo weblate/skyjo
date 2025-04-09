@@ -20,6 +20,7 @@ export class Constants {
     TOO_MANY_REQUESTS: "too-many-requests",
     GAME_ALREADY_PROCESSING_AFK: "game-already-processing-afk",
     UNEXPECTED_ERROR: "unexpected-error",
+    MESSAGE_NOT_FOUND: "message-not-found",
   } as const
 
   static readonly BAN_ERROR = {

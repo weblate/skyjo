@@ -39,6 +39,8 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     showYouKickPlayer,
     showHostKick,
     showHostKickYou,
+    showReport,
+    showReportAgainstYou,
   } = useKickVoteToasts()
 
   const [kickVote, setKickVote] = useState<KickVoteToJson | null>(null)
@@ -102,11 +104,19 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     } else showHostKick(playerKickName)
   }
 
+  const onReport = (playerToKickId: string, playerToKickName: string) => {
+    if (playerToKickId === player.id) {
+      showReportAgainstYou()
+      router.replace("/")
+    } else showReport(playerToKickName)
+  }
+
   const initKickVoteListeners = () => {
     socket!.on("kick:vote", onKickVote)
     socket!.on("kick:vote-success", onKickVoteSuccess)
     socket!.on("kick:host-kick", onHostKick)
     socket!.on("kick:vote-failed", onKickVoteFailed)
+    socket!.on("kick:report", onReport)
   }
 
   const destroyKickVoteListeners = () => {
@@ -114,6 +124,7 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     socket!.off("kick:vote-success", onKickVoteSuccess)
     socket!.off("kick:host-kick", onHostKick)
     socket!.off("kick:vote-failed", onKickVoteFailed)
+    socket!.off("kick:report", onReport)
   }
   //#endregion
 

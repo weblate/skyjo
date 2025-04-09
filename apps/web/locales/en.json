@@ -267,7 +267,10 @@
       }
     },
     "ChatMessage": {
-      "separator": ": "
+      "separator": ": ",
+      "context-menu": {
+        "report": "Report message"
+      }
     },
     "ChatMessageList": {
       "unread-messages": "{count} unread message{count, plural, =1 {} other {s}}"
@@ -543,10 +546,12 @@
     },
     "Avatar": {
       "context-menu": {
-        "kick": "Kick",
-        "ban": "Ban",
-        "mute": "Mute",
-        "unmute": "Unmute"
+        "report": "Report {username}",
+        "kick": "Kick {username}",
+        "vote-to-kick": "Vote to kick {username}",
+        "ban": "Ban {username}",
+        "mute": "Mute {username}",
+        "unmute": "Unmute {username}"
       }
     },
     "KickVote": {
@@ -594,6 +599,13 @@
       },
       "host-kick-you": {
         "title": "You have been kicked out of the game by the host"
+      },
+      "report": {
+        "title": "{playerName} has been kicked due to a report"
+      },
+      "report-against-you": {
+        "title": "You have been kicked due to a report",
+        "description": "Your username or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
       }
     },
     "AfkKick": {
@@ -608,6 +620,23 @@
       "player-kicked": {
         "title": "Player Kicked",
         "description": "{playerName} has been kicked from the game due to inactivity."
+      }
+    },
+    "ReportDialog": {
+      "title": "Report {username}",
+      "description": "Report the username or a message from {username} if it seems inappropriate.",
+      "report-username": "Report the username",
+      "report-message": "Report a message",
+      "select-message": "Select the message to report",
+      "select-message-placeholder": "Select a message",
+      "no-messages": "No messages found from this user",
+      "cancel": "Cancel",
+      "submit": "Report",
+      "toast": {
+        "report-submitted": {
+          "title": "Report submitted",
+          "description": "Thank you for your report, you have contributed to improving the quality of the game."
+        }
       }
     }
   },

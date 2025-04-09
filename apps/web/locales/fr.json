@@ -262,7 +262,10 @@
       }
     },
     "ChatMessage": {
-      "separator": ": "
+      "separator": ": ",
+      "context-menu": {
+        "report": "Signaler le message"
+      }
     },
     "ChatMessageList": {
       "unread-messages": "{count} message{count, plural, =1 {} other {s}} non lu{count, plural, =1 {} other {s}}"
@@ -538,10 +541,12 @@
     },
     "Avatar": {
       "context-menu": {
-        "kick": "Expulser",
-        "ban": "Bannir",
-        "mute": "Rendre muet",
-        "unmute": "Rendre non muet"
+        "report": "Signaler {username}",
+        "kick": "Expulser {username}",
+        "vote-to-kick": "Voter pour expulser {username}",
+        "ban": "Bannir {username}",
+        "mute": "Rendre muet {username}",
+        "unmute": "Rendre non muet {username}"
       }
     },
     "KickVote": {
@@ -589,6 +594,13 @@
       },
       "host-kick-you": {
         "title": "Vous avez été expulsé de la partie par l'hôte"
+      },
+      "report": {
+        "title": "{playerName} a été expulsé suite à un signalement"
+      },
+      "report-against-you": {
+        "title": "Vous avez été expulsé suite à un signalement",
+        "description": "Votre pseudonyme ou un de vos messages a été signalé et a été jugé inapproprié. Merci de ne pas répéter ce comportement."
       }
     },
     "AfkKick": {
@@ -609,6 +621,23 @@
       "light": "Clair",
       "system": "Système",
       "dark": "Sombre"
+    },
+    "ReportDialog": {
+      "title": "Signaler {username}",
+      "description": "Signaler le pseudonyme ou un message de {username} s'il vous semble inapproprié.",
+      "report-username": "Signaler le nom d'utilisateur",
+      "report-message": "Signaler un message",
+      "select-message": "Sélectionner le message à signaler",
+      "select-message-placeholder": "Sélectionner un message",
+      "no-messages": "Aucun message trouvé de cette utilisateur",
+      "cancel": "Annuler",
+      "submit": "Signaler",
+      "toast": {
+        "report-submitted": {
+          "title": "Signalement envoyé",
+          "description": "Merci pour votre signalement, vous avez contribué à améliorer la qualité du jeu."
+        }
+      }
     }
   },
   "utils": {

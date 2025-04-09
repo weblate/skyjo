@@ -276,7 +276,10 @@
       "dark": "Oscuro"
     },
     "ChatMessage": {
-      "separator": ": "
+      "separator": ": ",
+      "context-menu": {
+        "report": "Reportar mensaje"
+      }
     },
     "ChatMessageList": {
       "unread-messages": "{count} mensaje no leído{count, plural, =1 {mensaje sin leer} otro {mensajes sin leer}}"
@@ -459,9 +462,11 @@
     },
     "Avatar": {
       "context-menu": {
-        "kick": "Expulsar",
-        "unmute": "Activar el sonido",
-        "mute": "Silenciar"
+        "report": "Reportar {username}",
+        "kick": "Expulsar {username}",
+        "vote-to-kick": "Votar para expulsar {username}",
+        "unmute": "Activar el sonido {username}",
+        "mute": "Silenciar {username}"
       }
     },
     "KickVote": {
@@ -511,6 +516,23 @@
       "card-per-row": "Número de filas: {value}",
       "initial-turned-count": "Número de cartas a girar al principio: {value}",
       "score-to-end-game": "Número de puntos para terminar el juego: {value}"
+    },
+    "ReportDialog": {
+      "title": "Reportar {username}",
+      "description": "Reportar el nombre de usuario o un mensaje de {username} si parece inapropiado.",
+      "report-username": "Reportar usuario",
+      "report-message": "Reportar un mensaje",
+      "select-message": "Seleccionar mensaje para reportar",
+      "select-message-placeholder": "Seleccionar un mensaje",
+      "no-messages": "No hay mensajes encontrados de este usuario",
+      "cancel": "Cancelar",
+      "submit": "Reportar",
+      "toast": {
+        "report-submitted": {
+          "title": "Reporte enviado",
+          "description": "Gracias por tu reporte, has contribuido a mejorar la calidad del juego."
+        }
+      }
     }
   },
   "utils": {

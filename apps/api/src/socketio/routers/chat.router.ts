@@ -2,6 +2,7 @@ import { ChatService } from "@/socketio/services/chat.service.js"
 import { consumeSocketRateLimiter } from "@/socketio/utils/rateLimiter.js"
 import { socketErrorWrapper } from "@/socketio/utils/socketErrorWrapper.js"
 import {
+  type Report,
   type SendChatMessage,
   type WizzPlayerUsername,
   sendChatMessage,
@@ -45,6 +46,13 @@ const chatRouter = (socket: GameSocket) => {
       const targetUsername = wizzPlayerUsername.parse(data)
 
       await instance.onWizz(socket, targetUsername)
+    }),
+  )
+
+  socket.on(
+    "report",
+    socketErrorWrapper(async (data: Report) => {
+      await instance.onReport(socket, data)
     }),
   )
 }

@@ -7,7 +7,12 @@ import { MessageRepository } from "@/redis/message.repository.js"
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
-import { Constants as CoreConstants, type Game, type Player } from "@skymo/core"
+import {
+  Constants as CoreConstants,
+  type Game,
+  type Player,
+  type ServerMessageType,
+} from "@skymo/core"
 import type { ServerChatMessage } from "@skymo/shared/types"
 import type { GameSocket } from "../types/gameSocket.js"
 
@@ -86,21 +91,29 @@ export abstract class BaseService {
     const messageType = reconnection
       ? CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_RECONNECT
       : CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED
+    await this.sendServerMessage(game.code, player.name, messageType)
+
+    await this.redis.updateGame(game)
+  }
+
+  async sendServerMessage(
+    gameCode: string,
+    playerName: string,
+    serverMessageType: ServerMessageType,
+  ) {
     const message: ServerChatMessage = {
       id: crypto.randomUUID(),
-      username: player.name,
-      message: messageType,
-      type: messageType,
+      username: playerName,
+      message: serverMessageType,
+      type: serverMessageType,
     }
 
-    await this.messageRepository.storeMessage(game.code, message)
+    await this.messageRepository.storeMessage(gameCode, message)
 
     this.socketManager.sendToRoom({
-      room: game.code,
+      room: gameCode,
       event: "message:server",
       data: [message],
     })
-
-    await this.redis.updateGame(game)
   }
 }

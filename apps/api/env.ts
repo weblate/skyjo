@@ -11,6 +11,13 @@ export const envSchema = z.object({
   GMAIL_APP_PASSWORD: z.string({
     message: "GMAIL_APP_PASSWORD must be set in .env file",
   }),
+
+  SIGHTENGINE_API_USER: z.string({
+    message: "SIGHTENGINE_API_USER must be set in .env file",
+  }),
+  SIGHTENGINE_API_SECRET: z.string({
+    message: "SIGHTENGINE_API_SECRET must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

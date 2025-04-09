@@ -26,19 +26,9 @@ export class PlayerService extends BaseService {
 
     if (!game.isPlaying()) {
       await game.disconnectPlayer(player)
-      const message = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
-      this.socketManager.sendToRoom({
-        room: game.code,
-        event: "message:server",
-        data: [
-          {
-            id: crypto.randomUUID(),
-            username: player.name,
-            message,
-            type: message,
-          },
-        ],
-      })
+
+      const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
+      await this.sendServerMessage(game.code, player.name, messageType)
     } else {
       player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
     }
@@ -70,19 +60,8 @@ export class PlayerService extends BaseService {
 
       await game.setPlayerToLeave(player)
 
-      const message = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
-      this.socketManager.sendToRoom({
-        room: game.code,
-        event: "message:server",
-        data: [
-          {
-            id: crypto.randomUUID(),
-            username: player.name,
-            message,
-            type: message,
-          },
-        ],
-      })
+      const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
+      await this.sendServerMessage(game.code, player.name, messageType)
 
       await this.updateAndSendGame(game, stateManager)
       await socket.leave(game.code)

@@ -9,6 +9,7 @@ import { useVoteKick } from "@/contexts/VoteKickContext"
 import { isHost } from "@/lib/game"
 import { PlayerToJson } from "@skymo/core"
 import {
+  FrownIcon,
   MessageSquareIcon,
   MessageSquareOffIcon,
   ShieldBanIcon,
@@ -16,8 +17,12 @@ import {
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-const UserContextMenu = ({ player }: { player: PlayerToJson }) => {
-  const { unmutePlayer, mutePlayer, mutedPlayers } = useChat()
+type UserContextMenuProps = {
+  player: PlayerToJson
+  reportMessageId?: string
+}
+const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
+  const { unmutePlayer, mutePlayer, mutedPlayers, reportPlayer } = useChat()
   const { actions, kickVoteInProgress } = useVoteKick()
   const { game, player: currentPlayer } = useGame()
   const { banPlayer } = useBan()
@@ -41,6 +46,10 @@ const UserContextMenu = ({ player }: { player: PlayerToJson }) => {
 
   return (
     <ContextMenuContent>
+      <ContextMenuItem onClick={() => reportPlayer(player.id, reportMessageId)}>
+        <FrownIcon className="w-4 h-4 mr-2" />
+        {t("context-menu.report", { username: player.name })}
+      </ContextMenuItem>
       <ContextMenuItem
         onClick={handleKickPlayer}
         disabled={
@@ -48,7 +57,10 @@ const UserContextMenu = ({ player }: { player: PlayerToJson }) => {
         }
       >
         <UserRoundXIcon className="w-4 h-4 mr-2" />
-        {t("context-menu.kick")}
+        {t(
+          isHostAndPrivate ? "context-menu.kick" : "context-menu.vote-to-kick",
+          { username: player.name },
+        )}
       </ContextMenuItem>
 
       {isHostAndPrivate && (
@@ -57,19 +69,19 @@ const UserContextMenu = ({ player }: { player: PlayerToJson }) => {
           className="text-red-500 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900 dark:hover:text-red-300"
         >
           <ShieldBanIcon className="w-4 h-4 mr-2" />
-          {t("context-menu.ban")}
+          {t("context-menu.ban", { username: player.name })}
         </ContextMenuItem>
       )}
 
       {mutedPlayers.includes(player.name) ? (
         <ContextMenuItem onClick={() => unmutePlayer(player.name)}>
           <MessageSquareIcon className="w-4 h-4 mr-2" />
-          {t("context-menu.unmute")}
+          {t("context-menu.unmute", { username: player.name })}
         </ContextMenuItem>
       ) : (
         <ContextMenuItem onClick={() => mutePlayer(player.name)}>
           <MessageSquareOffIcon className="w-4 h-4 mr-2" />
-          {t("context-menu.mute")}
+          {t("context-menu.mute", { username: player.name })}
         </ContextMenuItem>
       )}
     </ContextMenuContent>

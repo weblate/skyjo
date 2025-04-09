@@ -1,8 +1,10 @@
 "use client"
 
+import ReportDialog from "@/components/ReportDialog"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
+import { usePathname } from "@/i18n/routing"
 import { Constants as CoreConstants, SystemMessageType } from "@skymo/core"
 import {
   ChatMessage,
@@ -49,6 +51,7 @@ type ChatContext = {
   unmutePlayer: (username: string) => void
   toggleMutePlayer: (username: string) => void
   wizzPlayer: (targetUsername: string) => void
+  reportPlayer: (username: string, messageId?: string) => void
 }
 
 const ChatContext = createContext<ChatContext | undefined>(undefined)
@@ -60,12 +63,21 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     settings: { chatVisibility },
   } = useSettings()
   const t = useTranslations("utils.chat")
-  const [chat, setChat] = useState<ChatMessage[]>([])
+  const pathname = usePathname()
 
+  const [chat, setChat] = useState<ChatMessage[]>([])
   const [unreadMessages, setUnreadMessages] = useState<ChatMessage[]>([])
   const [hasUnreadMessage, setHasUnreadMessage] = useState<boolean>(false)
 
   const [mutedPlayers, setMutedPlayers] = useState<string[]>([])
+
+  const [report, setReport] = useState<
+    | {
+        playerId: string
+        messageId?: string
+      }
+    | undefined
+  >(undefined)
 
   useEffect(() => {
     if (!chatVisibility) return
@@ -86,6 +98,12 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       }
     }
   }, [socket, chatVisibility, mutedPlayers])
+
+  useEffect(() => {
+    if (!pathname.includes("/game/")) {
+      setChat([])
+    }
+  }, [pathname])
 
   const sendMessage = (username: string, message: string) => {
     socket!.send({
@@ -225,6 +243,10 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   }
   //#endregion
 
+  const reportPlayer = (playerId: string, messageId?: string) => {
+    setReport({ playerId, messageId })
+  }
+
   const contextValue = useMemo(
     () => ({
       chat,
@@ -241,12 +263,19 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       unmutePlayer,
       toggleMutePlayer,
       wizzPlayer,
+      reportPlayer,
     }),
     [chat, unreadMessages, hasUnreadMessage, mutedPlayers],
   )
 
   return (
     <ChatContext.Provider value={contextValue}>
+      <ReportDialog
+        open={!!report}
+        report={report}
+        messages={chat}
+        onOpenChange={() => setReport(undefined)}
+      />
       <div className="wizz-container">{children}</div>
     </ChatContext.Provider>
   )

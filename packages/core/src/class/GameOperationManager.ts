@@ -1,5 +1,12 @@
 import type { Game } from "@/class/Game.js"
 
+export const defaultKickSocketOptions: KickSocketOptions = {
+  emitEvent: true,
+}
+export type KickSocketOptions = {
+  emitEvent?: boolean
+}
+
 export interface GameOperationManagerInterface {
   updateGame(game: Game): Promise<void>
   removeGame(gameCode: string): Promise<void>
@@ -10,7 +17,7 @@ export interface GameOperationManagerInterface {
   cancelPlayerAfkTimer(gameCode: string, playerId: string): Promise<void>
 
   getSocket(socketId: string): unknown | undefined
-  kickSocket(socket: unknown): Promise<void>
+  kickSocket(socket: unknown, options?: KickSocketOptions): Promise<void>
 
   delayNewRound(
     game: Game,
