@@ -37,19 +37,21 @@ const UserContextMenu = ({ player }: { player: PlayerToJson }) => {
   const hasLessThanThreePlayers = game.players.length <= 2
   const isCurrentUserHost = isHost(game, currentPlayer.id)
 
+  const isHostAndPrivate = isCurrentUserHost && game.settings.private
+
   return (
     <ContextMenuContent>
       <ContextMenuItem
         onClick={handleKickPlayer}
         disabled={
-          (kickVoteInProgress || hasLessThanThreePlayers) && !isCurrentUserHost
+          (kickVoteInProgress || hasLessThanThreePlayers) && isHostAndPrivate
         }
       >
         <UserRoundXIcon className="w-4 h-4 mr-2" />
         {t("context-menu.kick")}
       </ContextMenuItem>
 
-      {isCurrentUserHost && game.settings.private && (
+      {isHostAndPrivate && (
         <ContextMenuItem
           onClick={handleBanPlayer}
           className="text-red-500 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900 dark:hover:text-red-300"
