@@ -1,6 +1,5 @@
 "use client"
 
-import { useChat } from "@/contexts/ChatContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
 import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
@@ -120,7 +119,6 @@ interface GameProviderProps extends PropsWithChildren {
 const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const { socket } = useSocket()
   const { playerId } = useUser()
-  const { sendMessage, setChat } = useChat()
   const router = useRouter()
   const { showAfkWarning, showAfkKick, showPlayerAfkKick } = useAfkKickToasts()
 
@@ -227,7 +225,6 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
 
   const onLeave = () => {
     setGame(undefined)
-    setChat([])
     if (game?.settings.private) router.replace("/")
     else router.replace("/search")
   }
@@ -432,7 +429,6 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }
 
   const actions = {
-    sendMessage,
     updateMaxPlayers,
     updateSingleSettings,
     toggleSettingsValidation,

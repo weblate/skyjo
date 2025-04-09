@@ -19,8 +19,8 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
   const params = use<GameLayoutParams>(paramsPromise)
 
   return (
-    <ChatProvider>
-      <GameProvider gameCode={params.code}>
+    <GameProvider gameCode={params.code}>
+      <ChatProvider>
         <VoteKickProvider>
           <BanProvider>
             <div className="w-svh h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
@@ -29,8 +29,8 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
             </div>
           </BanProvider>
         </VoteKickProvider>
-      </GameProvider>
-    </ChatProvider>
+      </ChatProvider>
+    </GameProvider>
   )
 }
 
