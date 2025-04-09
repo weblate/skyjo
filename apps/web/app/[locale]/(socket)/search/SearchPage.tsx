@@ -50,6 +50,11 @@ export const SearchPage = () => {
         )
       : data
 
+  const onJoinGameError = () => {
+    refetch()
+    setButtonLoading(false)
+  }
+
   return (
     <m.div
       className="relative min-h-svh w-full z-20 flex flex-col"
@@ -80,7 +85,7 @@ export const SearchPage = () => {
             buttonLoading={buttonLoading}
             setButtonLoading={setButtonLoading}
             onTagClick={onTagClick}
-            onJoinGameError={refetch}
+            onJoinGameError={onJoinGameError}
           />
         </m.div>
       </div>
