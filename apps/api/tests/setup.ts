@@ -26,6 +26,64 @@ vi.mock("bullmq", () => {
   }
 })
 
+// Mock Redis client to prevent actual Redis connections
+vi.mock("@/redis/client.ts", () => {
+  const mockClient = {
+    isOpen: true,
+    connect: vi.fn().mockResolvedValue(undefined),
+    disconnect: vi.fn().mockResolvedValue(undefined),
+    json: {
+      get: vi.fn().mockResolvedValue(null),
+      set: vi.fn().mockResolvedValue(undefined),
+      del: vi.fn().mockResolvedValue(undefined),
+    },
+    exists: vi.fn().mockResolvedValue(0),
+    get: vi.fn().mockResolvedValue(null),
+    set: vi.fn().mockResolvedValue(undefined),
+    del: vi.fn().mockResolvedValue(undefined),
+    expire: vi.fn().mockResolvedValue(undefined),
+    time: vi.fn().mockResolvedValue([Date.now()]),
+    hSet: vi.fn().mockResolvedValue(undefined),
+    hGet: vi.fn().mockResolvedValue(null),
+  }
+
+  return {
+    RedisClient: class {
+      static instance = null
+      static connectionPromise = null
+      static connectionAttempts = 0
+      static MAX_CONNECTION_ATTEMPTS = 5
+      static isConnecting = false
+
+      static async getClient() {
+        return mockClient
+      }
+
+      static async disconnect() {
+        return Promise.resolve()
+      }
+
+      static async createConnection() {
+        return mockClient
+      }
+
+      static async cleanupClient() {
+        return Promise.resolve()
+      }
+    },
+  }
+})
+
+vi.mock("@/redis/message.repository.js", () => {
+  return {
+    MessageRepository: vi.fn().mockImplementation(() => ({
+      storeMessage: vi.fn().mockResolvedValue(undefined),
+      getMessageById: vi.fn().mockResolvedValue(null),
+      getGameMessagesKey: vi.fn().mockReturnValue("game:test:messages"),
+    })),
+  }
+})
+
 vi.spyOn(process, "env", "get").mockReturnValue({
   NODE_ENV: "test",
   APP_NAME: "skymo-api",
@@ -34,6 +92,8 @@ vi.spyOn(process, "env", "get").mockReturnValue({
   GMAIL_APP_PASSWORD: "e",
   SEQ_URL: "e",
   SEQ_API_KEY: "e",
-  REDIS_URL: "e",
+  REDIS_URL: "redis://mock-redis-url",
   npm_package_version: "-99",
+  SIGHTENGINE_API_USER: "test-api-user",
+  SIGHTENGINE_API_SECRET: "test-api-secret",
 })

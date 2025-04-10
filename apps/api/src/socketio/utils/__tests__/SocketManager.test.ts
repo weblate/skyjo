@@ -42,13 +42,6 @@ vi.mock("@skymo/logger", () => ({
   },
 }))
 
-vi.mock("@env", () => ({
-  ENV: {
-    REDIS_URL: "redis://localhost:6379",
-    ORIGINS: ["http://localhost:3000"],
-  },
-}))
-
 // Create a mock game data object for tests
 const createMockGameData = () => ({
   code: "game-123",
