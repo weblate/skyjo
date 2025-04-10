@@ -2,12 +2,12 @@ import { BanService } from "@/socketio/services/ban.service.js"
 import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
-import { banPlayerSchema } from "@skymo/shared/validations"
+import { type BanPlayer, banPlayerSchema } from "@skymo/shared/validations"
 
 export const banRouter = (socket: GameSocket) => {
   const banService = new BanService()
 
-  socket.on("ban:player", async (data) => {
+  socket.on("ban:player", async (data: BanPlayer) => {
     try {
       const { targetId } = banPlayerSchema.parse(data)
 
