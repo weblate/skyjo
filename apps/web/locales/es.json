@@ -596,6 +596,10 @@
         },
         "game-already-started": {
           "description": "La partida ya ha comenzado"
+        },
+        "rate-limit": {
+          "title": "Demasiadas solicitudes de tu parte",
+          "description": "Por favor, espera unos segundos antes de intentarlo de nuevo"
         }
       }
     }

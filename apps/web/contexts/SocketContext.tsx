@@ -118,9 +118,9 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (socket === null) return
-    initGameListeners()
+    initCommonListeners()
 
-    return () => destroyGameListeners()
+    return () => destroyCommonListeners()
   }, [socket])
 
   //#region listeners
@@ -161,17 +161,25 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const initGameListeners = () => {
+  const onRateLimitError = () => {
+    toast.error(tSocketError("rate-limit.description"), {
+      duration: 5000,
+    })
+  }
+
+  const initCommonListeners = () => {
     socket!.on("connect", onConnect)
     socket!.on("disconnect", onConnectionLost)
     socket!.on("connect_error", onConnectionError)
     socket!.on("error:recover", onRecoverError)
+    socket!.on("error:rate-limit", onRateLimitError)
   }
-  const destroyGameListeners = () => {
+  const destroyCommonListeners = () => {
     socket!.off("connect", onConnect)
     socket!.off("disconnect", onConnectionLost)
     socket!.off("connect_error", onConnectionError)
     socket!.off("error:recover", onRecoverError)
+    socket!.off("error:rate-limit", onRateLimitError)
   }
   //#endregion
 

@@ -8,6 +8,7 @@ import type {
   ClientToServerChatEvents,
   ServerToClientChatEvents,
 } from "./events/chat.js"
+import type { ServerToClientErrorEvents } from "./events/error.js"
 import type {
   ClientToServerGameEvents,
   ServerToClientGameEvents,
@@ -41,7 +42,8 @@ export type ServerToClientEvents = ServerToClientGameEvents &
   ServerToClientLobbyEvents &
   ServerToClientPlayerEvents &
   ServerToClientAfkEvents &
-  ServerToClientBanEvents
+  ServerToClientBanEvents &
+  ServerToClientErrorEvents
 
 export type SocketData = {
   gameCode: string

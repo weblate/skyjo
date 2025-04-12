@@ -707,6 +707,10 @@
         },
         "player-banned": {
           "description": "You have been banned from this game"
+        },
+        "rate-limit": {
+          "title": "You are sending too many requests",
+          "description": "Please wait a few seconds before trying again"
         }
       }
     }

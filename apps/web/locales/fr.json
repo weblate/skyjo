@@ -707,6 +707,10 @@
         },
         "player-banned": {
           "description": "Vous avez été banni de cette partie"
+        },
+        "rate-limit": {
+          "title": "Vous envoyez trop de requêtes",
+          "description": "Merci d'attendre quelques secondes avant de réessayer"
         }
       }
     }
