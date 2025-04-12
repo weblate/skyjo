@@ -54,7 +54,7 @@ const CardTable = ({
     !hasRevealedCardCount(player, game.settings.initialTurnedCount)
 
   const canReplaceCard =
-    turnStatus.isThrowOrReplace ?? turnStatus.isReplaceACard
+    turnStatus.isThrowOrReplace || turnStatus.isReplaceACard
 
   const canTurnCard = turnStatus.isTurnACard
 
@@ -129,7 +129,7 @@ const CardTable = ({
                 disabled={cardDisabled || !canBeSelected || isActionPending}
                 loading={isCardLoading}
                 flipAnimation={lastTurnStatus.isTurn}
-                exitAnimation={roundPhase.isMain ?? roundPhase.isLastLap}
+                exitAnimation={roundPhase.isMain || roundPhase.isLastLap}
               />
             )
           })
