@@ -7,16 +7,15 @@ import { useRouter } from "@/i18n/routing"
 import { isHost } from "@/lib/game"
 import { cn } from "@/lib/utils"
 import { UpdateGameSettings } from "@skymo/shared/validations"
-import { Howl } from "howler"
 import { TimerIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { useLocalStorage } from "react-use"
 
-const SOUNDS = {
-  countdown: new Howl({ src: ["/sounds/countdown.ogg"] }),
-  gameStarting: new Howl({ src: ["/sounds/game-starting.ogg"] }),
-}
+// const SOUNDS = {
+//   countdown: new Howl({ src: ["/sounds/countdown.ogg"] }),
+//   gameStarting: new Howl({ src: ["/sounds/game-starting.ogg"] }),
+// }
 
 type LobbyCountdownProps = {
   gameCode: string
@@ -61,7 +60,7 @@ export const LobbyCountdown = ({
       const initialTime = calculateTimeLeft()
       setCountdown(initialTime)
       countdownValueRef.current = initialTime
-      SOUNDS.countdown.play()
+      // SOUNDS.countdown.play()
 
       clearCountdownInterval()
 
@@ -71,7 +70,7 @@ export const LobbyCountdown = ({
         setCountdown(timeLeft)
         countdownValueRef.current = timeLeft
 
-        if (timeLeft > 0 && timeLeft) SOUNDS.countdown.play()
+        // if (timeLeft > 0 && timeLeft) SOUNDS.countdown.play()
 
         if (timeLeft <= 0) {
           clearCountdownInterval()
@@ -99,7 +98,7 @@ export const LobbyCountdown = ({
   useEffect(() => {
     if (!gameStatus.isLobby) {
       clearCountdownInterval()
-      SOUNDS.gameStarting.play()
+      // SOUNDS.gameStarting.play()
       router.replace(`/game/${gameCode}`)
     }
   }, [gameStatus.isLobby, gameCode, router])
@@ -111,7 +110,7 @@ export const LobbyCountdown = ({
     setGameSettingsLocalStorage(game.settings)
 
     try {
-      socket?.timeout(5000).emit("game:start-countdown")
+      socket?.timeout(7000).emit("game:start-countdown")
     } catch (error) {
       console.error("Socket error while starting countdown:", error)
       setIsLoading(false)
