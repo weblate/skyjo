@@ -299,10 +299,10 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   //#endregion
 
   //#region actions
-  const ackCallback = (event: string) => (result: boolean) => {
-    console.log("ackCallback", event, result)
+  const ackCallback = (event: string) => () => {
     setPendingAction(event)
   }
+
   const sendWithAck = <
     T extends keyof ClientToServerGameWithAckEvents,
     D extends Parameters<ClientToServerGameWithAckEvents[T]>,
