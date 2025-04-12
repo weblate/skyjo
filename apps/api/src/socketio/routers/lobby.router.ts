@@ -26,6 +26,18 @@ const settingsRateLimiter = new RateLimiterMemory({
   duration: 5,
 })
 
+const startCountdownRateLimiter = new RateLimiterMemory({
+  keyPrefix: "start-countdown",
+  points: 5,
+  duration: 10,
+})
+
+const cancelCountdownRateLimiter = new RateLimiterMemory({
+  keyPrefix: "cancel-countdown",
+  points: 8,
+  duration: 10,
+})
+
 const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "create",
@@ -95,6 +107,8 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:start-countdown",
     socketErrorWrapper(async () => {
+      await consumeSocketRateLimiter(startCountdownRateLimiter)(socket)
+
       await instance.onStartCountdown(socket)
     }),
   )
@@ -102,6 +116,8 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:cancel-countdown",
     socketErrorWrapper(async () => {
+      await consumeSocketRateLimiter(cancelCountdownRateLimiter)(socket)
+
       await instance.onCancelCountdown(socket)
     }),
   )
