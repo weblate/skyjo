@@ -85,12 +85,20 @@ export const LobbyCountdown = ({
       setIsLoading(false)
     }
 
+    const handleRateLimit = () => {
+      setTimeout(() => {
+        setIsLoading(false)
+      }, 8000)
+    }
+
     socket.on("game:countdown-started", handleCountdownStarted)
     socket.on("game:countdown-canceled", handleCountdownCanceled)
+    socket.on("error:rate-limit", handleRateLimit)
 
     return () => {
       socket.off("game:countdown-started", handleCountdownStarted)
       socket.off("game:countdown-canceled", handleCountdownCanceled)
+      socket.off("error:rate-limit", handleRateLimit)
       clearCountdownInterval()
     }
   }, [socket])
