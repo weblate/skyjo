@@ -10,8 +10,8 @@ services:
     ports:
       - 2001:2001
     networks:
-      - internal
-      - external
+      - dev-internal
+      - dev-external
     env_file:
       - .env
       - ./apps/api/.env
@@ -30,7 +30,7 @@ services:
     depends_on:
       - dev-redis
     networks:
-      - internal
+      - dev-internal
     env_file:
       - .env
       - ./apps/cleanup-worker/.env
@@ -66,8 +66,8 @@ services:
     ports:
       - "${REDIS_PORT}:${REDIS_PORT}"
     networks:
-      - internal
-      - external
+      - dev-internal
+      - dev-external
     env_file:
       - .env
     environment:
@@ -75,9 +75,8 @@ services:
     restart: always
 
 networks:
-  internal:
-    internal: true
-  external:
+  dev-internal:
+  dev-external:
 
 volumes:
   dev-redis-data:

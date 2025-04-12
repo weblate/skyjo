@@ -98,7 +98,6 @@ services:
 
 networks:
   internal:
-    internal: true
   external:
 
 volumes:
