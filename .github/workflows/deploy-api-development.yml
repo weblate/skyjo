@@ -47,8 +47,8 @@ jobs:
 
             git pull
 
-            docker compose -f docker-compose.dev.yml down dev-api
-            docker compose -f docker-compose.dev.yml pull dev-api
-            docker compose -f docker-compose.dev.yml up -d dev-api
+            docker compose -f compose.dev.yml down dev-api
+            docker compose -f compose.dev.yml pull dev-api
+            docker compose -f compose.dev.yml up -d dev-api
 
             docker volume prune -f
