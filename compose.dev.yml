@@ -17,7 +17,7 @@ services:
       - ./apps/api/.env
     environment:
       - NODE_ENV=development
-      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:2002
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:${REDIS_PORT}
       - NODE_OPTIONS=--max-old-space-size=8192 --max-http-header-size=16384 --expose-gc --use-largepages=silent
     restart: always
 
@@ -36,7 +36,7 @@ services:
       - ./apps/cleanup-worker/.env
     environment:
       - NODE_ENV=development
-      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:2002
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:${REDIS_PORT}
       - NODE_OPTIONS=--max-old-space-size=2048 --expose-gc
     restart: always
 
@@ -44,6 +44,7 @@ services:
     image: redis/redis-stack-server:latest
     command: >
       redis-server 
+      --port ${REDIS_PORT}
       --loadmodule /opt/redis-stack/lib/rejson.so 
       --requirepass ${REDIS_PASSWORD}
       --maxmemory 10gb
@@ -63,7 +64,7 @@ services:
     volumes:
       - dev-redis-data:/data
     ports:
-      - 2002:2002
+      - "${REDIS_PORT}:${REDIS_PORT}"
     networks:
       - internal
       - external
