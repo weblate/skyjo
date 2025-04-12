@@ -19,14 +19,12 @@ import { useEffect } from "react"
 import { useLocalStorage } from "react-use"
 
 const GamePage = () => {
-  const { game, player, opponents, roundPhase } = useGame()
+  const { game, player, opponents } = useGame()
   const { openRules, isRulesOpen } = useRules()
   const router = useRouter()
   const [firstGame, setFirstGame] = useLocalStorage<boolean>("firstGame")
 
   const isPlayerTurn = isCurrentUserTurn(game, player)
-  const roundInProgress = roundPhase.isMain ?? roundPhase.isLastLap
-
   const isFirstPlayerGame = firstGame ?? true
 
   useEffect(() => {
@@ -80,8 +78,8 @@ const GamePage = () => {
         <div className="col-start-2 relative flex flex-col justify-center items-center gap-4">
           <div className="relative flex flex-row items-center justify-center gap-10 h-full max-h-20 w-fit">
             <GameInfo />
-            <DrawPile isPlayerTurn={isPlayerTurn && roundInProgress} />
-            <DiscardPile isPlayerTurn={isPlayerTurn && roundInProgress} />
+            <DrawPile isPlayerTurn={isPlayerTurn} />
+            <DiscardPile isPlayerTurn={isPlayerTurn} />
           </div>
         </div>
         <div className="hidden lg:flex flex-col items-end">
