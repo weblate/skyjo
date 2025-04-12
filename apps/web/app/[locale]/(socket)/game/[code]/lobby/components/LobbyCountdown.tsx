@@ -21,7 +21,6 @@ type LobbyCountdownProps = {
   gameCode: string
   className?: string
 }
-
 export const LobbyCountdown = ({
   gameCode,
   className,
@@ -54,7 +53,10 @@ export const LobbyCountdown = ({
     const handleCountdownStarted = (endTimestamp: number) => {
       const calculateTimeLeft = () => {
         const difference = endTimestamp - Date.now()
-        return Math.ceil(Math.max(0, difference / 1000))
+        // Always less than 5 seconds and never under 0
+        const safeDifference = Math.max(0, Math.min(5000, difference))
+
+        return Math.ceil(safeDifference / 1000)
       }
 
       const initialTime = calculateTimeLeft()
