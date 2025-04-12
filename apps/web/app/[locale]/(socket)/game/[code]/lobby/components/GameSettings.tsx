@@ -20,6 +20,7 @@ import {
 } from "@skymo/core"
 import { TriangleAlertIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { useEffect } from "react"
 
 type GameSettingsProps = {
   className?: string
@@ -28,6 +29,15 @@ type GameSettingsProps = {
 export const GameSettings = ({ className }: GameSettingsProps) => {
   const t = useTranslations("pages.Lobby")
   const { player, game, actions } = useGame()
+
+  useEffect(() => {
+    const localSettings = localStorage.getItem("gameSettings")
+
+    if (localSettings) {
+      const parsedLocalSettings = JSON.parse(localSettings)
+      actions.updateSettings(parsedLocalSettings)
+    }
+  }, [])
 
   const host = isHost(game, player?.id)
   const nbCards = game.settings.cardPerColumn * game.settings.cardPerRow
@@ -269,7 +279,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
               title={t("settings.first-player-multiplier-penalty.title", {
                 number: game.settings.firstPlayerMultiplierPenalty,
               })}
-              disabled={disableInput ?? disableMultiplierPenalty}
+              disabled={disableInput || disableMultiplierPenalty}
             />
             <Input
               name={"first-player-multiplier-penalty"}
@@ -286,7 +296,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
               title={t("settings.first-player-multiplier-penalty.title", {
                 number: game.settings.firstPlayerMultiplierPenalty,
               })}
-              disabled={disableInput ?? disableMultiplierPenalty}
+              disabled={disableInput || disableMultiplierPenalty}
               className="w-16 text-center"
             />
           </div>
@@ -309,7 +319,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
               title={t("settings.first-player-flat-penalty.title", {
                 number: game.settings.firstPlayerFlatPenalty,
               })}
-              disabled={disableInput ?? disableFlatPenalty}
+              disabled={disableInput || disableFlatPenalty}
             />
             <Input
               name={"first-player-flat-penalty"}
@@ -327,7 +337,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
               title={t("settings.first-player-flat-penalty.title", {
                 number: game.settings.firstPlayerFlatPenalty,
               })}
-              disabled={disableInput ?? disableFlatPenalty}
+              disabled={disableInput || disableFlatPenalty}
               className="w-20 text-center"
             />
           </div>

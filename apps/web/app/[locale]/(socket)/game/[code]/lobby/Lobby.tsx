@@ -2,11 +2,7 @@
 
 import CopyLink from "@/components/CopyLink"
 import MenuDropdown from "@/components/MenuDropdown"
-import { useGame } from "@/contexts/GameContext"
-import { UpdateGameSettings } from "@skymo/shared/validations"
 import { m } from "framer-motion"
-import { useEffect } from "react"
-import { useLocalStorage } from "react-use"
 import {
   GameSettings,
   LobbyActions,
@@ -19,25 +15,6 @@ type LobbyProps = {
 }
 
 const Lobby = ({ gameCode }: LobbyProps) => {
-  const { actions } = useGame()
-  const [gameSettingsLocalStorage, setGameSettingsLocalStorage] =
-    useLocalStorage<UpdateGameSettings>("gameSettings")
-
-  useEffect(() => {
-    const oldSettings = localStorage.getItem("settings")
-    if (oldSettings) {
-      const parsedOldSettings = JSON.parse(oldSettings)
-      setGameSettingsLocalStorage(parsedOldSettings)
-
-      localStorage.removeItem("settings")
-    }
-
-    if (gameSettingsLocalStorage) {
-      const newSettings = { ...gameSettingsLocalStorage }
-      actions.updateSettings(newSettings)
-    }
-  }, [gameSettingsLocalStorage, actions])
-
   return (
     <m.div
       className="relative h-svh w-full z-20 flex flex-col md:items-center mdh:md:justify-center overflow-auto"
