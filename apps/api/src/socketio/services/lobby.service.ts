@@ -181,6 +181,13 @@ export class LobbyService extends BaseService {
       })
     }
 
+    if (await this.countdownQueue.coundownExists(game.code)) {
+      throw new CError(`Countdown already exists.`, {
+        code: ErrorConstants.ERROR.NOT_ALLOWED,
+        level: "warn",
+      })
+    }
+
     await this.countdownQueue.startCountdown(game.code)
   }
 

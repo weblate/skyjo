@@ -44,6 +44,12 @@ export class GameStartCountdownQueueService extends BaseQueueService<GameStartCo
     return !!GameStartCountdownQueueService.instance
   }
 
+  async coundownExists(gameCode: string): Promise<boolean> {
+    const jobId = `game-start-countdown-${gameCode}`
+    const job = await this.queue.getJob(jobId)
+    return !!job
+  }
+
   async startCountdown(gameCode: string): Promise<void> {
     await this.cancelCountdown(gameCode)
 
