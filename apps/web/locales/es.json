@@ -268,6 +268,9 @@
       "button-title": "Enviar",
       "message-too-long": {
         "description": "El mensaje es demasiado largo (máximo 200 caracteres)"
+      },
+      "unknown-command": {
+        "description": "Comando desconocido"
       }
     },
     "AppearanceSelect": {

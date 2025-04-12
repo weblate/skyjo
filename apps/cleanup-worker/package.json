@@ -14,13 +14,13 @@
     "@skymo/error": "workspace:*",
     "@skymo/logger": "workspace:*",
     "@skymo/ts-config": "workspace:*",
-    "bullmq": "^5.40.2",
+    "bullmq": "^5.48.1",
     "redis": "^4.7.0",
-    "zod": "^3.23.8"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
-    "@types/node": "^22.10.1",
-    "tsx": "^4.19.2",
-    "typescript": "^5.7.2"
+    "@types/node": "^22.14.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
   }
 }

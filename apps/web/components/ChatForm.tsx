@@ -34,7 +34,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
     wizzPlayer,
   } = useChat()
   const t = useTranslations("components.ChatForm")
-  const form = useForm<z.infer<typeof chatFormSchema>>({
+  const form = useForm({
     resolver: zodResolver(chatFormSchema),
     defaultValues: {
       message: "",
@@ -214,7 +214,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
         wizzPlayer(args.slice(1).trim() ?? "")
         break
       default:
-        addSystemMessage(t("unknown-command", { command }))
+        addSystemMessage(t("unknown-command.description", { command }))
     }
   }
 

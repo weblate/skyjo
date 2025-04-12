@@ -11,7 +11,7 @@ import {
 } from "@/lib/game"
 import { cn } from "@/lib/utils"
 import { PlayerToJson } from "@skymo/core"
-import { AnimatePresence, m } from "framer-motion"
+import { AnimatePresence, m } from "motion/react"
 import { useEffect, useState } from "react"
 
 const OpponentsMobileView = () => {

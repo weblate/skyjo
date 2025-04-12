@@ -6,7 +6,7 @@ import { TagsFilter } from "@/app/[locale]/(socket)/search/TagsFilter"
 import MenuDropdown from "@/components/MenuDropdown"
 import { PublicGame, PublicGameTag } from "@skymo/shared/types"
 import { useQuery } from "@tanstack/react-query"
-import { m } from "framer-motion"
+import { m } from "motion/react"
 import { useState } from "react"
 
 const MAX_GAMES_PER_PAGE = 20

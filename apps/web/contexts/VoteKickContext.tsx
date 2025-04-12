@@ -28,7 +28,6 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
   const { game, player } = useGame()
   const router = useRouter()
   const {
-    showVoteInitiated,
     showVoteWithAction,
     showVoteAgainstYou,
     showVoteWithoutAction,
@@ -133,8 +132,6 @@ export const VoteKickProvider = ({ children }: PropsWithChildren) => {
     socket!.emit("kick:initiate-vote", { targetId })
     const playerToKick = game?.players.find((p) => p.socketId === targetId)
     if (!playerToKick) return
-
-    showVoteInitiated(playerToKick.name)
   }
 
   const voteToKick = async (vote: boolean) => {

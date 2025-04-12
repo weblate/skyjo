@@ -5,7 +5,7 @@ import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
 import { cn } from "@/lib/utils"
 import { CardToJson } from "@skymo/core"
 import { cva } from "class-variance-authority"
-import { AnimatePresence, m } from "framer-motion"
+import { AnimatePresence, m } from "motion/react"
 import { useEffect, useState } from "react"
 
 const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {

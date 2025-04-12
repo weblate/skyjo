@@ -20,6 +20,8 @@ const GameRules = () => {
 
   const [open, setOpen] = useState(false)
 
+  const firstPlayerPenaltyType =
+    `first-player-penalty-type.${game?.settings.firstPlayerPenaltyType as "1" | "2" | "3" | "4"}` as const
   return (
     <>
       <Button
@@ -39,12 +41,12 @@ const GameRules = () => {
           <DialogDescription></DialogDescription>
           <p>
             {t("remove-identical-column", {
-              value: game?.settings.removeIdenticalColumn,
+              value: game?.settings.removeIdenticalColumn.toString(),
             })}
           </p>
           <p>
             {t("remove-identical-row", {
-              value: game?.settings.removeIdenticalRow,
+              value: game?.settings.removeIdenticalRow.toString(),
             })}
           </p>
           <p>{t("card-per-column", { value: game?.settings.cardPerColumn })}</p>
@@ -59,9 +61,7 @@ const GameRules = () => {
           </p>
           <p>
             {t("first-player-penalty-type.label")}
-            {t(
-              `first-player-penalty-type.${game?.settings.firstPlayerPenaltyType}`,
-            )}
+            {t(firstPlayerPenaltyType)}
           </p>
           {game?.settings.firstPlayerPenaltyType !==
             CoreConstants.FIRST_PLAYER_PENALTY_TYPE.FLAT_ONLY && (

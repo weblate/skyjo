@@ -2,7 +2,7 @@
 
 import CopyLink from "@/components/CopyLink"
 import MenuDropdown from "@/components/MenuDropdown"
-import { m } from "framer-motion"
+import { m } from "motion/react"
 import {
   GameSettings,
   LobbyActions,

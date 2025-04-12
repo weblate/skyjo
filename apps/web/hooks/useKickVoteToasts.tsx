@@ -17,24 +17,12 @@ export const useKickVoteToasts = () => {
   const { game, player } = useGame()
   const t = useTranslations("components.KickVote")
 
-  const showVoteInitiated = async (playerToKickName: string) => {
-    await dismissAllKickVoteToasts()
-
-    toast(t("vote-initiated.title"), {
-      description: t("vote-initiated.description", {
-        playerName: playerToKickName,
-      }),
-      duration: 5000,
-      id: voteInitiatedToastId,
-    })
-  }
-
   const showVoteWithAction = async (
     kickVote: KickVoteToJson,
     voteToKick: (vote: boolean) => void,
   ) => {
-    const playerToKickName = getPlayerToKick(kickVote.targetId)?.name
-    const initiatorName = getInitiator(kickVote.initiatorId)?.name
+    const playerToKickName = getPlayerToKick(kickVote.targetId)?.name ?? ""
+    const initiatorName = getInitiator(kickVote.initiatorId)?.name ?? ""
 
     await dismissAllKickVoteToasts()
 
@@ -84,7 +72,7 @@ export const useKickVoteToasts = () => {
 
     toast(
       t("player-has-voted.title", {
-        playerName: getPlayerToKick(kickVote.targetId)?.name,
+        playerName: getPlayerToKick(kickVote.targetId)?.name ?? "",
       }),
       {
         description:
@@ -103,7 +91,7 @@ export const useKickVoteToasts = () => {
     toast(t("vote-against-you.title"), {
       description:
         t("vote-against-you.description", {
-          initiatorName: getInitiator(kickVote.initiatorId)?.name,
+          initiatorName: getInitiator(kickVote.initiatorId)?.name ?? "",
         }) + ` (${getYesVotes(kickVote.votes)}/${kickVote.requiredVotes})`,
       duration: 12000,
       id: voteAgainstYouToastId,
@@ -203,7 +191,6 @@ export const useKickVoteToasts = () => {
   }
 
   return {
-    showVoteInitiated,
     showVoteWithAction,
     showVoteAgainstYou,
     showVoteWithoutAction,

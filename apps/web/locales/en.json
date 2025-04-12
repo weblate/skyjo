@@ -264,6 +264,9 @@
       "button-title": "Send",
       "message-too-long": {
         "description": "The message is too long (max 200 characters)"
+      },
+      "unknown-command": {
+        "description": "Unknown command"
       }
     },
     "ChatMessage": {
@@ -742,6 +745,10 @@
       "you-were-banned": {
         "title": "You have been banned",
         "description": "You have been banned from the game by the host"
+      },
+      "unexpected-error": {
+        "title": "An unexpected error occurred",
+        "description": "An unexpected error occurred while banning a player"
       }
     }
   }

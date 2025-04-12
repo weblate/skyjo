@@ -1,6 +1,7 @@
 import { useGame } from "@/contexts/GameContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useRouter } from "@/i18n/routing"
+import { BanError } from "@skymo/error"
 import { useTranslations } from "next-intl"
 import {
   PropsWithChildren,
@@ -46,9 +47,9 @@ export const BanProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const onBanError = (errorCode: string) => {
-    toast.error(t(`error.${errorCode}.title`), {
-      description: t(`error.${errorCode}.description`),
+  const onBanError = (errorCode: BanError) => {
+    toast.error(t(`${errorCode}.title`), {
+      description: t(`${errorCode}.description`),
     })
   }
 

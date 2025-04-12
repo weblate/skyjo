@@ -1,7 +1,7 @@
 import { Card } from "@/components/Card"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { AnimatePresence, m } from "framer-motion"
+import { AnimatePresence, m } from "motion/react"
 
 type SelectedCardProps = {
   show: boolean

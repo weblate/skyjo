@@ -25,7 +25,6 @@ export const LobbyCountdown = ({
   gameCode,
   className,
 }: LobbyCountdownProps) => {
-  const t = useTranslations("pages.Lobby")
   const { player, game, gameStatus } = useGame()
   const { socket } = useSocket()
   const router = useRouter()
@@ -133,12 +132,7 @@ export const LobbyCountdown = ({
 
   if (!isUserHost) {
     return (
-      <PlayerView
-        countdown={countdown}
-        game={game}
-        t={t}
-        className={className}
-      />
+      <PlayerView countdown={countdown} game={game} className={className} />
     )
   }
 
@@ -149,7 +143,6 @@ export const LobbyCountdown = ({
       isLoading={isLoading}
       onStartCountdown={startCountdown}
       onCancelCountdown={cancelCountdown}
-      t={t}
       className={className}
     />
   )
@@ -158,11 +151,12 @@ export const LobbyCountdown = ({
 type PlayerViewProps = {
   countdown: number | null
   game: ReturnType<typeof useGame>["game"]
-  t: ReturnType<typeof useTranslations>
   className?: string
 }
 
-const PlayerView = ({ countdown, game, t, className }: PlayerViewProps) => {
+const PlayerView = ({ countdown, game, className }: PlayerViewProps) => {
+  const t = useTranslations("pages.Lobby")
+
   const getMessage = () => {
     if (countdown !== null) {
       return t("game-starting-in", { seconds: countdown })
@@ -191,7 +185,6 @@ type HostViewProps = {
   isLoading: boolean
   onStartCountdown: () => void
   onCancelCountdown: () => void
-  t: ReturnType<typeof useTranslations>
   className?: string
 }
 
@@ -201,9 +194,10 @@ const HostView = ({
   isLoading,
   onStartCountdown,
   onCancelCountdown,
-  t,
   className,
 }: HostViewProps) => {
+  const t = useTranslations("pages.Lobby")
+
   if (countdown !== null) {
     return (
       <div className={cn("flex items-center justify-center gap-4", className)}>

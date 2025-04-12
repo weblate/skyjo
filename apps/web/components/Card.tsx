@@ -4,8 +4,8 @@ import { cn } from "@/lib/utils"
 import { CardToJson } from "@skymo/core"
 import { VariantProps, cva } from "class-variance-authority"
 import { ClassValue } from "clsx"
-import { m, useAnimate, useAnimationControls } from "framer-motion"
 import { Trash2Icon } from "lucide-react"
+import { m, useAnimate, useAnimationControls } from "motion/react"
 import { useTheme } from "next-themes"
 import { useEffect, useState } from "react"
 
@@ -24,7 +24,7 @@ const cardClass = cva(
         discard:
           "bg-transparent border-dashed border-card-discard dark:border-dark-card-discard !shadow-none",
         "no-card":
-          "bg-transparent border-dashed border-black dark:border-dark-border dark:border-dark-card-empty !shadow-none",
+          "bg-transparent border-dashed border-black dark:border-dark-card-empty !shadow-none",
         "not-visible":
           " bg-card-not-visible text-card-not-visible dark:bg-dark-card-not-visible dark:text-dark-card-not-visible ",
         negative: " bg-card-negative dark:bg-dark-card-negative ",

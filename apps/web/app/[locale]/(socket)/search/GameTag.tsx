@@ -1,7 +1,7 @@
 import type { PublicGameTag } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
-import { m } from "framer-motion"
 import { XIcon } from "lucide-react"
+import { m } from "motion/react"
 import { useTranslations } from "next-intl"
 
 const tagVariants = cva(

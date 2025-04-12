@@ -2,7 +2,7 @@
 
 import { useGame } from "@/contexts/GameContext"
 import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
-import { AnimatePresence, m } from "framer-motion"
+import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 
 const GameInfo = () => {

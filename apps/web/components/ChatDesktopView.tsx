@@ -7,8 +7,8 @@ import { useSettings } from "@/contexts/SettingsContext"
 import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
 import { ClassValue } from "clsx"
-import { m } from "framer-motion"
 import { MessageCircleIcon } from "lucide-react"
+import { m } from "motion/react"
 import { useTranslations } from "next-intl"
 
 const ChatNotificationVariant = cva(

@@ -4,8 +4,8 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover"
 import { PublicGameTag } from "@skymo/shared/types"
-import { AnimatePresence } from "framer-motion"
 import { PlusCircleIcon } from "lucide-react"
+import { AnimatePresence } from "motion/react"
 import { useTranslations } from "next-intl"
 import { GameTag } from "./GameTag"
 

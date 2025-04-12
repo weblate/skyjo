@@ -37,7 +37,7 @@ type FeedbackProps = {
 const FeedbackForm = ({ setOpen }: FeedbackProps) => {
   const t = useTranslations("components.Feedback")
   const [isPending, startTransition] = useTransition()
-  const form = useForm<z.infer<typeof feedbackSchema>>({
+  const form = useForm({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {
       email: "",

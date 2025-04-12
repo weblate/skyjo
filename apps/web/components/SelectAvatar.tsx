@@ -2,8 +2,8 @@
 
 import { AVATARS_ARRAY, useUser } from "@/contexts/UserContext"
 import { cn } from "@/lib/utils"
-import { AnimatePresence, m } from "framer-motion"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
+import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 

@@ -6,7 +6,7 @@ import { posthogServer } from "@/lib/posthog-server"
 import { getCurrentUrl } from "@/lib/utils"
 import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
-import { getMessages, getTranslations } from "next-intl/server"
+import { getTranslations } from "next-intl/server"
 import { Fredoka } from "next/font/google"
 import { notFound } from "next/navigation"
 
@@ -18,13 +18,17 @@ const fredoka = Fredoka({
 
 export type LocaleLayoutProps = Readonly<{
   children: React.ReactNode
-  params: Promise<{ locale: string }>
+  params: Promise<{ locale: Locales }>
 }>
 
 export async function generateMetadata(props: LocaleLayoutProps) {
   const { locale } = await props.params
+  if (!routing.locales.includes(locale)) notFound()
 
-  const t = await getTranslations({ locale, namespace: "head" })
+  const t = await getTranslations({
+    locale,
+    namespace: "head",
+  })
 
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ""
   const currentUrl = getCurrentUrl("", locale)
@@ -132,31 +136,24 @@ export const viewport: Viewport = {
 }
 
 export default async function LocaleLayout(props: LocaleLayoutProps) {
-  const params = await props.params
-
-  const { locale } = params
+  const { locale } = await props.params
+  if (!routing.locales.includes(locale)) notFound()
 
   const { children } = props
-
-  const messages = await getMessages()
 
   const isSiteUnderMaintenance = await posthogServer.isFeatureEnabled(
     "maintenance",
     "web-server",
   )
 
-  if (!routing.locales.includes(locale as Locales)) {
-    notFound()
-  }
-
   return (
     <html lang={locale} suppressHydrationWarning style={fredoka.style}>
       <body className="bg-body dark:bg-dark-body antialiased">
-        <NextIntlClientProvider locale={locale} messages={messages}>
+        <NextIntlClientProvider locale={locale}>
           {isSiteUnderMaintenance ? (
             <MaintenancePage />
           ) : (
-            <Providers locale={locale as Locales}>
+            <Providers locale={locale}>
               <PostHogPageView />
               {children}
             </Providers>

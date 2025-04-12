@@ -46,7 +46,7 @@ const ReportDialog = ({
   const reportUsername = useMemo(
     () =>
       opponents.flat().find((opponent) => opponent.id === report?.playerId)
-        ?.name,
+        ?.name ?? "",
     [opponents, report],
   )
 

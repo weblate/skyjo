@@ -1,7 +1,7 @@
 import { JoinGameButton } from "@/components/JoinGameButton"
 import { PublicGame, type PublicGameTag } from "@skymo/shared/types"
-import { AnimatePresence, m } from "framer-motion"
 import { Gamepad2Icon } from "lucide-react"
+import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { Dispatch, Fragment, SetStateAction } from "react"

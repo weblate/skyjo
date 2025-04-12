@@ -23,10 +23,10 @@
     "@skymo/core": "workspace:*",
     "@skymo/error": "workspace:*",
     "@skymo/state-operations": "workspace:*",
-    "zod": "^3.23.8"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@skymo/ts-config": "workspace:*",
-    "typescript": "^5.7.2"
+    "typescript": "^5.8.3"
   }
 }

@@ -39,7 +39,14 @@ const RulesPage = () => {
   )
 }
 type RenderSectionProps = {
-  section: string
+  section:
+    | "how-we-use-your-information"
+    | "data-storage-and-retention"
+    | "data-sharing"
+    | "your-rights-and-choices"
+    | "childrens-privacy"
+    | "changes-to-this-policy"
+    | "contact-us"
 }
 const RenderSection = ({ section }: RenderSectionProps) => {
   const tr = useTranslations(`pages.PrivacyPolicy.content.${section}`)
@@ -68,7 +75,12 @@ const RenderSection = ({ section }: RenderSectionProps) => {
 }
 
 type RenderSubSectionProps = {
-  section: string
+  section:
+    | "information-we-collect.anonymous-usage-data"
+    | "information-we-collect.game-data"
+    | "information-we-collect.user-provided-information"
+    | "information-we-collect.local-storage-data"
+    | "information-we-collect.cookies"
 }
 const RenderSubSection = ({ section }: RenderSubSectionProps) => {
   const tr = useTranslations(`pages.PrivacyPolicy.content.${section}`)

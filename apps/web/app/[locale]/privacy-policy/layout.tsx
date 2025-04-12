@@ -1,11 +1,12 @@
 import Footer from "@/components/Footer"
-import { generateAlternatesLanguages } from "@/i18n/routing"
+import { Locales, generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { notFound } from "next/navigation"
 
 type PrivacyPolicyLayoutParams = {
-  locale: string
+  locale: Locales
 }
 export type PrivacyPolicyLayoutProps = Readonly<{
   children: React.ReactNode
@@ -14,6 +15,7 @@ export type PrivacyPolicyLayoutProps = Readonly<{
 
 export async function generateMetadata(props: PrivacyPolicyLayoutProps) {
   const { locale } = await props.params
+  if (!routing.locales.includes(locale)) notFound()
 
   const t = await getTranslations({
     locale,
