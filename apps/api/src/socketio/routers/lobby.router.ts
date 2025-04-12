@@ -93,13 +93,6 @@ const lobbyRouter = (socket: GameSocket) => {
   //#endregion
 
   socket.on(
-    "start",
-    socketErrorWrapper(async () => {
-      await instance.onGameStart(socket)
-    }),
-  )
-
-  socket.on(
     "game:start-countdown",
     socketErrorWrapper(async () => {
       await instance.onStartCountdown(socket)

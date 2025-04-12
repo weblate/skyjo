@@ -10,7 +10,6 @@ import {
 import { Constants as ErrorConstants } from "@skymo/error"
 import type { UpdateGameSettings } from "@skymo/shared/validations"
 import {
-  mockGameOperationManager,
   mockRedisInService,
   mockSocket,
   mockSocketManagerInService,
@@ -745,65 +744,6 @@ describe("LobbyService", () => {
       await service.onToggleSettingsValidation(socket)
 
       expect(game.settings.isConfirmed).toBeTruthy()
-    })
-  })
-
-  describe("onGameStart", () => {
-    it("should throw if player is not host", async () => {
-      const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
-        "socket456",
-      )
-      const game = new Game({
-        hostId: opponent.id,
-        settings: new Settings(false),
-      })
-      game.addPlayer(opponent)
-
-      const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
-        TEST_SOCKET_ID,
-      )
-      game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
-
-      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
-
-      await expect(service.onGameStart(socket)).toThrowCErrorWithCode(
-        ErrorConstants.ERROR.NOT_ALLOWED,
-      )
-
-      expect(socket.emit).not.toHaveBeenCalled()
-    })
-
-    it("should start the game", async () => {
-      const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
-        TEST_SOCKET_ID,
-      )
-      const game = new Game({
-        hostId: player.id,
-        settings: new Settings(false),
-      })
-      mockGameOperationManager(game)
-
-      game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
-
-      const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
-        "socket456",
-      )
-      game.addPlayer(opponent)
-
-      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
-
-      await service.onGameStart(socket)
-
-      expect(game.isPlaying()).toBeTruthy()
-      expect(game.isRoundRevealCards()).toBeTruthy()
     })
   })
 })

@@ -4,7 +4,6 @@ import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { type CreatePlayer, Game, Player, Settings } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
-import { Logger } from "@skymo/logger"
 import type { UpdateGameSettings } from "@skymo/shared/validations"
 
 export class LobbyService extends BaseService {
@@ -163,30 +162,6 @@ export class LobbyService extends BaseService {
 
     game.settings.isConfirmed = !game.settings.isConfirmed
     game.updatedAt = new Date()
-
-    await this.updateAndSendGame(game, stateManager)
-  }
-
-  async onGameStart(socket: GameSocket) {
-    const game = await this.getGame(socket.data.gameCode)
-    if (!game.isHost(socket.data.playerId)) {
-      throw new CError(`Player try to start the game but is not the host.`, {
-        code: ErrorConstants.ERROR.NOT_ALLOWED,
-        level: "warn",
-        meta: {
-          game: game.serialize(),
-          socketId: socket.id,
-          gameCode: game.code,
-          playerId: socket.data.playerId,
-        },
-      })
-    }
-
-    const stateManager = new GameStateTracker(game)
-
-    await game.start()
-
-    Logger.info(`Game ${game.code} started.`)
 
     await this.updateAndSendGame(game, stateManager)
   }
