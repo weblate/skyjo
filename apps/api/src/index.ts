@@ -1,18 +1,18 @@
 import { initializeHttpServer } from "@/http/index.js"
-import { RedisClient } from "@/redis/client.js"
-import { initializeSocketServer } from "@/socketio/index.js"
-import { serve } from "@hono/node-server"
-import { Logger } from "@skymo/logger"
-import { Hono } from "hono"
-import "@env"
 import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
 import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
+import { RedisClient } from "@/redis/client.js"
+import { initializeSocketServer } from "@/socketio/index.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
+import { ENV } from "@env"
+import { serve } from "@hono/node-server"
+import { Logger } from "@skymo/logger"
+import { Hono } from "hono"
 
 const app = new Hono()
-const port = 3001
+const port = ENV.PORT
 let server: ReturnType<typeof serve> | null = null
 
 const monitorMemoryUsage = () => {

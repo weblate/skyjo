@@ -87,6 +87,7 @@ vi.mock("@/redis/message.repository.js", () => {
 vi.spyOn(process, "env", "get").mockReturnValue({
   NODE_ENV: "test",
   APP_NAME: "skymo-api",
+  PORT: "3001",
   ORIGINS: "e",
   GMAIL_EMAIL: "e",
   GMAIL_APP_PASSWORD: "e",
