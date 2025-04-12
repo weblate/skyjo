@@ -33,6 +33,7 @@ jobs:
 
   deploy-to-vps:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
@@ -44,8 +45,10 @@ jobs:
             # Use a separate directory for development
             cd dev/skymo
 
-            docker compose -f docker-compose.dev.yml down api
-            docker compose -f docker-compose.dev.yml pull api
-            docker compose -f docker-compose.dev.yml up -d api
+            git pull
+
+            docker compose -f docker-compose.dev.yml down dev-api
+            docker compose -f docker-compose.dev.yml pull dev-api
+            docker compose -f docker-compose.dev.yml up -d dev-api
 
             docker volume prune -f

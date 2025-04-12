@@ -1,5 +1,5 @@
 services:
-  api:
+  dev-api:
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
@@ -21,7 +21,7 @@ services:
       - NODE_OPTIONS=--max-old-space-size=8192 --max-http-header-size=16384 --expose-gc --use-largepages=silent
     restart: always
 
-  redis:
+  dev-redis:
     image: redis/redis-stack-server:latest
     command: >
       redis-server 
