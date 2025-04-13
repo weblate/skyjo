@@ -1,8 +1,7 @@
 import MaintenancePage from "@/app/[locale]/MaintenancePage"
-import PostHogPageView from "@/app/[locale]/PostHogPageView"
 import Providers from "@/app/[locale]/providers"
 import { Locales, generateAlternatesLanguages, routing } from "@/i18n/routing"
-import { posthogServer } from "@/lib/posthog-server"
+import { PostHogServerClient } from "@/lib/posthog-server"
 import { getCurrentUrl } from "@/lib/utils"
 import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
@@ -141,7 +140,8 @@ export default async function LocaleLayout(props: LocaleLayoutProps) {
 
   const { children } = props
 
-  const isSiteUnderMaintenance = await posthogServer.isFeatureEnabled(
+  const posthog = PostHogServerClient()
+  const isSiteUnderMaintenance = await posthog.isFeatureEnabled(
     "maintenance",
     "web-server",
   )
@@ -153,10 +153,7 @@ export default async function LocaleLayout(props: LocaleLayoutProps) {
           {isSiteUnderMaintenance ? (
             <MaintenancePage />
           ) : (
-            <Providers locale={locale}>
-              <PostHogPageView />
-              {children}
-            </Providers>
+            <Providers locale={locale}>{children}</Providers>
           )}
         </NextIntlClientProvider>
       </body>
