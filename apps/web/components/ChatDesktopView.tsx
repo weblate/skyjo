@@ -85,7 +85,7 @@ const ChatDesktopView = ({
             },
           }}
           transition={{ duration: 0.2 }}
-          className="flex flex-grow flex-col items-center"
+          className="min-w-52 xl:min-w-72 flex flex-grow flex-col items-center"
         >
           <p className="w-full text-center text-black dark:text-dark-font text-xl pt-2 pb-1 border-b-2 border-black dark:border-dark-border">
             {t("title")}
