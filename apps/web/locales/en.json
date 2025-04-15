@@ -560,7 +560,6 @@
     "KickVote": {
       "player-has-not-voted": {
         "title": "Vote to kick {playerName}",
-        "description": "{initiatorName} wants to kick {playerName}",
         "kick-button": {
           "alt": "Kick {playerName}",
           "label": "Kick"
@@ -576,7 +575,7 @@
       },
       "vote-against-you": {
         "title": "Vote to kick you",
-        "description": "{initiatorName} has requested a vote to kick you."
+        "description": "A vote to kick you has been requested."
       },
       "vote-failed": {
         "title": "The vote to kick {playerName} failed",
@@ -592,7 +591,7 @@
       },
       "vote-against-you-succeeded": {
         "title": "You have been kicked",
-        "description": "The players have voted to kick you out of the game."
+        "description": "Players have voted to kick you out of the game."
       },
       "you-kick-player": {
         "title": "You have kicked {playerName}"

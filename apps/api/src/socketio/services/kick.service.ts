@@ -64,7 +64,7 @@ export class KickService extends BaseService {
 
     await this.kickVoteRepository.addVote(game.code, player.id, vote)
 
-    await this.checkKickVoteStatus(socket, game)
+    await this.checkKickVoteStatus(game)
   }
 
   //#region private methods
@@ -159,7 +159,7 @@ export class KickService extends BaseService {
         target.id,
       )
 
-      await this.checkKickVoteStatus(socket, game)
+      await this.checkKickVoteStatus(game)
     } catch (error) {
       if (
         error instanceof CError &&
@@ -185,7 +185,7 @@ export class KickService extends BaseService {
     }
   }
 
-  private async checkKickVoteStatus(socket: GameSocket, game: Game) {
+  private async checkKickVoteStatus(game: Game) {
     const kickVote = await this.kickVoteRepository.getKickVote(game.code)
     if (!kickVote) {
       Logger.debug(
@@ -197,6 +197,18 @@ export class KickService extends BaseService {
       return
     }
 
+    const playerToKick = game.getPlayerById(kickVote.targetId)
+    if (!playerToKick) {
+      this.socketManager.sendToRoom({
+        room: game.code,
+        event: "kick:vote-dismiss",
+        data: [],
+      })
+      await this.kickVoteExpirationQueue.cancelKickVoteExpiration(game.code)
+      await this.kickVoteRepository.deleteKickVote(game.code)
+      return
+    }
+
     if (
       kickVote.hasReachedRequiredVotes() ||
       kickVote.allPlayersVotedExceptTarget()
@@ -205,16 +217,12 @@ export class KickService extends BaseService {
       await this.kickVoteRepository.deleteKickVote(game.code)
 
       if (kickVote.hasReachedRequiredVotes()) {
-        await this.kickPlayer(socket, game, kickVote)
+        await this.kickPlayer(game, kickVote)
       } else {
-        const playerToKick = game.getPlayerById(kickVote.targetId)
-        // istanbul ignore if --@preserve If the player is not found, it means the player left the game before the vote ended.
-        if (!playerToKick) return
-
         this.socketManager.sendToRoom({
           room: game.code,
           event: "kick:vote-failed",
-          data: [playerToKick.id, playerToKick.name],
+          data: [],
         })
       }
     } else {
@@ -226,31 +234,16 @@ export class KickService extends BaseService {
     }
   }
 
-  private async kickPlayer(socket: GameSocket, game: Game, kickVote: KickVote) {
+  private async kickPlayer(game: Game, kickVote: KickVote) {
     const playerToKick = game.getPlayerById(kickVote.targetId)
-    if (!playerToKick) {
-      throw new CError(
-        `Player try to be kicked but is not found in game. This can happen if the player left the game before the vote ended.`,
-        {
-          code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
-          level: "warn",
-          meta: {
-            game: game.serialize(),
-            socketId: socket.id,
-            targetId: kickVote.targetId,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
-          },
-        },
-      )
-    }
+    if (!playerToKick) return
 
     const operationManager = new GameStateTracker(game)
 
     this.socketManager.sendToRoom({
       room: game.code,
       event: "kick:vote-success",
-      data: [playerToKick.id, playerToKick.name],
+      data: [playerToKick.id],
     })
 
     await game.disconnectPlayer(playerToKick)

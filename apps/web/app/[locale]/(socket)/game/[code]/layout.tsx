@@ -1,11 +1,12 @@
 "use client"
-
 import { Chat } from "@/components/Chat"
+import { KickVote } from "@/components/KickVote"
 import withAuth from "@/components/withAuth"
 import { BanProvider } from "@/contexts/BanContext"
 import ChatProvider from "@/contexts/ChatContext"
 import GameProvider from "@/contexts/GameContext"
-import { VoteKickProvider } from "@/contexts/VoteKickContext"
+import { KickProvider } from "@/contexts/KickContext"
+import { ReportProvider } from "@/contexts/ReportContext"
 import { PropsWithChildren, use } from "react"
 
 type GameLayoutParams = {
@@ -21,14 +22,17 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
   return (
     <GameProvider gameCode={params.code}>
       <ChatProvider>
-        <VoteKickProvider>
-          <BanProvider>
-            <div className="w-svh h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
-              {children}
-              <Chat className="z-40" />
-            </div>
-          </BanProvider>
-        </VoteKickProvider>
+        <ReportProvider>
+          <KickProvider>
+            <BanProvider>
+              <div className="w-svh h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
+                {children}
+                <KickVote />
+                <Chat className="z-40" />
+              </div>
+            </BanProvider>
+          </KickProvider>
+        </ReportProvider>
       </ChatProvider>
     </GameProvider>
   )

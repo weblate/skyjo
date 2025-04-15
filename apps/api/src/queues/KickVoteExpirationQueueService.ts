@@ -99,7 +99,7 @@ export class KickVoteExpirationQueueService extends BaseQueueService<KickVoteExp
       this.socketManager.sendToRoom({
         room: gameCode,
         event: "kick:vote-failed",
-        data: [playerToKick.id, playerToKick.name],
+        data: [],
       })
 
       Logger.info(

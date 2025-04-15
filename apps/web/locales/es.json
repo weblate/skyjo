@@ -482,15 +482,14 @@
         "ignore-button": {
           "alt": "Ignorar la votación para expulsar a {playerName}",
           "label": "Ignorar"
-        },
-        "description": "{initiatorName} quiere expulsar a {playerName}"
+        }
       },
       "player-has-voted": {
         "title": "Vota para expulsar a {playerName}",
         "description": "Ha votado {vote, select, true {a favor} false {en contra} other {voto}}"
       },
       "vote-against-you": {
-        "description": "{initiatorName} ha pedido una votación para expulsarte.",
+        "description": "Se ha pedido una votación para expulsarte.",
         "title": "Voto a favor de echarlo"
       },
       "vote-against-you-failed": {

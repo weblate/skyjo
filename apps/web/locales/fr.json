@@ -555,7 +555,6 @@
     "KickVote": {
       "player-has-not-voted": {
         "title": "Vote pour expulser {playerName}",
-        "description": "{initiatorName} veut expulser {playerName}",
         "kick-button": {
           "alt": "Voter pour expulser {playerName}",
           "label": "Expulser"
@@ -571,7 +570,7 @@
       },
       "vote-against-you": {
         "title": "Vote pour vous expulser",
-        "description": "{initiatorName} a demandé un vote pour vous expulser."
+        "description": "Un vote pour vous expulser a été demandé."
       },
       "vote-failed": {
         "title": "Le vote pour expulser {playerName} a échoué",

@@ -256,7 +256,7 @@ describe("KickService", () => {
         .fn()
         .mockResolvedValue(null)
 
-      await service["checkKickVoteStatus"](socket, game)
+      await service["checkKickVoteStatus"](game)
 
       // Verify Logger.debug was called with expected message
       expect(Logger.debug).toHaveBeenCalledWith(
@@ -295,10 +295,7 @@ describe("KickService", () => {
       // Remove the player from the game
       game.players = game.players.filter((p) => p.id !== opponent2.id)
 
-      // Need to spy on socketManager.sendToRoom to verify it's not called
-      const sendToRoomSpy = vi.spyOn(service["socketManager"], "sendToRoom")
-
-      await service["checkKickVoteStatus"](socket, game)
+      await service["checkKickVoteStatus"](game)
 
       // Verify cancelKickVoteExpiration and deleteKickVote were called
       expect(
@@ -308,11 +305,11 @@ describe("KickService", () => {
         game.code,
       )
 
-      // Verify sendToRoom was not called with vote-failed event
-      const voteFailedCalls = sendToRoomSpy.mock.calls.filter(
-        (call) => call[0].event === "kick:vote-failed",
-      )
-      expect(voteFailedCalls.length).toBe(0)
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledWith({
+        room: game.code,
+        event: "kick:vote-dismiss",
+        data: [],
+      })
     })
   })
 
@@ -375,7 +372,7 @@ describe("KickService", () => {
       const originalCheckKickVoteStatus = service["checkKickVoteStatus"]
       service["checkKickVoteStatus"] = vi
         .fn()
-        .mockImplementation(async (_socket, game) => {
+        .mockImplementation(async (game) => {
           // Clear mock call history from previous calls
           vi.mocked(service["socketManager"].sendToRoom).mockClear()
           // Make just one call to sendToRoom
@@ -413,9 +410,13 @@ describe("KickService", () => {
       // Remove the player from the game
       game.players = game.players.filter((p) => p.id !== opponent2.id)
 
-      await expect(service.onVoteToKick(socket, true)).toThrowCErrorWithCode(
-        ErrorConstants.ERROR.PLAYER_NOT_FOUND,
-      )
+      await service.onVoteToKick(socket, true)
+
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalledWith({
+        room: game.code,
+        event: "kick:vote-dismiss",
+        data: [],
+      })
     })
 
     for (const key of Object.keys(CoreConstants.GAME_STATUS)) {
@@ -502,7 +503,7 @@ describe("KickService", () => {
       const originalCheckKickVoteStatus = service["checkKickVoteStatus"]
       service["checkKickVoteStatus"] = vi
         .fn()
-        .mockImplementation(async (_socket, game) => {
+        .mockImplementation(async (game) => {
           // Simulate that all players have voted by adding votes through public methods
           for (const p of game.players) {
             if (
@@ -518,7 +519,7 @@ describe("KickService", () => {
           service["socketManager"].sendToRoom({
             room: game.code,
             event: "kick:vote-failed",
-            data: [opponent2.id, opponent2.name],
+            data: [],
           })
         })
 
@@ -528,7 +529,7 @@ describe("KickService", () => {
       expect(service["socketManager"].sendToRoom).toHaveBeenCalledWith({
         room: game.code,
         event: "kick:vote-failed",
-        data: [opponent2.id, opponent2.name],
+        data: [],
       })
 
       // Player is still in the game
