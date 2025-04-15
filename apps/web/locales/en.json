@@ -602,13 +602,6 @@
       },
       "host-kick-you": {
         "title": "You have been kicked out of the game by the host"
-      },
-      "report": {
-        "title": "{playerName} has been kicked due to a report"
-      },
-      "report-against-you": {
-        "title": "You have been kicked due to a report",
-        "description": "Your username or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
       }
     },
     "AfkKick": {
@@ -749,6 +742,15 @@
       "unexpected-error": {
         "title": "An unexpected error occurred",
         "description": "An unexpected error occurred while banning a player"
+      }
+    },
+    "ReportContext": {
+      "report": {
+        "title": "{playerName} has been kicked due to a report"
+      },
+      "report-against-you": {
+        "title": "You have been kicked due to a report",
+        "description": "Your username or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
       }
     }
   }

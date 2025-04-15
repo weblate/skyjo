@@ -5,6 +5,7 @@ import {
 import { useBan } from "@/contexts/BanContext"
 import { useChat } from "@/contexts/ChatContext"
 import { useGame } from "@/contexts/GameContext"
+import { useReport } from "@/contexts/ReportContext"
 import { useVoteKick } from "@/contexts/VoteKickContext"
 import { isHost } from "@/lib/game"
 import { PlayerToJson } from "@skymo/core"
@@ -22,8 +23,9 @@ type UserContextMenuProps = {
   reportMessageId?: string
 }
 const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
-  const { unmutePlayer, mutePlayer, mutedPlayers, reportPlayer } = useChat()
   const { actions, kickVoteInProgress } = useVoteKick()
+  const { unmutePlayer, mutePlayer, mutedPlayers } = useChat()
+  const { reportPlayer } = useReport()
   const { game, player: currentPlayer } = useGame()
   const { banPlayer } = useBan()
   const t = useTranslations("components.Avatar")

@@ -597,13 +597,6 @@
       },
       "host-kick-you": {
         "title": "Vous avez été expulsé de la partie par l'hôte"
-      },
-      "report": {
-        "title": "{playerName} a été expulsé suite à un signalement"
-      },
-      "report-against-you": {
-        "title": "Vous avez été expulsé suite à un signalement",
-        "description": "Votre pseudonyme ou un de vos messages a été signalé et a été jugé inapproprié. Merci de ne pas répéter ce comportement."
       }
     },
     "AfkKick": {
@@ -749,6 +742,15 @@
       "unexpected-error": {
         "title": "Une erreur inattendue est survenue",
         "description": "Une erreur inattendue est survenue lors de la bannissement d'un joueur"
+      }
+    },
+    "ReportContext": {
+      "report": {
+        "title": "{playerName} a été expulsé suite à un signalement"
+      },
+      "report-against-you": {
+        "title": "Vous avez été expulsé suite à un signalement",
+        "description": "Votre pseudonyme ou un de vos messages a été signalé et a été jugé inapproprié. Merci de ne pas répéter ce comportement."
       }
     }
   }

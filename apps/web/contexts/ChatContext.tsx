@@ -1,6 +1,5 @@
 "use client"
 
-import ReportDialog from "@/components/ReportDialog"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
@@ -51,7 +50,6 @@ type ChatContext = {
   unmutePlayer: (username: string) => void
   toggleMutePlayer: (username: string) => void
   wizzPlayer: (targetUsername: string) => void
-  reportPlayer: (username: string, messageId?: string) => void
 }
 
 const ChatContext = createContext<ChatContext | undefined>(undefined)
@@ -70,14 +68,6 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [hasUnreadMessage, setHasUnreadMessage] = useState<boolean>(false)
 
   const [mutedPlayers, setMutedPlayers] = useState<string[]>([])
-
-  const [report, setReport] = useState<
-    | {
-        playerId: string
-        messageId?: string
-      }
-    | undefined
-  >(undefined)
 
   useEffect(() => {
     if (!chatVisibility) return
@@ -243,10 +233,6 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   }
   //#endregion
 
-  const reportPlayer = (playerId: string, messageId?: string) => {
-    setReport({ playerId, messageId })
-  }
-
   const contextValue = useMemo(
     () => ({
       chat,
@@ -263,19 +249,12 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       unmutePlayer,
       toggleMutePlayer,
       wizzPlayer,
-      reportPlayer,
     }),
     [chat, unreadMessages, hasUnreadMessage, mutedPlayers],
   )
 
   return (
     <ChatContext.Provider value={contextValue}>
-      <ReportDialog
-        open={!!report}
-        report={report}
-        messages={chat}
-        onOpenChange={() => setReport(undefined)}
-      />
       <div className="wizz-container">{children}</div>
     </ChatContext.Provider>
   )
