@@ -1,4 +1,5 @@
 import { Server as HttpServer } from "http"
+import { reportRouter } from "@/socketio/routers/report.router.js"
 import type { ServerType } from "@hono/node-server"
 import { Logger } from "@skymo/logger"
 import { banRouter } from "./routers/ban.router.js"
@@ -34,6 +35,7 @@ export const initializeSocketServer = async (server: ServerType) => {
       chatRouter(socket)
       kickRouter(socket)
       banRouter(socket)
+      reportRouter(socket)
     })
 
     Logger.info("Socket.IO server initialized successfully")
