@@ -746,4 +746,104 @@ describe("LobbyService", () => {
       expect(game.settings.isConfirmed).toBeTruthy()
     })
   })
+
+  describe("onStartCountdown", () => {
+    it("should throw if user is not host", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        "host-socket",
+      )
+      const notHost = new Player(
+        { username: "notHost", avatar: CoreConstants.AVATARS.BEE },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+      game.addPlayer(notHost)
+      socket.data = { gameCode: game.code, playerId: notHost.id }
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(service.onStartCountdown(socket)).toThrowCErrorWithCode(
+        ErrorConstants.ERROR.NOT_ALLOWED,
+      )
+    })
+
+    it("should throw if countdown already exists", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+
+      socket.data = { gameCode: game.code, playerId: host.id }
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      service["countdownQueue"].coundownExists = vi.fn(() =>
+        Promise.resolve(true),
+      )
+
+      await expect(service.onStartCountdown(socket)).toThrowCErrorWithCode(
+        ErrorConstants.ERROR.NOT_ALLOWED,
+      )
+    })
+
+    it("should call startCountdown if host and no countdown exists", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+      socket.data = { gameCode: game.code, playerId: host.id }
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      service["countdownQueue"].coundownExists = vi.fn(() =>
+        Promise.resolve(false),
+      )
+      const startCountdown = vi.fn(() => Promise.resolve())
+      service["countdownQueue"].startCountdown = startCountdown
+
+      await service.onStartCountdown(socket)
+
+      expect(startCountdown).toHaveBeenCalledWith(game.code)
+    })
+  })
+
+  describe("onCancelCountdown", () => {
+    it("should throw if user is not host", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        "host-socket",
+      )
+      const notHost = new Player(
+        { username: "notHost", avatar: CoreConstants.AVATARS.BEE },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+      game.addPlayer(notHost)
+      socket.data = { gameCode: game.code, playerId: notHost.id }
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(service.onCancelCountdown(socket)).toThrowCErrorWithCode(
+        ErrorConstants.ERROR.NOT_ALLOWED,
+      )
+    })
+
+    it("should call cancelCountdown if host", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+      socket.data = { gameCode: game.code, playerId: host.id }
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      const cancelCountdown = vi.fn(() => Promise.resolve())
+      service["countdownQueue"].cancelCountdown = cancelCountdown
+
+      await service.onCancelCountdown(socket)
+
+      expect(cancelCountdown).toHaveBeenCalledWith(game.code)
+    })
+  })
 })
