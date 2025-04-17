@@ -49,8 +49,6 @@
           "label": "முதல் பிளேயர் மதிப்பெண் பெனால்டி பெருக்கி"
         }
       },
-      "waiting-admin-to-start": "நிர்வாகி விளையாட்டைத் தொடங்க காத்திருக்கிறது",
-      "waiting-admin-to-confirm-game-settings": "அமைப்புகளை சரிபார்க்க நிர்வாகி காத்திருக்கிறது",
       "player-section": {
         "title": "வீரர்கள் {nbPlayers}/{maxPlayers}",
         "select": {
@@ -451,17 +449,6 @@
             "label": "அரட்டை அறிவிப்பு அளவு"
           }
         },
-        "game-board": {
-          "title": "விளையாட்டு பலகை",
-          "size": {
-            "label": "உங்கள் விளையாட்டு வாரியத்தின் அளவு",
-            "big-warning": "மொபைலில் காட்சியை உடைக்க முடியும்",
-            "values": {
-              "big": "பெரியது",
-              "normal": "சாதாரண"
-            }
-          }
-        },
         "title": "காட்சி"
       },
       "audio": {
@@ -498,7 +485,6 @@
       },
       "player-has-not-voted": {
         "title": "உதைக்க வாக்களிக்கவும் {playerName}",
-        "description": "{initiatorName} உதைக்க விரும்புகிறது {playerName}",
         "kick-button": {
           "alt": "கிக் {playerName}",
           "label": "கிக்"
@@ -560,22 +546,6 @@
           "description": "விளையாட்டு ஏற்கனவே தொடங்கியது"
         }
       }
-    },
-    "skyjo": {
-      "waiting": "வீரர்களுக்காக காத்திருக்கிறது",
-      "turn-cards": "{number} அட்டை {எண், பன்மை, = 1 {} பிற {s}}",
-      "waiting-opponents-to-turn-cards": "எதிராளுக்காக காத்திருக்கிறது {எதிர்ப்பாளர், பன்மை, = 1 {} மற்றவர்கள்} to} எண்} அட்டை {எண், பன்மை, = 1 {} பிற {s}}",
-      "turn": {
-        "chooseAPile": "ஒரு குவியலைத் தேர்வுசெய்க",
-        "throwOrReplace": "மாற்றவும் அல்லது நிராகரிக்கவும்",
-        "replaceACard": "ஒரு அட்டையை மாற்றவும்",
-        "turnACard": "ஒரு அட்டையைத் திருப்புங்கள்"
-      },
-      "player-turn": "இது {playerName} இன் முறை",
-      "last-turn": "கடைசி முறை!",
-      "round-over": "சுற்று முடிந்தது",
-      "game-ended": "விளையாட்டு ஓவர்!",
-      "game-stopped": "விளையாட்டு நிறுத்தப்பட்டது"
     },
     "chat": {
       "player-joined": "{username} விளையாட்டில் சேர்ந்தார்",

@@ -344,7 +344,6 @@
           "label": "Skarzhañ"
         },
         "title": "Mouezhiañ evit skarzhañ {playerName}",
-        "description": "{initiatorName} a fell dezhi⋅añ skarzhañ {playerName}",
         "ignore-button": {
           "alt": "Tremen ar mouezhiadeg evit skarzhañ {playerName}",
           "label": "Tremen"
@@ -536,22 +535,6 @@
       "toucan": "toukan",
       "whale": "balum",
       "owl": "kaouenn"
-    },
-    "skyjo": {
-      "turn": {
-        "replaceACard": "Eskemmit ur gartenn",
-        "chooseAPile": "Dibab ur bern",
-        "throwOrReplace": "Eskemmit pe diskargit",
-        "turnACard": "Troit ur gartenn"
-      },
-      "waiting": "O c'hortoz ar c'hoarierien",
-      "turn-cards": "Troit {number} a gartennoù",
-      "waiting-opponents-to-turn-cards": "O c'hortoz e trofe {nbOpponents} enebour {number} a gartennoù",
-      "player-turn": "Tro {playerName} an hini eo",
-      "last-turn": "Tro diwezhañ!",
-      "game-stopped": "C'hoariadenn harzhet",
-      "round-over": "Troiad echuet",
-      "game-ended": "C'hoariadenn echuet!"
     },
     "chat": {
       "player-joined": "{username} a zo deuet-tre",
