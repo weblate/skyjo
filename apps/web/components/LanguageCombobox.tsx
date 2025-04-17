@@ -105,7 +105,7 @@ const LanguageCombobox = () => {
             variant="outline"
             role="input-list"
             aria-expanded={open}
-            className="justify-between"
+            className="justify-between w-[180px]"
             disabled={inGame}
           >
             {currentLocale
