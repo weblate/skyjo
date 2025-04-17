@@ -1,16 +1,15 @@
 import { LobbyService } from "@/socketio/services/lobby.service.js"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import {
   Constants as CoreConstants,
   type CreatePlayer,
-  Skyjo,
-  SkyjoPlayer,
-  SkyjoSettings,
-} from "@skyjo/core"
-import { Constants as ErrorConstants } from "@skyjo/error"
-import type { UpdateGameSettings } from "@skyjo/shared/validations"
+  Game,
+  Player,
+  Settings,
+} from "@skymo/core"
+import { Constants as ErrorConstants } from "@skymo/error"
+import type { UpdateGameSettings } from "@skymo/shared/validations"
 import {
-  mockGameOperationManager,
   mockRedisInService,
   mockSocket,
   mockSocketManagerInService,
@@ -20,7 +19,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("LobbyService", () => {
   let service: LobbyService
-  let socket: SkyjoSocket
+  let socket: GameSocket
 
   beforeEach(() => {
     service = new LobbyService()
@@ -132,18 +131,18 @@ describe("LobbyService", () => {
 
   describe("onJoin", () => {
     it("should throw if it's full", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
       game.settings.maxPlayers = 2
 
@@ -164,19 +163,47 @@ describe("LobbyService", () => {
       expect(socket.emit).not.toHaveBeenCalled()
     })
 
-    it("sould throw if game already started", async () => {
-      const opponent = new SkyjoPlayer(
+    it("should throw if the player is banned", async () => {
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const opponent2 = new SkyjoPlayer(
+
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
+      })
+      game.addPlayer(opponent)
+
+      game.bannedUsernames = ["playerNameXX"]
+
+      const player: CreatePlayer = {
+        username: "playerNameXX",
+        avatar: CoreConstants.AVATARS.BEE,
+      }
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(
+        service.onJoin(socket, game.code, player),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_BANNED)
+
+      expect(socket.emit).not.toHaveBeenCalled()
+    })
+
+    it("sould throw if game already started", async () => {
+      const opponent = new Player(
+        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+      )
+      const opponent2 = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
 
       game.addPlayer(opponent)
@@ -199,14 +226,14 @@ describe("LobbyService", () => {
     })
 
     it("should join the game", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
 
       game.addPlayer(opponent)
@@ -262,19 +289,19 @@ describe("LobbyService", () => {
   })
 
   describe("onResetSettings", () => {
-    it("should throw if user is not admin", async () => {
-      const opponent = new SkyjoPlayer(
+    it("should throw if user is not host", async () => {
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
@@ -291,17 +318,17 @@ describe("LobbyService", () => {
     })
 
     it("should throw if settings are already confirmed for a public game", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
@@ -320,13 +347,13 @@ describe("LobbyService", () => {
     })
 
     it("should reset game settings if settings are confirmed for a private game", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(true),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(true),
       })
       // custom settings
       game.settings.cardPerColumn = 1
@@ -334,13 +361,13 @@ describe("LobbyService", () => {
       game.settings.initialTurnedCount = 1
       game.settings.scoreToEndGame = 1
       game.settings.firstPlayerMultiplierPenalty = 1
-      game.settings.allowSkyjoForColumn = true
-      game.settings.allowSkyjoForRow = true
+      game.settings.removeIdenticalColumn = true
+      game.settings.removeIdenticalRow = true
       game.settings.maxPlayers = 2
 
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
@@ -352,19 +379,19 @@ describe("LobbyService", () => {
       await service.onResetSettings(socket)
 
       expect(game.settings.toJson()).toStrictEqual(
-        new SkyjoSettings(true, game.settings.maxPlayers).toJson(),
+        new Settings(true, game.settings.maxPlayers).toJson(),
       )
       expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
 
     it("should reset game settings", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
@@ -374,27 +401,25 @@ describe("LobbyService", () => {
 
       await service.onResetSettings(socket)
 
-      expect(game.settings).toBeInstanceOf(SkyjoSettings)
-      expect(game.settings.toJson()).toStrictEqual(
-        new SkyjoSettings(false).toJson(),
-      )
+      expect(game.settings).toBeInstanceOf(Settings)
+      expect(game.settings.toJson()).toStrictEqual(new Settings(false).toJson())
     })
   })
 
   describe("onUpdateMaxPlayers", () => {
-    it("should throw if user is not admin", async () => {
-      const opponent = new SkyjoPlayer(
+    it("should throw if user is not host", async () => {
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
@@ -411,17 +436,17 @@ describe("LobbyService", () => {
     })
 
     it("should update max players settings if game is private", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(true),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(true),
       })
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
@@ -441,18 +466,18 @@ describe("LobbyService", () => {
       expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
     it("should update max players settings if game is public and not confirmed", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.settings.isConfirmed = false
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
@@ -472,18 +497,18 @@ describe("LobbyService", () => {
       expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
     it("should update max players settings if game is public and confirmed", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.settings.isConfirmed = true
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
@@ -505,19 +530,19 @@ describe("LobbyService", () => {
   })
 
   describe("onUpdateSettings", () => {
-    it("should throw if user is not admin", async () => {
-      const opponent = new SkyjoPlayer(
+    it("should throw if user is not host", async () => {
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
@@ -527,8 +552,8 @@ describe("LobbyService", () => {
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       const newSettings: UpdateGameSettings = {
-        allowSkyjoForColumn: true,
-        allowSkyjoForRow: true,
+        removeIdenticalColumn: true,
+        removeIdenticalRow: true,
         initialTurnedCount: 2,
         cardPerRow: 6,
         cardPerColumn: 8,
@@ -544,17 +569,17 @@ describe("LobbyService", () => {
     })
 
     it("should throw if settings are already confirmed for a public game", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
@@ -577,17 +602,17 @@ describe("LobbyService", () => {
     })
 
     it("should update game settings if settings are confirmed for a private game", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(true),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(true),
       })
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
@@ -611,13 +636,13 @@ describe("LobbyService", () => {
     })
 
     it("should change one game setting", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
@@ -626,12 +651,12 @@ describe("LobbyService", () => {
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       const newSettings: UpdateGameSettings = {
-        allowSkyjoForColumn: false,
+        removeIdenticalColumn: false,
       }
 
       await service.onUpdateSettings(socket, newSettings)
 
-      expect(game.settings).toBeInstanceOf(SkyjoSettings)
+      expect(game.settings).toBeInstanceOf(Settings)
       expect(game.settings.toJson()).toStrictEqual({
         ...game.settings,
         ...newSettings,
@@ -642,13 +667,13 @@ describe("LobbyService", () => {
     })
 
     it("should change multiple game settings", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
@@ -657,8 +682,8 @@ describe("LobbyService", () => {
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       const newSettings: UpdateGameSettings = {
-        allowSkyjoForColumn: true,
-        allowSkyjoForRow: true,
+        removeIdenticalColumn: true,
+        removeIdenticalRow: true,
         initialTurnedCount: 2,
         cardPerRow: 6,
         cardPerColumn: 8,
@@ -668,7 +693,7 @@ describe("LobbyService", () => {
 
       await service.onUpdateSettings(socket, newSettings)
 
-      expect(game.settings).toBeInstanceOf(SkyjoSettings)
+      expect(game.settings).toBeInstanceOf(Settings)
       expect(game.settings.toJson()).toStrictEqual({
         ...game.settings,
         ...newSettings,
@@ -680,13 +705,13 @@ describe("LobbyService", () => {
 
   describe("onToggleSettingsValidation", () => {
     it("should do nothing if game is private", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(true),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(true),
       })
       game.addPlayer(player)
       socket.data.gameCode = game.code
@@ -702,13 +727,13 @@ describe("LobbyService", () => {
     })
 
     it("should set the settings validation to true", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
       socket.data.gameCode = game.code
@@ -722,62 +747,103 @@ describe("LobbyService", () => {
     })
   })
 
-  describe("onGameStart", () => {
-    it("should throw if player is not admin", async () => {
-      const opponent = new SkyjoPlayer(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
-        "socket456",
+  describe("onStartCountdown", () => {
+    it("should throw if user is not host", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        "host-socket",
       )
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
-      })
-      game.addPlayer(opponent)
-
-      const player = new SkyjoPlayer(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+      const notHost = new Player(
+        { username: "notHost", avatar: CoreConstants.AVATARS.BEE },
         TEST_SOCKET_ID,
       )
-      game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
-
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+      game.addPlayer(notHost)
+      socket.data = { gameCode: game.code, playerId: notHost.id }
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
-      await expect(service.onGameStart(socket)).toThrowCErrorWithCode(
+      await expect(service.onStartCountdown(socket)).toThrowCErrorWithCode(
         ErrorConstants.ERROR.NOT_ALLOWED,
       )
-
-      expect(socket.emit).not.toHaveBeenCalled()
     })
 
-    it("should start the game", async () => {
-      const player = new SkyjoPlayer(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+    it("should throw if countdown already exists", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
-      })
-      mockGameOperationManager(game)
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
 
-      game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
-
-      const opponent = new SkyjoPlayer(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
-        "socket456",
+      socket.data = { gameCode: game.code, playerId: host.id }
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      service["countdownQueue"].coundownExists = vi.fn(() =>
+        Promise.resolve(true),
       )
-      game.addPlayer(opponent)
 
+      await expect(service.onStartCountdown(socket)).toThrowCErrorWithCode(
+        ErrorConstants.ERROR.NOT_ALLOWED,
+      )
+    })
+
+    it("should call startCountdown if host and no countdown exists", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+      socket.data = { gameCode: game.code, playerId: host.id }
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      service["countdownQueue"].coundownExists = vi.fn(() =>
+        Promise.resolve(false),
+      )
+      const startCountdown = vi.fn(() => Promise.resolve())
+      service["countdownQueue"].startCountdown = startCountdown
+
+      await service.onStartCountdown(socket)
+
+      expect(startCountdown).toHaveBeenCalledWith(game.code)
+    })
+  })
+
+  describe("onCancelCountdown", () => {
+    it("should throw if user is not host", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        "host-socket",
+      )
+      const notHost = new Player(
+        { username: "notHost", avatar: CoreConstants.AVATARS.BEE },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+      game.addPlayer(notHost)
+      socket.data = { gameCode: game.code, playerId: notHost.id }
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
-      await service.onGameStart(socket)
+      await expect(service.onCancelCountdown(socket)).toThrowCErrorWithCode(
+        ErrorConstants.ERROR.NOT_ALLOWED,
+      )
+    })
 
-      expect(game.isPlaying()).toBeTruthy()
-      expect(game.isRoundRevealCards()).toBeTruthy()
+    it("should call cancelCountdown if host", async () => {
+      const host = new Player(
+        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({ hostId: host.id, settings: new Settings(false) })
+      game.addPlayer(host)
+      socket.data = { gameCode: game.code, playerId: host.id }
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      const cancelCountdown = vi.fn(() => Promise.resolve())
+      service["countdownQueue"].cancelCountdown = cancelCountdown
+
+      await service.onCancelCountdown(socket)
+
+      expect(cancelCountdown).toHaveBeenCalledWith(game.code)
     })
   })
 })

@@ -1,14 +1,100 @@
 import { vi } from "vitest"
-import "@skyjo/error/test/expect-extend"
+import "@skymo/error/test/expect-extend"
+
+// Mock BullMQ to prevent actual Redis connections
+vi.mock("bullmq", () => {
+  return {
+    Queue: vi.fn().mockImplementation(() => ({
+      add: vi.fn().mockResolvedValue(undefined),
+      remove: vi.fn().mockResolvedValue(undefined),
+      close: vi.fn().mockResolvedValue(undefined),
+      emit: vi.fn(),
+    })),
+    Worker: vi.fn().mockImplementation(() => ({
+      on: vi.fn(),
+      close: vi.fn().mockResolvedValue(undefined),
+      emit: vi.fn(),
+    })),
+    Job: vi.fn().mockImplementation((_, data) => ({
+      data,
+      id: "test-job-id",
+      attemptsMade: 0,
+      opts: { attempts: 3 },
+      moveToCompleted: vi.fn().mockResolvedValue(undefined),
+      token: "test-token",
+    })),
+  }
+})
+
+// Mock Redis client to prevent actual Redis connections
+vi.mock("@/redis/client.ts", () => {
+  const mockClient = {
+    isOpen: true,
+    connect: vi.fn().mockResolvedValue(undefined),
+    disconnect: vi.fn().mockResolvedValue(undefined),
+    json: {
+      get: vi.fn().mockResolvedValue(null),
+      set: vi.fn().mockResolvedValue(undefined),
+      del: vi.fn().mockResolvedValue(undefined),
+    },
+    exists: vi.fn().mockResolvedValue(0),
+    get: vi.fn().mockResolvedValue(null),
+    set: vi.fn().mockResolvedValue(undefined),
+    del: vi.fn().mockResolvedValue(undefined),
+    expire: vi.fn().mockResolvedValue(undefined),
+    time: vi.fn().mockResolvedValue([Date.now()]),
+    hSet: vi.fn().mockResolvedValue(undefined),
+    hGet: vi.fn().mockResolvedValue(null),
+  }
+
+  return {
+    RedisClient: class {
+      static instance = null
+      static connectionPromise = null
+      static connectionAttempts = 0
+      static MAX_CONNECTION_ATTEMPTS = 5
+      static isConnecting = false
+
+      static async getClient() {
+        return mockClient
+      }
+
+      static async disconnect() {
+        return Promise.resolve()
+      }
+
+      static async createConnection() {
+        return mockClient
+      }
+
+      static async cleanupClient() {
+        return Promise.resolve()
+      }
+    },
+  }
+})
+
+vi.mock("@/redis/message.repository.js", () => {
+  return {
+    MessageRepository: vi.fn().mockImplementation(() => ({
+      storeMessage: vi.fn().mockResolvedValue(undefined),
+      getMessageById: vi.fn().mockResolvedValue(null),
+      getGameMessagesKey: vi.fn().mockReturnValue("game:test:messages"),
+    })),
+  }
+})
 
 vi.spyOn(process, "env", "get").mockReturnValue({
   NODE_ENV: "test",
-  APP_NAME: "skyjo-api",
+  APP_NAME: "skymo-api",
+  PORT: "3001",
   ORIGINS: "e",
   GMAIL_EMAIL: "e",
   GMAIL_APP_PASSWORD: "e",
   SEQ_URL: "e",
   SEQ_API_KEY: "e",
-  REDIS_URL: "e",
+  REDIS_URL: "redis://mock-redis-url",
   npm_package_version: "-99",
+  SIGHTENGINE_API_USER: "test-api-user",
+  SIGHTENGINE_API_SECRET: "test-api-secret",
 })

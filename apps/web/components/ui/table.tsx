@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { cn } from "@/lib/utils"
-import { m } from "framer-motion"
+import { m } from "motion/react"
 
 const Table = React.forwardRef<
   HTMLTableElement,

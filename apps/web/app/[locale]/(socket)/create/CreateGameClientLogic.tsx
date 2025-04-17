@@ -1,14 +1,14 @@
 "use client"
 
-import { Card } from "@/components/Card"
+import { GameCard } from "@/components/Card/GameCard"
 import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
-import { SkyjoCardToJson } from "@skyjo/core"
+import { CardToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { useEffect, useState } from "react"
 
-const generateRandomCard = (isVisible: boolean): SkyjoCardToJson => {
+const generateRandomCard = (isVisible: boolean): CardToJson => {
   const value = isVisible ? Math.floor(Math.random() * 14) - 2 : undefined
 
   return {
@@ -25,7 +25,7 @@ const CreateGameClientLogic = () => {
   const t = useTranslations("pages.Create")
   const [loading, setLoading] = useState(false)
 
-  const [card, setCard] = useState<SkyjoCardToJson>(generateRandomCard(true))
+  const [card, setCard] = useState<CardToJson>(generateRandomCard(true))
 
   const privateQueryParam = searchParams.get("private")
 
@@ -33,9 +33,9 @@ const CreateGameClientLogic = () => {
 
   useEffect(() => {
     // loading card animation
-    setInterval(() => {
+    const interval = setInterval(() => {
       setCard((prev) => generateRandomCard(!prev.isVisible))
-    }, 1800)
+    }, 1000)
 
     const player = getUser()
 
@@ -43,18 +43,13 @@ const CreateGameClientLogic = () => {
       createGame(player, isPrivate)
       setLoading(true)
     }
+
+    return () => clearInterval(interval)
   }, [socket, isPrivate])
 
   return (
     <div className="h-svh w-full flex flex-col gap-2 items-center justify-center">
-      <Card
-        key={card.id}
-        card={card}
-        size="normal"
-        disabled={true}
-        flipAnimation={true}
-        exitAnimation={false}
-      />
+      <GameCard key={card.id} card={card} size="normal" disabled={true} />
 
       <p>{t("loading-text")}</p>
     </div>

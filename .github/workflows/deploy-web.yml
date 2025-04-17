@@ -20,13 +20,13 @@ jobs:
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 9.14.4
+          version: 10.6.5
       - name: Install Vercel CLI
         run: pnpm add --global vercel@latest
       - name: Install Dependencies
         run: pnpm install
       - name: Build Project
-        run: pnpm build --filter @skyjo/web
+        run: pnpm build --filter @skymo/web
       - name: Set version env var in Vercel
         run: |
           TAG=${GITHUB_REF#refs/tags/v}

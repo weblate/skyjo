@@ -1,5 +1,6 @@
 "use client"
 
+import { useUser } from "@/contexts/UserContext"
 import { usePathname, useRouter } from "@/i18n/routing"
 import {
   addReconnectionDateToLastGame,
@@ -9,16 +10,16 @@ import {
   Constants as CoreConstants,
   CreatePlayer,
   GameStatus,
-} from "@skyjo/core"
-import { Constants as ErrorConstants } from "@skyjo/error"
+} from "@skymo/core"
+import { Constants as ErrorConstants } from "@skymo/error"
 import {
   ClientToServerEvents,
   ErrorJoinMessage,
   ErrorReconnectMessage,
   ErrorRecoverMessage,
   ServerToClientEvents,
-} from "@skyjo/shared/types"
-import { LastGame } from "@skyjo/shared/validations"
+} from "@skymo/shared/types"
+import { LastGame } from "@skymo/shared/validations"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import { WifiIcon, WifiOffIcon } from "lucide-react"
@@ -38,10 +39,10 @@ import { toast } from "sonner"
 
 dayjs.extend(utc)
 
-export type SkyjoSocket = Socket<ServerToClientEvents, ClientToServerEvents>
+export type GameSocket = Socket<ServerToClientEvents, ClientToServerEvents>
 
 type SocketContext = {
-  socket: SkyjoSocket | null
+  socket: GameSocket | null
   createGame: (player: CreatePlayer, isPrivate: boolean) => void
   joinGame: (
     player: CreatePlayer,
@@ -58,8 +59,9 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const router = useRouter()
   const pathname = usePathname()
   const searchParams = useSearchParams()
+  const { setPlayerId } = useUser()
 
-  const [socket, setSocket] = useState<SkyjoSocket | null>(null)
+  const [socket, setSocket] = useState<GameSocket | null>(null)
 
   //#region error descriptions
   const joinErrorDescription: Record<ErrorJoinMessage, string> = {
@@ -71,6 +73,9 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     ),
     [ErrorConstants.ERROR.GAME_IS_FULL]: tSocketError(
       "game-is-full.description",
+    ),
+    [ErrorConstants.ERROR.PLAYER_BANNED]: tSocketError(
+      "player-banned.description",
     ),
   }
 
@@ -91,8 +96,13 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     console.log("Connecting to socket", process.env.NEXT_PUBLIC_API_URL)
     const newSocket = io(process.env.NEXT_PUBLIC_API_URL, {
       autoConnect: true,
+      rememberUpgrade: true,
+      reconnection: true,
       reconnectionDelay: 1000,
-      reconnectionDelayMax: 5000,
+      reconnectionDelayMax: 2000,
+      reconnectionAttempts: 10,
+      timeout: 20000,
+      withCredentials: true,
       parser: customParser,
     })
 
@@ -108,9 +118,9 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
   useEffect(() => {
     if (socket === null) return
-    initGameListeners()
+    initCommonListeners()
 
-    return () => destroyGameListeners()
+    return () => destroyCommonListeners()
   }, [socket])
 
   //#region listeners
@@ -129,7 +139,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
     if (socket?.active) {
       toast.warning(t("connection-lost"), {
-        duration: Infinity,
+        duration: 3000,
         icon: <WifiOffIcon className="w-5 h-5" />,
         id: "socket-connection-lost",
       })
@@ -151,17 +161,25 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const initGameListeners = () => {
+  const onRateLimitError = () => {
+    toast.error(tSocketError("rate-limit.description"), {
+      duration: 5000,
+    })
+  }
+
+  const initCommonListeners = () => {
     socket!.on("connect", onConnect)
     socket!.on("disconnect", onConnectionLost)
     socket!.on("connect_error", onConnectionError)
     socket!.on("error:recover", onRecoverError)
+    socket!.on("error:rate-limit", onRateLimitError)
   }
-  const destroyGameListeners = () => {
+  const destroyCommonListeners = () => {
     socket!.off("connect", onConnect)
     socket!.off("disconnect", onConnectionLost)
     socket!.off("connect_error", onConnectionError)
     socket!.off("error:recover", onRecoverError)
+    socket!.off("error:rate-limit", onRateLimitError)
   }
   //#endregion
 
@@ -217,12 +235,15 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
       }),
     )
 
+    setPlayerId(playerId)
+
     if (status === CoreConstants.GAME_STATUS.LOBBY)
       router.replace(`/game/${code}/lobby`)
     else router.replace(`/game/${code}`)
   }
 
   const onJoinGameError = (message: ErrorJoinMessage) => {
+    console.log("onJoinGameError", message)
     toast.error(joinErrorDescription[message], {
       duration: 5000,
     })
@@ -252,7 +273,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     socket.once("game:join", onJoinGameSuccess)
 
     try {
-      socket!.timeout(10000).emit("reconnect", lastGame)
+      socket.timeout(10000).emit("reconnect", lastGame)
     } catch {
       toast.error(tSocketError("timeout.description"), {
         duration: 5000,

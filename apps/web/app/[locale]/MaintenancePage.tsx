@@ -7,25 +7,17 @@ const MaintenancePage = () => {
 
   return (
     <div className="flex flex-col items-center justify-center h-dvh gap-2 p-4">
-      <Image
-        src="/svg/logo.svg"
-        width={0}
-        height={0}
-        style={{ width: "auto", height: "2rem" }}
-        className="select-none absolute top-4 inset-x-0 mx-auto sm:mx-0 sm:left-4 dark:invert"
-        priority
-        loading="eager"
-        title="Skyjo"
-        alt="Skyjo"
-      />
-      <h1 className="text-black dark:text-white text-4xl font-bold text-center">
-        {t("title")}
+      <h1 className="font-shantell text-4xl select-none absolute top-4 inset-x-0 mx-auto sm:mx-0 sm:left-4">
+        Skymo
       </h1>
+      <h2 className="text-black dark:text-white text-4xl font-bold text-center">
+        {t("title")}
+      </h2>
       <p className="text-black dark:text-white text-center">
         {t("description")}
       </p>
       <Link
-        href="https://github.com/maxentr/skyjo"
+        href="https://github.com/maxentr/skymo"
         className="absolute bottom-4 inset-x-0 flex justify-center"
       >
         <Image

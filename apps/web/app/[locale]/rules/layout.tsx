@@ -1,11 +1,12 @@
 import Footer from "@/components/Footer"
-import { generateAlternatesLanguages } from "@/i18n/routing"
+import { Locales, generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { notFound } from "next/navigation"
 
 type RulesLayoutParams = {
-  locale: string
+  locale: Locales
 }
 export type RulesLayoutProps = Readonly<{
   children: React.ReactNode
@@ -14,6 +15,7 @@ export type RulesLayoutProps = Readonly<{
 
 export async function generateMetadata(props: RulesLayoutProps) {
   const { locale } = await props.params
+  if (!routing.locales.includes(locale)) notFound()
 
   const t = await getTranslations({ locale, namespace: "pages.Rules.head" })
 

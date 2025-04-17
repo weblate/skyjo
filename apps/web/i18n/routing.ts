@@ -14,23 +14,22 @@ export const routing = defineRouting({
 export const generateAlternatesLanguages = (
   route?: string,
 ): Languages<string> => {
-  const localesWithoutDefault = routing.locales.filter(
-    (locale) => locale !== routing.defaultLocale,
-  )
-
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ""
   const path = route ? `/${route}` : ""
 
-  const alternates = localesWithoutDefault.reduce((acc, locale) => {
-    return {
-      ...acc,
-      [locale]: `${locale}${path}`,
-    }
-  }, {})
+  const alternates: Record<string, string> = {}
 
-  return {
-    [routing.defaultLocale]: path || "/",
-    ...alternates,
-  }
+  alternates[routing.defaultLocale] = `${baseUrl}${path}`
+
+  routing.locales.forEach((locale) => {
+    if (locale !== routing.defaultLocale) {
+      alternates[locale] = `${baseUrl}/${locale}${path}`
+    }
+  })
+
+  alternates["x-default"] = alternates[routing.defaultLocale]
+
+  return alternates
 }
 
 export const { Link, redirect, usePathname, useRouter } =

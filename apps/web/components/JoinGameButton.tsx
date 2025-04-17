@@ -45,7 +45,7 @@ export const JoinGameButton = ({
       loading={loading}
       title={t("join-game-button")}
     >
-      {children || t("join-game-button")}
+      {children ?? t("join-game-button")}
     </Button>
   )
 }

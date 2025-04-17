@@ -8,18 +8,20 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { useSkyjo } from "@/contexts/SkyjoContext"
-import { Constants as CoreConstants } from "@skyjo/core"
+import { useGame } from "@/contexts/GameContext"
+import { Constants as CoreConstants } from "@skymo/core"
 import { BookOpenIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
 const GameRules = () => {
-  const { game } = useSkyjo()
+  const { game } = useGame()
   const t = useTranslations("components.GameRules")
 
   const [open, setOpen] = useState(false)
 
+  const firstPlayerPenaltyType =
+    `first-player-penalty-type.${game?.settings.firstPlayerPenaltyType as "1" | "2" | "3" | "4"}` as const
   return (
     <>
       <Button
@@ -38,13 +40,13 @@ const GameRules = () => {
           </DialogHeader>
           <DialogDescription></DialogDescription>
           <p>
-            {t("allow-skyjo-for-column", {
-              value: game?.settings.allowSkyjoForColumn,
+            {t("remove-identical-column", {
+              value: game?.settings.removeIdenticalColumn.toString(),
             })}
           </p>
           <p>
-            {t("allow-skyjo-for-row", {
-              value: game?.settings.allowSkyjoForRow,
+            {t("remove-identical-row", {
+              value: game?.settings.removeIdenticalRow.toString(),
             })}
           </p>
           <p>{t("card-per-column", { value: game?.settings.cardPerColumn })}</p>
@@ -59,9 +61,7 @@ const GameRules = () => {
           </p>
           <p>
             {t("first-player-penalty-type.label")}
-            {t(
-              `first-player-penalty-type.${game?.settings.firstPlayerPenaltyType}`,
-            )}
+            {t(firstPlayerPenaltyType)}
           </p>
           {game?.settings.firstPlayerPenaltyType !==
             CoreConstants.FIRST_PLAYER_PENALTY_TYPE.FLAT_ONLY && (

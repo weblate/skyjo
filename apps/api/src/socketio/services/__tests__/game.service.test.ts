@@ -1,14 +1,14 @@
 import { GameService } from "@/socketio/services/game.service.js"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import {
+  Card,
   Constants as CoreConstants,
-  Skyjo,
-  SkyjoCard,
-  SkyjoPlayer,
-  SkyjoSettings,
+  Game,
+  Player,
+  Settings,
   type TurnStatus,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
+} from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
 import {
   mockGameOperationManager,
   mockRedisInService,
@@ -20,7 +20,7 @@ import { beforeEach, describe, expect, it, vi } from "vitest"
 
 describe("GameService", () => {
   let service: GameService
-  let socket: SkyjoSocket
+  let socket: GameSocket
 
   beforeEach(() => {
     service = new GameService()
@@ -53,13 +53,13 @@ describe("GameService", () => {
     })
 
     it("should not get the game if the client state version is sync with the server", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
-      const newGame = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const newGame = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       newGame.addPlayer(player)
       socket.data.gameCode = newGame.code
@@ -76,13 +76,13 @@ describe("GameService", () => {
     })
 
     it("should get the game if the client state version is null and it's the first time the client get the game", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
-      const newGame = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const newGame = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       newGame.addPlayer(player)
       socket.data.gameCode = newGame.code
@@ -99,22 +99,22 @@ describe("GameService", () => {
     })
 
     it("should get the game if the client state version is null and throw if it's not the first time the client get the game", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
-      const newGame = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const newGame = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       newGame.addPlayer(player)
       socket.data.gameCode = newGame.code
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(newGame))
 
-      await expect(
-        service.onGet(socket, null, false),
-      ).toThrowCErrorWithCode(ErrorConstants.ERROR.STATE_VERSION_NULL)
+      await expect(service.onGet(socket, null, false)).toThrowCErrorWithCode(
+        ErrorConstants.ERROR.STATE_VERSION_NULL,
+      )
 
       expect(service["socketManager"].sendGameToSocket).toHaveBeenNthCalledWith(
         1,
@@ -124,13 +124,13 @@ describe("GameService", () => {
     })
 
     it("should not get the game if the client state version is ahead of the server", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
-      const newGame = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const newGame = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       newGame.addPlayer(player)
       socket.data.gameCode = newGame.code
@@ -151,13 +151,13 @@ describe("GameService", () => {
     })
 
     it("should get the game if the client state version is behind the server", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
-      const newGame = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const newGame = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       newGame.addPlayer(player)
       socket.data.gameCode = newGame.code
@@ -185,20 +185,20 @@ describe("GameService", () => {
 
   describe("onRevealCard", () => {
     it("should throw if player is not in the game", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         "socket2131123",
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
       socket.data.gameCode = game.code
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.TURTLE },
         "socketId132312",
       )
@@ -212,20 +212,20 @@ describe("GameService", () => {
     })
 
     it("should do nothing if current game is processing reveal cards for AFK players", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -244,20 +244,20 @@ describe("GameService", () => {
     })
 
     it("should do nothing if game is not started", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -274,17 +274,17 @@ describe("GameService", () => {
     })
 
     it("should not reveal the card if player already revealed the right card amount", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -310,16 +310,16 @@ describe("GameService", () => {
     })
 
     it("should reveal the card", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -348,19 +348,19 @@ describe("GameService", () => {
 
   describe("onPickCard", () => {
     it("should throw if player is not in the game", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
       socket.data.gameCode = game.code
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId9887",
       )
@@ -380,20 +380,20 @@ describe("GameService", () => {
     })
 
     it("should throw if current game is processing afk player move", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -412,20 +412,20 @@ describe("GameService", () => {
     })
 
     it("should throw if game is not started", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -445,19 +445,19 @@ describe("GameService", () => {
     })
 
     it("should throw if it's not the player turn", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -481,19 +481,19 @@ describe("GameService", () => {
     })
 
     it("should throw if it's not the waited move", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -518,19 +518,19 @@ describe("GameService", () => {
     })
 
     it("should pick a card from the draw pile", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -551,19 +551,19 @@ describe("GameService", () => {
     })
 
     it("should pick a card from the discard pile", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -587,19 +587,19 @@ describe("GameService", () => {
 
   describe("onReplaceCard", () => {
     it("should throw if player is not in the game", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
       socket.data.gameCode = game.code
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId9887",
       )
@@ -619,20 +619,20 @@ describe("GameService", () => {
     })
 
     it("should throw if current game is processing afk player move", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -648,20 +648,20 @@ describe("GameService", () => {
       expect(service["socketManager"].sendToRoom).not.toHaveBeenCalled()
     })
     it("should throw if game is not started", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -681,20 +681,20 @@ describe("GameService", () => {
     })
 
     it("should throw if it's not the player turn", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -718,19 +718,19 @@ describe("GameService", () => {
     })
 
     it("should throw if it's not the waited move", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -755,13 +755,13 @@ describe("GameService", () => {
     })
 
     it("should replace a card and finish the turn", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
@@ -769,7 +769,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -799,19 +799,19 @@ describe("GameService", () => {
 
   describe("onDiscardCard", () => {
     it("should throw if player is not in the game", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
       socket.data.gameCode = game.code
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId9887",
       )
@@ -831,20 +831,20 @@ describe("GameService", () => {
     })
 
     it("should throw if current game is processing afk player move", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -863,20 +863,20 @@ describe("GameService", () => {
     })
 
     it("should throw if game is not started", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -896,20 +896,20 @@ describe("GameService", () => {
     })
 
     it("should throw if it's not the player turn", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -933,19 +933,19 @@ describe("GameService", () => {
     })
 
     it("should throw if it's not the waited move", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -971,19 +971,19 @@ describe("GameService", () => {
     })
 
     it("should discard a card", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -1009,19 +1009,19 @@ describe("GameService", () => {
 
   describe("onTurnCard", () => {
     it("should throw if player is not in the game", async () => {
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
-      const game = new Skyjo({
-        adminId: opponent.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
       })
       game.addPlayer(opponent)
 
       socket.data.gameCode = game.code
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId9887",
       )
@@ -1041,20 +1041,20 @@ describe("GameService", () => {
     })
 
     it("should throw if current game is processing afk player move", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -1071,20 +1071,20 @@ describe("GameService", () => {
     })
 
     it("should throw if game is not started", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -1104,20 +1104,20 @@ describe("GameService", () => {
     })
 
     it("should throw if it's not player turn", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -1141,19 +1141,19 @@ describe("GameService", () => {
     })
 
     it("should throw if it's not the waited move", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -1178,20 +1178,20 @@ describe("GameService", () => {
     })
 
     it("should turn a card and finish the turn ", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -1214,20 +1214,20 @@ describe("GameService", () => {
     })
 
     it("should turn a card, finish the turn and start a new round", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -1236,12 +1236,12 @@ describe("GameService", () => {
       game.settings.initialTurnedCount = 0
       await game.start()
 
-      player.cards = [[new SkyjoCard(1), new SkyjoCard(1), new SkyjoCard(1)]]
+      player.cards = [[new Card(1), new Card(1), new Card(1)]]
       opponent.cards = [
-        [new SkyjoCard(1, true), new SkyjoCard(1, true)],
-        [new SkyjoCard(1, true), new SkyjoCard(1, true)],
-        [new SkyjoCard(1, true), new SkyjoCard(1, true)],
-        [new SkyjoCard(1, true), new SkyjoCard(1, true)],
+        [new Card(1, true), new Card(1, true)],
+        [new Card(1, true), new Card(1, true)],
+        [new Card(1, true), new Card(1, true)],
+        [new Card(1, true), new Card(1, true)],
       ]
 
       game.turn = 0
@@ -1260,13 +1260,13 @@ describe("GameService", () => {
     })
 
     it("should turn a card, finish the turn and start a new round when first player to finish is disconnected", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
 
@@ -1274,13 +1274,13 @@ describe("GameService", () => {
       socket.data.playerId = player.id
       game.addPlayer(player)
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
 
-      const opponent2 = new SkyjoPlayer(
+      const opponent2 = new Player(
         { username: "player3", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId113226",
       )
@@ -1290,10 +1290,10 @@ describe("GameService", () => {
       await game.start()
 
       opponent.cards = [
-        [new SkyjoCard(1, true), new SkyjoCard(1, true)],
-        [new SkyjoCard(1, true), new SkyjoCard(1, true)],
-        [new SkyjoCard(1, true), new SkyjoCard(1, true)],
-        [new SkyjoCard(1, true), new SkyjoCard(1, true)],
+        [new Card(1, true), new Card(1, true)],
+        [new Card(1, true), new Card(1, true)],
+        [new Card(1, true), new Card(1, true)],
+        [new Card(1, true), new Card(1, true)],
       ]
 
       game.turn = 0
@@ -1315,13 +1315,13 @@ describe("GameService", () => {
 
   describe("onReplay", () => {
     it("should throw if the game is not finished", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
@@ -1330,28 +1330,26 @@ describe("GameService", () => {
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
-      await expect(
-        service.onReplay(socket, game.stateVersion),
-      ).toThrowCErrorWithCode(ErrorConstants.ERROR.NOT_ALLOWED)
+      await service.onReplay(socket, game.stateVersion)
 
       expect(socket.emit).not.toHaveBeenCalled()
     })
 
     it("should ask to replay the game but not restart it", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       game.addPlayer(player)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
@@ -1370,13 +1368,13 @@ describe("GameService", () => {
     })
 
     it("should ask to replay the game and restart it", async () => {
-      const player = new SkyjoPlayer(
+      const player = new Player(
         { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
-      const game = new Skyjo({
-        adminId: player.id,
-        settings: new SkyjoSettings(false),
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
       })
       mockGameOperationManager(game)
       game.addPlayer(player)
@@ -1384,7 +1382,7 @@ describe("GameService", () => {
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
-      const opponent = new SkyjoPlayer(
+      const opponent = new Player(
         { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )

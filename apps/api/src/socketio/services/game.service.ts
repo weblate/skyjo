@@ -1,4 +1,4 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import {
   Constants as CoreConstants,
@@ -7,13 +7,13 @@ import {
   type PlayRevealCard,
   type PlayTurnCard,
   type TurnStatus,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
+} from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { BaseService } from "./base.service.js"
 
 export class GameService extends BaseService {
   async onGet(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     clientStateVersion: number | null,
     firstTime: boolean = false,
   ) {
@@ -23,7 +23,7 @@ export class GameService extends BaseService {
   }
 
   async onRevealCard(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     turnData: PlayRevealCard,
     clientStateVersion: number,
   ) {
@@ -48,9 +48,8 @@ export class GameService extends BaseService {
       throw new CError(`Player try to reveal a card but is not found.`, {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
-          game,
-          socket,
-
+          game: game.serialize(),
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -63,7 +62,7 @@ export class GameService extends BaseService {
   }
 
   async onPickCard(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     { pile }: PlayPickCard,
     clientStateVersion: number,
   ) {
@@ -81,7 +80,7 @@ export class GameService extends BaseService {
   }
 
   async onReplaceCard(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     { column, row }: PlayReplaceCard,
     clientStateVersion: number,
   ) {
@@ -98,7 +97,7 @@ export class GameService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onDiscardCard(socket: SkyjoSocket, clientStateVersion: number) {
+  async onDiscardCard(socket: GameSocket, clientStateVersion: number) {
     await this.checkStateVersion(socket, clientStateVersion)
 
     const { game } = await this.checkPlayAuthorization(socket, [
@@ -112,7 +111,7 @@ export class GameService extends BaseService {
   }
 
   async onTurnCard(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     { column, row }: PlayTurnCard,
     clientStateVersion: number,
   ) {
@@ -128,24 +127,12 @@ export class GameService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onReplay(socket: SkyjoSocket, clientStateVersion: number) {
+  async onReplay(socket: GameSocket, clientStateVersion: number) {
     await this.checkStateVersion(socket, clientStateVersion)
 
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isFinished() && !game.isStopped()) {
-      throw new CError(
-        `Player try to replay but the game is not finished. This error should never happen.`,
-        {
-          code: ErrorConstants.ERROR.NOT_ALLOWED,
-          meta: {
-            game,
-            socket,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
-          },
-        },
-      )
-    }
+    if (!game.isFinished() && !game.isStopped()) return
+
     const stateManager = new GameStateTracker(game)
 
     await game.togglePlayerReplay(socket.data.playerId)
@@ -155,7 +142,7 @@ export class GameService extends BaseService {
 
   //#region private methods
   private async checkStateVersion(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     clientStateVersion: number | null,
     firstTime: boolean = false,
   ) {
@@ -171,8 +158,10 @@ export class GameService extends BaseService {
         {
           code: ErrorConstants.ERROR.STATE_VERSION_NULL,
           meta: {
-            gameCode: game.code,
+            game: game.serialize(),
+            socketId: socket.id,
             serverStateVersion: game.stateVersion,
+            gameCode: game.code,
             playerId: socket.data.playerId,
           },
         },
@@ -187,6 +176,8 @@ export class GameService extends BaseService {
         {
           code: ErrorConstants.ERROR.STATE_VERSION_AHEAD,
           meta: {
+            game: game.serialize(),
+            socketId: socket.id,
             clientStateVersion,
             serverStateVersion: game.stateVersion,
             gameCode: game.code,
@@ -205,6 +196,8 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.STATE_VERSION_BEHIND,
           level: "warn",
           meta: {
+            game: game.serialize(),
+            socketId: socket.id,
             clientStateVersion,
             serverStateVersion: game.stateVersion,
             gameCode: game.code,
@@ -216,7 +209,7 @@ export class GameService extends BaseService {
   }
 
   private async checkPlayAuthorization(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     allowedStates: TurnStatus[],
   ) {
     const game = await this.getGame(socket.data.gameCode)
@@ -229,10 +222,7 @@ export class GameService extends BaseService {
     }
 
     // TODO remove this condition in 1.36.0 if game sync works and this error never happens in last versions
-    if (
-      !game.isPlaying() ||
-      (!game.isRoundInMain() && !game.isRoundInLastLap())
-    ) {
+    if (!game.isPlaying() || (!game.isRoundMain() && !game.isRoundLastLap())) {
       this.socketManager.sendGameToSocket(socket.id, game)
       throw new CError(
         `Player try to play but the game is not in playing state. This should not happen since the game sync was normally checked before. Sent game to the player to fix the issue.`,
@@ -240,8 +230,8 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "error",
           meta: {
-            game,
-            socket,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -254,8 +244,8 @@ export class GameService extends BaseService {
       throw new CError(`Player try to play but is not found.`, {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
-          game,
-          socket,
+          game: game.serialize(),
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -271,9 +261,8 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "error",
           meta: {
-            game,
-            socket,
-            player,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -290,9 +279,8 @@ export class GameService extends BaseService {
           code: ErrorConstants.ERROR.INVALID_TURN_STATE,
           level: "error",
           meta: {
-            game,
-            socket,
-            player,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },

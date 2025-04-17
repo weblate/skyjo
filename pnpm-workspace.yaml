@@ -1,4 +1,13 @@
 packages:
-  - "apps/*"
-  - "packages/*"
-  - "packages/config/*"
+  - apps/*
+  - packages/*
+  - packages/config/*
+onlyBuiltDependencies:
+  - '@biomejs/biome'
+  - bufferutil
+  - core-js
+  - esbuild
+  - lefthook
+  - msgpackr-extract
+  - sharp
+  - utf-8-validate

@@ -1,19 +1,19 @@
-import type { Skyjo, SkyjoToJson } from "@skyjo/core"
+import type { Game, GameToJson } from "@skymo/core"
 import {
-  type SkyjoOperation,
+  type GameOperation,
   createStateOperations,
-} from "@skyjo/state-operations"
+} from "@skymo/state-operations"
 
 export class GameStateTracker {
-  private previousState: SkyjoToJson
-  private readonly game: Skyjo
+  private previousState: GameToJson
+  private readonly game: Game
 
-  constructor(game: Skyjo) {
+  constructor(game: Game) {
     this.previousState = structuredClone(game.toJson())
     this.game = game
   }
 
-  getChanges(): SkyjoOperation | null {
+  getChanges(): GameOperation | null {
     const currentState = this.game.toJson()
     const operations = createStateOperations(this.previousState, currentState)
 

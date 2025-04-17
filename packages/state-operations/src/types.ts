@@ -1,18 +1,14 @@
-import type {
-  SkyjoPlayerToJson,
-  SkyjoSettingsToJson,
-  SkyjoToJson,
-} from "@skyjo/core"
+import type { GameToJson, PlayerToJson, SettingsToJson } from "@skymo/core"
 
-export type SkyjoUpdate = Omit<Partial<SkyjoToJson>, "settings" | "players">
+export type GameUpdate = Omit<Partial<GameToJson>, "settings" | "players">
 
-export type PlayerUpdate = Partial<SkyjoPlayerToJson> & {
+export type PlayerUpdate = Partial<PlayerToJson> & {
   id: string
 }
-export type SkyjoOperation = Partial<{
-  game: SkyjoUpdate
-  settings: Partial<SkyjoSettingsToJson>
-  addPlayers: SkyjoPlayerToJson[]
+export type GameOperation = Partial<{
+  game: GameUpdate
+  settings: Partial<SettingsToJson>
+  addPlayers: PlayerToJson[]
   updatePlayers: PlayerUpdate[]
   removePlayers: string[]
 }>

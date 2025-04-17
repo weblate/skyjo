@@ -1,5 +1,5 @@
 {
-  "extends": "@skyjo/ts-config/base-package.json",
+  "extends": "@skymo/ts-config/base-package.json",
   "include": ["src", "env.ts"],
   "compilerOptions": {
     "rootDir": "./",

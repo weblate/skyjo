@@ -6,17 +6,17 @@ import {
   type JoinGame,
   createPlayer,
   joinGame,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import type { ErrorJoinMessage } from "@skyjo/shared/types"
+} from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { ErrorJoinMessage } from "@skymo/shared/types"
 import {
   type UpdateGameSettings,
   type UpdateMaxPlayers,
   updateGameSettingsSchema,
   updateMaxPlayersSchema,
-} from "@skyjo/shared/validations"
+} from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+import type { GameSocket } from "../types/gameSocket.js"
 
 const instance = new LobbyService()
 
@@ -26,7 +26,19 @@ const settingsRateLimiter = new RateLimiterMemory({
   duration: 5,
 })
 
-const lobbyRouter = (socket: SkyjoSocket) => {
+const startCountdownRateLimiter = new RateLimiterMemory({
+  keyPrefix: "start-countdown",
+  points: 5,
+  duration: 10,
+})
+
+const cancelCountdownRateLimiter = new RateLimiterMemory({
+  keyPrefix: "cancel-countdown",
+  points: 8,
+  duration: 10,
+})
+
+const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "create",
     socketErrorWrapper(async (player: CreatePlayer, isPrivate: boolean) => {
@@ -46,7 +58,8 @@ const lobbyRouter = (socket: SkyjoSocket) => {
           error instanceof CError &&
           (error.code === ErrorConstants.ERROR.GAME_NOT_FOUND ||
             error.code === ErrorConstants.ERROR.GAME_ALREADY_STARTED ||
-            error.code === ErrorConstants.ERROR.GAME_IS_FULL)
+            error.code === ErrorConstants.ERROR.GAME_IS_FULL ||
+            error.code === ErrorConstants.ERROR.PLAYER_BANNED)
         ) {
           socket.emit("error:join", error.code satisfies ErrorJoinMessage)
         } else {
@@ -92,9 +105,20 @@ const lobbyRouter = (socket: SkyjoSocket) => {
   //#endregion
 
   socket.on(
-    "start",
+    "game:start-countdown",
     socketErrorWrapper(async () => {
-      await instance.onGameStart(socket)
+      await consumeSocketRateLimiter(startCountdownRateLimiter)(socket)
+
+      await instance.onStartCountdown(socket)
+    }),
+  )
+
+  socket.on(
+    "game:cancel-countdown",
+    socketErrorWrapper(async () => {
+      await consumeSocketRateLimiter(cancelCountdownRateLimiter)(socket)
+
+      await instance.onCancelCountdown(socket)
     }),
   )
 }

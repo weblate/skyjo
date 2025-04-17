@@ -27,6 +27,9 @@ const config = {
       },
     },
     extend: {
+      fontFamily: {
+        shantell: ["Shantell Sans", "sans-serif"],
+      },
       screens: {
         smh: { raw: "(min-height: 600px)" },
         mdh: { raw: "(min-height: 690px)" },
@@ -90,6 +93,16 @@ const config = {
           },
           "50%": {
             scale: "1.05",
+          },
+        },
+        "loading-card": {
+          "0%, 100%": {
+            scale: "1",
+            opacity: "1",
+          },
+          "50%": {
+            scale: "1.1",
+            opacity: "0.5",
           },
         },
         "small-bounce": {
@@ -172,6 +185,7 @@ const config = {
         "small-scale": "small-scale 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         "small-bounce": "small-bounce 1s infinite",
         wizz: "wizz 1s",
+        "loading-card": "loading-card 1s cubic-bezier(0.4, 0, 0.6, 1) infinite",
       },
     },
   },

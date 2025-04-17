@@ -17,9 +17,6 @@ pre-commit:
     shared:
       <<: *build
       root: "packages/shared/"
-    database:
-      <<: *build
-      root: "packages/database/"
     web:
       <<: *build
       root: "apps/web/"

@@ -1,6 +1,6 @@
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 import { zValidator } from "@hono/zod-validator"
-import { getPublicGamesQuerySchema } from "@skyjo/shared/validations"
+import { getPublicGamesQuerySchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 import { GameService } from "../services/game.service.js"

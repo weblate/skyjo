@@ -2,7 +2,6 @@ import Footer from "@/components/Footer"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
 import { useTranslations } from "next-intl"
-import Image from "next/image"
 
 const NotFoundServerPage = () => {
   const t = useTranslations("pages.NotFound")
@@ -10,19 +9,11 @@ const NotFoundServerPage = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-[90dvh] gap-2">
-        <Image
-          src="/svg/logo.svg"
-          width={0}
-          height={0}
-          style={{ width: "auto", height: "2rem" }}
-          className="select-none absolute top-4 inset-x-0 mx-auto sm:mx-0 sm:left-4"
-          priority
-          loading="eager"
-          title="Skyjo"
-          alt="Skyjo"
-        />
+        <h1 className="font-shantell text-4xl select-none absolute top-4 inset-x-0 mx-auto sm:mx-0 sm:left-4">
+          Skymo
+        </h1>
 
-        <h1 className="text-4xl font-bold text-center">{t("title")}</h1>
+        <h2 className="text-4xl font-bold text-center">{t("title")}</h2>
         <p className="text-lg text-center">{t("description")}</p>
 
         <Link href="/" className="mt-4" replace>

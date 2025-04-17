@@ -1,3 +1,4 @@
+import { feedbackRouter } from "@/http/routers/feedback.router.js"
 import { gameRouter } from "@/http/routers/game.router.js"
 import { ENV } from "@env"
 import type { Hono } from "hono"
@@ -12,9 +13,15 @@ export const initializeHttpServer = (app: Hono) => {
   )
 
   app.get("/", (c) => {
-    return c.text("API is running!")
+    return c.json({
+      message: "API is running",
+      status: "ok",
+      timestamp: new Date().toISOString(),
+      version: process.env.npm_package_version ?? "unknown",
+    })
   })
 
   // routes prefixe are defined in each router
   app.route("/", gameRouter)
+  app.route("/", feedbackRouter)
 }

@@ -1,18 +1,17 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import { Constants as CoreConstants, KickVote, type Skyjo } from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
+import { type Game, KickVote } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import { Logger } from "@skymo/logger"
 import { BaseService } from "./base.service.js"
 
 export class KickService extends BaseService {
-  private readonly kickVotes: Map<string, KickVote> = new Map()
-
-  async onInitiateKickVote(socket: SkyjoSocket, targetId: string) {
+  async onInitiateKickVote(socket: GameSocket, targetId: string) {
     const game = await this.getGame(socket.data.gameCode)
     await this.initiateKickVote(socket, game, targetId)
   }
 
-  async onVoteToKick(socket: SkyjoSocket, vote: boolean) {
+  async onVoteToKick(socket: GameSocket, vote: boolean) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
@@ -23,8 +22,8 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
           level: "warn",
           meta: {
-            game,
-            socket,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -32,7 +31,7 @@ export class KickService extends BaseService {
       )
     }
 
-    const kickVote = this.kickVotes.get(game.id)
+    const kickVote = await this.kickVoteRepository.getKickVote(game.code)
     if (!kickVote) {
       throw new CError(
         `No kick vote is in progress. This can happen if the vote has expired or if the game is not in the correct state.`,
@@ -40,9 +39,8 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.NO_KICK_VOTE_IN_PROGRESS,
           level: "warn",
           meta: {
-            game,
-            socket,
-            player,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -50,29 +48,29 @@ export class KickService extends BaseService {
       )
     }
 
-    if (kickVote.hasPlayerVoted(player.id)) {
+    const hasPlayerVoted = kickVote.hasPlayerVoted(player.id)
+    if (hasPlayerVoted) {
       throw new CError(`Player has already voted.`, {
         code: ErrorConstants.ERROR.PLAYER_ALREADY_VOTED,
         level: "warn",
         meta: {
-          game,
-          socket,
-          player,
+          game: game.serialize(),
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
       })
     }
 
-    kickVote.addVote(player.id, vote)
+    await this.kickVoteRepository.addVote(game.code, player.id, vote)
 
-    await this.checkKickVoteStatus(socket, game, kickVote)
+    await this.checkKickVoteStatus(game)
   }
 
   //#region private methods
   private async initiateKickVote(
-    socket: SkyjoSocket,
-    game: Skyjo,
+    socket: GameSocket,
+    game: Game,
     targetId: string,
   ) {
     const initiator = game.getPlayerById(socket.data.playerId)
@@ -83,8 +81,8 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
           level: "warn",
           meta: {
-            game,
-            socket,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -100,9 +98,9 @@ export class KickService extends BaseService {
           code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
           level: "warn",
           meta: {
-            game,
-            socket,
-            initiator,
+            game: game.serialize(),
+            socketId: socket.id,
+            initiatorId: initiator.id,
             targetId,
             gameCode: game.code,
             playerId: socket.data.playerId,
@@ -111,17 +109,35 @@ export class KickService extends BaseService {
       )
     }
 
-    if (this.kickVotes.has(game.id)) {
+    if (game.isHost(initiator.id) && game.settings.private) {
+      const operationManager = new GameStateTracker(game)
+
+      this.socketManager.sendToRoom({
+        room: game.code,
+        event: "kick:host-kick",
+        data: [target.id, target.name],
+      })
+
+      await game.disconnectPlayer(target)
+      await this.updateAndSendGame(game, operationManager)
+      return
+    }
+
+    const kickVoteAlreadyExists = await this.kickVoteRepository.getKickVote(
+      game.code,
+    )
+    if (kickVoteAlreadyExists) {
       throw new CError(
-        `Cannot initiate a kick vote, a kick vote is already in progress for this game.`,
+        `Cannot initiate a kick vote, a kick vote is already in progress for this 
+        game.`,
         {
           code: ErrorConstants.ERROR.KICK_VOTE_IN_PROGRESS,
           level: "warn",
           meta: {
-            game,
-            socket,
-            initiator,
-            target,
+            game: game.serialize(),
+            socketId: socket.id,
+            initiatorId: initiator.id,
+            targetId,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -129,43 +145,84 @@ export class KickService extends BaseService {
       )
     }
 
-    const kickVote = new KickVote(game, target.id, initiator.id)
+    const kickVote = new KickVote({
+      targetId: target.id,
+      initiatorId: initiator.id,
+      nbConnectedPlayers: game.getConnectedPlayers().length,
+    })
 
-    this.kickVotes.set(game.id, kickVote)
+    try {
+      await this.kickVoteRepository.createKickVote(game.code, kickVote)
 
-    await this.checkKickVoteStatus(socket, game, kickVote)
+      await this.kickVoteExpirationQueue.addKickVoteExpiration(
+        game.code,
+        target.id,
+      )
 
-    // Add timeout for vote expiration
-    kickVote.timeout = setTimeout(async () => {
-      await this.checkKickVoteStatus(socket, game, kickVote)
-    }, CoreConstants.KICK_VOTE_EXPIRATION_TIME)
+      await this.checkKickVoteStatus(game)
+    } catch (error) {
+      if (
+        error instanceof CError &&
+        error.code === ErrorConstants.ERROR.KICK_VOTE_IN_PROGRESS
+      ) {
+        throw new CError(
+          `Cannot initiate a kick vote, a kick vote is already in progress for this game.`,
+          {
+            code: ErrorConstants.ERROR.KICK_VOTE_IN_PROGRESS,
+            level: "warn",
+            meta: {
+              game: game.serialize(),
+              socketId: socket.id,
+              initiatorId: initiator.id,
+              targetId,
+              gameCode: game.code,
+              playerId: socket.data.playerId,
+            },
+          },
+        )
+      }
+      throw error
+    }
   }
 
-  private async checkKickVoteStatus(
-    socket: SkyjoSocket,
-    game: Skyjo,
-    kickVote: KickVote,
-  ) {
+  private async checkKickVoteStatus(game: Game) {
+    const kickVote = await this.kickVoteRepository.getKickVote(game.code)
+    if (!kickVote) {
+      Logger.debug(
+        `No kick vote found for game ${game.code} during status check`,
+        {
+          gameCode: game.code,
+        },
+      )
+      return
+    }
+
+    const playerToKick = game.getPlayerById(kickVote.targetId)
+    if (!playerToKick) {
+      this.socketManager.sendToRoom({
+        room: game.code,
+        event: "kick:vote-dismiss",
+        data: [],
+      })
+      await this.kickVoteExpirationQueue.cancelKickVoteExpiration(game.code)
+      await this.kickVoteRepository.deleteKickVote(game.code)
+      return
+    }
+
     if (
       kickVote.hasReachedRequiredVotes() ||
-      kickVote.allPlayersVotedExceptTarget() ||
-      kickVote.hasExpired()
+      kickVote.allPlayersVotedExceptTarget()
     ) {
-      /* istanbul ignore else --@preserve */
-      if (kickVote.timeout) clearTimeout(kickVote.timeout)
-      this.kickVotes.delete(game.id)
+      await this.kickVoteExpirationQueue.cancelKickVoteExpiration(game.code)
+      await this.kickVoteRepository.deleteKickVote(game.code)
 
       if (kickVote.hasReachedRequiredVotes()) {
-        await this.kickPlayer(socket, game, kickVote)
+        await this.kickPlayer(game, kickVote)
       } else {
-        const playerToKick = game.getPlayerById(kickVote.targetId)
-        // istanbul ignore if --@preserve
-        if (!playerToKick) return
-
         this.socketManager.sendToRoom({
           room: game.code,
           event: "kick:vote-failed",
-          data: [playerToKick.id, playerToKick.name],
+          data: [],
         })
       }
     } else {
@@ -177,35 +234,16 @@ export class KickService extends BaseService {
     }
   }
 
-  private async kickPlayer(
-    socket: SkyjoSocket,
-    game: Skyjo,
-    kickVote: KickVote,
-  ) {
+  private async kickPlayer(game: Game, kickVote: KickVote) {
     const playerToKick = game.getPlayerById(kickVote.targetId)
-    if (!playerToKick) {
-      throw new CError(
-        `Player try to be kicked but is not found in game. This can happen if the player left the game before the vote ended.`,
-        {
-          code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
-          level: "warn",
-          meta: {
-            game,
-            socket,
-            targetId: kickVote.targetId,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
-          },
-        },
-      )
-    }
+    if (!playerToKick) return
 
     const operationManager = new GameStateTracker(game)
 
     this.socketManager.sendToRoom({
       room: game.code,
       event: "kick:vote-success",
-      data: [playerToKick.id, playerToKick.name],
+      data: [playerToKick.id],
     })
 
     await game.disconnectPlayer(playerToKick)

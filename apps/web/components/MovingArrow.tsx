@@ -1,8 +1,8 @@
 "use client"
 
 import { Link } from "@/i18n/routing"
-import { m } from "framer-motion"
 import { ArrowDown } from "lucide-react"
+import { m } from "motion/react"
 
 type Props = {
   href: string

@@ -11,9 +11,10 @@ import {
   playRevealCard,
   playTurnCard,
   stateVersionSchema,
-} from "@skyjo/core"
+} from "@skymo/core"
+import type { SocketAck } from "@skymo/shared/types"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+import type { GameSocket } from "../types/gameSocket.js"
 
 const instance = new GameService()
 
@@ -28,7 +29,7 @@ const replayRateLimiter = new RateLimiterMemory({
   duration: 5,
 })
 
-const gameRouter = (socket: SkyjoSocket) => {
+const gameRouter = (socket: GameSocket) => {
   socket.on(
     "get",
     socketErrorWrapper(
@@ -47,7 +48,12 @@ const gameRouter = (socket: SkyjoSocket) => {
   socket.on(
     "play:reveal-card",
     socketErrorWrapper(
-      async (data: PlayRevealCard, clientStateVersion: number) => {
+      async (
+        data: PlayRevealCard,
+        clientStateVersion: number,
+        ack: SocketAck,
+      ) => {
+        ack(true)
         await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
         const turnCardData = playRevealCard.parse(data)
@@ -61,7 +67,12 @@ const gameRouter = (socket: SkyjoSocket) => {
   socket.on(
     "play:pick-card",
     socketErrorWrapper(
-      async (data: PlayPickCard, clientStateVersion: number) => {
+      async (
+        data: PlayPickCard,
+        clientStateVersion: number,
+        ack: SocketAck,
+      ) => {
+        ack(true)
         await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
         const playData = playPickCard.parse(data)
@@ -75,7 +86,12 @@ const gameRouter = (socket: SkyjoSocket) => {
   socket.on(
     "play:replace-card",
     socketErrorWrapper(
-      async (data: PlayReplaceCard, clientStateVersion: number) => {
+      async (
+        data: PlayReplaceCard,
+        clientStateVersion: number,
+        ack: SocketAck,
+      ) => {
+        ack(true)
         await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
         const playData = playReplaceCard.parse(data)
@@ -88,7 +104,8 @@ const gameRouter = (socket: SkyjoSocket) => {
 
   socket.on(
     "play:discard-selected-card",
-    socketErrorWrapper(async (clientStateVersion: number) => {
+    socketErrorWrapper(async (clientStateVersion: number, ack: SocketAck) => {
+      ack(true)
       await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
       const stateVersion = stateVersionSchema.parse(clientStateVersion)
@@ -100,7 +117,12 @@ const gameRouter = (socket: SkyjoSocket) => {
   socket.on(
     "play:turn-card",
     socketErrorWrapper(
-      async (data: PlayTurnCard, clientStateVersion: number) => {
+      async (
+        data: PlayTurnCard,
+        clientStateVersion: number,
+        ack: SocketAck,
+      ) => {
+        ack(true)
         await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
         const playData = playTurnCard.parse(data)

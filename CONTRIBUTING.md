@@ -1,6 +1,6 @@
-# Contributing to Skyjo online
+# Contributing to Skymo
 
-Thank you for considering contributing to Skyjo online! We welcome contributions from everyone. By participating in this project, you agree to abide by the following guidelines.
+Thank you for considering contributing to Skymo! We welcome contributions from everyone. By participating in this project, you agree to abide by the following guidelines.
 
 ## How to contribute
 
@@ -38,4 +38,4 @@ Update the documentation to reflect your changes, including any new features or 
 
 If you need help or have questions, feel free to open an issue or reach out to the maintainers.
 
-Thank you for contributing to Skyjo online!
+Thank you for contributing to Skymo!

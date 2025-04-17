@@ -1,0 +1,529 @@
+"use client"
+
+import { useSocket } from "@/contexts/SocketContext"
+import { useUser } from "@/contexts/UserContext"
+import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
+import { useRouter } from "@/i18n/routing"
+import {
+  getCurrentUser,
+  getOpponents,
+  isGameFinished,
+  isGameLobby,
+  isGamePlaying,
+  isGameStopped,
+  isHost,
+  isLastTurnPickFromDiscardPile,
+  isLastTurnPickFromDrawPile,
+  isLastTurnReplace,
+  isLastTurnThrow,
+  isLastTurnTurn,
+  isRoundLastLap,
+  isRoundMain,
+  isRoundOver,
+  isRoundRevealCards,
+  isTurnChooseAPile,
+  isTurnReplaceACard,
+  isTurnThrowOrReplace,
+  isTurnTurnACard,
+} from "@/lib/game"
+import { Opponents } from "@/types/opponents"
+import {
+  addReconnectionDateToLastGame,
+  clearLastGame,
+} from "@/utils/reconnection"
+import {
+  Constants as CoreConstants,
+  GameToJson,
+  PlayPickCard,
+  PlayerToJson,
+} from "@skymo/core"
+import { ClientToServerGameWithAckEvents } from "@skymo/shared/types"
+import { UpdateGameSettings, UpdateMaxPlayers } from "@skymo/shared/validations"
+import {
+  type GameOperation,
+  applyStateOperations,
+} from "@skymo/state-operations"
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+import {
+  PropsWithChildren,
+  createContext,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
+import { Socket } from "socket.io-client"
+import { toast } from "sonner"
+
+dayjs.extend(utc)
+
+type GameContext = {
+  game: GameToJson
+  player: PlayerToJson
+  opponents: Opponents
+  isActionPending: boolean
+  pendingAction: string | null
+  lastClickedPile: "draw" | "discard" | null
+  actions: {
+    updateMaxPlayers: (maxPlayers: UpdateMaxPlayers) => void
+    updateSingleSettings: <T extends keyof UpdateGameSettings>(
+      key: T,
+      value: UpdateGameSettings[T],
+    ) => void
+    updateSettings: (settings: UpdateGameSettings) => void
+    toggleSettingsValidation: () => void
+    resetSettings: () => void
+    startGame: () => void
+    playRevealCard: (column: number, row: number) => void
+    pickCardFromPile: (pile: PlayPickCard["pile"]) => void
+    replaceCard: (column: number, row: number) => void
+    discardSelectedCard: () => void
+    turnCard: (column: number, row: number) => void
+    replay: () => void
+    leave: () => void
+  }
+  roundPhase: {
+    isRevealCards: boolean
+    isMain: boolean
+    isLastLap: boolean
+    isOver: boolean
+  }
+  gameStatus: {
+    isLobby: boolean
+    isPlaying: boolean
+    isFinished: boolean
+    isStopped: boolean
+  }
+  turnStatus: {
+    isChooseAPile: boolean
+    isThrowOrReplace: boolean
+    isTurnACard: boolean
+    isReplaceACard: boolean
+  }
+  lastTurnStatus: {
+    isPickFromDrawPile: boolean
+    isPickFromDiscardPile: boolean
+    isThrow: boolean
+    isReplace: boolean
+    isTurn: boolean
+  }
+}
+
+const GameContext = createContext<GameContext | undefined>(undefined)
+
+interface GameProviderProps extends PropsWithChildren {
+  gameCode: string
+}
+
+const GameProvider = ({ children, gameCode }: GameProviderProps) => {
+  const { socket } = useSocket()
+  const { playerId } = useUser()
+  const router = useRouter()
+  const { showAfkWarning, showAfkKick, showPlayerAfkKick } = useAfkKickToasts()
+
+  const [game, setGame] = useState<GameToJson>()
+
+  const [pendingAction, setPendingAction] = useState<string | null>(null)
+  const [lastClickedPile, setLastClickedPile] = useState<
+    "draw" | "discard" | null
+  >(null)
+
+  const isActionPending = pendingAction !== null
+
+  const player = getCurrentUser(game?.players, playerId)
+  const opponents = getOpponents(game?.players, playerId)
+
+  const host = isHost(game, player?.id)
+  const stateVersion = game?.stateVersion ?? -99
+
+  useEffect(() => {
+    if (!gameCode || !socket) return
+
+    initGameListeners()
+    initAfkListeners()
+
+    // first time we get the game, we don't have a state version
+    socket.emit("get", null, true)
+
+    return () => {
+      destroyGameListeners()
+      destroyAfkListeners()
+    }
+  }, [socket, gameCode])
+
+  useEffect(() => {
+    socket!.on("leave:success", onLeave)
+    return () => {
+      socket!.off("leave:success", onLeave)
+    }
+  }, [game?.settings.private])
+
+  //#region reconnection
+
+  useEffect(() => {
+    if (socket?.recovered) socket.emit("recover")
+  }, [socket?.recovered])
+
+  useEffect(() => {
+    const onUnload = (event: BeforeUnloadEvent) => {
+      if (!game?.status) return
+
+      const inGame = game?.status === CoreConstants.GAME_STATUS.PLAYING
+      if (inGame) {
+        addReconnectionDateToLastGame()
+        event.preventDefault()
+      } else {
+        clearLastGame()
+      }
+    }
+
+    window.addEventListener("beforeunload", onUnload)
+
+    socket!.on("disconnect", onDisconnect)
+
+    return () => {
+      socket!.off("disconnect", onDisconnect)
+      window.removeEventListener("beforeunload", onUnload)
+    }
+  }, [game?.status])
+
+  //#endregion
+
+  //#region listeners
+  //#region game
+  const onGameReceive = (game: GameToJson) => {
+    setGame(game)
+  }
+
+  const onGameUpdate = (operations: GameOperation) => {
+    console.log("onGameUpdate", operations)
+    setPendingAction(null)
+    setLastClickedPile(null)
+    setGame((prev) => {
+      if (!prev) return prev
+      const prevState = structuredClone(prev)
+      const newState = applyStateOperations(prevState, operations)
+      return newState
+    })
+  }
+
+  const onGameFix = (operations: GameOperation[]) => {
+    console.log("onGameFix", operations)
+    setGame((prev) => {
+      if (!prev) return prev
+
+      let newState = structuredClone(prev)
+
+      for (const operation of operations) {
+        newState = applyStateOperations(newState, operation)
+      }
+
+      return newState
+    })
+  }
+
+  const onLeave = () => {
+    setGame(undefined)
+    if (game?.settings.private) router.replace("/")
+    else router.replace("/search")
+  }
+
+  const onDisconnect = (reason: Socket.DisconnectReason) => {
+    console.log("onDisconnect", reason === "ping timeout", game?.status)
+    if (
+      reason === "ping timeout" &&
+      game?.status === CoreConstants.GAME_STATUS.LOBBY
+    ) {
+      if (game?.settings.private) router.replace("/")
+      else router.replace("/search")
+    } else if (game?.status === CoreConstants.GAME_STATUS.PLAYING) {
+      reconnect()
+      socket?.on("game:join", () => {
+        socket.emit("get", game.stateVersion)
+      })
+    }
+  }
+
+  const MAX_RECONNECT_BACKOFF_MS = 3000
+  const reconnect = (attempt = 1, backoffMs = 1000) => {
+    try {
+      console.log(`Reconnection attempt ${attempt} (delay: ${backoffMs}ms)`)
+
+      socket!.timeout(5000).emit("reconnect", {
+        gameCode: game?.code,
+        playerId: player?.id,
+      })
+    } catch (error) {
+      console.error("Error reconnecting", error)
+
+      const nextBackoff = Math.min(backoffMs * 1.5, MAX_RECONNECT_BACKOFF_MS)
+
+      setTimeout(() => {
+        reconnect(attempt + 1, nextBackoff)
+      }, backoffMs)
+    }
+  }
+
+  const initGameListeners = () => {
+    socket!.on("game", onGameReceive)
+    socket!.on("game:update", onGameUpdate)
+    socket!.on("game:fix", onGameFix)
+  }
+
+  const destroyGameListeners = () => {
+    socket!.off("game", onGameReceive)
+    socket!.off("game:update", onGameUpdate)
+    socket!.off("game:fix", onGameFix)
+  }
+  //#endregion
+
+  //#region afk
+  const initAfkListeners = () => {
+    socket!.on("kick:afk-warning", showAfkWarning)
+    socket!.on("kick:afk", onAfkKick)
+    socket!.on("kick:player-afk", showPlayerAfkKick)
+  }
+
+  const destroyAfkListeners = () => {
+    socket!.off("kick:afk-warning", showAfkWarning)
+    socket!.off("kick:afk", onAfkKick)
+    socket!.off("kick:player-afk", showPlayerAfkKick)
+  }
+
+  const onAfkKick = () => {
+    clearLastGame()
+    showAfkKick()
+    router.replace("/")
+  }
+  //#endregion
+
+  //#region actions
+  const ackCallback = (event: string) => () => {
+    setPendingAction(event)
+  }
+
+  const sendWithAck = <
+    T extends keyof ClientToServerGameWithAckEvents,
+    D extends Parameters<ClientToServerGameWithAckEvents[T]>,
+  >(params: {
+    event: T
+    data: D
+  }) => {
+    if (isActionPending) return
+
+    socket!.emit(params.event, ...params.data)
+  }
+  const updateMaxPlayers = (maxPlayers: UpdateMaxPlayers) => {
+    if (!host) return
+
+    socket!.emit("game:update-max-players", maxPlayers)
+  }
+
+  const updateSingleSettings = <T extends keyof UpdateGameSettings>(
+    key: T,
+    value: UpdateGameSettings[T],
+  ) => {
+    if (!host) return
+
+    socket!.emit("game:update-settings", {
+      [key]: value,
+    })
+  }
+
+  const toggleSettingsValidation = () => {
+    if (!host) return
+
+    socket!.emit("game:settings:toggle-validation")
+  }
+
+  const updateSettings = (settings: UpdateGameSettings) => {
+    if (!host) return
+
+    socket!.emit("game:update-settings", settings)
+  }
+
+  const resetSettings = () => {
+    if (!host) return
+
+    socket!.emit("game:reset-settings")
+  }
+
+  const startGame = () => {
+    if (!host) return
+
+    socket!.emit("start")
+  }
+
+  const playRevealCard = (column: number, row: number) => {
+    sendWithAck({
+      event: "play:reveal-card",
+      data: [
+        {
+          column: column,
+          row: row,
+        },
+        stateVersion,
+        ackCallback("play:reveal-card"),
+      ],
+    })
+  }
+
+  const pickCardFromPile = (pile: PlayPickCard["pile"]) => {
+    setLastClickedPile(pile)
+    sendWithAck({
+      event: "play:pick-card",
+      data: [
+        {
+          pile,
+        },
+        stateVersion,
+        ackCallback("play:pick-card"),
+      ],
+    })
+  }
+
+  const replaceCard = (column: number, row: number) => {
+    sendWithAck({
+      event: "play:replace-card",
+      data: [
+        {
+          column: column,
+          row: row,
+        },
+        stateVersion,
+        ackCallback("play:replace-card"),
+      ],
+    })
+  }
+
+  const discardSelectedCard = () => {
+    setLastClickedPile("discard")
+    sendWithAck({
+      event: "play:discard-selected-card",
+      data: [stateVersion, ackCallback("play:discard-selected-card")],
+    })
+  }
+
+  const turnCard = (column: number, row: number) => {
+    sendWithAck({
+      event: "play:turn-card",
+      data: [
+        {
+          column: column,
+          row: row,
+        },
+        stateVersion,
+        ackCallback("play:turn-card"),
+      ],
+    })
+  }
+
+  const replay = () => {
+    socket!.emit("replay", stateVersion)
+  }
+
+  const leave = () => {
+    toast.dismiss()
+    socket!.emit("leave")
+  }
+
+  const actions = {
+    updateMaxPlayers,
+    updateSingleSettings,
+    toggleSettingsValidation,
+    updateSettings,
+    resetSettings,
+    startGame,
+    playRevealCard,
+    pickCardFromPile,
+    replaceCard,
+    discardSelectedCard,
+    turnCard,
+    replay,
+    leave,
+  }
+  //#endregion
+
+  //#region round phases
+  const roundPhase = {
+    isRevealCards: isRoundRevealCards(game?.roundPhase),
+    isMain: isRoundMain(game?.roundPhase),
+    isLastLap: isRoundLastLap(game?.roundPhase),
+    isOver: isRoundOver(game?.roundPhase),
+  }
+  //#endregion
+
+  //#region game status
+  const gameStatus = {
+    isLobby: isGameLobby(game?.status),
+    isPlaying: isGamePlaying(game?.status),
+    isFinished: isGameFinished(game?.status),
+    isStopped: isGameStopped(game?.status),
+  }
+  //#endregion
+
+  //#region turn status
+  const turnStatus = {
+    isChooseAPile: isTurnChooseAPile(game?.turnStatus),
+    isThrowOrReplace: isTurnThrowOrReplace(game?.turnStatus),
+    isTurnACard: isTurnTurnACard(game?.turnStatus),
+    isReplaceACard: isTurnReplaceACard(game?.turnStatus),
+  }
+  //#endregion
+
+  //#region last turn status
+  const lastTurnStatus = {
+    isPickFromDrawPile: isLastTurnPickFromDrawPile(game?.lastTurnStatus),
+    isPickFromDiscardPile: isLastTurnPickFromDiscardPile(game?.lastTurnStatus),
+    isThrow: isLastTurnThrow(game?.lastTurnStatus),
+    isReplace: isLastTurnReplace(game?.lastTurnStatus),
+    isTurn: isLastTurnTurn(game?.lastTurnStatus),
+  }
+  //#endregion
+
+  const providerValue = useMemo(
+    () => ({
+      game: game as GameToJson,
+      player: player as PlayerToJson,
+      opponents,
+      actions,
+      isActionPending,
+      pendingAction,
+      lastClickedPile,
+      roundPhase,
+      gameStatus,
+      turnStatus,
+      lastTurnStatus,
+    }),
+    [
+      game,
+      opponents,
+      player,
+      isActionPending,
+      pendingAction,
+      lastClickedPile,
+      roundPhase,
+      gameStatus,
+      turnStatus,
+      lastTurnStatus,
+    ],
+  )
+
+  if (!game || !player) return null
+
+  return (
+    <GameContext.Provider value={providerValue}>
+      {children}
+    </GameContext.Provider>
+  )
+}
+
+export const useGame = () => {
+  const context = useContext(GameContext)
+  if (context === undefined) {
+    throw new Error("useGame must be used within a GameProvider")
+  }
+  return context
+}
+export default GameProvider

@@ -13,14 +13,16 @@
   },
   "formatter": {
     "enabled": true,
-    "formatWithErrors": false,
+    "formatWithErrors": true,
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
     "lineWidth": 80,
     "attributePosition": "auto"
   },
-  "organizeImports": { "enabled": true },
+  "organizeImports": {
+    "enabled": true
+  },
   "linter": {
     "ignore": ["**/*.test.ts", "**/.env"],
     "enabled": true,
@@ -32,10 +34,19 @@
       },
       "correctness": {
         "noPrecisionLoss": "error",
-        "noUnusedVariables": { "level": "error", "fix": "safe" },
-        "noUnusedImports": { "level": "error", "fix": "safe" }
+        "noUnusedVariables": {
+          "level": "error",
+          "fix": "safe"
+        },
+        "noUnusedImports": {
+          "level": "error",
+          "fix": "safe"
+        }
       },
-      "style": { "noNamespace": "error", "useAsConstAssertion": "error" },
+      "style": {
+        "noNamespace": "error",
+        "useAsConstAssertion": "error"
+      },
       "suspicious": {
         "noExplicitAny": "warn",
         "noExtraNonNullAssertion": "error",

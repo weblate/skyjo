@@ -4,6 +4,14 @@ import { MetadataRoute } from "next"
 type Page = {
   name: string
   priority: number
+  changefreq?:
+    | "always"
+    | "hourly"
+    | "daily"
+    | "weekly"
+    | "monthly"
+    | "yearly"
+    | "never"
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
@@ -12,22 +20,27 @@ export default function sitemap(): MetadataRoute.Sitemap {
     {
       name: "",
       priority: 1,
+      changefreq: "weekly",
     },
     {
       name: "search",
       priority: 0.9,
+      changefreq: "weekly",
     },
     {
       name: "create",
       priority: 0.9,
+      changefreq: "weekly",
     },
     {
       name: "rules",
       priority: 0.8,
+      changefreq: "monthly",
     },
     {
       name: "privacy-policy",
       priority: 0.7,
+      changefreq: "monthly",
     },
   ]
 
@@ -46,6 +59,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
         url,
         lastModified: new Date(),
         priority: page.priority,
+        changeFrequency: page.changefreq,
       }
     })
   })

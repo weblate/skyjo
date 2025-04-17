@@ -1,10 +1,12 @@
-import { generateAlternatesLanguages } from "@/i18n/routing"
+import Footer from "@/components/Footer"
+import { Locales, generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
+import { notFound } from "next/navigation"
 
 type CreateLayoutParams = {
-  locale: string
+  locale: Locales
 }
 export type CreateLayoutProps = Readonly<{
   children: React.ReactNode
@@ -13,6 +15,7 @@ export type CreateLayoutProps = Readonly<{
 
 export async function generateMetadata(props: CreateLayoutProps) {
   const { locale } = await props.params
+  if (!routing.locales.includes(locale)) notFound()
 
   const t = await getTranslations({
     locale,
@@ -44,5 +47,10 @@ export async function generateMetadata(props: CreateLayoutProps) {
 }
 
 export default async function CreateLayout({ children }: CreateLayoutProps) {
-  return children
+  return (
+    <>
+      {children}
+      <Footer />
+    </>
+  )
 }

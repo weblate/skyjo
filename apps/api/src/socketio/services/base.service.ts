@@ -1,29 +1,38 @@
+import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
+import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
+import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { GameRepository } from "@/redis/game.repository.js"
+import { KickVoteRepository } from "@/redis/kickVote.repository.js"
+import { MessageRepository } from "@/redis/message.repository.js"
 import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { SocketManager } from "@/socketio/utils/SocketManager.js"
 import {
   Constants as CoreConstants,
-  type Skyjo,
-  type SkyjoPlayer,
-} from "@skyjo/core"
-import type { ServerChatMessage } from "@skyjo/shared/types"
-import { PlayerAfkQueueService } from "../../queues/PlayerAfkQueueService.js"
-import { RevealCardsAfkQueueService } from "../../queues/RevealCardsAfkQueueService.js"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+  type Game,
+  type Player,
+  type ServerMessageType,
+} from "@skymo/core"
+import type { ServerChatMessage } from "@skymo/shared/types"
+import type { GameSocket } from "../types/gameSocket.js"
 
 export abstract class BaseService {
   protected redis = new GameRepository()
+  protected kickVoteRepository = new KickVoteRepository()
   protected socketManager = SocketManager.getInstance()
 
   protected afkQueue: PlayerAfkQueueService =
     PlayerAfkQueueService.getInstance()
   protected revealCardsAfkQueue: RevealCardsAfkQueueService =
     RevealCardsAfkQueueService.getInstance()
+  protected kickVoteExpirationQueue: KickVoteExpirationQueueService =
+    KickVoteExpirationQueueService.getInstance()
+
+  protected messageRepository = new MessageRepository()
 
   protected async sendMissingStatesToSocket(
-    socket: SkyjoSocket,
-    game: Skyjo,
+    socket: GameSocket,
+    game: Game,
     clientStateVersion: number,
   ) {
     const states = await this.redis.getGameStates(
@@ -38,7 +47,7 @@ export abstract class BaseService {
   }
 
   protected async updateAndSendGame(
-    game: Skyjo,
+    game: Game,
     stateManager: GameStateTracker,
   ) {
     const operations = stateManager.getChanges()
@@ -62,9 +71,9 @@ export abstract class BaseService {
   }
 
   protected async joinGame(
-    socket: SkyjoSocket,
-    game: Skyjo,
-    player: SkyjoPlayer,
+    socket: GameSocket,
+    game: Game,
+    player: Player,
     reconnection: boolean = false,
   ) {
     await socket.join(game.code)
@@ -82,19 +91,29 @@ export abstract class BaseService {
     const messageType = reconnection
       ? CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_RECONNECT
       : CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED
+    await this.sendServerMessage(game.code, player.name, messageType)
+
+    await this.redis.updateGame(game)
+  }
+
+  async sendServerMessage(
+    gameCode: string,
+    playerName: string,
+    serverMessageType: ServerMessageType,
+  ) {
     const message: ServerChatMessage = {
       id: crypto.randomUUID(),
-      username: player.name,
-      message: messageType,
-      type: messageType,
+      username: playerName,
+      message: serverMessageType,
+      type: serverMessageType,
     }
 
+    await this.messageRepository.storeMessage(gameCode, message)
+
     this.socketManager.sendToRoom({
-      room: game.code,
+      room: gameCode,
       event: "message:server",
       data: [message],
     })
-
-    await this.redis.updateGame(game)
   }
 }

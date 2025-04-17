@@ -1,8 +1,8 @@
 {
   "head": {
-    "title": "Play Skyjo Online with friends | Skyjo Online",
-    "description": "Enjoy playing Skyjo online with friends for free! Join the fun in this exciting multiplayer game and challenge your friends to see who can win!",
-    "keywords": "Skyjo,Skyjo online,multiplayer game,card game,play with friends,free online games,online card games"
+    "title": "Skymo | Play Skyjo Card Game Online Free",
+    "description": "Play Skyjo online for free with Skymo! A fast-paced multiplayer card game where strategy meets fun. Challenge friends, flip cards, and aim for the lowest score to win!",
+    "keywords": "Skymo,Skyjo,Skyjo online,multiplayer game,card game,play with friends,free online games,online card games"
   },
   "pages": {
     "Index": {
@@ -38,9 +38,9 @@
     },
     "Search": {
       "head": {
-        "title": "Find public Skyjo games | Skyjo Online",
-        "description": "Looking for a Skyjo game to join? Browse available public games and start playing Skyjo online instantly with other players. Play for free now!",
-        "keywords": "Skyjo,Skyjo online,find game,join game,public games,online multiplayer,play with others,quick play,free online games,open games,online card game, multiplayer card game"
+        "title": "Find public Skymo games | Play Skyjo Online",
+        "description": "Looking for a Skymo game to join? Browse available public games and start playing Skyjo online instantly with other players. Play for free now!",
+        "keywords": "Skymo,Skyjo,Skyjo online,find game,join game,public games,online multiplayer,play with others,quick play,free online games,open games,online card game, multiplayer card game"
       },
       "header": {
         "back": "Back to homepage",
@@ -67,9 +67,9 @@
     },
     "Create": {
       "head": {
-        "title": "Create a Skyjo game | Skyjo Online",
-        "description": "Start a new Skyjo game online! Create private or public rooms, invite your friends, and enjoy the fun of Skyjo together. Play now for free!",
-        "keywords": "Skyjo,Skyjo online,create game,start game,private game,public game,play with friends,online multiplayer,free online games,custom game"
+        "title": "Create a Skymo game | Play Skyjo Online",
+        "description": "Start a new Skymo game online! Create private or public rooms, invite your friends, and enjoy the fun of Skyjo together. Play now for free!",
+        "keywords": "Skymo,Skyjo,Skyjo online,create game,start game,private game,public game,play with friends,online multiplayer,free online games,custom game"
       },
       "loading-text": "Creating your game…"
     },
@@ -102,8 +102,8 @@
           "label": "Maximum number of players",
           "title": "Maximum number of players: {number}"
         },
-        "allow-skyjo-for-column": "Allow Skyjo for column",
-        "allow-skyjo-for-row": "Allow Skyjo for row",
+        "remove-identical-column": "Remove identical columns",
+        "remove-identical-row": "Remove identical rows",
         "nb-columns": {
           "label": "Number of columns",
           "title": "$number columns"
@@ -113,12 +113,15 @@
           "title": "$number rows"
         },
         "initial-turned-count": {
-          "label": "Number of card turned at the beginning of a round",
-          "title": "{number} cards will be turned at the beginning of the game"
+          "label": "Number of cards initially revealed",
+          "title": "At the start of the game, {number} of your cards will be revealed"
+        },
+        "show-current-score": {
+          "label": "Show the current score during the game"
         },
         "score-to-end-game": {
-          "label": "Number of points to end the game",
-          "title": "{number} points will be required to end the game"
+          "label": "Score to end the game",
+          "title": "The game will end when a player reaches {number} points"
         },
         "first-player-penalty-type": {
           "label": "First player penalty type",
@@ -127,13 +130,13 @@
           "item": {
             "multiplier-only": "Multiplier only",
             "flat-only": "Flat only",
-            "flat-then-multiplier": "Flat then multiplier",
-            "multiplier-then-flat": "Multiplier then flat"
+            "flat-then-multiplier": "Flat then Multiplier",
+            "multiplier-then-flat": "Multiplier then Flat"
           }
         },
         "first-player-flat-penalty": {
-          "label": "First player flat penalty",
-          "title": "The score of the first player will be added by {number} if it is not strictly inferior to the other scores of the game"
+          "label": "First player score flat penalty",
+          "title": "An additional {number} points will be added to the score of the first player"
         },
         "first-player-multiplier-penalty": {
           "label": "First player score penalty multiplier",
@@ -141,8 +144,10 @@
         }
       },
       "start-game-button": "Start the game",
-      "waiting-admin-to-start": "Waiting for the admin to start the game",
-      "waiting-admin-to-confirm-game-settings": "Waiting for the admin to validate the settings",
+      "cancel": "Cancel",
+      "game-starting-in": "Game starting in {seconds}",
+      "waiting-host-to-start": "Waiting for the host to start the game",
+      "waiting-host-to-confirm-game-settings": "Waiting for the host to validate the settings",
       "player-section": {
         "title": "Players {nbPlayers}/{maxPlayers}",
         "select": {
@@ -166,9 +171,9 @@
     },
     "PrivacyPolicy": {
       "head": {
-        "title": "Privacy Policy | Skyjo Online",
-        "description": "Learn about Skyjo Online's commitment to your privacy. Our policy details data collection, usage, security measures, and GDPR compliance for our online card game.",
-        "keywords": "Skyjo Online,privacy policy,data protection,online game privacy,secure gaming,user data,GDPR,CCPA,data security"
+        "title": "Privacy Policy | Skymo - Skyjo Online Card Game",
+        "description": "Privacy policy for Skymo. Learn how we protect your data while you enjoy our Skyjo card game. Transparent practices and secure gaming experience.",
+        "keywords": "Skymo,Skyjo,Skyjo Online,privacy policy,data protection,online game privacy,secure gaming,user data,GDPR,CCPA,data security"
       },
       "content": {
         "back": "Back to the home page",
@@ -184,25 +189,34 @@
             "description": "We use PostHog, an analytics tool, to collect anonymous data about how you use our website. This includes:",
             "items": "Page views;;Web vitals (performance metrics);;Survey responses (if you choose to participate)"
           },
+          "user-provided-information": {
+            "title": "User-Provided Information",
+            "description": "We collect:",
+            "items": "Feedback form submissions (including optional email addresses)"
+          },
           "game-data": {
             "title": "Game Data",
             "description": "We temporarily store:",
             "items": "Usernames and avatar choices;;Game elements and progress"
           },
-
           "local-storage-data": {
             "title": "Local Storage Data",
             "description": "We store in your browser's local storage:",
             "items": "Language preferences;;Game settings preferences"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "We use essential cookies to enable core functionality of our website:",
+            "items": "Session cookies: We use a session cookie (skymo-io) to maintain your connection to our game servers. This cookie is essential for the functionality of the game and expires after 24 hours;;These cookies do not track you across websites and are only used to provide the service you have requested"
           }
         },
         "how-we-use-your-information": {
           "title": "How We Use Your Information",
-          "items": "Improve our website and user experience;;Analyze usage patterns and performance;;Facilitate gameplay"
+          "items": "Improve our website and user experience;;Analyze usage patterns and performance;;Respond to feedback and support requests;;Facilitate gameplay"
         },
         "data-storage-and-retention": {
           "title": "Data Storage and Retention",
-          "items": "Anonymous usage data is stored on servers within the European Union and retained for up to 1 year;;Game data is stored in our database located in Frankfurt, Germany. This data is kept for the duration of active games. Once all players leave a game, the associated data is deleted;;Information stored in your browser's local storage remains there until you clear your browser data"
+          "items": "Anonymous usage data is stored on servers within the European Union and retained for up to 1 year;;Game data is stored in our database located in Frankfurt, Germany. This data is kept for the duration of active games. Once all players leave a game, the associated data is deleted;;Information stored in your browser's local storage remains there until you clear your browser data;;Feedback form submissions are retained only for the purpose of responding and considering suggestions for development"
         },
         "data-sharing": {
           "title": "Data Sharing",
@@ -211,11 +225,11 @@
         "your-rights-and-choices": {
           "title": "Your Rights and Choices",
           "description": "Given that we collect primarily anonymous data, we cannot identify or access personal information specific to any individual user. However, you have the following rights and choices:",
-          "items": "Local Storage: You can clear your browser's local storage at any time to remove saved preferences;;Analytics Opt-Out: You can opt-out of analytics data collection by enabling your browser's \"Do Not Track\" setting or using privacy-focused browsers that block analytics scripts;;Game Data: Game-related data is automatically deleted when all players leave a game"
+          "items": "Local Storage: You can clear your browser's local storage at any time to remove saved preferences;;Feedback: If you've submitted feedback with an email address, you can contact us to request its deletion;;Analytics Opt-Out: You can opt-out of analytics data collection by enabling your browser's \"Do Not Track\" setting or using privacy-focused browsers that block analytics scripts;;Game Data: Game-related data is automatically deleted when all players leave a game"
         },
         "childrens-privacy": {
           "title": "Children's Privacy",
-          "description": "Skyjo Online does not have any age restrictions. We do not knowingly collect personal information from children."
+          "description": "Skymo does not have any age restrictions. We do not knowingly collect personal information from children."
         },
         "changes-to-this-policy": {
           "title": "Changes to This Policy",
@@ -223,15 +237,15 @@
         },
         "contact-us": {
           "title": "Contact Us",
-          "description": "If you have any questions about this Privacy Policy, please contact us through our Discord server or GitHub."
+          "description": "If you have any questions about this Privacy Policy, please contact us through our feedback form on the website, Discord server or GitHub."
         }
       }
     },
     "Rules": {
       "head": {
-        "title": "How to play Skyjo | Skyjo Online",
-        "description": "Learn how to play Skyjo with our comprehensive guide. Discover the rules, strategies, and tips to master this fun online card game. Play Skyjo online with friends now!",
-        "keywords": "Skyjo rules,how to play Skyjo,Skyjo game,card game rules,online card game,game instructions,gameplay guide"
+        "title": "How to play Skymo | Skyjo Card Game Online",
+        "description": "Learn how to play Skyjo with our Skymo guide. Discover the rules, strategies, and tips to master this fun online card game. Play with friends now!",
+        "keywords": "Skymo,Skyjo,Skyjo rules,how to play Skyjo,Skyjo game,card game rules,online card game,game instructions,gameplay guide"
       },
       "title": "Skyjo game rules"
     }
@@ -250,10 +264,16 @@
       "button-title": "Send",
       "message-too-long": {
         "description": "The message is too long (max 200 characters)"
+      },
+      "unknown-command": {
+        "description": "Unknown command"
       }
     },
     "ChatMessage": {
-      "separator": ": "
+      "separator": ": ",
+      "context-menu": {
+        "report": "Report message"
+      }
     },
     "ChatMessageList": {
       "unread-messages": "{count} unread message{count, plural, =1 {} other {s}}"
@@ -273,16 +293,41 @@
       "title": "End of the round",
       "description": "The next round will start in few seconds…"
     },
+    "Feedback": {
+      "title": "Leave a feedback",
+      "description": "You can write a feedback to help us improve the game.",
+      "toast": {
+        "success": {
+          "title": "Thank you for your feedback!",
+          "description": "Your insights have helped us enhance our game website, and we are truly grateful."
+        },
+        "error": {
+          "title": "An error occurred, please try again."
+        }
+      },
+      "email-input": {
+        "label": "Your email (optional)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Your message",
+        "placeholder": "Tell us what you think, note or want to…"
+      },
+      "button-title": "Send"
+    },
     "Footer": {
+      "feedback": "Leave a feedback",
       "buy-game": "Buy the game",
       "explanation": "What is Skyjo?",
       "rules": "Game rules",
+      "status": "Server status",
       "home": "Home",
       "release-notes": "Release notes",
       "privacy-policy": "Privacy policy",
       "disclaimer": {
         "not-affiliated": "This website is not affiliated with the creators or distributors of Skyjo",
-        "rights-owned": "All rights to the Skyjo name and game mechanics are owned by Alexander Bernhardt and Magilano"
+        "rights-owned": "All rights to the Skyjo name and game mechanics are owned by Alexander Bernhardt and Magilano",
+        "responsible-content": "The owner of this site is not responsible for any user generated content (usernames, messages)"
       },
       "attribution": {
         "avatars": "Avatars created by Freepik - Flaticon"
@@ -297,8 +342,8 @@
     "GameRules": {
       "button-title": "Show game rules",
       "title": "Game rules",
-      "allow-skyjo-for-column": "Allow Skyjo for column: {value, select, true {yes} false {no} other {unknown}}",
-      "allow-skyjo-for-row": "Allow Skyjo for row: {value, select, true {yes} false {no} other {unknown}}",
+      "remove-identical-column": "Remove column if identical cards: {value, select, true {yes} false {no} other {unknown}}",
+      "remove-identical-row": "Remove row if identical cards: {value, select, true {yes} false {no} other {unknown}}",
       "card-per-column": "Number of columns: {value}",
       "card-per-row": "Number of rows: {value}",
       "initial-turned-count": "Number of cards to turn at the beginning: {value}",
@@ -330,6 +375,7 @@
         "aria-label": "Menu"
       },
       "rules": "Rules",
+      "feedback": "Leave a feedback",
       "discord": "Discord",
       "settings": "Settings"
     },
@@ -345,7 +391,7 @@
       "you": "You"
     },
     "PWABanner": {
-      "title": "Install Skyjo Online on your device!",
+      "title": "Install Skymo on your device!",
       "Safari": "Tap the share icon, then 'Add to Dock' to install",
       "Chrome": "Click on the 'Install' button to install",
       "FirefoxAndroid": "Tap the menu icon, then 'Add to Home screen' to install",
@@ -470,14 +516,23 @@
             }
           }
         },
-        "game-board": {
-          "title": "Game board",
-          "size": {
+        "gameplay": {
+          "title": "Gameplay",
+          "gameboard-size": {
             "label": "Size of your game board",
             "big-warning": "Can break display on mobile",
             "values": {
               "normal": "Normal",
               "big": "Big"
+            }
+          },
+          "timer": {
+            "label": "Timer display mode",
+            "description": "Smart mode displays the timer at half-time and the last 15 seconds.",
+            "modes": {
+              "never": "Never",
+              "smart": "Smart",
+              "always": "Always"
             }
           }
         }
@@ -494,15 +549,17 @@
     },
     "Avatar": {
       "context-menu": {
-        "kick": "Kick",
-        "mute": "Mute",
-        "unmute": "Unmute"
+        "report": "Report {username}",
+        "kick": "Kick {username}",
+        "vote-to-kick": "Vote to kick {username}",
+        "ban": "Ban {username}",
+        "mute": "Mute {username}",
+        "unmute": "Unmute {username}"
       }
     },
     "KickVote": {
       "player-has-not-voted": {
         "title": "Vote to kick {playerName}",
-        "description": "{initiatorName} wants to kick {playerName}",
         "kick-button": {
           "alt": "Kick {playerName}",
           "label": "Kick"
@@ -518,7 +575,7 @@
       },
       "vote-against-you": {
         "title": "Vote to kick you",
-        "description": "{initiatorName} has requested a vote to kick you."
+        "description": "A vote to kick you has been requested."
       },
       "vote-failed": {
         "title": "The vote to kick {playerName} failed",
@@ -534,7 +591,16 @@
       },
       "vote-against-you-succeeded": {
         "title": "You have been kicked",
-        "description": "The players have voted to kick you out of the game."
+        "description": "Players have voted to kick you out of the game."
+      },
+      "you-kick-player": {
+        "title": "You have kicked {playerName}"
+      },
+      "host-kick": {
+        "title": "{playerName} has been kicked from the game by the host"
+      },
+      "host-kick-you": {
+        "title": "You have been kicked out of the game by the host"
       }
     },
     "AfkKick": {
@@ -550,10 +616,27 @@
         "title": "Player Kicked",
         "description": "{playerName} has been kicked from the game due to inactivity."
       }
+    },
+    "ReportDialog": {
+      "title": "Report {username}",
+      "description": "Report the username or a message from {username} if it seems inappropriate.",
+      "report-username": "Report the username",
+      "report-message": "Report a message",
+      "select-message": "Select the message to report",
+      "select-message-placeholder": "Select a message",
+      "no-messages": "No messages found from this user",
+      "cancel": "Cancel",
+      "submit": "Report",
+      "toast": {
+        "report-submitted": {
+          "title": "Report submitted",
+          "description": "Thank you for your report, you have contributed to improving the quality of the game."
+        }
+      }
     }
   },
   "utils": {
-    "skyjo": {
+    "skymo": {
       "waiting": "Waiting for players",
       "turn-cards": "Turn {number} card{number, plural, =1 {} other {s}}",
       "waiting-opponents-to-turn-cards": "Waiting for opponent{nbOpponents, plural, =1 {} other {s}} to turn {number} card{number, plural, =1 {} other {s}}",
@@ -597,7 +680,8 @@
       "toucan": "toucan",
       "turtle": "turtle",
       "whale": "whale",
-      "owl": "owl"
+      "owl": "owl",
+      "cat": "cat"
     },
     "socket": {
       "error": {
@@ -615,6 +699,13 @@
         },
         "game-already-started": {
           "description": "The game has already started"
+        },
+        "player-banned": {
+          "description": "You have been banned from this game"
+        },
+        "rate-limit": {
+          "title": "You are sending too many requests",
+          "description": "Please wait a few seconds before trying again"
         }
       }
     }
@@ -629,6 +720,37 @@
       },
       "connection-lost": "Connection lost. Attempting to reconnect...",
       "reconnection": "Reconnection successful"
+    },
+    "BanContext": {
+      "not-allowed": {
+        "title": "You don't have permission to ban",
+        "description": "You don't have permission to ban a player"
+      },
+      "player-not-found": {
+        "title": "The player to ban does not exist",
+        "description": "The player to ban does not exist in the game"
+      },
+      "player-banned": {
+        "title": "{playerName} has been banned",
+        "description": "{playerName} has been banned by the host"
+      },
+      "you-were-banned": {
+        "title": "You have been banned",
+        "description": "You have been banned from the game by the host"
+      },
+      "unexpected-error": {
+        "title": "An unexpected error occurred",
+        "description": "An unexpected error occurred while banning a player"
+      }
+    },
+    "ReportContext": {
+      "report": {
+        "title": "{playerName} has been kicked due to a report"
+      },
+      "report-against-you": {
+        "title": "You have been kicked due to a report",
+        "description": "Your username or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
+      }
     }
   }
 }

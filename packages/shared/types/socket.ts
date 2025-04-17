@@ -1,8 +1,14 @@
+import type { ClientToServerReportEvents } from "@/types/events/report.js"
 import type { ServerToClientAfkEvents } from "./events/afk.js"
+import type {
+  ClientToServerBanEvents,
+  ServerToClientBanEvents,
+} from "./events/ban.js"
 import type {
   ClientToServerChatEvents,
   ServerToClientChatEvents,
 } from "./events/chat.js"
+import type { ServerToClientErrorEvents } from "./events/error.js"
 import type {
   ClientToServerGameEvents,
   ServerToClientGameEvents,
@@ -26,15 +32,18 @@ export type ClientToServerEvents = ClientToServerGameEvents &
   ClientToServerLobbyEvents &
   ClientToServerChatEvents &
   ClientToServerPlayerEvents &
-  ClientToServerSettingsEvents
+  ClientToServerSettingsEvents &
+  ClientToServerBanEvents &
+  ClientToServerReportEvents
 
-export interface ServerToClientEvents
-  extends ServerToClientGameEvents,
-    ServerToClientChatEvents,
-    ServerToClientKickEvents,
-    ServerToClientLobbyEvents,
-    ServerToClientPlayerEvents,
-    ServerToClientAfkEvents {}
+export type ServerToClientEvents = ServerToClientGameEvents &
+  ServerToClientChatEvents &
+  ServerToClientKickEvents &
+  ServerToClientLobbyEvents &
+  ServerToClientPlayerEvents &
+  ServerToClientAfkEvents &
+  ServerToClientBanEvents &
+  ServerToClientErrorEvents
 
 export type SocketData = {
   gameCode: string

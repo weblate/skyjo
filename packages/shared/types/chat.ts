@@ -2,7 +2,7 @@ import type {
   ServerMessageType,
   SystemMessageType,
   UserMessageType,
-} from "@skyjo/core"
+} from "@skymo/core"
 
 export type UserChatMessage = {
   id: string

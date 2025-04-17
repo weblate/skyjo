@@ -1,15 +1,15 @@
 import { PlayerService } from "@/socketio/services/player.service.js"
 import { socketErrorWrapper } from "@/socketio/utils/socketErrorWrapper.js"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
-import type { ErrorReconnectMessage } from "@skyjo/shared/types"
-import { type LastGame, reconnect } from "@skyjo/shared/validations"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import { Logger } from "@skymo/logger"
+import type { ErrorReconnectMessage } from "@skymo/shared/types"
+import { type LastGame, reconnect } from "@skymo/shared/validations"
 import type { DisconnectReason } from "socket.io"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+import type { GameSocket } from "../types/gameSocket.js"
 
 const instance = new PlayerService()
 
-const playerRouter = (socket: SkyjoSocket) => {
+const playerRouter = (socket: GameSocket) => {
   if (socket.recovered) {
     socketErrorWrapper(async () => {
       await instance.onRecover(socket)

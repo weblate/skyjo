@@ -4,9 +4,9 @@ import { GamesList } from "@/app/[locale]/(socket)/search/GamesList"
 import { SearchHeader } from "@/app/[locale]/(socket)/search/SearchHeader"
 import { TagsFilter } from "@/app/[locale]/(socket)/search/TagsFilter"
 import MenuDropdown from "@/components/MenuDropdown"
-import { PublicGame, PublicGameTag } from "@skyjo/shared/types"
+import { PublicGame, PublicGameTag } from "@skymo/shared/types"
 import { useQuery } from "@tanstack/react-query"
-import { m } from "framer-motion"
+import { m } from "motion/react"
 import { useState } from "react"
 
 const MAX_GAMES_PER_PAGE = 20
@@ -50,6 +50,11 @@ export const SearchPage = () => {
         )
       : data
 
+  const onJoinGameError = () => {
+    refetch()
+    setButtonLoading(false)
+  }
+
   return (
     <m.div
       className="relative min-h-svh w-full z-20 flex flex-col"
@@ -80,7 +85,7 @@ export const SearchPage = () => {
             buttonLoading={buttonLoading}
             setButtonLoading={setButtonLoading}
             onTagClick={onTagClick}
-            onJoinGameError={refetch}
+            onJoinGameError={onJoinGameError}
           />
         </m.div>
       </div>

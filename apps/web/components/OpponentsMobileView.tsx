@@ -1,20 +1,21 @@
-import { Card } from "@/components/Card"
+import { Card } from "@/components/Card/Card"
 import OpponentBoard from "@/components/OpponentBoard"
 import { UserAvatar } from "@/components/UserAvatar"
+import { useGame } from "@/contexts/GameContext"
 import { useSettings } from "@/contexts/SettingsContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
 import {
+  getCurrentScore,
   getCurrentWhoHasToPlay,
   getNextPlayerIndex,
   isCurrentUserTurn,
-} from "@/lib/skyjo"
+} from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
-import { AnimatePresence, m } from "framer-motion"
+import { PlayerToJson } from "@skymo/core"
+import { AnimatePresence, m } from "motion/react"
 import { useEffect, useState } from "react"
 
 const OpponentsMobileView = () => {
-  const { opponents, game, player } = useSkyjo()
+  const { opponents, game, player, gameStatus } = useGame()
   const {
     settings: { switchToPlayerWhoIsPlaying },
   } = useSettings()
@@ -52,11 +53,11 @@ const OpponentsMobileView = () => {
   }, [switchToPlayerWhoIsPlaying, game.turn, game.players])
 
   useEffect(() => {
-    if (game.status === CoreConstants.GAME_STATUS.PLAYING) {
+    if (gameStatus.isPlaying) {
       const nextPlayerIndex = getNextPlayerIndex(game, player)
       if (nextPlayerIndex !== -1) setSelectedOpponentIndex(nextPlayerIndex)
     }
-  }, [game.status])
+  }, [gameStatus.isPlaying])
 
   if (flattenOpponents.length === 0) return null
 
@@ -93,7 +94,7 @@ const OpponentsMobileView = () => {
 }
 
 type OpponentListProps = {
-  opponents: SkyjoPlayerToJson[]
+  opponents: PlayerToJson[]
   selectedOpponentIndex: number
   setSelectedOpponentIndex: (index: number) => void
 }
@@ -102,7 +103,7 @@ const OpponentList = ({
   selectedOpponentIndex,
   setSelectedOpponentIndex,
 }: OpponentListProps) => {
-  const { game } = useSkyjo()
+  const { game } = useGame()
 
   return (
     <div className="absolute flex flex-col w-20 gap-4 h-[calc(100svh-2rem)] pt-1 overflow-y-auto">
@@ -127,7 +128,7 @@ const OpponentList = ({
 }
 
 type OpponentItemProps = {
-  opponent: SkyjoPlayerToJson
+  opponent: PlayerToJson
   index: number
   isSelected: boolean
   isPlayerWhoHasToPlay: boolean
@@ -143,6 +144,7 @@ const OpponentItem = ({
   const {
     settings: { showPreviewOpponentsCardsForMobile },
   } = useSettings()
+  const { game } = useGame()
 
   return (
     <m.button
@@ -161,18 +163,17 @@ const OpponentItem = ({
         size="tiny"
         animate={isPlayerWhoHasToPlay}
       />
+      {game.settings.showCurrentScore && (
+        <p className="text-center select-none text-xs text-gray-500 dark:text-gray-400">
+          {getCurrentScore(opponent)}
+        </p>
+      )}
       {showPreviewOpponentsCardsForMobile && (
         <div className="flex flex-row gap-0.5">
           {opponent.cards.map((column, columnIndex) => (
             <div key={columnIndex} className="flex flex-col gap-0.5">
               {column.map((card) => (
-                <Card
-                  key={card.id}
-                  card={card}
-                  size="preview"
-                  flipAnimation={false}
-                  exitAnimation={false}
-                />
+                <Card key={card.id} value={card.value} size="preview" />
               ))}
             </div>
           ))}

@@ -9,13 +9,14 @@ export class Constants {
   static readonly DEFAULT_GAME_SETTINGS = {
     MIN_PLAYERS: 2,
     MAX_PLAYERS: 8,
-    ALLOW_SKYJO_FOR_COLUMN: true,
-    ALLOW_SKYJO_FOR_ROW: false,
+    REMOVE_IDENTICAL_COLUMN: true,
+    REMOVE_IDENTICAL_ROW: false,
     SCORE_TO_END_GAME: 100,
     FIRST_PLAYER_MULTIPLIER_PENALTY: 2,
     FIRST_PLAYER_FLAT_PENALTY: 0,
     FIRST_PLAYER_PENALTY_TYPE:
       Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
+    SHOW_CURRENT_SCORE: false,
     CARDS: {
       PER_ROW: 3,
       PER_COLUMN: 4,
@@ -70,6 +71,7 @@ export class Constants {
     TURTLE: "turtle",
     WHALE: "whale",
     OWL: "owl",
+    CAT: "cat",
   } as const
 
   static readonly CONNECTION_STATUS = {
@@ -79,7 +81,7 @@ export class Constants {
     DISCONNECTED: 4,
   } as const
 
-  static readonly USER_MESSAGE_TYPE = "message" as const
+  static readonly USER_MESSAGE_TYPE = "message"
 
   static readonly SYSTEM_MESSAGE_TYPE = {
     SYSTEM_MESSAGE: "system-message",
@@ -91,7 +93,6 @@ export class Constants {
     PLAYER_JOINED: "player-joined",
     PLAYER_RECONNECT: "player-reconnect",
     PLAYER_LEFT: "player-left",
-    WIZZ: "wizz",
   } as const
 
   static readonly SERVER_MESSAGE_TYPE_ARRAY = Object.values(
@@ -106,7 +107,7 @@ export class Constants {
     PUBLIC: 30000,
     PRIVATE: 120000,
     MAX_CONSECUTIVE: 2,
-    MAX_TOTAL: 3,
+    MAX_TOTAL: 4,
   } as const
 }
 

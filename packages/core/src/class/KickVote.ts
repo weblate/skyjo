@@ -1,27 +1,29 @@
-import type { KickVoteToJson, Vote } from "@/types/kickVote.js"
+import type { KickVoteDb, KickVoteToJson, Vote } from "@/types/kickVote.js"
 import { Constants } from "../constants.js"
-import { Skyjo } from "./Skyjo.js"
 
-interface KickVoteInterface {
-  toJson(): KickVoteToJson
+export interface KickVoteConstructorParams {
+  targetId: string
+  initiatorId: string
+  nbConnectedPlayers: number
+  votes?: Vote[]
 }
 
-export class KickVote implements KickVoteInterface {
-  timeout: NodeJS.Timeout | null = null
-
-  readonly targetId: string
-  readonly initiatorId: string
-
-  private readonly game: Skyjo
+export class KickVote {
+  targetId: string
+  initiatorId: string
   private readonly votes: Vote[]
-  private readonly expiresAt: number =
-    Date.now() + Constants.KICK_VOTE_EXPIRATION_TIME
+  private readonly nbConnectedPlayers: number
 
-  constructor(game: Skyjo, targetId: string, initiatorId: string) {
-    this.game = game
+  constructor({
+    targetId,
+    initiatorId,
+    nbConnectedPlayers,
+    votes = [{ playerId: initiatorId, vote: true }],
+  }: KickVoteConstructorParams) {
     this.targetId = targetId
     this.initiatorId = initiatorId
-    this.votes = [{ playerId: initiatorId, vote: true }]
+    this.votes = votes
+    this.nbConnectedPlayers = nbConnectedPlayers
   }
 
   addVote(playerId: string, vote: boolean) {
@@ -29,13 +31,13 @@ export class KickVote implements KickVoteInterface {
   }
 
   hasPlayerVoted(playerId: string) {
-    return this.votes.find((v) => v.playerId === playerId)
+    const vote = this.votes.find((v) => v.playerId === playerId)
+
+    return !!vote
   }
 
   getRequiredVotes() {
-    return Math.ceil(
-      this.game.getConnectedPlayers().length * Constants.KICK_VOTE_THRESHOLD,
-    )
+    return Math.ceil(this.nbConnectedPlayers * Constants.KICK_VOTE_THRESHOLD)
   }
 
   hasReachedRequiredVotes() {
@@ -45,11 +47,7 @@ export class KickVote implements KickVoteInterface {
   }
 
   allPlayersVotedExceptTarget() {
-    return this.votes.length === this.game.getConnectedPlayers().length - 1
-  }
-
-  hasExpired() {
-    return Date.now() > this.expiresAt
+    return this.votes.length === this.nbConnectedPlayers - 1
   }
 
   toJson(): KickVoteToJson {
@@ -58,7 +56,15 @@ export class KickVote implements KickVoteInterface {
       initiatorId: this.initiatorId,
       votes: this.votes,
       requiredVotes: this.getRequiredVotes(),
-      expiresAt: this.expiresAt,
+    }
+  }
+
+  serialize(): KickVoteDb {
+    return {
+      targetId: this.targetId,
+      initiatorId: this.initiatorId,
+      votes: this.votes,
+      nbConnectedPlayers: this.nbConnectedPlayers,
     }
   }
 }

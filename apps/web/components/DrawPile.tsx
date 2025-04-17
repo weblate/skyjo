@@ -1,60 +1,45 @@
 "use client"
 
-import { Card } from "@/components/Card"
+import { Card } from "@/components/Card/Card"
 import SelectedCard from "@/components/SelectedCard"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skyjo/core"
 import { useTranslations } from "next-intl"
-
-const DRAW_CARD = {
-  id: "draw",
-  value: undefined,
-  isVisible: false,
-}
 
 type DrawPileProps = {
   isPlayerTurn: boolean
 }
 
 const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
-  const { game, actions } = useSkyjo()
+  const { actions, isActionPending, lastClickedPile, turnStatus } = useGame()
   const t = useTranslations("components.DrawPile")
 
   const onClick = () => {
-    if (
-      isPlayerTurn &&
-      game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
-    ) {
+    if (isPlayerTurn && !isActionPending) {
       actions.pickCardFromPile("draw")
     }
   }
 
-  const canDrawCard =
-    isPlayerTurn && game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
-      ? "animate-scale"
-      : ""
+  // Determine if this draw pile should have the selection animation
+  const shouldAnimate =
+    isPlayerTurn && turnStatus.isChooseAPile && !isActionPending
+
+  // Determine if this draw pile should pulse when action is pendings
+  const isDrawLoading = isActionPending && lastClickedPile === "draw"
 
   return (
     <div className="relative">
-      <SelectedCard
-        show={game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE}
-      />
+      <SelectedCard show={turnStatus.isThrowOrReplace} />
       <Card
-        card={DRAW_CARD}
+        value="back"
         onClick={onClick}
         title={t("title")}
         className={cn(
           "!shadow-[3px_3px_0px_0px_rgba(0,0,0)] !mdh:md:shadow-[4px_4px_0px_0px_rgba(0,0,0)]",
-          canDrawCard,
+          shouldAnimate ? "animate-scale" : "",
         )}
-        disabled={
-          !(
-            isPlayerTurn &&
-            game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
-          )
-        }
-        flipAnimation={false}
+        disabled={!isPlayerTurn || !turnStatus.isChooseAPile}
+        loading={isDrawLoading}
       />
     </div>
   )

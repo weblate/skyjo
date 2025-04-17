@@ -1,10 +1,9 @@
 "use client"
 
-import { Card } from "@/components/Card"
+import { Card } from "@/components/Card/Card"
 import SelectedCard from "@/components/SelectedCard"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skyjo/core"
 import { useTranslations } from "next-intl"
 
 type DiscardPileProps = {
@@ -12,38 +11,49 @@ type DiscardPileProps = {
 }
 
 const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
-  const { game, actions } = useSkyjo()
+  const {
+    game,
+    actions,
+    isActionPending,
+    lastClickedPile,
+    pendingAction,
+    turnStatus,
+  } = useGame()
   const t = useTranslations("components.DiscardPile")
 
   const onClick = () => {
     if (
       isPlayerTurn &&
       game.lastDiscardCardValue !== undefined &&
-      game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
-    )
+      !isActionPending &&
+      turnStatus.isChooseAPile
+    ) {
       actions.pickCardFromPile("discard")
+    }
   }
 
   const onDiscard = () => {
-    if (isPlayerTurn) actions.discardSelectedCard()
+    if (isPlayerTurn && !isActionPending) actions.discardSelectedCard()
   }
 
-  if (
-    isPlayerTurn &&
-    game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE
-  ) {
+  // Check if discard is loading - either when lastClickedPile is "discard"
+  // OR when the specific action is discarding a selected card
+  const isDiscardLoading =
+    isActionPending &&
+    (lastClickedPile === "discard" ||
+      pendingAction === "play:discard-selected-card")
+
+  if (isPlayerTurn && turnStatus.isThrowOrReplace) {
+    const shouldAnimate = !isActionPending
+
     return (
       <Card
-        card={{
-          id: "discard",
-          value: -98,
-          isVisible: false,
-        }}
+        value="discard"
         onClick={onDiscard}
         title={t("throw")}
-        className="translate-y-1 animate-scale"
+        className={cn("translate-y-1", shouldAnimate ? "animate-scale" : "")}
         disabled={false}
-        flipAnimation={false}
+        loading={isDiscardLoading}
       />
     )
   }
@@ -54,24 +64,23 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
     isVisible: game.lastDiscardCardValue !== undefined,
   }
 
-  const canDiscard =
-    isPlayerTurn && game.turnStatus === CoreConstants.TURN_STATUS.CHOOSE_A_PILE
+  const canDiscard = isPlayerTurn && turnStatus.isChooseAPile
+
+  const shouldAnimate = canDiscard && !isActionPending
 
   return (
     <div className="relative">
-      <SelectedCard
-        show={game.turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD}
-      />
+      <SelectedCard show={turnStatus.isReplaceACard} />
       <Card
-        card={card}
+        value={card.value}
         onClick={onClick}
         title={t("title")}
         className={cn(
           card.value === -99 ? "translate-y-1" : "translate-y-[2.5px]",
-          canDiscard ? "animate-scale" : "",
+          shouldAnimate ? "animate-scale" : "",
         )}
         disabled={!canDiscard}
-        flipAnimation={false}
+        loading={isDiscardLoading}
       />
     </div>
   )

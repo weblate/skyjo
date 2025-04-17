@@ -6,9 +6,9 @@ import {
   type WizzPlayerUsername,
   sendChatMessage,
   wizzPlayerUsername,
-} from "@skyjo/shared/validations"
+} from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+import type { GameSocket } from "../types/gameSocket.js"
 
 const instance = new ChatService()
 
@@ -26,7 +26,7 @@ const rateLimiterWizz = new RateLimiterMemory({
   blockDuration: 20,
 })
 
-const chatRouter = (socket: SkyjoSocket) => {
+const chatRouter = (socket: GameSocket) => {
   socket.on(
     "message",
     socketErrorWrapper(async (data: SendChatMessage) => {

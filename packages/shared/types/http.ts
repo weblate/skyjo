@@ -1,4 +1,4 @@
-import type { Skyjo, SkyjoPlayerToJson } from "@skyjo/core"
+import type { Game, PlayerToJson } from "@skymo/core"
 
 export type PublicGameTag =
   | "classic"
@@ -7,9 +7,9 @@ export type PublicGameTag =
   | "short-game"
   | "long-game"
 
-export type PublicGame = Pick<Skyjo, "code"> & {
-  adminName: string
+export type PublicGame = Pick<Game, "code"> & {
+  hostName: string
   maxPlayers: number
-  players: Pick<SkyjoPlayerToJson, "name" | "avatar" | "id">[]
+  players: Pick<PlayerToJson, "name" | "avatar" | "id">[]
   tags: PublicGameTag[]
 }

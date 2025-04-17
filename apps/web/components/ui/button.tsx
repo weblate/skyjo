@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         small:
-          " rounded border-[1.5px] h-6 px-4 shadow-[3px_3px_0px_0px_rgba(0,0,0)] dark:shadow-[3px_3px_0px_0px_rgba(137,137,137)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0)] dark:active:shadow-[0px_0px_0px_0px_rgba(137,137,137)]",
+          " rounded border-[1.5px] h-8 px-4 text-sm shadow-[3px_3px_0px_0px_rgba(0,0,0)] dark:shadow-[3px_3px_0px_0px_rgba(137,137,137)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0)] dark:active:shadow-[0px_0px_0px_0px_rgba(137,137,137)]",
         default:
           "rounded-md h-10 px-4 py-2 shadow-[3px_3px_0px_0px_rgba(0,0,0)] dark:shadow-[3px_3px_0px_0px_rgba(137,137,137)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0)] dark:active:shadow-[0px_0px_0px_0px_rgba(137,137,137)]",
         outline: "rounded-md h-10 w-fit px-4 py-2 bg-white",

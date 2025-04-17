@@ -1,5 +1,5 @@
 import { ENV } from "@env"
-import { Logger } from "@skyjo/logger"
+import { Logger } from "@skymo/logger"
 import { createClient } from "redis"
 
 type RedisClientInstance = ReturnType<typeof createClient>
@@ -92,32 +92,37 @@ export abstract class RedisClient {
       return client
     } catch (error) {
       Logger.error("Redis Connection Error", { error })
-      try {
-        await client.quit().catch(() => {
-          // Ignore quit errors
-        })
-      } catch {
-        // Ignore quit errors
-      }
+
+      await this.cleanupClient(client)
       throw error
+    }
+  }
+
+  private static async cleanupClient(
+    client: RedisClientInstance,
+  ): Promise<void> {
+    try {
+      if (client.isOpen) {
+        await client.quit().catch((err) => {
+          Logger.warn("Error during Redis client quit", { error: err })
+        })
+      }
+    } catch (error) {
+      Logger.warn("Error during Redis client cleanup", { error })
+      try {
+        await client.disconnect()
+      } catch (disconnectError) {
+        Logger.error("Failed to disconnect Redis client", {
+          error: disconnectError,
+        })
+      }
     }
   }
 
   public static async disconnect(): Promise<void> {
     if (this.instance) {
       try {
-        if (this.instance.isOpen) {
-          await this.instance.quit()
-        }
-      } catch (error) {
-        Logger.warn("Error during Redis disconnect", { error })
-        try {
-          await this.instance.disconnect()
-        } catch (disconnectError) {
-          Logger.error("Failed to disconnect Redis client", {
-            error: disconnectError,
-          })
-        }
+        await this.cleanupClient(this.instance)
       } finally {
         this.instance = null
       }

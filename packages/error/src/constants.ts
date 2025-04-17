@@ -3,6 +3,7 @@ export class Constants {
     GAME_NOT_FOUND: "game-not-found",
     GAME_ALREADY_EXISTS: "game-already-exists",
     PLAYER_NOT_FOUND: "player-not-found",
+    PLAYER_BANNED: "player-banned",
     NOT_ALLOWED: "not-allowed",
     INVALID_TURN_STATE: "invalid-turn-state",
     TOO_FEW_PLAYERS: "too-few-players",
@@ -18,6 +19,18 @@ export class Constants {
     STATE_VERSION_NULL: "state-version-null",
     TOO_MANY_REQUESTS: "too-many-requests",
     GAME_ALREADY_PROCESSING_AFK: "game-already-processing-afk",
+    UNEXPECTED_ERROR: "unexpected-error",
+    MESSAGE_NOT_FOUND: "message-not-found",
+  } as const
+
+  static readonly BAN_ERROR = {
+    NOT_ALLOWED: "not-allowed",
+    PLAYER_NOT_FOUND: "player-not-found",
+    PLAYER_BANNED: "player-banned",
+    UNEXPECTED_ERROR: "unexpected-error",
   } as const
 }
 export type Error = (typeof Constants.ERROR)[keyof typeof Constants.ERROR]
+
+export type BanError =
+  (typeof Constants.BAN_ERROR)[keyof typeof Constants.BAN_ERROR]

@@ -1,7 +1,7 @@
-import { SkyjoToJson } from "@skyjo/core"
+import { GameToJson } from "@skymo/core"
 
 export type Opponents = [
-  SkyjoToJson["players"],
-  SkyjoToJson["players"],
-  SkyjoToJson["players"],
+  GameToJson["players"],
+  GameToJson["players"],
+  GameToJson["players"],
 ]

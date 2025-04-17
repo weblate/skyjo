@@ -111,7 +111,7 @@
         },
         "initial-turned-count": {
           "label": "Niver a gartoù troet e deroù ur c'hoariadenn",
-          "title": "[number} a gartenn troet e deroù ar c'hoariadenn"
+          "title": "{number} a gartenn troet e deroù ar c'hoariadenn"
         },
         "score-to-end-game": {
           "label": "Niver a boentoù evit echuiñ ar c'hoariadenn",
@@ -139,8 +139,6 @@
         "validation-warning": "Arventennoù ar c'hoariadenn n'hall ket bezañ kemmet ur wech int bet kadarnaet",
         "allow-skyjo-for-row": "Aotren ar Skyjo evit ar renkoù"
       },
-      "waiting-admin-to-start": "O c'hortoz e vefe lañset ar c'hoari gant ar merour⋅ez",
-      "waiting-admin-to-confirm-game-settings": "O c'hortoz e vefe kadarnaet an arventennoù gant ar merour⋅ez",
       "player-section": {
         "title": "C'hoarierien {nbPlayers}/{maxPlayers}",
         "select": {
@@ -324,17 +322,6 @@
           "title": "Hezoug",
           "switch-to-player-who-is-playing": "Mont d'ar c'hoari⋅ez o c'hoari ent emgefreek",
           "show-preview-opponents-cards": "Diskouez alberz kartennoù an enebourien e roll an enebourien"
-        },
-        "game-board": {
-          "title": "Taol-c'hoari",
-          "size": {
-            "label": "Ment ho taol-c'hoari",
-            "big-warning": "Gallout a ra terriñ ar skrammañ war hezoug",
-            "values": {
-              "normal": "Ordinal",
-              "big": "Bras"
-            }
-          }
         }
       },
       "title": "Arventennoù",

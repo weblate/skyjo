@@ -1,7 +1,7 @@
 import { JoinGameButton } from "@/components/JoinGameButton"
-import { PublicGame, type PublicGameTag } from "@skyjo/shared/types"
-import { AnimatePresence, m } from "framer-motion"
+import { PublicGame, type PublicGameTag } from "@skymo/shared/types"
 import { Gamepad2Icon } from "lucide-react"
+import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { Dispatch, Fragment, SetStateAction } from "react"
@@ -92,7 +92,7 @@ const PublicGameRow = ({
       <div className="flex flex-col gap-2">
         <div className="flex flex-col sm:flex-row sm:items-center gap-0 sm:gap-2">
           <p className="text-black dark:text-dark-font text-base">
-            {t("game-of", { name: game.adminName })}
+            {t("game-of", { name: game.hostName })}
           </p>
           <div className="flex flex-row items-center gap-1">
             {game.tags.map((tag) => (

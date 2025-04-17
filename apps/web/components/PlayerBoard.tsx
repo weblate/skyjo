@@ -1,29 +1,33 @@
 import { CardTable } from "@/components/CardTable"
 import { TurnTimer } from "@/components/TurnTimer"
+import { useGame } from "@/contexts/GameContext"
 import { useSettings } from "@/contexts/SettingsContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { getCurrentScore } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
+import { PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 
 type PlayerBoardProps = {
-  player: SkyjoPlayerToJson
+  player: PlayerToJson
   isPlayerTurn: boolean
 }
 
 const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
-  const { game } = useSkyjo()
+  const { game, isActionPending, roundPhase, turnStatus } = useGame()
   const { settings } = useSettings()
   const ta = useTranslations("utils.avatar")
   const tp = useTranslations("components.PlayerBoard")
 
+  const isActionablePlayerTurn =
+    isPlayerTurn &&
+    !isActionPending &&
+    (turnStatus.isTurnACard ||
+      turnStatus.isReplaceACard ||
+      turnStatus.isThrowOrReplace)
+
   const showSelectionAnimation =
-    game.roundPhase === CoreConstants.ROUND_PHASE.REVEAL_CARDS ||
-    (isPlayerTurn &&
-      (game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD ||
-        game.turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD ||
-        game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE))
+    roundPhase.isRevealCards || isActionablePlayerTurn
 
   return (
     <div
@@ -62,6 +66,11 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
       >
         {player.name} ({tp("you")})
       </p>
+      {game.settings.showCurrentScore && (
+        <p className="text-center select-none text-xs text-gray-500 dark:text-gray-400">
+          {getCurrentScore(player)}
+        </p>
+      )}
     </div>
   )
 }

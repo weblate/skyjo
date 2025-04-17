@@ -3,13 +3,14 @@
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
-import { Constants as CoreConstants, SystemMessageType } from "@skyjo/core"
+import { usePathname } from "@/i18n/routing"
+import { Constants as CoreConstants, SystemMessageType } from "@skymo/core"
 import {
   ChatMessage,
   ServerChatMessage,
   SystemChatMessage,
   UserChatMessage,
-} from "@skyjo/shared/types"
+} from "@skymo/shared/types"
 import { Howl } from "howler"
 import { useTranslations } from "next-intl"
 import {
@@ -60,8 +61,9 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     settings: { chatVisibility },
   } = useSettings()
   const t = useTranslations("utils.chat")
-  const [chat, setChat] = useState<ChatMessage[]>([])
+  const pathname = usePathname()
 
+  const [chat, setChat] = useState<ChatMessage[]>([])
   const [unreadMessages, setUnreadMessages] = useState<ChatMessage[]>([])
   const [hasUnreadMessage, setHasUnreadMessage] = useState<boolean>(false)
 
@@ -86,6 +88,12 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       }
     }
   }, [socket, chatVisibility, mutedPlayers])
+
+  useEffect(() => {
+    if (!pathname.includes("/game/")) {
+      setChat([])
+    }
+  }, [pathname])
 
   const sendMessage = (username: string, message: string) => {
     socket!.send({

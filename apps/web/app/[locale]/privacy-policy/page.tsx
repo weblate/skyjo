@@ -2,7 +2,7 @@ import { Link } from "@/i18n/routing"
 import dayjs from "dayjs"
 import { useTranslations } from "next-intl"
 
-const LAST_PAGE_UPDATED_DATE = dayjs("2025-01-27 18:56:00")
+const LAST_PAGE_UPDATED_DATE = dayjs("2025-03-22 08:35:00")
 
 const RulesPage = () => {
   const t = useTranslations("pages.PrivacyPolicy.content")
@@ -24,7 +24,9 @@ const RulesPage = () => {
         </h2>
         <RenderSubSection section="information-we-collect.anonymous-usage-data" />
         <RenderSubSection section="information-we-collect.game-data" />
+        <RenderSubSection section="information-we-collect.user-provided-information" />
         <RenderSubSection section="information-we-collect.local-storage-data" />
+        <RenderSubSection section="information-we-collect.cookies" />
       </section>
       <RenderSection section="how-we-use-your-information" />
       <RenderSection section="data-storage-and-retention" />
@@ -37,7 +39,14 @@ const RulesPage = () => {
   )
 }
 type RenderSectionProps = {
-  section: string
+  section:
+    | "how-we-use-your-information"
+    | "data-storage-and-retention"
+    | "data-sharing"
+    | "your-rights-and-choices"
+    | "childrens-privacy"
+    | "changes-to-this-policy"
+    | "contact-us"
 }
 const RenderSection = ({ section }: RenderSectionProps) => {
   const tr = useTranslations(`pages.PrivacyPolicy.content.${section}`)
@@ -66,7 +75,12 @@ const RenderSection = ({ section }: RenderSectionProps) => {
 }
 
 type RenderSubSectionProps = {
-  section: string
+  section:
+    | "information-we-collect.anonymous-usage-data"
+    | "information-we-collect.game-data"
+    | "information-we-collect.user-provided-information"
+    | "information-we-collect.local-storage-data"
+    | "information-we-collect.cookies"
 }
 const RenderSubSection = ({ section }: RenderSubSectionProps) => {
   const tr = useTranslations(`pages.PrivacyPolicy.content.${section}`)

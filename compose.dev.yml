@@ -1,0 +1,82 @@
+services:
+  dev-api:
+    build:
+      context: .
+      dockerfile: ./apps/api/Dockerfile
+      args:
+        - NODE_ENV=development
+    depends_on:
+      - dev-redis
+    ports:
+      - 2001:2001
+    networks:
+      - dev-internal
+      - dev-external
+    env_file:
+      - .env
+      - ./apps/api/.env
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@dev-redis:${REDIS_PORT}
+      - NODE_OPTIONS=--max-old-space-size=8192 --max-http-header-size=16384 --expose-gc --use-largepages=silent
+    restart: always
+
+  dev-cleanup-worker:
+    build:
+      context: .
+      dockerfile: ./apps/cleanup-worker/Dockerfile
+      args:
+        - NODE_ENV=development
+    depends_on:
+      - dev-redis
+    networks:
+      - dev-internal
+    env_file:
+      - .env
+      - ./apps/cleanup-worker/.env
+    environment:
+      - NODE_ENV=development
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:${REDIS_PORT}
+      - NODE_OPTIONS=--max-old-space-size=2048 --expose-gc
+    restart: always
+
+  dev-redis:
+    image: redis/redis-stack-server:latest
+    command: >
+      redis-server 
+      --port ${REDIS_PORT}
+      --loadmodule /opt/redis-stack/lib/rejson.so 
+      --requirepass ${REDIS_PASSWORD}
+      --maxmemory 10gb
+      --maxmemory-policy noeviction
+      --appendonly yes
+      --appendfsync everysec
+      --io-threads 4
+      --tcp-keepalive 300
+      --maxclients 10000
+      --timeout 300
+      --tcp-backlog 511
+      --databases 16
+      --loglevel notice
+      --client-output-buffer-limit normal 0 0 0
+      --client-output-buffer-limit replica 256mb 64mb 60
+      --client-output-buffer-limit pubsub 32mb 8mb 60
+    volumes:
+      - dev-redis-data:/data
+    ports:
+      - "${REDIS_PORT}:${REDIS_PORT}"
+    networks:
+      - dev-internal
+      - dev-external
+    env_file:
+      - .env
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    restart: always
+
+networks:
+  dev-internal:
+  dev-external:
+
+volumes:
+  dev-redis-data:

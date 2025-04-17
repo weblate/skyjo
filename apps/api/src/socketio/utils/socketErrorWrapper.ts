@@ -1,5 +1,5 @@
-import { CError } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
+import { CError } from "@skymo/error"
+import { Logger } from "@skymo/logger"
 import { ZodError } from "zod"
 
 export function socketErrorWrapper(
@@ -19,12 +19,12 @@ export function socketErrorWrapper(
         const errors = error.errors
 
         for (const error of errors) {
-          Logger.warn(`Zod error: ${error.message}`, { zodError: error })
+          Logger.warn("Unexpected error (ZodError instance)", { error })
         }
       } else if (error instanceof Error) {
-        Logger.error(error.message, { error })
+        Logger.error("Unexpected error (Error instance)", { error })
       } else {
-        Logger.error(`Unexpected error`, { error })
+        Logger.error("Unexpected error (unknown error type)", { error })
       }
     }
   }

@@ -1,0 +1,16 @@
+/* Add and override the default styles */
+.card-backface-hidden {
+  backface-visibility: hidden;
+}
+.card-rotate-y-0 {
+  transform: rotateY(0deg);
+}
+.card-rotate-y-180 {
+  transform: rotateY(180deg);
+}
+.card-preserve-3d {
+  transform-style: preserve-3d;
+}
+.card-perspective-1000 {
+  perspective: 1000px;
+}

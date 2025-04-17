@@ -20,6 +20,10 @@ describe("DefaultGameOperationManager", () => {
     await expect(manager.startRevealCardsAfkTimer()).resolves.toBeUndefined()
   })
 
+  it("should implement cancelRevealCardsAfkTimer method", async () => {
+    await expect(manager.cancelRevealCardsAfkTimer()).resolves.toBeUndefined()
+  })
+
   it("should implement startPlayerAfkTimer method", async () => {
     await expect(manager.startPlayerAfkTimer()).resolves.toBeUndefined()
   })
@@ -39,4 +43,4 @@ describe("DefaultGameOperationManager", () => {
   it("should implement delayNewRound method", async () => {
     await expect(manager.delayNewRound()).resolves.toBeUndefined()
   })
-}) 
+})

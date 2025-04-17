@@ -5,30 +5,27 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog"
-import { useSkyjo } from "@/contexts/SkyjoContext"
+import { useGame } from "@/contexts/GameContext"
 import { DialogDescription } from "@radix-ui/react-dialog"
-import { Constants as CoreConstants } from "@skyjo/core"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 
 const EndRoundDialog = () => {
-  const { game } = useSkyjo()
+  const { game, roundPhase, gameStatus } = useGame()
   const t = useTranslations("components.EndRoundDialog")
 
-  const [open, setOpen] = useState(false)
+  const [dialogOpen, setDialogOpen] = useState(false)
 
-  const isRoundOver =
-    game.roundPhase === CoreConstants.ROUND_PHASE.OVER &&
-    game.status === CoreConstants.GAME_STATUS.PLAYING
+  const shouldBeOpen = gameStatus.isPlaying && roundPhase.isOver
 
   useEffect(() => {
     setTimeout(() => {
-      setOpen(isRoundOver)
+      setDialogOpen(shouldBeOpen)
     }, 1400)
-  }, [isRoundOver])
+  }, [shouldBeOpen])
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
       <DialogContent>
         <DialogHeader>
           <DialogTitle className="text-center">{t("title")}</DialogTitle>

@@ -6,13 +6,13 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Constants as CoreConstants, SkyjoPlayerToJson } from "@skyjo/core"
+import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 
 type Props = {
-  players: SkyjoPlayerToJson[]
-  winner?: SkyjoPlayerToJson
+  players: PlayerToJson[]
+  winner?: PlayerToJson
   scrollToEnd?: boolean
 }
 

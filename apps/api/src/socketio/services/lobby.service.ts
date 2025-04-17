@@ -1,19 +1,16 @@
+import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { BaseService } from "@/socketio/services/base.service.js"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import {
-  type CreatePlayer,
-  Skyjo,
-  SkyjoPlayer,
-  SkyjoSettings,
-} from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import { Logger } from "@skyjo/logger"
-import type { UpdateGameSettings } from "@skyjo/shared/validations"
+import { type CreatePlayer, Game, Player, Settings } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { UpdateGameSettings } from "@skymo/shared/validations"
 
 export class LobbyService extends BaseService {
+  private readonly countdownQueue = GameStartCountdownQueueService.getInstance()
+
   async onCreate(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     playerToCreate: CreatePlayer,
     isPrivateGame = true,
   ) {
@@ -28,31 +25,45 @@ export class LobbyService extends BaseService {
   }
 
   async onJoin(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     gameCode: string,
     playerToCreate: CreatePlayer,
   ) {
     const game = await this.getGame(gameCode)
 
-    const player = new SkyjoPlayer(playerToCreate, socket.id)
+    const player = new Player(playerToCreate, socket.id)
+
+    if (game.isPlayerBanned(player)) {
+      throw new CError(`Player tried to join a game but is banned.`, {
+        code: ErrorConstants.ERROR.PLAYER_BANNED,
+        level: "info",
+        meta: {
+          game: game.serialize(),
+          socketId: socket.id,
+          gameCode: game.code,
+          playerId: player.id,
+          username: player.name,
+        },
+      })
+    }
 
     await this.addPlayerToGame(socket, game, player)
     await this.joinGame(socket, game, player)
   }
 
-  async onResetSettings(socket: SkyjoSocket) {
+  async onResetSettings(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const stateManager = new GameStateTracker(game)
 
-    if (!game.isAdmin(socket.data.playerId)) {
+    if (!game.isHost(socket.data.playerId)) {
       throw new CError(
-        `Player try to change all game settings but is not the admin.`,
+        `Player try to change all game settings but is not the host.`,
         {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game,
-            socket,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -70,7 +81,7 @@ export class LobbyService extends BaseService {
       )
     }
 
-    game.settings = new SkyjoSettings(
+    game.settings = new Settings(
       game.settings.private,
       game.settings.maxPlayers,
     )
@@ -79,17 +90,17 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onUpdateMaxPlayers(socket: SkyjoSocket, maxPlayers: number) {
+  async onUpdateMaxPlayers(socket: GameSocket, maxPlayers: number) {
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isAdmin(socket.data.playerId)) {
+    if (!game.isHost(socket.data.playerId)) {
       throw new CError(
-        `Player try to change all game settings but is not the admin.`,
+        `Player try to change all game settings but is not the host.`,
         {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game,
-            socket,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -107,17 +118,17 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onUpdateSettings(socket: SkyjoSocket, settings: UpdateGameSettings) {
+  async onUpdateSettings(socket: GameSocket, settings: UpdateGameSettings) {
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isAdmin(socket.data.playerId)) {
+    if (!game.isHost(socket.data.playerId)) {
       throw new CError(
-        `Player try to change all game settings but is not the admin.`,
+        `Player try to change all game settings but is not the host.`,
         {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
           level: "warn",
           meta: {
-            game,
-            socket,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },
@@ -143,7 +154,7 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onToggleSettingsValidation(socket: SkyjoSocket) {
+  async onToggleSettingsValidation(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     if (game.settings.private) return
 
@@ -155,40 +166,62 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onGameStart(socket: SkyjoSocket) {
+  async onStartCountdown(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
-    if (!game.isAdmin(socket.data.playerId)) {
-      throw new CError(`Player try to start the game but is not the admin.`, {
+    if (!game.isHost(socket.data.playerId)) {
+      throw new CError(`Player tried to start countdown but is not the host.`, {
         code: ErrorConstants.ERROR.NOT_ALLOWED,
         level: "warn",
         meta: {
-          game,
-          socket,
+          game: game.serialize(),
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
       })
     }
 
-    const stateManager = new GameStateTracker(game)
+    if (await this.countdownQueue.coundownExists(game.code)) {
+      throw new CError(`Countdown already exists.`, {
+        code: ErrorConstants.ERROR.NOT_ALLOWED,
+        level: "warn",
+      })
+    }
 
-    await game.start()
+    await this.countdownQueue.startCountdown(game.code)
+  }
 
-    Logger.info(`Game ${game.code} started.`)
+  async onCancelCountdown(socket: GameSocket) {
+    const game = await this.getGame(socket.data.gameCode)
+    if (!game.isHost(socket.data.playerId)) {
+      throw new CError(
+        `Player tried to cancel countdown but is not the host.`,
+        {
+          code: ErrorConstants.ERROR.NOT_ALLOWED,
+          level: "warn",
+          meta: {
+            game: game.serialize(),
+            socketId: socket.id,
+            gameCode: game.code,
+            playerId: socket.data.playerId,
+          },
+        },
+      )
+    }
 
-    await this.updateAndSendGame(game, stateManager)
+    await this.countdownQueue.cancelCountdown(game.code)
   }
 
   //#region private methods
   private async createGame(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     playerToCreate: CreatePlayer,
     isPrivateGame: boolean,
   ) {
-    const player = new SkyjoPlayer(playerToCreate, socket.id)
-    const game = new Skyjo({
-      adminId: player.id,
-      settings: new SkyjoSettings(isPrivateGame),
+    const player = new Player(playerToCreate, socket.id)
+    const game = new Game({
+      hostId: player.id,
+      settings: new Settings(isPrivateGame),
     })
 
     await this.redis.createGame(game)
@@ -197,20 +230,19 @@ export class LobbyService extends BaseService {
   }
 
   private async addPlayerToGame(
-    socket: SkyjoSocket,
-    game: Skyjo,
-    player: SkyjoPlayer,
+    socket: GameSocket,
+    game: Game,
+    player: Player,
   ) {
     if (!game.isInLobby()) {
       throw new CError(
         `Player try to join a game but the game is not in the lobby.`,
         {
           code: ErrorConstants.ERROR.GAME_ALREADY_STARTED,
-          level: "warn",
+          level: "info",
           meta: {
-            game,
-            socket,
-            player,
+            game: game.serialize(),
+            socketId: socket.id,
             gameCode: game.code,
             playerId: socket.data.playerId,
           },

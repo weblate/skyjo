@@ -5,12 +5,12 @@ import {
   type VoteToKick,
   initiateKickVote,
   voteToKick,
-} from "@skyjo/shared/validations"
-import type { SkyjoSocket } from "../types/skyjoSocket.js"
+} from "@skymo/shared/validations"
+import type { GameSocket } from "../types/gameSocket.js"
 
 const instance = new KickService()
 
-export const kickRouter = (socket: SkyjoSocket) => {
+export const kickRouter = (socket: GameSocket) => {
   socket.on(
     "kick:initiate-vote",
     socketErrorWrapper(async (data: InitiateKickVote) => {

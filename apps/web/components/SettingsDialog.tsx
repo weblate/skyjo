@@ -17,6 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import {
   ChatNotificationSize,
   GameBoardSize,
+  TimerDisplayMode,
   useSettings,
 } from "@/contexts/SettingsContext"
 import { useTranslations } from "next-intl"
@@ -185,14 +186,14 @@ const DisplaySettings = () => {
         </div>
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold">{t("game-board.title")}</h2>
+        <h2 className="text-lg font-semibold">{t("gameplay.title")}</h2>
         <div className="flex flex-col gap-4">
           <div className="flex flex-col gap-2">
             <div>
-              <Label>{t("game-board.size.label")}</Label>
+              <Label>{t("gameplay.gameboard-size.label")}</Label>
               {settings.gameBoardSize === GameBoardSize.BIG && (
                 <p className="text-xs text-orange-600">
-                  {t("game-board.size.big-warning")}
+                  {t("gameplay.gameboard-size.big-warning")}
                 </p>
               )}
             </div>
@@ -207,7 +208,29 @@ const DisplaySettings = () => {
                 <div className="flex items-center space-x-2" key={size}>
                   <RadioGroupItem value={size} id={size} />
                   <Label htmlFor={size}>
-                    {t(`game-board.size.values.${size}`)}
+                    {t(`gameplay.gameboard-size.values.${size}`)}
+                  </Label>
+                </div>
+              ))}
+            </RadioGroup>
+          </div>
+          <div className="flex flex-col">
+            <Label>{t("gameplay.timer.label")}</Label>
+            <p className="text-sm text-gray-700 dark:text-dark-font/80 mt-1 mb-2">
+              {t("gameplay.timer.description")}
+            </p>
+            <RadioGroup
+              value={settings.timerDisplayMode}
+              onValueChange={(value) =>
+                updateSetting("timerDisplayMode", value as TimerDisplayMode)
+              }
+              className="flex gap-4"
+            >
+              {Object.values(TimerDisplayMode).map((mode) => (
+                <div className="flex items-center space-x-2" key={mode}>
+                  <RadioGroupItem value={mode} id={mode} />
+                  <Label htmlFor={mode}>
+                    {t(`gameplay.timer.modes.${mode}`)}
                   </Label>
                 </div>
               ))}

@@ -16,6 +16,14 @@ import { useLocalStorage } from "react-use"
 
 const VOLUME_DIVISOR = 100
 
+export const TimerDisplayMode = {
+  NEVER: "never",
+  SMART: "smart",
+  ALWAYS: "always",
+} as const
+export type TimerDisplayMode =
+  (typeof TimerDisplayMode)[keyof typeof TimerDisplayMode]
+
 export const ChatNotificationSize = {
   SMALL: "small",
   NORMAL: "normal",
@@ -49,6 +57,7 @@ type Settings = {
   switchToPlayerWhoIsPlaying: boolean
   showPreviewOpponentsCardsForMobile: boolean
   gameBoardSize: GameBoardSize
+  timerDisplayMode: TimerDisplayMode
 }
 type SettingsKeys = keyof Settings
 
@@ -61,6 +70,7 @@ const DEFAULT_GAME_SETTINGS: Settings = {
   switchToPlayerWhoIsPlaying: true,
   showPreviewOpponentsCardsForMobile: true,
   gameBoardSize: GameBoardSize.NORMAL,
+  timerDisplayMode: TimerDisplayMode.SMART,
 }
 
 type SettingsContext = {

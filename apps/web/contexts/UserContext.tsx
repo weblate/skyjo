@@ -5,7 +5,7 @@ import {
   Constants as CoreConstants,
   CreatePlayer,
   createPlayer,
-} from "@skyjo/core"
+} from "@skymo/core"
 import {
   Dispatch,
   PropsWithChildren,
@@ -26,8 +26,10 @@ export const AVATARS_ARRAY = Object.values(CoreConstants.AVATARS)
 type UserContext = {
   username: string
   avatarIndex: number
+  playerId: string
   setUsername: Dispatch<SetStateAction<string>>
   setAvatarIndex: Dispatch<SetStateAction<number>>
+  setPlayerId: Dispatch<SetStateAction<string>>
   saveUserInLocalStorage: () => CreatePlayer
   getUser: () => CreatePlayer
   getAvatar: () => Avatar
@@ -46,6 +48,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
 
   const [username, setUsername] = useState<string>("")
   const [avatarIndex, setAvatarIndex] = useState<number>(-1)
+  const [playerId, setPlayerId] = useState<string>("")
 
   useEffect(() => {
     if (localStorage) {
@@ -59,7 +62,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
   }, [preferredUsername, preferredAvatarIndex])
 
   const getAvatar = () => {
-    return AVATARS_ARRAY[avatarIndex]
+    return AVATARS_ARRAY[avatarIndex] ?? CoreConstants.AVATARS.BEE
   }
 
   const saveUserInLocalStorage = () => {
@@ -71,7 +74,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
   }
 
   const getUser = () => {
-    return { username: username || "Ano", avatar: getAvatar() }
+    return { username: username ?? "Ano", avatar: getAvatar() }
   }
 
   const value = useMemo(
@@ -83,8 +86,10 @@ const UserProvider = ({ children }: PropsWithChildren) => {
       saveUserInLocalStorage,
       getAvatar,
       getUser,
+      playerId,
+      setPlayerId,
     }),
-    [username, avatarIndex],
+    [username, avatarIndex, playerId],
   )
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>

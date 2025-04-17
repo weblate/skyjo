@@ -1,15 +1,11 @@
-import { Card } from "@/components/Card"
+import { GameCard } from "@/components/Card/GameCard"
+import { useGame } from "@/contexts/GameContext"
 import { GameBoardSize } from "@/contexts/SettingsContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
-import {
-  canTurnInitialCard,
-  hasTurnedCard,
-  isCurrentUserTurn,
-} from "@/lib/skyjo"
+import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { Constants as CoreConstants, SkyjoCardToJson } from "@skyjo/core"
+import { CardToJson } from "@skymo/core"
 import { cva } from "class-variance-authority"
-import { AnimatePresence, m } from "framer-motion"
+import { AnimatePresence, m } from "motion/react"
 import { useEffect, useState } from "react"
 
 const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
@@ -22,7 +18,7 @@ const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
 })
 
 type CardTableProps = {
-  cards: SkyjoCardToJson[][]
+  cards: CardToJson[][]
   cardDisabled?: boolean
   showSelectionAnimation?: boolean
   size?: GameBoardSize
@@ -33,32 +29,54 @@ const CardTable = ({
   showSelectionAnimation = false,
   size = GameBoardSize.NORMAL,
 }: CardTableProps) => {
-  const { game, player, actions } = useSkyjo()
+  const {
+    game,
+    player,
+    actions,
+    isActionPending,
+    gameStatus,
+    roundPhase,
+    turnStatus,
+    lastTurnStatus,
+  } = useGame()
   const numberOfRows = cards?.[0]?.length
+  const [lastClickedPosition, setLastClickedPosition] = useState<{
+    column: number
+    row: number
+  } | null>(null)
   const [numberOfRowsForClass, setNumberOfRowsForClass] = useState<number>(
     game.settings.cardPerRow,
   )
 
-  const canTurnCardsAtBeginning =
-    canTurnInitialCard(game) &&
-    !hasTurnedCard(player, game.settings.initialTurnedCount)
-  const canReplaceCard =
-    game.turnStatus === CoreConstants.TURN_STATUS.THROW_OR_REPLACE ||
-    game.turnStatus === CoreConstants.TURN_STATUS.REPLACE_A_CARD
-  const canTurnCard = game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD
+  const canRevealCards =
+    gameStatus.isPlaying &&
+    roundPhase.isRevealCards &&
+    !hasRevealedCardCount(player, game.settings.initialTurnedCount)
 
-  const onClick = (column: number, row: number) => {
-    if (canTurnCardsAtBeginning) {
-      actions.playRevealCard(column, row)
-    } else if (isCurrentUserTurn(game, player)) {
-      if (canReplaceCard) actions.replaceCard(column, row)
-      else if (
-        game.turnStatus === CoreConstants.TURN_STATUS.TURN_A_CARD &&
-        !cards[column][row].isVisible
-      )
-        actions.turnCard(column, row)
-    }
+  const canReplaceCard =
+    turnStatus.isThrowOrReplace || turnStatus.isReplaceACard
+
+  const canTurnCard = turnStatus.isTurnACard
+
+  const handleCardClick = (column: number, row: number) => {
+    if (isActionPending) return
+
+    setLastClickedPosition({ column, row })
+
+    const isUserTurn = isCurrentUserTurn(game, player)
+    const isCardVisible = cards[column][row].isVisible
+
+    if (canRevealCards) actions.playRevealCard(column, row)
+    else if (isUserTurn && canReplaceCard) actions.replaceCard(column, row)
+    else if (isUserTurn && turnStatus.isTurnACard && !isCardVisible)
+      actions.turnCard(column, row)
   }
+
+  useEffect(() => {
+    if (!isActionPending) {
+      setLastClickedPosition(null)
+    }
+  }, [isActionPending])
 
   // wait 2 seconds to set the number of rows (it's the time it takes for the animation to finish)
   useEffect(() => {
@@ -87,27 +105,32 @@ const CardTable = ({
         {cards.map((column, columnIndex) => {
           return column.map((card, rowIndex) => {
             const canBeSelected =
-              ((canTurnCardsAtBeginning || canTurnCard) && !card.isVisible) ||
+              ((canRevealCards || canTurnCard) && !card.isVisible) ||
               canReplaceCard
+
+            const isCardLoading =
+              isActionPending &&
+              lastClickedPosition !== null &&
+              lastClickedPosition.column === columnIndex &&
+              lastClickedPosition.row === rowIndex
+
+            const shouldShowSelectionAnimation =
+              showSelectionAnimation && canBeSelected && !isActionPending
+
+            console.log(shouldShowSelectionAnimation)
             return (
-              <Card
+              <GameCard
                 key={card.id}
                 card={card}
-                onClick={() => onClick(columnIndex, rowIndex)}
+                onClick={() => handleCardClick(columnIndex, rowIndex)}
                 className={
-                  showSelectionAnimation && canBeSelected
-                    ? "animate-small-scale"
-                    : ""
+                  shouldShowSelectionAnimation ? "animate-small-scale" : ""
                 }
                 size={size}
-                disabled={cardDisabled || !canBeSelected}
-                flipAnimation={
-                  game?.lastTurnStatus === CoreConstants.LAST_TURN_STATUS.TURN
-                }
-                exitAnimation={
-                  game.roundPhase === CoreConstants.ROUND_PHASE.MAIN ||
-                  game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP
-                }
+                disabled={cardDisabled || !canBeSelected || isActionPending}
+                loading={isCardLoading}
+                showFlipAnimation={lastTurnStatus.isTurn}
+                showExitAnimation={roundPhase.isMain || roundPhase.isLastLap}
               />
             )
           })

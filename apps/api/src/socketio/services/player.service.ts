@@ -1,12 +1,12 @@
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import { Constants as CoreConstants } from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import type { LastGame } from "@skyjo/shared/validations"
+import { Constants as CoreConstants } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { LastGame } from "@skymo/shared/validations"
 import { BaseService } from "./base.service.js"
 
 export class PlayerService extends BaseService {
-  async onConnectionLost(socket: SkyjoSocket) {
+  async onConnectionLost(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -14,8 +14,8 @@ export class PlayerService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         level: "error",
         meta: {
-          game,
-          socket,
+          game: game.serialize(),
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -24,12 +24,19 @@ export class PlayerService extends BaseService {
 
     const stateManager = new GameStateTracker(game)
 
-    player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+    if (!game.isPlaying()) {
+      await game.disconnectPlayer(player)
+
+      const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
+      await this.sendServerMessage(game.code, player.name, messageType)
+    } else {
+      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+    }
 
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onLeave(socket: SkyjoSocket) {
+  async onLeave(socket: GameSocket) {
     try {
       const game = await this.getGame(socket.data.gameCode)
       const stateManager = new GameStateTracker(game)
@@ -42,8 +49,8 @@ export class PlayerService extends BaseService {
             code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
             level: "warn",
             meta: {
-              game,
-              socket,
+              game: game.serialize(),
+              socketId: socket.id,
               gameCode: game.code,
               playerId: socket.data.playerId,
             },
@@ -51,31 +58,10 @@ export class PlayerService extends BaseService {
         )
       }
 
-      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LEAVE
+      await game.setPlayerToLeave(player)
 
-      if (game.isAdmin(player.id)) game.changeAdmin()
-
-      if (!game.isPlaying()) {
-        game.removePlayer(player.id)
-
-        if (game.getConnectedPlayers().length === 0) {
-          await this.redis.removeGame(game.code)
-        }
-      }
-
-      const message = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
-      this.socketManager.sendToRoom({
-        room: game.code,
-        event: "message:server",
-        data: [
-          {
-            id: crypto.randomUUID(),
-            username: player.name,
-            message,
-            type: message,
-          },
-        ],
-      })
+      const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
+      await this.sendServerMessage(game.code, player.name, messageType)
 
       await this.updateAndSendGame(game, stateManager)
       await socket.leave(game.code)
@@ -92,7 +78,7 @@ export class PlayerService extends BaseService {
     }
   }
 
-  async onReconnect(socket: SkyjoSocket, reconnectData: LastGame) {
+  async onReconnect(socket: GameSocket, reconnectData: LastGame) {
     const canReconnect = await this.redis.canReconnectPlayer(
       reconnectData.gameCode,
       reconnectData.playerId,
@@ -104,7 +90,7 @@ export class PlayerService extends BaseService {
           code: ErrorConstants.ERROR.CANNOT_RECONNECT,
           level: "warn",
           meta: {
-            socket,
+            socketId: socket.id,
             gameCode: reconnectData.gameCode,
             playerId: reconnectData.playerId,
           },
@@ -132,7 +118,7 @@ export class PlayerService extends BaseService {
     await this.joinGame(socket, game, player, true)
   }
 
-  async onRecover(socket: SkyjoSocket) {
+  async onRecover(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -140,8 +126,8 @@ export class PlayerService extends BaseService {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         level: "error",
         meta: {
-          game,
-          socket,
+          game: game.serialize(),
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },

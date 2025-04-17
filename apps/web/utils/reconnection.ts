@@ -1,4 +1,4 @@
-import { LastGame } from "@skyjo/shared/validations"
+import { LastGame } from "@skymo/shared/validations"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 

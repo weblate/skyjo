@@ -1,5 +1,5 @@
 import { routing } from "@/i18n/routing"
-import { Constants as CoreConstants, GameStatus } from "@skyjo/core"
+import { Constants as CoreConstants, GameStatus } from "@skymo/core"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
 
@@ -13,12 +13,11 @@ export const getGameInviteLink = (gameCode: string) => {
 
 export const getCurrentUrl = (route: string, locale?: string) => {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ""
-  const url =
-    locale && locale !== routing.defaultLocale
-      ? `${baseUrl}/${locale}/${route}`
-      : `${baseUrl}/${route}`
+  const path = route ? `/${route}` : ""
 
-  return url
+  return locale && locale !== routing.defaultLocale
+    ? `${baseUrl}/${locale}${path}`
+    : `${baseUrl}${path}`
 }
 
 export const getRedirectionUrl = (code: string, status: GameStatus) => {

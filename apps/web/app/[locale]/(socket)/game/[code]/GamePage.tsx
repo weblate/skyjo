@@ -10,26 +10,21 @@ import OpponentBoard from "@/components/OpponentBoard"
 import OpponentsMobileView from "@/components/OpponentsMobileView"
 import PlayerBoard from "@/components/PlayerBoard"
 import Scoreboard from "@/components/Scoreboard"
+import { useGame } from "@/contexts/GameContext"
 import { useRules } from "@/contexts/RulesContext"
-import { useSkyjo } from "@/contexts/SkyjoContext"
 import { useRouter } from "@/i18n/routing"
-import { isCurrentUserTurn } from "@/lib/skyjo"
+import { isCurrentUserTurn } from "@/lib/game"
 import { getRedirectionUrl } from "@/lib/utils"
-import { Constants as CoreConstants } from "@skyjo/core"
 import { useEffect } from "react"
 import { useLocalStorage } from "react-use"
 
 const GamePage = () => {
-  const { game, player, opponents } = useSkyjo()
+  const { game, player, opponents, roundPhase } = useGame()
   const { openRules, isRulesOpen } = useRules()
   const router = useRouter()
   const [firstGame, setFirstGame] = useLocalStorage<boolean>("firstGame")
 
   const isPlayerTurn = isCurrentUserTurn(game, player)
-  const roundInProgress =
-    game.roundPhase === CoreConstants.ROUND_PHASE.MAIN ||
-    game.roundPhase === CoreConstants.ROUND_PHASE.LAST_LAP
-
   const isFirstPlayerGame = firstGame ?? true
 
   useEffect(() => {
@@ -41,11 +36,13 @@ const GamePage = () => {
   }, [isRulesOpen])
 
   useEffect(() => {
-    router.replace(getRedirectionUrl(game.code, game.status))
+    setTimeout(() => {
+      router.replace(getRedirectionUrl(game.code, game.status))
+    }, 2000)
   }, [game.status])
 
   return (
-    <div className="h-full w-full !p-4 !md:p-6 bg-body dark:bg-dark-body flex flex-col gap-2">
+    <div className="h-full w-full !p-4 !md:p-6 flex flex-col gap-2">
       <div className="w-full flex flex-row items-start h-full">
         {/* mobile */}
         <OpponentsMobileView />
@@ -81,8 +78,12 @@ const GamePage = () => {
         <div className="col-start-2 relative flex flex-col justify-center items-center gap-4">
           <div className="relative flex flex-row items-center justify-center gap-10 h-full max-h-20 w-fit">
             <GameInfo />
-            <DrawPile isPlayerTurn={isPlayerTurn && roundInProgress} />
-            <DiscardPile isPlayerTurn={isPlayerTurn && roundInProgress} />
+            <DrawPile
+              isPlayerTurn={isPlayerTurn && !roundPhase.isRevealCards}
+            />
+            <DiscardPile
+              isPlayerTurn={isPlayerTurn && !roundPhase.isRevealCards}
+            />
           </div>
         </div>
         <div className="hidden lg:flex flex-col items-end">

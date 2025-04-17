@@ -1,29 +1,25 @@
-import type {
-  SkyjoPlayerToJson,
-  SkyjoSettingsToJson,
-  SkyjoToJson,
-} from "@skyjo/core"
-import type { PlayerUpdate, SkyjoOperation, SkyjoUpdate } from "./types.js"
+import type { GameToJson, PlayerToJson, SettingsToJson } from "@skymo/core"
+import type { GameOperation, GameUpdate, PlayerUpdate } from "./types.js"
 
 const actions: Record<
-  keyof SkyjoOperation,
-  (game: SkyjoToJson, data: SkyjoOperation[keyof SkyjoOperation]) => void
+  keyof GameOperation,
+  (game: GameToJson, data: GameOperation[keyof GameOperation]) => void
 > = {
-  game: (game, data) => updateGameBasicFields(game, data as SkyjoUpdate),
+  game: (game, data) => updateGameBasicFields(game, data as GameUpdate),
   settings: (game, data) =>
-    updateSettings(game, data as Partial<SkyjoSettingsToJson>),
-  addPlayers: (game, data) => addPlayers(game, data as SkyjoPlayerToJson[]),
+    updateSettings(game, data as Partial<SettingsToJson>),
+  addPlayers: (game, data) => addPlayers(game, data as PlayerToJson[]),
   updatePlayers: (game, data) => updatePlayers(game, data as PlayerUpdate[]),
   removePlayers: (game, data) => removePlayers(game, data as string[]),
 }
 
 export const applyStateOperations = (
-  game: SkyjoToJson,
-  operations: SkyjoOperation,
-): SkyjoToJson => {
+  game: GameToJson,
+  operations: GameOperation,
+): GameToJson => {
   const gameUpdated = game
 
-  const keys = Object.keys(operations) as (keyof SkyjoOperation)[]
+  const keys = Object.keys(operations) as (keyof GameOperation)[]
   keys.forEach((key) => {
     const data = operations[key]
     if (!data) return
@@ -41,22 +37,19 @@ export const applyStateOperations = (
   return gameUpdated
 }
 
-const updateGameBasicFields = (game: SkyjoToJson, data: SkyjoUpdate) => {
+const updateGameBasicFields = (game: GameToJson, data: GameUpdate) => {
   Object.assign(game, data)
 }
 
-const updateSettings = (
-  game: SkyjoToJson,
-  data: Partial<SkyjoSettingsToJson>,
-) => {
+const updateSettings = (game: GameToJson, data: Partial<SettingsToJson>) => {
   Object.assign(game.settings, data)
 }
 
-const addPlayers = (game: SkyjoToJson, players: SkyjoPlayerToJson[]) => {
+const addPlayers = (game: GameToJson, players: PlayerToJson[]) => {
   game.players.push(...players)
 }
 
-const updatePlayers = (game: SkyjoToJson, operations: PlayerUpdate[]) => {
+const updatePlayers = (game: GameToJson, operations: PlayerUpdate[]) => {
   operations.forEach(({ id, ...rest }) => {
     const playerIndex = game.players.findIndex((p) => p.id === id)
     if (playerIndex === -1) return
@@ -65,6 +58,6 @@ const updatePlayers = (game: SkyjoToJson, operations: PlayerUpdate[]) => {
   })
 }
 
-const removePlayers = (game: SkyjoToJson, playerIds: string[]) => {
+const removePlayers = (game: GameToJson, playerIds: string[]) => {
   game.players = game.players.filter((player) => !playerIds.includes(player.id))
 }

@@ -1,6 +1,6 @@
-# Skyjo website
+# Skymo website
 
-This is the web client for the Skyjo game project. It is built with [Next.js](https://nextjs.org/) and [shadcn/ui](https://ui.shadcn.com/). The web client is responsible for displaying the game to the players and handling the user interactions.
+This is the web client for Skymo, a Skyjo like game project. It is built with [Next.js](https://nextjs.org/) and [shadcn/ui](https://ui.shadcn.com/). The web client is responsible for displaying the game to the players and handling the user interactions.
 
 ## Development
 

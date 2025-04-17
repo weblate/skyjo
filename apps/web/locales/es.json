@@ -1,8 +1,8 @@
 {
   "head": {
-    "keywords": "Skyjo,Skyjo en línea,juego multijugador,jugar con amigos,juegos en línea gratis,jugar Skyjo en línea",
-    "title": "Jugar a Skyjo en línea con amigos | Skyjo Online",
-    "description": "¡Juega gratis a Skyjo en línea con tus amigos! ¡Un emocionante juego multijugador donde competirás para ver quién puede ganar!"
+    "keywords": "Skymo,Skyjo,Skyjo en línea,juego multijugador,jugar con amigos,juegos en línea gratis,jugar Skyjo en línea",
+    "title": "Skymo | Juega Skyjo en línea - Juego de Cartas Multijugador Gratis",
+    "description": "¡Juega Skyjo online gratis con Skymo! Un juego de cartas rápido y estratégico. Desafía a tus amigos, voltea cartas y consigue la puntuación más baja para ganar."
   },
   "pages": {
     "Index": {
@@ -55,8 +55,8 @@
           }
         },
         "reset-settings": "Restablecer los ajustes",
-        "allow-skyjo-for-column": "Permitir Skyjo para columna",
-        "allow-skyjo-for-row": "Permitir Skyjo para fila",
+        "remove-identical-column": "Remover columna si cartas idénticas",
+        "remove-identical-row": "Remover fila si cartas idénticas",
         "nb-columns": {
           "label": "Número de columnas",
           "title": "$número de columnas"
@@ -79,15 +79,17 @@
         "validate-settings": "Validar los ajustes",
         "validation-warning": "Los ajustes de la partida no pueden modificarse una vez validados"
       },
-      "start-game-button": "Iniciar el juego",
+      "start-game-button": "Iniciar juego",
+      "cancel": "Cancelar",
+      "game-starting-in": "El juego comienza en {seconds}",
       "player-section": {
         "title": "Jugadores {nbPlayers}/{maxPlayers}"
       },
-      "waiting-admin-to-confirm-game-settings": "Esperando a que el administrador valide la configuración",
+      "waiting-host-to-confirm-game-settings": "Esperando a que el anfitrión confirme la configuración",
       "title": "Partida de {name}",
       "leave-to-home": "Ir a la página de inicio",
       "leave-to-public-game-list": "Ir a la lista pública de partidas",
-      "waiting-admin-to-start": "Esperando a que el administrador inicie la partida",
+      "waiting-host-to-start": "Esperando a que el hostistrador inicie la partida",
       "go-back-to-settings": "Volver a los ajustes"
     },
     "ResultsPage": {
@@ -123,10 +125,20 @@
             "description": "Almacenamos temporalmente:",
             "items": "Nombres de usuario y opciones del avatar;;Elementos del juego y progreso"
           },
+          "user-provided-information": {
+            "title": "Información proporcionada por el usuario",
+            "description": "Recopilamos:",
+            "items": "Envío de formularios de comentarios (incluyendo direcciones de correo electrónico opcionales)"
+          },
           "local-storage-data": {
             "title": "Datos de almacenamiento local",
-            "description": "Guardamos en el almacenamiento local de su navegador:",
-            "items": "Preferencias de idioma;;Sus ajustes en el juego"
+            "description": "Almacenamos en el almacenamiento local de su navegador:",
+            "items": "Preferencias de idioma;;Preferencias de configuración del juego"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "Utilizamos cookies esenciales para permitir la funcionalidad básica de nuestro sitio web:",
+            "items": "Cookies de sesión: Utilizamos una cookie de sesión (skymo-io) para mantener su conexión a nuestros servidores de juego. Esta cookie es esencial para el funcionamiento del juego y caduca después de 24 horas;;Estas cookies no le rastrean a través de sitios web y solo se utilizan para proporcionar el servicio que ha solicitado"
           }
         },
         "how-we-use-your-information": {
@@ -135,7 +147,7 @@
         },
         "contact-us": {
           "title": "Contacta con nosotros",
-          "description": "Si tiene alguna pregunta sobre esta Política de privacidad, por favor contáctenos a través de nuestro servidor Discord o GitHub."
+          "description": "Si tiene alguna pregunta sobre esta Política de privacidad, por favor contáctenos a través de comentarios en la página web, servidor Discord o GitHub."
         },
         "changes-to-this-policy": {
           "description": "Podemos actualizar esta política de vez en cuando. Le notificaremos de cualquier cambio publicando la nueva política en esta página.",
@@ -160,17 +172,17 @@
         }
       },
       "head": {
-        "keywords": "Skyjo Online,política de privacidad,protección de datos,privacidad de juegos en línea,juego seguro,datos de usuario,cumplimiento del RGPD",
-        "title": "Política de privacidad | Skyjo en línea",
-        "description": "Descubra cómo Skyjo en línea protege su privacidad y sus datos mientras juega a nuestro juego de cartas en línea gratuito. Descubra nuestras prácticas de recopilación, uso y protección de datos."
+        "keywords": "Skymo,Skyjo Online,política de privacidad,protección de datos,privacidad de juegos en línea,juego seguro,datos de usuario,cumplimiento del RGPD",
+        "title": "Política de Privacidad | Skymo - Juego de Cartas Skyjo Multiplayer",
+        "description": "Política de privacidad de Skymo. Descubre cómo protegemos tus datos mientras disfrutas de nuestro juego de cartas Skyjo. Prácticas transparentes y seguras."
       }
     },
     "Rules": {
       "title": "Reglas de Skyjo",
       "head": {
         "keywords": "Reglas de Skyjo, cómo jugar a Skyjo, juego Skyjo, multijugador en línea, juego de cartas gratuito, jugar con amigos, reglas del juego Skyjo",
-        "description": "Aprende las reglas de Skyjo, un juego multijugador en línea divertido y atractivo. Descubre cómo jugar a Skyjo con amigos gratis y domina el juego con nuestra guía detallada.",
-        "title": "¿Cómo jugar a Skyjo? | Skyjo en línea"
+        "description": "Aprende las reglas de Skyjo en 5 minutos. Guía rápida para dominar este divertido juego de cartas, voltear cartas estratégicamente y conseguir la menor puntuación. ¡Comienza a jugar ahora!",
+        "title": "Skymo | Reglas de Skyjo - Cómo Jugar - Guía Rápida y Completa"
       }
     },
     "Search": {
@@ -213,8 +225,31 @@
         "aria-label": "Menú"
       },
       "rules": "Reglas",
+      "feedback": "Dejar un comentario",
       "discord": "Discord",
       "settings": "Ajustes"
+    },
+    "Feedback": {
+      "title": "Dejar un comentario",
+      "description": "Puedes escribir un comentario para ayudarnos a mejorar el juego.",
+      "toast": {
+        "success": {
+          "title": "¡Gracias por tu opinión!",
+          "description": "Tus ideas nos han ayudado a mejorar nuestra página web de juegos, y estamos verdaderamente agradecidos."
+        },
+        "error": {
+          "title": "Se ha producido un error, por favor inténtelo de nuevo."
+        }
+      },
+      "email-input": {
+        "placeholder": "example@example.com",
+        "label": "Tu correo electrónico (opcional)"
+      },
+      "message-input": {
+        "label": "Tu mensaje",
+        "placeholder": "Cuéntanos lo que piensas, notas o quieres…"
+      },
+      "button-title": "Enviar"
     },
     "PlayerBoard": {
       "you": "Tú"
@@ -233,6 +268,9 @@
       "button-title": "Enviar",
       "message-too-long": {
         "description": "El mensaje es demasiado largo (máximo 200 caracteres)"
+      },
+      "unknown-command": {
+        "description": "Comando desconocido"
       }
     },
     "AppearanceSelect": {
@@ -241,7 +279,10 @@
       "dark": "Oscuro"
     },
     "ChatMessage": {
-      "separator": ": "
+      "separator": ": ",
+      "context-menu": {
+        "report": "Reportar mensaje"
+      }
     },
     "ChatMessageList": {
       "unread-messages": "{count} mensaje no leído{count, plural, =1 {mensaje sin leer} otro {mensajes sin leer}}"
@@ -295,18 +336,7 @@
             }
           }
         },
-        "title": "Mostrar",
-        "game-board": {
-          "title": "Tablero de juego",
-          "size": {
-            "label": "Tamaño de tu tablero de juego",
-            "values": {
-              "normal": "Normal",
-              "big": "Grande"
-            },
-            "big-warning": "Puede hacer que se muestre de forma correcta en el móvil"
-          }
-        }
+        "title": "Mostrar"
       },
       "title": "Ajustes"
     },
@@ -384,7 +414,7 @@
       "ChromeIOS": "Pulse el icono de compartir, luego deslice y toque 'Agregar a la pantalla de inicio' para instalar",
       "FirefoxAndroid": "Toque el icono de menú y, a continuación, \"Añadir a la pantalla de inicio\" para instalar",
       "ChromeAndroid": "Toque el icono del menú, a continuación 'Añadir a la pantalla de inicio' para instalar",
-      "title": "¡Instala Skyjo en línea en tu dispositivo!",
+      "title": "¡Instala Skymo en tu dispositivo!",
       "FirefoxIOS": "Pulse el icono del menú, luego el icono de compartir, luego deslice y toque 'Agregar a la pantalla de inicio' para instalar",
       "install-button": {
         "title": "Instalar la aplicación",
@@ -395,15 +425,18 @@
       "SafariIOS": "Pulsa el icono de compartir, desplázate y pulsa \"Añadir a la pantalla de inicio\" para instalarlo"
     },
     "Footer": {
+      "feedback": "Dejar un comentario",
       "rules": "Reglas del juego",
       "release-notes": "Notas de la versión",
       "privacy-policy": "Política de privacidad",
+      "status": "Estado del servidor",
       "buy-game": "Comprar el juego",
       "explanation": "¿Qué es Skyjo?",
       "home": "Inicio",
       "disclaimer": {
         "not-affiliated": "Esta página web no está afiliada a los creadores o distribuidores de Skyjo",
-        "rights-owned": "Todos los derechos sobre el nombre Skyjo y la mecánica del juego son propiedad de Alexander Bernhardt y Magilano"
+        "rights-owned": "Todos los derechos sobre el nombre Skyjo y la mecánica del juego son propiedad de Alexander Bernhardt y Magilano",
+        "responsible-content": "El propietario de este sitio web no es responsable del contenido generado por los usuarios (pseudónimos, mensajes)"
       },
       "attribution": {
         "avatars": "Avatars creados por Freepik - Flaticon"
@@ -432,9 +465,11 @@
     },
     "Avatar": {
       "context-menu": {
-        "kick": "Expulsar",
-        "unmute": "Activar el sonido",
-        "mute": "Silenciar"
+        "report": "Reportar {username}",
+        "kick": "Expulsar {username}",
+        "vote-to-kick": "Votar para expulsar {username}",
+        "unmute": "Activar el sonido {username}",
+        "mute": "Silenciar {username}"
       }
     },
     "KickVote": {
@@ -447,15 +482,14 @@
         "ignore-button": {
           "alt": "Ignorar la votación para expulsar a {playerName}",
           "label": "Ignorar"
-        },
-        "description": "{initiatorName} quiere expulsar a {playerName}"
+        }
       },
       "player-has-voted": {
         "title": "Vota para expulsar a {playerName}",
         "description": "Ha votado {vote, select, true {a favor} false {en contra} other {voto}}"
       },
       "vote-against-you": {
-        "description": "{initiatorName} ha pedido una votación para expulsarte.",
+        "description": "Se ha pedido una votación para expulsarte.",
         "title": "Voto a favor de echarlo"
       },
       "vote-against-you-failed": {
@@ -478,16 +512,33 @@
     "GameRules": {
       "button-title": "Mostrar las reglas del juego",
       "title": "Reglas del juego",
-      "allow-skyjo-for-column": "Permitir Skyjo para columna: {value, select, true {si} false {no} other {desconocido}}",
-      "allow-skyjo-for-row": "Permitir Skyjo para la fila: {value, select, true {si} false {no} other {desconocido}}",
+      "remove-identical-column": "Remover columna si cartas idénticas: {value, select, true {si} false {no} other {desconocido}}",
+      "remove-identical-row": "Remover fila si cartas idénticas: {value, select, true {si} false {no} other {desconocido}}",
       "card-per-column": "Número de columnas: {value}",
       "card-per-row": "Número de filas: {value}",
       "initial-turned-count": "Número de cartas a girar al principio: {value}",
       "score-to-end-game": "Número de puntos para terminar el juego: {value}"
+    },
+    "ReportDialog": {
+      "title": "Reportar {username}",
+      "description": "Reportar el nombre de usuario o un mensaje de {username} si parece inapropiado.",
+      "report-username": "Reportar usuario",
+      "report-message": "Reportar un mensaje",
+      "select-message": "Seleccionar mensaje para reportar",
+      "select-message-placeholder": "Seleccionar un mensaje",
+      "no-messages": "No hay mensajes encontrados de este usuario",
+      "cancel": "Cancelar",
+      "submit": "Reportar",
+      "toast": {
+        "report-submitted": {
+          "title": "Reporte enviado",
+          "description": "Gracias por tu reporte, has contribuido a mejorar la calidad del juego."
+        }
+      }
     }
   },
   "utils": {
-    "skyjo": {
+    "skymo": {
       "waiting": "Esperando a los jugadores",
       "turn": {
         "chooseAPile": "Elige una pila",
@@ -528,7 +579,8 @@
       "toucan": "tucán",
       "turtle": "tortuga",
       "whale": "ballena",
-      "owl": "búho"
+      "owl": "búho",
+      "cat": "gato"
     },
     "socket": {
       "error": {
@@ -546,6 +598,10 @@
         },
         "game-already-started": {
           "description": "La partida ya ha comenzado"
+        },
+        "rate-limit": {
+          "title": "Demasiadas solicitudes de tu parte",
+          "description": "Por favor, espera unos segundos antes de intentarlo de nuevo"
         }
       }
     }

@@ -1,12 +1,12 @@
 import { BaseService } from "@/socketio/services/base.service.js"
-import type { SkyjoSocket } from "@/socketio/types/skyjoSocket.js"
-import { Constants as CoreConstants } from "@skyjo/core"
-import { CError, Constants as ErrorConstants } from "@skyjo/error"
-import type { UserChatMessage } from "@skyjo/shared/types"
+import type { GameSocket } from "@/socketio/types/gameSocket.js"
+import { Constants as CoreConstants } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { UserChatMessage } from "@skymo/shared/types"
 
 export class ChatService extends BaseService {
   async onMessage(
-    socket: SkyjoSocket,
+    socket: GameSocket,
     { username, message }: Omit<UserChatMessage, "id" | "type">,
   ) {
     const game = await this.getGame(socket.data.gameCode)
@@ -15,8 +15,8 @@ export class ChatService extends BaseService {
       throw new CError(`Player try to send a message but is not found.`, {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
-          game,
-          socket,
+          game: game.serialize(),
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
@@ -32,11 +32,13 @@ export class ChatService extends BaseService {
       type: CoreConstants.USER_MESSAGE_TYPE,
     }
 
+    await this.messageRepository.storeMessage(game.code, newMessage)
+
     socket.to(game.code).volatile.emit("message", newMessage)
     socket.volatile.emit("message", newMessage)
   }
 
-  async onWizz(socket: SkyjoSocket, targetUsername: string) {
+  async onWizz(socket: GameSocket, targetUsername: string) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
@@ -44,8 +46,8 @@ export class ChatService extends BaseService {
       throw new CError(`Player try to send a message but is not found.`, {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
-          game,
-          socket,
+          game: game.serialize(),
+          socketId: socket.id,
           gameCode: game.code,
           playerId: socket.data.playerId,
         },
