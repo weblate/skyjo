@@ -1,16 +1,10 @@
 "use client"
 
-import { Card } from "@/components/Card"
+import { Card } from "@/components/Card/Card"
 import SelectedCard from "@/components/SelectedCard"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
-
-const DRAW_CARD = {
-  id: "draw",
-  value: undefined,
-  isVisible: false,
-}
 
 type DrawPileProps = {
   isPlayerTurn: boolean
@@ -37,7 +31,7 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
     <div className="relative">
       <SelectedCard show={turnStatus.isThrowOrReplace} />
       <Card
-        card={DRAW_CARD}
+        value="back"
         onClick={onClick}
         title={t("title")}
         className={cn(
@@ -46,7 +40,6 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
         )}
         disabled={!isPlayerTurn || !turnStatus.isChooseAPile}
         loading={isDrawLoading}
-        flipAnimation={false}
       />
     </div>
   )

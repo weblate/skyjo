@@ -1,4 +1,4 @@
-import { Card } from "@/components/Card"
+import { Card } from "@/components/Card/Card"
 import { useTranslations } from "next-intl"
 
 const Rules = () => {
@@ -13,31 +13,11 @@ const Rules = () => {
         <div className="mt-2 flex flex-col gap-2">
           <div className="flex flex-row gap-2 items-center">
             <p className="w-8 text-end">5x</p>
-            <Card
-              card={{
-                id: "tutorial-2",
-                value: -2,
-                isVisible: true,
-              }}
-              size="tiny"
-              className="w-8"
-              flipAnimation={false}
-              disabled
-            />
+            <Card value={-2} size="tiny" className="w-8" disabled />
           </div>
           <div className="flex flex-row gap-2 items-center">
             <p className="w-8 text-end">15x</p>
-            <Card
-              card={{
-                id: "tutorial-0",
-                value: 0,
-                isVisible: true,
-              }}
-              size="tiny"
-              className="w-8"
-              flipAnimation={false}
-              disabled
-            />
+            <Card value={0} size="tiny" className="w-8" disabled />
           </div>
           <div className="flex flex-row gap-2 items-center">
             <p className="w-8 text-end flex-shrink-0">10x</p>
@@ -45,14 +25,9 @@ const Rules = () => {
               {[-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((value) => (
                 <Card
                   key={value}
-                  card={{
-                    id: `tutorial-${value}}`,
-                    value: value,
-                    isVisible: true,
-                  }}
+                  value={value}
                   size="tiny"
                   className="w-8"
-                  flipAnimation={false}
                   disabled
                 />
               ))}

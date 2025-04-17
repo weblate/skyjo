@@ -1,4 +1,4 @@
-import { Card } from "@/components/Card"
+import { Card } from "@/components/Card/Card"
 import OpponentBoard from "@/components/OpponentBoard"
 import { UserAvatar } from "@/components/UserAvatar"
 import { useGame } from "@/contexts/GameContext"
@@ -173,13 +173,7 @@ const OpponentItem = ({
           {opponent.cards.map((column, columnIndex) => (
             <div key={columnIndex} className="flex flex-col gap-0.5">
               {column.map((card) => (
-                <Card
-                  key={card.id}
-                  card={card}
-                  size="preview"
-                  flipAnimation={false}
-                  exitAnimation={false}
-                />
+                <Card key={card.id} value={card.value} size="preview" />
               ))}
             </div>
           ))}

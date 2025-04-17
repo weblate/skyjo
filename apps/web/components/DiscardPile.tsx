@@ -1,6 +1,6 @@
 "use client"
 
-import { Card } from "@/components/Card"
+import { Card } from "@/components/Card/Card"
 import SelectedCard from "@/components/SelectedCard"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
@@ -48,17 +48,12 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
 
     return (
       <Card
-        card={{
-          id: "discard",
-          value: -98,
-          isVisible: false,
-        }}
+        value="discard"
         onClick={onDiscard}
         title={t("throw")}
         className={cn("translate-y-1", shouldAnimate ? "animate-scale" : "")}
         disabled={false}
         loading={isDiscardLoading}
-        flipAnimation={false}
       />
     )
   }
@@ -77,7 +72,7 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
     <div className="relative">
       <SelectedCard show={turnStatus.isReplaceACard} />
       <Card
-        card={card}
+        value={card.value}
         onClick={onClick}
         title={t("title")}
         className={cn(
@@ -86,7 +81,6 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
         )}
         disabled={!canDiscard}
         loading={isDiscardLoading}
-        flipAnimation={false}
       />
     </div>
   )

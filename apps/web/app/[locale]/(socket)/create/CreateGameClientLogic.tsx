@@ -1,6 +1,6 @@
 "use client"
 
-import { Card } from "@/components/Card"
+import { GameCard } from "@/components/Card/GameCard"
 import { useSocket } from "@/contexts/SocketContext"
 import { useUser } from "@/contexts/UserContext"
 import { CardToJson } from "@skymo/core"
@@ -33,9 +33,9 @@ const CreateGameClientLogic = () => {
 
   useEffect(() => {
     // loading card animation
-    setInterval(() => {
+    const interval = setInterval(() => {
       setCard((prev) => generateRandomCard(!prev.isVisible))
-    }, 1800)
+    }, 1000)
 
     const player = getUser()
 
@@ -43,18 +43,13 @@ const CreateGameClientLogic = () => {
       createGame(player, isPrivate)
       setLoading(true)
     }
+
+    return () => clearInterval(interval)
   }, [socket, isPrivate])
 
   return (
     <div className="h-svh w-full flex flex-col gap-2 items-center justify-center">
-      <Card
-        key={card.id}
-        card={card}
-        size="normal"
-        disabled={true}
-        flipAnimation={true}
-        exitAnimation={false}
-      />
+      <GameCard key={card.id} card={card} size="normal" disabled={true} />
 
       <p>{t("loading-text")}</p>
     </div>

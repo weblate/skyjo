@@ -1,4 +1,4 @@
-import { Card } from "@/components/Card"
+import { Card } from "@/components/Card/Card"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, m } from "motion/react"
@@ -42,16 +42,7 @@ const SelectedCard = ({ show }: SelectedCardProps) => {
           }}
           // exit={exit}
         >
-          <Card
-            card={{
-              id: "selected-animation",
-              value: undefined,
-              isVisible: false,
-            }}
-            size="normal"
-            disabled
-            flipAnimation={false}
-          />
+          <Card value="back" size="normal" disabled />
           <m.div
             initial={{
               opacity: 0,
@@ -66,15 +57,10 @@ const SelectedCard = ({ show }: SelectedCardProps) => {
             className="absolute top-0 left-0 w-full h-full"
           >
             <Card
-              card={{
-                id: "selectedCard",
-                value: game.selectedCardValue,
-                isVisible: true,
-              }}
+              value={game.selectedCardValue}
               size="normal"
               disabled
               loading={isSelectedCardLoading}
-              flipAnimation={false}
             />
           </m.div>
         </m.div>

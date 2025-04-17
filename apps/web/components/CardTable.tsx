@@ -1,4 +1,4 @@
-import { Card } from "@/components/Card"
+import { GameCard } from "@/components/Card/GameCard"
 import { useGame } from "@/contexts/GameContext"
 import { GameBoardSize } from "@/contexts/SettingsContext"
 import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
@@ -117,8 +117,9 @@ const CardTable = ({
             const shouldShowSelectionAnimation =
               showSelectionAnimation && canBeSelected && !isActionPending
 
+            console.log(shouldShowSelectionAnimation)
             return (
-              <Card
+              <GameCard
                 key={card.id}
                 card={card}
                 onClick={() => handleCardClick(columnIndex, rowIndex)}
@@ -128,8 +129,8 @@ const CardTable = ({
                 size={size}
                 disabled={cardDisabled || !canBeSelected || isActionPending}
                 loading={isCardLoading}
-                flipAnimation={lastTurnStatus.isTurn}
-                exitAnimation={roundPhase.isMain || roundPhase.isLastLap}
+                showFlipAnimation={lastTurnStatus.isTurn}
+                showExitAnimation={roundPhase.isMain || roundPhase.isLastLap}
               />
             )
           })
