@@ -117,7 +117,6 @@ const CardTable = ({
             const shouldShowSelectionAnimation =
               showSelectionAnimation && canBeSelected && !isActionPending
 
-            console.log(shouldShowSelectionAnimation)
             return (
               <GameCard
                 key={card.id}
