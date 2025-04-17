@@ -68,7 +68,9 @@ export const cardVariants = cva(
   },
 )
 
-type CardVisualType = VariantProps<typeof cardVariants>["type"]
+type CardVariants = VariantProps<typeof cardVariants>
+type CardVisualType = CardVariants["type"]
+type CardSize = CardVariants["size"]
 
 type CardValue = number | "no-card" | "discard" | "hidden" | "back"
 const valueMap: Record<string, CardVisualType> = {
@@ -95,6 +97,56 @@ const getCardVisualType = (value?: CardValue): CardVisualType => {
   return valueMap[value.toString()] || "not-visible"
 }
 
+export interface CardProps extends CardVariants {
+  value?: CardValue
+  onClick?: () => void
+  className?: ClassValue
+  title?: string
+  disabled?: boolean
+  loading?: boolean
+  as?: "button" | "div"
+}
+const Card = ({
+  value,
+  size = "normal",
+  onClick,
+  className,
+  title,
+  disabled = false,
+  loading = false,
+  shadow = true,
+  as = "button",
+}: CardProps) => {
+  const cardType = getCardVisualType(value)
+
+  const cardClass: ClassValue = cn(
+    cardVariants({ size, disabled, loading, shadow, type: cardType }),
+    "ph-no-capture",
+    className,
+  )
+
+  if (as === "div") {
+    // Render as a non-interactive div (no button props)
+    return (
+      <div className={cardClass} title={title}>
+        <Content cardType={cardType} value={value} size={size} />
+      </div>
+    )
+  }
+
+  // Default: render as a button
+  return (
+    <button
+      className={cardClass}
+      onClick={onClick}
+      title={title}
+      disabled={disabled || loading}
+    >
+      <Content cardType={cardType} value={value} size={size} />
+    </button>
+  )
+}
+
 const throwIconClass = cva(
   "aspect-square text-card-discard dark:text-dark-card-discard",
   {
@@ -109,52 +161,27 @@ const throwIconClass = cva(
     },
   },
 )
-
-type CardVariants = VariantProps<typeof cardVariants>
-
-export interface CardProps extends CardVariants {
+type ContentProps = {
+  cardType: CardVisualType
   value?: CardValue
-  onClick?: () => void
-  className?: ClassValue
-  title?: string
-  disabled?: boolean
-  loading?: boolean
+  size: CardSize
 }
-const Card = ({
-  value,
-  size = "normal",
-  onClick,
-  className,
-  title,
-  disabled = false,
-  loading = false,
-  shadow = true,
-}: CardProps) => {
-  const cardType = getCardVisualType(value)
-
+const Content = ({ cardType, value, size }: ContentProps) => {
   const isGameCard =
     value !== null &&
     value !== undefined &&
     Number(value) >= -2 &&
     Number(value) <= 12
 
-  return (
-    <button
-      className={cn(
-        cardVariants({ size, disabled, loading, shadow, type: cardType }),
-        "ph-no-capture",
-        className,
-      )}
-      onClick={onClick}
-      title={title}
-      disabled={disabled || loading}
-    >
-      {cardType === "discard" && (
-        <Trash2Icon className={throwIconClass({ size })} />
-      )}
-      {isGameCard && value}
-    </button>
-  )
+  if (cardType === "discard") {
+    return <Trash2Icon className={throwIconClass({ size })} />
+  }
+
+  if (isGameCard) {
+    return value
+  }
+
+  return null
 }
 
 export { Card }

@@ -109,14 +109,14 @@ export const GameCard = ({
           className={cn(cardPositionClass, "bg-white")}
           size={size}
           disabled={disabled}
-          loading={loading}
+          as="div"
         />
         <Card
           value={displayedValue}
           className={cn(cardPositionClass, "card-rotate-y-180")}
           size={size}
           disabled={disabled}
-          loading={loading}
+          as="div"
         />
       </div>
     </m.button>
