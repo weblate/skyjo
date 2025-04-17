@@ -111,7 +111,7 @@
         },
         "initial-turned-count": {
           "label": "Niver a gartoù troet e deroù ur c'hoariadenn",
-          "title": "[number} a gartenn troet e deroù ar c'hoariadenn"
+          "title": "{number} a gartenn troet e deroù ar c'hoariadenn"
         },
         "score-to-end-game": {
           "label": "Niver a boentoù evit echuiñ ar c'hoariadenn",
