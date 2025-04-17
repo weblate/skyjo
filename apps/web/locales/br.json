@@ -100,7 +100,6 @@
           "label": "Niver uhelañ a c'hoarierien",
           "title": "Niver uhelañ a c'hoarierien: {number}"
         },
-        "allow-skyjo-for-column": "Aotren ar Skyjo evit ar bannoù",
         "nb-columns": {
           "label": "Niver a vannoù",
           "title": "$number a vannoù"
@@ -136,8 +135,7 @@
           "label": "Lieskementer kastiz evit kont ar c'hoarier⋅ez kentañ",
           "title": "Kont ar c'hoarier⋅ez kentañ a vo lieskementet dre {number} ma n'eo ket bihanoc'h strizh eget kontoù all ar c'hoariadenn"
         },
-        "validation-warning": "Arventennoù ar c'hoariadenn n'hall ket bezañ kemmet ur wech int bet kadarnaet",
-        "allow-skyjo-for-row": "Aotren ar Skyjo evit ar renkoù"
+        "validation-warning": "Arventennoù ar c'hoariadenn n'hall ket bezañ kemmet ur wech int bet kadarnaet"
       },
       "player-section": {
         "title": "C'hoarierien {nbPlayers}/{maxPlayers}",
@@ -431,8 +429,6 @@
     "GameRules": {
       "button-title": "Diskouez reolennoù ar c'hoariadenn",
       "title": "Reolennoù ar c'hoariadenn",
-      "allow-skyjo-for-column": "Skyjo bann aotreet: {value, select, true {ya} false {n'eo ket} other {dianav}}",
-      "allow-skyjo-for-row": "Skyjo renk aotreet : {value, select, true {ya} false {n'eo ket} other {dianav}}",
       "card-per-column": "Niver a vannoù: {value}",
       "card-per-row": "Niver a renkoù {value}",
       "score-to-end-game": "Niver a boentoù evit echuiñ ar c'hoariadenn: {value}",
@@ -454,7 +450,9 @@
         "en": "English",
         "es": "Español",
         "fr": "Français",
-        "it": "Italiano"
+        "it": "Italiano",
+        "br": "Brezhoneg",
+        "ta": "தமிழ்"
       },
       "select-language": "Dibab ar yezh",
       "search-language": "Klask ur yezh"

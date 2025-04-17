@@ -2,7 +2,7 @@ import { createNavigation } from "next-intl/navigation"
 import { defineRouting } from "next-intl/routing"
 import { Languages } from "next/dist/lib/metadata/types/alternative-urls-types"
 
-const locales = ["en", "es", "fr"] as const
+const locales = ["en", "es", "fr", "br", "ta"] as const
 export type Locales = (typeof locales)[number]
 
 export const routing = defineRouting({

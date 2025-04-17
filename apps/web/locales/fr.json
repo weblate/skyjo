@@ -359,10 +359,12 @@
       "no-language-found": "Aucune langue trouvée",
       "locale": {
         "en": "English",
-        "fr": "Français",
+        "it": "Italiano",
         "de": "Deutsch",
         "es": "Español",
-        "it": "Italiano"
+        "fr": "Français",
+        "br": "Brezhoneg",
+        "ta": "தமிழ்"
       }
     },
     "MenuDropdown": {
