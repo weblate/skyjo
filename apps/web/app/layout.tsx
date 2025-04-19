@@ -1,9 +1,8 @@
 import "@/app/globals.css"
 
-export type RootLayoutProps = Readonly<{
+export interface RootLayoutProps {
   children: React.ReactNode
-}>
-
+}
 export default function RootLayout({ children }: RootLayoutProps) {
   return children
 }

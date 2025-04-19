@@ -4,11 +4,10 @@ import { Link } from "@/i18n/routing"
 import { ArrowDown } from "lucide-react"
 import { m } from "motion/react"
 
-type Props = {
+interface MovingArrowProps {
   href: string
 }
-
-const MovingArrow = ({ href }: Props) => {
+const MovingArrow = ({ href }: MovingArrowProps) => {
   return (
     <Link href={href}>
       <m.div

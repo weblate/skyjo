@@ -3,7 +3,7 @@ import type { Game } from "@/class/Game.js"
 export const defaultKickSocketOptions: KickSocketOptions = {
   emitEvent: true,
 }
-export type KickSocketOptions = {
+export interface KickSocketOptions {
   emitEvent?: boolean
 }
 

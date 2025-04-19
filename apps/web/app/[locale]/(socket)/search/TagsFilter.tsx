@@ -17,7 +17,7 @@ const allTags: PublicGameTag[] = [
   "long-game",
 ] as const
 
-type TagsFilterProps = {
+interface TagsFilterProps {
   selectedTags: PublicGameTag[]
   onTagClick: (tag: PublicGameTag) => void
 }

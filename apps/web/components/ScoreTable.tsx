@@ -10,13 +10,16 @@ import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 
-type Props = {
+interface ScoreTableProps {
   players: PlayerToJson[]
   winner?: PlayerToJson
   scrollToEnd?: boolean
 }
-
-const ScoreTable = ({ players, winner, scrollToEnd = false }: Props) => {
+const ScoreTable = ({
+  players,
+  winner,
+  scrollToEnd = false,
+}: ScoreTableProps) => {
   const t = useTranslations("components.ScoreTable")
 
   const nbRounds = players[0].scores.length

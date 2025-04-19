@@ -14,12 +14,12 @@ import {
 } from "react"
 import { toast } from "sonner"
 
-type Report = {
+interface Report {
   playerId: string
   messageId?: string
 }
 
-type ReportContext = {
+interface ReportContext {
   reportPlayer: (playerId: string, messageId?: string) => void
 }
 

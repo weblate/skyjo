@@ -6,10 +6,9 @@ import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 
-type DrawPileProps = {
+interface DrawPileProps {
   isPlayerTurn: boolean
 }
-
 const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
   const { actions, isActionPending, lastClickedPile, turnStatus } = useGame()
   const t = useTranslations("components.DrawPile")

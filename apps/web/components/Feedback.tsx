@@ -29,11 +29,10 @@ import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
 
-type FeedbackProps = {
+interface FeedbackProps {
   open: boolean
   setOpen: Dispatch<SetStateAction<boolean>>
 }
-
 const FeedbackForm = ({ setOpen }: FeedbackProps) => {
   const t = useTranslations("components.Feedback")
   const [isPending, startTransition] = useTransition()

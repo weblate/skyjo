@@ -5,13 +5,13 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-type SearchLayoutParams = {
+interface SearchLayoutParams {
   locale: Locales
 }
-export type SearchLayoutProps = Readonly<{
+export interface SearchLayoutProps {
   children: React.ReactNode
   params: Promise<SearchLayoutParams>
-}>
+}
 
 export async function generateMetadata(props: SearchLayoutProps) {
   const { locale } = await props.params

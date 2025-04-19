@@ -26,7 +26,7 @@ import { useTranslations } from "next-intl"
 import { useEffect, useMemo, useState } from "react"
 import { toast } from "sonner"
 
-type ReportDialogProps = {
+interface ReportDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
   report?: { playerId: string; messageId?: string }

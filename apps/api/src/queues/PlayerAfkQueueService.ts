@@ -7,7 +7,7 @@ import { Logger } from "@skymo/logger"
 import type { Job } from "bullmq"
 import { BaseAfkQueueService } from "./BaseAfkQueueService.js"
 
-export type PlayerAfkJobData = {
+export interface PlayerAfkJobData {
   gameCode: string
   playerId: string
 }

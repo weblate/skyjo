@@ -10,7 +10,7 @@ export type KickVoteToJson = {
   requiredVotes: number
 }
 
-export type KickVoteDb = {
+export interface KickVoteDb {
   targetId: string
   initiatorId: string
   votes: Vote[]

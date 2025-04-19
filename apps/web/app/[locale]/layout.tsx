@@ -15,10 +15,10 @@ const fredoka = Fredoka({
   // display: "swap",
 })
 
-export type LocaleLayoutProps = Readonly<{
+export interface LocaleLayoutProps {
   children: React.ReactNode
   params: Promise<{ locale: Locales }>
-}>
+}
 
 export async function generateMetadata(props: LocaleLayoutProps) {
   const { locale } = await props.params

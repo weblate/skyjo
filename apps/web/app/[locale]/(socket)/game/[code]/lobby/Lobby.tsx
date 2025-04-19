@@ -10,7 +10,7 @@ import {
   LobbyPlayers,
 } from "./components"
 
-type LobbyProps = {
+interface LobbyProps {
   gameCode: string
 }
 

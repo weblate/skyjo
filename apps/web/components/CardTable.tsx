@@ -17,7 +17,7 @@ const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
   },
 })
 
-type CardTableProps = {
+interface CardTableProps {
   cards: CardToJson[][]
   cardDisabled?: boolean
   showSelectionAnimation?: boolean

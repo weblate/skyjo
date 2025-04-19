@@ -10,7 +10,7 @@ import type {
 import type { PlayerScores, PlayerToJson } from "./player.js"
 import type { SettingsToJson } from "./settings.js"
 
-export type GameToJson = {
+export interface GameToJson {
   code: string
   status: GameStatus
   hostId: string
@@ -26,7 +26,7 @@ export type GameToJson = {
   updatedAt: Date
 }
 
-export type GameDb = {
+export interface GameDb {
   id: string
   code: string
   hostId: string

@@ -18,7 +18,7 @@ const turnTimerTextVariants = cva("text-sm", {
   },
 })
 
-type TurnTimerProps = {
+interface TurnTimerProps {
   className?: string
   turnStartTime: Date | null
 }

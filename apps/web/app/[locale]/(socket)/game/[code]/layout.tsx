@@ -7,13 +7,14 @@ import ChatProvider from "@/contexts/ChatContext"
 import GameProvider from "@/contexts/GameContext"
 import { KickProvider } from "@/contexts/KickContext"
 import { ReportProvider } from "@/contexts/ReportContext"
-import { PropsWithChildren, use } from "react"
+import { use } from "react"
 
-type GameLayoutParams = {
+interface GameLayoutParams {
   code: string
   locale: string
 }
-type GameLayoutProps = PropsWithChildren & {
+interface GameLayoutProps {
+  children: React.ReactNode
   params: Promise<GameLayoutParams>
 }
 const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {

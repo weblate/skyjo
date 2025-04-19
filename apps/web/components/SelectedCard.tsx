@@ -3,10 +3,9 @@ import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 import { AnimatePresence, m } from "motion/react"
 
-type SelectedCardProps = {
+interface SelectedCardProps {
   show: boolean
 }
-
 const SelectedCard = ({ show }: SelectedCardProps) => {
   const { game, isActionPending, turnStatus, lastClickedPile, lastTurnStatus } =
     useGame()

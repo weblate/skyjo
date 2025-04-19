@@ -23,7 +23,7 @@ const AVATAR_KEY = "Avatar-index"
 
 export const AVATARS_ARRAY = Object.values(CoreConstants.AVATARS)
 
-type UserContext = {
+interface UserContext {
   username: string
   avatarIndex: number
   playerId: string

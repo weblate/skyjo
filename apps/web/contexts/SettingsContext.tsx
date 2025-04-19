@@ -4,14 +4,7 @@ import SettingsDialog from "@/components/SettingsDialog"
 import { Locales } from "@/i18n/routing"
 import { Howler } from "howler"
 import { ThemeProvider } from "next-themes"
-import {
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useState,
-} from "react"
+import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { useLocalStorage } from "react-use"
 
 const VOLUME_DIVISOR = 100
@@ -45,7 +38,7 @@ export const GameBoardSize = {
 } as const
 export type GameBoardSize = (typeof GameBoardSize)[keyof typeof GameBoardSize]
 
-type Settings = {
+interface Settings {
   // general
   locale: Locales
   // audio
@@ -73,14 +66,17 @@ const DEFAULT_GAME_SETTINGS: Settings = {
   timerDisplayMode: TimerDisplayMode.SMART,
 }
 
-type SettingsContext = {
+interface SettingsContext {
   settings: Settings
   openSettings: () => void
   updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void
 }
 const SettingsContext = createContext<SettingsContext | undefined>(undefined)
 
-type SettingsProviderProps = PropsWithChildren<{ locale: Locales }>
+interface SettingsProviderProps {
+  children: React.ReactNode
+  locale: Locales
+}
 const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
   const [settings, setSettings] = useLocalStorage<Settings>("userSettings", {
     ...DEFAULT_GAME_SETTINGS,

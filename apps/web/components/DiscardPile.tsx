@@ -6,10 +6,9 @@ import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 
-type DiscardPileProps = {
+interface DiscardPileProps {
   isPlayerTurn: boolean
 }
-
 const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
   const {
     game,

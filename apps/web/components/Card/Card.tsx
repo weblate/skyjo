@@ -161,7 +161,7 @@ const throwIconClass = cva(
     },
   },
 )
-type ContentProps = {
+interface ContentProps {
   cardType: CardVisualType
   value?: CardValue
   size: CardSize

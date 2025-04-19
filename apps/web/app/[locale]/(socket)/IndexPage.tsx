@@ -7,7 +7,7 @@ import { useUser } from "@/contexts/UserContext"
 import { useTranslations } from "next-intl"
 import { ChangeEvent } from "react"
 
-type Props = {
+interface Props {
   searchParams: {
     gameCode?: string
   }

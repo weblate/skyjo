@@ -1,10 +1,10 @@
 import Lobby from "./Lobby"
 
-type LobbyLayoutParams = {
+interface LobbyLayoutParams {
   code: string
   locale: string
 }
-type LobbyServerPageProps = {
+interface LobbyServerPageProps {
   params: Promise<LobbyLayoutParams>
 }
 

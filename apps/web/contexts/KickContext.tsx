@@ -13,7 +13,7 @@ import {
   useState,
 } from "react"
 
-type KickContext = {
+interface KickContext {
   actions: {
     initiateKickVote: (targetPlayerId: string) => void
     voteToKick: (vote: boolean) => void

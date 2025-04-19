@@ -22,7 +22,7 @@ import { TriangleAlertIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 
-type GameSettingsProps = {
+interface GameSettingsProps {
   className?: string
 }
 

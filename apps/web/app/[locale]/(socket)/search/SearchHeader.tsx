@@ -3,7 +3,7 @@ import { cn } from "@/lib/utils"
 import { HomeIcon, PlusIcon, RefreshCwIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-type SearchHeaderProps = {
+interface SearchHeaderProps {
   onRefresh: () => void
   isFetching: boolean
   buttonLoading: boolean

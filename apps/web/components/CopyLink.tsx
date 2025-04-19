@@ -6,10 +6,9 @@ import { getGameInviteLink } from "@/lib/utils"
 import { CheckIcon, ClipboardCopyIcon } from "lucide-react"
 import { MouseEvent, useState } from "react"
 
-type CopyLinkProps = {
+interface CopyLinkProps {
   gameCode: string
 }
-
 const CopyLink = ({ gameCode }: CopyLinkProps) => {
   const [copied, setCopied] = useState(false)
   const [interval, setInterval] = useState<NodeJS.Timeout>()

@@ -23,7 +23,7 @@ import {
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 
-type SettingsDialogProps = {
+interface SettingsDialogProps {
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
 }

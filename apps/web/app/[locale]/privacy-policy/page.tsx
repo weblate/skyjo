@@ -38,7 +38,7 @@ const RulesPage = () => {
     </div>
   )
 }
-type RenderSectionProps = {
+interface RenderSectionProps {
   section:
     | "how-we-use-your-information"
     | "data-storage-and-retention"
@@ -74,7 +74,7 @@ const RenderSection = ({ section }: RenderSectionProps) => {
   )
 }
 
-type RenderSubSectionProps = {
+interface RenderSubSectionProps {
   section:
     | "information-we-collect.anonymous-usage-data"
     | "information-we-collect.game-data"

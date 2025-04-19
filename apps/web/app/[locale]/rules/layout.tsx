@@ -5,13 +5,13 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-type RulesLayoutParams = {
+interface RulesLayoutParams {
   locale: Locales
 }
-export type RulesLayoutProps = Readonly<{
+export interface RulesLayoutProps {
   children: React.ReactNode
   params: Promise<RulesLayoutParams>
-}>
+}
 
 export async function generateMetadata(props: RulesLayoutProps) {
   const { locale } = await props.params

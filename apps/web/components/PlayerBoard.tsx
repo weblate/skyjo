@@ -8,11 +8,10 @@ import { PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 
-type PlayerBoardProps = {
+interface PlayerBoardProps {
   player: PlayerToJson
   isPlayerTurn: boolean
 }
-
 const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
   const { game, isActionPending, roundPhase, turnStatus } = useGame()
   const { settings } = useSettings()

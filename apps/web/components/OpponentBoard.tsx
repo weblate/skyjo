@@ -17,12 +17,11 @@ import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { TurnTimer } from "./TurnTimer"
 
-type OpponentBoardProps = {
+interface OpponentBoardProps {
   opponent: PlayerToJson
   isPlayerTurn: boolean
   className?: ClassValue
 }
-
 const OpponentBoard = ({
   opponent,
   isPlayerTurn,

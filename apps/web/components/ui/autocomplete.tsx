@@ -1,12 +1,12 @@
 import { cn } from "@/lib/utils"
 
-export type AutoCompleteChoice = {
+export interface AutoCompleteChoice {
   name: string
   value: string
   description?: string
 }
 
-type AutocompleteProps = {
+interface AutocompleteProps {
   choices: AutoCompleteChoice[]
   onSelect: (choice: string) => void
   selectedIndex: number

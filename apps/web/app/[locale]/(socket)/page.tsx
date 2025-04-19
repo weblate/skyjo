@@ -15,10 +15,10 @@ import Image from "next/image"
 import { use } from "react"
 import IndexPage from "./IndexPage"
 
-type SearchParams = {
+interface SearchParams {
   gameCode?: string
 }
-type IndexServerPageProps = {
+interface IndexServerPageProps {
   searchParams: Promise<SearchParams>
 }
 const IndexServerPage = (props: IndexServerPageProps) => {

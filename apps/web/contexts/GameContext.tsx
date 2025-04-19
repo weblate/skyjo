@@ -58,7 +58,7 @@ import { toast } from "sonner"
 
 dayjs.extend(utc)
 
-type GameContext = {
+interface GameContext {
   game: GameToJson
   player: PlayerToJson
   opponents: Opponents

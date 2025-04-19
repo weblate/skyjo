@@ -36,16 +36,17 @@ export type ClientToServerEvents = ClientToServerGameEvents &
   ClientToServerBanEvents &
   ClientToServerReportEvents
 
-export type ServerToClientEvents = ServerToClientGameEvents &
-  ServerToClientChatEvents &
-  ServerToClientKickEvents &
-  ServerToClientLobbyEvents &
-  ServerToClientPlayerEvents &
-  ServerToClientAfkEvents &
-  ServerToClientBanEvents &
-  ServerToClientErrorEvents
+export interface ServerToClientEvents
+  extends ServerToClientGameEvents,
+    ServerToClientChatEvents,
+    ServerToClientKickEvents,
+    ServerToClientLobbyEvents,
+    ServerToClientPlayerEvents,
+    ServerToClientAfkEvents,
+    ServerToClientBanEvents,
+    ServerToClientErrorEvents {}
 
-export type SocketData = {
+export interface SocketData {
   gameCode: string
   playerId: string
 }

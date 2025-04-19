@@ -17,7 +17,7 @@ import { useLocalStorage } from "react-use"
 //   gameStarting: new Howl({ src: ["/sounds/game-starting.ogg"] }),
 // }
 
-type LobbyCountdownProps = {
+interface LobbyCountdownProps {
   gameCode: string
   className?: string
 }
@@ -148,7 +148,7 @@ export const LobbyCountdown = ({
   )
 }
 
-type PlayerViewProps = {
+interface PlayerViewProps {
   countdown: number | null
   game: ReturnType<typeof useGame>["game"]
   className?: string
@@ -179,7 +179,7 @@ const PlayerView = ({ countdown, game, className }: PlayerViewProps) => {
   )
 }
 
-type HostViewProps = {
+interface HostViewProps {
   countdown: number | null
   hasMinPlayers: boolean
   isLoading: boolean

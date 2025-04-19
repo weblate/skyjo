@@ -11,11 +11,10 @@ import { useGame } from "@/contexts/GameContext"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 
-type ScoreDialogProps = {
+interface ScoreDialogProps {
   open: boolean
   onOpenChange: Dispatch<SetStateAction<boolean>>
 }
-
 const ScoreDialog = ({ open, onOpenChange }: ScoreDialogProps) => {
   const t = useTranslations("components.ScoreDialog")
   const { game } = useGame()

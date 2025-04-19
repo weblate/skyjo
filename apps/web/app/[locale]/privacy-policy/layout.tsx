@@ -5,13 +5,13 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-type PrivacyPolicyLayoutParams = {
+interface PrivacyPolicyLayoutParams {
   locale: Locales
 }
-export type PrivacyPolicyLayoutProps = Readonly<{
+export interface PrivacyPolicyLayoutProps {
   children: React.ReactNode
   params: Promise<PrivacyPolicyLayoutParams>
-}>
+}
 
 export async function generateMetadata(props: PrivacyPolicyLayoutProps) {
   const { locale } = await props.params

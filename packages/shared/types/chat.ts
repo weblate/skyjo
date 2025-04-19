@@ -4,20 +4,20 @@ import type {
   UserMessageType,
 } from "@skymo/core"
 
-export type UserChatMessage = {
+export interface UserChatMessage {
   id: string
   username: string
   message: string
   type: UserMessageType
 }
 
-export type SystemChatMessage = {
+export interface SystemChatMessage {
   id: string
   message: string
   type: SystemMessageType
 }
 
-export type ServerChatMessage = {
+export interface ServerChatMessage {
   id: string
   username: string
   message: ServerMessageType

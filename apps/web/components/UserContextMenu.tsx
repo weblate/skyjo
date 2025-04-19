@@ -5,8 +5,8 @@ import {
 import { useBan } from "@/contexts/BanContext"
 import { useChat } from "@/contexts/ChatContext"
 import { useGame } from "@/contexts/GameContext"
-import { useReport } from "@/contexts/ReportContext"
 import { useKick } from "@/contexts/KickContext"
+import { useReport } from "@/contexts/ReportContext"
 import { isHost } from "@/lib/game"
 import { PlayerToJson } from "@skymo/core"
 import {
@@ -18,7 +18,7 @@ import {
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-type UserContextMenuProps = {
+interface UserContextMenuProps {
   player: PlayerToJson
   reportMessageId?: string
 }

@@ -2,10 +2,9 @@
 
 import { useRules } from "@/contexts/RulesContext"
 
-type FooterRulesLinkProps = {
+interface FooterRulesLinkProps {
   text: string
 }
-
 const FooterRulesLink = ({ text }: FooterRulesLinkProps) => {
   const { openRules } = useRules()
 

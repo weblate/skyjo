@@ -24,13 +24,12 @@ const ChatNotificationVariant = cva(
   },
 )
 
-type ChatDesktopViewProps = {
+interface ChatDesktopViewProps {
   open: boolean
   toggleOpening: () => void
   disabled?: boolean
   className?: ClassValue
 }
-
 const ChatDesktopView = ({
   open,
   toggleOpening,

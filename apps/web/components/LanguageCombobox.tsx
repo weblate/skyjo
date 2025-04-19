@@ -29,7 +29,7 @@ import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
 import { useMemo, useState } from "react"
 
-type LocalListProps = {
+interface LocalListProps {
   currentLocale: Locales
   updateLocale: (locale: Locales) => void
   t: ReturnType<typeof useTranslations<"components.LanguageCombobox">>

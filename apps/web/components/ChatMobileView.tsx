@@ -15,13 +15,12 @@ import { useTranslations } from "next-intl"
 import ChatForm from "./ChatForm"
 import { ChatMessageList } from "./ChatMessageList"
 
-type ChatDrawerProps = {
+interface ChatDrawerProps {
   open: boolean
   toggleOpening: () => void
   disabled?: boolean
   className?: ClassValue
 }
-
 const ChatMobileView = ({
   open,
   toggleOpening,

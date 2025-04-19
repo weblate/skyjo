@@ -7,10 +7,9 @@ import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 
-type SelectAvatarProps = {
+interface SelectAvatarProps {
   containerClassName?: string
 }
-
 const SelectAvatar = ({ containerClassName }: SelectAvatarProps) => {
   const { avatarIndex, setAvatarIndex, getAvatar } = useUser()
   const tAvatar = useTranslations("utils.avatar")

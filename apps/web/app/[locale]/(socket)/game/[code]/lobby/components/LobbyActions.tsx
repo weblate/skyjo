@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { useTranslations } from "next-intl"
 import { LobbyCountdown } from "./LobbyCountdown"
 
-type LobbyActionsProps = {
+interface LobbyActionsProps {
   gameCode: string
   className?: string
 }

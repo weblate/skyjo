@@ -8,7 +8,7 @@ import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { ClassValue } from "clsx"
 import { useEffect, useState } from "react"
 
-type ChatProps = {
+interface ChatProps {
   className?: ClassValue
   disabled?: boolean
 }

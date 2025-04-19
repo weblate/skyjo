@@ -12,10 +12,9 @@ import {
 } from "react"
 import { toast } from "sonner"
 
-type BanContext = {
+interface BanContext {
   banPlayer: (targetId: string) => void
 }
-
 const BanContext = createContext<BanContext | undefined>(undefined)
 
 export const BanProvider = ({ children }: PropsWithChildren) => {

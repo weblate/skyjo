@@ -8,7 +8,7 @@ import { getLastGameIfPossible } from "@/utils/reconnection"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-type GameLobbyButtonsProps = {
+interface GameLobbyButtonsProps {
   gameCode?: string
   hideReconnectButton?: boolean
 }

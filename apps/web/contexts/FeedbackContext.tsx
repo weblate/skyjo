@@ -9,7 +9,7 @@ import {
   useState,
 } from "react"
 
-type FeedbackContext = {
+interface FeedbackContext {
   openFeedback: () => void
 }
 const FeedbackContext = createContext<FeedbackContext | undefined>(undefined)

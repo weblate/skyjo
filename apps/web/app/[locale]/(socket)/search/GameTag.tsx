@@ -19,7 +19,7 @@ const tagVariants = cva(
   },
 )
 
-type GameTagProps = {
+interface GameTagProps {
   tag: PublicGameTag
   showXIconOnHover?: boolean
   onClick: (tag: PublicGameTag) => void

@@ -35,7 +35,7 @@ const wizzSound = new Howl({
   src: "/sounds/wizz.ogg",
 })
 
-type ChatContext = {
+interface ChatContext {
   chat: ChatMessage[]
   unreadMessages: ChatMessage[]
   hasUnreadMessage: boolean

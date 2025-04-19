@@ -1,7 +1,7 @@
 import { routing } from "@/i18n/routing"
 import { MetadataRoute } from "next"
 
-type Page = {
+interface Page {
   name: string
   priority: number
   changefreq?:

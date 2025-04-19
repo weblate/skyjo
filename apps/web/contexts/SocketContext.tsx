@@ -41,7 +41,7 @@ dayjs.extend(utc)
 
 export type GameSocket = Socket<ServerToClientEvents, ClientToServerEvents>
 
-type SocketContext = {
+interface SocketContext {
   socket: GameSocket | null
   createGame: (player: CreatePlayer, isPrivate: boolean) => void
   joinGame: (

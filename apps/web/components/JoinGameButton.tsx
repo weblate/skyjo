@@ -8,7 +8,7 @@ import { ClassValue } from "clsx"
 import { useTranslations } from "next-intl"
 import { Dispatch, ReactNode, SetStateAction } from "react"
 
-type JoinGameButtonProps = {
+interface JoinGameButtonProps {
   gameCode: string
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>

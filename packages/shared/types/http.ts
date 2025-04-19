@@ -7,7 +7,7 @@ export type PublicGameTag =
   | "short-game"
   | "long-game"
 
-export type PublicGame = Pick<Game, "code"> & {
+export interface PublicGame extends Pick<Game, "code"> {
   hostName: string
   maxPlayers: number
   players: Pick<PlayerToJson, "name" | "avatar" | "id">[]

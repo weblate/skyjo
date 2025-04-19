@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button"
 import { useRules } from "@/contexts/RulesContext"
 
-type RulesButtonProps = {
+interface RulesButtonProps {
   text: string
 }
 

@@ -8,11 +8,12 @@ import {
 } from "@/components/ui/tooltip"
 import { useGame } from "@/contexts/GameContext"
 import { getHost, isHost } from "@/lib/game"
+import { ClassValue } from "clsx"
 import { ArrowLeftIcon, LockIcon, UnlockIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 
-type LobbyHeaderProps = {
-  className?: string
+interface LobbyHeaderProps {
+  className?: ClassValue
 }
 
 export const LobbyHeader = ({ className }: LobbyHeaderProps) => {

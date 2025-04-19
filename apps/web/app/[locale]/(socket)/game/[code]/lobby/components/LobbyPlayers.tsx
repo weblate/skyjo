@@ -11,10 +11,11 @@ import {
 import { useGame } from "@/contexts/GameContext"
 import { isHost } from "@/lib/game"
 import { Constants as CoreConstants } from "@skymo/core"
+import { ClassValue } from "clsx"
 import { useTranslations } from "next-intl"
 
-type LobbyPlayersProps = {
-  className?: string
+interface LobbyPlayersProps {
+  className?: ClassValue
 }
 
 export const LobbyPlayers = ({ className }: LobbyPlayersProps) => {

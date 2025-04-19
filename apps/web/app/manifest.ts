@@ -6,7 +6,7 @@ type ClientMode =
   | "navigate-existing"
   | "navigate-new"
 
-type Manifest = MetadataRoute.Manifest & {
+interface Manifest extends MetadataRoute.Manifest {
   handle_links?: "auto" | "preferred" | "not-preferred"
   launch_handler?: {
     client_mode: ClientMode | Array<ClientMode>

@@ -3,11 +3,10 @@ import { PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 
-type Props = {
+interface ScoreSheetProps {
   players: PlayerToJson[]
 }
-
-const ScoreSheet = ({ players }: Props) => {
+const ScoreSheet = ({ players }: ScoreSheetProps) => {
   const t = useTranslations("components.ScoreSheet")
 
   const [open, setOpen] = useState(false)

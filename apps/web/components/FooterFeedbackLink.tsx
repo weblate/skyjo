@@ -2,10 +2,9 @@
 
 import { useFeedback } from "@/contexts/FeedbackContext"
 
-type FooterFeedbackLinkProps = {
+interface FooterFeedbackLinkProps {
   text: string
 }
-
 const FooterFeedbackLink = ({ text }: FooterFeedbackLinkProps) => {
   const { openFeedback } = useFeedback()
 

@@ -93,7 +93,7 @@ const OpponentsMobileView = () => {
   )
 }
 
-type OpponentListProps = {
+interface OpponentListProps {
   opponents: PlayerToJson[]
   selectedOpponentIndex: number
   setSelectedOpponentIndex: (index: number) => void
@@ -127,7 +127,7 @@ const OpponentList = ({
   )
 }
 
-type OpponentItemProps = {
+interface OpponentItemProps {
   opponent: PlayerToJson
   index: number
   isSelected: boolean

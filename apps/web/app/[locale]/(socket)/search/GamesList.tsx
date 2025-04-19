@@ -7,7 +7,7 @@ import Image from "next/image"
 import { Dispatch, Fragment, SetStateAction } from "react"
 import { GameTag } from "./GameTag"
 
-type GamesListProps = {
+interface GamesListProps {
   games: PublicGame[] | undefined
   isFetching: boolean
   buttonLoading: boolean
@@ -65,7 +65,7 @@ export const GamesList = ({
   )
 }
 
-type PublicGameRowProps = {
+interface PublicGameRowProps {
   game: PublicGame
   loading: boolean
   setLoading: Dispatch<SetStateAction<boolean>>

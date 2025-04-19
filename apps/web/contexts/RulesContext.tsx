@@ -9,7 +9,7 @@ import {
   useState,
 } from "react"
 
-type RulesContext = {
+interface RulesContext {
   openRules: () => void
   isRulesOpen: boolean
 }

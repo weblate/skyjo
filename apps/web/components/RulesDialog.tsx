@@ -9,11 +9,10 @@ import {
 } from "@/components/ui/dialog"
 import { useTranslations } from "next-intl"
 
-type RulesDialogProps = {
+interface RulesDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
 }
-
 const RulesDialog = ({ open, onOpenChange }: RulesDialogProps) => {
   const t = useTranslations("components.RulesDialog")
 

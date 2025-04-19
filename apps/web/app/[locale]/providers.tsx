@@ -9,13 +9,16 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { LazyMotion, domAnimation } from "motion/react"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
-import { PropsWithChildren, useEffect } from "react"
+import { useEffect } from "react"
 import { Toaster } from "sonner"
 import PostHogPageView from "./PostHogPageView"
 
 const queryClient = new QueryClient()
 
-type ProvidersProps = PropsWithChildren<{ locale: Locales }>
+interface ProvidersProps {
+  children: React.ReactNode
+  locale: Locales
+}
 const Providers = ({ children, locale }: ProvidersProps) => {
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {

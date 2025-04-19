@@ -2,7 +2,7 @@ import type { GameDb } from "@/types/game.js"
 import type { SettingsToJson } from "@/types/settings.js"
 import { Constants, type FirstPlayerPenaltyType } from "../constants.js"
 
-type UpdateSettings = {
+interface UpdateSettings {
   maxPlayers?: number
   removeIdenticalColumn?: boolean
   removeIdenticalRow?: boolean

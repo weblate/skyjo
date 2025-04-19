@@ -19,10 +19,9 @@ const chatFormSchema = z.object({
   message: z.string().max(200),
 })
 
-type ChatFormProps = {
+interface ChatFormProps {
   chatOpen: boolean
 }
-
 const ChatForm = ({ chatOpen }: ChatFormProps) => {
   const { player, opponents } = useGame()
   const {
