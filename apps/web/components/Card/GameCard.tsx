@@ -8,6 +8,7 @@ import { CardToJson } from "@skymo/core"
 import { ClassValue } from "clsx"
 import { TargetAndTransition, m } from "motion/react"
 import { useEffect, useState } from "react"
+
 const FLIP_DURATION_MS = 500
 
 const cardPositionClass: ClassValue =
@@ -79,7 +80,7 @@ export const GameCard = ({
           shadow: false,
           type: "hidden",
         }),
-        "card-perspective-1000",
+        "group/card card-perspective-1000 focus-visible:outline-none",
         className,
       )}
       onClick={handleClick}
@@ -106,16 +107,22 @@ export const GameCard = ({
         )}
       >
         <Card
-          className={cn(cardPositionClass, "bg-white")}
+          className={cn(
+            cardPositionClass,
+            "bg-white",
+            "group-focus-visible/card:outline group-focus-visible/card:outline-2 group-focus-visible/card:outline-black group-focus-visible/card:-outline-offset-[6px]",
+          )}
           size={size}
-          disabled={disabled}
           as="div"
         />
         <Card
           value={displayedValue}
-          className={cn(cardPositionClass, "card-rotate-y-180")}
+          className={cn(
+            cardPositionClass,
+            "card-rotate-y-180",
+            "group-focus-visible/card:outline group-focus-visible/card:outline-2 group-focus-visible/card:outline-black group-focus-visible/card:-outline-offset-[6px]",
+          )}
           size={size}
-          disabled={disabled}
           as="div"
         />
       </div>

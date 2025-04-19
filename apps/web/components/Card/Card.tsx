@@ -4,7 +4,7 @@ import { ClassValue } from "clsx"
 import { Trash2Icon } from "lucide-react"
 
 export const cardVariants = cva(
-  "text-black border-2 border-black flex justify-center items-center select-none focus-visible:outline-black focus-visible:-outline-offset-2",
+  "text-black border-2 border-black flex justify-center items-center select-none focus-visible:outline-black focus-visible:-outline-offset-2 transition-all duration-200",
   {
     variants: {
       size: {
