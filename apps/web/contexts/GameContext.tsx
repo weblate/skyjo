@@ -200,6 +200,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     console.log("onGameUpdate", operations)
     setPendingAction(null)
     setLastClickedPile(null)
+
     setGame((prev) => {
       if (!prev) return prev
       const prevState = structuredClone(prev)
@@ -209,6 +210,9 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }
 
   const onGameFix = (operations: GameOperation[]) => {
+    setPendingAction(null)
+    setLastClickedPile(null)
+
     console.log("onGameFix", operations)
     setGame((prev) => {
       if (!prev) return prev
@@ -312,8 +316,14 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }) => {
     if (isActionPending) return
 
-    socket!.emit(params.event, ...params.data)
+    try {
+      socket!.timeout(3000).emit(params.event, ...params.data)
+    } catch (_error) {
+      setLastClickedPile(null)
+      setPendingAction(null)
+    }
   }
+
   const updateMaxPlayers = (maxPlayers: UpdateMaxPlayers) => {
     if (!host) return
 
