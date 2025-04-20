@@ -1,3 +1,4 @@
+import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import type { GameSocket } from "@/socketio/types/gameSocket.js"
 import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
 import { Constants as CoreConstants } from "@skymo/core"
@@ -6,6 +7,8 @@ import type { LastGame } from "@skymo/shared/validations"
 import { BaseService } from "./base.service.js"
 
 export class PlayerService extends BaseService {
+  private readonly countdownQueue = GameStartCountdownQueueService.getInstance()
+
   async onConnectionLost(socket: GameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
@@ -23,6 +26,13 @@ export class PlayerService extends BaseService {
     }
 
     const stateManager = new GameStateTracker(game)
+
+    if (
+      game.isInLobby() &&
+      (await this.countdownQueue.coundownExists(game.code))
+    ) {
+      await this.countdownQueue.cancelCountdown(game.code)
+    }
 
     if (!game.isPlaying()) {
       await game.disconnectPlayer(player)
@@ -58,6 +68,13 @@ export class PlayerService extends BaseService {
         )
       }
 
+      if (
+        game.isInLobby() &&
+        (await this.countdownQueue.coundownExists(game.code))
+      ) {
+        await this.countdownQueue.cancelCountdown(game.code)
+      }
+
       await game.setPlayerToLeave(player)
 
       const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
@@ -66,7 +83,6 @@ export class PlayerService extends BaseService {
       await this.updateAndSendGame(game, stateManager)
       await socket.leave(game.code)
     } catch (error) {
-      // If the game is not found, it means the player wasn't in a game so we don't need to do anything
       if (
         error instanceof CError &&
         error.code === ErrorConstants.ERROR.GAME_NOT_FOUND

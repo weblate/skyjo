@@ -95,6 +95,9 @@ describe("PlayerService", () => {
       const disconnectPlayerSpy = vi.spyOn(game, "disconnectPlayer")
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      vi.spyOn(service["countdownQueue"], "coundownExists").mockResolvedValue(
+        false,
+      )
 
       await service.onConnectionLost(socket)
 
@@ -125,6 +128,60 @@ describe("PlayerService", () => {
       await service.onConnectionLost(socket)
 
       expect(disconnectPlayerSpy).toHaveBeenCalledWith(player)
+    })
+
+    it("should cancel countdown if game is in lobby and countdown exists", async () => {
+      const player = new Player(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(player)
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+      game.status = CoreConstants.GAME_STATUS.LOBBY
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      const cancelCountdownSpy = vi
+        .spyOn(service["countdownQueue"], "cancelCountdown")
+        .mockResolvedValue()
+      vi.spyOn(service["countdownQueue"], "coundownExists").mockResolvedValue(
+        true,
+      )
+
+      await service.onConnectionLost(socket)
+      expect(cancelCountdownSpy).toHaveBeenCalledWith(game.code)
+    })
+
+    it("should not cancel countdown if game is in lobby and countdown does not exist", async () => {
+      const player = new Player(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(player)
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+      game.status = CoreConstants.GAME_STATUS.LOBBY
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      const cancelCountdownSpy = vi
+        .spyOn(service["countdownQueue"], "cancelCountdown")
+        .mockResolvedValue()
+      vi.spyOn(service["countdownQueue"], "coundownExists").mockResolvedValue(
+        false,
+      )
+
+      await service.onConnectionLost(socket)
+      expect(cancelCountdownSpy).not.toHaveBeenCalled()
     })
   })
 
@@ -322,6 +379,60 @@ describe("PlayerService", () => {
       expect(removeGameSpy).toHaveBeenCalledWith(game.code)
 
       removeGameSpy.mockClear()
+    })
+
+    it("should cancel countdown if game is in lobby and countdown exists", async () => {
+      const player = new Player(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(player)
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+      game.status = CoreConstants.GAME_STATUS.LOBBY
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      const cancelCountdownSpy = vi
+        .spyOn(service["countdownQueue"], "cancelCountdown")
+        .mockResolvedValue()
+      vi.spyOn(service["countdownQueue"], "coundownExists").mockResolvedValue(
+        true,
+      )
+
+      await service.onLeave(socket)
+      expect(cancelCountdownSpy).toHaveBeenCalledWith(game.code)
+    })
+
+    it("should not cancel countdown if game is in lobby and countdown does not exist", async () => {
+      const player = new Player(
+        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      const game = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(player)
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+      game.status = CoreConstants.GAME_STATUS.LOBBY
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+      const cancelCountdownSpy = vi
+        .spyOn(service["countdownQueue"], "cancelCountdown")
+        .mockResolvedValue()
+      vi.spyOn(service["countdownQueue"], "coundownExists").mockResolvedValue(
+        false,
+      )
+
+      await service.onLeave(socket)
+      expect(cancelCountdownSpy).not.toHaveBeenCalled()
     })
   })
 
