@@ -125,6 +125,9 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const [game, setGame] = useState<GameToJson>()
 
   const [pendingAction, setPendingAction] = useState<string | null>(null)
+  const [pendingActionCleanup, setPendingActionCleanup] = useState<
+    (() => void) | null
+  >(null)
   const [lastClickedPile, setLastClickedPile] = useState<
     "draw" | "discard" | null
   >(null)
@@ -149,6 +152,8 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     return () => {
       destroyGameListeners()
       destroyAfkListeners()
+
+      pendingActionCleanup?.()
     }
   }, [socket, gameCode])
 
@@ -198,6 +203,8 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
 
   const onGameUpdate = (operations: GameOperation) => {
     console.log("onGameUpdate", operations)
+    if (pendingActionCleanup) pendingActionCleanup()
+    setPendingActionCleanup(null)
     setPendingAction(null)
     setLastClickedPile(null)
 
@@ -210,6 +217,8 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }
 
   const onGameFix = (operations: GameOperation[]) => {
+    if (pendingActionCleanup) pendingActionCleanup()
+    setPendingActionCleanup(null)
     setPendingAction(null)
     setLastClickedPile(null)
 
@@ -305,6 +314,16 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   //#region actions
   const ackCallback = (event: string) => () => {
     setPendingAction(event)
+
+    const timeoutId = setTimeout(() => {
+      setPendingAction((current) => (current === event ? null : current))
+      setPendingActionCleanup(null)
+      setLastClickedPile(null)
+    }, 5000)
+
+    const cleanup = () => clearTimeout(timeoutId)
+    setPendingActionCleanup(() => cleanup)
+    return cleanup
   }
 
   const sendWithAck = <
@@ -319,6 +338,8 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     try {
       socket!.timeout(3000).emit(params.event, ...params.data)
     } catch (_error) {
+      if (pendingActionCleanup) pendingActionCleanup()
+      setPendingActionCleanup(null)
       setLastClickedPile(null)
       setPendingAction(null)
     }
