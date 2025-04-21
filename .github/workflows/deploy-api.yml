@@ -71,7 +71,10 @@ jobs:
             cd skymo
             git pull
             docker compose down api
+
+            docker logout ghcr.io
             docker compose pull api
+
             docker compose up -d api
 
             docker volume prune -f
