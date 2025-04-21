@@ -1,7 +1,7 @@
 {
   "name": "@skymo/cleanup-worker",
   "description": "Cleanup worker for Skymo",
-  "version": "1.54.0",
+  "version": "1.54.2",
   "private": true,
   "type": "module",
   "scripts": {
