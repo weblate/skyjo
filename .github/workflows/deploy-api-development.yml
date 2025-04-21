@@ -47,8 +47,10 @@ jobs:
 
             git pull
 
+            docker logout ghcr.io
+
             docker compose -f compose.dev.yml down dev-api
             docker compose -f compose.dev.yml pull dev-api
-            docker compose -f compose.dev.yml up -d dev-api
+            docker compose -f compose.dev.yml up -d dev-api --build
 
             docker volume prune -f
