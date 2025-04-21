@@ -1,0 +1,23 @@
+---
+description: 
+globs: packages/core/**
+alwaysApply: false
+---
+# Core Game Logic Package (`packages/core`)
+
+This package contains the core game logic, types, and validation for Skyjo. It is used by both the API and web app.
+
+## Key Files & Directories:
+- **[`src/`](mdc:packages/core/src)**: Main source code for game logic and types.
+  - **[`class/`](mdc:packages/core/src/class)**: Main game classes (e.g., `Game`, `Player`, `Settings`, `Card`, `KickVote`).
+  - **[`types/`](mdc:packages/core/src/types)**: TypeScript types for game entities and state.
+  - **[`validations/`](mdc:packages/core/src/validations)**: Zod schemas for validating game actions and state.
+  - **[`constants.ts`](mdc:packages/core/src/constants.ts)**: Game constants and enums.
+  - **[`index.ts`](mdc:packages/core/src/index.ts)**: Entry point for exports.
+- **[`tests/`](mdc:packages/core/tests)**: Unit tests for core logic.
+- **[`package.json`](mdc:packages/core/package.json)**: Dependencies and scripts.
+- **[`tsconfig.json`](mdc:packages/core/tsconfig.json)**: TypeScript configuration.
+
+## Notes
+- All logic is pure TypeScript, no external dependencies except for validation.
+- Designed for maximum reusability and testability.

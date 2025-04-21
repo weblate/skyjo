@@ -1,0 +1,71 @@
+---
+description: 
+globs: *tsx,*.ts
+alwaysApply: false
+---
+# TypeScript Usage Guide
+
+This project uses strict TypeScript for all source code. Follow these guidelines for consistency, safety, and maintainability:
+
+## General Principles
+
+- **No `any`**: All types must be explicit and exact. Avoid `any` and use precise interfaces or types.
+- **Type Inference**: Prefer inference types but allow explicit types when it is non-obvious.
+- **Strict Mode**: The project enforces strict type checking (`strict: true` in `tsconfig.json`).
+
+## File Structure
+
+- All TypeScript files use the `.ts` or `.tsx` extension.
+- Source code is organized under `src/` (see [Project Structure Guide](mdc:apps/api/README.md) for details).
+
+## Types & Interfaces
+
+- Always use `interface`.
+- Only use `type` if you _need specific features_ that is only with `type`.
+- Prefer named types over inline types for clarity and reusability.
+- All exported functions, classes, and components must have explicit type annotations.
+
+## React Components
+
+- Define Props type at the end of the destructured object functional components.
+  - Example: `const Component = ({ children, disabled }: ComponentProps) => {`
+- Props interfaces should be named as `<ComponentName>Props`.
+- Avoid default exports for components; use named exports for clarity.
+
+## Utility Types
+
+- Use built-in utility types (`Partial`, `Pick`, `Omit`, `Record`, etc.) to avoid repetition.
+- Use generics for reusable logic, but keep them as simple as possible.
+
+## Type Safety
+
+- Always validate external data (e.g., API responses, environment variables) using runtime validation libraries (e.g., `zod`).
+- Never trust untyped or loosely typed data.
+
+## Linting & Formatting
+
+- The project uses Biome for code style and formatting.
+- TypeScript-specific lint rules are enforced (see `biome.json`).
+
+## Example
+
+```typescript
+// Good
+interface User {
+  id: string;
+  email: string;
+  firstName?: string;
+  lastName?: string;
+}
+
+const formatUserDisplayName = (user: User) => {
+  return (
+    [user.firstName, user.lastName].filter(Boolean).join(" ") || user.email
+  );
+};
+```
+
+## References
+
+- [tsconfig.json](mdc:apps/api/tsconfig.json)
+- [TypeScript Handbook](mdc:https:/www.typescriptlang.org/docs/handbook/intro.html)

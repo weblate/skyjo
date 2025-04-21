@@ -1,0 +1,20 @@
+---
+description: 
+globs: packages/logger/**
+alwaysApply: false
+---
+# Logger Package (`packages/logger`)
+
+This package provides a reusable logging utility for the Skyjo monorepo, with support for environment-based configuration.
+
+## Key Files & Directories:
+- **[`src/`](mdc:packages/logger/src)**: Main source code for the logger utility.
+  - **[`Logger.ts`](mdc:packages/logger/src/Logger.ts)**: Logger class implementation.
+  - **[`index.ts`](mdc:packages/logger/src/index.ts)**: Entry point for exports.
+- **[`env.ts`](mdc:packages/logger/env.ts)**: Environment variable validation for logger config.
+- **[`package.json`](mdc:packages/logger/package.json)**: Dependencies and scripts.
+- **[`tsconfig.json`](mdc:packages/logger/tsconfig.json)**: TypeScript configuration.
+
+## Notes
+- Used by API, workers, and other packages for consistent logging.
+- Type-safe and environment-aware.

@@ -1,0 +1,21 @@
+---
+description: 
+globs: packages/error/**
+alwaysApply: false
+---
+# Error Package (`packages/error`)
+
+This package provides custom error types and error handling utilities for the Skyjo monorepo.
+
+## Key Files & Directories:
+- **[`src/`](mdc:packages/error/src)**: Main source code for error types and utilities.
+  - **[`CError.ts`](mdc:packages/error/src/CError.ts)**: Custom error class implementation.
+  - **[`constants.ts`](mdc:packages/error/src/constants.ts)**: Error codes and constants.
+  - **[`index.ts`](mdc:packages/error/src/index.ts)**: Entry point for exports.
+  - **[`test/`](mdc:packages/error/src/test)**: Test helpers for error handling (e.g., `expect-extend.ts`).
+- **[`package.json`](mdc:packages/error/package.json)**: Dependencies and scripts.
+- **[`tsconfig.json`](mdc:packages/error/tsconfig.json)**: TypeScript configuration.
+
+## Notes
+- Used by API, web, and workers for consistent error handling.
+- Type-safe and extensible.

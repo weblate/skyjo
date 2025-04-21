@@ -1,0 +1,20 @@
+---
+description: 
+globs: apps/cleanup-worker/**
+alwaysApply: false
+---
+# Cleanup Worker App Structure (`apps/cleanup-worker`)
+
+This package is a background worker for cleaning up expired or orphaned data in the Skyjo system.
+
+## Key Files & Directories:
+- **[`src/`](mdc:apps/cleanup-worker/src)**: Main worker source code and logic.
+- **[`env.ts`](mdc:apps/cleanup-worker/env.ts)**: Environment variable validation and definition.
+- **[`package.json`](mdc:apps/cleanup-worker/package.json)**: Dependencies and scripts for the worker.
+- **[`tsconfig.json`](mdc:apps/cleanup-worker/tsconfig.json)**: TypeScript configuration.
+- **[`Dockerfile`](mdc:apps/cleanup-worker/Dockerfile)**: Docker build instructions for deployment.
+- **[`README.md`](mdc:apps/cleanup-worker/README.md)**: Project documentation.
+
+## Notes
+- Runs as a separate process from the API/web apps.
+- Uses strict TypeScript and environment validation for safety.

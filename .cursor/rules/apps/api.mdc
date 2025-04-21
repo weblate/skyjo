@@ -1,0 +1,41 @@
+---
+description: 
+globs: apps/api/**
+alwaysApply: false
+---
+# API Project Structure (`apps/api`)
+
+This directory contains the backend API service for the Skyjo application.
+
+## Key Files & Directories:
+
+- **[`src/`](mdc:apps/api/src)**: Main source code for the API.
+  - **[`index.ts`](mdc:apps/api/src/index.ts)**: API entry point; sets up HTTP and Socket.IO servers.
+  - **[`http/`](mdc:apps/api/src/http)**: HTTP layer (REST endpoints, middlewares, services).
+    - **[`routers/`](mdc:apps/api/src/http/routers)**: Route definitions (e.g., [`game.router.ts`](mdc:apps/api/src/http/routers/game.router.ts), [`feedback.router.ts`](mdc:apps/api/src/http/routers/feedback.router.ts)).
+    - **[`services/`](mdc:apps/api/src/http/services)**: Business logic for HTTP routes.
+    - **[`middlewares/`](mdc:apps/api/src/http/middlewares)**: HTTP middleware (e.g., [`rateLimiter.ts`](mdc:apps/api/src/http/middlewares/rateLimiter.ts)).
+  - **[`socketio/`](mdc:apps/api/src/socketio)**: Real-time event handling with Socket.IO.
+    - **[`index.ts`](mdc:apps/api/src/socketio/index.ts)**: Socket.IO server setup.
+    - **[`routers/`](mdc:apps/api/src/socketio/routers)**: Socket event routers (e.g., [`game.router.ts`](mdc:apps/api/src/socketio/routers/game.router.ts), [`chat.router.ts`](mdc:apps/api/src/socketio/routers/chat.router.ts)).
+    - **[`services/`](mdc:apps/api/src/socketio/services)**: Business logic for socket events.
+    - **[`types/`](mdc:apps/api/src/socketio/types)**: TypeScript types for socket events and payloads.
+    - **[`utils/`](mdc:apps/api/src/socketio/utils)**: Socket-related utilities (e.g., [`SocketManager.ts`](mdc:apps/api/src/socketio/utils/SocketManager.ts)).
+  - **[`queues/`](mdc:apps/api/src/queues)**: Game-related queue services (e.g., AFK, countdowns, vote expiration).
+  - **[`redis/`](mdc:apps/api/src/redis)**: Redis client and repositories for game state, messages, and votes.
+
+- **[`tests/`](mdc:apps/api/tests)**: Unit and integration tests.
+  - Includes mocks, setup, and coverage reports.
+  - Queue and socketio services/utilities have dedicated test subfolders.
+
+- **[`env.ts`](mdc:apps/api/env.ts)**: Environment variable validation and definition (using `zod`).
+- **[`package.json`](mdc:apps/api/package.json)**: Project dependencies and scripts.
+- **[`tsconfig.json`](mdc:apps/api/tsconfig.json)**: TypeScript configuration for development.
+- **[`tsconfig.prod.json`](mdc:apps/api/tsconfig.prod.json)**: TypeScript configuration for production builds.
+- **[`Dockerfile`](mdc:apps/api/Dockerfile)**: Docker build instructions for the API.
+- **[`vitest.config.ts`](mdc:apps/api/vitest.config.ts)**: Vitest testing framework configuration.
+
+## Notes
+- Built with [Hono](mdc:https:/hono.dev) (HTTP) and [Socket.IO](mdc:https:/socket.io) (real-time).
+- Environment variables are strictly validated at startup for security.
+- Project is deployed via GitHub Actions on version tag push.

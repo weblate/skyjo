@@ -60,4 +60,6 @@ meili_data
 !.vscode/extensions.json
 .vercel
 
+# Task list
 TODO.md
+TASKS.md

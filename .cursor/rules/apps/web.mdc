@@ -1,0 +1,50 @@
+---
+description: 
+globs: apps/web/**
+alwaysApply: false
+---
+# Skymo Web App Structure Guide
+
+This project is a Next.js app for the Skymo game, located in [`apps/web`](mdc:apps/web).
+
+## Main Entry Points
+- **App root:** [`app/layout.tsx`](mdc:apps/web/app/layout.tsx)
+- **Locale-aware routing:** [`app/[locale]/`](mdc:apps/web/app/[locale])
+  - Main game and lobby: [`(socket)/game/[code]/`](mdc:apps/web/app/[locale]/(socket)/game/[code])
+  - Rules: [`rules/page.tsx`](mdc:apps/web/app/[locale]/rules/page.tsx)
+  - Privacy Policy: [`privacy-policy/page.tsx`](mdc:apps/web/app/[locale]/privacy-policy/page.tsx)
+  - Catch-all: [`[...rest]/page.tsx`](mdc:apps/web/app/[locale]/[...rest]/page.tsx)
+
+## Components
+- All UI and game components: [`components/`](mdc:apps/web/components)
+  - UI primitives: [`components/ui/`](mdc:apps/web/components/ui)
+  - Card-related: [`components/Card/`](mdc:apps/web/components/Card)
+
+## Contexts & State
+- React contexts for game, user, chat, etc: [`contexts/`](mdc:apps/web/contexts)
+- Custom hooks: [`hooks/`](mdc:apps/web/hooks)
+
+## Utilities & Types
+- Utility functions: [`utils/`](mdc:apps/web/utils)
+- Shared types: [`types/`](mdc:apps/web/types)
+- Game logic helpers: [`lib/`](mdc:apps/web/lib)
+
+## Internationalization
+- i18n helpers: [`i18n/`](mdc:apps/web/i18n)
+- Locale files: [`locales/`](mdc:apps/web/locales)
+
+## Styling
+- Tailwind config: [`tailwind.config.ts`](mdc:apps/web/tailwind.config.ts)
+- Global styles: [`app/globals.css`](mdc:apps/web/app/globals.css)
+
+## Testing
+- Test coverage and files: [`tests/`](mdc:apps/web/tests)
+
+## Project Metadata
+- Package/deps/scripts: [`package.json`](mdc:apps/web/package.json)
+- Next.js config: [`next.config.mjs`](mdc:apps/web/next.config.mjs)
+- Readme: [`README.md`](mdc:apps/web/README.md)
+
+---
+- All code is TypeScript, type-exact, and uses React best practices.
+- For new features, prefer minimal, self-documenting components and strict types.

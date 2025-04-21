@@ -1,0 +1,20 @@
+---
+description:
+globs:
+alwaysApply: true
+---
+# State Operations Package (`packages/state-operations`)
+
+This package provides pure functions for creating and applying game state operations in Skyjo. Used by both the API and web app for deterministic state changes.
+
+## Key Files & Directories:
+- **[`src/`](mdc:packages/state-operations/src)**: Main source code for state operation logic.
+  - **[`create.ts`](mdc:packages/state-operations/src/create.ts)**: Functions to create state operations.
+  - **[`apply.ts`](mdc:packages/state-operations/src/apply.ts)**: Functions to apply operations to game state.
+  - **[`types.ts`](mdc:packages/state-operations/src/types.ts)**: TypeScript types for operations and state.
+  - **[`index.ts`](mdc:packages/state-operations/src/index.ts)**: Entry point for exports.
+- **[`package.json`](mdc:packages/state-operations/package.json)**: Dependencies and scripts.
+- **[`tsconfig.json`](mdc:packages/state-operations/tsconfig.json)**: TypeScript configuration.
+
+## Notes
+- All logic is pure and deterministic for easy testing and replay.

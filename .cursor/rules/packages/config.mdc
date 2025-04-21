@@ -1,0 +1,18 @@
+---
+description: 
+globs: packages/config/**
+alwaysApply: false
+---
+# Config Package (`packages/config`)
+
+This package provides shared configuration files (JSON) for TypeScript and Node.js projects in the Skyjo monorepo.
+
+## Key Files & Directories:
+- **[`ts/`](mdc:packages/config/ts)**: TypeScript and Node.js base config files.
+  - **[`base-package.json`](mdc:packages/config/ts/base-package.json)**: Base config for package.json files.
+  - **[`base-node.json`](mdc:packages/config/ts/base-node.json)**: Base config for Node.js projects.
+  - **[`package.json`](mdc:packages/config/ts/package.json)**: Config package metadata.
+
+## Notes
+- Used as a dependency by other packages for consistent configuration.
+- No runtime logic; only static config files.

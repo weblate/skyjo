@@ -1,0 +1,19 @@
+---
+description: 
+globs: packages/shared/**
+alwaysApply: false
+---
+# Shared Types & Validation Package (`packages/shared`)
+
+This package provides shared TypeScript types and Zod validation schemas for use across the Skyjo monorepo (API, web, workers).
+
+## Key Files & Directories:
+- **[`types/`](mdc:packages/shared/types)**: Shared TypeScript types for sockets, HTTP, chat, and game events.
+  - **[`events/`](mdc:packages/shared/types/events)**: Event-specific types (e.g., game, player, lobby, chat, error).
+- **[`validations/`](mdc:packages/shared/validations)**: Zod schemas for validating API and socket payloads (e.g., chat, feedback, report, reconnect).
+- **[`package.json`](mdc:packages/shared/package.json)**: Dependencies and scripts.
+- **[`tsconfig.json`](mdc:packages/shared/tsconfig.json)**: TypeScript configuration.
+
+## Notes
+- All types and schemas are designed for maximum reusability and type safety.
+- No runtime logic; only types and validation.
