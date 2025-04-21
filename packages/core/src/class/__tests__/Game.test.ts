@@ -144,7 +144,7 @@ describe("Game", () => {
             connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
             afkCount: 0,
             consecutiveAfkCount: 0,
-            turnStartTime: new Date(),
+            turnStartTime: Date.now(),
             score: 10,
             scores: [5, 5],
             wantsReplay: true,

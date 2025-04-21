@@ -20,7 +20,7 @@ const turnTimerTextVariants = cva("text-sm", {
 
 interface TurnTimerProps {
   className?: string
-  turnStartTime: Date | null
+  turnStartTime: number | null
 }
 const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   const { game, gameStatus } = useGame()

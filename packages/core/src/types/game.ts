@@ -44,7 +44,7 @@ export interface GameDb {
     hasPlayedLastTurn: boolean
     afkCount: number
     consecutiveAfkCount: number
-    turnStartTime: Date | null
+    turnStartTime: number | null
     cards: Array<
       Array<{
         id: string

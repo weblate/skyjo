@@ -17,7 +17,7 @@ interface PlayerInterface {
   score: number
   wantsReplay: boolean
   hasPlayedLastTurn: boolean
-  turnStartTime: Date | null
+  turnStartTime: number | null
 
   toggleReplay(): void
   setCards(cardsValue: number[], cardSettings: Settings): void
@@ -45,7 +45,7 @@ export class Player implements PlayerInterface {
   scores: PlayerScores = []
   hasPlayedLastTurn = false
   wantsReplay: boolean = false
-  turnStartTime: Date | null = null
+  turnStartTime: number | null = null
   constructor(
     playerToCreate: CreatePlayer = {
       username: "",
@@ -224,10 +224,14 @@ export class Player implements PlayerInterface {
   resetRound() {
     this.cards = []
     this.hasPlayedLastTurn = false
-    this.turnStartTime = new Date()
+    this.turnStartTime = null
   }
 
-  toJson() {
+  startTurn(serverTimestamp?: number) {
+    this.turnStartTime = serverTimestamp ?? Date.now()
+  }
+
+  toJson(): PlayerToJson {
     return {
       id: this.id,
       name: this.name,
@@ -239,7 +243,7 @@ export class Player implements PlayerInterface {
       scores: this.scores,
       turnStartTime: this.turnStartTime,
       cards: this.cards.map((column) => column.map((card) => card.toJson())),
-    } satisfies PlayerToJson
+    }
   }
 
   //#region private methods

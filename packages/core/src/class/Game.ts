@@ -417,7 +417,7 @@ export class Game implements GameInterface {
       const newCurrentPlayer = this.getCurrentPlayer()
 
       if (newCurrentPlayer) {
-        newCurrentPlayer.turnStartTime = new Date()
+        newCurrentPlayer.turnStartTime = Date.now()
         await this.operationManager.startPlayerAfkTimer(
           this,
           newCurrentPlayer.id,
@@ -650,7 +650,7 @@ export class Game implements GameInterface {
     const currentPlayer = this.getCurrentPlayer()
 
     if (currentPlayer) {
-      currentPlayer.turnStartTime = new Date()
+      currentPlayer.turnStartTime = Date.now()
       await this.operationManager.startPlayerAfkTimer(this, currentPlayer.id)
     }
   }

@@ -8,7 +8,7 @@ export type PlayerToJson = {
   name: string
   socketId: string
   avatar: Avatar
-  turnStartTime: Date | null
+  turnStartTime: number | null
   wantsReplay: boolean
   connectionStatus: ConnectionStatus
   score: number
