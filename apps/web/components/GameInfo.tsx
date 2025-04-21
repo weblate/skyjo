@@ -6,15 +6,8 @@ import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 
 const GameInfo = () => {
-  const {
-    game,
-    player,
-    opponents,
-    isActionPending,
-    roundPhase,
-    gameStatus,
-    turnStatus,
-  } = useGame()
+  const { game, player, opponents, roundPhase, gameStatus, turnStatus } =
+    useGame()
   const t = useTranslations("utils.skymo")
 
   const getGameInfo = () => {
@@ -44,7 +37,7 @@ const GameInfo = () => {
   const gameInProgress =
     roundPhase.isRevealCards || roundPhase.isMain || roundPhase.isLastLap
 
-  const showGameInfo = gameInProgress && isPlayerTurn && !isActionPending
+  const showGameInfo = gameInProgress && isPlayerTurn
   return (
     <div className="absolute -top-6 sm:-top-8 lg:-top-11 text-center text-sm animate-scale flex flex-col items-center">
       <AnimatePresence>

@@ -13,14 +13,13 @@ interface PlayerBoardProps {
   isPlayerTurn: boolean
 }
 const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
-  const { game, isActionPending, roundPhase, turnStatus } = useGame()
+  const { game, roundPhase, turnStatus } = useGame()
   const { settings } = useSettings()
   const ta = useTranslations("utils.avatar")
   const tp = useTranslations("components.PlayerBoard")
 
   const isActionablePlayerTurn =
     isPlayerTurn &&
-    !isActionPending &&
     (turnStatus.isTurnACard ||
       turnStatus.isReplaceACard ||
       turnStatus.isThrowOrReplace)

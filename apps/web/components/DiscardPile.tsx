@@ -10,21 +10,13 @@ interface DiscardPileProps {
   isPlayerTurn: boolean
 }
 const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
-  const {
-    game,
-    actions,
-    isActionPending,
-    lastClickedPile,
-    pendingAction,
-    turnStatus,
-  } = useGame()
+  const { game, actions, turnStatus } = useGame()
   const t = useTranslations("components.DiscardPile")
 
   const onClick = () => {
     if (
       isPlayerTurn &&
       game.lastDiscardCardValue !== undefined &&
-      !isActionPending &&
       turnStatus.isChooseAPile
     ) {
       actions.pickCardFromPile("discard")
@@ -32,27 +24,17 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
   }
 
   const onDiscard = () => {
-    if (isPlayerTurn && !isActionPending) actions.discardSelectedCard()
+    if (isPlayerTurn) actions.discardSelectedCard()
   }
 
-  // Check if discard is loading - either when lastClickedPile is "discard"
-  // OR when the specific action is discarding a selected card
-  const isDiscardLoading =
-    isActionPending &&
-    (lastClickedPile === "discard" ||
-      pendingAction === "play:discard-selected-card")
-
   if (isPlayerTurn && turnStatus.isThrowOrReplace) {
-    const shouldAnimate = !isActionPending
-
     return (
       <Card
         value="discard"
         onClick={onDiscard}
         title={t("throw")}
-        className={cn("translate-y-1", shouldAnimate ? "animate-scale" : "")}
+        className={cn("translate-y-1 animate-scale")}
         disabled={false}
-        loading={isDiscardLoading}
       />
     )
   }
@@ -65,8 +47,6 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
 
   const canDiscard = isPlayerTurn && turnStatus.isChooseAPile
 
-  const shouldAnimate = canDiscard && !isActionPending
-
   return (
     <div className="relative">
       <SelectedCard show={turnStatus.isReplaceACard} />
@@ -76,10 +56,9 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
         title={t("title")}
         className={cn(
           card.value === -99 ? "translate-y-1" : "translate-y-[2.5px]",
-          shouldAnimate ? "animate-scale" : "",
+          canDiscard && "animate-scale",
         )}
         disabled={!canDiscard}
-        loading={isDiscardLoading}
       />
     </div>
   )

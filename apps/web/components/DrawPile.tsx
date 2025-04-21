@@ -10,21 +10,17 @@ interface DrawPileProps {
   isPlayerTurn: boolean
 }
 const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
-  const { actions, isActionPending, lastClickedPile, turnStatus } = useGame()
+  const { actions, turnStatus } = useGame()
   const t = useTranslations("components.DrawPile")
 
   const onClick = () => {
-    if (isPlayerTurn && !isActionPending) {
+    if (isPlayerTurn) {
       actions.pickCardFromPile("draw")
     }
   }
 
   // Determine if this draw pile should have the selection animation
-  const shouldAnimate =
-    isPlayerTurn && turnStatus.isChooseAPile && !isActionPending
-
-  // Determine if this draw pile should pulse when action is pendings
-  const isDrawLoading = isActionPending && lastClickedPile === "draw"
+  const shouldAnimate = isPlayerTurn && turnStatus.isChooseAPile
 
   return (
     <div className="relative">
@@ -38,7 +34,6 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
           shouldAnimate ? "animate-scale" : "",
         )}
         disabled={!isPlayerTurn || !turnStatus.isChooseAPile}
-        loading={isDrawLoading}
       />
     </div>
   )

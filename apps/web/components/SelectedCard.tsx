@@ -7,15 +7,7 @@ interface SelectedCardProps {
   show: boolean
 }
 const SelectedCard = ({ show }: SelectedCardProps) => {
-  const { game, isActionPending, turnStatus, lastClickedPile, lastTurnStatus } =
-    useGame()
-
-  // Show loading state for the selected card when we're replacing a card
-  // but not when we're discarding the selected card
-  const isSelectedCardLoading =
-    isActionPending &&
-    turnStatus.isThrowOrReplace &&
-    lastClickedPile !== "discard" // Don't show loading when discarding
+  const { game, lastTurnStatus } = useGame()
 
   return (
     <AnimatePresence>
@@ -55,12 +47,7 @@ const SelectedCard = ({ show }: SelectedCardProps) => {
             }}
             className="absolute top-0 left-0 w-full h-full"
           >
-            <Card
-              value={game.selectedCardValue}
-              size="normal"
-              disabled
-              loading={isSelectedCardLoading}
-            />
+            <Card value={game.selectedCardValue} size="normal" disabled />
           </m.div>
         </m.div>
       )}

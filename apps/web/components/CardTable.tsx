@@ -33,17 +33,12 @@ const CardTable = ({
     game,
     player,
     actions,
-    isActionPending,
     gameStatus,
     roundPhase,
     turnStatus,
     lastTurnStatus,
   } = useGame()
   const numberOfRows = cards?.[0]?.length
-  const [lastClickedPosition, setLastClickedPosition] = useState<{
-    column: number
-    row: number
-  } | null>(null)
   const [numberOfRowsForClass, setNumberOfRowsForClass] = useState<number>(
     game.settings.cardPerRow,
   )
@@ -59,10 +54,6 @@ const CardTable = ({
   const canTurnCard = turnStatus.isTurnACard
 
   const handleCardClick = (column: number, row: number) => {
-    if (isActionPending) return
-
-    setLastClickedPosition({ column, row })
-
     const isUserTurn = isCurrentUserTurn(game, player)
     const isCardVisible = cards[column][row].isVisible
 
@@ -71,12 +62,6 @@ const CardTable = ({
     else if (isUserTurn && turnStatus.isTurnACard && !isCardVisible)
       actions.turnCard(column, row)
   }
-
-  useEffect(() => {
-    if (!isActionPending) {
-      setLastClickedPosition(null)
-    }
-  }, [isActionPending])
 
   // wait 2 seconds to set the number of rows (it's the time it takes for the animation to finish)
   useEffect(() => {
@@ -108,14 +93,8 @@ const CardTable = ({
               ((canRevealCards || canTurnCard) && !card.isVisible) ||
               canReplaceCard
 
-            const isCardLoading =
-              isActionPending &&
-              lastClickedPosition !== null &&
-              lastClickedPosition.column === columnIndex &&
-              lastClickedPosition.row === rowIndex
-
             const shouldShowSelectionAnimation =
-              showSelectionAnimation && canBeSelected && !isActionPending
+              showSelectionAnimation && canBeSelected
 
             return (
               <GameCard
@@ -126,8 +105,7 @@ const CardTable = ({
                   shouldShowSelectionAnimation ? "animate-small-scale" : ""
                 }
                 size={size}
-                disabled={cardDisabled || !canBeSelected || isActionPending}
-                loading={isCardLoading}
+                disabled={cardDisabled || !canBeSelected}
                 showFlipAnimation={lastTurnStatus.isTurn}
                 showExitAnimation={roundPhase.isMain || roundPhase.isLastLap}
               />
