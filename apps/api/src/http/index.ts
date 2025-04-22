@@ -8,7 +8,7 @@ export const initializeHttpServer = (app: Hono) => {
   app.use(
     "/*",
     cors({
-      origin: ENV.ORIGINS,
+      origin: ENV.ORIGINS.split(","),
     }),
   )
 
