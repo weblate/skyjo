@@ -69,7 +69,7 @@ export class SocketManager {
           parser: customParser,
           transports: ["polling", "websocket"],
           cors: {
-            origin: ENV.ORIGINS,
+            origin: ENV.ORIGINS.split(","),
             credentials: true,
           },
           connectionStateRecovery: {
