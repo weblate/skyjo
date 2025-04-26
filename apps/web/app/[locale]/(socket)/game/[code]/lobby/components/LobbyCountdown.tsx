@@ -252,7 +252,7 @@ const HostView = ({
               </p>
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter className="mx-auto mt-3">
+          <DialogFooter className="mx-auto">
             <DialogClose asChild>
               <Button onClick={() => setShowModal(false)}>
                 {t("not-enough-players-modal.close")}
