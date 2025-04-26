@@ -1,0 +1,37 @@
+name: Deploy Web Development
+env:
+  VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+  VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+  NEXT_PUBLIC_POSTHOG_KEY: ${{ secrets.POSTHOG_KEY }}
+  VERCEL_ENVIRONMENT: preview
+on:
+  push:
+    branches:
+      - trunk
+
+jobs:
+  Deploy-Production:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+      - name: Install Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 22.10.0
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10.6.5
+      - name: Install Vercel CLI
+        run: pnpm add --global vercel@latest
+      - name: Install Dependencies
+        run: pnpm install
+      - name: Build Project
+        run: pnpm build --filter @skymo/web
+      - name: Pull Vercel Environment Information
+        run: vercel pull --yes --environment=${{ env.VERCEL_ENVIRONMENT }} --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Build Project Artifacts
+        run: vercel build --token=${{ secrets.VERCEL_TOKEN }}
+      - name: Deploy Project Artifacts to Vercel
+        run: vercel deploy --prebuilt --token=${{ secrets.VERCEL_TOKEN }}
