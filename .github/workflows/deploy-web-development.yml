@@ -10,7 +10,7 @@ on:
       - trunk
 
 jobs:
-  Deploy-Production:
+  Deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository

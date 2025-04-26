@@ -8,7 +8,7 @@ on:
     tags:
       - "v[0-9]+.[0-9]+.[0-9]+"
 jobs:
-  Deploy-Production:
+  Deploy:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -27,10 +27,6 @@ jobs:
         run: pnpm install
       - name: Build Project
         run: pnpm build --filter @skymo/web
-      - name: Set version env var in Vercel
-        run: |
-          TAG=${GITHUB_REF#refs/tags/v}
-          vercel env add npm_package_version $TAG production --token=${{ secrets.VERCEL_TOKEN }}
       - name: Pull Vercel Environment Information
         run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
       - name: Build Project Artifacts
