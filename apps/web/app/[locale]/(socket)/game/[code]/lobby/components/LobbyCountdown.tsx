@@ -1,13 +1,22 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog"
 import { useGame } from "@/contexts/GameContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useRouter } from "@/i18n/routing"
 import { isHost } from "@/lib/game"
 import { cn } from "@/lib/utils"
 import { UpdateGameSettings } from "@skymo/shared/validations"
-import { TimerIcon } from "lucide-react"
+import { TimerIcon, TriangleAlertIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { useLocalStorage } from "react-use"
@@ -139,8 +148,8 @@ export const LobbyCountdown = ({
   return (
     <HostView
       countdown={countdown}
-      hasMinPlayers={hasMinPlayers}
       isLoading={isLoading}
+      hasMinPlayers={hasMinPlayers}
       onStartCountdown={startCountdown}
       onCancelCountdown={cancelCountdown}
       className={className}
@@ -153,7 +162,6 @@ interface PlayerViewProps {
   game: ReturnType<typeof useGame>["game"]
   className?: string
 }
-
 const PlayerView = ({ countdown, game, className }: PlayerViewProps) => {
   const t = useTranslations("pages.Lobby")
 
@@ -181,8 +189,8 @@ const PlayerView = ({ countdown, game, className }: PlayerViewProps) => {
 
 interface HostViewProps {
   countdown: number | null
-  hasMinPlayers: boolean
   isLoading: boolean
+  hasMinPlayers: boolean
   onStartCountdown: () => void
   onCancelCountdown: () => void
   className?: string
@@ -190,13 +198,20 @@ interface HostViewProps {
 
 const HostView = ({
   countdown,
-  hasMinPlayers,
   isLoading,
+  hasMinPlayers,
   onStartCountdown,
   onCancelCountdown,
   className,
 }: HostViewProps) => {
+  const { game } = useGame()
   const t = useTranslations("pages.Lobby")
+  const [showModal, setShowModal] = useState(false)
+
+  const handleStartClick = () => {
+    if (!hasMinPlayers) setShowModal(true)
+    else onStartCountdown()
+  }
 
   if (countdown !== null) {
     return (
@@ -211,13 +226,41 @@ const HostView = ({
   }
 
   return (
-    <Button
-      onClick={onStartCountdown}
-      disabled={!hasMinPlayers}
-      loading={isLoading}
-      className={className}
-    >
-      {t("start-game-button")}
-    </Button>
+    <>
+      <Button
+        onClick={handleStartClick}
+        loading={isLoading}
+        className={className}
+      >
+        {t("start-game-button")}
+      </Button>
+      <Dialog open={showModal} onOpenChange={setShowModal}>
+        <DialogContent allowClose={false} className="max-w-lg">
+          <DialogHeader className="flex flex-col items-center mx-auto">
+            <div className="flex items-center justify-center rounded-full bg-amber-200  size-16">
+              <TriangleAlertIcon className="size-10 -translate-y-0.5" />
+            </div>
+            <DialogTitle className="text-center">
+              {t("not-enough-players-modal.title")}
+            </DialogTitle>
+            <DialogDescription className="mt-2 text-center flex flex-col">
+              <p>{t("not-enough-players-modal.description")}</p>
+              <p>
+                {game.settings.private
+                  ? t("not-enough-players-modal.private-description")
+                  : t("not-enough-players-modal.public-description")}
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="mx-auto mt-3">
+            <DialogClose asChild>
+              <Button onClick={() => setShowModal(false)}>
+                {t("not-enough-players-modal.close")}
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+    </>
   )
 }

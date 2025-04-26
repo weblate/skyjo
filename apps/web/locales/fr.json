@@ -154,6 +154,13 @@
           "placeholder": "Sélectionner un nombre de joueurs",
           "item": "{value} joueurs"
         }
+      },
+      "not-enough-players-modal": {
+        "title": "Pas assez de joueurs",
+        "description": "Vous devez être au moins 2 joueurs pour lancer la partie.",
+        "public-description": "Invitez un ami ou attendez qu'un autre joueur vous rejoigne.",
+        "private-description": "Utilisez le lien privé pour inviter des amis !",
+        "close": "Je comprends"
       }
     },
     "ResultsPage": {

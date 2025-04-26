@@ -154,6 +154,13 @@
           "placeholder": "Select a number of players",
           "item": "{value} players"
         }
+      },
+      "not-enough-players-modal": {
+        "title": "Not enough players",
+        "description": "You must be at least 2 players to start the game.",
+        "public-description": "Invite a friend or wait for another player to join.",
+        "private-description": "Use the private link to invite friends!",
+        "close": "I understand"
       }
     },
     "ResultsPage": {
