@@ -47,7 +47,7 @@ const Footer = () => {
         </div>
         <div className="flex flex-col justify-center items-center md:items-end gap-3 md:gap-4">
           <Link
-            href="https://www.magilano.com/produkt/skyjo/?lang=en&v=1d2a83b3af1f"
+            href="https://magilano.com/en"
             target="_blank"
             className="text-black dark:text-dark-font underline"
           >
