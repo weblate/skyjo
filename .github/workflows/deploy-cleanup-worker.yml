@@ -76,4 +76,5 @@ jobs:
             docker compose pull cleanup-worker
             docker compose up -d cleanup-worker
 
+            docker image prune -a
             docker volume prune -f

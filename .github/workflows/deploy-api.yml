@@ -77,4 +77,5 @@ jobs:
 
             docker compose up -d api
 
+            docker image prune -a
             docker volume prune -f

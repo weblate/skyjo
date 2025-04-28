@@ -53,4 +53,5 @@ jobs:
             docker compose -f compose.dev.yml pull dev-api
             docker compose -f compose.dev.yml up -d dev-api --build
 
+            docker image prune -a
             docker volume prune -f
