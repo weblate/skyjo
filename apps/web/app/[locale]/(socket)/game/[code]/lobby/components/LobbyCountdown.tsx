@@ -244,12 +244,12 @@ const HostView = ({
               {t("not-enough-players-modal.title")}
             </DialogTitle>
             <DialogDescription className="mt-2 text-center flex flex-col">
-              <p>{t("not-enough-players-modal.description")}</p>
-              <p>
+              <span>{t("not-enough-players-modal.description")}</span>
+              <span>
                 {game.settings.private
                   ? t("not-enough-players-modal.private-description")
                   : t("not-enough-players-modal.public-description")}
-              </p>
+              </span>
             </DialogDescription>
           </DialogHeader>
           <DialogFooter className="mx-auto">
