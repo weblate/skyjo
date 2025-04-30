@@ -237,7 +237,7 @@ const HostView = ({
       <Dialog open={showModal} onOpenChange={setShowModal}>
         <DialogContent allowClose={false} className="max-w-lg">
           <DialogHeader className="flex flex-col items-center mx-auto">
-            <div className="flex items-center justify-center rounded-full bg-amber-200  size-16">
+            <div className="flex items-center justify-center rounded-full bg-amber-400/50  size-16">
               <TriangleAlertIcon className="size-10 -translate-y-0.5" />
             </div>
             <DialogTitle className="text-center">
