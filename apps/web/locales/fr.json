@@ -535,7 +535,7 @@
             "description": "Le mode intelligent affiche le chronomètre à mi-temps et les 15 dernières secondes.",
             "modes": {
               "never": "Jamais",
-              "smart": "Intelligente",
+              "smart": "Intelligent",
               "always": "Toujours"
             }
           }
