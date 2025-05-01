@@ -146,8 +146,11 @@ const DisplaySettings = () => {
             >
               {Object.values(ChatNotificationSize).map((size) => (
                 <div className="flex items-center space-x-2" key={size}>
-                  <RadioGroupItem value={size} id={size} />
-                  <Label htmlFor={size}>
+                  <RadioGroupItem
+                    value={size}
+                    id={`chat-notification-size-${size}`}
+                  />
+                  <Label htmlFor={`chat-notification-size-${size}`}>
                     {t(`chat.chat-notification-size.values.${size}`)}
                   </Label>
                 </div>
@@ -206,8 +209,8 @@ const DisplaySettings = () => {
             >
               {Object.values(GameBoardSize).map((size) => (
                 <div className="flex items-center space-x-2" key={size}>
-                  <RadioGroupItem value={size} id={size} />
-                  <Label htmlFor={size}>
+                  <RadioGroupItem value={size} id={`gameboard-size-${size}`} />
+                  <Label htmlFor={`gameboard-size-${size}`}>
                     {t(`gameplay.gameboard-size.values.${size}`)}
                   </Label>
                 </div>
