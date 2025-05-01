@@ -40,11 +40,16 @@ export const cardVariants = cva(
         true: "animate-loading-card",
         false: "",
       },
+      onClickExist: {
+        true: "",
+        false: "",
+      },
     },
     compoundVariants: [
       {
         loading: false,
         disabled: false,
+        onClickExist: true,
         className: "cursor-pointer",
       },
       {
@@ -119,8 +124,16 @@ const Card = ({
 }: CardProps) => {
   const cardType = getCardVisualType(value)
 
+  const onClickExist = typeof onClick === "function"
   const cardClass: ClassValue = cn(
-    cardVariants({ size, disabled, loading, shadow, type: cardType }),
+    cardVariants({
+      size,
+      disabled,
+      loading,
+      shadow,
+      type: cardType,
+      onClickExist,
+    }),
     "ph-no-capture",
     className,
   )
