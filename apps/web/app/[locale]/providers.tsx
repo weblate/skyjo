@@ -53,8 +53,10 @@ const Providers = ({ children, locale }: ProvidersProps) => {
           </RulesProvider>
           <Toaster
             toastOptions={{
-              closeButton: false,
+              closeButton: true,
               classNames: {
+                closeButton:
+                  "!bg-none !border-none !text-black !absolute !left-auto !top-2 !right-[-5px]",
                 toast:
                   "!border-2 !border-black dark:!border-dark-border !bg-white dark:!bg-dark-body",
                 title:
