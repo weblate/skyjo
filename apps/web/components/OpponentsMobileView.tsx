@@ -173,7 +173,12 @@ const OpponentItem = ({
           {opponent.cards.map((column, columnIndex) => (
             <div key={columnIndex} className="flex flex-col gap-0.5">
               {column.map((card) => (
-                <Card key={card.id} value={card.value} size="preview" />
+                <Card
+                  key={card.id}
+                  value={card.value}
+                  size="preview"
+                  as="div"
+                />
               ))}
             </div>
           ))}
