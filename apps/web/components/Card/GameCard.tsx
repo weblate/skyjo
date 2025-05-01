@@ -1,6 +1,6 @@
 "use client"
 
-import "./Card.css"
+import "./GameCard.css"
 
 import { Card, CardProps, cardVariants } from "@/components/Card/Card"
 import { cn } from "@/lib/utils"
