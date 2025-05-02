@@ -43,12 +43,12 @@ const GamePage = () => {
 
   return (
     <div className="h-full w-full !p-4 !md:p-6 flex flex-col gap-2">
-      <div className="w-full flex flex-row items-start h-full">
+      <div className="flex flex-1 flex-row items-start">
         {/* mobile */}
         <OpponentsMobileView />
         {/* desktop */}
         <div className="hidden lg:block w-10"></div>
-        <div className="hidden lg:flex flex-1 flex-row justify-evenly w-full h-full">
+        <div className="hidden lg:flex grow flex-row justify-evenly">
           {opponents[1].map((opponent) => (
             <OpponentBoard
               opponent={opponent}
@@ -65,7 +65,7 @@ const GamePage = () => {
           </div>
         </div>
       </div>
-      <div className="w-full h-full grid grid-cols-3 grid-flow-row">
+      <div className="flex flex-1 flex-row items-center justify-center lg:justify-between">
         <div className="hidden lg:flex flex-col items-start">
           {opponents[0].map((opponent) => (
             <OpponentBoard
@@ -96,7 +96,7 @@ const GamePage = () => {
           ))}
         </div>
       </div>
-      <div className="w-full h-full grid grid-cols-3 grid-flow-row items-end">
+      <div className="flex flex-1 flex-row items-end justify-center">
         {player && <PlayerBoard player={player} isPlayerTurn={isPlayerTurn} />}
       </div>
       <EndRoundDialog />

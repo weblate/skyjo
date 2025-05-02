@@ -4,15 +4,20 @@ import { ClassValue } from "clsx"
 import { Trash2Icon } from "lucide-react"
 
 export const cardVariants = cva(
-  "text-black border-2 border-black flex justify-center items-center select-none focus-visible:outline-black focus-visible:-outline-offset-4 transition-all",
+  "text-black border-black flex justify-center items-center select-none focus-visible:outline-black focus-visible:-outline-offset-4 transition-all",
   {
     variants: {
       size: {
         preview: " h-3 w-2 border rounded-sm text-transparent",
         tiny: " h-12 w-8 border-[1.5px] rounded text-base",
-        normal:
-          " h-8 w-6 smh:h-12 smh:w-8 xlh:md:h-16 xlh:md:w-12 rounded smh:rounded xlh:md:rounded-md text-base xlh:md:text-2xl ",
-        big: " h-8 w-6 smh:h-16 smh:w-12 xlh:md:h-20 xlh:md:w-14 rounded smh:rounded xlh:md:rounded-md text-base xlh:md:text-2xl ",
+        small: "h-12 w-8 border-[1.5px] rounded text-base",
+        normal: [
+          "w-8 h-[43px] border-2 rounded text-lg",
+          "mdh:w-8 mdh:h-[43px] mdh:border-2 mdh:rounded mdh:text-lg",
+          "xl:lgh:w-10 xl:lgh:h-[53px] xl:lgh:border-2 xl:lgh:rounded-md xl:lgh:text-xl",
+          "2xl:xlh:h-16 2xl:xlh:w-12 2xl:xlh:border-2 2xl:xlh:rounded-md 2xl:xlh:text-2xl",
+        ],
+        big: "h-12 w-8 smh:h-16 smh:w-12 xlh:h-20 xlh:w-14 border-2 rounded mdh:rounded-md text-base mdh:text-2xl",
       },
       type: {
         hidden: "border-none bg-transparent",
@@ -59,15 +64,20 @@ export const cardVariants = cva(
       },
       {
         shadow: true,
+        size: "small",
+        className: "shadow-[0.75px_0.75px_0px_0px_rgba(0,0,0)]",
+      },
+      {
+        shadow: true,
         size: "normal",
         className:
-          "shadow-[0.75px_0.75px_0px_0px_rgba(0,0,0)] xlh:md:shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0)]",
+          "shadow-[0.75px_0.75px_0px_0px_rgba(0,0,0)] mdh:shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0)]",
       },
       {
         shadow: true,
         size: "big",
         className:
-          "shadow-[0.75px_0.75px_0px_0px_rgba(0,0,0)] xlh:md:shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0)]",
+          "shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0)] xlh:shadow-[2px_2px_0px_0px_rgba(0,0,0)]",
       },
     ],
   },

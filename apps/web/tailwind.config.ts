@@ -31,10 +31,10 @@ const config = {
         shantell: ["Shantell Sans", "sans-serif"],
       },
       screens: {
-        smh: { raw: "(min-height: 600px)" },
+        smh: { raw: "(min-height: 300px)" },
         mdh: { raw: "(min-height: 690px)" },
-        lgh: { raw: "(min-height: 800px)" },
-        xlh: { raw: "(min-height: 900px)" },
+        lgh: { raw: "(min-height: 760px)" },
+        xlh: { raw: "(min-height: 860px)" },
       },
       colors: {
         card: {
@@ -190,9 +190,6 @@ const config = {
     },
   },
   plugins: [require("tailwindcss-animate"), require("tailwind-scrollbar")],
-  variants: {
-    height: ["responsive"],
-  },
   ...(process.env.NEXT_PUBLIC_ENVIRONMENT === "PROD" ? { cssnano: {} } : {}),
 } satisfies Config
 

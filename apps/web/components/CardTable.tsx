@@ -11,8 +11,9 @@ import { useEffect, useState } from "react"
 const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
   variants: {
     size: {
-      normal: "gap-1 smh:gap-2",
-      big: "gap-2 smh:gap-4",
+      small: "gap-1.5 mdh:gap-2",
+      normal: "gap-1 mdh:gap-1.5 xlh:gap-2",
+      big: "gap-2 mdh:gap-4",
     },
   },
 })

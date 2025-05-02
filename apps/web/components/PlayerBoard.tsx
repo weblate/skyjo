@@ -30,14 +30,21 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-end col-start-2 duration-300 ease-in-out w-full h-full",
+        "flex flex-col items-center justify-end col-start-2 duration-500 ease-in-out w-fit",
       )}
     >
-      <CardTable
-        cards={player.cards}
-        showSelectionAnimation={showSelectionAnimation}
-        size={settings.gameBoardSize}
-      />
+      <div
+        className={cn(
+          "transition-transform duration-500 ease-in-out justify-self-center",
+          isPlayerTurn ? "scale-100" : "scale-90 translate-y-2",
+        )}
+      >
+        <CardTable
+          cards={player.cards}
+          showSelectionAnimation={showSelectionAnimation}
+          size={settings.gameBoardSize}
+        />
+      </div>
       <div className="relative">
         <TurnTimer
           className="absolute bottom-2 left-[200%]"
@@ -50,7 +57,7 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
           alt={ta(player.avatar)}
           title={ta(player.avatar)}
           className={cn(
-            "mt-4 select-none dark:opacity-75",
+            "mt-3 select-none dark:opacity-75 size-6 smh:size-8",
             isPlayerTurn && "animate-bounce",
           )}
           priority
@@ -58,7 +65,7 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
       </div>
       <p
         className={cn(
-          "text-center select-none text-sm text-black dark:text-dark-font",
+          "text-center select-none text-xs smh:text-sm text-black dark:text-dark-font",
           isPlayerTurn && "font-semibold",
         )}
       >

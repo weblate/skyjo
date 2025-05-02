@@ -34,7 +34,7 @@ const OpponentBoard = ({
   return (
     <div
       className={cn(
-        "flex flex-col items-center justify-start duration-300 ease-in-out w-full h-full",
+        "flex flex-col items-center justify-start duration-300 ease-in-out w-fit h-full",
         className,
       )}
     >
@@ -52,7 +52,7 @@ const OpponentBoard = ({
               alt={ta(opponent.avatar)}
               title={ta(opponent.avatar)}
               className={cn(
-                "select-none dark:opacity-75",
+                "select-none dark:opacity-75 size-6 smh:size-8",
                 isPlayerTurn && "animate-bounce",
               )}
               priority
@@ -60,7 +60,7 @@ const OpponentBoard = ({
           </div>
           <p
             className={cn(
-              "text-center select-none text-sm text-black dark:text-dark-font flex flex-row items-center gap-1",
+              "text-center select-none text-xs smh:text-sm text-black dark:text-dark-font flex flex-row items-center gap-1",
               isPlayerTurn && "font-semibold",
             )}
           >
@@ -87,7 +87,14 @@ const OpponentBoard = ({
         </ContextMenuTrigger>
         <UserContextMenu player={opponent} />
       </ContextMenu>
-      <CardTable cards={opponent.cards} cardDisabled={true} />
+      <div
+        className={cn(
+          "transition-transform duration-500 ease-in-out",
+          isPlayerTurn ? "scale-100" : "scale-90 -translate-y-2",
+        )}
+      >
+        <CardTable cards={opponent.cards} cardDisabled={true} />
+      </div>
     </div>
   )
 }
