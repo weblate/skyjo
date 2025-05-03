@@ -1319,6 +1319,13 @@ describe("GameService", () => {
       game.settings.initialTurnedCount = 0
       await game.start()
 
+      player.cards = [
+        [new Card(1, true), new Card(2, true), new Card(2, false)],
+        [new Card(1, true), new Card(2, true), new Card(2, true)],
+        [new Card(1, true), new Card(2, true), new Card(2, true)],
+        [new Card(1, false), new Card(2, false), new Card(2, false)],
+      ]
+
       opponent.cards = [
         [new Card(1, true), new Card(1, true)],
         [new Card(1, true), new Card(1, true)],
