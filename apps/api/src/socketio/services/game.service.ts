@@ -19,7 +19,19 @@ export class GameService extends BaseService {
   ) {
     // TODO add trycatch and send error get if game not found to redirect the client to the homepage with a toast to explain the error
     // Leave the checkStateVersion check if client really needs to get the game
-    await this.checkStateVersion(socket, clientStateVersion, firstTime)
+    const isUpToDate = await this.checkStateVersion(
+      socket,
+      clientStateVersion,
+      firstTime,
+    )
+
+    // If the client state version is the same as the game state version, send an empty game:fix event to the client to explain that the game is up to date
+    if (isUpToDate) {
+      this.socketManager.sendToSocket(socket, {
+        event: "game:fix",
+        data: [[]],
+      })
+    }
   }
 
   async onRevealCard(
@@ -141,6 +153,14 @@ export class GameService extends BaseService {
   }
 
   //#region private methods
+
+  /**
+   * Check if the client state version is the same as the game state version
+   * @param socket client socket
+   * @param clientStateVersion client state version
+   * @param firstTime if the client is requesting the game for the first time
+   * @returns true if the client state version is the same as the game state version
+   */
   private async checkStateVersion(
     socket: GameSocket,
     clientStateVersion: number | null,
@@ -206,6 +226,8 @@ export class GameService extends BaseService {
         },
       )
     }
+
+    return clientStateVersion === game.stateVersion
   }
 
   private async checkPlayAuthorization(

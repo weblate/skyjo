@@ -181,6 +181,36 @@ describe("GameService", () => {
         },
       )
     })
+
+    it("should send a game:fix event to the client if the client state version is the same as the game state version", async () => {
+      const player = new Player(
+        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        "socketId132312",
+      )
+      const newGame = new Game({
+        hostId: player.id,
+        settings: new Settings(false),
+      })
+      newGame.addPlayer(player)
+      socket.data.gameCode = newGame.code
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(newGame))
+
+      service["redis"].getGameStates = vi.fn(() => Promise.resolve([]))
+
+      const sameStateVersion = newGame.stateVersion
+
+      await service.onGet(socket, sameStateVersion)
+
+      expect(service["socketManager"].sendToSocket).toHaveBeenNthCalledWith(
+        1,
+        socket,
+        {
+          event: "game:fix",
+          data: [[]],
+        },
+      )
+    })
   })
 
   describe("onRevealCard", () => {
