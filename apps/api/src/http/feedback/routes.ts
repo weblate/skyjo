@@ -1,9 +1,9 @@
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
-import { FeedbackService } from "@/http/services/feedback.service.js"
 import { zValidator } from "@hono/zod-validator"
 import { feedbackSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import { FeedbackService } from "./services.js"
 
 export const feedbackRouter = new Hono().basePath("/feedbacks")
 

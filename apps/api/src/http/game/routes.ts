@@ -3,7 +3,7 @@ import { zValidator } from "@hono/zod-validator"
 import { getPublicGamesQuerySchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-import { GameService } from "../services/game.service.js"
+import { GameService } from "./services.js"
 
 export const gameRouter = new Hono().basePath("/games")
 
