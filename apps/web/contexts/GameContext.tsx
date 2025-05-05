@@ -50,6 +50,7 @@ import {
   useContext,
   useEffect,
   useMemo,
+  useRef,
   useState,
 } from "react"
 import { Socket } from "socket.io-client"
@@ -120,6 +121,8 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
 
   const [game, setGame] = useState<GameToJson>()
 
+  const lastHiddenAt = useRef<number | null>(null)
+
   const player = getCurrentUser(game?.players, playerId)
   const opponents = getOpponents(game?.players, playerId)
 
@@ -154,6 +157,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     if (socket?.recovered) socket.emit("recover")
   }, [socket?.recovered])
 
+  // beforeunload to allow reconnection when reopening the tab/website
   useEffect(() => {
     const onUnload = (event: BeforeUnloadEvent) => {
       if (!game?.status) return
@@ -177,6 +181,25 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     }
   }, [game?.status])
 
+  // Get the game when the tab is visible
+  useEffect(() => {
+    const handleVisibilityChange = () => {
+      if (document.visibilityState === "hidden") {
+        lastHiddenAt.current = Date.now()
+      } else if (
+        lastHiddenAt.current &&
+        Date.now() - lastHiddenAt.current >= 30000
+      ) {
+        socket?.emit("get", game?.stateVersion)
+        lastHiddenAt.current = null
+      }
+    }
+    document.addEventListener("visibilitychange", handleVisibilityChange)
+    return () => {
+      document.removeEventListener("visibilitychange", handleVisibilityChange)
+    }
+  }, [game?.stateVersion])
+
   //#endregion
 
   //#region listeners
@@ -185,13 +208,14 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     setGame(game)
   }
 
-  const onGameUpdate = (operations: GameOperation) => {
-    console.log("onGameUpdate", operations)
+  const onGameUpdate = (operation: GameOperation) => {
+    console.log("onGameUpdate", operation)
+    if (!operation) return
 
     setGame((prev) => {
       if (!prev) return prev
       const prevState = structuredClone(prev)
-      const newState = applyStateOperations(prevState, operations)
+      const newState = applyStateOperations(prevState, operation)
       return newState
     })
   }
@@ -199,15 +223,15 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const onGameFix = (operations: GameOperation[]) => {
     console.log("onGameFix", operations)
 
+    if (!operations || operations.length === 0) return
+
     setGame((prev) => {
       if (!prev) return prev
 
       let newState = structuredClone(prev)
-
       for (const operation of operations) {
         newState = applyStateOperations(newState, operation)
       }
-
       return newState
     })
   }
@@ -238,16 +262,13 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const reconnect = (attempt = 1, backoffMs = 1000) => {
     try {
       console.log(`Reconnection attempt ${attempt} (delay: ${backoffMs}ms)`)
-
       socket!.timeout(5000).emit("reconnect", {
         gameCode: game?.code,
         playerId: player?.id,
       })
     } catch (error) {
       console.error("Error reconnecting", error)
-
       const nextBackoff = Math.min(backoffMs * 1.5, MAX_RECONNECT_BACKOFF_MS)
-
       setTimeout(() => {
         reconnect(attempt + 1, nextBackoff)
       }, backoffMs)
