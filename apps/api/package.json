@@ -1,7 +1,7 @@
 {
   "name": "@skymo/api",
   "description": "Skymo API",
-  "version": "1.54.3",
+  "version": "1.55.0",
   "private": true,
   "type": "module",
   "scripts": {
