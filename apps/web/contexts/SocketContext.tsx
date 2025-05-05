@@ -1,7 +1,7 @@
 "use client"
 
 import { useUser } from "@/contexts/UserContext"
-import { usePathname, useRouter } from "@/i18n/routing"
+import { useRouter } from "@/i18n/routing"
 import {
   addReconnectionDateToLastGame,
   clearLastGame,
@@ -24,7 +24,6 @@ import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
 import { WifiIcon, WifiOffIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-import { useSearchParams } from "next/navigation"
 import {
   PropsWithChildren,
   createContext,
@@ -57,8 +56,6 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const t = useTranslations("contexts.SocketContext")
   const tSocketError = useTranslations("utils.socket.error")
   const router = useRouter()
-  const pathname = usePathname()
-  const searchParams = useSearchParams()
   const { setPlayerId } = useUser()
 
   const [socket, setSocket] = useState<GameSocket | null>(null)
@@ -247,15 +244,6 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     toast.error(joinErrorDescription[message], {
       duration: 5000,
     })
-
-    let route = pathname
-    if (searchParams.has("gameCode")) {
-      const nextSearchParams = new URLSearchParams(searchParams.toString())
-      nextSearchParams.delete("gameCode")
-      route += `?${nextSearchParams}`
-    }
-
-    router.replace(route)
   }
   //#endregion
 
