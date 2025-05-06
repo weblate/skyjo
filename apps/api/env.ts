@@ -8,6 +8,8 @@ export const envSchema = z.object({
 
   REDIS_URL: z.string({ message: "REDIS_URL must be set in .env file" }),
 
+  POSTGRES_URL: z.string({ message: "POSTGRES_URL must be set in .env file" }),
+
   GMAIL_EMAIL: z.string({ message: "GMAIL_EMAIL must be set in .env file" }),
   GMAIL_APP_PASSWORD: z.string({
     message: "GMAIL_APP_PASSWORD must be set in .env file",

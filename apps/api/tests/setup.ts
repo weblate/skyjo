@@ -97,4 +97,5 @@ vi.spyOn(process, "env", "get").mockReturnValue({
   npm_package_version: "-99",
   SIGHTENGINE_API_USER: "test-api-user",
   SIGHTENGINE_API_SECRET: "test-api-secret",
+  POSTGRES_URL: "postgresql://mock-postgres-url",
 })
