@@ -33,6 +33,7 @@ const CardTable = ({
   const {
     game,
     player,
+    nbConnectedPlayers,
     actions,
     gameStatus,
     roundPhase,
@@ -109,6 +110,7 @@ const CardTable = ({
                 disabled={cardDisabled || !canBeSelected}
                 showFlipAnimation={lastTurnStatus.isTurn}
                 showExitAnimation={roundPhase.isMain || roundPhase.isLastLap}
+                playerCount={nbConnectedPlayers}
               />
             )
           })

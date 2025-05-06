@@ -13,9 +13,7 @@ export const cardVariants = cva(
         small: "h-12 w-8 border-[1.5px] rounded text-base",
         normal: [
           "w-8 h-[43px] border-2 rounded text-lg",
-          "mdh:w-8 mdh:h-[43px] mdh:border-2 mdh:rounded mdh:text-lg",
-          "xl:lgh:w-10 xl:lgh:h-[53px] xl:lgh:border-2 xl:lgh:rounded-md xl:lgh:text-xl",
-          "2xl:xlh:h-16 2xl:xlh:w-12 2xl:xlh:border-2 2xl:xlh:rounded-md 2xl:xlh:text-2xl",
+          "mdh:w-10 mdh:h-[53px] mdh:rounded-md mdh:text-xl",
         ],
         big: "h-12 w-8 smh:h-16 smh:w-12 xlh:h-20 xlh:w-14 border-2 rounded mdh:rounded-md text-base mdh:text-2xl",
       },
@@ -49,6 +47,16 @@ export const cardVariants = cva(
         true: "",
         false: "",
       },
+      nbPlayers: {
+        1: "",
+        2: "",
+        3: "",
+        4: "",
+        5: "",
+        6: "",
+        7: "",
+        8: "",
+      },
     },
     compoundVariants: [
       {
@@ -78,6 +86,22 @@ export const cardVariants = cva(
         size: "big",
         className:
           "shadow-[1.5px_1.5px_0px_0px_rgba(0,0,0)] xlh:shadow-[2px_2px_0px_0px_rgba(0,0,0)]",
+      },
+      {
+        size: "normal",
+        nbPlayers: [1, 2, 3],
+        className: [
+          "xlh:w-12 xlh:h-16 xlh:border-2 xlh:rounded-md xlh:text-2xl",
+        ],
+      },
+      {
+        size: "normal",
+        nbPlayers: [4, 5, 6, 7, 8],
+        className: [
+          "md:w-[26px] md:h-[35px] md:text-sm md:border-[1.5px]",
+          "lg:mdh:w-8 lg:mdh:h-[43px] lg:mdh:border-2 lg:mdh:rounded lg:mdh:text-lg",
+          "lgh:w-10 lgh:h-[53px] lgh:border-2 lgh:rounded-md lgh:text-xl",
+        ],
       },
     ],
   },
@@ -120,6 +144,7 @@ export interface CardProps extends CardVariants {
   disabled?: boolean
   loading?: boolean
   as?: "button" | "div"
+  playerCount?: number
 }
 const Card = ({
   value,
@@ -131,10 +156,12 @@ const Card = ({
   loading = false,
   shadow = true,
   as = "button",
+  playerCount = 2,
 }: CardProps) => {
   const cardType = getCardVisualType(value)
 
   const onClickExist = typeof onClick === "function"
+
   const cardClass: ClassValue = cn(
     cardVariants({
       size,
@@ -143,6 +170,7 @@ const Card = ({
       shadow,
       type: cardType,
       onClickExist,
+      nbPlayers: playerCount as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8,
     }),
     "ph-no-capture",
     className,

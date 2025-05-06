@@ -28,6 +28,7 @@ interface GameCardProps extends Omit<CardProps, "value"> {
   onClick?: () => void
   showFlipAnimation?: boolean
   showExitAnimation?: boolean
+  playerCount?: number
 }
 export const GameCard = ({
   card,
@@ -37,6 +38,7 @@ export const GameCard = ({
   loading = false,
   showFlipAnimation = true,
   showExitAnimation = false,
+  playerCount = 2,
   className,
 }: GameCardProps) => {
   const [displayedValue, setDisplayedValue] = useState(card.value)
@@ -79,6 +81,7 @@ export const GameCard = ({
           loading,
           shadow: false,
           type: "hidden",
+          nbPlayers: playerCount as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8,
         }),
         "group/card card-perspective-1000 focus-visible:outline-none",
         className,
@@ -113,6 +116,7 @@ export const GameCard = ({
             "group-focus-visible/card:outline group-focus-visible/card:outline-2 group-focus-visible/card:outline-black group-focus-visible/card:-outline-offset-[6px]",
           )}
           size={size}
+          playerCount={playerCount}
           as="div"
         />
         <Card
@@ -123,6 +127,7 @@ export const GameCard = ({
             "group-focus-visible/card:outline group-focus-visible/card:outline-2 group-focus-visible/card:outline-black group-focus-visible/card:-outline-offset-[6px]",
           )}
           size={size}
+          playerCount={playerCount}
           as="div"
         />
       </div>

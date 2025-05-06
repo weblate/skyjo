@@ -62,6 +62,7 @@ interface GameContext {
   game: GameToJson
   player: PlayerToJson
   opponents: Opponents
+  nbConnectedPlayers: number
   actions: {
     updateMaxPlayers: (maxPlayers: UpdateMaxPlayers) => void
     updateSingleSettings: <T extends keyof UpdateGameSettings>(
@@ -125,6 +126,16 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
 
   const player = getCurrentUser(game?.players, playerId)
   const opponents = getOpponents(game?.players, playerId)
+
+  const nbConnectedPlayers = useMemo(() => {
+    return (
+      game?.players.filter(
+        (player) =>
+          player.connectionStatus !==
+          CoreConstants.CONNECTION_STATUS.DISCONNECTED,
+      ).length ?? 0
+    )
+  }, [game?.players])
 
   const host = isHost(game, player?.id)
   const stateVersion = game?.stateVersion ?? -99
@@ -465,6 +476,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       game: game as GameToJson,
       player: player as PlayerToJson,
       opponents,
+      nbConnectedPlayers,
       actions,
       roundPhase,
       gameStatus,
@@ -479,6 +491,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       gameStatus,
       turnStatus,
       lastTurnStatus,
+      nbConnectedPlayers,
     ],
   )
 
