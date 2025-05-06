@@ -65,8 +65,8 @@ const GamePage = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-1 flex-row items-center justify-center lg:justify-between">
-        <div className="hidden lg:flex flex-col items-start">
+      <div className="grid grid-cols-3 flex-1 items-center">
+        <div className="hidden lg:flex flex-col items-start justify-center">
           {opponents[0].map((opponent) => (
             <OpponentBoard
               opponent={opponent}
@@ -75,7 +75,7 @@ const GamePage = () => {
             />
           ))}
         </div>
-        <div className="col-start-2 relative flex flex-col justify-center items-center gap-4">
+        <div className="col-start-2 flex flex-col justify-center items-center gap-4">
           <div className="relative flex flex-row items-center justify-center gap-10 h-full max-h-20 w-fit">
             <GameInfo />
             <DrawPile
@@ -86,7 +86,7 @@ const GamePage = () => {
             />
           </div>
         </div>
-        <div className="hidden lg:flex flex-col items-end">
+        <div className="hidden lg:flex flex-col items-end justify-center">
           {opponents[2].map((opponent) => (
             <OpponentBoard
               opponent={opponent}
