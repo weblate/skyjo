@@ -1,6 +1,6 @@
 {
   "extends": "@skymo/ts-config/base-package.json",
-  "include": ["validations", "types", "utils", "constants.ts"],
+  "include": ["validations", "types", "utils", "constants"],
   "compilerOptions": {
     "rootDir": "./",
     "outDir": "./dist",

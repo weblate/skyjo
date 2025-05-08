@@ -98,4 +98,7 @@ vi.spyOn(process, "env", "get").mockReturnValue({
   SIGHTENGINE_API_USER: "test-api-user",
   SIGHTENGINE_API_SECRET: "test-api-secret",
   POSTGRES_URL: "postgresql://mock-postgres-url",
+  GOOGLE_CLIENT_ID: "test-google-client-id",
+  GOOGLE_CLIENT_SECRET: "test-google-client-secret",
+  GOOGLE_REDIRECT_URI: "test-google-redirect-uri",
 })

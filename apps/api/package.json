@@ -22,6 +22,8 @@
     "@skymo/shared": "workspace:*",
     "@skymo/state-operations": "workspace:*",
     "@socket.io/redis-adapter": "^8.3.0",
+    "arctic": "^3.6.1",
+    "argon2": "^0.43.0",
     "bullmq": "^5.48.1",
     "dayjs": "^1.11.13",
     "drizzle-orm": "^0.43.1",

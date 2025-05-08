@@ -21,6 +21,16 @@ export const envSchema = z.object({
   SIGHTENGINE_API_SECRET: z.string({
     message: "SIGHTENGINE_API_SECRET must be set in .env file",
   }),
+
+  GOOGLE_CLIENT_ID: z.string({
+    message: "GOOGLE_CLIENT_ID must be set in .env file",
+  }),
+  GOOGLE_CLIENT_SECRET: z.string({
+    message: "GOOGLE_CLIENT_SECRET must be set in .env file",
+  }),
+  GOOGLE_REDIRECT_URI: z.string({
+    message: "GOOGLE_REDIRECT_URI must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

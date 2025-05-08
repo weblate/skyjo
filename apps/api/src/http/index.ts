@@ -1,3 +1,4 @@
+import { authRouter } from "@/http/auth/auth.router.js"
 import { feedbackRouter } from "@/http/feedback/routes.js"
 import { gameRouter } from "@/http/game/routes.js"
 import { ENV } from "@env"
@@ -24,4 +25,5 @@ export const initializeHttpServer = (app: Hono) => {
   // routes prefixe are defined in each router
   app.route("/", gameRouter)
   app.route("/", feedbackRouter)
+  app.route("/", authRouter)
 }

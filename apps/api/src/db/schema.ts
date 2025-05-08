@@ -9,6 +9,7 @@ import {
   smallint,
   text,
   timestamp,
+  uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core"
 
@@ -31,19 +32,29 @@ export const avatarEnum = pgEnum("avatar", [
   "cat",
 ])
 
-export const userTable = pgTable("users", {
-  id: serial("id").primaryKey(),
-  email: varchar("email", { length: 255 }).notNull().unique(),
-  avatar: avatarEnum("avatar").notNull().default("bee"),
-  username: varchar("username", { length: 20 }).notNull().unique(),
-  password: varchar("password", { length: 255 }).notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-})
+export const userTable = pgTable(
+  "users",
+  {
+    id: serial("id").primaryKey(),
+    email: varchar("email", { length: 255 }).notNull().unique(),
+    avatar: avatarEnum("avatar").notNull().default("bee"),
+    username: varchar("username", { length: 20 }).notNull(),
+    userTag: varchar("user_tag", { length: 20 }).notNull().unique(),
+    password: varchar("password", { length: 255 }),
+    googleId: varchar("google_id", { length: 255 }).unique(),
+    facebookId: varchar("facebook_id", { length: 255 }).unique(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("email_idx").on(t.email),
+    uniqueIndex("user_tag_idx").on(t.userTag),
+  ],
+)
 export type User = InferSelectModel<typeof userTable>
 
 export const sessionTable = pgTable("sessions", {
