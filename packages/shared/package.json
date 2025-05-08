@@ -1,7 +1,7 @@
 {
   "name": "@skymo/shared",
   "description": "Shared types and validations between the server and the client",
-  "version": "1.55.0",
+  "version": "1.56.1",
   "type": "module",
   "types": "./dist/*.d.ts",
   "exports": {
