@@ -7,7 +7,7 @@ import { cn } from "@/lib/utils"
 import { CardToJson } from "@skymo/core"
 import { ClassValue } from "clsx"
 import { TargetAndTransition, m } from "motion/react"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 
 const FLIP_DURATION_MS = 500
 
@@ -43,6 +43,7 @@ export const GameCard = ({
 }: GameCardProps) => {
   const [displayedValue, setDisplayedValue] = useState(card.value)
   const [isFlipping, setIsFlipping] = useState(false)
+  const prevIsVisible = useRef(card.isVisible)
 
   useEffect(() => {
     if (!showFlipAnimation) {
@@ -50,21 +51,19 @@ export const GameCard = ({
       return
     }
 
-    setIsFlipping(true)
+    if (card.isVisible !== prevIsVisible.current) {
+      setIsFlipping(true)
 
-    if (card.isVisible) {
-      setDisplayedValue(card.value)
+      if (card.isVisible) setDisplayedValue(card.value)
+
+      const flipTimer = setTimeout(() => setIsFlipping(false), FLIP_DURATION_MS)
+
+      prevIsVisible.current = card.isVisible
+
+      return () => clearTimeout(flipTimer)
     } else {
-      setTimeout(() => {
-        setDisplayedValue(card.value)
-      }, FLIP_DURATION_MS)
-    }
-
-    const flipTimer = setTimeout(() => {
       setIsFlipping(false)
-    }, FLIP_DURATION_MS)
-
-    return () => clearTimeout(flipTimer)
+    }
   }, [showFlipAnimation, card.value, card.isVisible])
 
   const handleClick = () => {
