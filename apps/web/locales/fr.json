@@ -530,6 +530,7 @@
               "big": "Grand"
             }
           },
+          "enlarge-active-player-board": "Agrandir le plateau du joueur dont c'est le tour",
           "timer": {
             "label": "Mode d'affichage du chronomètre",
             "description": "Le mode intelligent affiche le chronomètre à mi-temps et les 15 dernières secondes.",

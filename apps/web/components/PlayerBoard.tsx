@@ -2,7 +2,7 @@ import { CardTable } from "@/components/CardTable"
 import { TurnTimer } from "@/components/TurnTimer"
 import { useGame } from "@/contexts/GameContext"
 import { useSettings } from "@/contexts/SettingsContext"
-import { getCurrentScore } from "@/lib/game"
+import { getBoardScaleClass, getCurrentScore } from "@/lib/game"
 import { cn } from "@/lib/utils"
 import { PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
@@ -36,7 +36,7 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
       <div
         className={cn(
           "transition-transform duration-500 ease-in-out justify-self-center",
-          isPlayerTurn ? "scale-100" : "scale-90 translate-y-2",
+          getBoardScaleClass(isPlayerTurn, settings.enlargeActivePlayerBoard),
         )}
       >
         <CardTable

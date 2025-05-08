@@ -50,6 +50,7 @@ interface Settings {
   switchToPlayerWhoIsPlaying: boolean
   showPreviewOpponentsCardsForMobile: boolean
   gameBoardSize: GameBoardSize
+  enlargeActivePlayerBoard: boolean
   timerDisplayMode: TimerDisplayMode
 }
 type SettingsKeys = keyof Settings
@@ -63,6 +64,7 @@ const DEFAULT_GAME_SETTINGS: Settings = {
   switchToPlayerWhoIsPlaying: true,
   showPreviewOpponentsCardsForMobile: true,
   gameBoardSize: GameBoardSize.NORMAL,
+  enlargeActivePlayerBoard: false,
   timerDisplayMode: TimerDisplayMode.SMART,
 }
 

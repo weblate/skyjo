@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils"
 import { Opponents } from "@/types/opponents"
 import {
   Constants as CoreConstants,
@@ -8,6 +9,7 @@ import {
   RoundPhase,
   TurnStatus,
 } from "@skymo/core"
+import { ClassValue } from "clsx"
 
 export const getCurrentUser = (
   players: GameToJson["players"] | undefined,
@@ -218,3 +220,17 @@ export const isLastTurnTurn = (lastTurnStatus?: LastTurnStatus) => {
   return lastTurnStatus === CoreConstants.LAST_TURN_STATUS.TURN
 }
 //#endregion
+
+export const getBoardScaleClass = (
+  isPlayerTurn: boolean,
+  enlargeActivePlayerBoard: boolean,
+  isOpponent: boolean = false,
+) => {
+  if (!enlargeActivePlayerBoard || isPlayerTurn) return "scale-100"
+
+  let className: ClassValue = "scale-90"
+  if (isOpponent) className = cn(className, "-translate-y-2")
+  else className = cn(className, "translate-y-2")
+
+  return className
+}

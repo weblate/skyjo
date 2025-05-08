@@ -120,7 +120,7 @@ const DisplaySettings = () => {
     <div className="flex flex-col gap-8">
       <div className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold">{t("chat.title")}</h2>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <Label htmlFor="chat-visibility">{t("chat.chat-visibility")}</Label>
             <Switch
@@ -161,7 +161,7 @@ const DisplaySettings = () => {
       </div>
       <div className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold">{t("mobile.title")}</h2>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <Label htmlFor="switch-to-player-who-is-playing">
               {t("mobile.switch-to-player-who-is-playing")}
@@ -190,7 +190,7 @@ const DisplaySettings = () => {
       </div>
       <div className="flex flex-col gap-2">
         <h2 className="text-lg font-semibold">{t("gameplay.title")}</h2>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-6">
           <div className="flex flex-col gap-2">
             <div>
               <Label>{t("gameplay.gameboard-size.label")}</Label>
@@ -216,6 +216,18 @@ const DisplaySettings = () => {
                 </div>
               ))}
             </RadioGroup>
+          </div>
+          <div className="flex flex-col gap-2">
+            <Label htmlFor="enlarge-active-player-board">
+              {t("gameplay.enlarge-active-player-board")}
+            </Label>
+            <Switch
+              id="enlarge-active-player-board"
+              checked={settings.enlargeActivePlayerBoard}
+              onCheckedChange={(value) =>
+                updateSetting("enlargeActivePlayerBoard", value)
+              }
+            />
           </div>
           <div className="flex flex-col">
             <Label>{t("gameplay.timer.label")}</Label>

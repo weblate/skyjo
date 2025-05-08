@@ -8,7 +8,8 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { useGame } from "@/contexts/GameContext"
-import { getCurrentScore } from "@/lib/game"
+import { useSettings } from "@/contexts/SettingsContext"
+import { getBoardScaleClass, getCurrentScore } from "@/lib/game"
 import { cn } from "@/lib/utils"
 import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
 import { ClassValue } from "clsx"
@@ -30,6 +31,7 @@ const OpponentBoard = ({
   const ta = useTranslations("utils.avatar")
   const to = useTranslations("components.OpponentBoard")
   const { game } = useGame()
+  const { settings } = useSettings()
 
   return (
     <div
@@ -90,7 +92,11 @@ const OpponentBoard = ({
       <div
         className={cn(
           "transition-transform duration-500 ease-in-out",
-          isPlayerTurn ? "scale-100" : "scale-90 -translate-y-2",
+          getBoardScaleClass(
+            isPlayerTurn,
+            settings.enlargeActivePlayerBoard,
+            true,
+          ),
         )}
       >
         <CardTable cards={opponent.cards} cardDisabled={true} />

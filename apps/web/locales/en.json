@@ -535,6 +535,7 @@
               "big": "Big"
             }
           },
+          "enlarge-active-player-board": "Enlarge the board of the player whose turn it is",
           "timer": {
             "label": "Timer display mode",
             "description": "Smart mode displays the timer at half-time and the last 15 seconds.",
