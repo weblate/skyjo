@@ -31,7 +31,7 @@ vi.mock("@/redis/game.repository.js", () => ({
   })),
 }))
 
-vi.mock("@/socketio/utils/SocketManager.js", () => ({
+vi.mock("@/realtime/utils/SocketManager.js", () => ({
   SocketManager: {
     getInstance: vi.fn().mockReturnValue({
       sendToRoom: vi.fn(),
@@ -40,7 +40,7 @@ vi.mock("@/socketio/utils/SocketManager.js", () => ({
   },
 }))
 
-vi.mock("@/socketio/utils/GameOperationManager.js", () => ({
+vi.mock("@/realtime/utils/GameOperationManager.js", () => ({
   GameOperationManager: {
     getInstance: vi.fn().mockReturnValue({
       updateGame: vi.fn().mockResolvedValue(undefined),
@@ -48,7 +48,7 @@ vi.mock("@/socketio/utils/GameOperationManager.js", () => ({
   },
 }))
 
-vi.mock("@/socketio/utils/GameStateTracker.js", () => ({
+vi.mock("@/realtime/utils/GameStateTracker.js", () => ({
   GameStateTracker: vi.fn().mockImplementation(() => ({
     getChanges: vi.fn().mockReturnValue({ test: "operations" }),
   })),
@@ -270,7 +270,7 @@ describe("GameStartCountdownQueueService", () => {
 
     //   // Mock GameStateTracker to return null for changes
     //   vi.mocked(
-    //     require("@/socketio/utils/GameStateTracker.js").GameStateTracker,
+    //     require("@/realtime/utils/GameStateTracker.js").GameStateTracker,
     //   ).mockImplementationOnce(() => ({
     //     getChanges: vi.fn().mockReturnValue(null),
     //   }))
