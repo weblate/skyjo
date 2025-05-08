@@ -17,6 +17,11 @@ import type { GameSocket } from "../types/gameSocket.js"
 
 const instance = new GameService()
 
+const revealCardRateLimiter = new RateLimiterMemory({
+  keyPrefix: "reveal-card",
+  points: 11,
+  duration: 5,
+})
 const gameRateLimiter = new RateLimiterMemory({
   keyPrefix: "game",
   points: 10,
@@ -48,7 +53,7 @@ const gameRouter = (socket: GameSocket) => {
     "play:reveal-card",
     socketErrorWrapper(
       async (data: PlayRevealCard, clientStateVersion: number) => {
-        await consumeSocketRateLimiter(gameRateLimiter)(socket)
+        await consumeSocketRateLimiter(revealCardRateLimiter)(socket)
 
         const turnCardData = playRevealCard.parse(data)
         const stateVersion = stateVersionSchema.parse(clientStateVersion)
