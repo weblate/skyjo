@@ -1,6 +1,6 @@
 {
-  "name": "@skymo/cleanup-worker",
-  "description": "Cleanup worker for Skymo",
+  "name": "@skymo/workers",
+  "description": "Workers for Skymo",
   "version": "1.58.0",
   "private": true,
   "type": "module",

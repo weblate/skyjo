@@ -21,10 +21,10 @@ services:
       - NODE_OPTIONS=--max-old-space-size=8192 --max-http-header-size=16384 --expose-gc --use-largepages=silent
     restart: always
 
-  dev-cleanup-worker:
+  dev-workers:
     build:
       context: .
-      dockerfile: ./apps/cleanup-worker/Dockerfile
+      dockerfile: ./apps/workers/Dockerfile
       args:
         - NODE_ENV=development
     depends_on:
@@ -33,7 +33,7 @@ services:
       - dev-internal
     env_file:
       - .env
-      - ./apps/cleanup-worker/.env
+      - ./apps/workers/.env
     environment:
       - NODE_ENV=development
       - REDIS_URL=redis://:${REDIS_PASSWORD}@dev-redis:${REDIS_PORT}

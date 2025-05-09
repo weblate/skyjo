@@ -1,10 +1,7 @@
 import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
 import { type Job, Worker } from "bullmq"
-import {
-  type GameCleanupData,
-  GameCleanupTask,
-} from "../tasks/GameCleanupTask.js"
+import { type GameCleanupData, GameCleanupTask } from "./GameCleanupTask.js"
 
 /**
  * Worker that processes game cleanup jobs

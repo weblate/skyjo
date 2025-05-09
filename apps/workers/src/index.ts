@@ -1,5 +1,5 @@
+import { createGameCleanupWorker } from "@/game-cleanup/gameCleanupQueue.js"
 import { Logger } from "@skymo/logger"
-import { createGameCleanupWorker } from "./queues/gameCleanupQueue.js"
 
 const gameCleanupWorker = createGameCleanupWorker()
 

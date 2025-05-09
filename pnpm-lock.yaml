@@ -128,37 +128,6 @@ importers:
         specifier: ^6.0.5
         version: 6.0.5
 
-  apps/cleanup-worker:
-    dependencies:
-      '@skymo/error':
-        specifier: workspace:*
-        version: link:../../packages/error
-      '@skymo/logger':
-        specifier: workspace:*
-        version: link:../../packages/logger
-      '@skymo/ts-config':
-        specifier: workspace:*
-        version: link:../../packages/config/ts
-      bullmq:
-        specifier: ^5.48.1
-        version: 5.48.1
-      redis:
-        specifier: ^4.7.0
-        version: 4.7.0
-      zod:
-        specifier: ^3.24.2
-        version: 3.24.2
-    devDependencies:
-      '@types/node':
-        specifier: ^22.14.1
-        version: 22.14.1
-      tsx:
-        specifier: ^4.19.3
-        version: 4.19.3
-      typescript:
-        specifier: ^5.8.3
-        version: 5.8.3
-
   apps/web:
     dependencies:
       '@radix-ui/react-accordion':
@@ -318,6 +287,37 @@ importers:
       tailwindcss:
         specifier: ^3.4.15
         version: 3.4.17
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
+
+  apps/workers:
+    dependencies:
+      '@skymo/error':
+        specifier: workspace:*
+        version: link:../../packages/error
+      '@skymo/logger':
+        specifier: workspace:*
+        version: link:../../packages/logger
+      '@skymo/ts-config':
+        specifier: workspace:*
+        version: link:../../packages/config/ts
+      bullmq:
+        specifier: ^5.48.1
+        version: 5.48.1
+      redis:
+        specifier: ^4.7.0
+        version: 4.7.0
+      zod:
+        specifier: ^3.24.2
+        version: 3.24.2
+    devDependencies:
+      '@types/node':
+        specifier: ^22.14.1
+        version: 22.14.1
+      tsx:
+        specifier: ^4.19.3
+        version: 4.19.3
       typescript:
         specifier: ^5.8.3
         version: 5.8.3

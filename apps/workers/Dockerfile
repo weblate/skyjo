@@ -1,4 +1,4 @@
-ARG PROJECT=@skymo/cleanup-worker
+ARG PROJECT=@skymo/workers
 
 FROM node:22.9-alpine AS base
 RUN apk update && apk add --no-cache libc6-compat jemalloc && npm install -g pnpm@10.6.5 turbo@2.3.3
