@@ -9,8 +9,6 @@ import { ClassValue } from "clsx"
 import { TargetAndTransition, m } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 
-const FLIP_DURATION_MS = 500
-
 const cardPositionClass: ClassValue =
   "absolute w-full h-full card-backface-hidden"
 
@@ -42,32 +40,16 @@ export const GameCard = ({
   className,
 }: GameCardProps) => {
   const [displayedValue, setDisplayedValue] = useState(card.value)
-  const [isFlipping, setIsFlipping] = useState(false)
   const prevIsVisible = useRef(card.isVisible)
 
   useEffect(() => {
-    if (!showFlipAnimation) {
+    if (card.isVisible) {
       setDisplayedValue(card.value)
-      return
-    }
-
-    if (card.isVisible !== prevIsVisible.current) {
-      setIsFlipping(true)
-
-      if (card.isVisible) setDisplayedValue(card.value)
-
-      const flipTimer = setTimeout(() => setIsFlipping(false), FLIP_DURATION_MS)
-
       prevIsVisible.current = card.isVisible
-
-      return () => clearTimeout(flipTimer)
-    } else {
-      setIsFlipping(false)
     }
-  }, [showFlipAnimation, card.value, card.isVisible])
+  }, [card.value, card.isVisible])
 
   const handleClick = () => {
-    if (isFlipping) return
     onClick?.()
   }
 
