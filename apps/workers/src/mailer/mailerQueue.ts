@@ -1,31 +1,32 @@
 import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
-import type { GameCleanupJobData } from "@skymo/worker-types"
-import { Worker } from "bullmq"
-import { GameCleanupTask } from "./gameCleanupTask.js"
+import type { MailerJobData } from "@skymo/worker-types"
+import { type Job, Worker } from "bullmq"
+import { MailerTask } from "./mailerTask.js"
 
+const mailerTask = new MailerTask()
 /**
- * Worker that processes game cleanup jobs
+ * Worker that processes email jobs
  */
-export const createGameCleanupWorker = (): Worker => {
-  const worker = new Worker<GameCleanupJobData>(
-    "game-cleanup",
-    async (job) => {
-      const { gameCode } = job.data
+export const createMailerWorker = (): Worker => {
+  const worker = new Worker<MailerJobData>(
+    "mailer",
+    async (job: Job<MailerJobData>) => {
+      const { to, template, content } = job.data
 
       try {
-        Logger.info(`Processing cleanup job for game ${gameCode}`, {
+        Logger.info(`Processing email job for ${to}`, {
           jobId: job.id,
-          gameCode,
+          to,
+          template,
+          content,
         })
 
-        const result = await GameCleanupTask.cleanupGame(gameCode)
-
-        return result
+        await mailerTask.sendEmail(job.data)
       } catch (error) {
-        Logger.error(`Error processing cleanup job for game ${gameCode}`, {
+        Logger.error(`Error processing email for ${to}`, {
           jobId: job.id,
-          gameCode,
+          to,
           error,
         })
         throw error
@@ -65,6 +66,6 @@ export const createGameCleanupWorker = (): Worker => {
     Logger.error("Worker error", { error: error.message, stack: error.stack })
   })
 
-  Logger.info("Game cleanup worker initialized")
+  Logger.info("Mailer worker initialized")
   return worker
 }

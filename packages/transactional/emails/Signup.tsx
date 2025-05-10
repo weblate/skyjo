@@ -1,18 +1,21 @@
 import { createIntl } from "@formatjs/intl"
 import { Heading, Hr, Img, Link, Section, Text } from "@react-email/components"
-import BaseEmail from "components/BaseEmail.js"
-import Button from "components/Button.js"
-import Footer from "components/Footer.js"
+// biome-ignore lint/correctness/noUnusedImports: <explanation>
+import React from "react"
+import BaseEmail from "../components/BaseEmail.js"
+import Button from "../components/Button.js"
+import Footer from "../components/Footer.js"
 import {
   type Locale,
   SUPPORT_EMAIL,
   WEBSITE_LOGO_URL,
   WEBSITE_URL,
-} from "contants.js"
-import type { DefaultProps } from "types.js"
+} from "../constants.js"
+import type { DefaultProps } from "../types.js"
 
 const messages: Record<Locale, Record<string, string>> = {
   en: {
+    subject: "Welcome to Skymo! Verify your email to join a game!",
     preview: "Welcome to Skymo! Verify your email to join a game!",
     logoAlt: "Skymo Logo",
     welcome: "Welcome to the Skymo Arena!",
@@ -23,6 +26,8 @@ const messages: Record<Locale, Record<string, string>> = {
       "This email was dealt to you by Skymo. If you didn't sign up for the game, please let our support team know at",
   },
   fr: {
+    subject:
+      "Bienvenue sur Skymo ! Vérifiez votre email pour rejoindre une partie !",
     preview:
       "Bienvenue sur Skymo ! Vérifiez votre email pour rejoindre une partie !",
     logoAlt: "Logo Skymo",
@@ -35,13 +40,16 @@ const messages: Record<Locale, Record<string, string>> = {
   },
 }
 
+export const getSignupSubject = (locale: Locale) => {
+  return messages[locale].subject
+}
 export interface SignupContent {
   username: string
   email: string
   token: string
 }
 type SignupProps = DefaultProps<SignupContent>
-const Signup = ({ locale, content }: SignupProps) => {
+export const Signup = ({ locale, content }: SignupProps) => {
   const intl = createIntl({ messages: messages[locale], locale })
 
   return (

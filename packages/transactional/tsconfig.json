@@ -1,13 +1,13 @@
 {
-  "extends": "@skymo/ts-config/base-node.json",
+  "extends": "@skymo/ts-config/base-package.json",
   "compilerOptions": {
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
       "@/*": ["./src/*"]
     },
-    "jsx": "react-jsx"
+    "jsx": "preserve"
   },
-  "include": ["emails/**/*", "components/**/*", "contants.ts", "types.ts"],
+  "include": ["emails/**/*", "components/**/*", "constants.ts", "types.ts"],
   "exclude": ["node_modules", "dist"]
 }

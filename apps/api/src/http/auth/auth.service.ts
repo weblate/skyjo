@@ -1,5 +1,6 @@
 import { db } from "@/db/index.js"
 import { sessionTable, userTable } from "@/db/schema.js"
+import { mailerQueue } from "@/utils/mailer.js"
 import { Logger } from "@skymo/logger"
 import { AuthErrorKeys } from "@skymo/shared/constants"
 import type { LoginUser, RegisterUser } from "@skymo/shared/validations"
@@ -52,6 +53,16 @@ export class AuthService {
     }
 
     // TODO: Add job to email queue: send welcome email to newUserResult[0].email + verify email + continue your inscription with the link
+    mailerQueue.add("signup", {
+      to: email,
+      template: "signup",
+      locale: "en",
+      content: {
+        username,
+        email,
+        token: "123456",
+      },
+    })
   }
 
   async login(data: LoginUser, c: Context) {
@@ -179,7 +190,6 @@ export class AuthService {
       const newUserResult = await db
         .insert(userTable)
         .values({
-          // TODO check how email is get
           email: googleUser.email,
           username,
           userTag,

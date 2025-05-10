@@ -1,7 +1,9 @@
 import { createIntl } from "@formatjs/intl"
 import { Container, Text } from "@react-email/components"
 import { Hr, Img, Link } from "@react-email/components"
-import { DISCORD_URL, WEBSITE_URL } from "contants.js"
+// biome-ignore lint/correctness/noUnusedImports: needed when using createElement
+import React from "react"
+import { DISCORD_URL, type Locale, WEBSITE_URL } from "../constants.js"
 
 const footerMessages = {
   en: {
@@ -16,7 +18,7 @@ const footerMessages = {
   },
 }
 interface FooterProps {
-  locale: "en" | "fr"
+  locale: Locale
 }
 const Footer = ({ locale }: FooterProps) => {
   const intl = createIntl({ messages: footerMessages[locale], locale })

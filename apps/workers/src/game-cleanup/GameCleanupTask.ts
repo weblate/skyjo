@@ -1,10 +1,6 @@
 import { Logger } from "@skymo/logger"
 import { RedisClient } from "../redis.js"
 
-export interface GameCleanupData {
-  gameCode: string
-}
-
 export class GameCleanupTask {
   private static readonly GAME_PREFIX = "game"
   private static readonly BATCH_SIZE = 20

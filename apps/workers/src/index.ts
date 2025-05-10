@@ -1,7 +1,10 @@
 import { createGameCleanupWorker } from "@/game-cleanup/gameCleanupQueue.js"
 import { Logger } from "@skymo/logger"
+import "@env"
+import { createMailerWorker } from "@/mailer/mailerQueue.js"
 
 const gameCleanupWorker = createGameCleanupWorker()
+const mailerWorker = createMailerWorker()
 
 setInterval(() => {
   const memoryUsage = process.memoryUsage()
@@ -21,6 +24,7 @@ async function gracefulShutdown() {
   Logger.info("Shutdown signal received")
 
   await gameCleanupWorker.close()
+  await mailerWorker.close()
 
   process.exit(0)
 }

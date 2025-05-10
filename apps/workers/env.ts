@@ -1,4 +1,7 @@
+import { config } from "dotenv"
 import { z } from "zod"
+
+config()
 
 export const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]),
@@ -8,6 +11,11 @@ export const envSchema = z.object({
 
   SEQ_URL: z.string({ message: "SEQ_URL must be set in .env file" }),
   SEQ_API_KEY: z.string({ message: "SEQ_API_KEY must be set in .env file" }),
+
+  // Mailer
+  RESEND_API_KEY: z.string({
+    message: "RESEND_API_KEY must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

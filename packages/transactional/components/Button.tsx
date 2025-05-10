@@ -1,8 +1,9 @@
 import { type ButtonProps, Button as _Button } from "@react-email/components"
-import React from "react"
+// biome-ignore lint/correctness/noUnusedImports: needed when using createElement
+import React, { type ReactNode } from "react"
 
 interface CustomButtonProps extends ButtonProps {
-  children: React.ReactNode
+  children: ReactNode
   href: string
 }
 

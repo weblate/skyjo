@@ -6,7 +6,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@env": ["./env.ts"]
-    }
+    },
+    "jsx": "preserve"
   },
   "include": ["src/**/*", "env.ts", "src/redis.ts"],
   "exclude": ["node_modules", "dist", "**/*.test.ts"]

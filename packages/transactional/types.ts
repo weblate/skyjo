@@ -1,4 +1,4 @@
-import type { Locale } from "contants.js"
+import type { Locale } from "./constants.js"
 
 export interface DefaultProps<T> {
   locale: Locale

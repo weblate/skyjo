@@ -12,9 +12,9 @@ coverage
 .next/
 out/
 build
-
-# build
 dist
+.react-email/
+
 
 # misc
 .DS_Store

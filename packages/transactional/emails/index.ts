@@ -1,5 +1,3 @@
-import Signup, { type SignupContent } from "./Signup.js"
-
+export * from "./Signup.js"
 export type * from "../types.js"
-export type * from "../contants.js"
-export { Signup, type SignupContent }
+export type * from "../constants.js"

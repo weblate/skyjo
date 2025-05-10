@@ -34,7 +34,8 @@
     "redis": "^4.7.0",
     "socket.io": "^4.8.1",
     "socket.io-msgpack-parser": "^3.0.2",
-    "zod": "^3.24.2"
+    "zod": "^3.24.2",
+    "@skymo/worker-types": "workspace:*"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
