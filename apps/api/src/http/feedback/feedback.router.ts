@@ -1,13 +1,11 @@
+import { sendFeedback } from "@/http/feedback/feedback.service.js"
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 import { zValidator } from "@hono/zod-validator"
 import { feedbackSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-import { FeedbackService } from "./services.js"
 
 export const feedbackRouter = new Hono().basePath("/feedbacks")
-
-const feedbackService = new FeedbackService()
 
 const feedbackRateLimiter = new RateLimiterMemory({
   keyPrefix: "feedback",
@@ -22,7 +20,7 @@ feedbackRouter.post(
   (c) => {
     const { email, message } = c.req.valid("json")
 
-    const success = feedbackService.sendFeedback({ email, message })
+    const success = sendFeedback({ email, message })
 
     return c.json({ success })
   },

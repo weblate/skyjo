@@ -1,11 +1,14 @@
+import {
+  getCurrentUser,
+  login,
+  logout,
+  register,
+} from "@/http/auth/auth.service.js"
 import { googleRouter } from "@/http/auth/google.router.js"
 import { zValidator } from "@hono/zod-validator"
 import { AuthError } from "@skymo/shared/constants"
 import { loginSchema, registerSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
-import { AuthService } from "./auth.service.js"
-
-const authService = new AuthService()
 
 const authRouter = new Hono().basePath("/auth")
 authRouter.route("", googleRouter)
@@ -13,7 +16,7 @@ authRouter.route("", googleRouter)
 authRouter.post("/register", zValidator("json", registerSchema), async (c) => {
   const data = c.req.valid("json")
   try {
-    await authService.register(data)
+    await register(data)
 
     return c.json({
       success: true,
@@ -30,7 +33,7 @@ authRouter.post("/register", zValidator("json", registerSchema), async (c) => {
 authRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   const data = c.req.valid("json")
   try {
-    await authService.login(data, c)
+    await login(data, c)
 
     return c.json({
       success: true,
@@ -52,7 +55,7 @@ authRouter.post("/login", zValidator("json", loginSchema), async (c) => {
 
 authRouter.post("/logout", async (c) => {
   try {
-    await authService.logout(c)
+    await logout(c)
 
     return c.json({
       success: true,
@@ -72,7 +75,7 @@ authRouter.post("/logout", async (c) => {
 
 authRouter.get("/me", async (c) => {
   try {
-    const user = await authService.getCurrentUser(c)
+    const user = await getCurrentUser(c)
 
     return c.json({ user })
   } catch (error) {

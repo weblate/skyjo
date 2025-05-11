@@ -1,13 +1,11 @@
+import { getPublicGames } from "@/http/game/game.service.js"
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 import { zValidator } from "@hono/zod-validator"
 import { getPublicGamesQuerySchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-import { GameService } from "./services.js"
 
 export const gameRouter = new Hono().basePath("/games")
-
-const gameService = new GameService()
 
 const publicGamesRateLimiter = new RateLimiterMemory({
   keyPrefix: "public-games",
@@ -22,7 +20,7 @@ gameRouter.get(
   async (c) => {
     const query = c.req.valid("query")
 
-    const games = await gameService.getPublicGames(query.nbPerPage, query.page)
+    const games = await getPublicGames(query.nbPerPage, query.page)
 
     return c.json({
       success: true,

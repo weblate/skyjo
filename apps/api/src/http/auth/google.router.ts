@@ -1,12 +1,10 @@
-import { AuthService } from "@/http/auth/auth.service.js"
+import { loginGoogle } from "@/http/auth/auth.service.js"
 import { createGoogleAuthorizationURL } from "@/http/auth/lib/google.js"
 import { Logger } from "@skymo/logger"
 import { AuthError } from "@skymo/shared/constants"
 import { Hono } from "hono"
 import { deleteCookie, getCookie, setCookie } from "hono/cookie"
 import type { CookieOptions } from "hono/utils/cookie"
-
-const authService = new AuthService()
 
 const googleRouter = new Hono()
 
@@ -65,7 +63,7 @@ googleRouter.get("/login/google/callback", async (c) => {
   deleteCookie(c, "google_oauth_code_verifier")
 
   try {
-    await authService.loginGoogle(code, codeVerifier, c)
+    await loginGoogle(code, codeVerifier, c)
 
     return c.json({
       success: true,

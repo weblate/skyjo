@@ -1,6 +1,6 @@
 import { authRouter } from "@/http/auth/auth.router.js"
-import { feedbackRouter } from "@/http/feedback/routes.js"
-import { gameRouter } from "@/http/game/routes.js"
+import { feedbackRouter } from "@/http/feedback/feedback.router.js"
+import { gameRouter } from "@/http/game/game.router.js"
 import { ENV } from "@env"
 import type { Hono } from "hono"
 import { cors } from "hono/cors"
