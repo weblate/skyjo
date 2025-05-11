@@ -94,4 +94,5 @@ authRouter.get("/me", async (c) => {
     throw error
   }
 })
+
 export { authRouter }

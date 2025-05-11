@@ -6,10 +6,13 @@ import {
   userTable,
 } from "@/db/schema.js"
 import { sha256 } from "@oslojs/crypto/sha2"
-import { encodeBase32, encodeHexLowerCase } from "@oslojs/encoding"
-import { eq } from "drizzle-orm"
+import {
+  encodeBase32LowerCaseNoPadding,
+  encodeHexLowerCase,
+} from "@oslojs/encoding"
+import { and, eq } from "drizzle-orm"
 import type { Context } from "hono"
-import { getCookie, setCookie } from "hono/cookie"
+import { getCookie } from "hono/cookie"
 
 type SessionValidationResult =
   | { session: Session; user: User }
@@ -17,7 +20,7 @@ type SessionValidationResult =
 export async function validateSessionToken(
   token: string,
 ): Promise<SessionValidationResult> {
-  const sessionId = getSessionId(token)
+  const sessionId = createSessionId(token)
 
   const result = await db
     .select()
@@ -37,7 +40,7 @@ export async function validateSessionToken(
     return { session: null, user: null }
   }
   if (Date.now() >= session.expiresAt.getTime() - 1000 * 60 * 60 * 24 * 15) {
-    await createSession(token, user.id)
+    await updateSession(session.id, user.id)
   }
 
   return { session, user }
@@ -62,38 +65,14 @@ export async function invalidateUserSessions(userId: number): Promise<void> {
   await db.delete(sessionTable).where(eq(sessionTable.userId, userId))
 }
 
-export function setSessionTokenCookie(
-  c: Context,
-  token: string,
-  expiresAt: Date,
-): void {
-  setCookie(c, "session", token, {
-    httpOnly: true,
-    path: "/",
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    expires: expiresAt,
-  })
-}
-
-export function deleteSessionTokenCookie(c: Context): void {
-  setCookie(c, "session", "", {
-    httpOnly: true,
-    path: "/",
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "lax",
-    maxAge: 0,
-  })
-}
-
 export function generateSessionToken(): string {
-  const tokenBytes = new Uint8Array(20)
-  crypto.getRandomValues(tokenBytes)
-  const token = encodeBase32(tokenBytes).toLowerCase()
+  const bytes = new Uint8Array(20)
+  crypto.getRandomValues(bytes)
+  const token = encodeBase32LowerCaseNoPadding(bytes)
   return token
 }
 
-export function getSessionId(token: string): string {
+export function createSessionId(token: string): string {
   const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)))
   return sessionId
 }
@@ -102,8 +81,7 @@ export async function createSession(
   token: string,
   userId: number,
 ): Promise<Session> {
-  const sessionId = getSessionId(token)
-
+  const sessionId = createSessionId(token)
   const session: Session = {
     id: sessionId,
     userId,
@@ -112,4 +90,16 @@ export async function createSession(
   await db.insert(sessionTable).values(session)
 
   return session
+}
+
+export async function updateSession(
+  sessionId: string,
+  userId: number,
+): Promise<void> {
+  await db
+    .update(sessionTable)
+    .set({
+      expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),
+    })
+    .where(and(eq(sessionTable.id, sessionId), eq(sessionTable.userId, userId)))
 }

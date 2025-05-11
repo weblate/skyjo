@@ -1,9 +1,16 @@
+import { SESSION_COOKIE_NAME } from "@/constants.js"
 import { db } from "@/db/index.js"
 import { sessionTable, userTable } from "@/db/schema.js"
+import { setSessionTokenCookie } from "@/http/auth/lib/cookie.js"
 import {
   type GoogleUser,
   validateGoogleAuthorizationCode,
 } from "@/http/auth/lib/google.js"
+import {
+  createSession,
+  createSessionId,
+  generateSessionToken,
+} from "@/http/session/session.service.js"
 import { createUser } from "@/http/user/user.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { Logger } from "@skymo/logger"
@@ -12,11 +19,8 @@ import type { LoginUser, RegisterUser } from "@skymo/shared/validations"
 import { decodeIdToken } from "arctic"
 import { eq, or } from "drizzle-orm"
 import type { Context } from "hono"
-import { deleteCookie, getCookie, setCookie } from "hono/cookie"
-import { nanoid } from "nanoid"
+import { deleteCookie, getCookie } from "hono/cookie"
 import { verifyPassword } from "./lib/password.js"
-
-const SESSION_COOKIE_NAME = "skymo_session_id"
 
 export async function register(data: RegisterUser) {
   const { email, username, password, locale } = data
@@ -72,7 +76,9 @@ export async function login(data: LoginUser, c: Context) {
     throw new Error(AuthError.LOGIN_INVALID_CREDENTIALS)
   }
 
-  await createSession(user[0].id, c)
+  const token = generateSessionToken()
+  const session = await createSession(token, user[0].id)
+  setSessionTokenCookie(c, token, session.expiresAt)
 }
 
 export async function loginGoogle(
@@ -117,7 +123,9 @@ export async function loginGoogle(
     userId = newUser.id
   }
 
-  await createSession(userId, c)
+  const token = generateSessionToken()
+  const session = await createSession(token, userId)
+  setSessionTokenCookie(c, token, session.expiresAt)
 }
 
 export async function logout(c: Context) {
@@ -139,13 +147,13 @@ export async function logout(c: Context) {
 }
 
 export async function getCurrentUser(c: Context) {
-  const sessionId = getCookie(c, SESSION_COOKIE_NAME)
-  if (!sessionId) throw new Error(AuthError.SESSION_NOT_FOUND)
+  const sessionIdFromCookie = getCookie(c, SESSION_COOKIE_NAME)
+  if (!sessionIdFromCookie) throw new Error(AuthError.SESSION_NOT_FOUND)
 
   const session = await db
     .select()
     .from(sessionTable)
-    .where(eq(sessionTable.id, sessionId))
+    .where(eq(sessionTable.id, createSessionId(sessionIdFromCookie)))
     .limit(1)
 
   if (session.length === 0) {
@@ -171,21 +179,4 @@ export async function getCurrentUser(c: Context) {
   if (user.length === 0) throw new Error(AuthError.USER_NOT_FOUND)
 
   return user[0]
-}
-
-export async function createSession(userId: number, c: Context) {
-  const sessionId = nanoid()
-  const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000) // 7 days
-
-  await db.insert(sessionTable).values({ id: sessionId, userId, expiresAt })
-
-  setCookie(c, SESSION_COOKIE_NAME, sessionId, {
-    path: "/",
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: "Strict",
-    expires: expiresAt,
-  })
-
-  return { sessionId }
 }
