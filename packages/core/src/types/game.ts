@@ -26,7 +26,7 @@ export interface GameToJson {
   updatedAt: Date
 }
 
-export interface GameDb {
+export interface GameRedisDb {
   id: string
   code: string
   hostId: string

@@ -3,9 +3,3 @@ export type CardToJson = {
   value?: number
   isVisible: boolean
 }
-
-export interface CardDb {
-  id: string
-  value: number
-  isVisible: boolean
-}

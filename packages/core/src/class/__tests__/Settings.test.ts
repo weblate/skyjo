@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest"
 import { Constants } from "../../constants.js"
-import type { GameDb } from "../../types/game.js"
+import type { GameRedisDb } from "../../types/game.js"
 import { Settings } from "../Settings.js"
 let settings: Settings
 
@@ -44,7 +44,7 @@ describe("Settings", () => {
   })
 
   it("should populate the class", () => {
-    const dbGameSettings: GameDb["settings"] = {
+    const dbGameSettings: GameRedisDb["settings"] = {
       isConfirmed: true,
       removeIdenticalColumn: false,
       removeIdenticalRow: false,

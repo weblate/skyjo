@@ -2,7 +2,7 @@ import { ENV } from "@env"
 import {
   Constants as CoreConstants,
   Game,
-  type GameDb,
+  type GameRedisDb,
   type PlayerToJson,
 } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
@@ -96,7 +96,7 @@ export class GameRepository extends RedisClient {
     const client = await RedisClient.getClient()
     const key = this.getGameLatestStateKey(code)
 
-    const game = (await client.json.get(key)) as GameDb | null
+    const game = (await client.json.get(key)) as GameRedisDb | null
     if (!game) {
       throw new CError("Game not found in redis", {
         level: "warn",
@@ -185,7 +185,7 @@ export class GameRepository extends RedisClient {
     return `${GameRepository.GAME_PREFIX}:${code}:${GameRepository.GAME_STATE_PREFIX}:${stateVersion}`
   }
 
-  private deserializeGame(gameDb: GameDb): Game {
+  private deserializeGame(gameDb: GameRedisDb): Game {
     const game = new Game({
       hostId: gameDb.hostId,
     })

@@ -1,4 +1,4 @@
-import type { GameDb } from "@/types/game.js"
+import type { GameRedisDb } from "@/types/game.js"
 import type { PlayerScores, PlayerToJson } from "@/types/player.js"
 import type { CreatePlayer } from "@/validations/player.js"
 import { type Avatar, type ConnectionStatus, Constants } from "../constants.js"
@@ -58,7 +58,7 @@ export class Player implements PlayerInterface {
     this.avatar = playerToCreate.avatar
   }
 
-  populate(player: GameDb["players"][number]) {
+  populate(player: GameRedisDb["players"][number]) {
     this.id = player.id
     this.name = player.name
     this.avatar = player.avatar

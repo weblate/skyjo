@@ -4,7 +4,7 @@ import type { PublicGame, PublicGameTag } from "@skymo/shared/types"
 
 const gameRepository = new GameRepository()
 
-export async function getPublicGames(
+export async function getRedisPublicGames(
   nbPerPage: number,
   page: number,
 ): Promise<PublicGame[]> {

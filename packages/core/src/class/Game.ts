@@ -1,4 +1,4 @@
-import type { GameDb, GameToJson } from "@/types/game.js"
+import type { GameRedisDb, GameToJson } from "@/types/game.js"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import {
   Constants,
@@ -83,7 +83,7 @@ export class Game implements GameInterface {
     this.operationManager = operationManager
   }
 
-  populate(game: GameDb) {
+  populate(game: GameRedisDb) {
     this.id = game.id
     this.code = game.code
     this.status = game.status
@@ -512,7 +512,7 @@ export class Game implements GameInterface {
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
       processingAfk: this.processingAfk,
-    } satisfies GameDb
+    } satisfies GameRedisDb
   }
 
   //#region private methods

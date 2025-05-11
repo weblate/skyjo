@@ -1,4 +1,4 @@
-import { getPublicGames } from "@/http/game/game.service.js"
+import { getRedisPublicGames } from "@/http/game/game.service.js"
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 import { zValidator } from "@hono/zod-validator"
 import { getPublicGamesQuerySchema } from "@skymo/shared/validations"
@@ -20,7 +20,7 @@ gameRouter.get(
   async (c) => {
     const query = c.req.valid("query")
 
-    const games = await getPublicGames(query.nbPerPage, query.page)
+    const games = await getRedisPublicGames(query.nbPerPage, query.page)
 
     return c.json({
       success: true,

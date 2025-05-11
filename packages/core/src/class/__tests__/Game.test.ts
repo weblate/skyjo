@@ -5,7 +5,7 @@ import {
   type LastTurnStatus,
   type TurnStatus,
 } from "../../constants.js"
-import type { GameDb } from "../../types/game.js"
+import type { GameRedisDb } from "../../types/game.js"
 import { Card } from "../Card.js"
 import { Game } from "../Game.js"
 import { Player } from "../Player.js"
@@ -65,7 +65,7 @@ describe("Game", () => {
 
   describe("populate", () => {
     it("should populate the class without players", () => {
-      const gameDb: GameDb = {
+      const gameDb: GameRedisDb = {
         id: crypto.randomUUID(),
         code: "code",
         hostId: player.id,
@@ -118,7 +118,7 @@ describe("Game", () => {
     })
 
     it("should populate the class with players", () => {
-      const gameDb: GameDb = {
+      const gameDb: GameRedisDb = {
         id: crypto.randomUUID(),
         hostId: player.id,
         isFull: false,
@@ -987,7 +987,7 @@ describe("Game", () => {
         processingAfk: game.processingAfk,
         createdAt: game.createdAt,
         updatedAt: game.updatedAt,
-      } satisfies GameDb)
+      } satisfies GameRedisDb)
     })
   })
 

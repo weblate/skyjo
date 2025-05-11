@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest"
 import { Constants } from "../../constants.js"
-import type { GameDb } from "../../types/game.js"
+import type { GameRedisDb } from "../../types/game.js"
 import { Card } from "../Card.js"
 import { Player } from "../Player.js"
 import { Settings } from "../Settings.js"
@@ -34,7 +34,7 @@ describe("Player", () => {
 
   //#region Player class
   it("should populate the class without cards", () => {
-    const dbPlayer: GameDb["players"][number] = {
+    const dbPlayer: GameRedisDb["players"][number] = {
       id: crypto.randomUUID(),
       name: "name",
       avatar: Constants.AVATARS.BEE,
@@ -62,7 +62,7 @@ describe("Player", () => {
   })
 
   it("should populate the class with cards", () => {
-    const dbPlayer: GameDb["players"][number] = {
+    const dbPlayer: GameRedisDb["players"][number] = {
       id: crypto.randomUUID(),
       name: "name",
       avatar: Constants.AVATARS.BEE,

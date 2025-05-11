@@ -1,4 +1,4 @@
-import type { GameDb } from "@/types/game.js"
+import type { GameRedisDb } from "@/types/game.js"
 import type { SettingsToJson } from "@/types/settings.js"
 import { Constants, type FirstPlayerPenaltyType } from "../constants.js"
 
@@ -57,7 +57,7 @@ export class Settings implements SettingsInterface {
     if (maxPlayers) this.maxPlayers = maxPlayers
   }
 
-  populate(settings: GameDb["settings"]) {
+  populate(settings: GameRedisDb["settings"]) {
     this.isConfirmed = settings.isConfirmed
     this.private = settings.private
     this.maxPlayers = settings.maxPlayers
