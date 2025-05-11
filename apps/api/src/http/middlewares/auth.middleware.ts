@@ -1,12 +1,11 @@
 import { SESSION_COOKIE_NAME } from "@/constants.js"
-import type { User } from "@/db/schema.js"
+import type { SessionDb, UserDb } from "@/db/schema.js"
 import { validateSessionToken } from "@/http/session/session.service.js"
 import type { Context, Next } from "hono"
 import { getCookie } from "hono/cookie"
-import type { Session } from "inspector/promises"
 
 export interface AuthContextVariables {
-  Variables: { user: User; session: Session }
+  Variables: { user: UserDb; session: SessionDb }
 }
 export const authMiddleware = async (c: Context, next: Next) => {
   const sessionToken = getCookie(c, SESSION_COOKIE_NAME)

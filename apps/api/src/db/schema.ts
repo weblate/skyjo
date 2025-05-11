@@ -57,8 +57,8 @@ export const userTable = pgTable(
     uniqueIndex("user_tag_idx").on(t.userTag),
   ],
 )
-export type User = Omit<InferSelectModel<typeof userTable>, "password">
-export type UserWithPassword = InferSelectModel<typeof userTable>
+export type UserDb = Omit<InferSelectModel<typeof userTable>, "password">
+export type UserWithPasswordDb = InferSelectModel<typeof userTable>
 
 export const sessionTable = pgTable("sessions", {
   id: text("id").primaryKey(),
@@ -70,7 +70,7 @@ export const sessionTable = pgTable("sessions", {
     mode: "date",
   }).notNull(),
 })
-export type Session = InferSelectModel<typeof sessionTable>
+export type SessionDb = InferSelectModel<typeof sessionTable>
 
 export const gameTable = pgTable("games", {
   id: serial("id").primaryKey(),
@@ -79,7 +79,7 @@ export const gameTable = pgTable("games", {
     .notNull()
     .defaultNow(),
 })
-export type Game = InferSelectModel<typeof gameTable>
+export type GameDb = InferSelectModel<typeof gameTable>
 
 export const playerTable = pgTable("players", {
   id: serial("id").primaryKey(),
@@ -93,7 +93,7 @@ export const playerTable = pgTable("players", {
   score: smallint("score").notNull().default(0),
   connectionStatus: smallint("connection_status").notNull().default(1),
 })
-export type Player = InferSelectModel<typeof playerTable>
+export type PlayerDb = InferSelectModel<typeof playerTable>
 
 export const scoreTable = pgTable("scores", {
   id: serial("id").primaryKey(),
@@ -107,3 +107,4 @@ export const scoreTable = pgTable("scores", {
   round: integer("round").notNull(),
   cards: json("cards"),
 })
+export type ScoreDb = InferSelectModel<typeof scoreTable>

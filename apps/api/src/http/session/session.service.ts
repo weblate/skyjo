@@ -1,7 +1,7 @@
 import { db } from "@/db/index.js"
 import {
-  type Session,
-  type User,
+  type SessionDb,
+  type UserDb,
   sessionTable,
   userTable,
 } from "@/db/schema.js"
@@ -15,7 +15,7 @@ import type { Context } from "hono"
 import { getCookie } from "hono/cookie"
 
 type SessionValidationResult =
-  | { session: Session; user: User }
+  | { session: SessionDb; user: UserDb }
   | { session: null; user: null }
 export async function validateSessionToken(
   token: string,
@@ -80,9 +80,9 @@ export function createSessionId(token: string): string {
 export async function createSession(
   token: string,
   userId: number,
-): Promise<Session> {
+): Promise<SessionDb> {
   const sessionId = createSessionId(token)
-  const session: Session = {
+  const session: SessionDb = {
     id: sessionId,
     userId,
     expiresAt: new Date(Date.now() + 1000 * 60 * 60 * 24 * 30),

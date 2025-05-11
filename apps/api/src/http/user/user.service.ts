@@ -1,5 +1,5 @@
 import { db } from "@/db/index.js"
-import { type User, userTable } from "@/db/schema.js"
+import { type UserDb, userTable } from "@/db/schema.js"
 import { hashPassword } from "@/http/auth/lib/password.js"
 import type { Avatar } from "@skymo/core"
 import { UserError } from "@skymo/shared/constants"
@@ -24,7 +24,7 @@ export async function createUser({
   avatar,
   emailVerified,
   password,
-}: CreateUserParams): Promise<User> {
+}: CreateUserParams): Promise<UserDb> {
   const createdUsername = username ?? "unnamed"
   const createdUserTag = userTag ?? (await createUserTag(createdUsername))
 
@@ -62,7 +62,7 @@ export async function createUser({
 
 export async function getUserFromGoogleId(
   googleId: string,
-): Promise<User | null> {
+): Promise<UserDb | null> {
   const row = await db
     .select()
     .from(userTable)
