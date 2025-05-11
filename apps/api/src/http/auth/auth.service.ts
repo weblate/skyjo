@@ -1,26 +1,26 @@
 import { db } from "@/db/index.js"
 import { sessionTable, userTable } from "@/db/schema.js"
+import {
+  type GoogleUser,
+  validateGoogleAuthorizationCode,
+} from "@/http/auth/lib/google.js"
+import { createUser } from "@/http/user/user.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { Logger } from "@skymo/logger"
-import { AuthErrorKeys } from "@skymo/shared/constants"
+import { AuthError } from "@skymo/shared/constants"
 import type { LoginUser, RegisterUser } from "@skymo/shared/validations"
+import { decodeIdToken } from "arctic"
 import { eq, or } from "drizzle-orm"
 import type { Context } from "hono"
 import { deleteCookie, getCookie, setCookie } from "hono/cookie"
 import { nanoid } from "nanoid"
-import {
-  createGoogleAuthorizationURL,
-  getGoogleUserFromIdToken,
-  setOAuthCookies as setGoogleOAuthCookies,
-  validateGoogleAuthorizationCode,
-} from "./lib/google.js"
-import { hashPassword, verifyPassword } from "./lib/password.js"
+import { verifyPassword } from "./lib/password.js"
 
 export class AuthService {
   private readonly SESSION_COOKIE_NAME = "skymo_session_id"
 
   async register(data: RegisterUser) {
-    const { email, username, password } = data
+    const { email, username, password, locale } = data
 
     const existingUser = await db
       .select({ id: userTable.id, email: userTable.email })
@@ -35,28 +35,18 @@ export class AuthService {
     //             (The latter would typically involve a password reset token flow).
     if (existingUser.length > 0) return
 
-    const hashedPassword = await hashPassword(password)
-
-    const userTag = await this.createUserTag(username)
-    const newUserResult = await db
-      .insert(userTable)
-      .values({
-        email,
-        username,
-        userTag,
-        password: hashedPassword,
-      })
-      .returning({ id: userTable.id })
-
-    if (!newUserResult || newUserResult.length === 0) {
-      throw new Error(AuthErrorKeys.USER_CREATION_FAILED)
-    }
+    await createUser({
+      email,
+      username,
+      password,
+      locale,
+    })
 
     // TODO: Add job to email queue: send welcome email to newUserResult[0].email + verify email + continue your inscription with the link
     mailerQueue.add("signup", {
       to: email,
       template: "signup",
-      locale: "en",
+      locale: locale ?? "en",
       content: {
         username,
         email,
@@ -75,15 +65,56 @@ export class AuthService {
       .limit(1)
 
     if (user.length === 0 || !user[0].password) {
-      throw new Error(AuthErrorKeys.LOGIN_INVALID_CREDENTIALS)
+      throw new Error(AuthError.LOGIN_INVALID_CREDENTIALS)
     }
 
     const isValidPassword = await verifyPassword(user[0].password, password)
     if (!isValidPassword) {
-      throw new Error(AuthErrorKeys.LOGIN_INVALID_CREDENTIALS)
+      throw new Error(AuthError.LOGIN_INVALID_CREDENTIALS)
     }
 
     await this.createSession(user[0].id, c)
+  }
+
+  async loginGoogle(code: string, codeVerifier: string, c: Context) {
+    const tokens = await validateGoogleAuthorizationCode(code, codeVerifier)
+
+    const claims = decodeIdToken(tokens.idToken()) as GoogleUser
+
+    const googleId = claims.sub
+    const name = claims.name
+    const email = claims.email
+    const locale = claims?.locale
+    const emailVerified = claims?.email_verified
+
+    const userRecord = await db
+      .select()
+      .from(userTable)
+      .where(or(eq(userTable.googleId, googleId), eq(userTable.email, email)))
+      .limit(1)
+    const user = userRecord?.[0]
+    let userId = user?.id
+
+    // If the user exists and has no googleId, set the googleId
+    if (user && user.googleId === null) {
+      await db
+        .update(userTable)
+        .set({ googleId })
+        .where(eq(userTable.id, user.id))
+    } else if (!user) {
+      const username = name?.split(" ")[0] ?? "unnamed"
+      const newUser = await createUser({
+        email,
+        username,
+        googleId: googleId ?? null,
+        locale,
+        emailVerified,
+      })
+
+      userId = newUser.id
+    }
+
+    await this.createSession(userId, c)
   }
 
   async logout(c: Context) {
@@ -100,13 +131,13 @@ export class AuthService {
         error,
       })
 
-      throw new Error(AuthErrorKeys.LOGOUT_FAILED)
+      throw new Error(AuthError.LOGOUT_FAILED)
     }
   }
 
   async getCurrentUser(c: Context) {
     const sessionId = getCookie(c, this.SESSION_COOKIE_NAME)
-    if (!sessionId) throw new Error(AuthErrorKeys.SESSION_NOT_FOUND)
+    if (!sessionId) throw new Error(AuthError.SESSION_NOT_FOUND)
 
     const session = await db
       .select()
@@ -116,7 +147,7 @@ export class AuthService {
 
     if (session.length === 0) {
       deleteCookie(c, this.SESSION_COOKIE_NAME)
-      throw new Error(AuthErrorKeys.SESSION_NOT_FOUND)
+      throw new Error(AuthError.SESSION_NOT_FOUND)
     }
 
     const user = await db
@@ -126,6 +157,7 @@ export class AuthService {
         username: userTable.username,
         userTag: userTable.userTag,
         avatar: userTable.avatar,
+        locale: userTable.locale,
         createdAt: userTable.createdAt,
         updatedAt: userTable.updatedAt,
       })
@@ -133,76 +165,9 @@ export class AuthService {
       .where(eq(userTable.id, session[0].userId))
       .limit(1)
 
-    if (user.length === 0) throw new Error(AuthErrorKeys.USER_NOT_FOUND)
+    if (user.length === 0) throw new Error(AuthError.USER_NOT_FOUND)
 
     return user[0]
-  }
-
-  googleLoginRedirect(c: Context) {
-    const { url, state, codeVerifier } = createGoogleAuthorizationURL()
-    setGoogleOAuthCookies(c, state, codeVerifier)
-
-    return url.toString()
-  }
-
-  async googleLoginCallback(
-    c: Context,
-    code: string,
-    storedCodeVerifier: string,
-  ) {
-    const tokens = await validateGoogleAuthorizationCode(
-      code,
-      storedCodeVerifier,
-    )
-
-    const idToken = tokens.idToken()
-    if (!idToken) {
-      throw new Error(AuthErrorKeys.OAUTH_ID_TOKEN_MISSING)
-    }
-
-    const googleUser = getGoogleUserFromIdToken(idToken)
-    if (!googleUser || !googleUser.sub) {
-      throw new Error(AuthErrorKeys.OAUTH_PARSE_USER_INFO_FAILED)
-    }
-
-    const userRecord = await db
-      .select()
-      .from(userTable)
-      .where(
-        or(
-          eq(userTable.googleId, googleUser.sub),
-          eq(userTable.email, googleUser.email || ""),
-        ),
-      )
-      .limit(1)
-    const user = userRecord?.[0]
-
-    // If the user exists and has no googleId, set the googleId
-    if (user && user.googleId === null) {
-      await db
-        .update(userTable)
-        .set({ googleId: googleUser.sub })
-        .where(eq(userTable.id, user.id))
-    } else if (!user) {
-      const username = googleUser.name?.split(" ")[0] ?? "unnamed"
-      const userTag = await this.createUserTag(username)
-
-      const newUserResult = await db
-        .insert(userTable)
-        .values({
-          email: googleUser.email,
-          username,
-          userTag,
-          googleId: googleUser.sub,
-        })
-        .returning({ id: userTable.id })
-
-      if (!newUserResult || newUserResult.length === 0) {
-        throw new Error(AuthErrorKeys.OAUTH_ACCOUNT_CREATION_FAILED)
-      }
-    }
-
-    await this.createSession(user.id, c)
   }
 
   private async createSession(userId: number, c: Context) {
@@ -220,26 +185,5 @@ export class AuthService {
     })
 
     return { sessionId }
-  }
-
-  private async createUserTag(username: string) {
-    const parsedUsername = username.slice(0, 15)
-
-    let userTag = ""
-    // Generate a user tag until it's unique. Maximum of 20 retries before throwing an error
-    for (let i = 0; i < 20; i++) {
-      userTag = `${parsedUsername}_${Math.floor(1000 + Math.random() * 9000)}`
-
-      const existingUser = await db
-        .select()
-        .from(userTable)
-        .where(eq(userTable.userTag, userTag))
-        .limit(1)
-
-      if (existingUser.length === 0) break
-      if (i === 19) throw new Error(AuthErrorKeys.USER_CREATION_FAILED)
-    }
-
-    return userTag
   }
 }

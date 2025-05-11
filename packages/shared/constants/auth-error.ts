@@ -1,7 +1,4 @@
-export const AuthErrorKeys = {
-  // Registration Errors
-  USER_CREATION_FAILED: "user-creation-failed",
-
+export const AuthError = {
   // Login Errors
   LOGIN_INVALID_CREDENTIALS: "invalid-credentials",
 
@@ -13,7 +10,7 @@ export const AuthErrorKeys = {
   USER_NOT_FOUND: "user-not-found",
 
   // OAuth General Errors
-  OAUTH_INVALID_CALLBACK_PARAMS: "oauth-invalid-callback-params",
+  OAUTH_RESTART_PROCESS: "oauth-restart-process",
   OAUTH_ID_TOKEN_MISSING: "oauth-id-token-missing",
   OAUTH_PARSE_USER_INFO_FAILED: "oauth-parse-user-info-failed",
   OAUTH_ACCOUNT_CREATION_FAILED: "oauth-account-creation-failed",
@@ -21,4 +18,4 @@ export const AuthErrorKeys = {
   // Generic/Fallback
   UNKNOWN_AUTH_ERROR: "unknown-auth-error",
 } as const
-export type AuthErrorKey = (typeof AuthErrorKeys)[keyof typeof AuthErrorKeys]
+export type AuthError = (typeof AuthError)[keyof typeof AuthError]

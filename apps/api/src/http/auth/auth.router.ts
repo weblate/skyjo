@@ -1,15 +1,14 @@
-import { getOAuthCookies as getGoogleOAuthCookies } from "@/http/auth/lib/google.js"
+import { googleRouter } from "@/http/auth/google.router.js"
 import { zValidator } from "@hono/zod-validator"
-import { Logger } from "@skymo/logger"
-import { AuthErrorKeys } from "@skymo/shared/constants"
+import { AuthError } from "@skymo/shared/constants"
 import { loginSchema, registerSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
-import { deleteCookie } from "hono/cookie"
 import { AuthService } from "./auth.service.js"
 
 const authService = new AuthService()
 
 const authRouter = new Hono().basePath("/auth")
+authRouter.route("", googleRouter)
 
 authRouter.post("/register", zValidator("json", registerSchema), async (c) => {
   const data = c.req.valid("json")
@@ -39,11 +38,11 @@ authRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   } catch (error) {
     if (
       error instanceof Error &&
-      error.message === AuthErrorKeys.LOGIN_INVALID_CREDENTIALS
+      error.message === AuthError.LOGIN_INVALID_CREDENTIALS
     ) {
       return c.json({
         success: false,
-        error: AuthErrorKeys.LOGIN_INVALID_CREDENTIALS,
+        error: AuthError.LOGIN_INVALID_CREDENTIALS,
       })
     }
 
@@ -60,10 +59,7 @@ authRouter.post("/logout", async (c) => {
       message: "Logged out successfully.",
     })
   } catch (error) {
-    if (
-      error instanceof Error &&
-      error.message === AuthErrorKeys.LOGOUT_FAILED
-    ) {
+    if (error instanceof Error && error.message === AuthError.LOGOUT_FAILED) {
       return c.json({
         success: false,
         message: "An error occurred during logout.",
@@ -82,12 +78,12 @@ authRouter.get("/me", async (c) => {
   } catch (error) {
     if (
       error instanceof Error &&
-      error.message === AuthErrorKeys.SESSION_NOT_FOUND
+      error.message === AuthError.SESSION_NOT_FOUND
     ) {
       return c.json({ user: null }, 401)
     } else if (
       error instanceof Error &&
-      error.message === AuthErrorKeys.USER_NOT_FOUND
+      error.message === AuthError.USER_NOT_FOUND
     ) {
       return c.json({ user: null }, 404)
     }
@@ -95,77 +91,4 @@ authRouter.get("/me", async (c) => {
     throw error
   }
 })
-
-//#region Google OAuth Routes
-authRouter.get("/google/login", async (c) => {
-  try {
-    const redirectUrl = authService.googleLoginRedirect(c)
-
-    return c.json({
-      success: true,
-      redirectUrl,
-    })
-  } catch (error) {
-    Logger.error("Google login initiation route error:", { error })
-    return c.json(
-      {
-        success: false,
-        message: "Failed to initiate Google login.",
-      },
-      500,
-    )
-  }
-})
-
-authRouter.get("/google/callback", async (c) => {
-  const code = c.req.query("code")
-  const state = c.req.query("state")
-
-  const { storedState, storedCodeVerifier } = getGoogleOAuthCookies(c)
-
-  deleteCookie(c, "google_oauth_state", { path: "/" })
-  deleteCookie(c, "google_oauth_code_verifier", { path: "/" })
-
-  if (!code || !state || !storedState || !storedCodeVerifier) {
-    return c.json({
-      success: false,
-      error: AuthErrorKeys.OAUTH_INVALID_CALLBACK_PARAMS,
-      statusCode: 400,
-    })
-  }
-
-  try {
-    await authService.googleLoginCallback(c, code, state)
-
-    return c.json({
-      success: true,
-    })
-  } catch (error) {
-    if (
-      error instanceof Error &&
-      error.message === AuthErrorKeys.OAUTH_ID_TOKEN_MISSING
-    ) {
-      return c.json({
-        success: false,
-        error: AuthErrorKeys.OAUTH_ID_TOKEN_MISSING,
-        statusCode: 400,
-      })
-    }
-
-    if (
-      error instanceof Error &&
-      error.message === AuthErrorKeys.OAUTH_PARSE_USER_INFO_FAILED
-    ) {
-      return c.json({
-        success: false,
-        error: AuthErrorKeys.OAUTH_PARSE_USER_INFO_FAILED,
-        statusCode: 500,
-      })
-    }
-
-    throw error
-  }
-})
-//#endregion
-
 export { authRouter }

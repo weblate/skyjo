@@ -43,6 +43,8 @@ export const userTable = pgTable(
     password: varchar("password", { length: 255 }),
     googleId: varchar("google_id", { length: 255 }).unique(),
     facebookId: varchar("facebook_id", { length: 255 }).unique(),
+    locale: varchar("locale", { length: 10 }).notNull().default("en"),
+    emailVerified: boolean("email_verified").notNull().default(false),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -55,7 +57,8 @@ export const userTable = pgTable(
     uniqueIndex("user_tag_idx").on(t.userTag),
   ],
 )
-export type User = InferSelectModel<typeof userTable>
+export type User = Omit<InferSelectModel<typeof userTable>, "password">
+export type UserWithPassword = InferSelectModel<typeof userTable>
 
 export const sessionTable = pgTable("sessions", {
   id: text("id").primaryKey(),

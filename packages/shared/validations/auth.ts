@@ -18,6 +18,7 @@ export const registerSchema = z.object({
       passwordSpecialCharRegex,
       "Must contain at least one special character",
     ),
+  locale: z.enum(["en", "fr"]).default("en"),
 })
 export type RegisterUser = z.infer<typeof registerSchema>
 

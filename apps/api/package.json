@@ -16,11 +16,14 @@
   "dependencies": {
     "@hono/node-server": "^1.14.1",
     "@hono/zod-validator": "^0.4.3",
+    "@oslojs/crypto": "^1.0.1",
+    "@oslojs/encoding": "^1.1.0",
     "@skymo/core": "workspace:*",
     "@skymo/error": "workspace:*",
     "@skymo/logger": "workspace:*",
     "@skymo/shared": "workspace:*",
     "@skymo/state-operations": "workspace:*",
+    "@skymo/worker-types": "workspace:*",
     "@socket.io/redis-adapter": "^8.3.0",
     "arctic": "^3.6.1",
     "argon2": "^0.43.0",
@@ -32,10 +35,10 @@
     "pg": "^8.15.6",
     "rate-limiter-flexible": "^7.0.0",
     "redis": "^4.7.0",
+    "sha2": "link:@oslojs/crypto/sha2",
     "socket.io": "^4.8.1",
     "socket.io-msgpack-parser": "^3.0.2",
-    "zod": "^3.24.2",
-    "@skymo/worker-types": "workspace:*"
+    "zod": "^3.24.2"
   },
   "devDependencies": {
     "@types/node": "^22.14.1",
