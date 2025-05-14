@@ -1,4 +1,4 @@
-import { SESSION_COOKIE_NAME } from "@/constants.js"
+import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import type { Context } from "hono"
 import { setCookie } from "hono/cookie"
 

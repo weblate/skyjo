@@ -5,10 +5,12 @@ import {
   signup,
 } from "@/http/auth/auth.service.js"
 import { googleRouter } from "@/http/auth/google.router.js"
+import { validateSessionToken } from "@/http/session/session.service.js"
 import { zValidator } from "@hono/zod-validator"
-import { AuthError } from "@skymo/shared/constants"
+import { AuthError, SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import { loginSchema, signupSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
+import { getCookie } from "hono/cookie"
 
 const authRouter = new Hono().basePath("/auth")
 authRouter.route("", googleRouter)
@@ -16,7 +18,7 @@ authRouter.route("", googleRouter)
 authRouter.post("/signup", zValidator("json", signupSchema), async (c) => {
   const data = c.req.valid("json")
   try {
-    await signup(data)
+    await signup(c, data)
 
     return c.json({
       success: true,
@@ -33,7 +35,7 @@ authRouter.post("/signup", zValidator("json", signupSchema), async (c) => {
 authRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   const data = c.req.valid("json")
   try {
-    await login(data, c)
+    await login(c, data)
 
     return c.json({
       success: true,
@@ -53,6 +55,33 @@ authRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   }
 })
 
+authRouter.post("/verify", async (c) => {
+  const sessionToken = getCookie(c, SESSION_COOKIE_NAME)
+
+  if (!sessionToken) {
+    return c.json(
+      { error: "Unauthorized", reason: "Missing session token" },
+      401,
+    )
+  }
+
+  try {
+    const { session, user } = await validateSessionToken(sessionToken)
+
+    if (!session || !user) {
+      return c.json(
+        { error: "Unauthorized", reason: "Invalid session token" },
+        401,
+      )
+    }
+
+    return c.json({
+      success: true,
+    })
+  } catch (error) {
+    throw error
+  }
+})
 authRouter.post("/logout", async (c) => {
   try {
     await logout(c)

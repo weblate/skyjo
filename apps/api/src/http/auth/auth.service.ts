@@ -1,4 +1,3 @@
-import { SESSION_COOKIE_NAME } from "@/constants.js"
 import { db } from "@/db/index.js"
 import { sessionTable, userTable } from "@/db/schema.js"
 import { setSessionTokenCookie } from "@/http/auth/lib/cookie.js"
@@ -14,7 +13,11 @@ import {
 import { createUser, generateOTP } from "@/http/user/user.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { Logger } from "@skymo/logger"
-import { AuthError, locales } from "@skymo/shared/constants"
+import {
+  AuthError,
+  SESSION_COOKIE_NAME,
+  locales,
+} from "@skymo/shared/constants"
 import type { LoginUser, Signup } from "@skymo/shared/validations"
 import { decodeIdToken } from "arctic"
 import { eq, or } from "drizzle-orm"
@@ -22,7 +25,7 @@ import type { Context } from "hono"
 import { deleteCookie, getCookie } from "hono/cookie"
 import { verifyPassword } from "./lib/password.js"
 
-export async function signup(data: Signup) {
+export async function signup(c: Context, data: Signup) {
   const { email, locale } = data
 
   const existingUser = await db
@@ -39,10 +42,14 @@ export async function signup(data: Signup) {
     return
   }
 
-  await createUser({
+  const user = await createUser({
     email,
     locale,
   })
+
+  const token = generateSessionToken()
+  const session = await createSession(token, user.id)
+  setSessionTokenCookie(c, token, session.expiresAt)
 }
 
 export async function sendOtp(email: string) {
@@ -69,7 +76,7 @@ export async function sendOtp(email: string) {
   })
 }
 
-export async function login(data: LoginUser, c: Context) {
+export async function login(c: Context, data: LoginUser) {
   const { login, password } = data
 
   const user = await db
@@ -93,9 +100,9 @@ export async function login(data: LoginUser, c: Context) {
 }
 
 export async function loginGoogle(
+  c: Context,
   code: string,
   codeVerifier: string,
-  c: Context,
 ) {
   const tokens = await validateGoogleAuthorizationCode(code, codeVerifier)
 

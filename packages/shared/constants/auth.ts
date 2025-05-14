@@ -19,3 +19,5 @@ export const AuthError = {
   UNKNOWN_AUTH_ERROR: "unknown-auth-error",
 } as const
 export type AuthError = (typeof AuthError)[keyof typeof AuthError]
+
+export const SESSION_COOKIE_NAME = "skymo_session_id"

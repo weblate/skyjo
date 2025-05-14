@@ -1,6 +1,6 @@
-import { SESSION_COOKIE_NAME } from "@/constants.js"
 import type { SessionDb, UserDb } from "@/db/schema.js"
 import { validateSessionToken } from "@/http/session/session.service.js"
+import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import type { Context, Next } from "hono"
 import { getCookie } from "hono/cookie"
 

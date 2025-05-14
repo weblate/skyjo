@@ -63,7 +63,7 @@ googleRouter.get("/login/google/callback", async (c) => {
   deleteCookie(c, "google_oauth_code_verifier")
 
   try {
-    await loginGoogle(code, codeVerifier, c)
+    await loginGoogle(c, code, codeVerifier)
 
     return c.json({
       success: true,
