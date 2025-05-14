@@ -53,7 +53,7 @@ export class Player implements PlayerInterface {
   userId: string | null = null
 
   constructor(
-    playerToCreate: CreatePlayer = {
+    playerToCreate: CreatePlayer & { userId: string | null } = {
       username: "",
       avatar: Constants.AVATARS.BEE,
       userId: null,
