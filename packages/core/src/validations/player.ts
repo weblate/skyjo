@@ -1,16 +1,12 @@
 import { z } from "zod"
-import { type Avatar, Constants } from "../constants.js"
-
-const avatar: z.ZodType<Avatar> = z.enum(
-  Object.values<Avatar>(Constants.AVATARS) as [Avatar],
-)
+import { Constants } from "../constants.js"
 
 export const createPlayer = z.object({
   username: z
     .string()
     .min(1)
     .transform((val) => val.slice(0, 20).replace(/ /g, "_")),
-  avatar: avatar,
+  avatar: z.nativeEnum(Constants.AVATARS),
 })
 
 export type CreatePlayer = z.infer<typeof createPlayer>

@@ -1,5 +1,8 @@
-import type { GameRedisDb } from "@/types/game.js"
-import type { PlayerScores, PlayerToJson } from "@/types/player.js"
+import type {
+  PlayerRedisDb,
+  PlayerScores,
+  PlayerToJson,
+} from "@/types/player.js"
 import type { CreatePlayer } from "@/validations/player.js"
 import { type Avatar, type ConnectionStatus, Constants } from "../constants.js"
 import { Card } from "./Card.js"
@@ -11,6 +14,7 @@ interface PlayerInterface {
   readonly name: string
   readonly socketId: string
   readonly avatar: Avatar
+  readonly userId: string | null
   connectionStatus: ConnectionStatus
   afkCount: number
   consecutiveAfkCount: number
@@ -46,19 +50,23 @@ export class Player implements PlayerInterface {
   hasPlayedLastTurn = false
   wantsReplay: boolean = false
   turnStartTime: number | null = null
+  userId: string | null = null
+
   constructor(
     playerToCreate: CreatePlayer = {
       username: "",
       avatar: Constants.AVATARS.BEE,
+      userId: null,
     },
     socketId: string = "",
   ) {
     this.name = playerToCreate.username
     this.socketId = socketId
     this.avatar = playerToCreate.avatar
+    this.userId = playerToCreate.userId ?? null
   }
 
-  populate(player: GameRedisDb["players"][number]) {
+  populate(player: PlayerRedisDb) {
     this.id = player.id
     this.name = player.name
     this.avatar = player.avatar
@@ -71,6 +79,7 @@ export class Player implements PlayerInterface {
     this.afkCount = player.afkCount
     this.consecutiveAfkCount = player.consecutiveAfkCount
     this.turnStartTime = player.turnStartTime
+    this.userId = player.userId ?? null
 
     if (player.cards.length > 0) {
       this.cards = player.cards.map((column) =>
@@ -242,6 +251,7 @@ export class Player implements PlayerInterface {
       connectionStatus: this.connectionStatus,
       scores: this.scores,
       turnStartTime: this.turnStartTime,
+      userId: this.userId,
       cards: this.cards.map((column) => column.map((card) => card.toJson())),
     }
   }
