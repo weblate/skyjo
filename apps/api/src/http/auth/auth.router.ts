@@ -2,27 +2,27 @@ import {
   getCurrentUser,
   login,
   logout,
-  register,
+  signup,
 } from "@/http/auth/auth.service.js"
 import { googleRouter } from "@/http/auth/google.router.js"
 import { zValidator } from "@hono/zod-validator"
 import { AuthError } from "@skymo/shared/constants"
-import { loginSchema, registerSchema } from "@skymo/shared/validations"
+import { loginSchema, signupSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 
 const authRouter = new Hono().basePath("/auth")
 authRouter.route("", googleRouter)
 
-authRouter.post("/register", zValidator("json", registerSchema), async (c) => {
+authRouter.post("/signup", zValidator("json", signupSchema), async (c) => {
   const data = c.req.valid("json")
   try {
-    await register(data)
+    await signup(data)
 
     return c.json({
       success: true,
       status: 201,
     })
-  } catch {
+  } catch (_e) {
     return c.json({
       success: false,
       status: 500,

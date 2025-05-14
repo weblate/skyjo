@@ -1,9 +1,16 @@
+import type { SessionDb, UserDb } from "@/db/schema.js"
 import type {
   ClientToServerEvents,
   ServerToClientEvents,
-  SocketData,
 } from "@skymo/shared/types"
 import type { Socket } from "socket.io"
+
+export interface SocketData {
+  gameCode: string
+  playerId: string
+  user?: UserDb
+  session?: SessionDb
+}
 
 export type GameSocket = Socket<
   ClientToServerEvents,

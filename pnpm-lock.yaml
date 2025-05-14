@@ -481,6 +481,9 @@ importers:
       '@react-email/components':
         specifier: 0.0.38
         version: 0.0.38(react-dom@19.1.0(react@19.1.0))(react@19.1.0)
+      '@skymo/shared':
+        specifier: workspace:*
+        version: link:../shared
       react-email:
         specifier: ^4.0.11
         version: 4.0.11(react-dom@19.1.0(react@19.1.0))(react@19.1.0)

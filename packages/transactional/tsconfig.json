@@ -4,10 +4,12 @@
     "outDir": "dist",
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"]
+      "@/*": ["./src/*"],
+      "@/emails/*": ["./emails/*"],
+      "@/constants": ["./src/constants.js"]
     },
     "jsx": "preserve"
   },
-  "include": ["emails/**/*", "components/**/*", "constants.ts", "types.ts"],
+  "include": ["emails/**/*", "src/**/*"],
   "exclude": ["node_modules", "dist"]
 }

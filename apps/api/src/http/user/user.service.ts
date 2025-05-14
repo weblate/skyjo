@@ -1,16 +1,17 @@
+import { randomInt } from "crypto"
 import { db } from "@/db/index.js"
 import { type UserDb, userTable } from "@/db/schema.js"
 import { hashPassword } from "@/http/auth/lib/password.js"
 import type { Avatar } from "@skymo/core"
-import { UserError } from "@skymo/shared/constants"
-import { eq } from "drizzle-orm"
+import { type Locales, UserError } from "@skymo/shared/constants"
+import { and, eq } from "drizzle-orm"
 
 interface CreateUserParams {
   email: string
+  name?: string
   username?: string
-  userTag?: string
   googleId?: string
-  locale?: string
+  locale?: Locales
   avatar?: Avatar
   emailVerified?: boolean
   password?: string
@@ -18,22 +19,22 @@ interface CreateUserParams {
 export async function createUser({
   googleId,
   email,
+  name,
   username,
-  userTag,
   locale,
   avatar,
   emailVerified,
   password,
 }: CreateUserParams): Promise<UserDb> {
-  const createdUsername = username ?? "unnamed"
-  const createdUserTag = userTag ?? (await createUserTag(createdUsername))
+  const createdName = name ?? null
+  const createdUsername = username ?? (name ? await createUsername(name) : null)
 
   const row = await db
     .insert(userTable)
     .values({
-      email,
+      email: email,
+      name: createdName,
       username: createdUsername,
-      userTag: createdUserTag,
       password: password ? await hashPassword(password) : null,
       googleId: googleId ?? null,
       locale,
@@ -42,8 +43,8 @@ export async function createUser({
     })
     .returning({
       id: userTable.id,
+      name: userTable.name,
       username: userTable.username,
-      userTag: userTable.userTag,
       email: userTable.email,
       googleId: userTable.googleId,
       facebookId: userTable.facebookId,
@@ -58,6 +59,23 @@ export async function createUser({
   if (!user) throw new Error(UserError.UNEXPECTED_ERROR)
 
   return user
+}
+
+export async function generateOTP(email: string) {
+  const otp = randomInt(0, 1000000).toString().padStart(6, "0")
+  await db.update(userTable).set({ otp }).where(eq(userTable.email, email))
+
+  return otp
+}
+
+export async function verifyOTP(email: string, otp: string) {
+  const user = await db
+    .select()
+    .from(userTable)
+    .where(and(eq(userTable.email, email), eq(userTable.otp, otp)))
+    .limit(1)
+
+  return user?.[0]
 }
 
 export async function getUserFromGoogleId(
@@ -75,23 +93,23 @@ export async function getUserFromGoogleId(
   return user
 }
 
-export async function createUserTag(username: string) {
-  const parsedUsername = username.slice(0, 15)
+export async function createUsername(name: string) {
+  const parsedUsername = name.slice(0, 15)
 
-  let userTag = ""
+  let username = ""
   // Generate a user tag until it's unique. Maximum of 20 retries before throwing an error
   for (let i = 0; i < 20; i++) {
-    userTag = `${parsedUsername}_${Math.floor(1000 + Math.random() * 9000)}`
+    username = `${parsedUsername}_${Math.floor(1000 + Math.random() * 9000)}`
 
     const existingUser = await db
       .select()
       .from(userTable)
-      .where(eq(userTable.userTag, userTag))
+      .where(eq(userTable.username, username))
       .limit(1)
 
     if (existingUser.length === 0) break
     if (i === 19) throw new Error(UserError.USER_CREATION_FAILED)
   }
 
-  return userTag
+  return username
 }

@@ -1,12 +1,12 @@
-import type { Locale, SignupContent } from "@skymo/transactional"
+import type { Locales, VerifyEmailContent } from "@skymo/transactional"
 
-export type EmailTemplateName = "signup"
+export type EmailTemplateName = "signup-otp"
 
-type EmailContent<T extends EmailTemplateName> = T extends "signup"
-  ? SignupContent
+type EmailContent<T extends EmailTemplateName> = T extends "signup-otp"
+  ? VerifyEmailContent
   : never
 type EmailableProps<T extends EmailTemplateName> = {
-  locale: Locale
+  locale: Locales
   content: EmailContent<T>
 }
 type EmailableComponent<T extends EmailTemplateName> = React.ComponentType<
@@ -18,7 +18,7 @@ export interface MailerJobData<
 > {
   to: string
   template: T
-  locale: Locale
+  locale: Locales
   content: EmailContent<T>
 }
 

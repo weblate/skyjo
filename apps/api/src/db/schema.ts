@@ -1,3 +1,4 @@
+import { locales } from "@skymo/shared/constants"
 import type { InferSelectModel } from "drizzle-orm"
 import {
   boolean,
@@ -38,13 +39,18 @@ export const userTable = pgTable(
     id: serial("id").primaryKey(),
     email: varchar("email", { length: 255 }).notNull().unique(),
     avatar: avatarEnum("avatar").notNull().default("bee"),
-    username: varchar("username", { length: 20 }).notNull(),
-    userTag: varchar("user_tag", { length: 20 }).notNull().unique(),
+    name: varchar("name", { length: 20 }),
+    username: varchar("username", { length: 20 }).unique(),
     password: varchar("password", { length: 255 }),
     googleId: varchar("google_id", { length: 255 }).unique(),
     facebookId: varchar("facebook_id", { length: 255 }).unique(),
-    locale: varchar("locale", { length: 10 }).notNull().default("en"),
+    locale: varchar("locale", { length: 10, enum: locales })
+      .notNull()
+      .default("en"),
+
     emailVerified: boolean("email_verified").notNull().default(false),
+    otp: varchar("otp", { length: 6 }),
+
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -54,10 +60,13 @@ export const userTable = pgTable(
   },
   (t) => [
     uniqueIndex("email_idx").on(t.email),
-    uniqueIndex("user_tag_idx").on(t.userTag),
+    uniqueIndex("username_idx").on(t.username),
   ],
 )
-export type UserDb = Omit<InferSelectModel<typeof userTable>, "password">
+export type UserDb = Omit<
+  InferSelectModel<typeof userTable>,
+  "password" | "otp"
+>
 export type UserWithPasswordDb = InferSelectModel<typeof userTable>
 
 export const sessionTable = pgTable("sessions", {

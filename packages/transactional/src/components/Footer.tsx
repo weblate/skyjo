@@ -3,7 +3,11 @@ import { Container, Text } from "@react-email/components"
 import { Hr, Img, Link } from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: needed when using createElement
 import React from "react"
-import { DISCORD_URL, type Locale, WEBSITE_URL } from "../constants.js"
+import {
+  DISCORD_URL,
+  type TransactionalLocales,
+  WEBSITE_URL,
+} from "../constants.js"
 
 const footerMessages = {
   en: {
@@ -18,7 +22,7 @@ const footerMessages = {
   },
 }
 interface FooterProps {
-  locale: Locale
+  locale: TransactionalLocales
 }
 const Footer = ({ locale }: FooterProps) => {
   const intl = createIntl({ messages: footerMessages[locale], locale })

@@ -1,12 +1,12 @@
 import { Container } from "@react-email/components"
 import { Body, Preview, Tailwind } from "@react-email/components"
 import { Html } from "@react-email/components"
-import type { Locale } from "constants.js"
 import type { ReactNode } from "react"
 // biome-ignore lint/correctness/noUnusedImports: needed when using createElement
 import React from "react"
+import type { TransactionalLocales } from "../constants.js"
 interface BaseEmailProps {
-  locale: Locale
+  locale: TransactionalLocales
   children: ReactNode
   preview: string
 }

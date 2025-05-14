@@ -11,19 +11,19 @@ import {
   createSessionId,
   generateSessionToken,
 } from "@/http/session/session.service.js"
-import { createUser } from "@/http/user/user.service.js"
+import { createUser, generateOTP } from "@/http/user/user.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { Logger } from "@skymo/logger"
-import { AuthError } from "@skymo/shared/constants"
-import type { LoginUser, RegisterUser } from "@skymo/shared/validations"
+import { AuthError, locales } from "@skymo/shared/constants"
+import type { LoginUser, Signup } from "@skymo/shared/validations"
 import { decodeIdToken } from "arctic"
 import { eq, or } from "drizzle-orm"
 import type { Context } from "hono"
 import { deleteCookie, getCookie } from "hono/cookie"
 import { verifyPassword } from "./lib/password.js"
 
-export async function register(data: RegisterUser) {
-  const { email, username, password, locale } = data
+export async function signup(data: Signup) {
+  const { email, locale } = data
 
   const existingUser = await db
     .select({ id: userTable.id, email: userTable.email })
@@ -31,29 +31,40 @@ export async function register(data: RegisterUser) {
     .where(eq(userTable.email, email))
     .limit(1)
 
-  // TODO: Add job to email queue: send email to existingUser[0].email
-  //  - Subject: Account already exists or Password reset instructions
-  //  - Content: Explain that an account with this email already exists.
-  //             Provide options like "Log in" or "Forgot your password?"
-  //             (The latter would typically involve a password reset token flow).
-  if (existingUser.length > 0) return
+  if (existingUser.length > 0) {
+    // TODO: Add job to email queue: send email to existingUser[0].email
+    //  - Subject: Registration attempt on this email
+    //  - Content: Explain that an account with this email already exists.
+    //             Provide options like "Log in" or "Forgot your password?"
+    return
+  }
 
   await createUser({
     email,
-    username,
-    password,
     locale,
   })
+}
 
-  // TODO: Add job to email queue: send welcome email to newUserResult[0].email + verify email + continue your inscription with the link
-  mailerQueue.add("signup", {
+export async function sendOtp(email: string) {
+  const user = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.email, email))
+    .limit(1)
+
+  // If the user does not exist, do nothing. This prevents giving away information about whether an email is registered or not.
+  if (user.length === 0) return
+
+  const locale = user[0].locale
+
+  const otp = await generateOTP(email)
+
+  await mailerQueue.add("signup-otp", {
     to: email,
-    template: "signup",
-    locale: locale ?? "en",
+    template: "signup-otp",
+    locale,
     content: {
-      username,
-      email,
-      token: "123456",
+      otp,
     },
   })
 }
@@ -64,7 +75,7 @@ export async function login(data: LoginUser, c: Context) {
   const user = await db
     .select()
     .from(userTable)
-    .where(or(eq(userTable.email, login), eq(userTable.userTag, login)))
+    .where(or(eq(userTable.email, login), eq(userTable.username, login)))
     .limit(1)
 
   if (user.length === 0 || !user[0].password) {
@@ -93,7 +104,7 @@ export async function loginGoogle(
   const googleId = claims.sub
   const name = claims.name
   const email = claims.email
-  const locale = claims?.locale
+  const locale = locales.find((l) => l === claims?.locale) ?? "en"
   const emailVerified = claims?.email_verified
 
   const userRecord = await db
@@ -165,8 +176,8 @@ export async function getCurrentUser(c: Context) {
     .select({
       id: userTable.id,
       email: userTable.email,
+      name: userTable.name,
       username: userTable.username,
-      userTag: userTable.userTag,
       avatar: userTable.avatar,
       locale: userTable.locale,
       createdAt: userTable.createdAt,
