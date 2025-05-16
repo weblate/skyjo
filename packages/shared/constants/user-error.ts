@@ -1,6 +1,8 @@
 export const UserError = {
   // Registration Errors
-  USER_CREATION_FAILED: "user-creation-failed",
+  CREATION_FAILED: "user-creation-failed",
+
+  NOT_FOUND: "user-verification-not-found",
 
   // Unexpected Errors
   UNEXPECTED_ERROR: "unexpected-error",

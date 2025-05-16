@@ -10,7 +10,7 @@
     "biome:check": "pnpm biome check --write ."
   },
   "exports": {
-    ".": "./dist/emails/index.js"
+    ".": "./dist/src/index.js"
   },
   "dependencies": {
     "@formatjs/intl": "^3.1.6",

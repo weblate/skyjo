@@ -47,9 +47,7 @@ export const userTable = pgTable(
     locale: varchar("locale", { length: 10, enum: locales })
       .notNull()
       .default("en"),
-
     emailVerified: boolean("email_verified").notNull().default(false),
-    otp: varchar("otp", { length: 6 }),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
@@ -65,10 +63,22 @@ export const userTable = pgTable(
 )
 export type UserDb = Omit<
   InferSelectModel<typeof userTable>,
-  "password" | "otp"
+  "password" | "verifyPin"
 >
 export type UserWithPasswordDb = InferSelectModel<typeof userTable>
 
+export const userVerificationTable = pgTable("user_verifications", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => userTable.id),
+  pin: varchar("pin", { length: 6 }).notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+})
+export type UserVerificationDb = InferSelectModel<typeof userVerificationTable>
 export const sessionTable = pgTable("sessions", {
   id: text("id").primaryKey(),
   userId: integer("user_id")

@@ -1,5 +1,10 @@
 import { ENV } from "@env"
-import { type Locale, Signup, getSignupSubject } from "@skymo/transactional"
+import {
+  type TransactionalLocales,
+  VerifyEmail,
+  getLocale,
+  getVerifyEmailSubject,
+} from "@skymo/transactional"
 import type {
   EmailTemplateName,
   EmailTemplateReact,
@@ -16,33 +21,45 @@ export class MailerTask {
   }
 
   async sendEmail<T extends EmailTemplateName>(job: MailerJobData<T>) {
-    const { to, template, locale, content } = job
+    const { to, template: templateName, locale: userLocale, content } = job
 
-    const {
-      from,
-      subject,
-      react: ActualComponent,
-    } = this.getTypedTemplate(template, locale)
+    const supportedLocale = getLocale(userLocale)
+
+    const template = this.getTypedTemplate(templateName, supportedLocale)
+
+    if (!template) return
 
     await this.resend.emails.send({
-      from,
+      from: template.from,
       to,
-      subject,
-      react: createElement(ActualComponent, { locale, content }),
+      subject: template.subject,
+      react: createElement(template.react, {
+        locale: supportedLocale,
+        content,
+      }),
     })
   }
 
   private getTypedTemplate<T extends EmailTemplateName>(
     templateName: T,
-    locale: Locale,
-  ): EmailTemplateReact<T> {
-    const templates = {
-      signup: {
+    locale: TransactionalLocales,
+  ): EmailTemplateReact<T> | null {
+    const templates: Record<
+      EmailTemplateName,
+      EmailTemplateReact<EmailTemplateName>
+    > = {
+      "verify-pin": {
         from: "no-reply@skymo.online",
-        subject: getSignupSubject(locale),
-        react: Signup,
+        subject: getVerifyEmailSubject(locale),
+        react: VerifyEmail,
       },
     }
-    return templates[templateName]
+    const template = templates[templateName]
+
+    if (!template) {
+      return null
+    }
+
+    return template
   }
 }

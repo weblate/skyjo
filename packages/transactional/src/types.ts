@@ -1,6 +1,6 @@
-import type { Locales } from "./constants.js"
+import type { TransactionalLocales } from "./constants.js"
 
 export interface DefaultProps<T> {
-  locale: Locales
+  locale: TransactionalLocales
   content: T
 }

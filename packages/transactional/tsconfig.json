@@ -3,11 +3,6 @@
   "compilerOptions": {
     "outDir": "dist",
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["./src/*"],
-      "@/emails/*": ["./emails/*"],
-      "@/constants": ["./src/constants.js"]
-    },
     "jsx": "preserve"
   },
   "include": ["emails/**/*", "src/**/*"],

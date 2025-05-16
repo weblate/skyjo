@@ -1,17 +1,16 @@
-import BaseEmail from "@/components/BaseEmail.jsx"
-import Footer from "@/components/Footer.jsx"
+import { createIntl } from "@formatjs/intl"
+import { Heading, Hr, Img, Link, Section, Text } from "@react-email/components"
+// biome-ignore lint/correctness/noUnusedImports: <explanation>
+import React from "react"
+import BaseEmail from "../src/components/BaseEmail.jsx"
+import Footer from "../src/components/Footer.jsx"
 import {
   SUPPORT_EMAIL,
   type TransactionalLocales,
   WEBSITE_LOGO_URL,
   WEBSITE_URL,
-} from "@/constants.js"
-import type { DefaultProps } from "@/types.js"
-import { getLocale } from "@/utils/getLocale.js"
-import { createIntl } from "@formatjs/intl"
-import { Heading, Hr, Img, Link, Section, Text } from "@react-email/components"
-// biome-ignore lint/correctness/noUnusedImports: <explanation>
-import React from "react"
+} from "../src/constants.js"
+import type { DefaultProps } from "../src/types.js"
 
 const messages: Record<TransactionalLocales, Record<string, string>> = {
   en: {
@@ -20,7 +19,7 @@ const messages: Record<TransactionalLocales, Record<string, string>> = {
     logoAlt: "Skymo Logo",
     welcome: "Verify your email to activate your Skymo account!",
     body: "Thank you for registering on Skymo! To activate your account and start playing, please enter the one-time password (OTP) below. Once verified, you'll be redirected to your onboarding page.",
-    otp: "Your verification code:",
+    pin: "Your verification code:",
     footer:
       "This email was sent to you by Skymo. If you did not register for the game, please contact our support team at",
   },
@@ -31,7 +30,7 @@ const messages: Record<TransactionalLocales, Record<string, string>> = {
     logoAlt: "Logo Skymo",
     welcome: "Vérifiez votre email pour activer votre compte Skymo !",
     body: "Merci de vous être inscrit sur Skymo ! Pour activer votre compte et commencer à jouer, veuillez saisir le code à usage unique (OTP) ci-dessous. Une fois vérifié, vous serez redirigé vers votre page d'onboarding.",
-    otp: "Votre code de vérification :",
+    pin: "Votre code de vérification :",
     footer:
       "Cet email vous a été envoyé par Skymo. Si vous ne vous êtes pas inscrit au jeu, veuillez en informer notre équipe d'assistance à l'adresse",
   },
@@ -41,22 +40,17 @@ export const getVerifyEmailSubject = (locale: TransactionalLocales) => {
   return messages[locale].subject
 }
 export interface VerifyEmailContent {
-  otp: string
+  pin: string
 }
 type VerifyEmailProps = DefaultProps<VerifyEmailContent>
 export const VerifyEmail = ({ locale, content }: VerifyEmailProps) => {
-  const supportedLocale = getLocale(locale)
-
   const intl = createIntl({
-    messages: messages[supportedLocale],
-    locale: supportedLocale,
+    messages: messages[locale],
+    locale,
   })
 
   return (
-    <BaseEmail
-      locale={supportedLocale}
-      preview={intl.formatMessage({ id: "preview" })}
-    >
+    <BaseEmail locale={locale} preview={intl.formatMessage({ id: "preview" })}>
       <>
         <Section className="mt-[32px]">
           <Link
@@ -82,10 +76,10 @@ export const VerifyEmail = ({ locale, content }: VerifyEmailProps) => {
         </Text>
 
         <Text className="text-xl text-black text-bold text-center mt-8">
-          {intl.formatMessage({ id: "otp" })}
+          {intl.formatMessage({ id: "pin" })}
         </Text>
         <Text className="text-5xl text-black text-bold tracking-[1rem] -mr-4 text-center mb-12">
-          {content.otp}
+          {content.pin}
         </Text>
 
         <Hr className="mx-0 my-[26px] w-full border border-[#eaeaea] border-solid" />
@@ -94,7 +88,7 @@ export const VerifyEmail = ({ locale, content }: VerifyEmailProps) => {
           {intl.formatMessage({ id: "footer" })}{" "}
           <Link href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</Link>
         </Text>
-        <Footer locale={supportedLocale} />
+        <Footer locale={locale} />
       </>
     </BaseEmail>
   )
@@ -103,7 +97,7 @@ export const VerifyEmail = ({ locale, content }: VerifyEmailProps) => {
 VerifyEmail.PreviewProps = {
   locale: "en",
   content: {
-    otp: "123456",
+    pin: "123456",
   },
 } satisfies VerifyEmailProps
 

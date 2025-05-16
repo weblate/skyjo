@@ -5,6 +5,7 @@ import {
   signup,
 } from "@/http/auth/auth.service.js"
 import { googleRouter } from "@/http/auth/google.router.js"
+import { type AuthContextVariables } from "@/http/middlewares/auth.middleware.js"
 import { validateSessionToken } from "@/http/session/session.service.js"
 import { zValidator } from "@hono/zod-validator"
 import { AuthError, SESSION_COOKIE_NAME } from "@skymo/shared/constants"
@@ -12,7 +13,7 @@ import { loginSchema, signupSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { getCookie } from "hono/cookie"
 
-const authRouter = new Hono().basePath("/auth")
+const authRouter = new Hono<AuthContextVariables>().basePath("/auth")
 authRouter.route("", googleRouter)
 
 authRouter.post("/signup", zValidator("json", signupSchema), async (c) => {
@@ -82,6 +83,7 @@ authRouter.post("/verify", async (c) => {
     throw error
   }
 })
+
 authRouter.post("/logout", async (c) => {
   try {
     await logout(c)

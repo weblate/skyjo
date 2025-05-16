@@ -10,8 +10,7 @@ import {
   createSessionId,
   generateSessionToken,
 } from "@/http/session/session.service.js"
-import { createUser, generateOTP } from "@/http/user/user.service.js"
-import { mailerQueue } from "@/utils/mailer.js"
+import { createUser } from "@/http/user/user.service.js"
 import { Logger } from "@skymo/logger"
 import {
   AuthError,
@@ -50,30 +49,6 @@ export async function signup(c: Context, data: Signup) {
   const token = generateSessionToken()
   const session = await createSession(token, user.id)
   setSessionTokenCookie(c, token, session.expiresAt)
-}
-
-export async function sendOtp(email: string) {
-  const user = await db
-    .select()
-    .from(userTable)
-    .where(eq(userTable.email, email))
-    .limit(1)
-
-  // If the user does not exist, do nothing. This prevents giving away information about whether an email is registered or not.
-  if (user.length === 0) return
-
-  const locale = user[0].locale
-
-  const otp = await generateOTP(email)
-
-  await mailerQueue.add("signup-otp", {
-    to: email,
-    template: "signup-otp",
-    locale,
-    content: {
-      otp,
-    },
-  })
 }
 
 export async function login(c: Context, data: LoginUser) {

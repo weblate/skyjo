@@ -6,4 +6,7 @@ export * from "./getPublicGames.js"
 export * from "./ban.js"
 export * from "./feedback.js"
 export * from "./report.js"
-export * from "./auth.js"
+
+export * from "./http/auth.js"
+export * from "./http/user.js"
+export * from "./http/userVerification.js"

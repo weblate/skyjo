@@ -1,0 +1,1 @@
+ALTER TABLE "users" RENAME COLUMN "otp" TO "verify_pin";

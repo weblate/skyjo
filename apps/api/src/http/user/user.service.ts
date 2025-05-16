@@ -1,10 +1,9 @@
-import { randomInt } from "crypto"
 import { db } from "@/db/index.js"
 import { type UserDb, userTable } from "@/db/schema.js"
 import { hashPassword } from "@/http/auth/lib/password.js"
 import type { Avatar } from "@skymo/core"
 import { type Locales, UserError } from "@skymo/shared/constants"
-import { and, eq } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 
 interface CreateUserParams {
   email: string
@@ -61,23 +60,6 @@ export async function createUser({
   return user
 }
 
-export async function generateOTP(email: string) {
-  const otp = randomInt(0, 1000000).toString().padStart(6, "0")
-  await db.update(userTable).set({ otp }).where(eq(userTable.email, email))
-
-  return otp
-}
-
-export async function verifyOTP(email: string, otp: string) {
-  const user = await db
-    .select()
-    .from(userTable)
-    .where(and(eq(userTable.email, email), eq(userTable.otp, otp)))
-    .limit(1)
-
-  return user?.[0]
-}
-
 export async function getUserFromGoogleId(
   googleId: string,
 ): Promise<UserDb | null> {
@@ -108,7 +90,7 @@ export async function createUsername(name: string) {
       .limit(1)
 
     if (existingUser.length === 0) break
-    if (i === 19) throw new Error(UserError.USER_CREATION_FAILED)
+    if (i === 19) throw new Error(UserError.CREATION_FAILED)
   }
 
   return username
