@@ -6,7 +6,15 @@ import { authMiddleware } from "./authMiddleware"
 
 // Define public pages - paths relative to root, without locale prefixes
 // Add any other pages that should not be protected by auth
-const publicPages = ["/", "/signup", "/login", "/search", "/create"]
+const publicPages = [
+  "/",
+  "/signup",
+  "/login",
+  "/search",
+  "/create",
+  "/rules",
+  "/privacy-policy",
+]
 
 // Special handling for paths that start with these prefixes (these will be public)
 const publicPrefixes = ["/game"]
