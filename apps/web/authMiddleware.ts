@@ -14,24 +14,23 @@ type UserData = {
 function handleRedirects(
   request: NextRequest,
   userData: UserData,
-): NextResponse | undefined {
+): NextResponse {
   const pathname = request.nextUrl.pathname
-  const pathnameWithoutLocale = pathname.replace(/^\/(fr|en)/, "")
 
-  // Email verification redirect logic
-  if (!userData.emailVerified) {
-    // If they're not on the verify page, redirect them there
-    if (pathnameWithoutLocale !== "/verify") {
-      return NextResponse.redirect(
-        new URL(`/verify`, process.env.NEXT_PUBLIC_SITE_URL),
-      )
-    }
-  } else if (pathnameWithoutLocale === "/verify") {
-    // If email is verified and they're on verify page, redirect to onboard
+  // If they're not verified and not on the verify page, redirect to verify
+  if (!userData.emailVerified && !pathname.includes("/verify")) {
+    return NextResponse.redirect(
+      new URL(`/verify`, process.env.NEXT_PUBLIC_SITE_URL),
+    )
+  }
+  // If they're verified and on the verify page, redirect to profile
+  if (userData.emailVerified && pathname.includes("/verify")) {
     return NextResponse.redirect(
       new URL(`/profile`, process.env.NEXT_PUBLIC_SITE_URL),
     )
   }
+
+  return NextResponse.next()
 }
 
 export async function authMiddleware(request: NextRequest) {
@@ -59,8 +58,5 @@ export async function authMiddleware(request: NextRequest) {
   }
 
   const data = await response.json()
-  const redirectResponse = handleRedirects(request, data.user)
-  if (redirectResponse) return redirectResponse
-
-  return NextResponse.next()
+  return handleRedirects(request, data.user)
 }
