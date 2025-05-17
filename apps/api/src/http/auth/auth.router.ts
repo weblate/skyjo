@@ -78,6 +78,9 @@ authRouter.post("/verify", async (c) => {
 
     return c.json({
       success: true,
+      user: {
+        emailVerified: user.emailVerified,
+      },
     })
   } catch (error) {
     throw error
