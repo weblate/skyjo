@@ -160,9 +160,7 @@ const ReportDialog = ({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {t("cancel")}
-          </Button>
+          <Button onClick={() => onOpenChange(false)}>{t("cancel")}</Button>
           <Button
             onClick={handleSubmit}
             disabled={reportType === "message" && !messageId}

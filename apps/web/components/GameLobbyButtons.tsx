@@ -74,7 +74,6 @@ const GameLobbyButtons = ({
       {!hideReconnectButton && lastGame && (
         <Button
           onClick={() => handleAction("reconnect-game")}
-          color="secondary"
           className="w-full mb-4"
           disabled={!username}
           loading={loading}
@@ -86,7 +85,6 @@ const GameLobbyButtons = ({
       {hasGameCode && !lastGame && (
         <Button
           onClick={() => handleAction("join-game")}
-          color="secondary"
           disabled={!username}
           className="w-full mb-4"
           loading={loading}

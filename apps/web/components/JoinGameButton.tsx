@@ -39,7 +39,6 @@ export const JoinGameButton = ({
   return (
     <Button
       onClick={handleJoiningGame}
-      color="secondary"
       disabled={!username}
       className={cn(className)}
       loading={loading}
