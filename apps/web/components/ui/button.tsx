@@ -16,8 +16,8 @@ const buttonVariants = cva(
       },
       color: {
         primary: "bg-button dark:bg-dark-button",
-        white: "bg-white dark:bg-white/80 text-black dark:text-black",
-        blue: "bg-blue-600/80 dark:bg-blue-600/80 text-white",
+        white: "bg-white dark:bg-white/90 text-black dark:text-black",
+        blue: "bg-blue-600/80 dark:bg-blue-600/80 text-white dark:text-white/90",
         destructive:
           "bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white dark:text-black dark:border-0",
       },
