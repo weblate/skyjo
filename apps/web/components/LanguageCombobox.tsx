@@ -104,9 +104,10 @@ const LanguageCombobox = () => {
         <PopoverTrigger asChild>
           <Button
             color="white"
+            shadow={false}
             role="input-list"
             aria-expanded={open}
-            className="justify-between w-[180px]"
+            className="justify-between w-[180px] dark:bg-dark-button text-white dark:text-dark-font"
             disabled={inGame}
           >
             {currentLocale
