@@ -258,6 +258,24 @@
         "keywords": "Skymo,Skyjo,Skyjo rules,how to play Skyjo,Skyjo game,card game rules,online card game,game instructions,gameplay guide"
       },
       "title": "Skyjo game rules"
+    },
+    "Signup": {
+      "head": {
+        "title": "Signup | Skymo - Skyjo Online Card Game",
+        "description": "Sign up for Skymo to play Skyjo online. Create your account in just a few clicks and start playing immediately.",
+        "keywords": "Skymo,Skyjo,signup,online card game,Skyjo game,card game,online game"
+      },
+      "title": "Signup",
+      "form": {
+        "email": {
+          "label": "Email",
+          "button": "Continue with email"
+        },
+        "error": {
+          "invalid-email": "Invalid email",
+          "default": "An error occurred, please try again."
+        }
+      }
     }
   },
   "components": {
