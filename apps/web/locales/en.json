@@ -658,6 +658,10 @@
           "description": "Thank you for your report, you have contributed to improving the quality of the game."
         }
       }
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Continue with Google",
+      "error": "Failed to initiate Google login, please try again later."
     }
   },
   "utils": {
