@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button"
 import { Form, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { useRouter } from "@/i18n/routing"
+import { Link, useRouter } from "@/i18n/routing"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Locales } from "@skymo/shared/constants"
 import { useMutation } from "@tanstack/react-query"
@@ -65,18 +65,20 @@ const SignupPage = () => {
 
   return (
     <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4">
-      <div className="max-w-sm flex flex-col w-full">
-        <h1 className="text-2xl text-center font-medium mb-6">{t("title")}</h1>
+      <div className="px-4 max-w-sm flex flex-col w-full">
+        <h1 className="text-2xl text-center font-medium mb-6 text-black dark:text-dark-font">
+          {t("title")}
+        </h1>
 
         <div className="flex flex-col gap-2">
           <GoogleOAuthButton />
         </div>
         <div className="flex flex-row items-center gap-2 mt-6 mb-2">
-          <hr className="w-full border border-black dark:border-white" />
-          <p className="text-center text-black dark:text-white">
+          <hr className="w-full border border-black dark:border-dark-font" />
+          <p className="text-center text-black dark:text-dark-font">
             {t("or")}
           </p>
-          <hr className="w-full border border-black dark:border-white" />
+          <hr className="w-full border border-black dark:border-dark-font" />
         </div>
         <Form {...form}>
           <form
@@ -112,6 +114,17 @@ const SignupPage = () => {
             </Button>
           </form>
         </Form>
+        <div className="text-sm text-center mt-8 flex flex-col sm:flex-row sm:items-center justify-center gap-1">
+          <p className="text-black dark:text-dark-font">
+            {t("already-have-account.description")}
+          </p>
+          <Link
+            href="/login"
+            className="ml-1 text-blue-600 dark:text-blue-400 underline underline-offset-1"
+          >
+            {t("already-have-account.link")}
+          </Link>
+        </div>
       </div>
     </div>
   )

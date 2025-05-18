@@ -276,6 +276,10 @@
           "invalid-email": "Invalid email",
           "default": "An error occurred, please try again."
         }
+      },
+      "already-have-account": {
+        "description": "Already have an account?",
+        "link": "Login"
       }
     },
     "OAuthCallbackPage": {
