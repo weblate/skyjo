@@ -14,6 +14,7 @@ const publicPages = [
   "/create",
   "/rules",
   "/privacy-policy",
+  "/auth/callback",
 ]
 
 // Special handling for paths that start with these prefixes (these will be public)

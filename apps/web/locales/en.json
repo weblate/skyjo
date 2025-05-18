@@ -277,6 +277,9 @@
           "default": "An error occurred, please try again."
         }
       }
+    },
+    "OAuthCallbackPage": {
+      "title": "Redirecting in progress…"
     }
   },
   "components": {

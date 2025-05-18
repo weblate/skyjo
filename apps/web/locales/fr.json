@@ -575,6 +575,9 @@
       "actions": {
         "return-homepage": "Retour à l'accueil"
       }
+    },
+    "OAuthCallbackPage": {
+      "title": "Redirection en cours…"
     }
   },
   "components": {

@@ -1,17 +1,21 @@
 import { routing } from "@/i18n/routing"
 import { MetadataRoute } from "next"
 
+const disallowRoutes = ["game", "auth/callback"]
+
 export default function robots(): MetadataRoute.Robots {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL ?? ""
-  const disallow = routing.locales.map((locale) =>
-    locale === routing.defaultLocale ? `/game/` : `/${locale}/game/`,
+  const disallow = disallowRoutes.map((route) =>
+    routing.locales.map((locale) =>
+      locale === routing.defaultLocale ? `/${route}/` : `/${locale}/${route}/`,
+    ),
   )
 
   return {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: disallow,
+      disallow: disallow.flat(),
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   }
