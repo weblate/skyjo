@@ -107,7 +107,7 @@ const LanguageCombobox = () => {
             shadow={false}
             role="input-list"
             aria-expanded={open}
-            className="justify-between w-[180px] dark:bg-dark-button text-white dark:text-dark-font"
+            className="justify-between w-[180px] dark:bg-dark-button text-black dark:text-dark-font"
             disabled={inGame}
           >
             {currentLocale
