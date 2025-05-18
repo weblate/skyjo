@@ -73,7 +73,9 @@ const SignupPage = () => {
         </div>
         <div className="flex flex-row items-center gap-2 mt-6 mb-2">
           <hr className="w-full border border-black dark:border-white" />
-          <p className="text-center text-black dark:text-white">Or</p>
+          <p className="text-center text-black dark:text-white">
+            {t("or")}
+          </p>
           <hr className="w-full border border-black dark:border-white" />
         </div>
         <Form {...form}>

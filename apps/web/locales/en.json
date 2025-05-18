@@ -266,6 +266,7 @@
         "keywords": "Skymo,Skyjo,signup,online card game,Skyjo game,card game,online game"
       },
       "title": "Signup",
+      "or": "Or",
       "form": {
         "email": {
           "label": "Email",
