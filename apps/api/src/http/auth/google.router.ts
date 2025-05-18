@@ -48,15 +48,13 @@ googleRouter.get("/login/google/callback", async (c) => {
     return c.json({
       success: false,
       error: AuthError.OAUTH_RESTART_PROCESS,
-      statusCode: 400,
-    })
+    }, 400)
   }
   if (storedState !== state) {
     return c.json({
       success: false,
       error: AuthError.OAUTH_RESTART_PROCESS,
-      statusCode: 400,
-    })
+    }, 400)
   }
 
   deleteCookie(c, "google_oauth_state")
@@ -76,8 +74,7 @@ googleRouter.get("/login/google/callback", async (c) => {
       return c.json({
         success: false,
         error: AuthError.OAUTH_ID_TOKEN_MISSING,
-        statusCode: 400,
-      })
+      }, 400)
     }
 
     if (
@@ -87,8 +84,7 @@ googleRouter.get("/login/google/callback", async (c) => {
       return c.json({
         success: false,
         error: AuthError.OAUTH_PARSE_USER_INFO_FAILED,
-        statusCode: 500,
-      })
+      }, 500)
     }
 
     throw error

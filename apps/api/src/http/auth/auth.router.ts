@@ -21,15 +21,20 @@ authRouter.post("/signup", zValidator("json", signupSchema), async (c) => {
   try {
     await signup(c, data)
 
-    return c.json({
-      success: true,
-      status: 201,
-    })
+    return c.json(
+      {
+        success: true,
+      },
+      201,
+    )
   } catch (_e) {
-    return c.json({
-      success: false,
-      status: 500,
-    })
+    return c.json(
+      {
+        success: false,
+        error: "An error occurred during signup.",
+      },
+      500,
+    )
   }
 })
 
@@ -38,18 +43,24 @@ authRouter.post("/login", zValidator("json", loginSchema), async (c) => {
   try {
     await login(c, data)
 
-    return c.json({
-      success: true,
-    })
+    return c.json(
+      {
+        success: true,
+      },
+      200,
+    )
   } catch (error) {
     if (
       error instanceof Error &&
       error.message === AuthError.LOGIN_INVALID_CREDENTIALS
     ) {
-      return c.json({
-        success: false,
-        error: AuthError.LOGIN_INVALID_CREDENTIALS,
-      })
+      return c.json(
+        {
+          success: false,
+          error: AuthError.LOGIN_INVALID_CREDENTIALS,
+        },
+        401,
+      )
     }
 
     throw error
@@ -61,7 +72,11 @@ authRouter.post("/verify", async (c) => {
 
   if (!sessionToken) {
     return c.json(
-      { error: "Unauthorized", reason: "Missing session token" },
+      {
+        success: false,
+        error: "Unauthorized",
+        reason: "Missing session token",
+      },
       401,
     )
   }
@@ -71,17 +86,22 @@ authRouter.post("/verify", async (c) => {
 
     if (!session || !user) {
       return c.json(
-        { error: "Unauthorized", reason: "Invalid session token" },
+        {
+          success: false,
+          error: "Unauthorized",
+          reason: "Invalid session token",
+        },
         401,
       )
     }
 
-    return c.json({
-      success: true,
-      user: {
-        emailVerified: user.emailVerified,
+    return c.json(
+      {
+        success: true,
+        user: { emailVerified: user.emailVerified },
       },
-    })
+      200,
+    )
   } catch (error) {
     throw error
   }
@@ -91,16 +111,16 @@ authRouter.post("/logout", async (c) => {
   try {
     await logout(c)
 
-    return c.json({
-      success: true,
-      message: "Logged out successfully.",
-    })
+    return c.json({}, 200)
   } catch (error) {
     if (error instanceof Error && error.message === AuthError.LOGOUT_FAILED) {
-      return c.json({
-        success: false,
-        message: "An error occurred during logout.",
-      })
+      return c.json(
+        {
+          success: false,
+          message: "An error occurred during logout.",
+        },
+        500,
+      )
     }
 
     throw error
@@ -117,12 +137,24 @@ authRouter.get("/me", async (c) => {
       error instanceof Error &&
       error.message === AuthError.SESSION_NOT_FOUND
     ) {
-      return c.json({ user: null }, 401)
+      return c.json(
+        {
+          success: false,
+          user: null,
+        },
+        401,
+      )
     } else if (
       error instanceof Error &&
       error.message === AuthError.USER_NOT_FOUND
     ) {
-      return c.json({ user: null }, 404)
+      return c.json(
+        {
+          success: false,
+          user: null,
+        },
+        404,
+      )
     }
 
     throw error
