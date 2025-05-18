@@ -31,6 +31,10 @@ export const envSchema = z.object({
   GOOGLE_REDIRECT_URI: z.string({
     message: "GOOGLE_REDIRECT_URI must be set in .env file",
   }),
+
+  WEBSITE_URL: z.string({
+    message: "WEBSITE_URL must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

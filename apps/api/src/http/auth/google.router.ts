@@ -1,5 +1,6 @@
 import { loginGoogle } from "@/http/auth/auth.service.js"
 import { createGoogleAuthorizationURL } from "@/http/auth/lib/google.js"
+import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
 import { AuthError } from "@skymo/shared/constants"
 import { Hono } from "hono"
@@ -63,9 +64,7 @@ googleRouter.get("/login/google/callback", async (c) => {
   try {
     await loginGoogle(c, code, codeVerifier)
 
-    return c.json({
-      success: true,
-    })
+    return c.redirect(`${ENV.WEBSITE_URL}/auth/callback`)
   } catch (error) {
     if (
       error instanceof Error &&
