@@ -1,43 +1,50 @@
 "use client"
 
-import { AVATARS_ARRAY, useUser } from "@/contexts/UserContext"
+import { AVATARS_ARRAY } from "@/contexts/UserContext"
 import { cn } from "@/lib/utils"
+import { ClassValue } from "clsx"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 
 interface SelectAvatarProps {
-  containerClassName?: string
+  containerClassName?: ClassValue
+  className?: ClassValue
+  responsive?: boolean
+  value: number
+  onChange: (avatarIndex: number) => void
 }
-const SelectAvatar = ({ containerClassName }: SelectAvatarProps) => {
-  const { avatarIndex, setAvatarIndex, getAvatar } = useUser()
+const SelectAvatar = ({
+  containerClassName,
+  className,
+  responsive = true,
+  value,
+  onChange,
+}: SelectAvatarProps) => {
   const tAvatar = useTranslations("utils.avatar")
 
   const handlePrevious = () => {
-    const newIndex =
-      avatarIndex === 0 ? AVATARS_ARRAY.length - 1 : avatarIndex - 1
-
-    setAvatarIndex(newIndex)
+    const newIndex = value === 0 ? AVATARS_ARRAY.length - 1 : value - 1
+    onChange(newIndex)
   }
 
   const handleNext = () => {
-    const newIndex =
-      avatarIndex === AVATARS_ARRAY.length - 1 ? 0 : avatarIndex + 1
-    setAvatarIndex(newIndex)
+    const newIndex = value === AVATARS_ARRAY.length - 1 ? 0 : value + 1
+    onChange(newIndex)
   }
 
-  const avatar = getAvatar()
+  const avatar = AVATARS_ARRAY[value]
 
   return (
     <div className={cn("flex flex-row gap-2 items-center", containerClassName)}>
       <ChevronLeftIcon
-        className="h-6 w-6 cursor-pointer text-black dark:text-dark-font"
+        className="size-6 cursor-pointer text-black dark:text-dark-font"
         onClick={handlePrevious}
       />
       <AnimatePresence mode="popLayout" initial={false}>
         <m.div
-          key={avatarIndex}
+          key={value}
           initial={{ opacity: 0, scale: 0 }}
           animate={{ opacity: 1, scale: 1 }}
           exit={{ opacity: 0, scale: 0 }}
@@ -50,7 +57,11 @@ const SelectAvatar = ({ containerClassName }: SelectAvatarProps) => {
               height={100}
               alt={tAvatar(avatar)}
               title={tAvatar(avatar)}
-              className="select-none size-12 smh:sm:size-16 mdh:md:size-[6.25rem] dark:opacity-75"
+              className={cn(
+                "select-none size-12 dark:opacity-75",
+                responsive && "size-12 smh:sm:size-16 mdh:md:size-[6.25rem]",
+                className,
+              )}
               priority
             />
           ) : (
