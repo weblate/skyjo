@@ -17,12 +17,12 @@ import {
   SESSION_COOKIE_NAME,
   locales,
 } from "@skymo/shared/constants"
-import type { LoginUser, Signup } from "@skymo/shared/validations"
+import type { LoginUser, Onboarding, Signup } from "@skymo/shared/validations"
 import { decodeIdToken } from "arctic"
-import { eq, or } from "drizzle-orm"
+import { and, eq, ne, or } from "drizzle-orm"
 import type { Context } from "hono"
 import { deleteCookie, getCookie } from "hono/cookie"
-import { verifyPassword } from "./lib/password.js"
+import { hashPassword, verifyPassword } from "./lib/password.js"
 
 export async function signup(c: Context, data: Signup) {
   const { email, locale } = data
@@ -162,6 +162,9 @@ export async function getCurrentUser(c: Context) {
       username: userTable.username,
       avatar: userTable.avatar,
       locale: userTable.locale,
+      emailVerified: userTable.emailVerified,
+      googleId: userTable.googleId,
+      facebookId: userTable.facebookId,
       createdAt: userTable.createdAt,
       updatedAt: userTable.updatedAt,
     })
@@ -172,4 +175,51 @@ export async function getCurrentUser(c: Context) {
   if (user.length === 0) throw new Error(AuthError.USER_NOT_FOUND)
 
   return user[0]
+}
+
+export async function completeOnboarding(userId: number, data: Onboarding) {
+  const isAvailable = await checkUsernameAvailability(data.username, userId)
+
+  if (!isAvailable) throw new Error(AuthError.USERNAME_TAKEN)
+
+  const [updatedUser] = await db
+    .update(userTable)
+    .set({
+      password: data.password ? await hashPassword(data.password) : undefined,
+      name: data.name,
+      username: data.username,
+      avatar: data.avatar,
+      updatedAt: new Date(),
+      onboardingCompleted: true,
+    })
+    .where(eq(userTable.id, userId))
+    .returning({
+      id: userTable.id,
+      email: userTable.email,
+      username: userTable.username,
+      avatar: userTable.avatar,
+      name: userTable.name,
+      locale: userTable.locale,
+      onboardingCompleted: userTable.onboardingCompleted,
+    })
+
+  return updatedUser
+}
+
+export async function checkUsernameAvailability(
+  username: string,
+  currentUserId?: number,
+): Promise<boolean> {
+  const existingUser = await db
+    .select({ id: userTable.id })
+    .from(userTable)
+    .where(
+      and(
+        eq(userTable.username, username),
+        currentUserId ? ne(userTable.id, currentUserId) : undefined,
+      ),
+    )
+    .limit(1)
+
+  return existingUser.length === 0
 }

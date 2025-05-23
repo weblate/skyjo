@@ -9,6 +9,9 @@ export const AuthError = {
   SESSION_NOT_FOUND: "session-not-found",
   USER_NOT_FOUND: "user-not-found",
 
+  // Onboarding Errors
+  USERNAME_TAKEN: "username-taken",
+
   // OAuth General Errors
   OAUTH_RESTART_PROCESS: "oauth-restart-process",
   OAUTH_ID_TOKEN_MISSING: "oauth-id-token-missing",

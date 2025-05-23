@@ -48,6 +48,7 @@ export const userTable = pgTable(
       .notNull()
       .default("en"),
     emailVerified: boolean("email_verified").notNull().default(false),
+    onboardingCompleted: boolean("onboarding_completed").notNull().default(false),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()

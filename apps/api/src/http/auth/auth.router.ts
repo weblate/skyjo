@@ -1,15 +1,24 @@
 import {
+  checkUsernameAvailability,
+  completeOnboarding,
   getCurrentUser,
   login,
   logout,
   signup,
 } from "@/http/auth/auth.service.js"
 import { googleRouter } from "@/http/auth/google.router.js"
-import { type AuthContextVariables } from "@/http/middlewares/auth.middleware.js"
+import {
+  type AuthContextVariables,
+  authMiddleware,
+} from "@/http/middlewares/auth.middleware.js"
 import { validateSessionToken } from "@/http/session/session.service.js"
 import { zValidator } from "@hono/zod-validator"
 import { AuthError, SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import { loginSchema, signupSchema } from "@skymo/shared/validations"
+import {
+  onboardingSchema,
+  usernameAvailabilitySchema,
+} from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { getCookie } from "hono/cookie"
 
@@ -98,7 +107,14 @@ authRouter.post("/verify", async (c) => {
     return c.json(
       {
         success: true,
-        user: { emailVerified: user.emailVerified },
+        user: {
+          emailVerified: user.emailVerified,
+          name: user.name,
+          username: user.username,
+          avatar: user.avatar,
+          hasOAuth: !!(user.googleId || user.facebookId),
+          onboardingCompleted: user.onboardingCompleted,
+        },
       },
       200,
     )
@@ -107,7 +123,7 @@ authRouter.post("/verify", async (c) => {
   }
 })
 
-authRouter.post("/logout", async (c) => {
+authRouter.post("/logout", authMiddleware, async (c) => {
   try {
     await logout(c)
 
@@ -127,7 +143,7 @@ authRouter.post("/logout", async (c) => {
   }
 })
 
-authRouter.get("/me", async (c) => {
+authRouter.get("/me", authMiddleware, async (c) => {
   try {
     const user = await getCurrentUser(c)
 
@@ -160,5 +176,76 @@ authRouter.get("/me", async (c) => {
     throw error
   }
 })
+
+authRouter.post(
+  "/onboard",
+  authMiddleware,
+  zValidator("json", onboardingSchema),
+  async (c) => {
+    const data = c.req.valid("json")
+    const user = c.get("user")
+    try {
+      const updatedUser = await completeOnboarding(user.id, data)
+
+      return c.json(
+        {
+          success: true,
+          user: updatedUser,
+        },
+        200,
+      )
+    } catch (error) {
+    if (
+        error instanceof Error &&
+        error.message === AuthError.USERNAME_TAKEN
+      ) {
+        return c.json(
+          {
+            success: false,
+            error: "Username is already taken",
+          },
+          409,
+        )
+      }
+
+      return c.json(
+        {
+          success: false,
+          error: "An error occurred during onboarding",
+        },
+        500,
+      )
+    }
+  },
+)
+
+authRouter.post(
+  "/check-username",
+  authMiddleware,
+  zValidator("json", usernameAvailabilitySchema),
+  async (c) => {
+    const data = c.req.valid("json")
+    const user = c.get("user")
+    try {
+      const available = await checkUsernameAvailability(data.username, user?.id)
+
+      return c.json(
+        {
+          success: true,
+          available,
+        },
+        200,
+      )
+    } catch (_error) {
+      return c.json(
+        {
+          success: false,
+          error: "An error occurred while checking username availability",
+        },
+        500,
+      )
+    }
+  },
+)
 
 export { authRouter }
