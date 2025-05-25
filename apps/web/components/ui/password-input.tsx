@@ -43,13 +43,12 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
         <button
           type="button"
           onClick={togglePasswordVisibility}
-          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black transition-all duration-200 hover:scale-110 dark:text-dark-font"
-          tabIndex={-1}
+          className="absolute right-3 top-1/2 transform -translate-y-1/2 text-black transition-all duration-200 hover:scale-110 dark:text-dark-font rounded-sm focus-visible:outline focus-visible:outline-black dark:focus-visible:outline-dark-border focus-visible:outline-2 focus-visible:outline-offset-1"
         >
           {showPassword ? (
-            <EyeOffIcon className="h-4 w-4 " />
+            <EyeOffIcon className="size-4" />
           ) : (
-            <EyeIcon className="h-4 w-4" />
+            <EyeIcon className="size-4" />
           )}
         </button>
       </div>
@@ -58,4 +57,4 @@ const PasswordInput = React.forwardRef<HTMLInputElement, PasswordInputProps>(
 )
 PasswordInput.displayName = "PasswordInput"
 
-export { PasswordInput } 
+export { PasswordInput }
