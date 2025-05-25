@@ -578,6 +578,28 @@
     },
     "OAuthCallbackPage": {
       "title": "Redirection en cours…"
+    },
+    "Verify": {
+      "head": {
+        "title": "Vérifier l'email | Skymo - Jeu de Cartes Skyjo",
+        "description": "Vérifiez votre adresse email pour finaliser votre compte Skymo et commencer à jouer à Skyjo en ligne avec vos amis.",
+        "keywords": "Skymo,Skyjo,vérification email,vérifier compte,jeu de cartes en ligne"
+      },
+      "title": "Vérifiez votre email",
+      "description": "Nous avons envoyé un code à 6 chiffres à votre adresse email. Veuillez le saisir ci-dessous.",
+      "resend": {
+        "countdown": "Renvoyer le code dans {seconds}s",
+        "prompt": "Vous n'avez pas reçu le code ?",
+        "button": "Demander un nouveau code",
+        "sending": "Envoi en cours..."
+      },
+      "toast": {
+        "success": "Email vérifié avec succès !",
+        "error": "Code PIN invalide. Veuillez réessayer.",
+        "resend-success": "Un nouvel email a été envoyé.",
+        "rate-limit": "Trop de requêtes. Veuillez réessayer plus tard.",
+        "send-failed": "Échec de l'envoi du code PIN. Veuillez réessayer."
+      }
     }
   },
   "components": {

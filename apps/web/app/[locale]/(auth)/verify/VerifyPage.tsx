@@ -1,0 +1,227 @@
+"use client"
+
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
+import { useRouter } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
+import { zodResolver } from "@hookform/resolvers/zod"
+import { VerifyPin, verifyPinSchema } from "@skymo/shared/validations"
+import { useMutation } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { toast } from "sonner"
+
+const COOLDOWN_SECONDS = 30
+
+type OtpStatus = "success" | "error" | undefined
+
+const VerifyPage = () => {
+  const router = useRouter()
+  const t = useTranslations("pages.Verify")
+
+  const form = useForm({
+    resolver: zodResolver(verifyPinSchema),
+    defaultValues: {
+      pin: "",
+    },
+  })
+
+  const [resendCooldown, setResendCooldown] = useState(0)
+  const [otpStatus, setOtpStatus] = useState<OtpStatus>(undefined)
+
+  const pinUnsuccessfull = () => {
+    setOtpStatus("error")
+    toast.error(t("toast.error"))
+  }
+
+  const pinSuccessfull = () => {
+    setOtpStatus("success")
+    toast.success(t("toast.success"))
+
+    setTimeout(() => {
+      router.push("/onboard")
+    }, 3000)
+  }
+
+  const {
+    mutate: verifyPin,
+    isPending: isVerifyingPin,
+    reset: resetVerifyPin,
+  } = useMutation({
+    mutationFn: async (payload: VerifyPin) => {
+      setOtpStatus(undefined)
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/verification/try-pin`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload),
+          credentials: "include",
+        },
+      )
+
+      const result = await res.json()
+      if (!res.ok || !result.success) {
+        throw new Error(result.error || t("toast.error"))
+      }
+
+      return result
+    },
+    onSuccess: () => pinSuccessfull(),
+    onError: (error: Error) => {
+      console.log(error)
+      pinUnsuccessfull()
+    },
+  })
+
+  const { mutate: sendPin, isPending: isSendingPin } = useMutation({
+    mutationFn: async () => {
+      setOtpStatus(undefined)
+      form.resetField("pin")
+      resetVerifyPin()
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/verification/send-pin`,
+        {
+          credentials: "include",
+        },
+      )
+
+      if (!res.ok) {
+        throw new Error(
+          res.status === 429 ? t("toast.rate-limit") : t("toast.send-failed"),
+        )
+      }
+
+      return res.json()
+    },
+    onSuccess: () => {
+      toast.success(t("toast.resend-success"))
+      setResendCooldown(COOLDOWN_SECONDS)
+    },
+    onError: (error: Error) => {
+      toast.error(error.message)
+    },
+  })
+
+  useEffect(() => sendPin(), [])
+
+  useEffect(() => {
+    if (resendCooldown > 0) {
+      const timer = setInterval(() => {
+        setResendCooldown((prevCooldown) => prevCooldown - 1)
+      }, 1000)
+      return () => clearInterval(timer)
+    }
+  }, [resendCooldown])
+
+  const verifyPinMutate = (data: VerifyPin) => {
+    if (isVerifyingPin || otpStatus === "success") return
+    verifyPin(data)
+  }
+
+  const handleResendPin = () => {
+    if (resendCooldown === 0 && !isSendingPin && otpStatus !== "success") {
+      sendPin()
+    }
+  }
+
+  const handleOtpChange = (pin: string) => {
+    form.setValue("pin", pin, { shouldValidate: true })
+    setOtpStatus(undefined)
+    form.trigger("pin").then((isValid) => {
+      if (isValid) {
+        if (form.formState.errors.pin?.message === "min-characters") {
+          form.clearErrors("pin")
+        }
+      }
+    })
+  }
+
+  return (
+    <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4 p-4">
+      <div className="max-w-sm flex flex-col w-full">
+        <h1 className="text-2xl text-center font-medium mb-2">{t("title")}</h1>
+        <p className="text-center text-muted-foreground mb-2">
+          {t("description")}
+        </p>
+
+        <Form {...form}>
+          <form
+            onSubmit={form.handleSubmit(verifyPinMutate)}
+            className="space-y-6"
+          >
+            <FormField
+              control={form.control}
+              name="pin"
+              render={({ field }) => (
+                <FormItem className="space-y-2 flex flex-col items-center">
+                  <FormControl>
+                    <InputOTP
+                      maxLength={6}
+                      value={field.value}
+                      onChange={handleOtpChange}
+                      disabled={isVerifyingPin || otpStatus === "success"}
+                      onComplete={(pinValue) => {
+                        if (
+                          verifyPinSchema.safeParse({ pin: pinValue }).success
+                        ) {
+                          verifyPinMutate({ pin: pinValue })
+                        } else {
+                          form.trigger("pin")
+                          if (otpStatus !== "error") {
+                            setOtpStatus("error")
+                          }
+                        }
+                      }}
+                    >
+                      <InputOTPGroup>
+                        <InputOTPSlot index={0} variant={otpStatus} />
+                        <InputOTPSlot index={1} variant={otpStatus} />
+                        <InputOTPSlot index={2} variant={otpStatus} />
+                        <InputOTPSlot index={3} variant={otpStatus} />
+                        <InputOTPSlot index={4} variant={otpStatus} />
+                        <InputOTPSlot index={5} variant={otpStatus} />
+                      </InputOTPGroup>
+                    </InputOTP>
+                  </FormControl>
+                </FormItem>
+              )}
+            />
+          </form>
+        </Form>
+
+        <div className="mt-4 text-center text-sm">
+          {resendCooldown > 0 ? (
+            t("resend.countdown", { seconds: resendCooldown })
+          ) : (
+            <>
+              {t("resend.prompt")}{" "}
+              <button
+                type="button"
+                className={cn(
+                  "p-0 h-auto text-sm underline underline-offset-1",
+                  isSendingPin || resendCooldown > 0 || otpStatus === "success"
+                    ? "cursor-not-allowed text-muted-foreground"
+                    : "hover:text-primary",
+                )}
+                onClick={handleResendPin}
+                disabled={
+                  isSendingPin || resendCooldown > 0 || otpStatus === "success"
+                }
+              >
+                {isSendingPin ? t("resend.sending") : t("resend.button")}
+              </button>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default VerifyPage
