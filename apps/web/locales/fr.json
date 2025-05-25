@@ -579,6 +579,32 @@
     "OAuthCallbackPage": {
       "title": "Redirection en cours…"
     },
+    "Onboarding": {
+      "title": "Embarquement en cours...",
+      "subtitle": "Complétez votre profil et lancez-vous dans l'aventure Skymo !",
+      "form": {
+        "name": {
+          "label": "Nom du joueur",
+          "placeholder": "Micheeel",
+          "description": "Affiché aux autres joueurs dans les parties"
+        },
+        "username": {
+          "label": "Nom d'utilisateur",
+          "placeholder": "micheel442",
+          "description": "Pour la connexion et les profil"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "placeholder": "Entrez votre mot de passe"
+        },
+        "submit": "Prêt à jouer !",
+        "errors": {
+          "username-taken": "Déjà pris !",
+          "username-availability-error": "Impossible de vérifier la disponibilité du nom d'utilisateur",
+          "default": "Une erreur est survenue, veuillez réessayer."
+        }
+      }
+    },
     "Verify": {
       "head": {
         "title": "Vérifier l'email | Skymo - Jeu de Cartes Skyjo",

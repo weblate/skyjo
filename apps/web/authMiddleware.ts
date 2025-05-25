@@ -9,6 +9,10 @@ async function NotAuthenticated() {
 
 type UserData = {
   emailVerified: boolean
+  username?: string | null
+  avatar?: string | null
+  hasOAuth?: boolean
+  onboardingCompleted?: boolean
 }
 
 function handleRedirects(
@@ -23,8 +27,23 @@ function handleRedirects(
       new URL(`/verify`, process.env.NEXT_PUBLIC_SITE_URL),
     )
   }
+  
+  // If they're verified but haven't completed onboarding, redirect to onboarding
+  if (userData.emailVerified && !userData.onboardingCompleted && !pathname.includes("/onboard")) {
+    return NextResponse.redirect(
+      new URL(`/onboard`, process.env.NEXT_PUBLIC_SITE_URL),
+    )
+  }
+  
   // If they're verified and on the verify page, redirect to profile
   if (userData.emailVerified && pathname.includes("/verify")) {
+    return NextResponse.redirect(
+      new URL(`/profile`, process.env.NEXT_PUBLIC_SITE_URL),
+    )
+  }
+  
+  // If they've completed onboarding and are on the onboarding page, redirect to profile
+  if (userData.emailVerified && userData.onboardingCompleted && pathname.includes("/onboard")) {
     return NextResponse.redirect(
       new URL(`/profile`, process.env.NEXT_PUBLIC_SITE_URL),
     )

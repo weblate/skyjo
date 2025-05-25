@@ -20,29 +20,26 @@ export const onboardingSchema = z.object({
       "Username can only contain letters, numbers, and underscores",
     ),
   avatar: z.nativeEnum(Constants.AVATARS),
-  password: z
-    .union([
-      z.string().length(0),
-      z
-        .string()
-        .min(10, "Password must be at least 10 characters")
-        .regex(
-          passwordLowercaseRegex,
-          "Must contain at least one lowercase letter",
-        )
-        .regex(
-          passwordUppercaseRegex,
-          "Must contain at least one uppercase letter",
-        )
-        .regex(passwordNumberRegex, "Must contain at least one number")
-        .regex(
-          passwordSpecialCharRegex,
-          "Must contain at least one special character",
-        ),
-    ])
-    .optional(),
+  password: z.string().optional(),
 })
 export type Onboarding = z.infer<typeof onboardingSchema>
+
+export const passwordSchema = z
+  .string()
+  .min(10, "Password must be at least 10 characters")
+  .regex(passwordLowercaseRegex, "Must contain at least one lowercase letter")
+  .regex(passwordUppercaseRegex, "Must contain at least one uppercase letter")
+  .regex(passwordNumberRegex, "Must contain at least one number")
+  .regex(
+    passwordSpecialCharRegex,
+    "Must contain at least one special character",
+  )
+export type Password = z.infer<typeof passwordSchema>
+
+export const onboardingWithPasswordSchema = z.object({
+  ...onboardingSchema.shape,
+  password: passwordSchema,
+})
 
 export const usernameAvailabilitySchema = z.object({
   username: z.string().min(1).max(20),

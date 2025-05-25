@@ -307,6 +307,32 @@
     "OAuthCallbackPage": {
       "title": "Redirecting in progress…"
     },
+    "Onboarding": {
+      "title": "Onboarding in progress...",
+      "subtitle": "Complete your profile and dive into the Skymo adventure!",
+      "form": {
+        "name": {
+          "label": "Player name",
+          "placeholder": "Jeff",
+          "description": "Shown to other players in games"
+        },
+        "username": {
+          "label": "Username",
+          "placeholder": "jeff",
+          "description": "For login and profile"
+        },
+        "password": {
+          "label": "Create a password",
+          "placeholder": "Enter a secure password"
+        },
+        "submit": "Ready to play!",
+        "errors": {
+          "username-taken": "Already taken!",
+          "username-availability-error": "Could not check username availability",
+          "default": "An error occurred, please try again."
+        }
+      }
+    },
     "Verify": {
       "head": {
         "title": "Verify Email | Skymo - Skyjo Online Card Game",
