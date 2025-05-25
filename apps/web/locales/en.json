@@ -688,6 +688,13 @@
     "GoogleOAuthButton": {
       "button-title": "Continue with Google",
       "error": "Failed to initiate Google login, please try again later."
+    },
+    "PasswordRequirements": {
+      "minimum-characters": "At least 10 characters",
+      "lowercase-letter": "At least one lowercase letter",
+      "capital-letter": "At least one uppercase letter",
+      "number": "At least one number",
+      "special-character": "At least one special character"
     }
   },
   "utils": {

@@ -13,7 +13,7 @@ interface PasswordRequirementsProps {
 
 const requirements = [
   {
-    label: "10-characters",
+    label: "minimum-characters",
     test: (pw: string) => pw.length >= 10,
   },
   {
@@ -38,7 +38,7 @@ export const PasswordRequirements = ({
   password = "",
 }: PasswordRequirementsProps) => {
   const t = useTranslations("components.PasswordRequirements")
-  
+
   return (
     <ul className="pt-1 pl-1 space-y-1 text-sm text-gray-700">
       {requirements.map((req, _i) => {
