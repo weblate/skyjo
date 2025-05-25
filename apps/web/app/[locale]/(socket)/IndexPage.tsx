@@ -15,7 +15,7 @@ interface Props {
 
 const IndexPage = ({ searchParams }: Props) => {
   const t = useTranslations("pages.Index")
-  const { username, setUsername } = useUser()
+  const { username, setUsername, avatarIndex, setAvatarIndex } = useUser()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
@@ -26,7 +26,11 @@ const IndexPage = ({ searchParams }: Props) => {
 
   return (
     <>
-      <SelectAvatar containerClassName="mb-4" />
+      <SelectAvatar 
+        containerClassName="mb-4" 
+        value={avatarIndex}
+        onChange={setAvatarIndex}
+      />
       <Input
         placeholder={t("name-input-placeholder")}
         value={username}
