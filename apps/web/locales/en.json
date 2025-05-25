@@ -282,6 +282,28 @@
         "link": "Login"
       }
     },
+    "Login": {
+      "head": {
+        "title": "Login | Skymo - Skyjo Online Card Game",
+        "description": "Login to Skymo to play Skyjo online. Enter your email and password to access your account and start playing immediately.",
+        "keywords": "Skymo,Skyjo,login,online card game,Skyjo game,card game,online game"
+      },
+      "title": "Login",
+      "or": "Or",
+      "form": {
+        "login": {
+          "label": "Email or username"
+        },
+        "password": {
+          "label": "Password"
+        },
+        "error": {
+          "invalid-credentials": "Login or password is incorrect",
+          "default": "An error occurred, please try again."
+        },
+        "submit": "Login"
+      }
+    },
     "OAuthCallbackPage": {
       "title": "Redirecting in progress…"
     }
