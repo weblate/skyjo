@@ -695,6 +695,16 @@
       "capital-letter": "At least one uppercase letter",
       "number": "At least one number",
       "special-character": "At least one special character"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Checking...",
+        "available": "Username available",
+        "taken": "Already taken!"
+      },
+      "error": {
+        "username-availability-error": "Could not check username availability"
+      }
     }
   },
   "utils": {
