@@ -50,7 +50,7 @@ export const PasswordRequirements = ({
             ) : (
               <XIcon className="size-4 text-gray-400" />
             )}
-            <span className={met ? "text-green-700" : "text-gray-600"}>
+            <span className={met ? "text-green-600" : "text-gray-600 dark:text-gray-400"}>
               {t(req.label)}
             </span>
           </li>
