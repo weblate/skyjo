@@ -494,10 +494,16 @@
       "button": {
         "aria-label": "Menu"
       },
+      "guest": "Mystery Player",
+      "guest-catch-phrase": "Ready to reveal your identity?",
+      "profile": "Profile",
       "rules": "Rules",
       "feedback": "Leave a feedback",
       "discord": "Discord",
-      "settings": "Settings"
+      "settings": "Settings",
+      "logout": "Log out",
+      "login": "Login",
+      "signup": "Create an account"
     },
     "OpponentBoard": {
       "disconnected": "Player has left the game. A bot will play for them during the next few turns until they reconnect."
