@@ -7,7 +7,7 @@ export default function CallbackLogic() {
   const router = useRouter()
 
   useEffect(() => {
-    const timer = setTimeout(() => router.replace("/profile"), 100)
+    const timer = setTimeout(() => router.replace("/"), 50)
 
     return () => clearTimeout(timer)
   }, [router])
