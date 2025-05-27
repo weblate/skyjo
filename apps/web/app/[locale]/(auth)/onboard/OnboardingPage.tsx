@@ -18,7 +18,7 @@ import {
   useUsernameValidation,
 } from "@/components/ui/username-input"
 import { AVATARS_ARRAY, useUser } from "@/contexts/UserContext"
-import { useAuthenticatedUser } from "@/hooks/useAuthenticatedUser"
+import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "@/i18n/routing"
 import { zodResolver } from "@hookform/resolvers/zod"
 import {
@@ -36,12 +36,10 @@ const OnboardingPage = () => {
   const router = useRouter()
   const t = useTranslations("pages.Onboarding")
   const { getAvatar, avatarIndex } = useUser()
-  const { data: authenticatedUser } = useAuthenticatedUser()
+  const { user } = useAuth()
   const form = useForm({
     resolver: zodResolver(
-      authenticatedUser?.hasOAuth
-        ? onboardingSchema
-        : onboardingWithPasswordSchema,
+      user?.hasOAuth ? onboardingSchema : onboardingWithPasswordSchema,
     ),
     defaultValues: {
       name: "",
@@ -60,18 +58,18 @@ const OnboardingPage = () => {
   const { usernameAvailability } = useUsernameValidation(watchedUsername)
 
   useEffect(() => {
-    if (!authenticatedUser || authenticatedUser?.hasOAuth) {
+    if (!user || user?.hasOAuth) {
       setShowPassword(false)
     } else {
       setShowPassword(true)
     }
 
-    if (authenticatedUser) {
-      form.setValue("name", authenticatedUser.name ?? "")
-      form.setValue("username", authenticatedUser.username ?? "")
-      form.setValue("avatar", authenticatedUser.avatar ?? "bee")
+    if (user) {
+      form.setValue("name", user.name ?? "")
+      form.setValue("username", user.username ?? "")
+      form.setValue("avatar", user.avatar ?? "bee")
     }
-  }, [authenticatedUser, form])
+  }, [user, form])
 
   useEffect(() => {
     const currentAvatar = getAvatar()
@@ -84,7 +82,7 @@ const OnboardingPage = () => {
     mutationFn: async (data: z.infer<typeof onboardingSchema>) => {
       setApiError(null)
 
-      const payload = authenticatedUser?.hasOAuth
+      const payload = user?.hasOAuth
         ? { name: data.name, username: data.username, avatar: data.avatar }
         : data
 
@@ -125,7 +123,7 @@ const OnboardingPage = () => {
     const isAvatarValid = !!values.avatar
 
     // For OAuth users, password is not required
-    if (authenticatedUser?.hasOAuth) {
+    if (user?.hasOAuth) {
       return isNameValid && isUsernameValid && isAvatarValid
     }
 
