@@ -6,7 +6,7 @@ import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-input"
-import { useRouter } from "@/i18n/routing"
+import { Link, useRouter } from "@/i18n/routing"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { AuthError } from "@skymo/shared/constants"
 import { LoginUser, loginSchema } from "@skymo/shared/validations"
@@ -58,7 +58,7 @@ const LoginPage = () => {
   })
 
   return (
-    <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4">
+    <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4 ">
       <div className="max-w-sm flex flex-col w-full">
         <h1 className="text-2xl text-center font-medium mb-6">{t("title")}</h1>
 
@@ -111,11 +111,30 @@ const LoginPage = () => {
                 {t(`form.error.${apiError}`)}
               </div>
             )}
+            <Link
+              href="/reset-password"
+              className="text-sm text-black dark:text-dark-font underline underline-offset-2"
+            >
+              {t("forgot-password")}
+            </Link>
+            <div />
             <Button type="submit" className="w-full" disabled={isPending}>
               {t("form.submit")}
             </Button>
           </form>
         </Form>
+
+        <div className="text-center mt-8 flex flex-row items-center justify-center gap-1">
+          <p className="text-sm text-black dark:text-dark-font">
+            {t("signup.description")}
+          </p>
+          <Link
+            href="/signup"
+            className="text-sm text-black dark:text-dark-font underline underline-offset-2"
+          >
+            {t("signup.link")}
+          </Link>
+        </div>
       </div>
     </div>
   )

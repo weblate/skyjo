@@ -302,7 +302,12 @@
           "default": "An error occurred, please try again."
         },
         "submit": "Login"
-      }
+      },
+      "signup": {
+        "description": "Don't have an account?",
+        "link": "Sign up now!"
+      },
+      "forgot-password": "Forgot your password?"
     },
     "OAuthCallbackPage": {
       "title": "Redirecting in progress…"
