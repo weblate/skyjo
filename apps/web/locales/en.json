@@ -309,6 +309,62 @@
       },
       "forgot-password": "Forgot your password?"
     },
+    "ForgotPassword": {
+      "head": {
+        "title": "Forgot Password | Skymo - Skyjo Online Card Game",
+        "description": "Reset your Skymo password to regain access to your account and continue playing Skyjo online with friends.",
+        "keywords": "Skymo,Skyjo,forgot password,reset password,account recovery,online card game"
+      },
+      "title": "Forgot Password",
+      "description": "Enter your email address and we'll send you a link to reset your password",
+      "form": {
+        "email": {
+          "label": "Email address"
+        },
+        "submit": "Send Reset Link",
+        "sending": "Sending..."
+      },
+      "success": {
+        "title": "Check Your Email",
+        "message": "If an account with this email exists, a password reset link has been sent.",
+        "back": "Back to Login"
+      },
+      "back": "Back to Login"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Reset Password | Skymo - Skyjo Online Card Game",
+        "description": "Create a new password for your Skymo account to regain access and continue playing Skyjo online.",
+        "keywords": "Skymo,Skyjo,reset password,new password,account recovery,online card game"
+      },
+      "title": "Reset Password",
+      "description": "Enter your new password below.",
+      "form": {
+        "password": {
+          "label": "New Password"
+        },
+        "confirmPassword": {
+          "label": "Confirm New Password"
+        },
+        "submit": "Reset Password",
+        "resetting": "Resetting...",
+        "error": {
+          "invalidToken": "Invalid or missing reset token.",
+          "expiredToken": "Reset token has expired. Please request a new one.",
+          "default": "An error occurred while resetting your password."
+        }
+      },
+      "success": {
+        "title": "Password Reset Successfully",
+        "message": "Your password has been reset. You can now log in with your new password.",
+        "back": "Go to Login"
+      },
+      "error": {
+        "title": "Invalid Reset Link",
+        "invalidToken": "This reset link is invalid or has expired. Please request a new password reset."
+      },
+      "back": "Back to Login"
+    },
     "OAuthCallbackPage": {
       "title": "Redirecting in progress…"
     },
@@ -771,6 +827,7 @@
       "error": "Failed to initiate Google login, please try again later."
     },
     "PasswordRequirements": {
+      "passwords-match": "Passwords match",
       "minimum-characters": "At least 10 characters",
       "lowercase-letter": "At least one lowercase letter",
       "capital-letter": "At least one uppercase letter",

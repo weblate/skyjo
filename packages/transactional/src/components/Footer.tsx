@@ -24,7 +24,7 @@ const footerMessages = {
 interface FooterProps {
   locale: TransactionalLocales
 }
-const Footer = ({ locale }: FooterProps) => {
+export const Footer = ({ locale }: FooterProps) => {
   const intl = createIntl({ messages: footerMessages[locale], locale })
 
   return (
@@ -32,7 +32,7 @@ const Footer = ({ locale }: FooterProps) => {
       <Hr className="mx-0 my-[26px] w-full border border-[#eaeaea] border-solid" />
 
       <Container>
-        <Text className="text-[#666666] text-[12px] text-center leading-[24px] mx-auto my-0">
+        <Text className="text-gray-500 text-sm text-center leading-[24px] mx-auto my-0">
           {intl.formatMessage({ id: "joinDiscord" })}
         </Text>
         <Link
@@ -50,11 +50,9 @@ const Footer = ({ locale }: FooterProps) => {
         </Link>
       </Container>
 
-      <Text className="text-[#666666] text-[12px] leading-[24px] text-center mt-[26px]">
+      <Text className="text-gray-500 text-xs leading-[24px] text-center mt-[26px]">
         {intl.formatMessage({ id: "copyright" })}
       </Text>
     </>
   )
 }
-
-export default Footer

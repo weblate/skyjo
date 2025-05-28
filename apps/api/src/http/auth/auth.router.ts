@@ -4,6 +4,8 @@ import {
   getCurrentUser,
   login,
   logout,
+  requestPasswordReset,
+  resetPassword,
   signup,
 } from "@/http/auth/auth.service.js"
 import { googleRouter } from "@/http/auth/google.router.js"
@@ -14,7 +16,7 @@ import {
 import { validateSessionToken } from "@/http/session/session.service.js"
 import { zValidator } from "@hono/zod-validator"
 import { AuthError, SESSION_COOKIE_NAME } from "@skymo/shared/constants"
-import { loginSchema, signupSchema } from "@skymo/shared/validations"
+import { forgotPasswordSchema, loginSchema, resetPasswordSchema, signupSchema } from "@skymo/shared/validations"
 import {
   onboardingSchema,
   usernameAvailabilitySchema,
@@ -247,5 +249,65 @@ authRouter.post(
     }
   },
 )
+
+authRouter.post("/forgot-password", zValidator("json", forgotPasswordSchema), async (c) => {
+  const data = c.req.valid("json")
+  try {
+    await requestPasswordReset(data)
+
+    return c.json(
+      {
+        success: true,
+        message: "If an account with this email exists, a password reset link has been sent.",
+      },
+      200,
+    )
+  } catch (_e) {
+    return c.json(
+      {
+        success: false,
+        error: "An error occurred while processing your request.",
+      },
+      500,
+    )
+  }
+})
+
+authRouter.post("/reset-password", zValidator("json", resetPasswordSchema), async (c) => {
+  const data = c.req.valid("json")
+  try {
+    await resetPassword(data)
+
+    return c.json(
+      {
+        success: true,
+        message: "Password has been reset successfully.",
+      },
+      200,
+    )
+  } catch (error) {
+    if (
+      error instanceof Error &&
+      (error.message === AuthError.RESET_TOKEN_INVALID ||
+       error.message === AuthError.RESET_TOKEN_EXPIRED)
+    ) {
+      return c.json(
+        {
+          success: false,
+          error: error.message,
+        },
+        400,
+      )
+    }
+
+    return c.json(
+      {
+        success: false,
+        error: "An error occurred while resetting your password.",
+      },
+      500,
+    )
+  }
+})
 
 export { authRouter }

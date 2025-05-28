@@ -80,6 +80,20 @@ export const userVerificationTable = pgTable("user_verifications", {
   expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
 })
 export type UserVerificationDb = InferSelectModel<typeof userVerificationTable>
+
+export const passwordResetTable = pgTable("password_resets", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => userTable.id),
+  token: varchar("token", { length: 255 }).notNull().unique(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+})
+export type PasswordResetDb = InferSelectModel<typeof passwordResetTable>
+
 export const sessionTable = pgTable("sessions", {
   id: text("id").primaryKey(),
   userId: integer("user_id")

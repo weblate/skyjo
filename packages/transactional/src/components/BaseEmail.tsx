@@ -5,12 +5,13 @@ import type { ReactNode } from "react"
 // biome-ignore lint/correctness/noUnusedImports: needed when using createElement
 import React from "react"
 import type { TransactionalLocales } from "../constants.js"
+
 interface BaseEmailProps {
   locale: TransactionalLocales
   children: ReactNode
   preview: string
 }
-const BaseEmail = ({ children, locale, preview }: BaseEmailProps) => {
+export const BaseEmail = ({ children, locale, preview }: BaseEmailProps) => {
   return (
     <Tailwind
       config={{
@@ -39,5 +40,3 @@ const BaseEmail = ({ children, locale, preview }: BaseEmailProps) => {
     </Tailwind>
   )
 }
-
-export default BaseEmail

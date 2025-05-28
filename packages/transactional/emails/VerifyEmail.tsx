@@ -2,19 +2,19 @@ import { createIntl } from "@formatjs/intl"
 import { Heading, Hr, Img, Link, Section, Text } from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
 import React from "react"
-import BaseEmail from "../src/components/BaseEmail.jsx"
-import Footer from "../src/components/Footer.jsx"
+import { BaseEmail } from "../src/components/BaseEmail.js"
+import { Footer } from "../src/components/Footer.js"
 import {
   SUPPORT_EMAIL,
   type TransactionalLocales,
   WEBSITE_LOGO_URL,
   WEBSITE_URL,
 } from "../src/constants.js"
-import type { DefaultProps } from "../src/types.js"
+import type { DefaultProps } from "../src/types.ts"
 
 const messages: Record<TransactionalLocales, Record<string, string>> = {
   en: {
-    subject: "Your Skymo OTP: Verify Your Email to Get Started",
+    subject: "Your verification code: [[code]]",
     preview: "Use your OTP to verify your email and start onboarding on Skymo.",
     logoAlt: "Skymo Logo",
     welcome: "Verify your email to activate your Skymo account!",
@@ -24,7 +24,7 @@ const messages: Record<TransactionalLocales, Record<string, string>> = {
       "This email was sent to you by Skymo. If you did not register for the game, please contact our support team at",
   },
   fr: {
-    subject: "Votre code OTP Skymo : Vérifiez votre email pour commencer",
+    subject: "Votre code de vérification : [[code]]",
     preview:
       "Utilisez votre code OTP pour vérifier votre email et commencer l'onboarding sur Skymo.",
     logoAlt: "Logo Skymo",
@@ -36,8 +36,11 @@ const messages: Record<TransactionalLocales, Record<string, string>> = {
   },
 }
 
-export const getVerifyEmailSubject = (locale: TransactionalLocales) => {
-  return messages[locale].subject
+export const getVerifyEmailSubject = (
+  locale: TransactionalLocales,
+  content: VerifyEmailContent,
+) => {
+  return messages[locale].subject.replace("[[code]]", content.pin)
 }
 export interface VerifyEmailContent {
   pin: string
@@ -71,7 +74,7 @@ export const VerifyEmail = ({ locale, content }: VerifyEmailProps) => {
           {intl.formatMessage({ id: "welcome" })}
         </Heading>
 
-        <Text className="text-[14px] text-black leading-[24px] text-center">
+        <Text className="text-sm text-black leading-[24px] text-center">
           {intl.formatMessage({ id: "body" })}
         </Text>
 
@@ -84,7 +87,7 @@ export const VerifyEmail = ({ locale, content }: VerifyEmailProps) => {
 
         <Hr className="mx-0 my-[26px] w-full border border-[#eaeaea] border-solid" />
 
-        <Text className="text-[#666666] text-[12px] leading-[24px]">
+        <Text className="text-gray-500 text-xs leading-[24px] text-center">
           {intl.formatMessage({ id: "footer" })}{" "}
           <Link href={`mailto:${SUPPORT_EMAIL}`}>{SUPPORT_EMAIL}</Link>
         </Text>

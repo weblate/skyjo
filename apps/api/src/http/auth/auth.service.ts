@@ -1,5 +1,5 @@
 import { db } from "@/db/index.js"
-import { sessionTable, userTable } from "@/db/schema.js"
+import { passwordResetTable, sessionTable, userTable } from "@/db/schema.js"
 import { setSessionTokenCookie } from "@/http/auth/lib/cookie.js"
 import {
   type GoogleUser,
@@ -11,18 +11,36 @@ import {
   generateSessionToken,
 } from "@/http/session/session.service.js"
 import { createUser } from "@/http/user/user.service.js"
+import { mailerQueue } from "@/utils/mailer.js"
+import { type RandomReader, generateRandomString } from "@oslojs/crypto/random"
+import { sha3_256 } from "@oslojs/crypto/sha3"
+import { encodeHexLowerCase } from "@oslojs/encoding"
 import { Logger } from "@skymo/logger"
 import {
   AuthError,
   SESSION_COOKIE_NAME,
   locales,
 } from "@skymo/shared/constants"
-import type { LoginUser, Onboarding, Signup } from "@skymo/shared/validations"
+import type {
+  ForgotPassword,
+  LoginUser,
+  Onboarding,
+  ResetPassword,
+  Signup,
+} from "@skymo/shared/validations"
 import { decodeIdToken } from "arctic"
 import { and, eq, ne, or } from "drizzle-orm"
 import type { Context } from "hono"
 import { deleteCookie, getCookie } from "hono/cookie"
 import { hashPassword, verifyPassword } from "./lib/password.js"
+
+const random: RandomReader = {
+  read(bytes) {
+    crypto.getRandomValues(bytes)
+  },
+}
+
+const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 export async function signup(c: Context, data: Signup) {
   const { email, locale } = data
@@ -222,4 +240,90 @@ export async function checkUsernameAvailability(
     .limit(1)
 
   return existingUser.length === 0
+}
+
+export async function requestPasswordReset(data: ForgotPassword) {
+  const { email } = data
+
+  const user = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.email, email))
+    .limit(1)
+
+  if (user.length === 0) {
+    // For security, we don't reveal if the email exists or not
+    Logger.warn("Password reset requested for non-existent email", { email })
+    return
+  }
+
+  const userRecord = user[0]
+
+  const token = generateRandomString(random, alphabet, 64)
+  const expiresAt = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
+
+  // Remove any existing password reset tokens for this user
+  await db
+    .delete(passwordResetTable)
+    .where(eq(passwordResetTable.userId, userRecord.id))
+
+  // Store new token
+  await db.insert(passwordResetTable).values({
+    userId: userRecord.id,
+    token: encodeHexLowerCase(sha3_256(new TextEncoder().encode(token))),
+    expiresAt,
+  })
+
+  // Send email with reset link
+  const resetUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password/${encodeURIComponent(token)}`
+
+  await mailerQueue.add("reset-password", {
+    to: email,
+    template: "reset-password",
+    locale: userRecord.locale,
+    content: {
+      resetUrl,
+    },
+  })
+  Logger.info("Password reset email queued", { email, userId: userRecord.id })
+}
+
+export async function resetPassword(data: ResetPassword) {
+  const { token, password } = data
+
+  // Find valid token
+  const resetRecord = await db
+    .select({
+      id: passwordResetTable.id,
+      userId: passwordResetTable.userId,
+      expiresAt: passwordResetTable.expiresAt,
+    })
+    .from(passwordResetTable)
+    .where(eq(passwordResetTable.token, token))
+    .limit(1)
+
+  if (resetRecord.length === 0) {
+    throw new Error(AuthError.RESET_TOKEN_INVALID)
+  }
+
+  const reset = resetRecord[0]
+
+  // Check if token is expired
+  if (reset.expiresAt < new Date()) {
+    await db
+      .delete(passwordResetTable)
+      .where(eq(passwordResetTable.id, reset.id))
+    throw new Error(AuthError.RESET_TOKEN_EXPIRED)
+  }
+
+  const hashedPassword = await hashPassword(password)
+
+  await db
+    .update(userTable)
+    .set({ password: hashedPassword })
+    .where(eq(userTable.id, reset.userId))
+
+  await db.delete(passwordResetTable).where(eq(passwordResetTable.id, reset.id))
+
+  await db.delete(sessionTable).where(eq(sessionTable.userId, reset.userId))
 }

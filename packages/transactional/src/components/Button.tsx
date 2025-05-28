@@ -7,15 +7,15 @@ interface CustomButtonProps extends ButtonProps {
   href: string
 }
 
-const Button = ({ children, ...props }: CustomButtonProps) => {
+export const Button = ({ children, ...props }: CustomButtonProps) => {
   return (
     <_Button
-      className="rounded-md bg-button px-12 py-2 inline-flex items-center justify-center text-center font-medium text-[12px] text-black border-2 border-solid border-black border-r-[5px] border-b-[5px] no-underline"
+      className="rounded-lg bg-button inline-flex items-center justify-center text-center border-2 border-solid border-black border-r-[5px] border-b-[5px] no-underline"
       {...props}
     >
-      {children}
+      <div className="bg-button text-black px-12 py-2 rounded-md font-medium text-sm">
+        {children}
+      </div>
     </_Button>
   )
 }
-
-export default Button

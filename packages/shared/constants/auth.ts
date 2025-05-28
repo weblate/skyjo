@@ -12,6 +12,11 @@ export const AuthError = {
   // Onboarding Errors
   USERNAME_TAKEN: "username-taken",
 
+  // Password Reset Errors
+  RESET_TOKEN_INVALID: "reset-token-invalid",
+  RESET_TOKEN_EXPIRED: "reset-token-expired",
+  PASSWORD_RESET_FAILED: "password-reset-failed",
+
   // OAuth General Errors
   OAUTH_RESTART_PROCESS: "oauth-restart-process",
   OAUTH_ID_TOKEN_MISSING: "oauth-id-token-missing",

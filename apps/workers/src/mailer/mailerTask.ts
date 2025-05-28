@@ -1,11 +1,15 @@
 import { ENV } from "@env"
 import {
+  ResetPasswordEmail,
   type TransactionalLocales,
   VerifyEmail,
+  type VerifyEmailContent,
   getLocale,
+  getResetPasswordEmailSubject,
   getVerifyEmailSubject,
 } from "@skymo/transactional"
 import type {
+  EmailContent,
   EmailTemplateName,
   EmailTemplateReact,
   MailerJobData,
@@ -25,7 +29,11 @@ export class MailerTask {
 
     const supportedLocale = getLocale(userLocale)
 
-    const template = this.getTypedTemplate(templateName, supportedLocale)
+    const template = this.getTypedTemplate(
+      templateName,
+      supportedLocale,
+      content,
+    )
 
     if (!template) return
 
@@ -43,23 +51,24 @@ export class MailerTask {
   private getTypedTemplate<T extends EmailTemplateName>(
     templateName: T,
     locale: TransactionalLocales,
+    content: EmailContent<T>,
   ): EmailTemplateReact<T> | null {
-    const templates: Record<
-      EmailTemplateName,
-      EmailTemplateReact<EmailTemplateName>
-    > = {
-      "verify-pin": {
-        from: "no-reply@skymo.online",
-        subject: getVerifyEmailSubject(locale),
+    if (templateName === "verify-pin") {
+      return {
+        from: "Skymo <no-reply@skymo.online>",
+        subject: getVerifyEmailSubject(locale, content as VerifyEmailContent),
         react: VerifyEmail,
-      },
-    }
-    const template = templates[templateName]
-
-    if (!template) {
-      return null
+      } as EmailTemplateReact<T>
     }
 
-    return template
+    if (templateName === "reset-password") {
+      return {
+        from: "Skymo <no-reply@skymo.online>",
+        subject: getResetPasswordEmailSubject(locale),
+        react: ResetPasswordEmail,
+      } as EmailTemplateReact<T>
+    }
+
+    return null
   }
 }

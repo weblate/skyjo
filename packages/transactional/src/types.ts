@@ -1,4 +1,4 @@
-import type { TransactionalLocales } from "./constants.js"
+import type { TransactionalLocales } from "./constants.ts"
 
 export interface DefaultProps<T> {
   locale: TransactionalLocales
