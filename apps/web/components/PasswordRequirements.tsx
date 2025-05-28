@@ -6,12 +6,13 @@ import {
 } from "@skymo/shared/validations"
 import { CheckIcon, XIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
-
-interface PasswordRequirementsProps {
-  password: string | undefined
-}
+import { useMemo } from "react"
 
 const requirements = [
+  {
+    label: "passwords-match",
+    test: (pw: string, confirmPw: string) => pw === confirmPw && pw.length > 0,
+  },
   {
     label: "minimum-characters",
     test: (pw: string) => pw.length >= 10,
@@ -34,15 +35,29 @@ const requirements = [
   },
 ] as const
 
+interface PasswordRequirementsProps {
+  password: string | undefined
+  confirmPassword?: string
+}
 export const PasswordRequirements = ({
   password = "",
+  confirmPassword,
 }: PasswordRequirementsProps) => {
   const t = useTranslations("components.PasswordRequirements")
 
+  const activeRequirements = useMemo(() => {
+    const activeRequirements = [...requirements]
+
+    if (confirmPassword === undefined) activeRequirements.shift()
+
+    return activeRequirements
+  }, [password, confirmPassword])
+
   return (
     <ul className="pt-1 pl-1 space-y-1 text-sm text-gray-700">
-      {requirements.map((req, _i) => {
-        const met = req.test(password)
+      {activeRequirements.map((req, _i) => {
+        const met = req.test(password, confirmPassword ?? "")
+
         return (
           <li key={req.label} className="flex items-center gap-1">
             {met ? (
@@ -50,7 +65,11 @@ export const PasswordRequirements = ({
             ) : (
               <XIcon className="size-4 text-gray-400" />
             )}
-            <span className={met ? "text-green-600" : "text-gray-600 dark:text-gray-400"}>
+            <span
+              className={
+                met ? "text-green-600" : "text-gray-600 dark:text-gray-400"
+              }
+            >
               {t(req.label)}
             </span>
           </li>
