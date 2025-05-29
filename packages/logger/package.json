@@ -1,7 +1,7 @@
 {
   "name": "@skymo/logger",
   "description": "Used to log messages to the console and to the Seq server",
-  "version": "1.56.2",
+  "version": "1.57.0",
   "type": "module",
   "exports": {
     ".": "./dist/src/index.js",
