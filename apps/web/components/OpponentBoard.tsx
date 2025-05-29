@@ -60,7 +60,7 @@ const OpponentBoard = ({
               priority
             />
           </div>
-          <p
+          <div
             className={cn(
               "text-center select-none text-xs smh:text-sm text-black dark:text-dark-font flex flex-row items-center gap-1",
               isPlayerTurn && "font-semibold",
@@ -74,13 +74,11 @@ const OpponentBoard = ({
                   <TooltipTrigger className="relative">
                     <UserXIcon size={16} className="text-yellow-600" />
                   </TooltipTrigger>
-                  <TooltipContent>
-                    <p>{to("disconnected")}</p>
-                  </TooltipContent>
+                  <TooltipContent>{to("disconnected")}</TooltipContent>
                 </Tooltip>
               </TooltipProvider>
             )}
-          </p>
+          </div>
           {game.settings.showCurrentScore && (
             <p className="text-center select-none text-xs text-gray-500 dark:text-gray-400">
               {getCurrentScore(opponent)}
