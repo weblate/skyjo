@@ -50,6 +50,9 @@ interface ChatContext {
   unmutePlayer: (username: string) => void
   toggleMutePlayer: (username: string) => void
   wizzPlayer: (targetUsername: string) => void
+  draftMessage: string
+  setDraftMessage: (message: string) => void
+  clearDraftMessage: () => void
 }
 
 const ChatContext = createContext<ChatContext | undefined>(undefined)
@@ -66,6 +69,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const [chat, setChat] = useState<ChatMessage[]>([])
   const [unreadMessages, setUnreadMessages] = useState<ChatMessage[]>([])
   const [hasUnreadMessage, setHasUnreadMessage] = useState<boolean>(false)
+  const [draftMessage, setDraftMessage] = useState<string>("")
 
   const [mutedPlayers, setMutedPlayers] = useState<string[]>([])
 
@@ -249,8 +253,11 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       unmutePlayer,
       toggleMutePlayer,
       wizzPlayer,
+      draftMessage,
+      setDraftMessage,
+      clearDraftMessage: () => setDraftMessage(""),
     }),
-    [chat, unreadMessages, hasUnreadMessage, mutedPlayers],
+    [chat, unreadMessages, hasUnreadMessage, mutedPlayers, draftMessage],
   )
 
   return (

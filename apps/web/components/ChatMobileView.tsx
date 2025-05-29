@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/button"
 import {
   Drawer,
   DrawerContent,
+  DrawerDescription,
   DrawerFooter,
   DrawerHeader,
   DrawerTitle,
@@ -47,6 +48,7 @@ const ChatMobileView = ({
       <DrawerContent>
         <DrawerHeader className="p-3 pb-0">
           <DrawerTitle className="text-center">{t("title")}</DrawerTitle>
+          <DrawerDescription></DrawerDescription>
         </DrawerHeader>
         <div className="px-4 my-2 h-[50svh] flex flex-col-reverse overflow-y-auto">
           <ChatMessageList />

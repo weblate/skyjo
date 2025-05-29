@@ -31,12 +31,15 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
     unmutePlayer,
     addSystemMessage,
     wizzPlayer,
+    draftMessage,
+    setDraftMessage,
+    clearDraftMessage,
   } = useChat()
   const t = useTranslations("components.ChatForm")
   const form = useForm({
     resolver: zodResolver(chatFormSchema),
     defaultValues: {
-      message: "",
+      message: draftMessage,
     },
   })
 
@@ -69,9 +72,14 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
     else setTabIndex(-1)
   }, [chatOpen])
 
+  useEffect(() => {
+    form.setValue("message", draftMessage)
+  }, [draftMessage, form])
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value
     form.setValue("message", value)
+    setDraftMessage(value)
 
     if (value.startsWith("/")) {
       const [command, ...args] = value.split(" ")
@@ -148,7 +156,9 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
 
         if (matchingCommands.length === 1) {
           words[words.length - 1] = matchingCommands[0].value
-          form.setValue("message", words.join(" ") + " ")
+          const newValue = words.join(" ") + " "
+          form.setValue("message", newValue)
+          setDraftMessage(newValue)
         } else if (matchingCommands.length > 1) {
           setAutocompleteOptions(matchingCommands)
           setShowAutocomplete(true)
@@ -174,6 +184,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
     setShowAutocomplete(false)
     const newValue = words.join(" ") + " "
     form.setValue("message", newValue)
+    setDraftMessage(newValue)
     inputRef.current?.focus()
   }
 
@@ -188,6 +199,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
       clearUnreadMessages()
     }
 
+    clearDraftMessage()
     form.reset()
   }
 
@@ -215,6 +227,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
       default:
         addSystemMessage(t("unknown-command.description", { command }))
     }
+    clearDraftMessage()
   }
 
   return (
