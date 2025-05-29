@@ -33,7 +33,7 @@ const MenuDropdown = () => {
           <MenuIcon />
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="mr-6">
+      <DropdownMenuContent align="end" side="top" sideOffset={8}>
         <DropdownMenuItem onClick={openRules}>
           <BookOpenIcon className="mr-2 h-4 w-4" />
           <span>{t("rules")}</span>

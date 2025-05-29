@@ -6,6 +6,9 @@
   },
   "pages": {
     "Index": {
+      "banner": {
+        "title": "I need  <gform>your feedback</gform>  to shape the future of Skymo!"
+      },
       "name-input-placeholder": "Name",
       "explanation": {
         "title": "What is Skyjo?",

@@ -6,6 +6,9 @@
   },
   "pages": {
     "Index": {
+      "banner": {
+        "title": "J'ai besoin de <gform>votre avis</gform> pour construire l'avenir de Skymo !"
+      },
       "name-input-placeholder": "Nom",
       "explanation": {
         "title": "Qu'est-ce que Skyjo ?",

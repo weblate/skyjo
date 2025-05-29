@@ -35,8 +35,21 @@ const IndexServerPage = (props: IndexServerPageProps) => {
     <>
       <div className="bg-body dark:bg-dark-body flex flex-col">
         <div className="relative h-dvh !p-6 flex items-center justify-center">
+          <div className="absolute top-0 left-0 right-0 px-6 py-2 bg-white border-b-2 border-black flex flex-row items-center sm:justify-center gap-1">
+            {t.rich("banner.title", {
+              gform: (chunks) => (
+                <Link
+                  href="https://forms.gle/CM9PV9H24KMFqDrXA"
+                  target="_blank"
+                  className="underline underline-offset-2 text-blue-500 font-semibold"
+                >
+                  {chunks}
+                </Link>
+              ),
+            })}
+          </div>
           <PWABanner />
-          <div className="absolute top-6 right-6 w-10 flex flex-col gap-4 z-10">
+          <div className="absolute top-14 right-4 w-10 flex flex-col gap-4 z-10">
             <MenuDropdown />
           </div>
           <div className="bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border px-10 md:px-16 py-6 mdh:md:py-12 rounded-xl md:w-3/6 max-w-2xl flex flex-col items-center">
