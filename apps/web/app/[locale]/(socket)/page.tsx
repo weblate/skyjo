@@ -35,7 +35,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
     <>
       <div className="bg-body dark:bg-dark-body flex flex-col">
         <div className="relative h-dvh !p-6 flex items-center justify-center">
-          <div className="absolute top-0 left-0 right-0 px-6 py-2 bg-white border-b-2 border-black flex flex-row items-center sm:justify-center gap-1">
+          <div className="absolute top-0 left-0 right-0 px-6 py-2 bg-white dark:bg-dark-body text-black dark:text-dark-font border-b-2 border-black dark:border-dark-border flex flex-row items-center sm:justify-center gap-1">
             {t.rich("banner.title", {
               gform: (chunks) => (
                 <Link
