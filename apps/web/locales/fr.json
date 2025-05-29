@@ -146,7 +146,7 @@
       "start-game-button": "Lancer la partie",
       "cancel": "Annuler",
       "game-starting-in": "La partie commence dans {seconds}",
-      "waiting-host-to-start": "En attente du lancement de la partie par l'host",
+      "waiting-host-to-start": "En attente du lancement de la partie par l'hôte",
       "waiting-host-to-confirm-game-settings": "En attente de la validation des paramètres par l'hôte",
       "player-section": {
         "title": "Joueurs {nbPlayers}/{maxPlayers}",
