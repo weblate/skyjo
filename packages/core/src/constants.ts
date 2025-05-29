@@ -53,7 +53,7 @@ export class Constants {
     TURN: 5,
   } as const
 
-  static readonly NEW_ROUND_DELAY = 10000
+  static readonly NEW_ROUND_DELAY = 5000
 
   static readonly AVATARS = {
     BEE: "bee",
