@@ -1,1 +1,769 @@
-{}
+{
+  "pages": {
+    "Search": {
+      "no-games-found": "Nessun gioco trovato",
+      "game-of": "Il gioco di {name}",
+      "header": {
+        "back": "Torna alla homepage",
+        "create-button": {
+          "title": "Crea una partita pubblica"
+        },
+        "refresh": "Aggiorna l'elenco dei giochi",
+        "title": "Giochi pubblici"
+      },
+      "tags": {
+        "tag": {
+          "classic": "Classico",
+          "custom": "Personalizzato",
+          "column": "Colonna",
+          "row": "Riga",
+          "short-game": "Gioco corto",
+          "long-game": "Lungo termine"
+        },
+        "title": "Filtri:",
+        "no-tags-available": "Nessun tag disponibile"
+      },
+      "head": {
+        "title": "Trova partite pubbliche di Skymo | Gioca a Skyjo Online",
+        "description": "Cerchi una partita a Skyjo a cui unirti? Sfoglia le partite pubbliche disponibili e inizia subito a giocare a Skyjo online con altri giocatori. Gioca gratis ora!",
+        "keywords": "Skymo,Skyjo,Skyjo online,trova partita,unisciti a partita,partite pubbliche,multigiocatore online,gioca con altri,gioca subito,giochi online gratuiti,partite aperte,gioco di carte online,gioco di carte multigiocatore"
+      }
+    },
+    "Lobby": {
+      "settings": {
+        "private": {
+          "tooltip": {
+            "on": "Questo gioco è privato, solo le persone con il link possono unirsi",
+            "off": "Questa parte è pubblica, chiunque può unirsi dopo aver convalidato i parametri"
+          }
+        },
+        "nb-rows": {
+          "label": "Numero di righe",
+          "title": "'$number righe'"
+        },
+        "initial-turned-count": {
+          "label": "Numero di carte inizialmente rivelate",
+          "title": "All'inizio della partita, {number} delle tue carte verranno rivelate"
+        },
+        "score-to-end-game": {
+          "title": "Il gioco terminerà quando un giocatore raggiungerà {number} punti",
+          "label": "Punteggio per terminare la partita"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Moltiplicatore penalità punteggio primo giocatore",
+          "title": "Il punteggio del primo giocatore sarà moltiplicato per {number} se non è strettamente inferiore agli altri punteggi della partita"
+        },
+        "show-current-score": {
+          "label": "Mostra il punteggio attuale durante la partita"
+        },
+        "remove-identical-column": "Rimuovi colonne identiche",
+        "validation-warning": "Le impostazioni di gioco non possono essere modificate una volta convalidate",
+        "validate-settings": "Convalida impostazioni",
+        "max-players": {
+          "title": "Numero massimo di giocatori: {number}",
+          "label": "Numero massimo di giocatori"
+        },
+        "remove-identical-row": "Rimuovi righe identiche",
+        "first-player-penalty-type": {
+          "description": "La penalità viene applicata se il primo giocatore a rivelare tutte le sue carte non ha il minor numero di punti (non si applica se il punteggio è inferiore o uguale a 0)",
+          "item": {
+            "multiplier-only": "Solo moltiplicatore",
+            "flat-only": "Solo appartamento",
+            "flat-then-multiplier": "Piatto poi Moltiplicatore",
+            "multiplier-then-flat": "'Moltiplicatore poi Piatto'"
+          },
+          "label": "Tipo di penalità primo giocatore",
+          "placeholder": "Selezionare un tipo di penalità"
+        },
+        "first-player-flat-penalty": {
+          "label": "Penalità fissa sul punteggio del primo giocatore",
+          "title": "Verranno aggiunti {number} punti aggiuntivi al punteggio del primo giocatore"
+        },
+        "reset-settings": "Reimposta impostazioni",
+        "nb-columns": {
+          "label": "Numero di colonne",
+          "title": "'$number colonne'"
+        }
+      },
+      "player-section": {
+        "title": "Giocatori {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Seleziona un numero di giocatori",
+          "item": "{value} giocatori"
+        }
+      },
+      "title": "Il gioco di {name}",
+      "leave-to-home": "Torna alla homepage",
+      "waiting-host-to-start": "In attesa che l'host avvii la partita",
+      "cancel": "Annulla",
+      "go-back-to-settings": "Torna alle impostazioni",
+      "leave-to-public-game-list": "Lascia la lista dei giochi pubblici",
+      "game-starting-in": "Gioco in avvio tra {seconds} secondi",
+      "waiting-host-to-confirm-game-settings": "In attesa che l'host convalidi le impostazioni",
+      "not-enough-players-modal": {
+        "title": "Non ci sono abbastanza giocatori",
+        "description": "Devono esserci almeno 2 giocatori per iniziare la partita.",
+        "public-description": "Invita un amico o attendi che si unisca un altro giocatore.",
+        "private-description": "Usa il link privato per invitare gli amici!",
+        "close": "Capisco"
+      },
+      "start-game-button": "Avvia il gioco"
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "anonymous-usage-data": {
+            "title": "Dati di utilizzo anonimi",
+            "description": "Utilizziamo PostHog, uno strumento di analisi, per raccogliere dati anonimi su come utilizzi il nostro sito web. Questo include:",
+            "items": "Visualizzazioni di pagina;;Web vitals (metriche di performance);;Risposte al sondaggio (se si sceglie di partecipare)"
+          },
+          "game-data": {
+            "description": "Memorizziamo temporaneamente:",
+            "title": "Dati di gioco",
+            "items": "Nomi utente e scelte avatar;;Elementi di gioco e progressi"
+          },
+          "user-provided-information": {
+            "title": "Informazioni Fornite dall'Utente",
+            "description": "Raccogliamo:",
+            "items": "Invii di moduli di feedback (inclusi indirizzi email opzionali)"
+          },
+          "local-storage-data": {
+            "title": "Dati di archiviazione locale",
+            "description": "Memorizziamo nella memoria locale del tuo browser:",
+            "items": "'Preferenze lingua;;Preferenze impostazioni di gioco'"
+          },
+          "title": "Informazioni che raccogliamo",
+          "cookies": {
+            "title": "Cookie",
+            "description": "Utilizziamo i cookie essenziali per abilitare le funzionalità principali del nostro sito web:",
+            "items": "Cookie di sessione: Utilizziamo un cookie di sessione (skymo-io) per mantenere la tua connessione ai nostri server di gioco. Questo cookie è essenziale per la funzionalità del gioco e scade dopo 24 ore;;Questi cookie non tracciano la tua navigazione tra i siti web e vengono utilizzati solo per fornire il servizio che hai richiesto"
+          }
+        },
+        "childrens-privacy": {
+          "title": "Privacy dei bambini",
+          "description": "Skymo non ha alcuna restrizione d'età. Non raccogliamo consapevolmente informazioni personali da bambini."
+        },
+        "back": "Torna alla pagina iniziale",
+        "title": "Informativa sulla privacy",
+        "last-update": {
+          "text": "Ultimo aggiornamento: {date}",
+          "date-format": "AAAA-MM-GG - hh:mmA"
+        },
+        "how-we-use-your-information": {
+          "items": "Migliorare il nostro sito web e l'esperienza utente;;Analizzare i modelli di utilizzo e le prestazioni;;Rispondere ai feedback e alle richieste di supporto;;Facilitare il gioco",
+          "title": "Come Usiamo le Tue Informazioni"
+        },
+        "data-storage-and-retention": {
+          "title": "Archiviazione e Conservazione dei Dati",
+          "items": "I dati di utilizzo anonimi sono archiviati su server all'interno dell'Unione Europea e conservati per un massimo di 1 anno;;I dati di gioco sono archiviati nel nostro database situato a Francoforte, in Germania. Questi dati vengono conservati per la durata delle partite attive. Una volta che tutti i giocatori lasciano una partita, i dati associati vengono eliminati;;Le informazioni archiviate nella memoria locale del browser rimangono lì finché non si cancellano i dati del browser;;I moduli di feedback inviati vengono conservati solo allo scopo di rispondere e considerare i suggerimenti per lo sviluppo"
+        },
+        "your-rights-and-choices": {
+          "description": "Dato che raccogliamo principalmente dati anonimi, non possiamo identificare o accedere a informazioni personali specifiche di alcun singolo utente. Tuttavia, l'utente ha i seguenti diritti e scelte:",
+          "items": "Memoria locale: Puoi cancellare la memoria locale del tuo browser in qualsiasi momento per rimuovere le preferenze salvate;;Feedback: Se hai inviato un feedback con un indirizzo email, puoi contattarci per richiederne la cancellazione;;Disattivazione Analytics: Puoi disattivare la raccolta di dati analitici abilitando l'impostazione \"Do Not Track\" del tuo browser o utilizzando browser incentrati sulla privacy che bloccano gli script di analisi;;Dati di gioco: I dati relativi al gioco vengono automaticamente cancellati quando tutti i giocatori lasciano una partita",
+          "title": "I tuoi diritti e le tue scelte"
+        },
+        "changes-to-this-policy": {
+          "title": "Modifiche a questa Informativa",
+          "description": "Potremmo aggiornare questa informativa di volta in volta. Ti informeremo di qualsiasi modifica pubblicando la nuova informativa su questa pagina."
+        },
+        "contact-us": {
+          "description": "Per qualsiasi domanda sulla presente Informativa sulla privacy, si prega di contattarci tramite il modulo di feedback sul sito web, il server Discord o GitHub.",
+          "title": "Contattaci"
+        },
+        "data-sharing": {
+          "title": "Condivisione dei dati",
+          "description": "Non condividiamo le tue informazioni personali con terze parti. I dati di utilizzo anonimi sono elaborati da PostHog, il nostro fornitore di analisi."
+        }
+      },
+      "head": {
+        "title": "Informativa sulla privacy | Skymo - Gioco di carte online Skyjo",
+        "description": "Informativa sulla privacy di Skymo. Scopri come proteggiamo i tuoi dati mentre ti diverti con il nostro gioco di carte Skyjo. Pratiche trasparenti ed esperienza di gioco sicura.",
+        "keywords": "Skymo,Skyjo,Skyjo Online,informativa sulla privacy,protezione dei dati,privacy dei giochi online,gioco sicuro,dati utente,GDPR,CCPA,sicurezza dei dati"
+      }
+    },
+    "NotFound": {
+      "description": "La pagina che stai cercando non esiste.",
+      "title": "Errore 404",
+      "go-back-to-homepage": "Torna alla homepage"
+    },
+    "Index": {
+      "explanation": {
+        "title": "Cos'è Skyjo?",
+        "button": "Vedi le regole",
+        "content": "Skyjo è un emozionante gioco di carte e un eccellente gioco da tavolo, apprezzato dagli appassionati di giochi di tutto il mondo. Questo gioco di carte multiplayer è progettato per un numero di giocatori che va da 2 a 8, dove ogni giocatore riceve 12 carte, inizialmente nascoste. L'obiettivo principale del gioco è totalizzare il minor numero di punti possibile. Il gioco termina non appena un giocatore raggiunge i 100 punti. Le regole del gioco sono semplici e facili da capire, il che lo rende una scelta ideale per le serate di gioco con la famiglia o gli amici. Gli appassionati di giochi saranno lieti di sapere che ora è possibile giocare a Skyjo online gratuitamente!"
+      },
+      "faq": {
+        "title": "Domande frequenti (FAQ)",
+        "meaning": {
+          "title": "Cosa significa Skyjo?",
+          "content": "Uno Skyjo è una colonna di 3 carte identiche nel gioco."
+        },
+        "pronounce": {
+          "title": "Come si pronuncia Skyjo?",
+          "content": "La parola Skyjo si pronuncia [Skyjoe]."
+        },
+        "how-to-win": {
+          "title": "Come vincere a Skyjo?",
+          "content": "Per vincere a Skyjo, è essenziale avere il punteggio più basso possibile. Per raggiungere questo obiettivo, adotta una strategia equilibrata tra avere le carte più basse, rivelare le tue carte e creare colonne di carte identiche. Evita di girare per primo a meno che tu non sia significativamente in vantaggio con le carte visibili. Ricorda di mantenere le carte già visibili per cercare di creare colonne con esse, piuttosto che ottimizzarle individualmente."
+        },
+        "how-to-play": {
+          "title": "Come si gioca a Skyjo?",
+          "content": "Per giocare a Skyjo, distribuisci 12 carte a ogni giocatore a faccia in giù. L'obiettivo è avere il minor numero di punti possibile girando e scambiando le carte. A ogni turno, pesca una carta dal mazzo o dalla pila degli scarti, quindi decidi di sostituire una delle tue carte visibili. Le carte numerate valgono i loro punti, le carte speciali hanno delle azioni. Il gioco termina quando un giocatore ha girato tutte le sue carte. Il giocatore con il minor numero di punti vince. Puoi consultare <rules>le regole</rules> per maggiori informazioni."
+        },
+        "play-classic-with-action": {
+          "title": "Si può giocare a Skyjo classico con Skyjo Action?",
+          "content": "Sì, devi solo rimuovere le carte azione. Se stai giocando alla versione online, seleziona la versione classica per giocare a Skyjo."
+        }
+      },
+      "banner": {
+        "title": "Ho bisogno del <gform>tuo feedback</gform> per plasmare il futuro di Skymo!"
+      },
+      "name-input-placeholder": "Nome"
+    },
+    "Maintenance": {
+      "description": "Stiamo aggiornando il sito, riprova più tardi.",
+      "github-alt": "Vedi il codice sorgente su GitHub",
+      "title": "Sito in manutenzione"
+    },
+    "ResultsPage": {
+      "total": "Totale",
+      "leave-button": "Abbandona la partita",
+      "player-want-to-replay": "Giocatori che vogliono rigiocare:",
+      "replay-button": {
+        "cancel": "Non riprodurre",
+        "replay": "Riproduci"
+      },
+      "rank": "Classifica",
+      "player": "Giocatore",
+      "score-per-round": "Punteggio per round",
+      "title": "Risultati della partita"
+    },
+    "Create": {
+      "head": {
+        "title": "Crea una partita a Skymo | Gioca a Skyjo Online",
+        "description": "Inizia una nuova partita a Skymo online! Crea stanze private o pubbliche, invita i tuoi amici e divertitevi insieme a Skyjo. Gioca ora gratuitamente!",
+        "keywords": "Skymo,Skyjo,Skyjo online,crea partita,avvia partita,partita privata,partita pubblica,gioca con amici,multigiocatore online,giochi online gratuiti,partita personalizzata"
+      },
+      "loading-text": "Creazione del tuo gioco…"
+    },
+    "Rules": {
+      "head": {
+        "description": "Impara a giocare a Skyjo con la nostra guida Skymo. Scopri le regole, le strategie e i suggerimenti per padroneggiare questo divertente gioco di carte online. Gioca subito con gli amici!",
+        "title": "Come giocare a Skymo | Gioco di carte Skyjo online",
+        "keywords": "Skymo,Skyjo,regole Skyjo,come giocare a Skyjo,gioco Skyjo,regole gioco di carte,gioco di carte online,istruzioni di gioco,guida al gameplay"
+      },
+      "title": "Regole del gioco Skyjo"
+    }
+  },
+  "components": {
+    "DiscardPile": {
+      "throw": "Lancia",
+      "title": "Pila degli scarti"
+    },
+    "Rules": {
+      "round-end": {
+        "content-2": "Tutti i giocatori successivi giocano ancora una volta per completare il round.",
+        "content-1": "Quando un giocatore ha rivelato tutte le sue carte, ha giocato il suo ultimo turno.",
+        "title": "Fine del round"
+      },
+      "round-start": {
+        "title": "Inizio del round",
+        "content-2": "o la prima carta coperta del mazzo di pesca",
+        "choice": "scelta {number}",
+        "choice-2": {
+          "content-1": "Il giocatore può guardare la carta e scegliere se scambiarla con una delle sue carte (nascoste o visibili) o scartarla. Se vuole tenere la carta pescata, la scambia con una delle sue carte come descritto sopra nel",
+          "choice-1": "Scelta 1",
+          "content-2": "Se non desidera tenere la carta pescata, la mette sul mazzo degli scarti e deve girare a faccia in su una delle sue carte.",
+          "title": "Scelta 2:",
+          "description": "Prendi la prima carta a faccia in giù dal mazzo di pesca."
+        },
+        "choice-1": {
+          "description": "Prendi la prima carta dalla pila degli scarti.",
+          "title": "Scelta 1:",
+          "content": "Il giocatore deve immediatamente scambiare questa carta con una delle sue 12 carte e posizionarla scoperta. Può scegliere liberamente tra carte scoperte e coperte. Le carte coperte non devono essere viste prima dello scambio. La carta scambiata viene posta scoperta sul mucchio degli scarti."
+        },
+        "end-of-turn": "Il suo turno è finito, ed è il turno del giocatore successivo (in senso orario).",
+        "content-1": "Il giocatore può scegliere la prima carta scoperta dal mazzo degli scarti"
+      },
+      "scoring": {
+        "first-to-finish": {
+          "note": {
+            "title": "Si prega di notare:",
+            "content": "questa regola si applica solo ai punti positivi!"
+          },
+          "content": "Se il giocatore che ha completato il round (il 1° ad aver girato tutte le sue carte) non ha ottenuto, in senso stretto, il punteggio più basso per quel round, allora la somma dei suoi punti per quel round viene raddoppiata."
+        },
+        "title": "Punteggio",
+        "list": {
+          "content-2": "Se il totale è negativo, viene sottratto dal punteggio totale dei round precedenti.",
+          "content-1": "Se il totale dei punti è positivo, lo aggiunge al totale dei punti dei round precedenti."
+        },
+        "example": {
+          "title": "Esempio:",
+          "content": "Il giocatore A rivela tutte le sue carte e termina il round. Alla fine del round, ha 10 punti, il giocatore B ha 24 punti e il giocatore C ha anch'egli 10 punti. Poiché il giocatore A non ha strettamente il numero più basso di punti, i suoi punti vengono raddoppiati a 20."
+        },
+        "description": "I giocatori che hanno ancora carte coperte le scoprono. Ogni giocatore conta il totale dei suoi punti."
+      },
+      "special-rule": {
+        "title": "Regola speciale:",
+        "content": "Se un giocatore ha 3 carte identiche in una colonna, il giocatore scarta queste 3 carte posizionandole sul mazzo degli scarti. Se una colonna di carte identiche viene ottenuta scambiando con una carta dal mazzo di pesca o dal mazzo degli scarti, le tre carte identiche devono sempre essere posizionate sul mazzo degli scarti dopo la carta scambiata."
+      },
+      "end-of-game": {
+        "title": "Fine del gioco",
+        "content": "Alla fine di ogni round, i punti di ciascun giocatore vengono aggiunti al punteggio totale ottenuto nei round precedenti. Il gioco termina non appena un giocatore raggiunge 100 punti o più. Il giocatore con il punteggio più basso vince la partita."
+      },
+      "cards-section-title": "{number} carte da gioco:",
+      "game-goal": {
+        "title": "Obiettivo del gioco",
+        "content": "Il gioco Skyjo si svolge in più round e termina non appena un giocatore raggiunge 100 punti o più. Il giocatore con il minor numero di punti vince la partita."
+      },
+      "round-preparation": {
+        "content-1": "Per prima cosa, a ogni giocatore vengono distribuite 12 carte coperte. Poi, una carta dal mazzo di pesca viene posta scoperta al centro del tavolo, formando l'inizio del mazzo degli scarti. Le carte rimanenti vengono poste coperte una accanto all'altra e formano il mazzo di pesca.",
+        "content-2": "Ogni giocatore dispone le sue 12 carte in quattro colonne di tre carte a faccia in giù di fronte a sé. Infine, ogni giocatore gira a faccia in su due carte a sua scelta.",
+        "title": "Preparazione del round"
+      }
+    },
+    "AppearanceSelect": {
+      "system": "Sistema",
+      "light": "Luce",
+      "dark": "'Scuro'"
+    },
+    "Feedback": {
+      "button-title": "Invia",
+      "toast": {
+        "success": {
+          "title": "Grazie per il tuo feedback!",
+          "description": "Le vostre intuizioni ci hanno aiutato a migliorare il sito web del nostro gioco e ve ne siamo davvero grati."
+        },
+        "error": {
+          "title": "Si è verificato un errore, riprova."
+        }
+      },
+      "message-input": {
+        "placeholder": "Dicci cosa ne pensi, annota o vuoi…",
+        "label": "Il tuo messaggio"
+      },
+      "description": "Puoi scrivere un feedback per aiutarci a migliorare il gioco.",
+      "email-input": {
+        "label": "La tua email (facoltativo)",
+        "placeholder": "example@example.com"
+      },
+      "title": "Lascia un feedback"
+    },
+    "ChatForm": {
+      "button-title": "Invia",
+      "message-input-placeholder": "Messaggio",
+      "unknown-command": {
+        "description": "Comando sconosciuto"
+      },
+      "message-too-long": {
+        "description": "Il messaggio è troppo lungo (max 200 caratteri)"
+      }
+    },
+    "DrawPile": {
+      "title": "Mazzo di pesca"
+    },
+    "EndRoundDialog": {
+      "title": "Fine del round",
+      "description": "Il prossimo round inizierà tra pochi secondi…"
+    },
+    "Footer": {
+      "home": "Home",
+      "privacy-policy": "Informativa sulla privacy",
+      "disclaimer": {
+        "rights-owned": "Tutti i diritti sul nome Skyjo e sulle meccaniche di gioco sono di proprietà di Alexander Bernhardt e Magilano",
+        "responsible-content": "Il proprietario di questo sito non è responsabile per alcun contenuto generato dagli utenti (nomi utente, messaggi)",
+        "not-affiliated": "Questo sito web non è affiliato con i creatori o i distributori di Skyjo"
+      },
+      "release-notes": "Note di rilascio",
+      "buy-game": "Acquista il gioco",
+      "explanation": "Cos'è Skyjo?",
+      "rules": "Regole del gioco",
+      "status": "Stato del server",
+      "feedback": "Lascia un feedback",
+      "attribution": {
+        "avatars": "'Avatar creati da Freepik - Flaticon'"
+      }
+    },
+    "ScoreDialog": {
+      "title": "Punteggio",
+      "description": "{name} ha vinto con {score} punti !"
+    },
+    "KickVote": {
+      "vote-against-you": {
+        "title": "Voto per espellerti",
+        "description": "È stata richiesta una votazione per espellerti."
+      },
+      "player-has-not-voted": {
+        "kick-button": {
+          "label": "Calcio",
+          "alt": "Calcia {playerName}"
+        },
+        "ignore-button": {
+          "alt": "Ignora il voto per espellere {playerName}",
+          "label": "Ignora"
+        },
+        "title": "Vota per espellere {playerName}"
+      },
+      "player-has-voted": {
+        "description": "Hai votato {vote, select, true {a favore} false {contro} other {votato}}",
+        "title": "Vota per espellere {playerName}"
+      },
+      "vote-against-you-failed": {
+        "title": "Non sei stato espulso",
+        "description": "Non ci sono abbastanza voti per espellerti"
+      },
+      "host-kick-you": {
+        "title": "Sei stato espulso dal gioco dall'host"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} è stato espulso",
+        "description": "Il voto per espellere {playerName} è riuscito."
+      },
+      "vote-against-you-succeeded": {
+        "description": "I giocatori hanno votato per espellerti dal gioco.",
+        "title": "Sei stato espulso"
+      },
+      "you-kick-player": {
+        "title": "Hai espulso {playerName}"
+      },
+      "host-kick": {
+        "title": "{playerName} è stato espulso dalla partita dall'host"
+      },
+      "vote-failed": {
+        "title": "La votazione per espellere {playerName} è fallita",
+        "description": "Non ci sono abbastanza voti per espellere {playerName}"
+      }
+    },
+    "LanguageCombobox": {
+      "locale": {
+        "it": "Italiano",
+        "es": "Spagnolo",
+        "br": "'Brezhoneg'",
+        "de": "Tedesco",
+        "fr": "Francese",
+        "ta": "Tamil",
+        "en": "Inglese"
+      },
+      "no-language-found": "Nessuna lingua trovata",
+      "select-language": "Seleziona la lingua",
+      "search-language": "Lingua di ricerca"
+    },
+    "GameRules": {
+      "score-to-end-game": "Numero di punti per terminare la partita: {value}",
+      "remove-identical-row": "Rimuovi riga se carte identiche: {value, select, true {sì} false {no} other {sconosciuto}}",
+      "card-per-row": "Numero di righe: {value}",
+      "initial-turned-count": "Numero di carte da girare all'inizio: {value}",
+      "first-player-penalty-type": {
+        "3": "'Flat e poi moltiplicatore'",
+        "label": "Tipo di penalità per il primo giocatore se non ha il minor numero di punti: ",
+        "1": "Solo moltiplicatore",
+        "2": "Solo appartamento",
+        "4": "Moltiplicatore poi fisso"
+      },
+      "remove-identical-column": "Rimuovi colonna se carte identiche: {value, select, true {sì} false {no} other {sconosciuto}}",
+      "first-player-flat-penalty": "Penalità fissa: {value}",
+      "first-player-multiplier-penalty": "Penalità moltiplicatore: {value}",
+      "button-title": "Mostra regole del gioco",
+      "title": "Regole del gioco",
+      "card-per-column": "Numero di colonne: {value}"
+    },
+    "GameLobbyButtons": {
+      "find-game-button": "Trova un gioco",
+      "create-game-button": "Crea una partita {type, select, private {privata} public {pubblica} other {sconosciuta}}",
+      "reconnect-game-button": "Riconnettiti al gioco",
+      "join-game-button": "Unisciti al gioco"
+    },
+    "SettingsDialog": {
+      "display": {
+        "gameplay": {
+          "title": "Gameplay",
+          "gameboard-size": {
+            "values": {
+              "normal": "Normale",
+              "big": "Grande"
+            },
+            "label": "Dimensioni della tua scacchiera",
+            "big-warning": "Può rompere il display sul cellulare"
+          },
+          "enlarge-active-player-board": "Ingrandisci la plancia del giocatore di turno",
+          "timer": {
+            "label": "Modalità di visualizzazione del timer",
+            "description": "La modalità Smart visualizza il timer a metà tempo e negli ultimi 15 secondi.",
+            "modes": {
+              "never": "Mai",
+              "smart": "Intelligente",
+              "always": "Sempre"
+            }
+          }
+        },
+        "mobile": {
+          "title": "Mobile",
+          "show-preview-opponents-cards": "Mostra un'anteprima delle carte degli avversari nell'elenco degli avversari",
+          "switch-to-player-who-is-playing": "Passa automaticamente al giocatore che sta giocando"
+        },
+        "chat": {
+          "chat-notification-size": {
+            "label": "Dimensioni notifica chat",
+            "values": {
+              "small": "Piccolo",
+              "normal": "Normale",
+              "big": "Grande"
+            }
+          },
+          "chat-visibility": "Visibilità chat",
+          "title": "Chat"
+        },
+        "title": "Display"
+      },
+      "general": {
+        "appearance": "Aspetto",
+        "language": "Lingua",
+        "language-warn": "Modificabile solo sulla home page",
+        "title": "Generale"
+      },
+      "audio": {
+        "toggle": {
+          "label": "Abilita audio"
+        },
+        "title": "Audio",
+        "volume": {
+          "label": "Volume ({volume}%)"
+        }
+      },
+      "title": "Impostazioni"
+    },
+    "ChatMessage": {
+      "context-menu": {
+        "report": "Segnala messaggio"
+      },
+      "separator": ": "
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Avversari:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Tu"
+    },
+    "PWABanner": {
+      "FirefoxAndroid": "Tocca l'icona del menu, quindi \"Aggiungi a schermata Home\" per installare",
+      "SamsungBrowser": "Tocca l'icona del menu, poi \"Aggiungi pagina a\", quindi \"Schermata Home\" per installare",
+      "title": "Installa Skymo sul tuo dispositivo!",
+      "Safari": "Tocca l'icona di condivisione, quindi \"Aggiungi al Dock\" per installare",
+      "Chrome": "Fare clic sul pulsante \"Installa\" per installare",
+      "ChromeAndroid": "Tocca l'icona del menu, quindi \"Aggiungi a schermata Home\" per installare",
+      "SafariIOS": "Tocca l'icona di condivisione, quindi scorri e tocca \"Aggiungi a schermata Home\" per installare",
+      "ChromeIOS": "Tocca l'icona di condivisione, quindi scorri e tocca \"Aggiungi a schermata Home\" per installare",
+      "FirefoxIOS": "Tocca l'icona del menu, poi l'icona di condivisione, quindi scorri e tocca \"Aggiungi a schermata Home\" per installare",
+      "install-button": {
+        "content": "Installa",
+        "title": "Installa l'app"
+      }
+    },
+    "Avatar": {
+      "context-menu": {
+        "vote-to-kick": "Vota per espellere {username}",
+        "kick": "Espelli {username}",
+        "report": "Report {username}",
+        "unmute": "Riattiva l'audio di {username}",
+        "ban": "Banna {username}",
+        "mute": "Silenzia {username}"
+      }
+    },
+    "Chat": {
+      "title": "Chat"
+    },
+    "ChatMessageList": {
+      "unread-messages": "'{count} messaggio non letto{count, plural, =1 {} other {i}}'"
+    },
+    "ScoreTable": {
+      "total": "Totale",
+      "name": "Nome",
+      "round": "Giro"
+    },
+    "RulesDialog": {
+      "trigger": {
+        "aria-label": "Mostra le regole del gioco"
+      },
+      "title": "Regole del gioco"
+    },
+    "AfkKick": {
+      "kicked": {
+        "title": "Espulso per inattività",
+        "description": "Sei stato espulso dal gioco per essere stato AFK troppe volte."
+      },
+      "player-kicked": {
+        "title": "Giocatore espulso",
+        "description": "{playerName} è stato espulso dalla partita per inattività."
+      },
+      "warning": {
+        "title": "Avviso AFK",
+        "description": "Sarai espulso dal gioco se rimani inattivo."
+      }
+    },
+    "CopyLink": {
+      "message": "Link copiato!",
+      "button-title": "Copia link"
+    },
+    "MenuDropdown": {
+      "settings": "Impostazioni",
+      "feedback": "Lascia un feedback",
+      "discord": "Discord",
+      "button": {
+        "aria-label": "Menu"
+      },
+      "rules": "Regole"
+    },
+    "ReportDialog": {
+      "description": "Segnala il nome utente o un messaggio di {username} se sembra inappropriato.",
+      "toast": {
+        "report-submitted": {
+          "description": "Grazie per la tua segnalazione, hai contribuito a migliorare la qualità del gioco.",
+          "title": "Report inviato"
+        }
+      },
+      "title": "Report {username}",
+      "report-username": "Segnalare il nome utente",
+      "report-message": "Segnala un messaggio",
+      "select-message": "Seleziona il messaggio da segnalare",
+      "select-message-placeholder": "Seleziona un messaggio",
+      "no-messages": "Nessun messaggio trovato da questo utente",
+      "cancel": "Annulla",
+      "submit": "Rapporto"
+    },
+    "OpponentBoard": {
+      "disconnected": "Il giocatore ha abbandonato la partita. Un bot giocherà al suo posto per i prossimi turni finché non si ricollegherà."
+    },
+    "Scoreboard": {
+      "button-title": "Mostra classifica"
+    },
+    "ScoreSheet": {
+      "see-scores": "Vedi punteggi"
+    }
+  },
+  "utils": {
+    "avatar": {
+      "bee": "ape",
+      "whale": "balena",
+      "crab": "granchio",
+      "jellyfish": "meduse",
+      "penguin": "pinguino",
+      "toucan": "tucano",
+      "eagle": "aquila",
+      "koala": "koala",
+      "octopus": "polpo",
+      "turtle": "tartaruga",
+      "owl": "gufo",
+      "cat": "gatto",
+      "elephant": "elefante",
+      "fox": "volpe",
+      "frog": "rana",
+      "dog": "cane"
+    },
+    "chat": {
+      "wizz-self": "Sei stato wizzato da {initiatorUsername}!",
+      "player-muted": "{username} è ora silenziato",
+      "wizz-sent": "Hai inviato un wizz a {targetUsername}!",
+      "wizz-other": "{initiatorUsername} ha wizzato {targetUsername} !",
+      "player-unmuted": "{username} non è più silenziato",
+      "player-joined": "{username} è entrato in partita",
+      "player-left": "{username} ha lasciato la partita",
+      "player-reconnect": "{username} si è riconnesso al gioco",
+      "argument-required": "Uno o più argomenti sono richiesti per il comando: {command}",
+      "player-already-muted": "{username} è già silenziato",
+      "player-not-muted": "{username} non è silenziato"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "Il server impiega più tempo del previsto per rispondere. Puoi provare a ricaricare la pagina e riprovare."
+        },
+        "cannot-reconnect": {
+          "description": "Non è più possibile riconnettersi al gioco, il tempo per la riconnessione è scaduto"
+        },
+        "game-not-found": {
+          "description": "Il gioco che stai cercando non esiste"
+        },
+        "game-is-full": {
+          "description": "La partita è al completo, non puoi unirti"
+        },
+        "game-already-started": {
+          "description": "Il gioco è già iniziato"
+        },
+        "rate-limit": {
+          "description": "Attendere qualche secondo prima di riprovare",
+          "title": "Stai inviando troppe richieste"
+        },
+        "player-banned": {
+          "description": "Sei stato bannato da questo gioco"
+        }
+      }
+    },
+    "skymo": {
+      "turn": {
+        "replaceACard": "Sostituisci una carta",
+        "turnACard": "Gira una carta",
+        "throwOrReplace": "Sostituire o scartare",
+        "chooseAPile": "Scegli un mazzo"
+      },
+      "last-turn": "Ultimo turno!",
+      "waiting-opponents-to-turn-cards": "In attesa che l'avversario{nbOpponents, plural, =1 {} other {i}} giri {number} carta{number, plural, =1 {} other {e}}",
+      "game-stopped": "Gioco fermato",
+      "round-over": "Round terminato",
+      "game-ended": "Game over!",
+      "waiting": "In attesa di giocatori",
+      "turn-cards": "Gira {number} carta",
+      "player-turn": "È il turno di {playerName}"
+    }
+  },
+  "head": {
+    "title": "Skymo | Gioca a Skyjo Card Game Online Gratis",
+    "description": "Gioca a Skyjo online gratuitamente con Skymo! Un gioco di carte multigiocatore frenetico dove la strategia incontra il divertimento. Sfida gli amici, gira le carte e punta al punteggio più basso per vincere!",
+    "keywords": "Skymo,Skyjo,Skyjo online,gioco multiplayer,gioco di carte,gioca con gli amici,giochi online gratuiti,giochi di carte online"
+  },
+  "contexts": {
+    "BanContext": {
+      "player-banned": {
+        "description": "{playerName} è stato bannato dall'host",
+        "title": "{playerName} è stato bannato"
+      },
+      "you-were-banned": {
+        "title": "Sei stato bannato",
+        "description": "Sei stato bannato dal gioco dall'host"
+      },
+      "unexpected-error": {
+        "title": "Si è verificato un errore imprevisto",
+        "description": "Si è verificato un errore imprevisto durante il ban di un giocatore"
+      },
+      "not-allowed": {
+        "title": "Non hai il permesso di bannare",
+        "description": "Non hai il permesso di bannare un giocatore"
+      },
+      "player-not-found": {
+        "title": "Il giocatore da bannare non esiste",
+        "description": "Il giocatore da bannare non esiste nel gioco"
+      }
+    },
+    "ReportContext": {
+      "report-against-you": {
+        "description": "Il tuo nome utente o uno dei tuoi messaggi è stato segnalato ed è stato ritenuto inappropriato. Ti preghiamo di non ripetere questo comportamento.",
+        "title": "Sei stato espulso a causa di una segnalazione"
+      },
+      "report": {
+        "title": "{playerName} è stato espulso a causa di una segnalazione"
+      }
+    },
+    "SocketContext": {
+      "connection-lost": "Connessione persa. Tentativo di riconnessione...",
+      "recover-error": {
+        "game-not-found": {
+          "title": "Gioco non trovato",
+          "description": "La partita a cui stavi cercando di riconnetterti non esiste più"
+        }
+      },
+      "reconnection": "Riconnessione riuscita"
+    }
+  }
+}
