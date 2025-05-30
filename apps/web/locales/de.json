@@ -1,12 +1,15 @@
 {
   "head": {
-    "title": "Skyjo Online mit Freunden spielen | Skyjo Online"
+    "title": "Skyjo Online spielen | Skyjo Online",
+    "keywords": "Skymo,Skyjo,Skyjo online,Mehrspielerspiel,Kartenspiel,mit Freunden spielen,kostenlose Online-Spiele,Online-Kartenspiele",
+    "description": "Spiele Skyjo online kostenlos mit Skymo! Ein temporeiches Mehrspieler-Kartenspiel, bei dem Strategie und Spaß aufeinandertreffen. Fordere Freunde heraus, decke Karten auf und versuche, den niedrigsten Punktestand zu erreichen, um zu gewinnen!"
   },
   "pages": {
     "Index": {
       "explanation": {
         "button": "Regeln anzeigen",
-        "title": "Was ist Skyjo?"
+        "title": "Was ist Skyjo?",
+        "content": "Skyjo ist ein aufregendes Kartenspiel und ein ausgezeichnetes Brettspiel, das von Spielefans auf der ganzen Welt gespielt wird. Dieses Mehrspieler-Kartenspiel ist für 2 bis 8 Spieler konzipiert, wobei jeder Spieler 12 Karten erhält, die zunächst verdeckt sind. Das Hauptziel des Spiels ist es, so wenige Punkte wie möglich zu sammeln. Das Spiel endet, sobald ein Spieler 100 Punkte erreicht. Die Spielregeln sind einfach und leicht verständlich, was es zu einer idealen Wahl für Spieleabende mit Familie oder Freunden macht. Spielebegeisterte werden erfreut sein zu erfahren, dass es jetzt möglich ist, Skyjo kostenlos online zu spielen!"
       },
       "name-input-placeholder": "Name",
       "faq": {
@@ -17,8 +20,135 @@
         },
         "pronounce": {
           "title": "Wie wird Skyjo ausgesprochen?",
-          "content": "Das Wort Skyjo ist ausgesprochen [Skyjoe]."
+          "content": "Das Wort Skyjo wird [Skyjoe] ausgesprochen."
+        },
+        "how-to-play": {
+          "title": "Wie wird Skyjo gespielt?",
+          "content": "Um Skyjo zu spielen, teile jedem Spieler 12 verdeckte Karten aus. Das Ziel ist es, so wenige Punkte wie möglich zu haben, indem man Karten aufdeckt und austauscht. Ziehe in jedem Zug eine Karte vom Stapel oder Ablagestapel und entscheide dann, ob du eine deiner sichtbaren Karten ersetzt. Zahlenkarten sind ihre Punkte wert, Spezialkarten haben Aktionen. Das Spiel endet, wenn ein Spieler alle seine Karten aufgedeckt hat. Der Spieler mit den wenigsten Punkten gewinnt. Du kannst <rules>die Regeln</rules> für weitere Informationen überprüfen."
+        },
+        "how-to-win": {
+          "title": "Wie gewinnt man in Skyjo?",
+          "content": "Um bei Skyjo zu gewinnen, ist es wichtig, die niedrigste Punktzahl zu haben. Um dies zu erreichen, wende eine ausgewogene Strategie an zwischen dem Sammeln der niedrigsten Karten, dem Aufdecken deiner Karten und dem Erstellen von Spalten mit identischen Karten. Vermeide es, als Erster alle Karten aufzudecken, es sei denn, du liegst mit deinen sichtbaren Karten deutlich vorne. Denke daran, bereits sichtbare Karten zu behalten, um zu versuchen, Spalten mit ihnen zu bilden, anstatt sie einzeln zu optimieren."
+        },
+        "play-classic-with-action": {
+          "title": "Kann man klassisches Skyjo mit Skyjo Action spielen?",
+          "content": "Ja, du musst nur die Aktionskarten entfernen. Wenn du die Online-Version spielst, wähle die klassische Version aus, um Skyjo zu spielen."
         }
+      }
+    },
+    "Search": {
+      "no-games-found": "Keine Spiele gefunden",
+      "head": {
+        "title": "Öffentliche Skymo-Spiele finden | Skyjo Online spielen",
+        "description": "Suchst du nach einem Skymo-Spiel zum Mitmachen? Durchsuche verfügbare öffentliche Spiele und beginne sofort online Skyjo mit anderen Spielern zu spielen. Spiele jetzt kostenlos!",
+        "keywords": "Skymo,Skyjo,Skyjo online,Spiel finden,Spiel beitreten,öffentliche Spiele,Online-Mehrspieler,mit anderen spielen,Schnellspiel,kostenlose Online-Spiele,offene Spiele,Online-Kartenspiel,Mehrspieler-Kartenspiel"
+      },
+      "header": {
+        "back": "Zurück zur Startseite",
+        "refresh": "Spiel-Liste aktualisieren",
+        "create-button": {
+          "title": "Erstelle ein öffentliches Spiel"
+        },
+        "title": "Öffentliche Spiele"
+      },
+      "tags": {
+        "tag": {
+          "short-game": "Kurzes Spiel",
+          "long-game": "Langes Spiel",
+          "classic": "Klassik",
+          "custom": "Benutzerdefiniert",
+          "column": "Spalte",
+          "row": "Zeile"
+        },
+        "title": "Filter:",
+        "no-tags-available": "Keine Tags mehr verfügbar"
+      },
+      "game-of": "{name}'s Spiel"
+    },
+    "Lobby": {
+      "leave-to-public-game-list": "Zur öffentlichen Spieleliste zurückkehren",
+      "settings": {
+        "reset-settings": "Einstellungen zurücksetzen",
+        "nb-rows": {
+          "title": "$number Zeilen"
+        },
+        "validation-warning": "Spieleinstellungen können nicht mehr geändert werden, sobald sie validiert wurden",
+        "validate-settings": "Einstellungen validieren",
+        "remove-identical-column": "Identische Spalten entfernen",
+        "remove-identical-row": "Identische Zeilen entfernen",
+        "private": {
+          "tooltip": {
+            "on": "Dieses Spiel ist privat, nur Personen mit dem Link können beitreten",
+            "off": "Dieser Teil ist öffentlich, jeder kann nach der Validierung der Parameter beitreten"
+          }
+        },
+        "initial-turned-count": {
+          "label": "Anzahl der anfangs aufgedeckten Karten",
+          "title": "Zu Beginn des Spiels werden {number} deiner Karten aufgedeckt"
+        },
+        "show-current-score": {
+          "label": "Zeige den aktuellen Punktestand während des Spiels"
+        },
+        "nb-columns": {
+          "label": "Spaltenanzahl",
+          "title": "$number Spalten"
+        },
+        "score-to-end-game": {
+          "label": "Punktzahl zum Beenden des Spiels"
+        },
+        "max-players": {
+          "label": "Maximale Spieleranzahl",
+          "title": "Maximale Spieleranzahl: {number}"
+        }
+      },
+      "title": "{name}'s Spiel",
+      "leave-to-home": "Zur Startseite zurückkehren",
+      "go-back-to-settings": "Zu den Einstellungen zurückkehren"
+    },
+    "Maintenance": {
+      "description": "Wir aktualisieren derzeit die Seite, bitte versuche es später noch einmal.",
+      "github-alt": "Quellcode auf GitHub ansehen",
+      "title": "Seite wird gewartet"
+    },
+    "Create": {
+      "head": {
+        "title": "Ein Skymo-Spiel erstellen | Skyjo Online spielen",
+        "description": "Starte ein neues Skymo-Spiel online! Erstelle private oder öffentliche Räume, lade deine Freunde ein und genieße den Spaß von Skyjo zusammen. Spiele jetzt kostenlos!",
+        "keywords": "Skymo,Skyjo,Skyjo online,Spiel erstellen,Spiel starten,privates Spiel,öffentliches Spiel,mit Freunden spielen,Online-Mehrspieler,kostenlose Online-Spiele,benutzerdefiniertes Spiel"
+      },
+      "loading-text": "Dein Spiel wird erstellt…"
+    },
+    "NotFound": {
+      "title": "Fehler 404",
+      "go-back-to-homepage": "Gehe zurück zur Startseite",
+      "description": "Die Seite, die du suchst, existiert nicht."
+    }
+  },
+  "contexts": {
+    "BanContext": {
+      "unexpected-error": {
+        "title": "Unerwarteter Fehler aufgetreten",
+        "description": "Unerwarteter Fehler beim Bannen eines Spielers aufgetreten"
+      },
+      "player-banned": {
+        "title": "{playerName} wurde gebannt",
+        "description": "{playerName} wurde vom Host gebannt"
+      },
+      "you-were-banned": {
+        "title": "Du wurdest gebannt",
+        "description": "Du wurdest vom Host gebannt"
+      },
+      "player-not-found": {
+        "description": "Der zu bannende Spieler existiert nicht"
+      }
+    },
+    "ReportContext": {
+      "report-against-you": {
+        "description": "Dein Benutzername oder eine deiner Nachrichten wurde gemeldet und als unangemessen eingestuft. Bitte wiederhole dieses Verhalten nicht.",
+        "title": "Du wurdest aufgrund einer Meldung aus dem Spiel entfernt"
+      },
+      "report": {
+        "title": "{playerName} wurde aufgrund einer Meldung aus dem Spiel entfernt"
       }
     }
   }
