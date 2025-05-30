@@ -96,16 +96,53 @@
         },
         "score-to-end-game": {
           "label": "Punktzahl zum Beenden des Spiels",
-          "title": "{number} punkte werden benötigt, um das spiel zu beenden"
+          "title": "Das Spiel endet, wenn ein Spieler {number} Punkte erreicht"
         },
         "max-players": {
           "label": "Maximale Spieleranzahl",
           "title": "Maximale Spieleranzahl: {number}"
+        },
+        "first-player-penalty-type": {
+          "description": "Strafe wird angewendet, wenn der erste Spieler, der alle seine Karten aufdeckt, nicht die geringste Punktzahl hat (gilt nicht, wenn die Punktzahl kleiner oder gleich",
+          "placeholder": "Wähle die Art der Strafe",
+          "item": {
+            "multiplier-only": "Nur Multiplikator",
+            "flat-only": "Nur pauschal",
+            "flat-then-multiplier": "Pauschal, dann Multiplikator",
+            "multiplier-then-flat": "Multiplikator, dann pauschal"
+          },
+          "label": "Art der Strafe für den ersten Spieler"
+        },
+        "first-player-flat-penalty": {
+          "label": "Pauschale Punkte Strafe für den ersten Spieler",
+          "title": "Zusätzliche {number} Punkte werden zur Punktzahl des ersten Spielers hinzugefügt"
+        },
+        "first-player-multiplier-penalty": {
+          "title": "Die Punktzahl des ersten Spielers wird mit {number} multipliziert, wenn sie nicht niedriger ist als die anderen Punktzahlen des Spiels"
         }
       },
       "title": "{name}'s Spiel",
       "leave-to-home": "Zur Startseite zurückkehren",
-      "go-back-to-settings": "Zu den Einstellungen zurückkehren"
+      "go-back-to-settings": "Zu den Einstellungen zurückkehren",
+      "player-section": {
+        "select": {
+          "placeholder": "Wähle die Anzahl der Spieler",
+          "item": "{value} Spieler"
+        },
+        "title": "Spieler {nbPlayers}/{maxPlayers}"
+      },
+      "game-starting-in": "Spiel startet in {seconds}",
+      "cancel": "Zurück",
+      "not-enough-players-modal": {
+        "title": "Nicht genügend Spieler",
+        "description": "Du musst mindestens 2 Spieler sein, um das Spiel zu starten.",
+        "public-description": "Lade einen Freund ein oder warte darauf, dass ein anderer Spieler beitritt.",
+        "private-description": "Nutze den privaten Link, um Freunde einzuladen!",
+        "close": "Ich verstehe"
+      },
+      "waiting-host-to-start": "Warte auf den Host das Spiel zu starten",
+      "waiting-host-to-confirm-game-settings": "Warte auf den Host die Einstellungen zu bestätigen",
+      "start-game-button": "Starte das Spiel"
     },
     "Maintenance": {
       "description": "Wir aktualisieren derzeit die Seite, bitte versuche es später noch einmal.",
@@ -124,6 +161,90 @@
       "title": "Fehler 404",
       "go-back-to-homepage": "Gehe zurück zur Startseite",
       "description": "Die Seite, die du suchst, existiert nicht."
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "anonymous-usage-data": {
+            "description": "Wir verwenden PostHog, ein Analysetool, um anonyme Daten darüber zu sammeln, wie du unsere Website nutzt. Dies umfasst:",
+            "title": "Anonyme Nutzungsdaten",
+            "items": "Seitenaufrufe;;Web Vitals (Leistungsmetriken);;Umfrageantworten (falls du dich zur Teilnahme entscheidest)"
+          },
+          "game-data": {
+            "items": "Benutzernamen und Avatar-Auswahl;;Spielelemente und Fortschritt",
+            "title": "Spieldaten",
+            "description": "Wir speichern temporär:"
+          },
+          "cookies": {
+            "description": "Wir verwenden essenzielle Cookies, um die Kernfunktionalität unserer Website zu ermöglichen:",
+            "title": "Cookies"
+          },
+          "user-provided-information": {
+            "title": "Benutzerbereitgestellte Informationen",
+            "description": "Wir sammeln:",
+            "items": "Feedback-Formular-Übermittlungen (einschließlich optionaler E-Mail-Adressen)"
+          },
+          "title": "Informationen, die wir sammeln",
+          "local-storage-data": {
+            "description": "Wir speichern im lokalen Speicher deines Browsers:",
+            "items": "Spracheinstellungen;;Spieleinstellungsvorlieben",
+            "title": "Local Storage Daten"
+          }
+        },
+        "data-sharing": {
+          "title": "Datenweitergabe",
+          "description": "Wir geben Ihre persönlichen Daten nicht an Dritte weiter. Anonymisierte Nutzungsdaten werden von PostHog, unserem Analyseanbieter, verarbeitet."
+        },
+        "back": "Zurück zur Startseite",
+        "title": "Datenschutzrichtlinie",
+        "last-update": {
+          "text": "Zuletzt aktualisiert: {date}",
+          "date-format": "YYYY-MM-DD - hh:mmA"
+        },
+        "your-rights-and-choices": {
+          "title": "Ihre Rechte und Wahlmöglichkeiten",
+          "description": "Da wir hauptsächlich anonyme Daten erfassen, können wir keine personenbezogenen Informationen einzelner Nutzer identifizieren oder darauf zugreifen. Sie haben jedoch die folgenden Rechte und Wahlmöglichkeiten:",
+          "items": "Lokaler Speicher: Sie können den lokalen Speicher Ihres Browsers jederzeit löschen, um gespeicherte Einstellungen zu entfernen;;Feedback: Wenn Sie Feedback mit einer E-Mail-Adresse übermittelt haben, können Sie uns kontaktieren, um dessen Löschung zu beantragen;;Analytics Opt-Out: Sie können die Erfassung von Analysedaten deaktivieren, indem Sie die \"Do Not Track\"-Einstellung Ihres Browsers aktivieren oder datenschutzorientierte Browser verwenden, die Analytics-Skripte blockieren;;Spieldaten: Spielbezogene Daten werden automatisch gelöscht, wenn alle Spieler ein Spiel verlassen"
+        },
+        "childrens-privacy": {
+          "title": "Datenschutz für Kinder",
+          "description": "Skymo unterliegt keinen Altersbeschränkungen. Wir erfassen wissentlich keine personenbezogenen Daten von Kindern."
+        },
+        "changes-to-this-policy": {
+          "title": "Änderungen an dieser Richtlinie",
+          "description": "Wir können diese Richtlinie von Zeit zu Zeit aktualisieren. Wir werden dich über Änderungen informieren, indem wir die neue Richtlinie auf dieser Seite veröffentlichen"
+        },
+        "contact-us": {
+          "title": "Kontaktiere uns",
+          "description": "Wenn du Fragen zu dieser Datenschutzrichtlinie hast, kontaktiere uns bitte über unser Feedback-Formular auf der Website, den Discord-Server oder GitHub"
+        },
+        "how-we-use-your-information": {
+          "title": "Wie wir deine Informationen nutzen",
+          "items": "Unsere Website und Benutzererfahrung verbessern;;Nutzungsmuster und Leistung analysieren;;Auf Feedback und Support-Anfragen antworten;;Gameplay ermöglichen"
+        },
+        "data-storage-and-retention": {
+          "items": "Anonyme Nutzungsdaten werden auf Servern innerhalb der Europäischen Union gespeichert und bis zu 1 Jahr aufbewahrt;;Spieldaten werden in unserer Datenbank in Frankfurt, Deutschland gespeichert. Diese Daten werden für die Dauer aktiver Spiele aufbewahrt. Sobald alle Spieler ein Spiel verlassen, werden die zugehörigen Daten gelöscht;;Im lokalen Speicher Ihres Browsers gespeicherte Informationen verbleiben dort, bis Sie Ihre Browserdaten löschen;;Feedback-Formular-Einsendungen werden nur zum Zweck der Beantwortung und Berücksichtigung von Entwicklungsvorschlägen aufbewahrt",
+          "title": "Datenspeicherung und -aufbewahrung"
+        }
+      },
+      "head": {
+        "title": "Datenschutzrichtlinie | Skymo - Skyjo Online-Kartenspiel",
+        "keywords": "Skymo,Skyjo,Skyjo Online,Datenschutzrichtlinie,Datenschutz,Online-Spiel-Datenschutz,sicheres Spielen,Benutzerdaten,DSGVO,CCPA,Datensicherheit",
+        "description": "Datenschutzrichtlinie für Skymo. Erfahre, wie wir deine Daten schützen, während du unser Skyjo-Kartenspiel genießt. Transparente Praktiken und sichere Spielerfahrung."
+      }
+    },
+    "ResultsPage": {
+      "player-want-to-replay": "Spieler, die nochmal spielen wollen:",
+      "replay-button": {
+        "replay": "Nochmal spielen",
+        "cancel": "Nicht nochmal spielen"
+      },
+      "leave-button": "Spiel verlassen",
+      "score-per-round": "Punkte pro Runde",
+      "total": "Gesamt",
+      "title": "Spielergebnis",
+      "rank": "Rang/Stufe",
+      "player": "Spieler"
     }
   },
   "contexts": {
