@@ -70,7 +70,8 @@
       "settings": {
         "reset-settings": "Einstellungen zurücksetzen",
         "nb-rows": {
-          "title": "$number Zeilen"
+          "title": "$number Zeilen",
+          "label": "Anzahl der Zeilen"
         },
         "validation-warning": "Spieleinstellungen können nicht mehr geändert werden, sobald sie validiert wurden",
         "validate-settings": "Einstellungen validieren",
@@ -94,7 +95,8 @@
           "title": "$number Spalten"
         },
         "score-to-end-game": {
-          "label": "Punktzahl zum Beenden des Spiels"
+          "label": "Punktzahl zum Beenden des Spiels",
+          "title": "{number} punkte werden benötigt, um das spiel zu beenden"
         },
         "max-players": {
           "label": "Maximale Spieleranzahl",
