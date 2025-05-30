@@ -8,7 +8,10 @@
         "button": "Regeln anzeigen",
         "title": "Was ist Skyjo?"
       },
-      "name-input-placeholder": "Name"
+      "name-input-placeholder": "Name",
+      "faq": {
+        "title": "Häufig gestellte Fragen (FAQ)"
+      }
     }
   }
 }
