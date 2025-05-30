@@ -11,14 +11,12 @@ import Image from "next/image"
 interface SelectAvatarProps {
   containerClassName?: ClassValue
   className?: ClassValue
-  responsive?: boolean
   value: number
   onChange: (avatarIndex: number) => void
 }
 const SelectAvatar = ({
   containerClassName,
   className,
-  responsive = true,
   value,
   onChange,
 }: SelectAvatarProps) => {
@@ -58,14 +56,13 @@ const SelectAvatar = ({
               alt={tAvatar(avatar)}
               title={tAvatar(avatar)}
               className={cn(
-                "select-none size-12 dark:opacity-75",
-                responsive && "size-12 smh:sm:size-16 mdh:md:size-[6.25rem]",
+                "select-none size-16 sm:size-20 dark:opacity-75",
                 className,
               )}
               priority
             />
           ) : (
-            <div className="size-12 smh:sm:size-16 mdh:md:size-[6.25rem] bg-zinc-200 rounded-3xl animate-pulse scale-50" />
+            <div className="bg-zinc-200 rounded-3xl animate-pulse scale-50 size-16 md:size-20" />
           )}
         </m.div>
       </AnimatePresence>

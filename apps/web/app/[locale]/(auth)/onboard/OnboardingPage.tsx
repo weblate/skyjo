@@ -172,8 +172,6 @@ const OnboardingPage = () => {
                     onChange={(index) =>
                       form.setValue("avatar", getAvatarNameFromIndex(index))
                     }
-                    className="size-20"
-                    responsive={false}
                   />
                   <FormMessage />
                 </FormItem>

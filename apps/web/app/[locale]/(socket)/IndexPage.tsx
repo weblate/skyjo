@@ -26,8 +26,8 @@ const IndexPage = ({ searchParams }: Props) => {
 
   return (
     <>
-      <SelectAvatar 
-        containerClassName="mb-4" 
+      <SelectAvatar
+        containerClassName="mb-4"
         value={avatarIndex}
         onChange={setAvatarIndex}
       />
