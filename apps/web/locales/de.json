@@ -10,7 +10,14 @@
       },
       "name-input-placeholder": "Name",
       "faq": {
-        "title": "Häufig gestellte Fragen (FAQ)"
+        "title": "Häufig gestellte Fragen (FAQ)",
+        "meaning": {
+          "title": "Was bedeutet Skyjo?",
+          "content": "Ein Skyjo ist eine Spalte mit 3 identischen Karten im Spiel."
+        },
+        "pronounce": {
+          "title": "Wie erklären Sie Skyjo?"
+        }
       }
     }
   }
