@@ -1,1 +1,13 @@
-{}
+{
+  "head": {
+    "title": "Skyjo Online mit Freunden spielen | Skyjo Online"
+  },
+  "pages": {
+    "Index": {
+      "explanation": {
+        "button": "Siehe die Regeln",
+        "title": "Was ist Skyjo?"
+      }
+    }
+  }
+}
