@@ -2,7 +2,7 @@
   "head": {
     "keywords": "Skymo,Skyjo,Skyjo en línea,juego multijugador,jugar con amigos,juegos en línea gratis,jugar Skyjo en línea",
     "title": "Skymo | Juega Skyjo en línea - Juego de Cartas Multijugador Gratis",
-    "description": "¡Juega Skyjo online gratis con Skymo! Un juego de cartas rápido y estratégico. Desafía a tus amigos, voltea cartas y consigue la puntuación más baja para ganar."
+    "description": "¡Juega Skyjo online gratis con Skymo! Un juego de cartas rápido y estratégico. Desafía a tus amigos, voltea cartas y consigue la puntuación más baja para ganar!"
   },
   "pages": {
     "Index": {
@@ -34,6 +34,9 @@
           "title": "¿Cómo se pronuncia Skyjo?",
           "content": "La palabra Skyjo se pronuncia [Skyjoe]."
         }
+      },
+      "banner": {
+        "title": "¡Necesito <gform>tu opinión</gform> para dar forma al futuro de Skymo!"
       }
     },
     "Maintenance": {
@@ -51,12 +54,12 @@
         "private": {
           "tooltip": {
             "on": "Este juego es privado, solo las personas con el enlace pueden unirse",
-            "off": "Este juego es público, cualquiera puede unirse"
+            "off": "Esta parte es pública, cualquiera puede unirse después de validar los parámetros"
           }
         },
         "reset-settings": "Restablecer los ajustes",
-        "remove-identical-column": "Remover columna si cartas idénticas",
-        "remove-identical-row": "Remover fila si cartas idénticas",
+        "remove-identical-column": "Eliminar columnas idénticas",
+        "remove-identical-row": "Eliminar filas idénticas",
         "nb-columns": {
           "label": "Número de columnas",
           "title": "$número de columnas"
@@ -66,31 +69,65 @@
           "title": "$número de filas"
         },
         "initial-turned-count": {
-          "label": "Número de cartas giradas al principio de una ronda",
-          "title": "{number} cartas se girarán al comienzo del juego"
+          "label": "Número de cartas inicialmente reveladas",
+          "title": "Al inicio del juego, {number} de tus cartas serán reveladas"
         },
         "score-to-end-game": {
-          "label": "Número de puntos para terminar el juego",
-          "title": "{number} puntos serán necesarios para terminar el juego"
+          "label": "Puntuación para terminar el juego",
+          "title": "El juego terminará cuando un jugador alcance {number} puntos"
         },
         "first-player-multiplier-penalty": {
-          "title": "La puntuación del primer jugador se multiplicará por {number} si no es estrictamente inferior a las otras puntuaciones del juego"
+          "title": "La puntuación del primer jugador se multiplicará por {number} si no es estrictamente inferior a las otras puntuaciones del juego",
+          "label": "Multiplicador de penalización de puntuación del primer jugador"
         },
         "validate-settings": "Validar los ajustes",
-        "validation-warning": "Los ajustes de la partida no pueden modificarse una vez validados"
+        "validation-warning": "Los ajustes de la partida no pueden modificarse una vez validados",
+        "max-players": {
+          "label": "Número máximo de jugadores",
+          "title": "Número máximo de jugadores: {number}"
+        },
+        "first-player-penalty-type": {
+          "label": "Tipo de penalización del primer jugador",
+          "description": "Se aplica penalización si el primer jugador en revelar todas sus cartas no tiene el menor número de puntos (no aplica si la puntuación es menor o igual a 0)",
+          "item": {
+            "flat-only": "Solo piso",
+            "flat-then-multiplier": "Plano y luego Multiplicador",
+            "multiplier-then-flat": "Multiplicador y luego Fijo",
+            "multiplier-only": "Solo multiplicador"
+          },
+          "placeholder": "Seleccione un tipo de penalización"
+        },
+        "first-player-flat-penalty": {
+          "title": "Se añadirán {number} puntos adicionales a la puntuación del primer jugador",
+          "label": "Penalización plana de puntuación del primer jugador"
+        },
+        "show-current-score": {
+          "label": "Mostrar la puntuación actual durante el juego"
+        }
       },
       "start-game-button": "Iniciar juego",
       "cancel": "Cancelar",
       "game-starting-in": "El juego comienza en {seconds}",
       "player-section": {
-        "title": "Jugadores {nbPlayers}/{maxPlayers}"
+        "title": "Jugadores {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Selecciona un número de jugadores",
+          "item": "{value} jugadores"
+        }
       },
       "waiting-host-to-confirm-game-settings": "Esperando a que el anfitrión confirme la configuración",
       "title": "Partida de {name}",
       "leave-to-home": "Ir a la página de inicio",
       "leave-to-public-game-list": "Ir a la lista pública de partidas",
       "waiting-host-to-start": "Esperando a que el hostistrador inicie la partida",
-      "go-back-to-settings": "Volver a los ajustes"
+      "go-back-to-settings": "Volver a los ajustes",
+      "not-enough-players-modal": {
+        "private-description": "¡Usa el enlace privado para invitar amigos!",
+        "title": "No hay suficientes jugadores",
+        "description": "Deben ser al menos 2 jugadores para iniciar el juego.",
+        "public-description": "Invita a un amigo o espera a que se una otro jugador.",
+        "close": "Entiendo"
+      }
     },
     "ResultsPage": {
       "title": "Resultados del juego",
@@ -154,7 +191,7 @@
           "title": "Cambios en esta política"
         },
         "childrens-privacy": {
-          "description": "Skyjo Online no tiene restricciones de edad. No recopilamos deliberadamente información personal de los niños.",
+          "description": "Skymo no tiene restricciones de edad. No recopilamos conscientemente información personal de niños.",
           "title": "Privacidad para niños"
         },
         "data-storage-and-retention": {
@@ -180,8 +217,8 @@
     "Rules": {
       "title": "Reglas de Skyjo",
       "head": {
-        "keywords": "Reglas de Skyjo, cómo jugar a Skyjo, juego Skyjo, multijugador en línea, juego de cartas gratuito, jugar con amigos, reglas del juego Skyjo",
-        "description": "Aprende las reglas de Skyjo en 5 minutos. Guía rápida para dominar este divertido juego de cartas, voltear cartas estratégicamente y conseguir la menor puntuación. ¡Comienza a jugar ahora!",
+        "keywords": "Skymo,Skyjo,reglas de Skyjo,cómo jugar Skyjo,juego Skyjo,reglas de juegos de cartas,juego de cartas online,instrucciones del juego,guía de juego",
+        "description": "Aprende a jugar Skyjo con nuestra guía de Skymo. Descubre las reglas, estrategias y consejos para dominar este divertido juego de cartas online. ¡Juega con amigos ahora!",
         "title": "Skymo | Reglas de Skyjo - Cómo Jugar - Guía Rápida y Completa"
       }
     },
@@ -189,7 +226,10 @@
       "header": {
         "title": "Juegos públicos",
         "refresh": "Actualizar la lista de juegos",
-        "back": "Volver a la página de inicio"
+        "back": "Volver a la página de inicio",
+        "create-button": {
+          "title": "Crear una partida pública"
+        }
       },
       "tags": {
         "title": "Filtros:",
@@ -204,7 +244,20 @@
         }
       },
       "no-games-found": "Sin partidas",
-      "game-of": "Partida {name}"
+      "game-of": "Partida {name}",
+      "head": {
+        "title": "Encuentra partidas públicas de Skymo | Juega Skyjo Online",
+        "keywords": "Skymo, Skyjo, Skyjo online, buscar partida, unirse a partida, partidas públicas, multijugador online, jugar con otros, partida rápida, juegos online gratis, partidas abiertas, juego de cartas online, juego de cartas multijugador",
+        "description": "¿Buscas una partida de Skyjo a la que unirte? Explora las partidas públicas disponibles y empieza a jugar a Skyjo online al instante con otros jugadores. ¡Juega gratis ahora!"
+      }
+    },
+    "Create": {
+      "loading-text": "Creando tu juego…",
+      "head": {
+        "keywords": "Skymo,Skyjo,Skyjo online,crear partida,iniciar partida,partida privada,partida pública,jugar con amigos,multijugador online,juegos online gratis,partida personalizada",
+        "title": "Crear un juego de Skymo | Jugar Skyjo Online",
+        "description": "¡Comienza un nuevo juego de Skymo en línea! Crea salas privadas o públicas, invita a tus amigos y disfruten juntos de la diversión de Skyjo. ¡Juega ahora gratis!"
+      }
     }
   },
   "components": {
@@ -216,7 +269,7 @@
         "es": "Español",
         "fr": "Français",
         "br": "Brezhoneg",
-        "ta": "தமிழ்"
+        "ta": "Tamil"
       },
       "select-language": "Elegir el idioma",
       "search-language": "Buscar idioma",
@@ -337,7 +390,28 @@
             }
           }
         },
-        "title": "Mostrar"
+        "title": "Mostrar",
+        "gameplay": {
+          "gameboard-size": {
+            "values": {
+              "normal": "Normal",
+              "big": "Grande"
+            },
+            "label": "Tamaño de tu tablero de juego",
+            "big-warning": "Puede romper la pantalla en el móvil"
+          },
+          "enlarge-active-player-board": "Agrandar el tablero del jugador cuyo turno es",
+          "timer": {
+            "description": "El modo inteligente muestra el temporizador en el descanso y en los últimos 15 segundos.",
+            "modes": {
+              "never": "Nunca",
+              "smart": "Inteligente",
+              "always": "Siempre"
+            },
+            "label": "Modo de visualización del temporizador"
+          },
+          "title": "Jugabilidad"
+        }
       },
       "title": "Ajustes"
     },
@@ -470,7 +544,8 @@
         "kick": "Expulsar {username}",
         "vote-to-kick": "Votar para expulsar {username}",
         "unmute": "Activar el sonido {username}",
-        "mute": "Silenciar {username}"
+        "mute": "Silenciar {username}",
+        "ban": "Banear a {username}"
       }
     },
     "KickVote": {
@@ -503,11 +578,20 @@
       },
       "vote-against-you-succeeded": {
         "title": "Te han expulsado",
-        "description": "Los jugadores han votado para expulsarte del juego."
+        "description": "Los jugadores han votado para echarte del juego."
       },
       "vote-failed": {
         "title": "La votación para expulsar a {playerName} falló",
         "description": "No hay suficientes votos para expulsar a {playerName}"
+      },
+      "you-kick-player": {
+        "title": "Has expulsado a {playerName}"
+      },
+      "host-kick": {
+        "title": "{playerName} ha sido expulsado del juego por el anfitrión"
+      },
+      "host-kick-you": {
+        "title": "Has sido expulsado del juego por el anfitrión"
       }
     },
     "GameRules": {
@@ -518,7 +602,16 @@
       "card-per-column": "Número de columnas: {value}",
       "card-per-row": "Número de filas: {value}",
       "initial-turned-count": "Número de cartas a girar al principio: {value}",
-      "score-to-end-game": "Número de puntos para terminar el juego: {value}"
+      "score-to-end-game": "Número de puntos para terminar el juego: {value}",
+      "first-player-multiplier-penalty": "Penalización de multiplicador: {value}",
+      "first-player-flat-penalty": "Penalización fija: {value}",
+      "first-player-penalty-type": {
+        "label": "Tipo de penalización para el primer jugador si no tiene el menor número de puntos: ",
+        "4": "Multiplicador y luego fijo",
+        "1": "Solo multiplicador",
+        "2": "Solo piso",
+        "3": "Plano y luego multiplicador"
+      }
     },
     "ReportDialog": {
       "title": "Reportar {username}",
@@ -536,6 +629,141 @@
           "description": "Gracias por tu reporte, has contribuido a mejorar la calidad del juego."
         }
       }
+    },
+    "AfkKick": {
+      "kicked": {
+        "title": "Expulsado por inactividad",
+        "description": "Has sido expulsado del juego por estar AFK demasiadas veces."
+      },
+      "warning": {
+        "title": "Advertencia de AFK",
+        "description": "Serás expulsado del juego si permaneces inactivo."
+      },
+      "player-kicked": {
+        "title": "Jugador expulsado",
+        "description": "{playerName} ha sido expulsado de la partida debido a inactividad."
+      }
+    },
+    "OpponentBoard": {
+      "disconnected": "El jugador ha abandonado la partida. Un bot jugará por él durante los próximos turnos hasta que se reconecte."
+    }
+  },
+  "utils": {
+    "chat": {
+      "player-not-muted": "{username} no está silenciado",
+      "wizz-self": "¡Has sido wizz por {initiatorUsername}!",
+      "wizz-other": "{initiatorUsername} le ha hecho wizz a {targetUsername} !",
+      "player-unmuted": "{username} ya no está silenciado",
+      "player-joined": "{username} se unió al juego",
+      "player-left": "{username} abandonó la partida",
+      "argument-required": "Se requieren uno o más argumentos para el comando: {command}",
+      "player-already-muted": "{username} ya está silenciado",
+      "player-muted": "{username} ahora está silenciado",
+      "wizz-sent": "¡Le has enviado un wizz a {targetUsername}!",
+      "player-reconnect": "{username} se reconectó al juego"
+    },
+    "skymo": {
+      "game-stopped": "Juego detenido",
+      "turn-cards": "Robar {number} carta{number, plural, =1 {} other {s}}",
+      "last-turn": "¡Último turno!",
+      "round-over": "Ronda terminada",
+      "game-ended": "¡Juego terminado!",
+      "waiting": "Esperando jugadores",
+      "waiting-opponents-to-turn-cards": "Esperando a que el oponente{nbOpponents, plural, =1 {} other {s}} voltee {number} carta{number, plural, =1 {} other {s}}",
+      "turn": {
+        "chooseAPile": "Elige una pila",
+        "throwOrReplace": "Reemplazar o desechar",
+        "replaceACard": "Reemplazar una tarjeta",
+        "turnACard": "Robar una carta"
+      },
+      "player-turn": "Es el turno de {playerName}"
+    },
+    "avatar": {
+      "toucan": "tucán",
+      "elephant": "elefante",
+      "turtle": "tortuga",
+      "crab": "cangrejo",
+      "dog": "perro",
+      "eagle": "águila",
+      "octopus": "pulpo",
+      "penguin": "pingüino",
+      "whale": "ballena",
+      "owl": "búho",
+      "cat": "gato",
+      "fox": "zorro",
+      "frog": "rana",
+      "jellyfish": "medusa",
+      "koala": "koala",
+      "bee": "abeja"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "El servidor tarda más de lo esperado en responder. Puedes intentar recargar la página y probar de nuevo."
+        },
+        "game-not-found": {
+          "description": "El juego que buscas no existe"
+        },
+        "game-is-full": {
+          "description": "La partida está llena, no puedes unirte"
+        },
+        "rate-limit": {
+          "description": "Por favor, espere unos segundos antes de intentar de nuevo",
+          "title": "Está enviando demasiadas solicitudes"
+        },
+        "cannot-reconnect": {
+          "description": "Ya no es posible reconectarse al juego, el tiempo para reconectarse ha expirado"
+        },
+        "game-already-started": {
+          "description": "El juego ya ha comenzado"
+        },
+        "player-banned": {
+          "description": "Has sido expulsado de este juego"
+        }
+      }
+    }
+  },
+  "contexts": {
+    "BanContext": {
+      "unexpected-error": {
+        "description": "Ocurrió un error inesperado al banear a un jugador",
+        "title": "Ocurrió un error inesperado"
+      },
+      "you-were-banned": {
+        "title": "Has sido baneado",
+        "description": "Has sido baneado del juego por el anfitrión"
+      },
+      "not-allowed": {
+        "title": "No tienes permiso para banear",
+        "description": "No tienes permiso para banear a un jugador"
+      },
+      "player-not-found": {
+        "title": "El jugador a banear no existe",
+        "description": "El jugador a banear no existe en el juego"
+      },
+      "player-banned": {
+        "title": "{playerName} ha sido baneado",
+        "description": "{playerName} ha sido expulsado por el anfitrión"
+      }
+    },
+    "ReportContext": {
+      "report-against-you": {
+        "description": "Su nombre de usuario o uno de sus mensajes ha sido reportado y se ha considerado inapropiado. Por favor, no repita este comportamiento.",
+        "title": "Has sido expulsado debido a una denuncia"
+      },
+      "report": {
+        "title": "{playerName} ha sido expulsado debido a una denuncia"
+      }
+    },
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "title": "Juego no encontrado",
+          "description": "La partida a la que intentabas reconectarte ya no existe"
+        }
+      },
+      "reconnection": "Reconexión exitosa",
+      "connection-lost": "Conexión perdida. Intentando reconectar..."
     }
   }
 }
