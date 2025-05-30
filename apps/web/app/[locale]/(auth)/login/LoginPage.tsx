@@ -113,7 +113,7 @@ const LoginPage = () => {
             )}
             <Link
               href="/reset-password"
-              className="text-sm text-black dark:text-dark-font underline underline-offset-2"
+              className="text-sm underline underline-offset-2 text-blue-600 dark:text-blue-400"
             >
               {t("forgot-password")}
             </Link>
@@ -130,7 +130,7 @@ const LoginPage = () => {
           </p>
           <Link
             href="/signup"
-            className="text-sm text-black dark:text-dark-font underline underline-offset-2"
+            className="text-sm font-medium underline underline-offset-2 text-blue-600 dark:text-blue-400"
           >
             {t("signup.link")}
           </Link>
