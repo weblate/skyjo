@@ -1,1 +1,769 @@
-{}
+{
+  "pages": {
+    "Lobby": {
+      "settings": {
+        "first-player-flat-penalty": {
+          "title": "Zuasätzliche {number} Punkt wern zum Punktestand vom easchtn Spuier dazua grechnet",
+          "label": "Strafpunkt für den ersten Spieler"
+        },
+        "first-player-penalty-type": {
+          "description": "Straaf gibt's, wann da easchte Spuia, dea olle Kartn aufdeckt, ned de wenigstn Punkt hod (gilt ned, wann da Punktestand kloana oda gleich 0 is)",
+          "label": "Straf-Art vom easchtn Spieler",
+          "placeholder": "Wähl a Strofaart",
+          "item": {
+            "multiplier-only": "Nua Multiplikator",
+            "flat-only": "Bloß d'Wohnung",
+            "flat-then-multiplier": "Zerscht flach, nacha multipliziern",
+            "multiplier-then-flat": "Multiplikator nachher Flach"
+          }
+        },
+        "initial-turned-count": {
+          "title": "Am Anfang vom Spui wern {number} vo deine Kartn aufdeckt",
+          "label": "Anzahl vo de Kartn, de wo am Anfang aufdeckt worn san"
+        },
+        "private": {
+          "tooltip": {
+            "off": "Dea Teil is öffentlich, a jeda ko beitreten, nachdem de Parameter validiert worn san",
+            "on": "Des Spui is privat, do kenna nua Leit mit'm Link mitmocha"
+          }
+        },
+        "reset-settings": "Eihstellunga zrucksetzn",
+        "validate-settings": "D'Eistellunga validiern",
+        "max-players": {
+          "label": "Maximale Anzahl an Spielern",
+          "title": "Maximale Spuilerzoi: {number}"
+        },
+        "remove-identical-column": "Gleichoatige Spoitn entfern",
+        "remove-identical-row": "Gleicha Zeiln entfern",
+        "nb-columns": {
+          "label": "Ozoi vu Spoitn",
+          "title": "$number Spalten"
+        },
+        "nb-rows": {
+          "label": "Ozoi vu Zeiln",
+          "title": "$number Zeiln"
+        },
+        "show-current-score": {
+          "label": "Zoag an aktuellen Punktestand während am Spui"
+        },
+        "score-to-end-game": {
+          "label": "Punkte zum Spui-End",
+          "title": "S'Spui is aus, wann a Spuier {number} Punkt' erreicht"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Strof-Multiplikator vom easchtn Spuier",
+          "title": "Da Punktestand vom easchtn Spieler wird mit {number} multipliziert, wenn er ned strikt schlechter is ois de andern Punkteständ vom Spui"
+        },
+        "validation-warning": "D'Spieleinstellungen kenna nimma g'ändert wern, wanns amoi bstätigt worn san"
+      },
+      "title": "{name} sei Spui",
+      "leave-to-home": "Zruck zur Startseitn",
+      "leave-to-public-game-list": "Af d'öffentliche Spuilist'n legn",
+      "go-back-to-settings": "Geh zruck zu de Eistellunga",
+      "start-game-button": "Fangt's as Spui o",
+      "cancel": "Abbrecha",
+      "game-starting-in": "Spui fangt in {seconds} o",
+      "waiting-host-to-start": "Wart'n, bis da Host as Spui start't",
+      "waiting-host-to-confirm-game-settings": "Wart'n, bis da Host de Eistellunga validiert",
+      "player-section": {
+        "title": "Spuier {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Wähln S' a Zoi vo Spuia aus",
+          "item": "{value} Spuier"
+        }
+      },
+      "not-enough-players-modal": {
+        "title": "Z'wenig Spuier",
+        "description": "Es miassats mindestns zwoa Spuier sei, um des Spui zum startn.",
+        "public-description": "Loada an Freind ei oda woart, bis a andana Spuier beitritt.",
+        "private-description": "Nutz den privaten Link, um Freind eizlodn!",
+        "close": "I vasteh"
+      }
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "cookies": {
+            "items": "Sitzungs-Cookies: Mia nutzn a Sitzungs-Cookie (skymo-io), um de Vabindung zu unsane Spui-Server aufrechtzhoitn. Des Cookie is entscheidend fia de Funktionalität vom Spui und lafft nach 24 Stundn ob. Dea Cookie spürt di ned auf andane Webseitn nach und wiad nur vawendt, um den vo dir gfrogt'n Dienst bereitzstella",
+            "title": "Cookies",
+            "description": "Mia vawendn notwendige Cookies, um de Grundfunktiona vo unsana Netzseitn z'ermöglichn:"
+          },
+          "title": "Informationa, de mia sammln",
+          "anonymous-usage-data": {
+            "title": "Anonyme Nutzungsdatn",
+            "description": "Mia nutzn PostHog, a Analyse-Werkzeig, um anonyme Datn z'sammeln, wia Du unsre Webseitn nutzst. Des beinhaltet:",
+            "items": "Seitenaufrufe;;Web-Vitals (Leistungsmetriken);;Umfrageantworten (wenn Sie teilnehmen möchten)"
+          },
+          "user-provided-information": {
+            "title": "Nutzer-Eingob",
+            "description": "Mia sammln:",
+            "items": "Eingaben vom Rückmeldungsformular (inklusive optionale E-Mail-Adressen)"
+          },
+          "game-data": {
+            "title": "Spuiedatn",
+            "description": "Mir speichan vorübergehend:",
+            "items": "Benutzernama und Avatar-Auswahl;;Spielelemente und Fortschritt"
+          },
+          "local-storage-data": {
+            "title": "Lokale Speicherdaten",
+            "description": "Mia speichan in da Lokalspeicherung vo Eicham Browser:",
+            "items": "Språcheinstellungen;;Spuieinstellungen"
+          }
+        },
+        "how-we-use-your-information": {
+          "title": "Wia mia Ihre Datn nutzn",
+          "items": "D'Webseitn und d'Nutzaerfoahrung vabessern;;D'Nutzungsmuster und d'Leistung analysiern;;Auf's Feedback und d'Support-Ofrogn reagiern;;'s Spuin erleichtern"
+        },
+        "data-sharing": {
+          "title": "Datnteiln",
+          "description": "Mir gebm Ihre persönli'n Datn ned an Dritte weida. Anonyme Nutzungsdatn wern vo PostHog, unserm Analyse-Dienstleister, verarbeitet."
+        },
+        "your-rights-and-choices": {
+          "description": "Do mia hauptsächlich anonyme Datn sammln, kenna mia koane persönlichn Informationa, de wo a bstimmta Nutza zuagordnet wern kenna, identifiziern oda drauf zugreifa. Trotzdem ham S' de foigendn Rechta und Wahlmöglichkeitn:",
+          "title": "Ihre Rechte und Möglichkeiten",
+          "items": "Lokal-Speicher: Du kannst den Lokal-Speicher vo deim Browser jederzeit leern, um gspeicherte Eistellunga z'entferna;;Feedback: Wennst uns a Feedback mit ana E-Mail-Adress gschickt host, kannst uns kontaktiern, um de Löschung z'beantragn;;Analyse-Opt-Out: Du kannst de Datensammlung fia Analysezwecke oblehna, indem du de \"Do Not Track\"-Einstellung in deim Browser aktivierst oder datenschutzfreundliche Browser verwendst, de Analyse-Skripte blockiern;;Spieldaten: Spuibezogene Daten wern automatisch glöscht, wenn olle Spuila a Spui verlassn"
+        },
+        "childrens-privacy": {
+          "title": "Kinderschutz",
+          "description": "Skymo hot koane Oitasbeschränkunga. Mia sammln ned bewusst persönliche Datn vo Kinda."
+        },
+        "changes-to-this-policy": {
+          "title": "Änderungen an deara Richtlinie",
+          "description": "Mia kenna de Politik vo Zeit zu Zeit aktualisiern. Mia wern Eich iba Ändarunga bscheidgebn, indem mia de neie Politik auf deara Seitn vaöffentlichtn."
+        },
+        "contact-us": {
+          "title": "Kontaktiert uns",
+          "description": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie haben, kontaktieren Sie uns bitte über unser Feedback-Formular auf der Webseite, den Discord-Server oder GitHub."
+        },
+        "back": "Zruck zur Startseitn",
+        "title": "Datenschutzrichtlinie",
+        "last-update": {
+          "text": "Letzte Aktualisierung: {date}",
+          "date-format": "JJJJ-MM-TT - hh:mmA"
+        },
+        "data-storage-and-retention": {
+          "title": "Datnspeicherung und -aufbewahrung",
+          "items": "Anonyme Nutzungsdatn wern auf Servern innerhoib vo da Eiropäischn Union gspeichert und bis zu am Joar aufgnumma;;Spieldatn wern in unsana Datenbank in Frankfurt, Deitschland, gspeichert. De Datn wern fia de Dauer vo aktive Spui aufgnumma. Soboid olle Spuila a Spui valassn, wern de zuaghearign Datn glöscht;;Informationa, de in da lokaln Speicherung vo Ihram Browser gspeichert san, bleim do, bis Sie Ihre Browserdatn löschen;;Eingaben vom Feedback-Formular wern nur zum Zweck vo da Beantwortung und Berücksichtigung vo Vorschläg fia de Entwicklung aufgnumma"
+        }
+      },
+      "head": {
+        "title": "Datenschutzrichtlinie | Skymo - Skyjo Online Kartenspiel",
+        "keywords": "Skymo, Skyjo, Skyjo Online, Datenschutzrichtlinie, Dateschutz, Online-Spui Datenschutz, sichers Spuin, Nutzadaten, DSGVO, CCPA, Datesicherheit",
+        "description": "Datenschutzerklärung für Skymo. Erfahre, wia mia deine Datn schützn, während du unser Skyjo-Kartnspui gnießt. Transparente Praktikn und a sichers Spuierlebnis."
+      }
+    },
+    "Index": {
+      "explanation": {
+        "button": "Schaug d'Regeln o",
+        "title": "Wos is Skyjo?",
+        "content": "Skyjo is a spannends Kartenspui und a hervorragends Brettspui, des wos Spuifans auf da ganzn Welt gern spuin. Des Multiplayer-Kartenspui is fia a Spuilerzoi vo 2 bis 8 Spuiler konzipiert, wobei jeda Spuiler 12 Kartn kriagt, de wos am Ofang vaborng san. S Hauptzui vom Spui is, so weng wia meglich Punkt z'sammz'bringa. S Spui is aus, sobald a Spuiler 100 Punkt erreicht. De Spuiregln san oafoch und leicht z'vastenga, wos s zu ana idealn Wahl fia Spuiabende mit da Familie oda Freind macht. Spuibegeisterte wern si gfrein, dass ma Skyjo jetzt a online und gratis spuin ko!"
+      },
+      "faq": {
+        "title": "Häufig gstellte Frog (HGF)",
+        "meaning": {
+          "title": "Wos moant Skyjo?",
+          "content": "A Skyjo is a Spoidn vo 3 gleiache Kortn im Spui."
+        },
+        "pronounce": {
+          "title": "Wia spricht ma \"Skyjo\" aus?",
+          "content": "S' Wort Skyjo wird [Skyjoe] ausgsprocha."
+        },
+        "how-to-play": {
+          "title": "Wia spuit ma Skyjo?",
+          "content": "Zum Skyjo spuin, kriagt a jeder Spuier zwäif Koartn vawicklt. S Zui is, de wenigstn Punkt zum ham, indem ma Koartn umdraht und tauscht. Jede Rundn ziagt ma a Koartn vom Stapel oda vom Oblegestapel, dann entscheidt ma, ob ma oane vo de sichtborn Koartn ersetzt. Zoin-Koartn san so vui wert wia de Zoi, bsundere Koartn ham Aktiona. S Spui is aus, wenn a Spuier olle Koartn umdraht hod. Da Spuier mit de wenigstn Punkt gwinnnt. Mehr Infos findst in <rules>de Regln</rules>."
+        },
+        "how-to-win": {
+          "title": "Wia gwinnt ma bei Skyjo?",
+          "content": "Um bei Skyjo z'gwinnan, is's ganz wichtig, dass ma de niedrigste Punktzoi wia megli hod. Dazua soi ma a ausgwogane Strategie fahrn zwischn de niedrigstn Kartn ham, de Kartn aufdecka und Spaltn aus identischn Kartn macha. Vameid, dassd ois Erschta umdraahst, es sei denn, du bist scho weit vorn mit de sichtbarn Kartn. Denk dro, de scho sichtbarn Kartn z'behoitn, um Spaltn draus z'machn, anstatt se oanzln z'optimiern."
+        },
+        "play-classic-with-action": {
+          "title": "Ko ma klassisches Skyjo mit Skyjo Action spuin?",
+          "content": "Jo, du muasst nua de Aktionskarten wegtuan. Wennst de Online-Version spuist, dann wehl de klassische Version aus, um Skyjo zum spuin."
+        }
+      },
+      "banner": {
+        "title": "I brauch <gform>dei Feedback</gform>, um de Zukunft vo Skymo zum gstoitn!"
+      },
+      "name-input-placeholder": "Nama"
+    },
+    "Search": {
+      "tags": {
+        "tag": {
+          "column": "Spaltn",
+          "classic": "Klassisch",
+          "custom": "Spezial",
+          "row": "Reih",
+          "short-game": "Kuazspui",
+          "long-game": "Langs Spui"
+        },
+        "title": "Filter:",
+        "no-tags-available": "Koane Markierer mehr verfügbar"
+      },
+      "head": {
+        "title": "Findt öffentliche Skymo-Spui | Skyjo Online spuin",
+        "keywords": "Skymo, Skyjo, Skyjo online, Spui findn, Spui beitretn, öffentliche Spui, Online-Mehrspieler, mit andern spuin, schnells Spui, kostenlose Online-Spui, offene Spui, Online-Kartnspui, Mehrspieler-Kartnspui",
+        "description": "Siaxt a Skymo-Spui, wo du mitmacha mogst? Schau da de effentlichn Spui o und fang glei o, Skyjo online mit andane Spuier z'spuin. Spui etz gratis!"
+      },
+      "header": {
+        "back": "Zruck zur Startseitn",
+        "title": "Öffentliche Spui",
+        "refresh": "Aktualisier d'Spuilistn",
+        "create-button": {
+          "title": "A öffentliches Spui erstoin"
+        }
+      },
+      "no-games-found": "Koane Spui gfundn",
+      "game-of": "S Spui vom {name}"
+    },
+    "Rules": {
+      "title": "Skyjo Spuiregln",
+      "head": {
+        "title": "Wia ma Skymo spuit | Skyjo Kartnspui Online",
+        "description": "Lernt's, wia ma Skyjo spuit, mit unserm Skymo-Führer. Entdeckt's de Regln, Strategien und Tipps, um des lustige Online-Kartnspui zum Moasta zum wern. Spuit's jetzt mit Freind!",
+        "keywords": "Skymo, Skyjo, Skyjo Regln, wia ma Skyjo spuit, Skyjo Spui, Kartnspui Regln, Online Kartnspui, Spuianleitung, Spuianleitung"
+      }
+    },
+    "Create": {
+      "head": {
+        "title": "A Skymo-Spui macha | Skyjo Online spuin",
+        "description": "Fangt a neis Skymo-Spui online o! Erstellt private oda öffentliche Zimma, lodt eure Freind ei und habts an Spaß vo Skyjo zamma. Spuit jetz gratis!",
+        "keywords": "Skymo, Skyjo, Skyjo online, Spui erstäin, Spui ofanga, privats Spui, effntlichs Spui, mit Freind spuin, Online-Mehrspieler, kostenlose Online-Spui, benutzadefinierds Spui"
+      },
+      "loading-text": "Dei Spui wird grod gmacht…"
+    },
+    "Maintenance": {
+      "description": "Mia san grod dabei, de Seitn z'aktualisiern, bitte vasuachs spader noamoi.",
+      "github-alt": "Schau da den Quellcode auf GitHub o",
+      "title": "D'Seitn wird grod gwartt"
+    },
+    "NotFound": {
+      "title": "Fehler 404",
+      "description": "De Seitn, de wo du suachst, gibt's ned.",
+      "go-back-to-homepage": "Geh zruck auf d'Hoamseitn"
+    },
+    "ResultsPage": {
+      "title": "Spuiergebniss",
+      "rank": "Rang",
+      "player": "Spuier",
+      "score-per-round": "Punkte pro Rundn",
+      "total": "Gsamtleng",
+      "player-want-to-replay": "Spuier, de wo wieda spuin woin:",
+      "replay-button": {
+        "cancel": "Ned wiederspui'n",
+        "replay": "Noamoi afgspuit"
+      },
+      "leave-button": "S Spui valassn"
+    }
+  },
+  "components": {
+    "Footer": {
+      "disclaimer": {
+        "rights-owned": "Olle Rechte am Nama Skyjo und de Spuimechanik ghern am Alexander Bernhardt und Magilano",
+        "responsible-content": "Da Betreiwer vo dera Seitn is ned verantwortlich für Nutza-generierte Inhoit (Nutznama, Nachrichtn)",
+        "not-affiliated": "Dea Netzseitn is ned mid de Erschaffer oda Vertreiber vo Skyjo vabundn"
+      },
+      "status": "Serverstatus",
+      "rules": "Spuiregln",
+      "home": "Dahoam",
+      "release-notes": "Versionshinweise",
+      "feedback": "Gib a Rückmeldung",
+      "buy-game": "Kaffs as Spui",
+      "explanation": "Wos is Skyjo?",
+      "privacy-policy": "Datenschutzerklärung",
+      "attribution": {
+        "avatars": "Avatars gmocht vo Freepik - Flaticon"
+      }
+    },
+    "KickVote": {
+      "vote-failed": {
+        "description": "Es san ned gnua Stimma do, um {playerName} rauszschmeißn",
+        "title": "De Abstimmung, um {playerName} zum Rauswerfa, is gscheitert"
+      },
+      "host-kick-you": {
+        "title": "Du bist vom Gastgeber ausm Spui gschmissn worn"
+      },
+      "player-has-not-voted": {
+        "kick-button": {
+          "label": "Tritt",
+          "alt": "Schmeiß {playerName} raus"
+        },
+        "title": "Stimm ab, um {playerName} rauszschmeißn",
+        "ignore-button": {
+          "alt": "De Abstimmung zum Rauswurf vom {playerName} ignoriern",
+          "label": "Ignoriern"
+        }
+      },
+      "you-kick-player": {
+        "title": "Du host {playerName} aussag'schmissn"
+      },
+      "player-has-voted": {
+        "title": "Stimm ab zum Rauswerfa vo {playerName}",
+        "description": "Du hast {vote, select, true {dafür} false {dagegn} other {gstimmb}} gstimmb"
+      },
+      "vote-against-you": {
+        "title": "Stimm, um di rauszschmeißn",
+        "description": "A Abstimmung, um di aussaz'schmeißn, is gfrogt worn."
+      },
+      "vote-against-you-failed": {
+        "title": "Du bist ned rausgschmissn worn",
+        "description": "Es san ned gnua Stimma do, um di z'kegln"
+      },
+      "vote-succeeded": {
+        "title": "Da {playerName} is aussaghuabt worn",
+        "description": "D'Abstimmung, um {playerName} rausz'schmeißn, is glunga."
+      },
+      "vote-against-you-succeeded": {
+        "title": "Du bist aussag'schmissn worn",
+        "description": "D'Spuier ham gstimmt, dass'd aus'm Spui gschmissn weast."
+      },
+      "host-kick": {
+        "title": "Da {playerName} is vom Host ausm Spui gschmissn worn"
+      }
+    },
+    "PWABanner": {
+      "Safari": "Druck auf's Teilen-Symbol, dann auf \"Zum Dock hinzufügn\", um's zu installiern",
+      "FirefoxIOS": "Tipp auf's Menü-Symbol, dann auf's Teilen-Symbol, dann scroll und tipp auf \"Zum Startbildschirm hinzufügen\" zum Installiern",
+      "Chrome": "Klick auf'n \"Installieren\"-Knopf, um's zu installiern",
+      "FirefoxAndroid": "Druck auf's Menü-Symbol, dann auf \"Zum Startbildschirm hinzufügen\", um's zu installiern",
+      "ChromeAndroid": "Tippa Sie aufs Menü-Symbol, dann auf \"Zum Startbildschirm hinzufügen\", um's zu installiern",
+      "install-button": {
+        "title": "De App installiern",
+        "content": "Installiern"
+      },
+      "title": "Installier Skymo auf deim Gerät!",
+      "SamsungBrowser": "Tipp auf's Menü-Symbol, dann auf \"Seitn hiizua\", dann auf \"Startbildschirm\" zum Installiern",
+      "ChromeIOS": "Druck auf's Teilen-Symbol, dann scroll und druck auf 'Zum Startbildschirm hinzufügen' zum Installiern",
+      "SafariIOS": "Druck auf's Teilen-Symbol, dann scroll und druck auf \"Zum Startbildschirm hinzufügen\" zum Installiern"
+    },
+    "Rules": {
+      "round-start": {
+        "content-1": "Da Spieler ko de easchte Kartn, de wo umdraht worn is, vom Oblegestapla aussasucha",
+        "title": "Rundnstart",
+        "choice-2": {
+          "title": "Wahl 2:",
+          "choice-1": "Wahl 1",
+          "content-2": "Wann er de zogne Kartn ned behoidn mog, legt er's auf'n Oblegestapfl und muaß oane vo seine Kartn aufdecka.",
+          "description": "Nimm de easchte Kartn verdeckt vom Ziahstapel.",
+          "content-1": "Da Spuier ko de Kartn oschaugn und si aussuacha, ob a's geng a eigane Kartn (vaborgn oda sichtbar) tauschn wui, oda ob a's wegwerfa wui. Wenn a de zongne Kartn boidn wui, tauscht a's wia obn bschriem geng a eigane Kartn in da"
+        },
+        "choice": "Wahl {number}",
+        "content-2": "oda de easchte vawicklte Kartn vom Ziahaufn",
+        "choice-1": {
+          "title": "Wahl 1:",
+          "description": "Nimm de easchte Kartn vom Oblegestoß.",
+          "content": "Da Spuier muass de Kartn sofort mit oana vo seine 12 Kartn tauschn und offn hiilegn. Er ko frei zwischn offane und vawicklte Kartn wähln. Vawicklte Kartn derfn ned vor'm Tausch gseng wern. De tauschte Kartn wird offn auf'n Oblegestapfl glegt."
+        },
+        "end-of-turn": "Sei Zug is dann vorbei, und da nächste Spieler is dro (im Uhrzeigersinn)."
+      },
+      "round-preparation": {
+        "title": "Rundnvorbereitung",
+        "content-1": "Zuerst kriagt a jeder Spieler zwäif Kartn verdeckt ausglegt. Nacha wead a Kartn vom Ziahstapl offn in d'Mitte vom Tisch glegt, des is da Ofang vom Oblegestapl. De restlichn Kartn wern verdeckt nebaneinanda glegt und buidn den Ziahstapl.",
+        "content-2": "Jeder Spieler legt seine 12 Karten in vier Spalten zu je drei Karten verdeckt vor sich hin. Zum Schluss deckt jeder Spieler zwei Karten seiner Wahl auf."
+      },
+      "special-rule": {
+        "title": "Bsundere Reglung:",
+        "content": "Wenn a Spieler 3 gleiche Kartn in ana Spaltn hod, legt da Spieler de 3 Kartn aufn Ablagestapel. Wenn a Spaltn aus gleiche Kartn durch an Tausch mit ana Kartn vom Zugstapel oda Ablagestapel entsteht, miassn de drei gleiche Kartn immer aufn Ablagestapel glegt wern, nach da tauschna Kartn."
+      },
+      "scoring": {
+        "title": "Punkte macha",
+        "example": {
+          "title": "Beispui:",
+          "content": "Spuier A zoagt olle seine Kartn und beendt de Rundn. Am End vo da Rundn hod a 10 Punkt, Spuier B hod 24 Punkt und Spuier C hod aa 10 Punkt. Wei Spuier A ned strikt de niadrigste Punktzoi hod, wern seine Punkt auf 20 vadopplt."
+        },
+        "description": "Spuier, de no Koartn vawicklt hom, drehn de um. A jeds Spui zäit sei Gsamtpunktzoi.",
+        "list": {
+          "content-1": "Wenn de Gsamtzahl vo de Punkt positiv is, zähjt er's zu de Gsamtpunkt vo de vorherign Rundn dazua.",
+          "content-2": "Is Gsamtergebnis negativ, wird's vo de Gsamtpunkt vo de vorherign Rundn obzogn."
+        },
+        "first-to-finish": {
+          "content": "Wenn da Spuier, der de Rundn beendt hot (da easchte, der olle seine Kartn umdraht hot), ned, streng gnumma, de niedrigste Punktzoi fia de Rundn erreicht hot, dann werd de Summe seiner Punkte fia de Rundn verdoppelt.",
+          "note": {
+            "title": "Bitte beachtn Sie:",
+            "content": "de Regl guit nua fia positive Punkt!"
+          }
+        }
+      },
+      "cards-section-title": "{number} Spuikartn:",
+      "game-goal": {
+        "title": "Spui-Zui",
+        "content": "S' Skyjo-Spui wead über mehrane Rundn gspuit und is aus, sobald a Spuier 100 Punkt oda mehr erreicht. Da Spuier mit de wenigstn Punkt gwinnnt s' Spui."
+      },
+      "round-end": {
+        "title": "End vo da Rundn",
+        "content-1": "Wenn a Spuier olle seine Kartn aufdeckt hod, hod a sei letzte Rundn gspuit.",
+        "content-2": "Olle nachfoigenden Spuier spuin no amoi, um de Rundn zum Beendn."
+      },
+      "end-of-game": {
+        "title": "Spui aus",
+        "content": "Am End vo jeda Rundn wern de Punkt vo jedn Spuier zum Gsamtergebnis vo de vorherign Rundn dazua grechnet. S Spui is aus, sobald a Spuier 100 Punkt oda mehr erreicht. Da Spuier mit de wenigstn Punkt gwinnnt s Spui."
+      }
+    },
+    "AppearanceSelect": {
+      "light": "Liacht",
+      "dark": "Dunkl",
+      "system": "System"
+    },
+    "LanguageCombobox": {
+      "locale": {
+        "ta": "Tamil",
+        "de": "Deitsch",
+        "en": "Englisch",
+        "es": "Spanisch",
+        "fr": "Französisch",
+        "it": "Italienisch",
+        "br": "Brezhoneg"
+      },
+      "select-language": "Språch auswähln",
+      "search-language": "Sproch suacha",
+      "no-language-found": "Koane Sproch gfundn"
+    },
+    "MenuDropdown": {
+      "button": {
+        "aria-label": "Speisekartn"
+      },
+      "rules": "Regeln",
+      "discord": "Discord",
+      "feedback": "Gib a Rückmeldung",
+      "settings": "Eistellunga"
+    },
+    "OpponentBoard": {
+      "disconnected": "Da Spieler hods Spui valossn. A Bot spuit fia eam de nächstn Rundn, bis a wieda do is."
+    },
+    "ScoreSheet": {
+      "see-scores": "Schau d'Ergebniss' o"
+    },
+    "AfkKick": {
+      "kicked": {
+        "title": "Wegschickt wega Untätigkeit",
+        "description": "Du bist ausm Spui gschmissn worn, weilst z oft AFK gwesn bist."
+      },
+      "warning": {
+        "title": "AFK Warnung",
+        "description": "Du wirst ausm Spiel gschmissn, wennst inaktiv bleibst."
+      },
+      "player-kicked": {
+        "title": "Spuier aussaghoit",
+        "description": "Da {playerName} is wega Inaktivität ausm Spui gschmissn worn."
+      }
+    },
+    "ReportDialog": {
+      "cancel": "Abbrecha",
+      "submit": "Bericht",
+      "toast": {
+        "report-submitted": {
+          "title": "Bericht eigreicht",
+          "description": "Vergelt's Gott für dei'n Bericht, du hast mitghoifa, dass d'Qualität vom Spui besser worn is."
+        }
+      },
+      "title": "Bericht {username}",
+      "description": "Meld' an Nutzanama oda a Nachricht vom {username}, wenn's unpassend wirkt.",
+      "report-message": "A Nachricht meldn",
+      "select-message": "Wähl d'Noachricht aus, de wo g'meldet wern soi",
+      "select-message-placeholder": "Wähle a Nachricht aus",
+      "no-messages": "Koane Nachrichten vo dem Nutza gfundn",
+      "report-username": "Meld an Benutzernama"
+    },
+    "Chat": {
+      "title": "Ratsch"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Nochricht",
+      "button-title": "Schick",
+      "message-too-long": {
+        "description": "D'Noochricht is z'lang (max. 200 Zeichn)"
+      },
+      "unknown-command": {
+        "description": "Unbekannta Befehl"
+      }
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Nachricht meldn"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} unglesene Nachricht{count, plural, =1 {} other {n}}"
+    },
+    "CopyLink": {
+      "message": "Lenk kopiert!",
+      "button-title": "Link kopiern"
+    },
+    "DiscardPile": {
+      "title": "Ablagestapel",
+      "throw": "Schmeiß"
+    },
+    "DrawPile": {
+      "title": "Ziahstapel"
+    },
+    "EndRoundDialog": {
+      "description": "De nächste Rund fangt in a boar Sekundn o…",
+      "title": "D'Rund is aus"
+    },
+    "Feedback": {
+      "title": "Gib a Rückmeldung",
+      "description": "Du kannst uns a Feedback schreibm, damit mia des Spui vabessern kenna.",
+      "toast": {
+        "success": {
+          "title": "Dank schee fia dei Rückmeldung!",
+          "description": "Eire Einblicke ham uns ghoifa, unsare Spui-Webseitn z'verbessern, und mia san eich wirklich dankbar."
+        },
+        "error": {
+          "title": "A Fehler is aufdradn, bitte noamoi probiern."
+        }
+      },
+      "email-input": {
+        "label": "Dei E-Mail (optional)",
+        "placeholder": "Beispiel@Beispiel.com"
+      },
+      "message-input": {
+        "label": "Dei Nachricht",
+        "placeholder": "Sog uns, wosd denksd, notiersd oda wuisd…"
+      },
+      "button-title": "Schick"
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Wieder mitm Spui vabindn",
+      "join-game-button": "Mach mit beim Spui",
+      "find-game-button": "A Spui findn",
+      "create-game-button": "Erstell a {type, select, private {private} public {öffentliche} other {unbekannte}}s Spui"
+    },
+    "GameRules": {
+      "button-title": "Zoag d'Spuiregln",
+      "title": "Spuiregln",
+      "remove-identical-column": "Spaltn entfern, wann identische Kartn: {value, select, true {ja} false {naa} other {unbekannt}}",
+      "remove-identical-row": "Reih entfern, wenn identische Kartn: {value, select, true {jo} false {naa} other {unbekannt}}",
+      "card-per-column": "Anzoi vo de Spoitn: {value}",
+      "card-per-row": "Zeilnzoi: {value}",
+      "initial-turned-count": "Anzohl vo de Kartn, de ma am Ofang umdraht: {value}",
+      "score-to-end-game": "Anzoi vo de Punkt, um as Spui z'beendn: {value}",
+      "first-player-penalty-type": {
+        "label": "Strof-Typ für'n easchtn Spuier, wenn er ned de gloanste Punktzoi hod: ",
+        "1": "Bloss Multiplikator",
+        "2": "Nur Wohnung",
+        "3": "Zuerst flach, dann multiplikativ",
+        "4": "Multiplikator dann flach"
+      },
+      "first-player-multiplier-penalty": "Multiplikator-Strof: {value}",
+      "first-player-flat-penalty": "Pauschale Strof: {value}"
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Gegner:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Du"
+    },
+    "RulesDialog": {
+      "title": "Spuiregln",
+      "trigger": {
+        "aria-label": "Spuiregln zoagn"
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Zeig d'Punktetafel"
+    },
+    "ScoreDialog": {
+      "title": "Punktestand",
+      "description": "Da {name} hod mit {score} Punkt gwunna!"
+    },
+    "ScoreTable": {
+      "name": "Nama",
+      "round": "Rund",
+      "total": "Gsamtleng"
+    },
+    "SettingsDialog": {
+      "title": "Eihstellunga",
+      "general": {
+        "title": "Generoi",
+        "language": "Språch",
+        "language-warn": "Nua auf da Hoamseitn zum ändan",
+        "appearance": "Aussehen"
+      },
+      "display": {
+        "title": "Ozoag",
+        "mobile": {
+          "title": "Mobil",
+          "switch-to-player-who-is-playing": "Automatisch zum Spieler wechsla, der grod spuit",
+          "show-preview-opponents-cards": "Zeig a Vorschau vo de Kartn vom Gegna in da Gegnalistn"
+        },
+        "chat": {
+          "title": "Ratsch",
+          "chat-visibility": "Sichtbarkeit vom Chat",
+          "chat-notification-size": {
+            "label": "Gräß vom Benochrichtigungsfensterl vom Chat",
+            "values": {
+              "small": "Kloa",
+              "normal": "Ganz normal",
+              "big": "Groß"
+            }
+          }
+        },
+        "gameplay": {
+          "title": "Spuiart",
+          "gameboard-size": {
+            "values": {
+              "normal": "Normal",
+              "big": "Groß"
+            },
+            "label": "Größ vo deim Spui-Brett",
+            "big-warning": "Ko am Handy d'Anzeig z'brocha"
+          },
+          "enlarge-active-player-board": "Vagressere as Brett vom Spuier, der grod dro is",
+          "timer": {
+            "label": "Zeitanzeigemodus",
+            "description": "Da Smart-Modus zoagt d'Zeituhr bei da Hoibzeit und de letztn 15 Sekundn o.",
+            "modes": {
+              "never": "Niemois",
+              "smart": "Gscheid",
+              "always": "Imma"
+            }
+          }
+        }
+      },
+      "audio": {
+        "title": "Audio",
+        "toggle": {
+          "label": "Ton eischaltn"
+        },
+        "volume": {
+          "label": "Lautstärkn ({volume}%)"
+        }
+      }
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Bericht {username}",
+        "kick": "Drah di {username}",
+        "vote-to-kick": "Stimm ab zum Rauswerfa vo {username}",
+        "ban": "Pfiat di, {username}",
+        "mute": "Stumm schalt'n {username}",
+        "unmute": "Stumm schalten aufheben {username}"
+      }
+    }
+  },
+  "utils": {
+    "chat": {
+      "player-not-muted": "Da {username} is ned stummgschalt",
+      "player-reconnect": "{username} is wieda im Spui",
+      "argument-required": "Aans oda mehra Argument san fia'n Befehl erforderlich: {command}",
+      "wizz-sent": "Du hast a Wizz an {targetUsername} gschickt!",
+      "wizz-self": "Du bist vom {initiatorUsername} gwizzd worn!",
+      "player-joined": "{username} is ins Spui eitretn",
+      "player-left": "{username} hods Spui valossn",
+      "player-already-muted": "{username} is scho stummgschoit",
+      "player-unmuted": "Da {username} is nimma stummgschaltn",
+      "wizz-other": "Da {initiatorUsername} hod an {targetUsername} ogwizzd!",
+      "player-muted": "Da {username} is etz stummgschaltn"
+    },
+    "socket": {
+      "error": {
+        "rate-limit": {
+          "description": "Bitte woart a boar Sekundn, bevorst's noamoi probiast",
+          "title": "Du schickst z'vui Ofrogn"
+        },
+        "player-banned": {
+          "description": "Du bist vo dem Spui ausgschlossn worn"
+        },
+        "timeout": {
+          "description": "Da Server braucht länger ois wia gwennt, um z'antwortn. Du koascht vasuacha, de Seitn nei z'lodn und's noamoi z'vasuacha."
+        },
+        "game-already-started": {
+          "description": "As Spui hod scho ogfangt"
+        },
+        "game-not-found": {
+          "description": "S Spui, wosd suachst, gibt's ned"
+        },
+        "cannot-reconnect": {
+          "description": "Ma ko si nimma mit'm Spui vabindn, de Zeit zum Vabindn is obglaffa"
+        },
+        "game-is-full": {
+          "description": "S Spui is scho voi, du kannst ned mitmacha"
+        }
+      }
+    },
+    "skymo": {
+      "waiting": "Woart auf Spuier",
+      "turn-cards": "Zieh {number} Kart{number, plural, =1 {} other {n}}",
+      "waiting-opponents-to-turn-cards": "Woart auf'n Gegna, dass a {number} Kartn umdraht",
+      "turn": {
+        "chooseAPile": "Wähl an Ståckn",
+        "throwOrReplace": "Auswechsln oda wegschmeissn",
+        "replaceACard": "A Kartn austauschn",
+        "turnACard": "A Koartn umdraahn"
+      },
+      "player-turn": "Da {playerName} is dro",
+      "last-turn": "Letzte Rundn!",
+      "game-stopped": "Spui is aus",
+      "round-over": "Rundn beendt",
+      "game-ended": "Spui aus!"
+    },
+    "avatar": {
+      "bee": "Biaßl",
+      "crab": "Krebs",
+      "dog": "Hund",
+      "eagle": "Adler",
+      "elephant": "Elefant",
+      "fox": "Fuchs",
+      "jellyfish": "Medusn",
+      "koala": "Koala",
+      "octopus": "Krake",
+      "penguin": "Pinguin",
+      "toucan": "Tukan",
+      "turtle": "Schildkröte",
+      "whale": "Woi",
+      "owl": "Uhu",
+      "cat": "Katz",
+      "frog": "Frosch"
+    }
+  },
+  "contexts": {
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "description": "S Spui, zu demst di wieda vabindn woitst, gibt's nimma",
+          "title": "Spui ned gfundn"
+        }
+      },
+      "connection-lost": "Vabindung weg. Versuch, wieda z'vabindn...",
+      "reconnection": "Wieda-vabindn glunga"
+    },
+    "ReportContext": {
+      "report": {
+        "title": "Da {playerName} is wega ana Meldung aussagflong"
+      },
+      "report-against-you": {
+        "title": "Du bist wega am Bericht aussagworfa worn",
+        "description": "Dei Nutzanama oda oane vo deine Nachrichtn is gmeldet worn und ois unpassend eigstuft worn. Bittschee, des Vahoidn ned wiedahoin."
+      }
+    },
+    "BanContext": {
+      "not-allowed": {
+        "title": "Du host koa Erlaubnis zum Sperra",
+        "description": "Du host koa Erlaubnis, an Spieler z'banna"
+      },
+      "player-not-found": {
+        "title": "Da Spuier zum Vabiatn existiert ned",
+        "description": "Da Spuier, der gschperrt wern soi, is ned im Spui vorhandn"
+      },
+      "player-banned": {
+        "title": "Da {playerName} is gschperrt worn",
+        "description": "Da Host hot {playerName} aussagwennt"
+      },
+      "you-were-banned": {
+        "title": "Du bist gschperrt worn",
+        "description": "Du bist vom Spui vom Gastgeber aussagschmissn worn"
+      },
+      "unexpected-error": {
+        "title": "A unerwoarter Fejler is aufdredn",
+        "description": "A unerwoarterter Fehler is aufgredn, wia a Spuier gschperrt worn is"
+      }
+    }
+  },
+  "head": {
+    "title": "Skymo | Skyjo Kartenspui Online Kostnlos Spuin",
+    "description": "Spui Skyjo gratis online mit Skymo! A schnöis Kartnspui für mehrane, wo Strategie und Spaß zammkemma. Fordere Freind heraus, dreh Kartn um und zui auf de niedrigste Punktzoi, um zum gwinnan!",
+    "keywords": "Skymo, Skyjo, Skyjo online, Mehrspieler-Spui, Kartenspui, mit Freind spuin, kostenlose Online-Spui, Online-Kartnspui"
+  }
+}
