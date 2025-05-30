@@ -5,7 +5,7 @@
   "pages": {
     "Index": {
       "explanation": {
-        "button": "Siehe die Regeln",
+        "button": "Regeln anzeigen",
         "title": "Was ist Skyjo?"
       },
       "name-input-placeholder": "Name"
