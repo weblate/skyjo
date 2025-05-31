@@ -1,7 +1,8 @@
 import { RulesButton } from "@/app/[locale]/(socket)/RulesButton"
+import Banner from "@/components/Banner"
 import Footer from "@/components/Footer"
-import MenuDropdown from "@/components/MenuDropdown"
 import MovingArrow from "@/components/MovingArrow"
+import Navbar from "@/components/Navbar"
 import PWABanner from "@/components/PWABanner"
 import {
   Accordion,
@@ -32,107 +33,97 @@ const IndexServerPage = (props: IndexServerPageProps) => {
   )
 
   return (
-    <>
-      <div className="bg-body dark:bg-dark-body flex flex-col">
-        <div className="relative h-dvh !p-6 flex items-center justify-center">
-          <div className="absolute top-0 left-0 right-0 px-6 py-2 bg-white dark:bg-dark-body text-black dark:text-dark-font border-b-2 border-black dark:border-dark-border flex flex-row items-center sm:justify-center gap-1">
-            {t.rich("banner.title", {
-              gform: (chunks) => (
-                <Link
-                  href="https://forms.gle/CM9PV9H24KMFqDrXA"
-                  target="_blank"
-                  className="underline underline-offset-2 text-blue-500 font-semibold"
-                >
-                  {chunks}
-                </Link>
-              ),
-            })}
+    <div className="bg-body dark:bg-dark-body flex flex-col">
+      <div className="relative h-dvh flex flex-col">
+        <PWABanner />
+        <Banner />
+        <Navbar className="mt-4" />
+        <div className="flex flex-col grow items-center justify-between p-6">
+          <div className="flex flex-col grow w-full items-center justify-center">
+            <div className="bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border px-16 py-12 rounded-xl w-full max-w-md md:max-w-xl flex flex-col items-center">
+              <h1 className="sr-only">Play Skyjo Online Free - Skymo</h1>
+              <IndexPage searchParams={searchParams} />
+            </div>
           </div>
-          <PWABanner />
-          <div className="absolute top-14 right-4 w-10 flex flex-col gap-4 z-10">
-            <MenuDropdown />
-          </div>
-          <div className="bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border px-10 md:px-16 py-6 mdh:md:py-12 rounded-xl md:w-3/6 max-w-2xl flex flex-col items-center">
-            <h1 className="mb-5 font-shantell text-4xl">Skymo</h1>
-            <IndexPage searchParams={searchParams} />
-          </div>
-          <div className="hidden mdh:sm:flex absolute bottom-6 left-6 right-6 z-10 items-center justify-center">
-            <MovingArrow href="#explanation" />
-          </div>
-          <Link
-            href="https://discord.gg/qKsaXebPyx"
-            target="_blank"
-            className="absolute bottom-6 left-6 z-10"
-          >
-            <Image
-              src="/svg/discord.svg"
-              width={24}
-              height={24}
-              alt="Discord server invite icon"
-              className="dark:invert"
-            />
-          </Link>
-          {process.env.npm_package_version && (
+          <div className="flex flex-row w-full z-10 items-center justify-between">
             <Link
-              href="https://github.com/maxentr/skymo/releases/latest"
+              href="https://discord.gg/qKsaXebPyx"
               target="_blank"
-              className="absolute bottom-6 right-6 z-10 underline"
+              className="w-20"
             >
-              v{process.env.npm_package_version}
+              <Image
+                src="/svg/discord.svg"
+                width={24}
+                height={24}
+                alt="Discord server invite icon"
+                className="dark:invert"
+              />
             </Link>
-          )}
+            <MovingArrow href="#explanation" />
+            {process.env.npm_package_version ? (
+              <Link
+                href="https://github.com/maxentr/skymo/releases/latest"
+                target="_blank"
+                className="underline underline-offset-2 w-20 text-end"
+              >
+                v{process.env.npm_package_version}
+              </Link>
+            ) : (
+              <span className="w-20 h-1" />
+            )}
+          </div>
         </div>
-        <section className="container my-8 max-w-4xl flex flex-col items-center">
-          <h2
-            id="explanation"
-            className="text-center text-3xl text-black dark:text-dark-font pt-2 mb-4"
-          >
-            {t("explanation.title")}
-          </h2>
-          <p className="text-justify text-black dark:text-dark-font">
-            {t("explanation.content")}
-          </p>
-          <RulesButton text={t("explanation.button")} />
-        </section>
-
-        <section className="container mt-16 mb-32 max-w-4xl flex flex-col items-center">
-          <h2 className="text-center text-3xl text-black dark:text-dark-font mb-4">
-            {t("faq.title")}
-          </h2>
-          <Accordion type="single" collapsible className="w-full">
-            <AccordionItem value="item-1">
-              <AccordionTrigger>{t("faq.meaning.title")}</AccordionTrigger>
-              <AccordionContent>{t("faq.meaning.content")}</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-2">
-              <AccordionTrigger>{t("faq.pronounce.title")}</AccordionTrigger>
-              <AccordionContent>{t("faq.pronounce.content")}</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-3">
-              <AccordionTrigger>{t("faq.how-to-play.title")}</AccordionTrigger>
-              <AccordionContent>
-                {t.rich("faq.how-to-play.content", {
-                  rules: rulesLink,
-                })}
-              </AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-4">
-              <AccordionTrigger>{t("faq.how-to-win.title")}</AccordionTrigger>
-              <AccordionContent>{t("faq.how-to-win.content")}</AccordionContent>
-            </AccordionItem>
-            <AccordionItem value="item-5">
-              <AccordionTrigger className="text-start">
-                {t("faq.play-classic-with-action.title")}
-              </AccordionTrigger>
-              <AccordionContent>
-                {t("faq.play-classic-with-action.content")}
-              </AccordionContent>
-            </AccordionItem>
-          </Accordion>
-        </section>
       </div>
+      <section className="container my-8 max-w-4xl flex flex-col items-center">
+        <h2
+          id="explanation"
+          className="text-center text-3xl text-black dark:text-dark-font pt-2 mb-4"
+        >
+          {t("explanation.title")}
+        </h2>
+        <p className="text-justify text-black dark:text-dark-font">
+          {t("explanation.content")}
+        </p>
+        <RulesButton text={t("explanation.button")} />
+      </section>
+
+      <section className="container mt-16 mb-32 max-w-4xl flex flex-col items-center">
+        <h2 className="text-center text-3xl text-black dark:text-dark-font mb-4">
+          {t("faq.title")}
+        </h2>
+        <Accordion type="single" collapsible className="w-full">
+          <AccordionItem value="item-1">
+            <AccordionTrigger>{t("faq.meaning.title")}</AccordionTrigger>
+            <AccordionContent>{t("faq.meaning.content")}</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-2">
+            <AccordionTrigger>{t("faq.pronounce.title")}</AccordionTrigger>
+            <AccordionContent>{t("faq.pronounce.content")}</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-3">
+            <AccordionTrigger>{t("faq.how-to-play.title")}</AccordionTrigger>
+            <AccordionContent>
+              {t.rich("faq.how-to-play.content", {
+                rules: rulesLink,
+              })}
+            </AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-4">
+            <AccordionTrigger>{t("faq.how-to-win.title")}</AccordionTrigger>
+            <AccordionContent>{t("faq.how-to-win.content")}</AccordionContent>
+          </AccordionItem>
+          <AccordionItem value="item-5">
+            <AccordionTrigger className="text-start">
+              {t("faq.play-classic-with-action.title")}
+            </AccordionTrigger>
+            <AccordionContent>
+              {t("faq.play-classic-with-action.content")}
+            </AccordionContent>
+          </AccordionItem>
+        </Accordion>
+      </section>
       <Footer />
-    </>
+    </div>
   )
 }
 
