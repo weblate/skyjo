@@ -42,7 +42,7 @@ const Navbar = ({ className }: NavbarProps) => {
 
       <div className="flex flex-row items-center gap-4">
         <LoginButton />
-        <MenuDropdown />
+        <MenuDropdown variant="account" />
       </div>
     </nav>
   )
