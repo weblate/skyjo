@@ -18,7 +18,7 @@ const publicPages = [
 ]
 
 // Special handling for paths that start with these prefixes (these will be public)
-const publicPrefixes = ["/game"]
+const publicPrefixes = ["/game", "/reset-password"]
 
 const publicPathnameRegex = RegExp(
   `^(/(${locales.join("|")}))?(${publicPages
