@@ -1,11 +1,13 @@
+"use client"
+
 import { Avatar } from "@skymo/core"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 interface AuthenticatedUser {
   emailVerified: boolean
-  name?: string | null
-  username?: string | null
-  avatar?: Avatar | null
+  name?: string
+  username?: string
+  avatar?: Avatar
   hasOAuth?: boolean
   onboardingCompleted?: boolean
 }
@@ -35,10 +37,9 @@ export const useAuth = () => {
       const result = await res.json()
       return result.user
     },
-    retry: false,
+    retry: 0,
     refetchOnWindowFocus: false,
-    staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
-    gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
   })
 
   const logoutMutation = useMutation({
@@ -57,12 +58,13 @@ export const useAuth = () => {
       }
     },
     onSuccess: () => {
-      // Clear authentication queries
-      queryClient.removeQueries({ queryKey: ["authenticated-user"] })
+      queryClient.setQueryData(["authenticated-user"], null)
+      queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
     },
     onError: (error) => {
       console.error("Logout error:", error)
-      queryClient.removeQueries({ queryKey: ["authenticated-user"] })
+      queryClient.setQueryData(["authenticated-user"], null)
+      queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
     },
   })
 
