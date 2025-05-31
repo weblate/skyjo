@@ -18,7 +18,7 @@ interface GamesListProps {
 
 export const GamesList = ({
   games,
-  isFetching,
+  isFetching = false,
   buttonLoading,
   setButtonLoading,
   onTagClick,
@@ -140,7 +140,7 @@ const PublicGameRow = ({
   )
 }
 
-const LoadingPublicGames = () => {
+export const LoadingPublicGames = () => {
   return Array.from({ length: 2 }).map((_, index) => (
     <Fragment key={`loading-game-${index}`}>
       <m.div

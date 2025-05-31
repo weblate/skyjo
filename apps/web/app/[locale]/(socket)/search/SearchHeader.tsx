@@ -11,7 +11,7 @@ interface SearchHeaderProps {
 
 export const SearchHeader = ({
   onRefresh,
-  isFetching,
+  isFetching = false,
   buttonLoading,
 }: SearchHeaderProps) => {
   const router = useRouter()
