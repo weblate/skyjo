@@ -62,7 +62,9 @@ const SelectAvatar = ({
               priority
             />
           ) : (
-            <div className="bg-zinc-200 rounded-3xl animate-pulse scale-50 size-16 md:size-20" />
+            <div className="flex items-center justify-center size-16 sm:size-20">
+              <div className="bg-zinc-200 rounded-lg animate-pulse size-12" />
+            </div>
           )}
         </m.div>
       </AnimatePresence>
