@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Locales } from "@skymo/shared/constants"
@@ -46,9 +47,10 @@ export async function generateMetadata(props: RulesLayoutProps) {
 
 export default async function RulesLayout({ children }: RulesLayoutProps) {
   return (
-    <>
+    <div className="flex flex-col p-4">
+      <Navbar />
       {children}
       <Footer />
-    </>
+    </div>
   )
 }
