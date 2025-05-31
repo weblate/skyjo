@@ -54,7 +54,7 @@ describe("GameService", () => {
 
     it("should not get the game if the client state version is sync with the server", async () => {
       const player = new Player(
-        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        { name: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
       const newGame = new Game({
@@ -77,7 +77,7 @@ describe("GameService", () => {
 
     it("should get the game if the client state version is null and it's the first time the client get the game", async () => {
       const player = new Player(
-        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        { name: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
       const newGame = new Game({
@@ -100,7 +100,7 @@ describe("GameService", () => {
 
     it("should get the game if the client state version is null and throw if it's not the first time the client get the game", async () => {
       const player = new Player(
-        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        { name: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
       const newGame = new Game({
@@ -125,7 +125,7 @@ describe("GameService", () => {
 
     it("should not get the game if the client state version is ahead of the server", async () => {
       const player = new Player(
-        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        { name: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
       const newGame = new Game({
@@ -152,7 +152,7 @@ describe("GameService", () => {
 
     it("should get the game if the client state version is behind the server", async () => {
       const player = new Player(
-        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        { name: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
       const newGame = new Game({
@@ -184,7 +184,7 @@ describe("GameService", () => {
 
     it("should send a game:fix event to the client if the client state version is the same as the game state version", async () => {
       const player = new Player(
-        { username: "player", avatar: CoreConstants.AVATARS.BEE },
+        { name: "player", avatar: CoreConstants.AVATARS.BEE },
         "socketId132312",
       )
       const newGame = new Game({
@@ -216,7 +216,7 @@ describe("GameService", () => {
   describe("onRevealCard", () => {
     it("should throw if player is not in the game", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         "socket2131123",
       )
       const game = new Game({
@@ -229,7 +229,7 @@ describe("GameService", () => {
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.TURTLE },
+        { name: "player2", avatar: CoreConstants.AVATARS.TURTLE },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -243,7 +243,7 @@ describe("GameService", () => {
 
     it("should do nothing if current game is processing reveal cards for AFK players", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -256,7 +256,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -275,7 +275,7 @@ describe("GameService", () => {
 
     it("should do nothing if game is not started", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -288,7 +288,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -305,7 +305,7 @@ describe("GameService", () => {
 
     it("should not reveal the card if player already revealed the right card amount", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -315,7 +315,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -341,7 +341,7 @@ describe("GameService", () => {
 
     it("should reveal the card", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -350,7 +350,7 @@ describe("GameService", () => {
       })
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -379,7 +379,7 @@ describe("GameService", () => {
   describe("onPickCard", () => {
     it("should throw if player is not in the game", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -391,7 +391,7 @@ describe("GameService", () => {
       socket.data.gameCode = game.code
 
       const opponent2 = new Player(
-        { username: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId9887",
       )
       game.addPlayer(opponent2)
@@ -411,7 +411,7 @@ describe("GameService", () => {
 
     it("should throw if current game is processing afk player move", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -424,7 +424,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -443,7 +443,7 @@ describe("GameService", () => {
 
     it("should throw if game is not started", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -456,7 +456,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -476,7 +476,7 @@ describe("GameService", () => {
 
     it("should throw if it's not the player turn", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -488,7 +488,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -512,7 +512,7 @@ describe("GameService", () => {
 
     it("should throw if it's not the waited move", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -524,7 +524,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -549,7 +549,7 @@ describe("GameService", () => {
 
     it("should pick a card from the draw pile", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -561,7 +561,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -582,7 +582,7 @@ describe("GameService", () => {
 
     it("should pick a card from the discard pile", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -594,7 +594,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -618,7 +618,7 @@ describe("GameService", () => {
   describe("onReplaceCard", () => {
     it("should throw if player is not in the game", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -630,7 +630,7 @@ describe("GameService", () => {
       socket.data.gameCode = game.code
 
       const opponent2 = new Player(
-        { username: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId9887",
       )
       game.addPlayer(opponent2)
@@ -650,7 +650,7 @@ describe("GameService", () => {
 
     it("should throw if current game is processing afk player move", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -663,7 +663,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -679,7 +679,7 @@ describe("GameService", () => {
     })
     it("should throw if game is not started", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -692,7 +692,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -712,7 +712,7 @@ describe("GameService", () => {
 
     it("should throw if it's not the player turn", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -725,7 +725,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -749,7 +749,7 @@ describe("GameService", () => {
 
     it("should throw if it's not the waited move", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -761,7 +761,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -786,7 +786,7 @@ describe("GameService", () => {
 
     it("should replace a card and finish the turn", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -800,7 +800,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -830,7 +830,7 @@ describe("GameService", () => {
   describe("onDiscardCard", () => {
     it("should throw if player is not in the game", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -842,7 +842,7 @@ describe("GameService", () => {
       socket.data.gameCode = game.code
 
       const opponent2 = new Player(
-        { username: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId9887",
       )
       game.addPlayer(opponent2)
@@ -862,7 +862,7 @@ describe("GameService", () => {
 
     it("should throw if current game is processing afk player move", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -875,7 +875,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -894,7 +894,7 @@ describe("GameService", () => {
 
     it("should throw if game is not started", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -907,7 +907,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -927,7 +927,7 @@ describe("GameService", () => {
 
     it("should throw if it's not the player turn", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -940,7 +940,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -964,7 +964,7 @@ describe("GameService", () => {
 
     it("should throw if it's not the waited move", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -976,7 +976,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1002,7 +1002,7 @@ describe("GameService", () => {
 
     it("should discard a card", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1014,7 +1014,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1040,7 +1040,7 @@ describe("GameService", () => {
   describe("onTurnCard", () => {
     it("should throw if player is not in the game", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -1052,7 +1052,7 @@ describe("GameService", () => {
       socket.data.gameCode = game.code
 
       const opponent2 = new Player(
-        { username: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "opponent2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId9887",
       )
       game.addPlayer(opponent2)
@@ -1072,7 +1072,7 @@ describe("GameService", () => {
 
     it("should throw if current game is processing afk player move", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1085,7 +1085,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1102,7 +1102,7 @@ describe("GameService", () => {
 
     it("should throw if game is not started", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1115,7 +1115,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1135,7 +1135,7 @@ describe("GameService", () => {
 
     it("should throw if it's not player turn", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1148,7 +1148,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1172,7 +1172,7 @@ describe("GameService", () => {
 
     it("should throw if it's not the waited move", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1184,7 +1184,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1209,7 +1209,7 @@ describe("GameService", () => {
 
     it("should turn a card and finish the turn ", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1222,7 +1222,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1245,7 +1245,7 @@ describe("GameService", () => {
 
     it("should turn a card, finish the turn and start a new round", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1258,7 +1258,7 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1291,7 +1291,7 @@ describe("GameService", () => {
 
     it("should turn a card, finish the turn and start a new round when first player to finish is disconnected", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1305,13 +1305,13 @@ describe("GameService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
 
       const opponent2 = new Player(
-        { username: "player3", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player3", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId113226",
       )
       game.addPlayer(opponent2)
@@ -1353,7 +1353,7 @@ describe("GameService", () => {
   describe("onReplay", () => {
     it("should throw if the game is not finished", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1374,7 +1374,7 @@ describe("GameService", () => {
 
     it("should ask to replay the game but not restart it", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1387,7 +1387,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -1406,7 +1406,7 @@ describe("GameService", () => {
 
     it("should ask to replay the game and restart it", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -1420,7 +1420,7 @@ describe("GameService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)

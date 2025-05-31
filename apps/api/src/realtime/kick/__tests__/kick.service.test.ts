@@ -89,15 +89,15 @@ describe("KickService", () => {
     socket = mockSocket()
 
     player = new Player(
-      { username: "player", avatar: CoreConstants.AVATARS.BEE },
+      { name: "player", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     opponent1 = new Player(
-      { username: "opponent1", avatar: CoreConstants.AVATARS.CRAB },
+      { name: "opponent1", avatar: CoreConstants.AVATARS.CRAB },
       RANDOM_SOCKET_ID(),
     )
     opponent2 = new Player(
-      { username: "opponent2", avatar: CoreConstants.AVATARS.DOG },
+      { name: "opponent2", avatar: CoreConstants.AVATARS.DOG },
       RANDOM_SOCKET_ID(),
     )
 
@@ -354,13 +354,13 @@ describe("KickService", () => {
       const _oldKickVoteJson = structuredClone(kickVote.toJson())
 
       const opponent3 = new Player(
-        { username: "opponent3", avatar: CoreConstants.AVATARS.DOG },
+        { name: "opponent3", avatar: CoreConstants.AVATARS.DOG },
         RANDOM_SOCKET_ID(),
       )
       game.addPlayer(opponent3)
 
       const opponent4 = new Player(
-        { username: "opponent4", avatar: CoreConstants.AVATARS.JELLYFISH },
+        { name: "opponent4", avatar: CoreConstants.AVATARS.JELLYFISH },
         RANDOM_SOCKET_ID(),
       )
       game.addPlayer(opponent4)
@@ -493,7 +493,7 @@ describe("KickService", () => {
       // Add more players to increase requiredVotes
       for (let i = 0; i < 3; i++) {
         const opponent = new Player(
-          { username: `opponent${i + 3}`, avatar: CoreConstants.AVATARS.DOG },
+          { name: `opponent${i + 3}`, avatar: CoreConstants.AVATARS.DOG },
           RANDOM_SOCKET_ID(),
         )
         game.addPlayer(opponent)

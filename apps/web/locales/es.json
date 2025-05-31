@@ -662,9 +662,9 @@
       }
     },
     "ReportDialog": {
-      "title": "Reportar {username}",
-      "description": "Reportar el nombre de usuario o un mensaje de {username} si parece inapropiado.",
-      "report-username": "Reportar usuario",
+      "title": "Reportar {name}",
+      "description": "Reportar el nombre de usuario o un mensaje de {name} si parece inapropiado.",
+      "report-name": "Reportar usuario",
       "report-message": "Reportar un mensaje",
       "select-message": "Seleccionar mensaje para reportar",
       "select-message-placeholder": "Seleccionar un mensaje",

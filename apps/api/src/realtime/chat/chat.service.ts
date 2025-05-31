@@ -7,7 +7,7 @@ import type { UserChatMessage } from "@skymo/shared/types"
 export class ChatService extends BaseService {
   async onMessage(
     socket: GameSocket,
-    { username, message }: Omit<UserChatMessage, "id" | "type">,
+    { name, message }: Omit<UserChatMessage, "id" | "type">,
   ) {
     const game = await this.getGame(socket.data.gameCode)
 
@@ -27,7 +27,7 @@ export class ChatService extends BaseService {
 
     const newMessage: UserChatMessage = {
       id: crypto.randomUUID(),
-      username,
+      name,
       message,
       type: CoreConstants.USER_MESSAGE_TYPE,
     }
@@ -38,7 +38,7 @@ export class ChatService extends BaseService {
     socket.volatile.emit("message", newMessage)
   }
 
-  async onWizz(socket: GameSocket, targetUsername: string) {
+  async onWizz(socket: GameSocket, targetName: string) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
@@ -56,6 +56,6 @@ export class ChatService extends BaseService {
 
     socket
       .to(socket.data.gameCode)
-      .volatile.emit("wizz", targetUsername, player.name)
+      .volatile.emit("wizz", targetName, player.name)
   }
 }

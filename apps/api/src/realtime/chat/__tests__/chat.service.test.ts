@@ -24,7 +24,7 @@ describe("ChatService", () => {
   describe("onMessage", () => {
     it("should throw if player is not in the game", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -38,7 +38,7 @@ describe("ChatService", () => {
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       await expect(
-        service.onMessage(socket, { username: "player2", message: "Hello!" }),
+        service.onMessage(socket, { name: "player2", message: "Hello!" }),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_NOT_FOUND)
 
       expect(socket.emit).not.toHaveBeenCalled()
@@ -46,7 +46,7 @@ describe("ChatService", () => {
 
     it("should send a message", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -58,7 +58,7 @@ describe("ChatService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -66,7 +66,7 @@ describe("ChatService", () => {
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
       await service.onMessage(socket, {
-        username: "player2",
+        name: "player2",
         message: "Hello!",
       })
 
@@ -77,7 +77,7 @@ describe("ChatService", () => {
   describe("onWizz", () => {
     it("should throw if player is not in the game", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -99,7 +99,7 @@ describe("ChatService", () => {
 
     it("should send a message", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -111,7 +111,7 @@ describe("ChatService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)

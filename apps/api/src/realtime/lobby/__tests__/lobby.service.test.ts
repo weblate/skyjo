@@ -36,7 +36,7 @@ describe("LobbyService", () => {
   describe("onCreate", () => {
     it("should create a new private game", async () => {
       const player: CreatePlayer = {
-        username: "player1",
+        name: "player1",
         avatar: CoreConstants.AVATARS.BEE,
       }
 
@@ -62,7 +62,7 @@ describe("LobbyService", () => {
         data: expect.arrayContaining([
           expect.objectContaining({
             type: CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED,
-            username: player.username,
+            name: player.name,
           }),
         ]),
       })
@@ -83,7 +83,7 @@ describe("LobbyService", () => {
 
     it("should create a new public game", async () => {
       const player: CreatePlayer = {
-        username: "player1",
+        name: "player1",
         avatar: CoreConstants.AVATARS.BEE,
       }
 
@@ -109,7 +109,7 @@ describe("LobbyService", () => {
         data: expect.arrayContaining([
           expect.objectContaining({
             type: CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED,
-            username: player.username,
+            name: player.name,
           }),
         ]),
       })
@@ -132,11 +132,11 @@ describe("LobbyService", () => {
   describe("onJoin", () => {
     it("should throw if it's full", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const opponent2 = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
@@ -150,7 +150,7 @@ describe("LobbyService", () => {
       game.addPlayer(opponent2)
 
       const player: CreatePlayer = {
-        username: "player2",
+        name: "player2",
         avatar: CoreConstants.AVATARS.BEE,
       }
 
@@ -165,7 +165,7 @@ describe("LobbyService", () => {
 
     it("should throw if the player is banned", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
@@ -175,10 +175,10 @@ describe("LobbyService", () => {
       })
       game.addPlayer(opponent)
 
-      game.bannedUsernames = ["playerNameXX"]
+      game.bannedNames = ["playerNameXX"]
 
       const player: CreatePlayer = {
-        username: "playerNameXX",
+        name: "playerNameXX",
         avatar: CoreConstants.AVATARS.BEE,
       }
 
@@ -193,11 +193,11 @@ describe("LobbyService", () => {
 
     it("sould throw if game already started", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const opponent2 = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
@@ -212,7 +212,7 @@ describe("LobbyService", () => {
       await game.start()
 
       const player: CreatePlayer = {
-        username: "player2",
+        name: "player2",
         avatar: CoreConstants.AVATARS.BEE,
       }
 
@@ -227,7 +227,7 @@ describe("LobbyService", () => {
 
     it("should join the game", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
@@ -239,7 +239,7 @@ describe("LobbyService", () => {
       game.addPlayer(opponent)
 
       const player: CreatePlayer = {
-        username: "player2",
+        name: "player2",
         avatar: CoreConstants.AVATARS.BEE,
       }
 
@@ -268,7 +268,7 @@ describe("LobbyService", () => {
         data: expect.arrayContaining([
           expect.objectContaining({
             type: CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_JOINED,
-            username: player.username,
+            name: player.name,
           }),
         ]),
       })
@@ -291,7 +291,7 @@ describe("LobbyService", () => {
   describe("onResetSettings", () => {
     it("should throw if user is not host", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
@@ -302,7 +302,7 @@ describe("LobbyService", () => {
       game.addPlayer(opponent)
 
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
@@ -319,7 +319,7 @@ describe("LobbyService", () => {
 
     it("should throw if settings are already confirmed for a public game", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -329,7 +329,7 @@ describe("LobbyService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       game.addPlayer(opponent)
@@ -348,7 +348,7 @@ describe("LobbyService", () => {
 
     it("should reset game settings if settings are confirmed for a private game", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -368,7 +368,7 @@ describe("LobbyService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       game.addPlayer(opponent)
@@ -386,7 +386,7 @@ describe("LobbyService", () => {
 
     it("should reset game settings", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -409,7 +409,7 @@ describe("LobbyService", () => {
   describe("onUpdateMaxPlayers", () => {
     it("should throw if user is not host", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
@@ -420,7 +420,7 @@ describe("LobbyService", () => {
       game.addPlayer(opponent)
 
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
@@ -437,7 +437,7 @@ describe("LobbyService", () => {
 
     it("should update max players settings if game is private", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -447,7 +447,7 @@ describe("LobbyService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       game.addPlayer(opponent)
@@ -467,7 +467,7 @@ describe("LobbyService", () => {
     })
     it("should update max players settings if game is public and not confirmed", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -478,7 +478,7 @@ describe("LobbyService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       game.addPlayer(opponent)
@@ -498,7 +498,7 @@ describe("LobbyService", () => {
     })
     it("should update max players settings if game is public and confirmed", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -509,7 +509,7 @@ describe("LobbyService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       game.addPlayer(opponent)
@@ -532,7 +532,7 @@ describe("LobbyService", () => {
   describe("onUpdateSettings", () => {
     it("should throw if user is not host", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
 
@@ -543,7 +543,7 @@ describe("LobbyService", () => {
       game.addPlayer(opponent)
 
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
@@ -570,7 +570,7 @@ describe("LobbyService", () => {
 
     it("should throw if settings are already confirmed for a public game", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -580,7 +580,7 @@ describe("LobbyService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       game.addPlayer(opponent)
@@ -603,7 +603,7 @@ describe("LobbyService", () => {
 
     it("should update game settings if settings are confirmed for a private game", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -613,7 +613,7 @@ describe("LobbyService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       game.addPlayer(opponent)
@@ -637,7 +637,7 @@ describe("LobbyService", () => {
 
     it("should change one game setting", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -668,7 +668,7 @@ describe("LobbyService", () => {
 
     it("should change multiple game settings", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -706,7 +706,7 @@ describe("LobbyService", () => {
   describe("onToggleSettingsValidation", () => {
     it("should do nothing if game is private", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -728,7 +728,7 @@ describe("LobbyService", () => {
 
     it("should set the settings validation to true", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -750,11 +750,11 @@ describe("LobbyService", () => {
   describe("onStartCountdown", () => {
     it("should throw if user is not host", async () => {
       const host = new Player(
-        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "host", avatar: CoreConstants.AVATARS.PENGUIN },
         "host-socket",
       )
       const notHost = new Player(
-        { username: "notHost", avatar: CoreConstants.AVATARS.BEE },
+        { name: "notHost", avatar: CoreConstants.AVATARS.BEE },
         TEST_SOCKET_ID,
       )
       const game = new Game({ hostId: host.id, settings: new Settings(false) })
@@ -770,7 +770,7 @@ describe("LobbyService", () => {
 
     it("should throw if countdown already exists", async () => {
       const host = new Player(
-        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "host", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({ hostId: host.id, settings: new Settings(false) })
@@ -789,7 +789,7 @@ describe("LobbyService", () => {
 
     it("should call startCountdown if host and no countdown exists", async () => {
       const host = new Player(
-        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "host", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({ hostId: host.id, settings: new Settings(false) })
@@ -811,11 +811,11 @@ describe("LobbyService", () => {
   describe("onCancelCountdown", () => {
     it("should throw if user is not host", async () => {
       const host = new Player(
-        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "host", avatar: CoreConstants.AVATARS.PENGUIN },
         "host-socket",
       )
       const notHost = new Player(
-        { username: "notHost", avatar: CoreConstants.AVATARS.BEE },
+        { name: "notHost", avatar: CoreConstants.AVATARS.BEE },
         TEST_SOCKET_ID,
       )
       const game = new Game({ hostId: host.id, settings: new Settings(false) })
@@ -831,7 +831,7 @@ describe("LobbyService", () => {
 
     it("should call cancelCountdown if host", async () => {
       const host = new Player(
-        { username: "host", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "host", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({ hostId: host.id, settings: new Settings(false) })

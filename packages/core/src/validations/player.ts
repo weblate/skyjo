@@ -2,7 +2,7 @@ import { z } from "zod"
 import { Constants } from "../constants.js"
 
 export const createPlayer = z.object({
-  username: z
+  name: z
     .string()
     .min(1)
     .transform((val) => val.slice(0, 20).replace(/ /g, "_")),

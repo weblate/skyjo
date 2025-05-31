@@ -41,7 +41,7 @@ export interface GameRedisDb {
   lastTurnStatus: LastTurnStatus
   firstToFinishPlayerId: string | null
   bannedPlayerIds: string[]
-  bannedUsernames: string[]
+  bannedNames: string[]
   stateVersion: number
   createdAt: Date
   updatedAt: Date

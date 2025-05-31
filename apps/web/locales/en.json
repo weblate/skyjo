@@ -204,7 +204,7 @@
           "game-data": {
             "title": "Game Data",
             "description": "We temporarily store:",
-            "items": "Usernames and avatar choices;;Game elements and progress"
+            "items": "Names and avatar choices;;Game elements and progress"
           },
           "local-storage-data": {
             "title": "Local Storage Data",
@@ -375,7 +375,7 @@
           "description": "Shown to other players in games"
         },
         "username": {
-          "label": "Username",
+          "label": "Name",
           "placeholder": "jeff",
           "description": "For login and profile"
         },
@@ -743,12 +743,12 @@
     },
     "Avatar": {
       "context-menu": {
-        "report": "Report {username}",
-        "kick": "Kick {username}",
-        "vote-to-kick": "Vote to kick {username}",
-        "ban": "Ban {username}",
-        "mute": "Mute {username}",
-        "unmute": "Unmute {username}"
+        "report": "Report {name}",
+        "kick": "Kick {name}",
+        "vote-to-kick": "Vote to kick {name}",
+        "ban": "Ban {name}",
+        "mute": "Mute {name}",
+        "unmute": "Unmute {name}"
       }
     },
     "KickVote": {
@@ -812,9 +812,9 @@
       }
     },
     "ReportDialog": {
-      "title": "Report {username}",
-      "description": "Report the username or a message from {username} if it seems inappropriate.",
-      "report-username": "Report the username",
+      "title": "Report {name}",
+      "description": "Report the name or a message from {name} if it seems inappropriate.",
+      "report-name": "Report the name",
       "report-message": "Report a message",
       "select-message": "Select the message to report",
       "select-message-placeholder": "Select a message",
@@ -869,17 +869,17 @@
       "game-ended": "Game over!"
     },
     "chat": {
-      "player-joined": "{username} joined the game",
-      "player-left": "{username} left the game",
-      "player-reconnect": "{username} reconnected to the game",
+      "player-joined": "{name} joined the game",
+      "player-left": "{name} left the game",
+      "player-reconnect": "{name} reconnected to the game",
       "argument-required": "One or more arguments are required for command: {command}",
-      "player-already-muted": "{username} is already muted",
-      "player-muted": "{username} is now muted",
-      "player-not-muted": "{username} is not muted",
-      "player-unmuted": "{username} is no longer muted",
-      "wizz-sent": "You have sent a wizz to {targetUsername}!",
-      "wizz-self": "You have been wizz by {initiatorUsername}!",
-      "wizz-other": "{initiatorUsername} has wizz {targetUsername} !"
+      "player-already-muted": "{name} is already muted",
+      "player-muted": "{name} is now muted",
+      "player-not-muted": "{name} is not muted",
+      "player-unmuted": "{name} is no longer muted",
+      "wizz-sent": "You have sent a wizz to {targetName}!",
+      "wizz-self": "You have been wizz by {initiatorName}!",
+      "wizz-other": "{initiatorName} has wizz {targetName} !"
     },
     "avatar": {
       "bee": "bee",
@@ -965,7 +965,7 @@
       },
       "report-against-you": {
         "title": "You have been kicked due to a report",
-        "description": "Your username or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
+        "description": "Your name or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
       }
     }
   }

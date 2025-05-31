@@ -18,7 +18,7 @@ describe("Player", () => {
 
   beforeEach(() => {
     player = new Player(
-      { username: "username", avatar: Constants.AVATARS.BEE },
+      { name: "name", avatar: Constants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     player.cards = [
@@ -47,6 +47,7 @@ describe("Player", () => {
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
+      userId: null,
       cards: [],
     }
 
@@ -75,6 +76,7 @@ describe("Player", () => {
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
+      userId: null,
       cards: [
         [new Card(0), new Card(1), new Card(2)],
         [new Card(3), new Card(4), new Card(5)],
@@ -401,7 +403,7 @@ describe("Player", () => {
 
       expect(playerToJson).toStrictEqual({
         id: player.id,
-        name: "username",
+        name: "name",
         socketId: TEST_SOCKET_ID,
         avatar: Constants.AVATARS.BEE,
         cards: player.cards.map((column) =>
@@ -410,6 +412,7 @@ describe("Player", () => {
         turnStartTime: null,
         score: 0,
         scores: [],
+        userId: null,
         wantsReplay: false,
         connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
       })

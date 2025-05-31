@@ -24,10 +24,10 @@ const AVATAR_KEY = "Avatar-index"
 export const AVATARS_ARRAY = Object.values(CoreConstants.AVATARS)
 
 interface UserContext {
-  username: string
+  name: string
   avatarIndex: number
   playerId: string
-  setUsername: Dispatch<SetStateAction<string>>
+  setName: Dispatch<SetStateAction<string>>
   setAvatarIndex: Dispatch<SetStateAction<number>>
   setPlayerId: Dispatch<SetStateAction<string>>
   saveUserInLocalStorage: () => CreatePlayer
@@ -38,7 +38,7 @@ interface UserContext {
 const UserContext = createContext<UserContext | undefined>(undefined)
 
 const UserProvider = ({ children }: PropsWithChildren) => {
-  const [preferredUsername, setPreferredUsername] = useLocalStorage<string>(
+  const [preferredName, setPreferredName] = useLocalStorage<string>(
     USERNAME_KEY,
     "",
     { raw: true },
@@ -46,42 +46,42 @@ const UserProvider = ({ children }: PropsWithChildren) => {
   const [preferredAvatarIndex, setPreferredAvatarIndex] =
     useLocalStorage<number>(AVATAR_KEY)
 
-  const [username, setUsername] = useState<string>("")
+  const [name, setName] = useState<string>("")
   const [avatarIndex, setAvatarIndex] = useState<number>(-1)
   const [playerId, setPlayerId] = useState<string>("")
 
   useEffect(() => {
     if (localStorage) {
-      if (preferredUsername) setUsername(preferredUsername)
+      if (preferredName) setName(preferredName)
       if (preferredAvatarIndex) setAvatarIndex(preferredAvatarIndex)
       else {
         const randomIndex = Math.floor(Math.random() * AVATARS_ARRAY.length)
         setAvatarIndex(randomIndex)
       }
     }
-  }, [preferredUsername, preferredAvatarIndex])
+  }, [preferredName, preferredAvatarIndex])
 
   const getAvatar = () => {
     return AVATARS_ARRAY[avatarIndex] ?? CoreConstants.AVATARS.BEE
   }
 
   const saveUserInLocalStorage = () => {
-    const player = createPlayer.parse({ username, avatar: getAvatar() })
-    setPreferredUsername(player.username)
+    const player = createPlayer.parse({ name, avatar: getAvatar() })
+    setPreferredName(player.name)
     setPreferredAvatarIndex(avatarIndex)
 
     return player
   }
 
   const getUser = () => {
-    return { username: username ?? "Ano", avatar: getAvatar() }
+    return { name: name ?? "Ano", avatar: getAvatar() }
   }
 
   const value = useMemo(
     () => ({
-      username,
+      name,
       avatarIndex,
-      setUsername,
+      setName,
       setAvatarIndex,
       saveUserInLocalStorage,
       getAvatar,
@@ -89,7 +89,7 @@ const UserProvider = ({ children }: PropsWithChildren) => {
       playerId,
       setPlayerId,
     }),
-    [username, avatarIndex, playerId],
+    [name, avatarIndex, playerId],
   )
 
   return <UserContext.Provider value={value}>{children}</UserContext.Provider>

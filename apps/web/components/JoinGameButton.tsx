@@ -25,7 +25,7 @@ export const JoinGameButton = ({
   onError,
 }: JoinGameButtonProps) => {
   const t = useTranslations("components.GameLobbyButtons")
-  const { getUser, username } = useUser()
+  const { getUser, name } = useUser()
   const { joinGame } = useSocket()
 
   const handleJoiningGame = async () => {
@@ -39,7 +39,7 @@ export const JoinGameButton = ({
   return (
     <Button
       onClick={handleJoiningGame}
-      disabled={!username}
+      disabled={!name}
       className={cn(className)}
       loading={loading}
       title={t("join-game-button")}

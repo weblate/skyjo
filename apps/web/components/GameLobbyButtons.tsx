@@ -18,7 +18,7 @@ const GameLobbyButtons = ({
   hideReconnectButton = false,
 }: GameLobbyButtonsProps) => {
   const { reconnectGame, joinGame } = useSocket()
-  const { getUser, username, saveUserInLocalStorage } = useUser()
+  const { getUser, name, saveUserInLocalStorage } = useUser()
   const t = useTranslations("components.GameLobbyButtons")
   const router = useRouter()
 
@@ -75,7 +75,7 @@ const GameLobbyButtons = ({
         <Button
           onClick={() => handleAction("reconnect-game")}
           className="w-full mb-4"
-          disabled={!username}
+          disabled={!name}
           loading={loading}
           title={t("reconnect-game-button")}
         >
@@ -85,7 +85,7 @@ const GameLobbyButtons = ({
       {hasGameCode && !lastGame && (
         <Button
           onClick={() => handleAction("join-game")}
-          disabled={!username}
+          disabled={!name}
           className="w-full mb-4"
           loading={loading}
           title={t("join-game-button")}
@@ -97,7 +97,7 @@ const GameLobbyButtons = ({
         onClick={() => handleAction("find-game")}
         className="w-full"
         loading={loading}
-        disabled={!username}
+        disabled={!name}
         title={t("find-game-button")}
       >
         {t("find-game-button")}
@@ -105,7 +105,7 @@ const GameLobbyButtons = ({
       <Button
         onClick={handleGameCreation}
         className="w-full"
-        disabled={!username}
+        disabled={!name}
         loading={loading}
         title={t("create-game-button", { type: "private" })}
       >

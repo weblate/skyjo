@@ -103,7 +103,7 @@ export abstract class BaseService {
   ) {
     const message: ServerChatMessage = {
       id: crypto.randomUUID(),
-      username: playerName,
+      name: playerName,
       message: serverMessageType,
       type: serverMessageType,
     }

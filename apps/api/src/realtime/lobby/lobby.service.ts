@@ -42,7 +42,7 @@ export class LobbyService extends BaseService {
           socketId: socket.id,
           gameCode: game.code,
           playerId: player.id,
-          username: player.name,
+          name: player.name,
         },
       })
     }

@@ -54,13 +54,13 @@ export class Player implements PlayerInterface {
 
   constructor(
     playerToCreate: CreatePlayer & { userId: string | null } = {
-      username: "",
+      name: "",
       avatar: Constants.AVATARS.BEE,
       userId: null,
     },
     socketId: string = "",
   ) {
-    this.name = playerToCreate.username
+    this.name = playerToCreate.name
     this.socketId = socketId
     this.avatar = playerToCreate.avatar
     this.userId = playerToCreate.userId ?? null

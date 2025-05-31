@@ -2,9 +2,9 @@ import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
 import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import {
   type SendChatMessage,
-  type WizzPlayerUsername,
+  type WizzPlayerName,
   sendChatMessage,
-  wizzPlayerUsername,
+  wizzPlayerName,
 } from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 import type { GameSocket } from "../types/gameSocket.js"
@@ -39,12 +39,12 @@ const chatRouter = (socket: GameSocket) => {
 
   socket.on(
     "wizz",
-    socketErrorWrapper(async (data: WizzPlayerUsername) => {
+    socketErrorWrapper(async (data: WizzPlayerName) => {
       await consumeSocketRateLimiter(rateLimiterWizz)(socket)
 
-      const targetUsername = wizzPlayerUsername.parse(data)
+      const targetName = wizzPlayerName.parse(data)
 
-      await instance.onWizz(socket, targetUsername)
+      await instance.onWizz(socket, targetName)
     }),
   )
 }

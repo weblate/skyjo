@@ -33,11 +33,11 @@ describe("ReportService", () => {
 
     beforeEach(() => {
       player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       target = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game = new Game({
@@ -107,7 +107,7 @@ describe("ReportService", () => {
       const message: UserChatMessage = {
         id: "test-message-id",
         message: "Hello!",
-        username: "player2",
+        name: "player2",
         type: "message",
       }
       getMessageByIdMock.mockResolvedValue(message)
@@ -124,7 +124,7 @@ describe("ReportService", () => {
       const message: UserChatMessage = {
         id: "test-message-id",
         message: "Hello!",
-        username: "player2",
+        name: "player2",
         type: "message",
       }
       getMessageByIdMock.mockResolvedValue(message)
@@ -141,7 +141,7 @@ describe("ReportService", () => {
       const message: UserChatMessage = {
         id: "test-message-id",
         message: "Bad content",
-        username: "player2",
+        name: "player2",
         type: "message",
       }
       getMessageByIdMock.mockResolvedValue(message)
@@ -167,7 +167,7 @@ describe("ReportService", () => {
     })
 
     it("should use player name as text when report type is not message", async () => {
-      report.type = "username"
+      report.type = "name"
 
       service["checkTextSafety"] = vi.fn().mockResolvedValue({ safe: true })
 
@@ -178,7 +178,7 @@ describe("ReportService", () => {
     })
 
     it("should ban player if player name is not safe", async () => {
-      report.type = "username"
+      report.type = "name"
 
       service["checkTextSafety"] = vi
         .fn()

@@ -22,10 +22,10 @@ const chatMessageClasses = cva("text-sm text-wrap break-words md:break-all", {
   },
 })
 type ChatMessageProps = Readonly<ChatMessage> & {
-  username?: string
+  name?: string
 }
 
-const ChatMessage = ({ username, message, type, id }: ChatMessageProps) => {
+const ChatMessage = ({ name, message, type, id }: ChatMessageProps) => {
   const { game, opponents } = useGame()
   const t = useTranslations("components.ChatMessage")
   const players = game?.players.map((p) => p.name) ?? []
@@ -50,9 +50,9 @@ const ChatMessage = ({ username, message, type, id }: ChatMessageProps) => {
     })
   }
 
-  const opponent = getOpponentByName(username)
+  const opponent = getOpponentByName(name)
 
-  if (type === "message" && username && opponent) {
+  if (type === "message" && name && opponent) {
     return (
       <ContextMenu>
         <ContextMenuTrigger asChild>
@@ -68,7 +68,7 @@ const ChatMessage = ({ username, message, type, id }: ChatMessageProps) => {
             className={chatMessageClasses({ type })}
           >
             <span className="font-semibold">
-              {username}
+              {name}
               {t("separator")}
             </span>
             {highlightTags(message)}
@@ -91,9 +91,9 @@ const ChatMessage = ({ username, message, type, id }: ChatMessageProps) => {
       }}
       className={chatMessageClasses({ type })}
     >
-      {username && (
+      {name && (
         <span className="font-semibold">
-          {username}
+          {name}
           {t("separator")}
         </span>
       )}

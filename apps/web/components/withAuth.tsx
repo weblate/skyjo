@@ -22,7 +22,7 @@ const withAuth = <P extends object>(
 
     const checkAuth = async () => {
       const player = getUser()
-      if (player.username && player.avatar && socket) setVerified(true)
+      if (player.name && player.avatar && socket) setVerified(true)
       else if (params?.code) router.replace(`/?gameCode=${params?.code}`)
       else router.replace("/")
     }

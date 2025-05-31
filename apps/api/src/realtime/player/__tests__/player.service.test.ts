@@ -51,7 +51,7 @@ describe("PlayerService", () => {
 
     it("should set the player connection status to lost when game is playing", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -77,7 +77,7 @@ describe("PlayerService", () => {
 
     it("should disconnect the player when game is in lobby", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -106,7 +106,7 @@ describe("PlayerService", () => {
 
     it("should disconnect the player when game is stopped", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -132,7 +132,7 @@ describe("PlayerService", () => {
 
     it("should cancel countdown if game is in lobby and countdown exists", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -159,7 +159,7 @@ describe("PlayerService", () => {
 
     it("should not cancel countdown if game is in lobby and countdown does not exist", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -202,7 +202,7 @@ describe("PlayerService", () => {
 
     it("should throw if player is not in the game", async () => {
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       const game = new Game({
@@ -214,7 +214,7 @@ describe("PlayerService", () => {
       socket.data.gameCode = game.code
 
       const opponent2 = new Player(
-        { username: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
+        { name: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
         "socketId9887",
       )
       game.addPlayer(opponent2)
@@ -229,7 +229,7 @@ describe("PlayerService", () => {
 
     it("should remove the player from the game if the game is in lobby", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -241,7 +241,7 @@ describe("PlayerService", () => {
       game.addPlayer(opponent)
 
       const player = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
@@ -259,7 +259,7 @@ describe("PlayerService", () => {
 
     it("should set the player to leave state and let the game goes", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -271,7 +271,7 @@ describe("PlayerService", () => {
       game.addPlayer(opponent)
 
       const player = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
@@ -279,7 +279,7 @@ describe("PlayerService", () => {
       socket.data.playerId = player.id
 
       const opponent2 = new Player(
-        { username: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
+        { name: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
         "socketId9887",
       )
       game.addPlayer(opponent2)
@@ -313,7 +313,7 @@ describe("PlayerService", () => {
 
     it("should remove the player if the game is finished", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -325,7 +325,7 @@ describe("PlayerService", () => {
       game.addPlayer(opponent)
 
       const player = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
@@ -357,7 +357,7 @@ describe("PlayerService", () => {
 
     it("should remove the player and the game if they are no more players", async () => {
       const player = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -383,7 +383,7 @@ describe("PlayerService", () => {
 
     it("should cancel countdown if game is in lobby and countdown exists", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -410,7 +410,7 @@ describe("PlayerService", () => {
 
     it("should not cancel countdown if game is in lobby and countdown does not exist", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -439,7 +439,7 @@ describe("PlayerService", () => {
   describe("onReconnect", () => {
     it("should throw if player cannot reconnect", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -453,7 +453,7 @@ describe("PlayerService", () => {
       socket.data.playerId = player.id
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -478,7 +478,7 @@ describe("PlayerService", () => {
 
     it("should reconnect the player if in the time limit", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -490,7 +490,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -526,7 +526,7 @@ describe("PlayerService", () => {
 
     it("should reconnect the player if no time limit", async () => {
       const player = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player1", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       const game = new Game({
@@ -536,7 +536,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
 
       const opponent = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socketId132312",
       )
       game.addPlayer(opponent)
@@ -569,7 +569,7 @@ describe("PlayerService", () => {
       vi.useFakeTimers()
 
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -579,13 +579,13 @@ describe("PlayerService", () => {
       game.addPlayer(opponent)
 
       const opponent2 = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         "socketId9887",
       )
       game.addPlayer(opponent2)
 
       const player = new Player(
-        { username: "player3", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player3", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
@@ -612,7 +612,7 @@ describe("PlayerService", () => {
 
     it("should set the player as connected and clear the disconnection timeout", async () => {
       const opponent = new Player(
-        { username: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
       )
       const game = new Game({
@@ -622,13 +622,13 @@ describe("PlayerService", () => {
       game.addPlayer(opponent)
 
       const opponent2 = new Player(
-        { username: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
         "socketId9887",
       )
       game.addPlayer(opponent2)
 
       const player = new Player(
-        { username: "player3", avatar: CoreConstants.AVATARS.PENGUIN },
+        { name: "player3", avatar: CoreConstants.AVATARS.PENGUIN },
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)

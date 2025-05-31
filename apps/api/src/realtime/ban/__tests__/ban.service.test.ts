@@ -34,15 +34,15 @@ describe("BanService", () => {
     socket = mockSocket()
 
     player = new Player(
-      { username: "player", avatar: CoreConstants.AVATARS.BEE },
+      { name: "player", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     opponent1 = new Player(
-      { username: "opponent1", avatar: CoreConstants.AVATARS.CRAB },
+      { name: "opponent1", avatar: CoreConstants.AVATARS.CRAB },
       RANDOM_SOCKET_ID(),
     )
     opponent2 = new Player(
-      { username: "opponent2", avatar: CoreConstants.AVATARS.DOG },
+      { name: "opponent2", avatar: CoreConstants.AVATARS.DOG },
       RANDOM_SOCKET_ID(),
     )
 
@@ -140,7 +140,7 @@ describe("BanService", () => {
       expect(updateAndSendGameSpy).toHaveBeenCalled()
     })
 
-    it("should add player id and username to ban lists", async () => {
+    it("should add player id and name to ban lists", async () => {
       // Make game private
       game.settings.private = true
 
@@ -149,14 +149,14 @@ describe("BanService", () => {
 
       // Ensure ban lists are empty initially
       expect(game.bannedPlayerIds).toHaveLength(0)
-      expect(game.bannedUsernames).toHaveLength(0)
+      expect(game.bannedNames).toHaveLength(0)
 
       // Execute the ban
       await service.onBanPlayer(socket, opponent2.id)
 
       // Verify ban lists were updated
       expect(game.bannedPlayerIds).toContain(opponent2.id)
-      expect(game.bannedUsernames).toContain(opponent2.name)
+      expect(game.bannedNames).toContain(opponent2.name)
     })
 
     it("should update the host if banned player was the host", async () => {

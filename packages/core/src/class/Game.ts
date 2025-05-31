@@ -29,7 +29,7 @@ interface GameInterface {
   roundPhase: RoundPhase
 
   bannedPlayerIds: string[]
-  bannedUsernames: string[]
+  bannedNames: string[]
 
   stateVersion: number
   createdAt: Date
@@ -62,7 +62,7 @@ export class Game implements GameInterface {
   firstToFinishPlayerId: string | null = null
 
   bannedPlayerIds: string[] = []
-  bannedUsernames: string[] = []
+  bannedNames: string[] = []
 
   processingAfk: boolean = false
 
@@ -100,7 +100,7 @@ export class Game implements GameInterface {
     this.firstToFinishPlayerId = game.firstToFinishPlayerId
 
     this.bannedPlayerIds = game.bannedPlayerIds
-    this.bannedUsernames = game.bannedUsernames
+    this.bannedNames = game.bannedNames
 
     this.stateVersion = game.stateVersion
     this.processingAfk = game.processingAfk
@@ -206,8 +206,8 @@ export class Game implements GameInterface {
     }
 
     const playerName = target.name
-    if (playerName && !this.bannedUsernames.includes(playerName)) {
-      this.bannedUsernames.push(playerName)
+    if (playerName && !this.bannedNames.includes(playerName)) {
+      this.bannedNames.push(playerName)
     }
   }
 
@@ -216,7 +216,7 @@ export class Game implements GameInterface {
     if (this.bannedPlayerIds.includes(playerId)) return true
 
     const playerName = player.name
-    if (this.bannedUsernames.includes(playerName)) return true
+    if (this.bannedNames.includes(playerName)) return true
 
     return false
   }
@@ -508,7 +508,7 @@ export class Game implements GameInterface {
       lastTurnStatus: this.lastTurnStatus,
       firstToFinishPlayerId: this.firstToFinishPlayerId,
       bannedPlayerIds: this.bannedPlayerIds,
-      bannedUsernames: this.bannedUsernames,
+      bannedNames: this.bannedNames,
       stateVersion: this.stateVersion,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
