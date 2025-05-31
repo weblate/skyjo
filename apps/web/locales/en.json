@@ -424,6 +424,9 @@
         "ranking": "Ranking"
       }
     },
+    "LoginButton": {
+      "login": "Join the Fun!"
+    },
     "AppearanceSelect": {
       "light": "Light",
       "dark": "Dark",
