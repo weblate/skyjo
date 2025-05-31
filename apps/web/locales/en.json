@@ -418,6 +418,12 @@
     "Banner": {
       "title": "I need  <gform>your feedback</gform>  to shape the future of Skymo!"
     },
+    "Navbar": {
+      "links": {
+        "rules": "Rules",
+        "ranking": "Ranking"
+      }
+    },
     "AppearanceSelect": {
       "light": "Light",
       "dark": "Dark",
