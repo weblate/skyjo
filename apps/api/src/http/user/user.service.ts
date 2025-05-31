@@ -50,6 +50,7 @@ export async function createUser({
       locale: userTable.locale,
       avatar: userTable.avatar,
       emailVerified: userTable.emailVerified,
+      onboardingCompleted: userTable.onboardingCompleted,
       createdAt: userTable.createdAt,
       updatedAt: userTable.updatedAt,
     })
