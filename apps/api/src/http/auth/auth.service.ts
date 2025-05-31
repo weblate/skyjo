@@ -140,7 +140,10 @@ export async function loginGoogle(
 }
 
 export async function logout(c: Context) {
-  const sessionId = getCookie(c, SESSION_COOKIE_NAME)
+  const sessionToken = getCookie(c, SESSION_COOKIE_NAME)
+  if (!sessionToken) return
+
+  const sessionId = createSessionId(sessionToken)
 
   deleteCookie(c, SESSION_COOKIE_NAME)
 
