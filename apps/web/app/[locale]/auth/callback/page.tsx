@@ -4,11 +4,13 @@ import { Locales } from "@skymo/shared/constants"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-export interface OAuthCallbackServerPageProps {
-  children: React.ReactNode
-  params: Promise<{ locale: Locales }>
+interface OAuthCallbackLayoutParams {
+  locale: Locales
 }
-export default async function OAuthCallbackServerPage(
+type OAuthCallbackServerPageProps = {
+  params: Promise<OAuthCallbackLayoutParams>
+}
+export default async function OauthCallbackServerPage(
   props: OAuthCallbackServerPageProps,
 ) {
   const { locale } = await props.params

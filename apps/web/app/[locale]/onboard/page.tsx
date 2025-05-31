@@ -1,7 +1,7 @@
 import OnboardingPage from "@/app/[locale]/onboard/OnboardingPage"
 
-const OnboardingServerPageProps = () => {
+const OnboardingServerPage = () => {
   return <OnboardingPage />
 }
 
-export default OnboardingServerPageProps 
+export default OnboardingServerPage
