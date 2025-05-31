@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Locales } from "@skymo/shared/constants"
@@ -51,9 +52,10 @@ export default async function PrivacyPolicyLayout({
   children,
 }: PrivacyPolicyLayoutProps) {
   return (
-    <>
+    <div className="flex flex-col pt-4">
+      <Navbar />
       {children}
       <Footer />
-    </>
+    </div>
   )
 }
