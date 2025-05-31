@@ -369,12 +369,7 @@
       "description": "La siguiente ronda comenzará en unos segundos…"
     },
     "SettingsDialog": {
-      "general": {
-        "appearance": "Apariencia",
-        "title": "General",
-        "language": "Idioma",
-        "language-warn": "Cambiar solo en la página principal"
-      },
+      "title": "Ajustes",
       "audio": {
         "title": "Sonido",
         "toggle": {
@@ -383,6 +378,23 @@
         "volume": {
           "label": "Volumen ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Chat",
+        "chat-visibility": "Visibilidad del chat",
+        "chat-notification-size": {
+          "label": "Tamaño de la notificación del chat",
+          "values": {
+            "small": "Pequeña",
+            "normal": "Normal",
+            "big": "Grande"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Móvil",
+        "switch-to-player-who-is-playing": "Cambiar al jugador que está jugando",
+        "show-preview-opponents-cards": "Mostrar una vista previa de las cartas de los oponentes en la lista de oponentes"
       },
       "display": {
         "mobile": {
@@ -425,7 +437,31 @@
           "title": "Jugabilidad"
         }
       },
-      "title": "Ajustes"
+      "gameplay": {
+        "title": "Juego",
+        "gameboard": {
+          "title": "Tablero de juego",
+          "size": {
+            "label": "Tamaño de tu tablero de juego",
+            "big-warning": "Puede romper la visualización en móvil",
+            "values": {
+              "normal": "Normal",
+              "big": "Grande"
+            }
+          },
+          "enlarge-active-player-board": "Agrandar el tablero del jugador cuyo turno es"
+        },
+        "timer": {
+          "title": "Temporizador",
+          "label": "Modo de visualización del temporizador",
+          "description": "El modo inteligente muestra el temporizador a la mitad del tiempo y los últimos 15 segundos.",
+          "modes": {
+            "never": "Nunca",
+            "smart": "Inteligente",
+            "always": "Siempre"
+          }
+        }
+      }
     },
     "GameLobbyButtons": {
       "reconnect-game-button": "Reconectar a la partida",

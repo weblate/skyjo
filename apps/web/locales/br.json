@@ -325,12 +325,6 @@
       }
     },
     "SettingsDialog": {
-      "general": {
-        "title": "Hollek",
-        "language": "Yezh",
-        "language-warn": "Kemmañ war ar bajenn degemer hepken",
-        "appearance": "Neuz"
-      },
       "display": {
         "chat": {
           "chat-notification-size": {

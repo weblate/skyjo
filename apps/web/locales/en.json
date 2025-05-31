@@ -689,53 +689,6 @@
     },
     "SettingsDialog": {
       "title": "Settings",
-      "general": {
-        "title": "General",
-        "language": "Language",
-        "language-warn": "Changeable only on the home page",
-        "appearance": "Appearance"
-      },
-      "display": {
-        "title": "Display",
-        "mobile": {
-          "title": "Mobile",
-          "switch-to-player-who-is-playing": "Automatically switch to the player who is playing",
-          "show-preview-opponents-cards": "Show a preview of opponents' cards in the opponents list"
-        },
-        "chat": {
-          "title": "Chat",
-          "chat-visibility": "Chat visibility",
-          "chat-notification-size": {
-            "label": "Chat notification size",
-            "values": {
-              "small": "Small",
-              "normal": "Normal",
-              "big": "Big"
-            }
-          }
-        },
-        "gameplay": {
-          "title": "Gameplay",
-          "gameboard-size": {
-            "label": "Size of your game board",
-            "big-warning": "Can break display on mobile",
-            "values": {
-              "normal": "Normal",
-              "big": "Big"
-            }
-          },
-          "enlarge-active-player-board": "Enlarge the board of the player whose turn it is",
-          "timer": {
-            "label": "Timer display mode",
-            "description": "Smart mode displays the timer at half-time and the last 15 seconds.",
-            "modes": {
-              "never": "Never",
-              "smart": "Smart",
-              "always": "Always"
-            }
-          }
-        }
-      },
       "audio": {
         "title": "Audio",
         "toggle": {
@@ -743,6 +696,48 @@
         },
         "volume": {
           "label": "Volume ({volume}%)"
+        }
+      },
+      "chat": {
+        "title": "Chat",
+        "chat-visibility": "Chat visibility",
+        "chat-notification-size": {
+          "label": "Chat notification size",
+          "values": {
+            "small": "Small",
+            "normal": "Normal",
+            "big": "Big"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobile",
+        "switch-to-player-who-is-playing": "Automatically switch to the player who is playing",
+        "show-preview-opponents-cards": "Show a preview of opponents' cards in the opponents list"
+      },
+      "gameplay": {
+        "title": "Gameplay",
+        "gameboard": {
+          "title": "Game Board",
+          "size": {
+            "label": "Size of your game board",
+            "big-warning": "Can break display on mobile",
+            "values": {
+              "normal": "Normal",
+              "big": "Big"
+            }
+          },
+          "enlarge-active-player-board": "Enlarge the board of the player whose turn it is"
+        },
+        "timer": {
+          "title": "Timer",
+          "label": "Timer display mode",
+          "description": "Smart mode displays the timer at half-time and the last 15 seconds.",
+          "modes": {
+            "never": "Never",
+            "smart": "Smart",
+            "always": "Always"
+          }
         }
       }
     },

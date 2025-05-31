@@ -478,12 +478,6 @@
       "total": "மொத்தம்"
     },
     "SettingsDialog": {
-      "general": {
-        "language-warn": "முகப்பு பக்கத்தில் மட்டுமே மாற்றக்கூடியது",
-        "title": "பொது",
-        "language": "மொழி",
-        "appearance": "தோற்றம்"
-      },
       "display": {
         "mobile": {
           "show-preview-opponents-cards": "எதிரிகளின் பட்டியலில் எதிரிகளின் அட்டைகளின் முன்னோட்டத்தைக் காட்டு",
