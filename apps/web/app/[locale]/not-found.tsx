@@ -9,11 +9,11 @@ const NotFoundServerPage = () => {
   return (
     <>
       <div className="flex flex-col items-center justify-center h-[90dvh] gap-2">
-        <h1 className="font-shantell text-4xl select-none absolute top-4 inset-x-0 mx-auto sm:mx-0 sm:left-4">
+        <span className="font-shantell text-4xl select-none absolute top-4 inset-x-0 mx-auto sm:mx-0 sm:left-4">
           Skymo
-        </h1>
+        </span>
 
-        <h2 className="text-4xl font-bold text-center">{t("title")}</h2>
+        <h1 className="text-4xl font-bold text-center">{t("title")}</h1>
         <p className="text-lg text-center">{t("description")}</p>
 
         <Link href="/" className="mt-4" replace>
