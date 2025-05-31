@@ -1,25 +1,26 @@
+import ResetPasswordFormPage from "@/app/[locale]/reset-password/ResetPasswordFormPage"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Locales } from "@skymo/shared/constants"
-import { Metadata } from "next"
+import { type Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import { notFound } from "next/navigation"
+import { notFound } from "next/navigation.js"
 
-interface LoginParams {
+interface ResetPasswordPageParams {
   locale: Locales
 }
-export interface LoginProps {
-  children: React.ReactNode
-  params: Promise<LoginParams>
+
+interface ResetPasswordPageProps {
+  params: Promise<ResetPasswordPageParams>
 }
 
-export async function generateMetadata(props: LoginProps) {
+export async function generateMetadata(props: ResetPasswordPageProps) {
   const { locale } = await props.params
   if (!routing.locales.includes(locale)) notFound()
 
-  const t = await getTranslations({ locale, namespace: "pages.Login.head" })
+  const t = await getTranslations({ locale, namespace: "pages.ForgotPassword.head" })
 
-  const currentUrl = getCurrentUrl("login", locale)
+  const currentUrl = getCurrentUrl("reset-password", locale)
 
   const metadata: Metadata = {
     title: t("title"),
@@ -27,7 +28,7 @@ export async function generateMetadata(props: LoginProps) {
     keywords: t("keywords").split(","),
     alternates: {
       canonical: currentUrl,
-      languages: generateAlternatesLanguages("login"),
+      languages: generateAlternatesLanguages("reset-password"),
     },
     openGraph: {
       title: t("title"),
@@ -43,6 +44,6 @@ export async function generateMetadata(props: LoginProps) {
   return metadata
 }
 
-export default async function LoginLayout({ children }: LoginProps) {
-  return children
+export default async function Page() {
+  return <ResetPasswordFormPage />
 }

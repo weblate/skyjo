@@ -57,7 +57,7 @@ const ResetPasswordFormPage = () => {
   if (isSuccess) {
     return (
       <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4">
-        <div className="max-w-sm flex flex-col w-full text-center">
+        <div className="max-w-sm flex flex-col w-full text-center -translate-y-12">
           <h1 className="text-2xl font-medium mb-6">{t("success.title")}</h1>
           <p className="text-gray-600 mb-6">{t("success.message")}</p>
           <Link href="/login">
@@ -70,7 +70,7 @@ const ResetPasswordFormPage = () => {
 
   return (
     <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4">
-      <div className="max-w-sm flex flex-col w-full">
+      <div className="max-w-sm flex flex-col w-full -translate-y-12">
         <h1 className="text-2xl text-center font-medium mb-3">{t("title")}</h1>
         <p className="text-gray-600 text-center mb-3">{t("description")}</p>
 

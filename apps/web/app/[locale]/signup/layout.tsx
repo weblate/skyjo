@@ -1,26 +1,27 @@
-import ResetPasswordFormPage from "@/app/[locale]/(auth)/reset-password/ResetPasswordFormPage"
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Locales } from "@skymo/shared/constants"
-import { type Metadata } from "next"
+import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
-import { notFound } from "next/navigation.js"
+import { notFound } from "next/navigation"
 
-interface ResetPasswordPageParams {
+interface ProfileParams {
   locale: Locales
 }
-
-interface ResetPasswordPageProps {
-  params: Promise<ResetPasswordPageParams>
+export interface ProfileProps {
+  children: React.ReactNode
+  params: Promise<ProfileParams>
 }
 
-export async function generateMetadata(props: ResetPasswordPageProps) {
+export async function generateMetadata(props: ProfileProps) {
   const { locale } = await props.params
   if (!routing.locales.includes(locale)) notFound()
 
-  const t = await getTranslations({ locale, namespace: "pages.ForgotPassword.head" })
+  const t = await getTranslations({ locale, namespace: "pages.Signup.head" })
 
-  const currentUrl = getCurrentUrl("reset-password", locale)
+  const currentUrl = getCurrentUrl("signup", locale)
 
   const metadata: Metadata = {
     title: t("title"),
@@ -28,7 +29,7 @@ export async function generateMetadata(props: ResetPasswordPageProps) {
     keywords: t("keywords").split(","),
     alternates: {
       canonical: currentUrl,
-      languages: generateAlternatesLanguages("reset-password"),
+      languages: generateAlternatesLanguages("signup"),
     },
     openGraph: {
       title: t("title"),
@@ -44,6 +45,12 @@ export async function generateMetadata(props: ResetPasswordPageProps) {
   return metadata
 }
 
-export default async function Page() {
-  return <ResetPasswordFormPage />
+export default async function ProfileLayout({ children }: ProfileProps) {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
+  )
 }

@@ -1,3 +1,5 @@
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Locales } from "@skymo/shared/constants"
@@ -5,21 +7,21 @@ import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
 
-interface VerifyParams {
+interface LoginParams {
   locale: Locales
 }
-export interface VerifyProps {
+export interface LoginProps {
   children: React.ReactNode
-  params: Promise<VerifyParams>
+  params: Promise<LoginParams>
 }
 
-export async function generateMetadata(props: VerifyProps) {
+export async function generateMetadata(props: LoginProps) {
   const { locale } = await props.params
   if (!routing.locales.includes(locale)) notFound()
 
-  const t = await getTranslations({ locale, namespace: "pages.Verify.head" })
+  const t = await getTranslations({ locale, namespace: "pages.Login.head" })
 
-  const currentUrl = getCurrentUrl("verify", locale)
+  const currentUrl = getCurrentUrl("login", locale)
 
   const metadata: Metadata = {
     title: t("title"),
@@ -27,7 +29,7 @@ export async function generateMetadata(props: VerifyProps) {
     keywords: t("keywords").split(","),
     alternates: {
       canonical: currentUrl,
-      languages: generateAlternatesLanguages("verify"),
+      languages: generateAlternatesLanguages("login"),
     },
     openGraph: {
       title: t("title"),
@@ -43,6 +45,12 @@ export async function generateMetadata(props: VerifyProps) {
   return metadata
 }
 
-export default async function VerifyLayout({ children }: VerifyProps) {
-  return children
+export default async function LoginLayout({ children }: LoginProps) {
+  return (
+    <>
+      <Navbar />
+      {children}
+      <Footer />
+    </>
+  )
 }

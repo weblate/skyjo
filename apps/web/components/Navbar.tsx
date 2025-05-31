@@ -15,7 +15,7 @@ const Navbar = ({ className }: NavbarProps) => {
   return (
     <nav
       className={cn(
-        "flex flex-row items-center justify-between px-4",
+        "flex flex-row items-center justify-between px-4 pt-4",
         className,
       )}
     >

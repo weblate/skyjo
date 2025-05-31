@@ -1,4 +1,4 @@
-import LoginPage from "@/app/[locale]/(auth)/login/LoginPage"
+import LoginPage from "@/app/[locale]/login/LoginPage"
 
 const LoginServerPageProps = () => {
   return <LoginPage />

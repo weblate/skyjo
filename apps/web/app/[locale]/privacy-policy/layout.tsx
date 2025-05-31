@@ -52,10 +52,10 @@ export default async function PrivacyPolicyLayout({
   children,
 }: PrivacyPolicyLayoutProps) {
   return (
-    <div className="flex flex-col pt-4">
+    <>
       <Navbar />
       {children}
       <Footer />
-    </div>
+    </>
   )
 }

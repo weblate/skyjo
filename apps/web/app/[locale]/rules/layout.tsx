@@ -47,10 +47,10 @@ export async function generateMetadata(props: RulesLayoutProps) {
 
 export default async function RulesLayout({ children }: RulesLayoutProps) {
   return (
-    <div className="flex flex-col p-4">
+    <>
       <Navbar />
       {children}
       <Footer />
-    </div>
+    </>
   )
 }

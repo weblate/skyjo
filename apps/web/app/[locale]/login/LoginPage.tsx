@@ -59,7 +59,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4 ">
-      <div className="max-w-sm flex flex-col w-full">
+      <div className="max-w-sm flex flex-col w-full -translate-y-12">
         <h1 className="text-2xl text-center font-medium mb-6">{t("title")}</h1>
 
         <div className="flex flex-col gap-2">

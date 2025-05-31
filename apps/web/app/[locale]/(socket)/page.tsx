@@ -37,7 +37,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
       <div className="relative h-dvh flex flex-col">
         <PWABanner />
         <Banner />
-        <Navbar className="mt-4" />
+        <Navbar />
         <div className="flex flex-col grow items-center justify-between p-6">
           <div className="flex flex-col grow w-full items-center justify-center">
             <div className="bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border px-16 py-12 rounded-xl w-full max-w-md md:max-w-xl flex flex-col items-center">
