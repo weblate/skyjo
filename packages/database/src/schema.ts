@@ -132,6 +132,7 @@ export const playerTable = pgTable("players", {
   avatar: avatarEnum("avatar").notNull(),
   username: varchar("username", { length: 20 }).notNull(),
   score: smallint("score").notNull().default(0),
+  rank: smallint("rank").notNull(),
   connectionStatus: smallint("connection_status").notNull().default(1),
 })
 export type PlayerDb = InferSelectModel<typeof playerTable>

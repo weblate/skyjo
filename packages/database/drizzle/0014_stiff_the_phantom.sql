@@ -1,0 +1,1 @@
+ALTER TABLE "players" ADD COLUMN "rank" smallint DEFAULT 1 NOT NULL;

@@ -47,13 +47,30 @@ export class GameStorageTask {
         const minScore =
           players.length > 0 ? Math.min(...players.map((p) => p.score)) : 0
 
+        // Sort players by score to calculate ranks (lower score = better rank)
+        const sortedPlayers = [...players].sort((a, b) => a.score - b.score)
+
+        // Calculate ranks (handle ties by giving the same rank)
+        const playersWithRanks = sortedPlayers.map((player, _index) => {
+          let rank = 1
+          // Find rank by counting how many players have a better (lower) score
+          for (let i = 0; i < sortedPlayers.length; i++) {
+            const otherPlayer = sortedPlayers[i]
+            if (otherPlayer && otherPlayer.score < player.score) {
+              rank++
+            }
+          }
+          return { ...player, rank }
+        })
+
         // Insert player records
-        const playerInserts = players.map((player) => ({
+        const playerInserts = playersWithRanks.map((player) => ({
           gameId: gameDbId,
           userId: player.userId,
           avatar: player.avatar,
           username: player.name,
           score: player.score,
+          rank: player.rank,
           connectionStatus: player.connectionStatus,
           winner: player.score === minScore ? true : false,
         }))
@@ -66,8 +83,12 @@ export class GameStorageTask {
         // Insert scores for each player
         const scoreInserts = []
 
-        for (let playerIndex = 0; playerIndex < players.length; playerIndex++) {
-          const player = players[playerIndex]
+        for (
+          let playerIndex = 0;
+          playerIndex < playersWithRanks.length;
+          playerIndex++
+        ) {
+          const player = playersWithRanks[playerIndex]
           const playerRecord = playerRecords[playerIndex]
 
           if (playerRecord && player) {
