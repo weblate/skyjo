@@ -1,1 +1,769 @@
-{}
+{
+  "head": {
+    "title": "Skymo | Speel Skyjo Kaartspel Online Gratis",
+    "description": "Speel Skyjo gratis online met Skymo! Een snel kaartspel voor meerdere spelers waar strategie en plezier samenkomen. Daag vrienden uit, draai kaarten om en ga voor de laagste score om te winnen!",
+    "keywords": "Skymo,Skyjo,Skyjo online,multiplayer game,kaartspel,speel met vrienden,gratis online spellen,online kaartspellen"
+  },
+  "pages": {
+    "Index": {
+      "banner": {
+        "title": "Ik heb <gform>uw feedback</gform> nodig om de toekomst van Skymo vorm te geven!"
+      },
+      "name-input-placeholder": "Naam",
+      "explanation": {
+        "title": "Wat is Skyjo?",
+        "content": "Skyjo is een spannend kaartspel en een uitstekend bordspel, geliefd bij spelfans over de hele wereld. Dit multiplayer kaartspel is ontworpen voor 2 tot 8 spelers, waarbij elke speler 12 kaarten ontvangt, aanvankelijk verborgen. Het hoofddoel van het spel is om zo min mogelijk punten te scoren. Het spel eindigt zodra één speler 100 punten bereikt. De spelregels zijn eenvoudig en gemakkelijk te begrijpen, waardoor het een ideale keuze is voor spelavonden met familie of vrienden. Spelfans zullen blij zijn te horen dat het nu mogelijk is om Skyjo gratis online te spelen!",
+        "button": "Zie de regels"
+      },
+      "faq": {
+        "title": "Veelgestelde vragen (FAQ)",
+        "meaning": {
+          "title": "Wat betekent Skyjo?",
+          "content": "Een Skyjo is een kolom van 3 identieke kaarten in het spel."
+        },
+        "pronounce": {
+          "title": "Hoe spreek je Skyjo uit?",
+          "content": "Het woord Skyjo wordt uitgesproken als [Skyjoe]."
+        },
+        "how-to-play": {
+          "content": "Om Skyjo te spelen, deel je elke speler 12 kaarten met de afbeelding naar beneden. Het doel is om zo min mogelijk punten te hebben door kaarten om te draaien en te ruilen. Trek elke beurt een kaart van de stapel of de aflegstapel en besluit dan een van je zichtbare kaarten te vervangen. Genummerde kaarten zijn hun punten waard, speciale kaarten hebben acties. Het spel eindigt wanneer een speler al zijn kaarten heeft omgedraaid. De speler met de minste punten wint. Je kunt <rules>de regels</rules> raadplegen voor meer informatie.",
+          "title": "Hoe speel je Skyjo?"
+        },
+        "how-to-win": {
+          "title": "Hoe win je bij Skyjo?",
+          "content": "Om te winnen bij Skyjo is het essentieel om de laagst mogelijke score te hebben. Om dit te bereiken, hanteer je een uitgebalanceerde strategie tussen het hebben van de laagste kaarten, het onthullen van je kaarten en het creëren van kolommen met identieke kaarten. Vermijd het om als eerste om te draaien, tenzij je aanzienlijk voorligt met zichtbare kaarten. Denk eraan om reeds zichtbare kaarten te bewaren om er kolommen mee te proberen te maken, in plaats van ze individueel te optimaliseren."
+        },
+        "play-classic-with-action": {
+          "title": "Kun je klassiek Skyjo spelen met Skyjo Action?",
+          "content": "Ja, je hoeft alleen de actiekaarten te verwijderen. Als je de online versie speelt, selecteer dan de klassieke versie om Skyjo te spelen."
+        }
+      }
+    },
+    "Search": {
+      "head": {
+        "title": "Vind openbare Skymo-spellen | Speel Skyjo Online",
+        "description": "Op zoek naar een Skymo-spel om deel te nemen? Blader door beschikbare openbare spellen en begin direct online Skyjo te spelen met andere spelers. Speel nu gratis!",
+        "keywords": "Skymo,Skyjo,Skyjo online,spel zoeken,spel meedoen,openbare spellen,online multiplayer,speel met anderen,snel spelen,gratis online spellen,open spellen,online kaartspel, multiplayer kaartspel"
+      },
+      "header": {
+        "back": "Terug naar de homepage",
+        "title": "Openbare spellen",
+        "refresh": "Vernieuw de spellijst",
+        "create-button": {
+          "title": "Maak een openbaar spel"
+        }
+      },
+      "tags": {
+        "title": "Filters:",
+        "no-tags-available": "Geen tags meer beschikbaar",
+        "tag": {
+          "classic": "Klassiek",
+          "custom": "Aangepast",
+          "column": "Column",
+          "row": "Rij",
+          "short-game": "Korte spel",
+          "long-game": "Lange termijn"
+        }
+      },
+      "game-of": "Het spel van '{name}",
+      "no-games-found": "Geen spellen gevonden"
+    },
+    "Create": {
+      "head": {
+        "title": "Maak een Skymo-spel | Speel Skyjo Online",
+        "description": "Start een nieuw Skymo-spel online! Creëer privé- of openbare kamers, nodig je vrienden uit en geniet samen van het plezier van Skyjo. Speel nu gratis!",
+        "keywords": "Skymo,Skyjo,Skyjo online,spel aanmaken,spel starten,privéspel,openbaar spel,speel met vrienden,online multiplayer,gratis online spellen,aangepast spel"
+      },
+      "loading-text": "Je spel wordt gemaakt…"
+    },
+    "Maintenance": {
+      "title": "Site in onderhoud",
+      "description": "We zijn de site momenteel aan het updaten, probeer het later opnieuw.",
+      "github-alt": "Bekijk de broncode op GitHub"
+    },
+    "NotFound": {
+      "title": "Fout 404",
+      "description": "De pagina die u zoekt, bestaat niet.",
+      "go-back-to-homepage": "Ga terug naar de homepage"
+    },
+    "Lobby": {
+      "title": "Het spel van '{name}",
+      "leave-to-home": "Terug naar de homepage",
+      "leave-to-public-game-list": "Aan openbare spellijst toevoegen",
+      "go-back-to-settings": "Ga terug naar instellingen",
+      "settings": {
+        "private": {
+          "tooltip": {
+            "on": "Dit spel is privé, alleen mensen met de link kunnen meedoen",
+            "off": "Dit deel is openbaar, iedereen kan deelnemen na validatie van de parameters"
+          }
+        },
+        "reset-settings": "Instellingen resetten",
+        "validation-warning": "Spelinstellingen kunnen niet worden gewijzigd nadat ze zijn gevalideerd",
+        "validate-settings": "Instellingen valideren",
+        "max-players": {
+          "label": "Maximum aantal spelers",
+          "title": "Maximum aantal spelers: {number}"
+        },
+        "remove-identical-column": "Verwijder identieke kolommen",
+        "remove-identical-row": "Dubbele rijen verwijderen",
+        "nb-columns": {
+          "label": "Aantal kolommen",
+          "title": "$number kolommen"
+        },
+        "nb-rows": {
+          "label": "Aantal rijen",
+          "title": "$number rijen"
+        },
+        "initial-turned-count": {
+          "label": "Aantal kaarten dat in eerste instantie is onthuld",
+          "title": "Aan het begin van het spel worden {number} van je kaarten onthuld"
+        },
+        "show-current-score": {
+          "label": "Toon de huidige score tijdens het spel"
+        },
+        "score-to-end-game": {
+          "label": "Score om het spel te beëindigen",
+          "title": "Het spel eindigt wanneer een speler {number} punten behaalt"
+        },
+        "first-player-penalty-type": {
+          "description": "Straf wordt toegepast als de eerste speler die al zijn kaarten onthult niet het kleinste aantal punten heeft (niet van toepassing als de score kleiner dan of gelijk aan 0 is)",
+          "label": "Type strafschop eerste speler",
+          "placeholder": "Selecteer een sanctietype",
+          "item": {
+            "multiplier-only": "Alleen vermenigvuldiger",
+            "flat-only": "Alleen plat",
+            "flat-then-multiplier": "Vlak dan Vermenigvuldiger",
+            "multiplier-then-flat": "Vermenigvuldiger dan Vlak"
+          }
+        },
+        "first-player-flat-penalty": {
+          "label": "Eerste speler scoort vlakke straf",
+          "title": "Er worden {number} extra punten toegevoegd aan de score van de eerste speler"
+        },
+        "first-player-multiplier-penalty": {
+          "title": "De score van de eerste speler wordt vermenigvuldigd met {number} als deze niet strikt lager is dan de andere scores van het spel",
+          "label": "Eerste speler score strafvermenigvuldiger"
+        }
+      },
+      "game-starting-in": "Spel start over {seconds}",
+      "waiting-host-to-start": "Wachten tot de host het spel start",
+      "waiting-host-to-confirm-game-settings": "Wachten tot de host de instellingen valideert",
+      "player-section": {
+        "title": "Spelers {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Selecteer een aantal spelers",
+          "item": "{value} spelers"
+        }
+      },
+      "not-enough-players-modal": {
+        "title": "Niet genoeg spelers",
+        "description": "Je moet minstens 2 spelers zijn om het spel te starten.",
+        "private-description": "Gebruik de privélink om vrienden uit te nodigen!",
+        "close": "Ik begrijp het",
+        "public-description": "Nodig een vriend uit of wacht tot een andere speler meedoet."
+      },
+      "start-game-button": "Start het spel",
+      "cancel": "Annuleren"
+    },
+    "ResultsPage": {
+      "title": "Spelresultaten",
+      "rank": "Rang",
+      "total": "Totaal",
+      "player-want-to-replay": "Spelers die opnieuw willen spelen:",
+      "replay-button": {
+        "cancel": "Niet opnieuw afspelen",
+        "replay": "Opnieuw afspelen"
+      },
+      "leave-button": "Verlaat het spel",
+      "player": "Speler",
+      "score-per-round": "Score per ronde"
+    },
+    "PrivacyPolicy": {
+      "head": {
+        "title": "Privacybeleid | Skymo - Skyjo Online Kaartspel",
+        "description": "Privacybeleid voor Skymo. Lees hoe wij uw gegevens beschermen terwijl u geniet van ons Skyjo-kaartspel. Transparante praktijken en een veilige spelervaring.",
+        "keywords": "Skymo,Skyjo,Skyjo Online,privacybeleid,gegevensbescherming,online game privacy,veilig gamen,gebruikersgegevens,AVG,CCPA,gegevensbeveiliging"
+      },
+      "content": {
+        "back": "Terug naar de startpagina",
+        "title": "Privacybeleid",
+        "last-update": {
+          "text": "Laatst bijgewerkt: {date}",
+          "date-format": "JJJJ-MM-DD - uu:mmA"
+        },
+        "information-we-collect": {
+          "title": "Informatie die we verzamelen",
+          "anonymous-usage-data": {
+            "title": "Anonieme gebruiksgegevens",
+            "description": "We gebruiken PostHog, een analysetool, om anonieme gegevens te verzamelen over hoe u onze website gebruikt. Dit omvat:",
+            "items": "Paginaweergaven;;Web Vitals (prestatiestatistieken);;Enquêteantwoorden (als u ervoor kiest deel te nemen)"
+          },
+          "user-provided-information": {
+            "title": "Door de gebruiker verstrekte informatie",
+            "description": "Wij verzamelen:",
+            "items": "Inzendingen feedbackformulieren (inclusief optionele e-mailadressen)"
+          },
+          "game-data": {
+            "title": "Spelgegevens",
+            "description": "We slaan tijdelijk op:",
+            "items": "Gebruikersnamen en avatar-keuzes;;Spelonderdelen en voortgang"
+          },
+          "local-storage-data": {
+            "title": "Lokale opslaggegevens",
+            "description": "We slaan op in de lokale opslag van uw browser:",
+            "items": "Taalvoorkeuren;;Spelinstellingenvoorkeuren"
+          },
+          "cookies": {
+            "description": "Wij gebruiken essentiële cookies om de basisfuncties van onze website mogelijk te maken:",
+            "items": "Sessiecookies: Wij gebruiken een sessiecookie (skymo-io) om uw verbinding met onze gameservers te onderhouden. Deze cookie is essentieel voor de functionaliteit van het spel en verloopt na 24 uur. Deze cookies volgen u niet op verschillende websites en worden alleen gebruikt om de door u gevraagde dienst te leveren",
+            "title": "Cookies"
+          }
+        },
+        "data-storage-and-retention": {
+          "items": "Anonieme gebruiksgegevens worden opgeslagen op servers binnen de Europese Unie en maximaal 1 jaar bewaard;;Spelgegevens worden opgeslagen in onze database in Frankfurt, Duitsland. Deze gegevens worden bewaard zolang de spellen actief zijn. Zodra alle spelers een spel verlaten, worden de bijbehorende gegevens verwijderd;;Informatie die is opgeslagen in de lokale opslag van uw browser blijft daar totdat u uw browsergegevens wist;;Inzendingen van feedbackformulieren worden alleen bewaard om te kunnen reageren en suggesties voor ontwikkeling in overweging te nemen",
+          "title": "Gegevensopslag en -bewaring"
+        },
+        "your-rights-and-choices": {
+          "title": "Uw Rechten en Keuzes",
+          "description": "Aangezien we voornamelijk anonieme gegevens verzamelen, kunnen we geen persoonlijke informatie identificeren of openen die specifiek is voor een individuele gebruiker. U hebt echter de volgende rechten en keuzes:",
+          "items": "Lokale opslag: U kunt de lokale opslag van uw browser op elk moment wissen om opgeslagen voorkeuren te verwijderen;;Feedback: Als u feedback heeft ingediend met een e-mailadres, kunt u contact met ons opnemen om de verwijdering ervan aan te vragen;;Afmelden voor analyses: U kunt zich afmelden voor het verzamelen van analysegegevens door de \"Do Not Track\"-instelling van uw browser in te schakelen of door privacygerichte browsers te gebruiken die analysescripts blokkeren;;Spelgegevens: Spelgerelateerde gegevens worden automatisch verwijderd wanneer alle spelers een spel verlaten"
+        },
+        "childrens-privacy": {
+          "title": "Privacy van kinderen",
+          "description": "Skymo heeft geen leeftijdsbeperkingen. We verzamelen niet bewust persoonlijke informatie van kinderen."
+        },
+        "changes-to-this-policy": {
+          "title": "Wijzigingen in dit beleid",
+          "description": "We kunnen dit beleid van tijd tot tijd bijwerken. We zullen u op de hoogte stellen van eventuele wijzigingen door het nieuwe beleid op deze pagina te plaatsen."
+        },
+        "how-we-use-your-information": {
+          "title": "Hoe we uw informatie gebruiken",
+          "items": "Onze website en gebruikerservaring verbeteren;;Gebruikspatronen en prestaties analyseren;;Reageren op feedback en ondersteuningsverzoeken;;Gameplay faciliteren"
+        },
+        "data-sharing": {
+          "title": "Gegevens delen",
+          "description": "We delen uw persoonlijke gegevens niet met derden. Anonieme gebruiksgegevens worden verwerkt door PostHog, onze analyseprovider."
+        },
+        "contact-us": {
+          "title": "Neem contact met ons op",
+          "description": "Als u vragen heeft over dit privacybeleid, neem dan contact met ons op via ons feedbackformulier op de website, onze Discord-server of GitHub."
+        }
+      }
+    },
+    "Rules": {
+      "head": {
+        "description": "Leer hoe je Skyjo speelt met onze Skymo-gids. Ontdek de regels, strategieën en tips om dit leuke online kaartspel onder de knie te krijgen. Speel nu met vrienden!",
+        "keywords": "Skymo, Skyjo, Skyjo spelregels, hoe speel je Skyjo, Skyjo spel, kaartspelregels, online kaartspel, spelinstructies, spelgids",
+        "title": "Hoe speel je Skymo | Skyjo Kaartspel Online"
+      },
+      "title": "Skyjo spelregels"
+    }
+  },
+  "components": {
+    "AppearanceSelect": {
+      "light": "Licht",
+      "dark": "Donker",
+      "system": "Systeem"
+    },
+    "Chat": {
+      "title": "Chat"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Bericht",
+      "button-title": "Verzenden",
+      "message-too-long": {
+        "description": "Het bericht is te lang (max. 200 tekens)"
+      },
+      "unknown-command": {
+        "description": "Onbekend commando"
+      }
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Bericht rapporteren"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} ongelezen bericht{count, plural, =1 {} other {en}}"
+    },
+    "CopyLink": {
+      "message": "Link gekopieerd!",
+      "button-title": "Link kopiëren"
+    },
+    "DiscardPile": {
+      "title": "Aflegstapel",
+      "throw": "Gooi"
+    },
+    "DrawPile": {
+      "title": "Trekstapel"
+    },
+    "EndRoundDialog": {
+      "title": "Einde van de ronde",
+      "description": "De volgende ronde begint over enkele seconden…"
+    },
+    "Feedback": {
+      "title": "Geef feedback",
+      "description": "U kunt feedback schrijven om ons te helpen het spel te verbeteren.",
+      "toast": {
+        "success": {
+          "title": "Bedankt voor uw feedback!",
+          "description": "Uw inzichten hebben ons geholpen onze gamewebsite te verbeteren, en daar zijn we u erg dankbaar voor."
+        },
+        "error": {
+          "title": "Er is een fout opgetreden, probeer het opnieuw."
+        }
+      },
+      "email-input": {
+        "label": "Uw e-mailadres (optioneel)",
+        "placeholder": "voorbeeld@voorbeeld.com"
+      },
+      "message-input": {
+        "label": "Uw bericht",
+        "placeholder": "Vertel ons wat je denkt, opmerkt of wilt…"
+      },
+      "button-title": "Verzenden"
+    },
+    "Footer": {
+      "feedback": "Laat feedback achter",
+      "buy-game": "Koop het spel",
+      "explanation": "Wat is Skyjo?",
+      "rules": "Spelregels",
+      "status": "Serverstatus",
+      "home": "Home",
+      "release-notes": "Releaseopmerkingen",
+      "privacy-policy": "Privacybeleid",
+      "disclaimer": {
+        "not-affiliated": "Deze website is niet gelieerd aan de makers of distributeurs van Skyjo",
+        "rights-owned": "Alle rechten op de naam Skyjo en de spelmechanismen zijn eigendom van Alexander Bernhardt en Magilano",
+        "responsible-content": "De eigenaar van deze site is niet verantwoordelijk voor enige door gebruikers gegenereerde inhoud (gebruikersnamen, berichten)"
+      },
+      "attribution": {
+        "avatars": "Avatars gemaakt door Freepik - Flaticon"
+      }
+    },
+    "GameLobbyButtons": {
+      "join-game-button": "Doe mee met het spel",
+      "find-game-button": "Zoek een spel",
+      "create-game-button": "Maak een {type, select, private {privé} public {openbaar} other {onbekend}} spel",
+      "reconnect-game-button": "Opnieuw verbinding maken met het spel"
+    },
+    "GameRules": {
+      "button-title": "Toon spelregels",
+      "title": "Spelregels",
+      "remove-identical-column": "Verwijder kolom bij identieke kaarten: {value, select, true {ja} false {nee} other {onbekend}}",
+      "remove-identical-row": "Rij verwijderen indien identieke kaarten: {value, select, true {ja} false {nee} other {onbekend}}",
+      "card-per-column": "Aantal kolommen: {value}",
+      "first-player-penalty-type": {
+        "label": "Straftype voor de eerste speler als hij niet het kleinste aantal punten heeft: ",
+        "1": "Alleen vermenigvuldiger",
+        "2": "Alleen plat",
+        "3": "Eerst plat, dan vermenigvuldiger",
+        "4": "Vermenigvuldiger dan vlak"
+      },
+      "first-player-multiplier-penalty": "Vermenigvuldigingsstraf: {value}",
+      "first-player-flat-penalty": "Vaste boete: {value}",
+      "card-per-row": "Aantal rijen: {value}",
+      "initial-turned-count": "Aantal kaarten om aan het begin om te draaien: {value}",
+      "score-to-end-game": "Aantal punten om het spel te beëindigen: {value}"
+    },
+    "LanguageCombobox": {
+      "select-language": "Taal selecteren",
+      "search-language": "Zoektaal",
+      "no-language-found": "Geen taal gevonden",
+      "locale": {
+        "de": "Duits",
+        "en": "Engels",
+        "es": "Spaans",
+        "fr": "Frans",
+        "it": "Italiaans",
+        "br": "Bretons",
+        "ta": "Tamil"
+      }
+    },
+    "MenuDropdown": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "rules": "Regels",
+      "feedback": "Geef feedback",
+      "discord": "Discord",
+      "settings": "Instellingen"
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Tegenstanders:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "U"
+    },
+    "PWABanner": {
+      "FirefoxAndroid": "Tik op het menupictogram en vervolgens op 'Toevoegen aan startscherm' om te installeren",
+      "ChromeAndroid": "Tik op het menupictogram en vervolgens op 'Toevoegen aan startscherm' om te installeren",
+      "ChromeIOS": "Tik op het deelicoon, scroll dan en tik op 'Zet op beginscherm' om te installeren",
+      "FirefoxIOS": "Tik op het menupictogram, dan op het deelpictogram, scroll dan en tik op 'Toevoegen aan beginscherm' om te installeren",
+      "title": "Installeer Skymo op uw apparaat!",
+      "Safari": "Tik op het deelicoon en vervolgens op 'Voeg toe aan Dock' om te installeren",
+      "Chrome": "Klik op de knop 'Installeren' om te installeren",
+      "SamsungBrowser": "Tik op het menupictogram, dan op 'Pagina toevoegen aan', dan op 'Startscherm' om te installeren",
+      "SafariIOS": "Tik op het deelicoon en scroll vervolgens naar 'Voeg toe aan beginscherm' en tik erop om te installeren",
+      "install-button": {
+        "title": "Installeer de app",
+        "content": "Installeren"
+      }
+    },
+    "OpponentBoard": {
+      "disconnected": "Speler heeft het spel verlaten. Een bot zal voor hen spelen gedurende de volgende paar beurten totdat ze opnieuw verbinding maken."
+    },
+    "RulesDialog": {
+      "trigger": {
+        "aria-label": "Spelregels weergeven"
+      },
+      "title": "Spelregels"
+    },
+    "Rules": {
+      "cards-section-title": "{number} spelkaarten:",
+      "game-goal": {
+        "title": "Speldoel",
+        "content": "Het Skyjo-spel wordt over verschillende rondes gespeeld en eindigt zodra een speler 100 punten of meer heeft bereikt. De speler met de minste punten wint het spel."
+      },
+      "round-preparation": {
+        "title": "Rondevoorbereiding",
+        "content-1": "Eerst krijgt elke speler 12 kaarten gedekt gedeeld. Vervolgens wordt één kaart van de trekstapel open in het midden van de tafel gelegd, waarmee de aflegstapel begint. De overige kaarten worden gedekt naast elkaar gelegd en vormen de trekstapel.",
+        "content-2": "Elke speler legt zijn 12 kaarten in vier kolommen van drie kaarten met de afbeelding naar beneden voor zich neer. Tot slot draait elke speler twee kaarten naar keuze met de afbeelding naar boven."
+      },
+      "round-start": {
+        "choice": "keuze {number}",
+        "content-1": "De speler kan de eerst omgedraaide kaart van de aflegstapel kiezen",
+        "content-2": "of de eerste gedekte kaart van de trekstapel",
+        "choice-1": {
+          "content": "De speler moet deze kaart onmiddellijk ruilen met één van zijn of haar 12 kaarten en deze open op tafel leggen. Hij kan vrij kiezen tussen open en gesloten kaarten. Verborgen kaarten mogen niet worden bekeken vóór de ruil. De geruilde kaart wordt open op de aflegstapel gelegd.",
+          "title": "Keuze 1:",
+          "description": "Neem de bovenste kaart van de aflegstapel."
+        },
+        "choice-2": {
+          "title": "Keuze 2:",
+          "description": "Neem de bovenste kaart gedekt van de trekstapel.",
+          "choice-1": "Keuze 1",
+          "content-1": "De speler kan de kaart bekijken en kiezen of hij deze wil ruilen voor een van zijn kaarten (verborgen of zichtbaar) of weggooien. Als hij de getrokken kaart wil houden, ruilt hij deze met een van zijn kaarten zoals hierboven beschreven in de",
+          "content-2": "Als hij de getrokken kaart niet wil houden, legt hij deze op de aflegstapel en moet hij een van zijn kaarten openleggen."
+        },
+        "end-of-turn": "Zijn beurt is dan voorbij en het is de beurt aan de volgende speler (met de klok mee).",
+        "title": "Rondestart"
+      },
+      "special-rule": {
+        "title": "Speciale regel:",
+        "content": "Als een speler 3 identieke kaarten in een kolom heeft, legt de speler deze 3 kaarten af door ze op de aflegstapel te plaatsen. Als een kolom van identieke kaarten wordt verkregen door te ruilen met een kaart van de trekstapel of aflegstapel, moeten de drie identieke kaarten altijd op de aflegstapel worden geplaatst na de geruilde kaart."
+      },
+      "round-end": {
+        "title": "Einde van de ronde",
+        "content-1": "Wanneer een speler al zijn kaarten heeft onthuld, heeft hij zijn laatste beurt gespeeld.",
+        "content-2": "Alle volgende spelers spelen nog één keer om de ronde te voltooien."
+      },
+      "scoring": {
+        "title": "Score",
+        "description": "Spelers die nog kaarten met de afbeelding naar beneden hebben liggen, draaien deze om. Elke speler telt zijn totale punten.",
+        "list": {
+          "content-1": "Als het totaal aantal punten positief is, telt hij het op bij het totaal aantal punten van vorige rondes.",
+          "content-2": "Als het totaal negatief is, wordt het afgetrokken van het totaal aantal punten van de vorige rondes."
+        },
+        "first-to-finish": {
+          "content": "Als de speler die de ronde heeft voltooid (de 1e die al zijn kaarten heeft omgedraaid) strikt genomen niet het laagste aantal punten voor die ronde heeft behaald, dan wordt de som van zijn punten voor die ronde verdubbeld.",
+          "note": {
+            "title": "Let op:",
+            "content": "deze regel is alleen van toepassing op positieve punten!"
+          }
+        },
+        "example": {
+          "title": "Voorbeeld:",
+          "content": "Speler A onthult al zijn kaarten en beëindigt de ronde. Aan het einde van de ronde heeft hij 10 punten, speler B heeft 24 punten en speler C heeft ook 10 punten. Omdat speler A niet strikt het laagste aantal punten heeft, worden zijn punten verdubbeld naar 20."
+        }
+      },
+      "end-of-game": {
+        "content": "Aan het einde van elke ronde worden de punten van elke speler opgeteld bij de totale score die in de vorige rondes is behaald. Het spel eindigt zodra een speler 100 punten of meer behaalt. De speler met de laagste score wint het spel.",
+        "title": "Einde spel"
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Scorebord weergeven"
+    },
+    "ScoreDialog": {
+      "title": "Score",
+      "description": "{name} heeft gewonnen met {score} punten !"
+    },
+    "ScoreSheet": {
+      "see-scores": "Scores bekijken"
+    },
+    "ScoreTable": {
+      "name": "Naam",
+      "total": "Totaal",
+      "round": "Rond"
+    },
+    "SettingsDialog": {
+      "title": "Instellingen",
+      "general": {
+        "title": "Algemeen",
+        "language": "Taal",
+        "language-warn": "Alleen te wijzigen op de startpagina",
+        "appearance": "Uiterlijk"
+      },
+      "display": {
+        "title": "Weergave",
+        "mobile": {
+          "title": "Mobiel",
+          "switch-to-player-who-is-playing": "Schakel automatisch over naar de speler die aan het afspelen is",
+          "show-preview-opponents-cards": "Toon een voorvertoning van de kaarten van tegenstanders in de lijst met tegenstanders"
+        },
+        "chat": {
+          "chat-notification-size": {
+            "label": "Grootte chatmelding",
+            "values": {
+              "small": "Klein",
+              "normal": "Normaal",
+              "big": "Groot"
+            }
+          },
+          "title": "Chat",
+          "chat-visibility": "Zichtbaarheid van chat"
+        },
+        "gameplay": {
+          "enlarge-active-player-board": "Vergroot het bord van de speler wiens beurt het is",
+          "timer": {
+            "label": "Timerweergavemodus",
+            "description": "De slimme modus toont de timer op de helft van de tijd en de laatste 15 seconden.",
+            "modes": {
+              "never": "Nooit",
+              "smart": "Slim",
+              "always": "Altijd"
+            }
+          },
+          "title": "Gameplay",
+          "gameboard-size": {
+            "label": "Grootte van je speelbord",
+            "big-warning": "Kan weergave op mobiel verbreken",
+            "values": {
+              "normal": "Normaal",
+              "big": "Groot"
+            }
+          }
+        }
+      },
+      "audio": {
+        "title": "Audio",
+        "toggle": {
+          "label": "Audio inschakelen"
+        },
+        "volume": {
+          "label": "Volume ({volume}%)"
+        }
+      }
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Rapporteer {username}",
+        "kick": "Kick {username}",
+        "vote-to-kick": "Stem om {username} te verwijderen",
+        "ban": "Ban {username}",
+        "mute": "Dempen {username}",
+        "unmute": "Dempen opheffen voor {username}"
+      }
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "title": "Stem om {playerName} te verwijderen",
+        "kick-button": {
+          "alt": "Verwijder {playerName}",
+          "label": "Kick"
+        },
+        "ignore-button": {
+          "alt": "Negeer de stemming om {playerName} te verwijderen",
+          "label": "Negeren"
+        }
+      },
+      "player-has-voted": {
+        "title": "Stem om {playerName} te verwijderen",
+        "description": "U hebt {vote, select, true {voor} false {tegen} other {gestemd}} gestemd"
+      },
+      "vote-against-you": {
+        "title": "Stem om je te kicken",
+        "description": "Er is een verzoek ingediend om u te verwijderen."
+      },
+      "vote-failed": {
+        "title": "De stemming om {playerName} eruit te zetten is mislukt",
+        "description": "Er zijn niet genoeg stemmen om {playerName} te verwijderen"
+      },
+      "vote-against-you-failed": {
+        "title": "U bent niet gekickt",
+        "description": "Er zijn niet genoeg stemmen om je te kicken"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} is gekickt",
+        "description": "De stemming om {playerName} eruit te zetten is geslaagd."
+      },
+      "vote-against-you-succeeded": {
+        "title": "Je bent eruit gezet",
+        "description": "Spelers hebben gestemd om je uit het spel te verwijderen."
+      },
+      "host-kick": {
+        "title": "{playerName} is door de host uit het spel verwijderd"
+      },
+      "host-kick-you": {
+        "title": "Je bent door de host uit het spel verwijderd"
+      },
+      "you-kick-player": {
+        "title": "Je hebt {playerName} gekickt"
+      }
+    },
+    "AfkKick": {
+      "warning": {
+        "title": "AFK-waarschuwing",
+        "description": "Je wordt uit het spel verwijderd als je inactief blijft."
+      },
+      "kicked": {
+        "title": "Wegens inactiviteit",
+        "description": "Je bent uit het spel verwijderd omdat je te vaak AFK was."
+      },
+      "player-kicked": {
+        "title": "Speler verwijderd",
+        "description": "{playerName} is uit het spel verwijderd wegens inactiviteit."
+      }
+    },
+    "ReportDialog": {
+      "title": "Rapporteer {username}",
+      "description": "Meld de gebruikersnaam of een bericht van {username} als het ongepast lijkt.",
+      "report-username": "Meld de gebruikersnaam",
+      "report-message": "Een bericht rapporteren",
+      "select-message": "Selecteer het bericht om te rapporteren",
+      "select-message-placeholder": "Selecteer een bericht",
+      "no-messages": "Geen berichten gevonden van deze gebruiker",
+      "cancel": "Annuleren",
+      "submit": "Rapport",
+      "toast": {
+        "report-submitted": {
+          "title": "Rapport ingediend",
+          "description": "Bedankt voor je melding, je hebt bijgedragen aan het verbeteren van de kwaliteit van het spel."
+        }
+      }
+    }
+  },
+  "utils": {
+    "skymo": {
+      "waiting": "Wachten op spelers",
+      "turn-cards": "Draai {number} kaart{number, plural, =1 {} other {en}}",
+      "waiting-opponents-to-turn-cards": "Wachten op tegenstander{nbOpponents, plural, =1 {} other {s}} om {number} kaart{number, plural, =1 {} other {s}} om te draaien",
+      "turn": {
+        "chooseAPile": "Kies een stapel",
+        "throwOrReplace": "Vervangen of weggooien",
+        "replaceACard": "Een kaart vervangen",
+        "turnACard": "Draai een kaart"
+      },
+      "player-turn": "Het is de beurt aan {playerName}",
+      "last-turn": "Laatste beurt!",
+      "game-stopped": "Spel gestopt",
+      "round-over": "Ronde voltooid",
+      "game-ended": "Game over!"
+    },
+    "chat": {
+      "player-joined": "{username} heeft zich bij het spel gevoegd",
+      "player-left": "{username} heeft het spel verlaten",
+      "player-reconnect": "{username} is opnieuw verbonden met het spel",
+      "argument-required": "Eén of meer argumenten zijn vereist voor commando: {command}",
+      "player-already-muted": "{username} heeft al een mute",
+      "player-muted": "{username} heeft nu een mute gekregen",
+      "player-not-muted": "{username} is niet gedempt",
+      "player-unmuted": "{username} is niet langer gedempt",
+      "wizz-sent": "Je hebt een wizz gestuurd naar {targetUsername}!",
+      "wizz-self": "Je bent gewizzd door {initiatorUsername}!",
+      "wizz-other": "{initiatorUsername} heeft {targetUsername} gewizzd!"
+    },
+    "avatar": {
+      "bee": "bij",
+      "crab": "krab",
+      "dog": "hond",
+      "eagle": "arend",
+      "elephant": "olifant",
+      "fox": "vos",
+      "frog": "kikker",
+      "jellyfish": "kwal",
+      "koala": "koala",
+      "octopus": "octopus",
+      "toucan": "toekan",
+      "turtle": "schildpad",
+      "whale": "walvis",
+      "owl": "uil",
+      "cat": "kat",
+      "penguin": "pinguïn"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "De server doet er langer over dan verwacht om te reageren. U kunt proberen de pagina opnieuw te laden en het opnieuw te proberen."
+        },
+        "cannot-reconnect": {
+          "description": "Het is niet langer mogelijk om opnieuw verbinding te maken met het spel, de tijd om opnieuw verbinding te maken is verlopen"
+        },
+        "game-is-full": {
+          "description": "Het spel is vol, je kunt niet meedoen"
+        },
+        "game-already-started": {
+          "description": "Het spel is al begonnen"
+        },
+        "player-banned": {
+          "description": "Je bent verbannen uit dit spel"
+        },
+        "rate-limit": {
+          "title": "U verstuurt te veel verzoeken",
+          "description": "Wacht alstublieft een paar seconden voordat u het opnieuw probeert"
+        },
+        "game-not-found": {
+          "description": "Het spel dat je zoekt bestaat niet"
+        }
+      }
+    }
+  },
+  "contexts": {
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "title": "Spel niet gevonden",
+          "description": "Het spel waarmee je opnieuw verbinding probeerde te maken, bestaat niet meer"
+        }
+      },
+      "connection-lost": "Verbinding verbroken. Bezig met opnieuw verbinden...",
+      "reconnection": "Verbinding hersteld"
+    },
+    "BanContext": {
+      "not-allowed": {
+        "title": "Je hebt geen toestemming om te verbannen",
+        "description": "Je hebt geen toestemming om een speler te verbannen"
+      },
+      "player-not-found": {
+        "title": "De speler om te verbannen bestaat niet",
+        "description": "De speler die verbannen moet worden, bestaat niet in het spel"
+      },
+      "you-were-banned": {
+        "description": "Je bent door de host uit het spel verbannen",
+        "title": "Je bent verbannen"
+      },
+      "unexpected-error": {
+        "description": "Er is een onverwachte fout opgetreden bij het bannen van een speler",
+        "title": "Er is een onverwachte fout opgetreden"
+      },
+      "player-banned": {
+        "title": "{playerName} is verbannen",
+        "description": "{playerName} is verbannen door de host"
+      }
+    },
+    "ReportContext": {
+      "report": {
+        "title": "{playerName} is gekickt wegens een melding"
+      },
+      "report-against-you": {
+        "title": "Je bent gekickt vanwege een melding",
+        "description": "Uw gebruikersnaam of een van uw berichten is gerapporteerd en ongepast bevonden. Gelieve dit gedrag niet te herhalen."
+      }
+    }
+  }
+}
