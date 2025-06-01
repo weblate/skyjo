@@ -1,15 +1,15 @@
 import { db } from "@/db/index.js"
-import {
-  type SessionDb,
-  type UserDb,
-  sessionTable,
-  userTable,
-} from "@/db/schema.js"
 import { sha256 } from "@oslojs/crypto/sha2"
 import {
   encodeBase32LowerCaseNoPadding,
   encodeHexLowerCase,
 } from "@oslojs/encoding"
+import {
+  type SessionDb,
+  type UserDb,
+  sessionTable,
+  userTable,
+} from "@skymo/database/schema"
 import { and, eq } from "drizzle-orm"
 import type { Context } from "hono"
 import { getCookie } from "hono/cookie"

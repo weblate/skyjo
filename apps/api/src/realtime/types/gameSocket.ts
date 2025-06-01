@@ -1,4 +1,4 @@
-import type { SessionDb, UserDb } from "@/db/schema.js"
+import type { SessionDb, UserDb } from "@skymo/database/schema"
 import type {
   ClientToServerEvents,
   ServerToClientEvents,

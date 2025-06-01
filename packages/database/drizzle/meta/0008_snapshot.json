@@ -1,6 +1,6 @@
 {
-  "id": "85ae34dd-8dbd-4d40-af1e-935f18e09090",
-  "prevId": "4f395e13-aa8d-41d9-aefe-ee8bb2192992",
+  "id": "4a86e230-d11e-464a-8930-34d2d7fc2ace",
+  "prevId": "28e48448-3251-4482-a098-1d8109f9aebc",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -98,12 +98,8 @@
           "name": "players_game_id_games_id_fk",
           "tableFrom": "players",
           "tableTo": "games",
-          "columnsFrom": [
-            "game_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["game_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -111,12 +107,8 @@
           "name": "players_user_id_users_id_fk",
           "tableFrom": "players",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -174,12 +166,8 @@
           "name": "scores_game_id_games_id_fk",
           "tableFrom": "scores",
           "tableTo": "games",
-          "columnsFrom": [
-            "game_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["game_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -187,12 +175,8 @@
           "name": "scores_player_id_players_id_fk",
           "tableFrom": "scores",
           "tableTo": "players",
-          "columnsFrom": [
-            "player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["player_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -232,12 +216,8 @@
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -272,14 +252,14 @@
           "notNull": true,
           "default": "'bee'"
         },
-        "username": {
-          "name": "username",
+        "name": {
+          "name": "name",
           "type": "varchar(20)",
           "primaryKey": false,
           "notNull": false
         },
-        "user_tag": {
-          "name": "user_tag",
+        "username": {
+          "name": "username",
           "type": "varchar(20)",
           "primaryKey": false,
           "notNull": false
@@ -316,6 +296,12 @@
           "notNull": true,
           "default": false
         },
+        "verify_pin": {
+          "name": "verify_pin",
+          "type": "varchar(6)",
+          "primaryKey": false,
+          "notNull": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
@@ -347,11 +333,11 @@
           "method": "btree",
           "with": {}
         },
-        "user_tag_idx": {
-          "name": "user_tag_idx",
+        "username_idx": {
+          "name": "username_idx",
           "columns": [
             {
-              "expression": "user_tag",
+              "expression": "username",
               "isExpression": false,
               "asc": true,
               "nulls": "last"
@@ -369,30 +355,22 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
-        "users_user_tag_unique": {
-          "name": "users_user_tag_unique",
+        "users_username_unique": {
+          "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "user_tag"
-          ]
+          "columns": ["username"]
         },
         "users_google_id_unique": {
           "name": "users_google_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "google_id"
-          ]
+          "columns": ["google_id"]
         },
         "users_facebook_id_unique": {
           "name": "users_facebook_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "facebook_id"
-          ]
+          "columns": ["facebook_id"]
         }
       },
       "policies": {},

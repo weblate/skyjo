@@ -1,6 +1,6 @@
 {
-  "id": "60c9d112-ab20-4132-8b8c-8066b53963a6",
-  "prevId": "4a86e230-d11e-464a-8930-34d2d7fc2ace",
+  "id": "6d052950-55cf-4c93-9b7c-c217b3b14cef",
+  "prevId": "60c9d112-ab20-4132-8b8c-8066b53963a6",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -98,12 +98,8 @@
           "name": "players_game_id_games_id_fk",
           "tableFrom": "players",
           "tableTo": "games",
-          "columnsFrom": [
-            "game_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["game_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -111,12 +107,8 @@
           "name": "players_user_id_users_id_fk",
           "tableFrom": "players",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -174,12 +166,8 @@
           "name": "scores_game_id_games_id_fk",
           "tableFrom": "scores",
           "tableTo": "games",
-          "columnsFrom": [
-            "game_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["game_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         },
@@ -187,12 +175,8 @@
           "name": "scores_player_id_players_id_fk",
           "tableFrom": "scores",
           "tableTo": "players",
-          "columnsFrom": [
-            "player_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["player_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -232,12 +216,8 @@
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }
@@ -316,6 +296,13 @@
           "notNull": true,
           "default": false
         },
+        "onboarding_completed": {
+          "name": "onboarding_completed",
+          "type": "boolean",
+          "primaryKey": false,
+          "notNull": true,
+          "default": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "timestamp with time zone",
@@ -369,30 +356,22 @@
         "users_email_unique": {
           "name": "users_email_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "email"
-          ]
+          "columns": ["email"]
         },
         "users_username_unique": {
           "name": "users_username_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "username"
-          ]
+          "columns": ["username"]
         },
         "users_google_id_unique": {
           "name": "users_google_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "google_id"
-          ]
+          "columns": ["google_id"]
         },
         "users_facebook_id_unique": {
           "name": "users_facebook_id_unique",
           "nullsNotDistinct": false,
-          "columns": [
-            "facebook_id"
-          ]
+          "columns": ["facebook_id"]
         }
       },
       "policies": {},
@@ -441,12 +420,8 @@
           "name": "user_verifications_user_id_users_id_fk",
           "tableFrom": "user_verifications",
           "tableTo": "users",
-          "columnsFrom": [
-            "user_id"
-          ],
-          "columnsTo": [
-            "id"
-          ],
+          "columnsFrom": ["user_id"],
+          "columnsTo": ["id"],
           "onDelete": "no action",
           "onUpdate": "no action"
         }

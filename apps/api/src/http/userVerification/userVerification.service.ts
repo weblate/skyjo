@@ -1,7 +1,11 @@
 import { randomInt } from "crypto"
 import { db } from "@/db/index.js"
-import { type UserDb, userTable, userVerificationTable } from "@/db/schema.js"
 import { mailerQueue } from "@/utils/mailer.js"
+import {
+  type UserDb,
+  userTable,
+  userVerificationTable,
+} from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import { and, eq } from "drizzle-orm"
 

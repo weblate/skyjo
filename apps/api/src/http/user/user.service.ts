@@ -1,7 +1,7 @@
 import { db } from "@/db/index.js"
-import { type UserDb, userTable } from "@/db/schema.js"
 import { hashPassword } from "@/http/auth/lib/password.js"
 import type { Avatar } from "@skymo/core"
+import { type UserDb, userTable } from "@skymo/database/schema"
 import { type Locales, UserError } from "@skymo/shared/constants"
 import { eq } from "drizzle-orm"
 

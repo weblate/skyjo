@@ -1,5 +1,4 @@
 import { db } from "@/db/index.js"
-import { passwordResetTable, sessionTable, userTable } from "@/db/schema.js"
 import { setSessionTokenCookie } from "@/http/auth/lib/cookie.js"
 import {
   type GoogleUser,
@@ -15,6 +14,11 @@ import { mailerQueue } from "@/utils/mailer.js"
 import { type RandomReader, generateRandomString } from "@oslojs/crypto/random"
 import { sha3_256 } from "@oslojs/crypto/sha3"
 import { encodeHexLowerCase } from "@oslojs/encoding"
+import {
+  passwordResetTable,
+  sessionTable,
+  userTable,
+} from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import {
   AuthError,

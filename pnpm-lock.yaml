@@ -38,6 +38,9 @@ importers:
       '@skymo/core':
         specifier: workspace:*
         version: link:../../packages/core
+      '@skymo/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@skymo/error':
         specifier: workspace:*
         version: link:../../packages/error
@@ -77,9 +80,6 @@ importers:
       nodemailer:
         specifier: ^6.10.1
         version: 6.10.1
-      pg:
-        specifier: ^8.15.6
-        version: 8.15.6
       rate-limiter-flexible:
         specifier: ^7.0.0
         version: 7.0.0
@@ -112,18 +112,12 @@ importers:
       '@types/nodemailer':
         specifier: ^6.4.17
         version: 6.4.17
-      '@types/pg':
-        specifier: ^8.11.14
-        version: 8.11.14
       '@vitest/coverage-istanbul':
         specifier: ^3.1.1
         version: 3.1.1(vitest@3.1.1(@types/node@22.14.1)(@vitest/ui@3.1.1)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1))
       '@vitest/ui':
         specifier: ^3.1.1
         version: 3.1.1(vitest@3.1.1)
-      drizzle-kit:
-        specifier: ^0.31.1
-        version: 0.31.1
       socket.io-client:
         specifier: ^4.8.1
         version: 4.8.1(bufferutil@4.0.9)(utf-8-validate@6.0.5)
@@ -314,6 +308,9 @@ importers:
 
   apps/workers:
     dependencies:
+      '@skymo/database':
+        specifier: workspace:*
+        version: link:../../packages/database
       '@skymo/error':
         specifier: workspace:*
         version: link:../../packages/error
@@ -393,6 +390,34 @@ importers:
       vitest:
         specifier: ^3.1.1
         version: 3.1.1(@types/node@22.14.1)(@vitest/ui@3.1.1)(jiti@1.21.7)(terser@5.39.0)(tsx@4.19.3)(yaml@2.7.1)
+
+  packages/database:
+    dependencies:
+      '@skymo/shared':
+        specifier: workspace:*
+        version: link:../shared
+      drizzle-orm:
+        specifier: ^0.43.1
+        version: 0.43.1(@types/pg@8.11.14)(pg@8.15.6)
+      pg:
+        specifier: ^8.13.1
+        version: 8.15.6
+    devDependencies:
+      '@skymo/ts-config':
+        specifier: workspace:*
+        version: link:../config/ts
+      '@types/node':
+        specifier: ^22.14.1
+        version: 22.14.1
+      '@types/pg':
+        specifier: ^8.11.10
+        version: 8.11.14
+      drizzle-kit:
+        specifier: ^0.31.1
+        version: 0.31.1
+      typescript:
+        specifier: ^5.8.3
+        version: 5.8.3
 
   packages/error:
     dependencies:
