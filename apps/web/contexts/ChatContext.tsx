@@ -43,13 +43,13 @@ interface ChatContext {
   addUnreadMessage: (message: ChatMessage) => void
   clearUnreadMessages: () => void
   setChat: (chat: ChatMessage[]) => void
-  sendMessage: (message: string, username: string) => void
+  sendMessage: (message: string, name: string) => void
   addSystemMessage: (message: string) => void
   mutedPlayers: string[]
-  mutePlayer: (username: string) => void
-  unmutePlayer: (username: string) => void
-  toggleMutePlayer: (username: string) => void
-  wizzPlayer: (targetUsername: string) => void
+  mutePlayer: (name: string) => void
+  unmutePlayer: (name: string) => void
+  toggleMutePlayer: (name: string) => void
+  wizzPlayer: (targetName: string) => void
   draftMessage: string
   setDraftMessage: (message: string) => void
   clearDraftMessage: () => void
@@ -59,7 +59,7 @@ const ChatContext = createContext<ChatContext | undefined>(undefined)
 
 const ChatProvider = ({ children }: PropsWithChildren) => {
   const { socket } = useSocket()
-  const { username } = useUser()
+  const { name } = useUser()
   const {
     settings: { chatVisibility },
   } = useSettings()
@@ -99,16 +99,16 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     }
   }, [pathname])
 
-  const sendMessage = (username: string, message: string) => {
+  const sendMessage = (name: string, message: string) => {
     socket!.send({
-      username,
+      name,
       message,
     })
   }
 
   //#region Message received
   const onMessageReceived = (message: UserChatMessage) => {
-    if (mutedPlayers.includes(message.username)) return
+    if (mutedPlayers.includes(message.name)) return
 
     messageSound.play()
     setChat((prev) => [message, ...prev])
@@ -127,7 +127,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     const chatMessage = {
       id: message.id,
       message: t(message.message, {
-        username: message.username,
+        name: message.name,
       }),
       type: message.type,
     } as ChatMessage
@@ -139,11 +139,8 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     setChat((prev) => [message, ...prev])
   }
 
-  const onWizzReceived = (
-    targetUsername: string,
-    initiatorUsername: string,
-  ) => {
-    if (targetUsername === username) {
+  const onWizzReceived = (targetName: string, initiatorName: string) => {
+    if (targetName === name) {
       const wizzContainer = document.querySelector(".wizz-container")
       if (wizzContainer) {
         wizzContainer.classList.add("animate-wizz")
@@ -156,11 +153,11 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
 
       wizzSound.play()
       addSystemMessage(
-        t("wizz-self", { initiatorUsername }),
+        t("wizz-self", { initiatorName }),
         CoreConstants.SYSTEM_MESSAGE_TYPE.WARN_SYSTEM_MESSAGE,
       )
     } else {
-      addSystemMessage(t("wizz-other", { targetUsername, initiatorUsername }))
+      addSystemMessage(t("wizz-other", { targetName, initiatorName }))
     }
   }
   //#endregion
@@ -186,54 +183,54 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
   const clearUnreadMessages = () => setUnreadMessages([])
 
   //#region Mute functionality
-  const mutePlayer = (username: string) => {
-    if (!username) {
+  const mutePlayer = (name: string) => {
+    if (!name) {
       addSystemMessage(
         t("argument-required", { command: "/mute" }),
         CoreConstants.SYSTEM_MESSAGE_TYPE.WARN_SYSTEM_MESSAGE,
       )
-    } else if (mutedPlayers.includes(username)) {
-      addSystemMessage(t("player-already-muted", { username }))
+    } else if (mutedPlayers.includes(name)) {
+      addSystemMessage(t("player-already-muted", { name }))
     } else {
-      setMutedPlayers((prev) => [...prev, username])
-      addSystemMessage(t("player-muted", { username }))
+      setMutedPlayers((prev) => [...prev, name])
+      addSystemMessage(t("player-muted", { name }))
     }
   }
 
-  const unmutePlayer = (username: string) => {
-    if (!username) {
+  const unmutePlayer = (name: string) => {
+    if (!name) {
       addSystemMessage(
         t("argument-required", { command: "/unmute" }),
         CoreConstants.SYSTEM_MESSAGE_TYPE.WARN_SYSTEM_MESSAGE,
       )
-    } else if (!mutedPlayers.includes(username)) {
-      addSystemMessage(t("player-not-muted", { username }))
+    } else if (!mutedPlayers.includes(name)) {
+      addSystemMessage(t("player-not-muted", { name }))
     } else {
-      setMutedPlayers((prev) => prev.filter((user) => user !== username))
-      addSystemMessage(t("player-unmuted", { username }))
+      setMutedPlayers((prev) => prev.filter((user) => user !== name))
+      addSystemMessage(t("player-unmuted", { name }))
     }
   }
 
-  const toggleMutePlayer = (username: string) => {
+  const toggleMutePlayer = (name: string) => {
     setMutedPlayers((prev) =>
-      prev.includes(username)
-        ? prev.filter((user) => user !== username)
-        : [...prev, username],
+      prev.includes(name)
+        ? prev.filter((user) => user !== name)
+        : [...prev, name],
     )
   }
   //#endregion
 
   //#region Wizz functionality
-  const wizzPlayer = (targetUsername: string) => {
-    if (!targetUsername) {
+  const wizzPlayer = (targetName: string) => {
+    if (!targetName) {
       addSystemMessage(
         t("argument-required", { command: "/wizz" }),
         CoreConstants.SYSTEM_MESSAGE_TYPE.WARN_SYSTEM_MESSAGE,
       )
     }
 
-    socket!.emit("wizz", targetUsername)
-    addSystemMessage(t("wizz-sent", { targetUsername }))
+    socket!.emit("wizz", targetName)
+    addSystemMessage(t("wizz-sent", { targetName }))
   }
   //#endregion
 
