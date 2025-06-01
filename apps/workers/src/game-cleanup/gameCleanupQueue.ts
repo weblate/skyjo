@@ -2,7 +2,7 @@ import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
 import type { GameCleanupJobData } from "@skymo/worker-types"
 import { Worker } from "bullmq"
-import { GameCleanupTask } from "./gameCleanupTask.js"
+import { GameCleanupTask } from "./GameCleanupTask.js"
 
 /**
  * Worker that processes game cleanup jobs
