@@ -1,1 +1,769 @@
-{}
+{
+  "pages": {
+    "Lobby": {
+      "settings": {
+        "nb-rows": {
+          "title": "$number Zeile",
+          "label": "Aazahl Zeile"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "De Strofemultiplikator vom erschte Spieler",
+          "title": "De Score vom erste Spieler wird mit {number} multipliziert, wenn er nöd strikt chliiner isch als di andere Scores vom Spiel"
+        },
+        "private": {
+          "tooltip": {
+            "on": "Das Spiel isch privat, nur Lüt mit em Link chönd mitmache",
+            "off": "Dä Teil isch öffentlich, jede cha biiträte nachdäm d'Parameter validiert worde sind"
+          }
+        },
+        "reset-settings": "Istellige zruggsetze",
+        "validation-warning": "D'Istellige vom Spiel chönd nöd gänderet werde, sobald sie bestätigt worde sind",
+        "validate-settings": "Istellige validiere",
+        "max-players": {
+          "label": "Maximali Aalzahl Lüt",
+          "title": "Maximali Aalzahl Spieler: {number}"
+        },
+        "remove-identical-column": "Gliichi Spalte lösche",
+        "remove-identical-row": "Gliichä Zeilä löschä",
+        "nb-columns": {
+          "label": "Aazahl Spalte",
+          "title": "$number Spalte"
+        },
+        "initial-turned-count": {
+          "label": "Aazahl Charte, wo am Afang offe sind",
+          "title": "Am Afang vom Spiel werded {number} vo dine Charte offe gleit"
+        },
+        "show-current-score": {
+          "label": "Zeig de aktuelli Spielstand wärend em Spiel"
+        },
+        "score-to-end-game": {
+          "label": "Punkte zum Spiil-Ändi",
+          "title": "S Spiel isch fertig, wenn e Spielerin oder en Spieler {number} Pünkt erreicht"
+        },
+        "first-player-penalty-type": {
+          "label": "Pönalty-Typ vom erste Spieler",
+          "description": "Strof wird agwendet, wenn de erst Spieler wo sini Charte ufdeckt nöd di chliinst Zuel a Pünkt het (gilt nöd, wenn d'Pünktzahl <= 0 isch)",
+          "placeholder": "Wähle e Strof-Typ us",
+          "item": {
+            "multiplier-only": "Numme Multiplikator",
+            "flat-only": "Numme flach",
+            "flat-then-multiplier": "Flach und denn Multiplikator",
+            "multiplier-then-flat": "Multiplier denn Flat"
+          }
+        },
+        "first-player-flat-penalty": {
+          "label": "De erst Spiler het e Pauschalstrof uf de Punktestand",
+          "title": "De Score vom erste Spieler wird um zuesätzliche {number} Pünkt erhööht"
+        }
+      },
+      "not-enough-players-modal": {
+        "close": "Ich verstah",
+        "title": "Zwenig Spieler",
+        "public-description": "Lad en Fründ ii oder wart, bis en andere Spieler debi isch.",
+        "private-description": "Nutz de privat Link, zum Fründe izlade!",
+        "description": "S bruucht mindestens 2 Spieler, zum s Spiel z'starte."
+      },
+      "title": "{name}sch Spiel",
+      "leave-to-home": "Zrugg uf d Startsiite",
+      "leave-to-public-game-list": "Uf d'Lischte vo de öffentliche Spiel setze",
+      "go-back-to-settings": "Gang zrugg uf d'Istellige",
+      "start-game-button": "Fang s Spiel aa",
+      "cancel": "Abbräche",
+      "game-starting-in": "S Spiel fangt aa i {seconds}",
+      "waiting-host-to-start": "Wartet uf de Host, bis er s Spiel startet",
+      "waiting-host-to-confirm-game-settings": "De Host isch am Warte, bis d'Istellige validiert worde sind",
+      "player-section": {
+        "title": "Lüüt {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Wähle d'Aazahl Spieler",
+          "item": "{value} Schpiiler"
+        }
+      }
+    },
+    "Index": {
+      "faq": {
+        "title": "Hüfigi Froge (FAQ)",
+        "meaning": {
+          "title": "Was heisst Skyjo?",
+          "content": "Es Skyjo isch e Spiil-Kolumne us 3 gliiche Charte."
+        },
+        "how-to-win": {
+          "title": "Wie gwünnt me bi Skyjo?",
+          "content": "Zum Gwünne bi Skyjo isch es wichtig, de tüüfstmöglich Pungktstand z'ha. Um das z'erreiche, söttisch e uusgwogeni Strategie zwüsched de tüüfste Charte ha, dini Charte ufdecke und Spalte us gliiche Charte bilde. Vermeindisch es früehz Ufdecke, usser du bisch scho wit vorn mit sichtbare Charte. Denk dra, scho sichtbari Charte z'behalte, um z'versueche, Spalte drus z'bilde, anstatt sie einzeln z'optimierä."
+        },
+        "pronounce": {
+          "title": "Wie sprichsch Skyjo us?",
+          "content": "Dä Begriff Skyjo wird [Skytschoh] usgsproche."
+        },
+        "how-to-play": {
+          "title": "Wie spiilt mer Skyjo?",
+          "content": "Zum Skyjo spiele, git me jede Spieler 12 Charte verdeckt. S Ziel isch, so wenig Pünkt wie möglich z ha, indem me Charte umdreht und uuschtuscht. Jede Zug ziehsch e Charte vom Stapel oder vom Ablagestapel, denn entscheidisch, ob du eini vo dine offene Charte ersetze wotsch. Zahlecharte sind ihri Pünkt wärt, spezielli Charte händ Aktione. S Spiel isch fertig, wenn en Spieler alli sini Charte umgedreht hät. De Spieler mit de wenigste Pünkt gwünnt. Meh Infos findsch i de <rules>Regle</rules>."
+        },
+        "play-classic-with-action": {
+          "title": "Chasch klassisch Skyjo mit Skyjo Action spiele?",
+          "content": "Jo, du muesch eifach d'Aktionscharte usemache. Wenn d'Online-Version spielsch, wähl d'Klassisch-Version us zum Skyjo spiele."
+        }
+      },
+      "banner": {
+        "title": "Ich bruuch <gform>dii Feedback</gform>, zum d Zuekunft vo Skymo z gschalte!"
+      },
+      "name-input-placeholder": "Name",
+      "explanation": {
+        "title": "Was isch Skyjo?",
+        "content": "Skyjo isch es ufsregends Charte-Spiel und es usgezeichnets Brettspiel, wo vo Spiil-Fans uf de ganze Wält gärn gha wird. Das Multiplayer-Charte-Spiel isch für 2 bis 8 Spiiler gmacht, wobei jede Spiiler 12 Charte überchunnt, wo am Afang verdeckt sind. S Hauptziil vom Spiel isch, so wenig Pünkt wie mögli z'erreiche. S Spiel isch fertig, sobald en Spiiler 100 Pünkt erreicht hät. D'Regle vom Spiel sind eifach und schnäll z'verstah, was es zu ere ideale Wahl für Spiil-Obe mit Familie oder Fründe macht. Spiil-Liebhaber werded sich freue z'ghöre, dass me Skyjo jetzt gratis online cha spiele!",
+        "button": "Lueg d Regle a"
+      }
+    },
+    "Search": {
+      "header": {
+        "create-button": {
+          "title": "Erstell es öffentlechs Spiel"
+        },
+        "back": "Zrugg uf d'Startsiite",
+        "title": "Öffentlechi Spiel",
+        "refresh": "Aktualisier d Spiillischt"
+      },
+      "tags": {
+        "title": "Filter:",
+        "no-tags-available": "Kei Tags meh verfüegbar",
+        "tag": {
+          "classic": "Klassisch",
+          "custom": "Aapasseti",
+          "column": "Spalte",
+          "row": "Reihe",
+          "short-game": "Churzspiel",
+          "long-game": "Langfristig"
+        }
+      },
+      "head": {
+        "title": "Öffentlechi Skymo-Spiel findä | Skyjo Online spielä",
+        "description": "Suesch es Skymo-Spiel zum mitmache? Lueg dir di verfüegbare öffentliche Spiel aa und fang sofort aa, Skyjo online mit andere Spieler z'spiele. Spiel jetzt gratis!",
+        "keywords": "Skymo, Skyjo, Skyjo online, Spiel finde, Spiel bitrette, öffentlechi Spiel, Online-Multiplayer, mit andere spiele, schnälls Spiel, gratis Online-Spiel, offeni Spiel, Online-Charte-Spiel, Multiplayer-Charte-Spiel"
+      },
+      "no-games-found": "Kei Spiel gfunde",
+      "game-of": "{name}sch Spil"
+    },
+    "ResultsPage": {
+      "player-want-to-replay": "Lüüt wo no einisch wetted spiele:",
+      "title": "S Spiilergebnis",
+      "rank": "Rang",
+      "player": "Player",
+      "score-per-round": "Pünkt pro Rundi",
+      "total": "Total",
+      "replay-button": {
+        "cancel": "Nöd nomal abspiile",
+        "replay": "Wiederhole"
+      },
+      "leave-button": "S Spiel verlah"
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "anonymous-usage-data": {
+            "items": "Siiteufruäf;;Web Vitals (Leischtigskennzaahle);;Umfrägteile (falls Sie teilnähme)",
+            "title": "Anonymi Nutzigsdate",
+            "description": "Mir bruuched PostHog, es Analyse-Tool, zum anonymi Date drüber z'sammle, wie du üsi Website bruuchsch. Das beinhaltet:"
+          },
+          "title": "Informatione wo mir sammle",
+          "user-provided-information": {
+            "title": "Vom Benutzer agäbni Date",
+            "description": "Mir sammled:",
+            "items": "Iigabene vom Rückmäldigsformular (inkl. optionaler E-Mail-Adrässe)"
+          },
+          "game-data": {
+            "title": "Gamedate",
+            "description": "Mir spichere temporär:",
+            "items": "Benutzername und Avatar-Usfüehlig;;Spielelemänt und Fortschritt"
+          },
+          "local-storage-data": {
+            "title": "Local Storage Date",
+            "description": "Mir spichere im lokale Speicher vo dim Browser:",
+            "items": "Sproochuswahl;;Istellige vom Spiel"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "Mir bruuched essenzielli Cookies, zum d'Hauptfunktione vo üsere Website z'aktiviere:",
+            "items": "Session-Cookies: Mir bruuched es Session-Cookie (skymo-io), zum dini Verbindig zu eusne Game-Server z'ghalte. Das Cookie isch essenziell für d'Funktionalität vom Spiel und lauft nach 24 Stund ab. Die Cookies verfolged dich nöd über Websiite und werded nur bruucht, zum de Service z'erbiete, wo du aagfrogt hesch"
+          }
+        },
+        "data-sharing": {
+          "title": "Date-Teile",
+          "description": "Mir teiled dini persönliche Date nöd mit Dritte. Anonymi Nutzigsdate werded vo PostHog, eusem Analyse-Aabieter, verarbeitet."
+        },
+        "your-rights-and-choices": {
+          "description": "Will mir hauptsächlich anonymi Date sammle, chönne mir ke persönlechi Date, wo sich uf en individuelle Nutzniesser beziehe, identifiziere oder druf zuegriffe. Gliichwohl hesch di folgend Rächt und Uswahlmöglichkeite:",
+          "title": "Dini Rächt und Wahlmöglichkeite",
+          "items": "Local Storage: Du chasch de Local Storage vo dim Browser jederzeit läär mache, zum gspeicherete Istellige z'entfäärne;;Feedback: Falls du üs Feedback mit ere E-Mail-Adrässe gschickt hesch, chasch üs kontaktiere, zum d'Löschig aazfoordere;;Analytics Opt-Out: Du chasch dich vo de Sammlig vo Analyse-Date abmelde, indem du d'Istellige \"Do Not Track\" i dim Browser aktiviersch oder privacy-fründlichi Browser bruchsch, wo Analyse-Skript blockiere;;Game Data: Spielbezogeni Date werde automatisch glöscht, wenn alli Spieler es Spiel verlahnd"
+        },
+        "contact-us": {
+          "title": "Kontakt",
+          "description": "Wenn Sie Frooge zu dere Dateschutzrichtlinie händ, chönd Sie üüs über üüses Feedback-Formular uf de Website, de Discord-Server oder GitHub kontaktiere."
+        },
+        "back": "Zrugg uf d'Startsiite",
+        "title": "Däteschutz",
+        "last-update": {
+          "text": "Zuletzt aktualisiert: {date}",
+          "date-format": "JJJJ-MM-TT - hh:mmA"
+        },
+        "how-we-use-your-information": {
+          "title": "Wie mir dini Date bruuche",
+          "items": "Üsi Website und d'Benutzererläbnis verbessere;;Nutzigsmuster und Performance analysiere;;Uf Feedback und Support-Ahfrage reagiere;;D'Spiil erliichtere"
+        },
+        "data-storage-and-retention": {
+          "title": "Datäspicherig und -behaltig",
+          "items": "Anonymi Nutzigsdate werde uf Server innerhalb vo de Europäische Union gspeicheret und bis zu 1 Johr ufbehalte;;Spieldate werde in userer Datebank z Frankfurt, Dütschland, gspeicheret. Die Date werde für d Duer vom aktive Spiel ufbehalte. Sobald alli Spieler es Spiel verlah händ, werde die dezueghörige Date glöscht;;Informazione, wo im lokale Speicher vo dim Browser gspeicheret sind, blibed döt, bis du dini Browserdate löschisch;;Iireichige vom Feedback-Formular werde nume zum Zweck vo de Beantwörtig und de Berücksichtigung vo Vorschläg für d Entwicklig ufbehalte"
+        },
+        "childrens-privacy": {
+          "title": "Chinder-Dateschutz",
+          "description": "Skymo het keini Altersbeschränkige. Mir sammled nöd wüssentlich persönliechi Date vo Chind."
+        },
+        "changes-to-this-policy": {
+          "title": "Änderige a dere Regle",
+          "description": "Mir chönd die Regle vo Ziit zu Ziit aktualisiere. Mir informiered dich über Änderige, indem mir die nöii Regle uf dere Site veröffentliched."
+        }
+      },
+      "head": {
+        "title": "Däteschutz | Skymo - Skyjo Online Chartegame",
+        "description": "Däate-Schutz-Erchlärig für Skymo. Finde use, wie mir dini Date schütze, während du üses Skyjo-Charte-Spiel gniesch. Transpärenti Praktike und es sichers Spiil-Erlebnis.",
+        "keywords": "Skymo,Skyjo,Skyjo Online,Däteschutzrichtlinie,Däteschutz,Online-Game-Däteschutz,sichers Gamä,Nutzerdäte,GDPR,CCPA,Dätesicherhäit"
+      }
+    },
+    "Create": {
+      "head": {
+        "title": "Es Skymo-Spiel erstelle | Skyjo online spiele",
+        "description": "Fang es nöis Skymo-Game online aa! Erstell privat oder öffentlichi Ruum, lad dini Fründ ii und gnüss de Spass vo Skyjo zäme. Jetzt gratis spiele!",
+        "keywords": "Skymo, Skyjo, Skyjo online, Spiel erstelle, Spiel starte, privats Spiel, öffentichs Spiel, mit Fründe spiele, Online-Multiplayer, gratis Online-Spiel, eigets Spiel"
+      },
+      "loading-text": "Mache dis Spiel…"
+    },
+    "Maintenance": {
+      "title": "D Site isch momentan under Wartig",
+      "description": "Mir aktualisiere grad d'Sitte, bitte versuech's spöter nomal.",
+      "github-alt": "De Quellcode isch uf GitHub z finde"
+    },
+    "NotFound": {
+      "description": "Die Site wo du sueche tuet, git's nöd.",
+      "title": "Error 404",
+      "go-back-to-homepage": "Gang zrugg uf d'Startsiite"
+    },
+    "Rules": {
+      "head": {
+        "description": "Lern wie mer Skyjo spiilt mit eusem Skyjo Guide. Entdeck d'Regle, Strategie und Tipss, um das luschtige Online-Chartegame z'meischtere. Spiel jetzt mit dine Fründe!",
+        "keywords": "Skymo, Skyjo, Skyjo Regle, wie me Skyjo spielt, Skyjo Spiel, Chartegame Regle, Online-Chartegame, Spielaaletige, Gameplay Guide",
+        "title": "Wie me Skymo spiilt | Skyjo Chartegame Online"
+      },
+      "title": "Skyjo Spielregle"
+    }
+  },
+  "components": {
+    "AfkKick": {
+      "player-kicked": {
+        "description": "{playerName} isch us em Spiel gheit, wil er nöd aktiv gsi isch.",
+        "title": "De Spiler isch usegheit worde"
+      },
+      "warning": {
+        "title": "AFK Warnig",
+        "description": "Du wirsch us em Spiel gworfe, wenn du inaktiv blibsch."
+      },
+      "kicked": {
+        "title": "Du bisch usegheit worde wägem Nöd-Tätig-Si",
+        "description": "Du bischt us em Spiel gworfe worde, will du z'vil Mol AFK gsi bischt."
+      }
+    },
+    "KickVote": {
+      "vote-succeeded": {
+        "title": "{playerName} isch usegschmisse worde",
+        "description": "D Abstimmig zum Usseschluss vo {playerName} isch erfolgriich gsi."
+      },
+      "vote-failed": {
+        "description": "S hät nöd gnueg Stämme zum de {playerName} usezschmeisse",
+        "title": "D'Abstimmig zum {playerName} usezschmeisse isch gscheiteret"
+      },
+      "player-has-not-voted": {
+        "title": "Stimm ab zum {playerName} usezschmeisse",
+        "kick-button": {
+          "alt": "Kick {playerName}",
+          "label": "Kick"
+        },
+        "ignore-button": {
+          "alt": "Ignorier d Abstimmig zum de {playerName} usezschmeisse",
+          "label": "Ignoriere"
+        }
+      },
+      "player-has-voted": {
+        "title": "Stimm ab zum {playerName} usezschmeisse",
+        "description": "Du hesch {vote, select, true {defür} false {degäge} other {abgstimmt}} gstimmt"
+      },
+      "vote-against-you": {
+        "title": "Stimm ab, zum dich usezschmeisse",
+        "description": "Es isch a Abstimmig verlanget worde, zum dich usezschmeisse."
+      },
+      "vote-against-you-failed": {
+        "title": "Du bisch nöd usegheit worde",
+        "description": "S hät nöd gnueg Stümme zum dich usezschmeisse"
+      },
+      "vote-against-you-succeeded": {
+        "title": "Du bisch usegheit worde",
+        "description": "D'Lüüt händ abgstimmt, dich us em Spiel z'schmeisse."
+      },
+      "you-kick-player": {
+        "title": "Du hesch de {playerName} usegheit"
+      },
+      "host-kick": {
+        "title": "De {playerName} isch vom Host us em Spiel gschmisse worde"
+      },
+      "host-kick-you": {
+        "title": "Du bisch vom Host us em Spiel gheit worde"
+      }
+    },
+    "Chat": {
+      "title": "Chat"
+    },
+    "ChatForm": {
+      "unknown-command": {
+        "description": "Unbekannte Befähl"
+      },
+      "message-input-placeholder": "Nachricht",
+      "button-title": "Sände",
+      "message-too-long": {
+        "description": "D'Mitteilig isch z'lang (max. 200 Zeiche)"
+      }
+    },
+    "Footer": {
+      "home": "Home",
+      "feedback": "Gib üüs es Feedback",
+      "buy-game": "Chouf s Spiel",
+      "explanation": "Was isch Skyjo?",
+      "rules": "Spielregle",
+      "status": "Server-Status",
+      "release-notes": "Release Notes",
+      "privacy-policy": "Däteschutzrichtlinie",
+      "disclaimer": {
+        "not-affiliated": "Die Website isch nöd verbunde mit de Erschtäller oder Händler vo Skyjo",
+        "rights-owned": "Alli Rächt am Name Skyjo und de Spielmechanik sind im Bsitz vom Alexander Bernhardt und Magilano",
+        "responsible-content": "De Betriiber vo dere Site isch nöd verantwortlich für Inhält, wo vo Benützer gmacht worde sind (Benutzername, Nachrichte)"
+      },
+      "attribution": {
+        "avatars": "Avatär erstellt vo Freepik - Flaticon"
+      }
+    },
+    "LanguageCombobox": {
+      "locale": {
+        "br": "Brezhoneg",
+        "de": "Tüütsch",
+        "en": "Änglisch",
+        "es": "Schwiizertüütsch",
+        "fr": "Französisch",
+        "it": "Italiänisch",
+        "ta": "Tamil"
+      },
+      "select-language": "Sprach usgwähle",
+      "search-language": "Sprooch sueche",
+      "no-language-found": "Kei Sprach gfunde"
+    },
+    "MenuDropdown": {
+      "discord": "Discord",
+      "settings": "Istellige",
+      "rules": "Regle",
+      "feedback": "Gib es Feedback",
+      "button": {
+        "aria-label": "Menü"
+      }
+    },
+    "OpponentBoard": {
+      "disconnected": "De Spiiler het s Spiel verlah. E Bot wird für ihn spiele i de nöchste Runde, bis er wieder verbunde isch."
+    },
+    "Rules": {
+      "scoring": {
+        "list": {
+          "content-2": "Wenn d'Total negativ isch, wird's vo de Gsamtpunktzahl vo de vorherige Runde abzooge.",
+          "content-1": "Wenn d'Total-Pünkt positiv sind, de duet er sie zu de Total-Pünkt vo de vorege Rundi dezue."
+        },
+        "title": "Scoring",
+        "description": "Dä Spieler wo no Charte verdeckt hät, dräit die uf. Jede Spieler zellt sini Pünkt.",
+        "first-to-finish": {
+          "content": "Wenn de Spieler, wo d Rundi abgschlosse hät (de 1. wo alli sini Charte umdreht hät), nöd de tüüfschti Punktestand für die Rundi erreicht hät, denn wird d Summe vo sine Pünkt für die Rundi verdopplet.",
+          "note": {
+            "title": "Bitte beachte:",
+            "content": "Die Regle gältet nume für positivi Pünkt!"
+          }
+        },
+        "example": {
+          "title": "Bispil:",
+          "content": "Schpiiler A zeigt alli sini Charte und beändet d Rundi. Am Ändi vo de Rundi hät er 10 Pünkt, de Schpiiler B hät 24 Pünkt und de Schpiiler C hät au 10 Pünkt. Wil de Schpiiler A nöd strikt di tüüfschti Aalzahl Pünkt hät, werded sini Pünkt uf 20 verdooblet."
+        }
+      },
+      "cards-section-title": "{number} Spiilcharte:",
+      "game-goal": {
+        "title": "S Ziel vom Spiel",
+        "content": "Dä Skyjo-Match wird über mehreri Runde gspielt und isch verbii, sobald en Spieler 100 Pünkt oder meh erreicht. De Spieler mit de wenigste Pünkt gwünnt de Match."
+      },
+      "round-preparation": {
+        "title": "Rundi-Vorbereitig",
+        "content-1": "Zuerst bechunnt jede Spieler 12 Charte verdeckt. Deet druf wird e Charte vom Ziähstapel offe i d Mitti vom Tisch gleit, das isch de Afang vom Ablagestapel. D reschtliche Charte werde verdeckt näbedenand gleit und bilde de Ziähstapel.",
+        "content-2": "Jede Spielerin und jede Spieler platziert sini 12 Charte i vier Spalte mit je drü Charte verdeckt vor sich. Am Schluss dräit jede Spieler und jede Spielerin zwei Charte nach Wahl uf."
+      },
+      "round-start": {
+        "title": "Rundi-Start",
+        "choice": "Uswohl {number}",
+        "content-1": "De Spiler cha d'erscht Charte us em Ablagstapel wähle, wo umdräit wird",
+        "content-2": "oder d'erscht verdeckti Charte vom Ziähstapel",
+        "choice-1": {
+          "title": "Uswahl 1:",
+          "description": "Nimm d'erst Charte vom Ablagestapel.",
+          "content": "De Spieler mues die Charte sofort mit eire vo sine 12 Charte tuusche und offe uf de Tisch legge. Er cha frei wähle zwüsched offene und verdeckte Charte. Verdeckti Charte dörfed vor em Tuusch nöd agseh werde. Die tuuscht Charte wird offe uf de Ablagestapel gleit."
+        },
+        "choice-2": {
+          "title": "Uswahl 2:",
+          "description": "Nimm die erschti Charte verdeckt vom Zoogstapel.",
+          "content-1": "De Spieler cha d Charte aluege und entscheide, öb er sie mit {einer} vo sine Charte (verdeckt oder offe) uusgwächsle oder ablegge will. Wenn er d zognig Charte bhalte will, tuet er sie mit {einer} vo sine Charte uusgwächsle, wie obe im beschriebe",
+          "choice-1": "Uswahl 1",
+          "content-2": "Falls er d zognig Charte nöd möcht bhalte, leit er sie uf de Ablagstapel und muess eini vo sine Charte offe ufeluege."
+        },
+        "end-of-turn": "S isch denn am Endi vo sim Zug, und de nöchscht Spiiler (im Uhrzeigersinn) isch draa."
+      },
+      "special-rule": {
+        "title": "Spezialregle:",
+        "content": "Wenn e Spieler 3 gliichi Charte in ere Spalte het, tuet de Spieler die 3 Charte uf de Ablagestapel ablegge. Wenn e Spalte mit gliiche Charte dur Uschtuusch mit ere Charte vom Ziähstapel oder Ablagestapel entstande isch, müesse die drü gliiche Charte immer uf de Ablagestapel gleit werde, nachdem d'Charte uusgtuuscht worde isch."
+      },
+      "round-end": {
+        "title": "Änd vom Spiil",
+        "content-1": "Wenn e Spieler sini Charte ufde Tisch gleit het, het er sini letschti Rundi gspielt.",
+        "content-2": "Alli nöchst Folgendi spile no einisch, zum d Rundi abschlüsse."
+      },
+      "end-of-game": {
+        "title": "Ändi vom Spiel",
+        "content": "Am Schluss vo jedere Rundä wärded d'Pünkt vo jedem Spieler zum Gsamtstand us de voregahndä Rundene dezuegrechnet. S'Spiel isch verbii, sobald en Spieler 100 Pünkt oder meh erreicht. De Spieler mit de tüüfschte Punktzahl gwünnt s'Spiel."
+      }
+    },
+    "SettingsDialog": {
+      "display": {
+        "chat": {
+          "chat-notification-size": {
+            "values": {
+              "big": "Gross",
+              "small": "Chlii",
+              "normal": "Normal"
+            },
+            "label": "Grössi vo de Chat-Benachrichtigung"
+          },
+          "title": "Chat",
+          "chat-visibility": "Chat-Sichtbarkeit"
+        },
+        "gameplay": {
+          "gameboard-size": {
+            "big-warning": "Cha Display uf Mobile kaputt mache",
+            "label": "D'Grössi vo dim Spiilbrätt",
+            "values": {
+              "normal": "Normal",
+              "big": "Gross"
+            }
+          },
+          "title": "Gameplay",
+          "enlarge-active-player-board": "Vergrössered s Spielfäld vom Spieler, wo dra isch",
+          "timer": {
+            "label": "Timer-Ahzeigemodus",
+            "description": "Im Smart-Modus wird de Timer bi de Halbziit und de letschte 15 Sekunde aazeigt.",
+            "modes": {
+              "never": "Nöd eso schnäll",
+              "smart": "Gschid",
+              "always": "Immer"
+            }
+          }
+        },
+        "title": "Aazeig",
+        "mobile": {
+          "title": "Mobile",
+          "switch-to-player-who-is-playing": "Automatisches Wächsle zum Spieler wo am Spiele isch",
+          "show-preview-opponents-cards": "Zeig e Vorschau vo de Charte vom Gägner i de Gägnerlischte"
+        }
+      },
+      "title": "Istellige",
+      "general": {
+        "title": "Allgmein",
+        "language": "Sprach",
+        "language-warn": "Nur uf de Startsite änderbar",
+        "appearance": "Uusgseh"
+      },
+      "audio": {
+        "title": "Audio",
+        "toggle": {
+          "label": "Audio aktiviere"
+        },
+        "volume": {
+          "label": "Volume ({volume}%)"
+        }
+      }
+    },
+    "Avatar": {
+      "context-menu": {
+        "ban": "De {username} spärre",
+        "report": "Rapport {username}",
+        "kick": "De {username} usehaue",
+        "vote-to-kick": "Stimm ab zum {username} usezschmeisse",
+        "mute": "Stumm schalte {username}",
+        "unmute": "Lüüt {username} wider ii"
+      }
+    },
+    "AppearanceSelect": {
+      "light": "Hell",
+      "dark": "Dunkel",
+      "system": "System"
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Meldig mälde"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} ungleseni Nachrichte{count, plural, =1 {} other {n}}"
+    },
+    "CopyLink": {
+      "message": "De Link isch kopiert worde!",
+      "button-title": "Link kopiere"
+    },
+    "DiscardPile": {
+      "title": "Abwurfstapel",
+      "throw": "Throw"
+    },
+    "DrawPile": {
+      "title": "Zieh-Stapel"
+    },
+    "EndRoundDialog": {
+      "title": "Änd vom Spiil",
+      "description": "Die nächscht Rundi fangt i paar Sekunde aa…"
+    },
+    "Feedback": {
+      "title": "Gib es Feedback",
+      "description": "Du chasch üs es Feedback schriibe, zum üs hälfe s Spiel z verbessere.",
+      "toast": {
+        "success": {
+          "title": "Merci vielmol für dis Feedback!",
+          "description": "Dini Iisichte händ üs ghoffe, üsi Game-Website z'verbessere, und mir sind dir würklich dankbar."
+        },
+        "error": {
+          "title": "Es isch en Fehler ufträte, bitte versuechs nomal."
+        }
+      },
+      "email-input": {
+        "label": "Dini E-Mail (optional)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Dini Nochricht",
+        "placeholder": "Säget üüs, was dir dänket, notieret oder wend …"
+      },
+      "button-title": "Sände"
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Wider mit em Spiel verbunde sii",
+      "join-game-button": "Tritt em Spiel bi",
+      "find-game-button": "Es Spiel finde",
+      "create-game-button": "Erstell es {type, select, private {privats} public {öffentlichs} other {unbekannts}} Spiel"
+    },
+    "GameRules": {
+      "button-title": "Zeig Spielregle",
+      "title": "Spielregle",
+      "remove-identical-column": "Spalte lösche, falls Charte glich sind: {value, select, true {jo} false {nei} other {unbekannt}}",
+      "remove-identical-row": "Riehe lösche, falls Charte glich sind: {value, select, true {jo} false {nei} other {unbekannt}}",
+      "card-per-column": "Aazahl Spalte: {value}",
+      "card-per-row": "Aazahl Zeile: {value}",
+      "initial-turned-count": "Aazahl Charte, wo am Afang umdräit wärde: {value}",
+      "score-to-end-game": "Aazahl Pünkt zum Spiel-Ändi: {value}",
+      "first-player-penalty-type": {
+        "label": "Stroftyp für de erst Spieler, wenn er nöd di chliinst Zuel a Pünkt hät: ",
+        "1": "Numme Multiplikator",
+        "2": "Numme flach",
+        "3": "Flat then multiplier",
+        "4": "Multiplier then flat"
+      },
+      "first-player-multiplier-penalty": "Muliplikator-Strof: {value}",
+      "first-player-flat-penalty": "Paushalstraaf: {value}"
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Gägener:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Du"
+    },
+    "PWABanner": {
+      "title": "Installier Skymo uf dim Grät!",
+      "Safari": "Tipp uf s Teilesymbol, denn 'Zum Dock dezuefüege' zum installiere",
+      "Chrome": "Klick uf de Knopf 'Installiere' zum installiere",
+      "FirefoxAndroid": "Tipp de Menü-Button a denn 'Zum Homescreen hinzuefüege' zum installiere",
+      "ChromeAndroid": "Tipp de Menü-Button a denn 'Zum Homescreen hinzuefüege' zum installiere",
+      "SamsungBrowser": "Tipp de Menü-Button a denn 'Uf Startbildschirm' zum Installiere",
+      "ChromeIOS": "Tipp de Share-Button, denn scroll und tipp 'Zum Home-Bildschirm' zum installiere",
+      "FirefoxIOS": "Tipp uf s Menü-Icon, denn uf s Teilet-Icon, und denn scroll und tipp uf 'Zum Homescreen hinzuefüege' zum installiere",
+      "SafariIOS": "Tipp de Share-Button, denn scroll und tipp 'Zum Home-Bildschirm' zum installiere",
+      "install-button": {
+        "title": "Installier d App",
+        "content": "Installiere"
+      }
+    },
+    "RulesDialog": {
+      "title": "Spielregle",
+      "trigger": {
+        "aria-label": "Zeig Spielregle"
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Ranglischt aazeige"
+    },
+    "ScoreDialog": {
+      "title": "Pünkt",
+      "description": "{name} hät gwunne mit {score} Pünkt !"
+    },
+    "ScoreSheet": {
+      "see-scores": "Lueg d'Resultat"
+    },
+    "ScoreTable": {
+      "name": "Name",
+      "round": "Rund",
+      "total": "Total"
+    },
+    "ReportDialog": {
+      "report-username": "Mäld de Benutzername",
+      "report-message": "Meld e Nachricht",
+      "select-message": "Wähl d'Nachricht us, wo du wotsch mälde",
+      "title": "Rapport {username}",
+      "description": "Mäld de Benutzername oder e Nachricht vom {username}, wenn's unpassend isch.",
+      "select-message-placeholder": "Wähle e Nachricht us",
+      "no-messages": "S het keini Nachrichte vo dem Benutzer gfunde",
+      "cancel": "Abbräche",
+      "submit": "Rapport",
+      "toast": {
+        "report-submitted": {
+          "title": "Rapport isch igreicht worde",
+          "description": "Merssi für din Rapport, du häsch ghulfe d Qualitet vom Spiel z verbessere."
+        }
+      }
+    }
+  },
+  "utils": {
+    "chat": {
+      "player-left": "{username} het s Spiel verlah",
+      "player-joined": "{username} isch em Spiil biträtte",
+      "player-reconnect": "{username} isch wieder im Spiel debi",
+      "argument-required": "Für de Befähl {command} bruucht’s eis oder meh Argument",
+      "player-already-muted": "{username} isch scho stummgschalte",
+      "player-muted": "{username} isch jetzt stumm gschalte",
+      "player-not-muted": "De {username} isch nöd stummgschalte",
+      "player-unmuted": "De Stumm-Modus isch für {username} ufghobe worde",
+      "wizz-sent": "Du häsch em {targetUsername} es Wizz gschickt!",
+      "wizz-self": "Du bisch vo {initiatorUsername} awizzed worde!",
+      "wizz-other": "{initiatorUsername} het de {targetUsername} awizzet!"
+    },
+    "skymo": {
+      "turn": {
+        "chooseAPile": "Wähl en Huufe",
+        "throwOrReplace": "Ersetze oder entsorgä",
+        "replaceACard": "Es Charte uswächsle",
+        "turnACard": "Zieh e Charte"
+      },
+      "player-turn": "De {playerName} isch draa",
+      "waiting": "Warte uf Spiler",
+      "turn-cards": "Drah {number} Charte{number, plural, =1 {} other {ne}}",
+      "waiting-opponents-to-turn-cards": "Warte uf de Gägner, bis er {number} Charte zoge het",
+      "last-turn": "Letschti Rundi!",
+      "game-stopped": "S Spiel isch abbroche worde",
+      "round-over": "Rundi abgschlosse",
+      "game-ended": "Game over!"
+    },
+    "avatar": {
+      "octopus": "Oktopus",
+      "penguin": "Pinguin",
+      "toucan": "Toucan",
+      "bee": "Im Kontext der Software-Lokalisierung, wo es oft um kurze, prägnante Begriffe geht und die technische Genauigkeit wichtig ist, würde ich \"Biini\" oder \"Imme\" vorschlagen, je nachdem, ob es sich um eine einzelne Biene oder um das Konzept der Bienen im Allgemeinen handelt.\n\nWenn es sich um das Tier \"Biene\" handelt, ist \"Biini\" die gängigste und verständlichste Übersetzung im Schweizerdeutschen.\n\nWenn es sich um einen technischen Kontext handelt, wo \"bee\" vielleicht als Abkürzung oder Code-Name verwendet wird, würde man es oft einfach als \"Bee\" belassen, um die technische Konsistenz zu wahren.\n\nOhne weiteren Kontext würde ich \"Biini\" vorschlagen.\n\n**Biini**",
+      "crab": "Chrabe",
+      "dog": "Hund",
+      "eagle": "Adler",
+      "turtle": "Schildchrot",
+      "whale": "Wal",
+      "owl": "Uul",
+      "elephant": "Elefant",
+      "fox": "Fuchs",
+      "frog": "Frosch",
+      "jellyfish": "Meduse",
+      "koala": "Koala",
+      "cat": "Chatz"
+    },
+    "socket": {
+      "error": {
+        "game-already-started": {
+          "description": "S Spiel hät scho agfange"
+        },
+        "player-banned": {
+          "description": "Du bisch us em Spiel usgsperrt worde"
+        },
+        "rate-limit": {
+          "title": "Du schicksch z'viel Ahfröge",
+          "description": "Bitte warte es bizli, bevor du's nomal probiersch"
+        },
+        "timeout": {
+          "description": "De Server bruucht länger als erwartet zum antworte. Du chasch versueche, d'Siite neu z'lade und es nomal probiere."
+        },
+        "game-not-found": {
+          "description": "S Spiel wo du suechsch exischtiert nöd"
+        },
+        "cannot-reconnect": {
+          "description": "S isch nümm mögli, sich wieder mit em Spiel z'verbinde, d'Zyt zum wider Verbinde isch abgeloffe"
+        },
+        "game-is-full": {
+          "description": "D'Spil isch voll, du chasch nöd mitmache"
+        }
+      }
+    }
+  },
+  "contexts": {
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "title": "S Spiel isch nöd gfunde worde",
+          "description": "S Spiel, wo du hetsch welle wider verbinde, git's nüme"
+        }
+      },
+      "connection-lost": "Verbindig verlore. Versueche wider z'verbinde...",
+      "reconnection": "Widerverbund erfolgriich"
+    },
+    "BanContext": {
+      "not-allowed": {
+        "description": "Du häsch kei Berächtigung, e Spieler z'spärre",
+        "title": "Du häsch kei Bärächtigung zum Spärre"
+      },
+      "unexpected-error": {
+        "title": "Es isch en unerwartete Fehler ufträte",
+        "description": "Es isch en unerwartete Fehler ufträte bim Sperre vomene Spieler"
+      },
+      "player-not-found": {
+        "title": "De Spiler zum Spärre git's nöd",
+        "description": "De Spieler zum usschlüsse git's nöd im Spiel"
+      },
+      "player-banned": {
+        "title": "De {playerName} isch gsperrt worde",
+        "description": "De Host het de {playerName} usgsperrt"
+      },
+      "you-were-banned": {
+        "title": "Du bisch gsperrt worde",
+        "description": "Du bisch vom Host us em Spiel usgsperrt worde"
+      }
+    },
+    "ReportContext": {
+      "report": {
+        "title": "De {playerName} isch usegschmisse worde uf Grund vo nere Meldig"
+      },
+      "report-against-you": {
+        "title": "Du bisch usegschmisse worde wägemene Rapport",
+        "description": "Dii Username oder eini vo dine Nachrichte isch gmoldä worde und als unpassend igstuufet worde. Bitte mach das nüme."
+      }
+    }
+  },
+  "head": {
+    "title": "Skymo | Skyjo-Chartegame gratis online spile",
+    "description": "Spiel Skyjo gratis online mit Skymo! Es schnälls Multiplayer-Charte-Spiel, wo Strategie uf Spass trifft. Fordere Fründe use, dräi Charte um und versuech de tüüfst Mööglichststand z'erreiche zum gwünne!",
+    "keywords": "Skymo,Skyjo,Skyjo online,Mehrspieler-Spiel,Kartespiel,mit Fründe spiele,gratis Online-Spiel,Online-Kartespiel"
+  }
+}
