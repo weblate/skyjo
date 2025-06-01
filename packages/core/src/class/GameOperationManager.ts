@@ -1,4 +1,5 @@
 import type { Game } from "@/class/Game.js"
+import type { GameRedisDb } from "@/types/game.js"
 
 export const defaultKickSocketOptions: KickSocketOptions = {
   emitEvent: true,
@@ -24,6 +25,8 @@ export interface GameOperationManagerInterface {
     callback: () => Promise<void>,
     ms: number,
   ): Promise<void>
+
+  endGame(game: GameRedisDb): Promise<void>
 }
 
 export class DefaultGameOperationManager
@@ -57,6 +60,10 @@ export class DefaultGameOperationManager
   }
 
   async delayNewRound(): Promise<void> {
+    /* Placeholder that should not be called */
+  }
+
+  async endGame(): Promise<void> {
     /* Placeholder that should not be called */
   }
 }

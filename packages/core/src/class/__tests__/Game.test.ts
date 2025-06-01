@@ -45,6 +45,7 @@ describe("Game", () => {
       getSocket: vi.fn(),
       kickSocket: vi.fn(),
       delayNewRound: vi.fn(),
+      endGame: vi.fn(),
     }
     game.setOperationManager(operationManager)
     game.addPlayer(player)

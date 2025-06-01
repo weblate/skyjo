@@ -11,12 +11,14 @@
     "biome:check": "pnpm biome check --write ."
   },
   "dependencies": {
+    "@skymo/database": "workspace:*",
     "@skymo/error": "workspace:*",
     "@skymo/logger": "workspace:*",
     "@skymo/transactional": "workspace:*",
     "@skymo/worker-types": "workspace:*",
     "bullmq": "^5.48.1",
     "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.43.1",
     "react": "19.1.0",
     "redis": "^4.7.0",
     "resend": "^4.5.1",

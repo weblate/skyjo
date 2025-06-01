@@ -790,6 +790,8 @@ export class Game implements GameInterface {
   private endGame() {
     this.roundPhase = Constants.ROUND_PHASE.OVER
     this.status = Constants.GAME_STATUS.FINISHED
+
+    this.operationManager.endGame(this.serialize())
   }
 
   private shouldEndRound() {
@@ -858,6 +860,7 @@ export class Game implements GameInterface {
     await this.resetRound()
     this.status = Constants.GAME_STATUS.LOBBY
     this.stateVersion = 0
+    this.createdAt = new Date()
     this.updatedAt = new Date()
     this.turn = 0
 

@@ -9,6 +9,8 @@ export const envSchema = z.object({
 
   REDIS_URL: z.string({ message: "REDIS_URL must be set in .env file" }),
 
+  POSTGRES_URL: z.string({ message: "POSTGRES_URL must be set in .env file" }),
+
   SEQ_URL: z.string({ message: "SEQ_URL must be set in .env file" }),
   SEQ_API_KEY: z.string({ message: "SEQ_API_KEY must be set in .env file" }),
 

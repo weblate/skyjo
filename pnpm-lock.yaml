@@ -329,6 +329,9 @@ importers:
       dotenv:
         specifier: ^16.5.0
         version: 16.5.0
+      drizzle-orm:
+        specifier: ^0.43.1
+        version: 0.43.1(@types/pg@8.11.14)(pg@8.15.6)
       react:
         specifier: 19.1.0
         version: 19.1.0

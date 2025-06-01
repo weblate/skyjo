@@ -13,6 +13,7 @@ import {
   uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core"
+import type { GameRedisDb } from "../../core/dist/src/index.js"
 
 export const avatarEnum = pgEnum("avatar", [
   "bee",
@@ -111,7 +112,11 @@ export type SessionDb = InferSelectModel<typeof sessionTable>
 export const gameTable = pgTable("games", {
   id: serial("id").primaryKey(),
   code: varchar("code", { length: 8 }),
+  settings: json("settings").$type<GameRedisDb["settings"]>(),
   createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  finishedAt: timestamp("finished_at", { withTimezone: true })
     .notNull()
     .defaultNow(),
 })
@@ -141,6 +146,5 @@ export const scoreTable = pgTable("scores", {
     .references(() => playerTable.id),
   score: varchar("score").notNull(),
   round: integer("round").notNull(),
-  cards: json("cards"),
 })
 export type ScoreDb = InferSelectModel<typeof scoreTable>

@@ -5,7 +5,7 @@ if (!process.env.POSTGRES_URL) {
 }
 
 export default defineConfig({
-  schema: "./src/db/schema.ts",
+  schema: "./src/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
     url: process.env.POSTGRES_URL,
