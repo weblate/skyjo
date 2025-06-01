@@ -5,6 +5,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
 interface AuthenticatedUser {
   emailVerified: boolean
+  email?: string
   name?: string
   username?: string
   avatar?: Avatar
@@ -39,6 +40,7 @@ export const useAuth = () => {
     },
     retry: 0,
     refetchOnWindowFocus: false,
+    staleTime: 30 * 60 * 1000, // 30 minutes
     gcTime: 30 * 60 * 1000, // 30 minutes
   })
 

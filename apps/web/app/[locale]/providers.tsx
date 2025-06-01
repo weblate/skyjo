@@ -5,9 +5,7 @@ import RulesProvider from "@/contexts/RulesContext"
 import SettingsProvider from "@/contexts/SettingsContext"
 import UserProvider from "@/contexts/UserContext"
 import { Locales } from "@skymo/shared/constants"
-import { createSyncStoragePersister } from "@tanstack/query-sync-storage-persister"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { persistQueryClient } from "@tanstack/react-query-persist-client"
 import { LazyMotion, domAnimation } from "motion/react"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
@@ -15,24 +13,7 @@ import { useEffect } from "react"
 import { Toaster } from "sonner"
 import PostHogPageView from "./PostHogPageView"
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 5 * 60 * 1000, // Consider data fresh for 5 minutes
-      gcTime: 10 * 60 * 1000, // Keep in cache for 10 minutes
-    },
-  },
-})
-
-const localStoragePersister = createSyncStoragePersister({
-  storage: typeof window !== "undefined" ? window.localStorage : null,
-})
-
-persistQueryClient({
-  // biome-ignore lint/suspicious/noExplicitAny: https://tanstack.com/query/latest/docs/framework/react/plugins/createSyncStoragePersister#usage
-  queryClient: queryClient as any,
-  persister: localStoragePersister,
-})
+const queryClient = new QueryClient()
 
 interface ProvidersProps {
   children: React.ReactNode
