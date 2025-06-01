@@ -1,6 +1,7 @@
 import { authRouter } from "@/http/auth/auth.router.js"
 import { feedbackRouter } from "@/http/feedback/feedback.router.js"
 import { gameRouter } from "@/http/game/game.router.js"
+import { userRouter } from "@/http/user/user.router.js"
 import { userVerificationRouter } from "@/http/userVerification/userVerification.router.js"
 import { ENV } from "@env"
 import type { Hono } from "hono"
@@ -28,5 +29,6 @@ export const initializeHttpServer = (app: Hono) => {
   app.route("/", gameRouter)
   app.route("/", feedbackRouter)
   app.route("/", authRouter)
+  app.route("/", userRouter)
   app.route("/", userVerificationRouter)
 }

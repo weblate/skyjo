@@ -1,9 +1,15 @@
 import { db } from "@/db/index.js"
 import { hashPassword } from "@/http/auth/lib/password.js"
 import type { Avatar } from "@skymo/core"
-import { type UserDb, userTable } from "@skymo/database/schema"
+import {
+  type UserDb,
+  gameTable,
+  playerTable,
+  userTable,
+} from "@skymo/database/schema"
 import { type Locales, UserError } from "@skymo/shared/constants"
-import { eq } from "drizzle-orm"
+import type { GameHistoryQuery } from "@skymo/shared/validations"
+import { desc, eq } from "drizzle-orm"
 
 interface CreateUserParams {
   email: string
@@ -95,4 +101,42 @@ export async function createUsername(name: string) {
   }
 
   return username
+}
+
+export async function getUserByUsername(
+  username: string,
+): Promise<UserDb | null> {
+  const [user] = await db
+    .select()
+    .from(userTable)
+    .where(eq(userTable.username, username))
+    .limit(1)
+
+  if (!user) return null
+
+  return user
+}
+
+export async function getUserGames(
+  username: string,
+  { limit = 20, offset = 0 }: GameHistoryQuery,
+) {
+  const games = await db
+    .select({
+      id: gameTable.id,
+      code: gameTable.code,
+      settings: gameTable.settings,
+      createdAt: gameTable.createdAt,
+      finishedAt: gameTable.finishedAt,
+      rank: playerTable.rank,
+    })
+    .from(gameTable)
+    .innerJoin(playerTable, eq(gameTable.id, playerTable.gameId))
+    .innerJoin(userTable, eq(playerTable.userId, userTable.id))
+    .where(eq(userTable.username, username))
+    .limit(limit)
+    .orderBy(desc(gameTable.finishedAt))
+    .offset(offset)
+
+  return games
 }
