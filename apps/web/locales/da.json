@@ -1,1 +1,769 @@
-{}
+{
+  "pages": {
+    "Index": {
+      "faq": {
+        "play-classic-with-action": {
+          "content": "Ja, du skal bare fjerne handlingskortene. Hvis du spiller onlineversionen, skal du vælge den klassisk version for at spille Skyjo.",
+          "title": "Kan du spille klassisk Skyjo med Skyjo Action?"
+        },
+        "title": "Ofte stillede spørgsmål (FAQ)",
+        "meaning": {
+          "title": "Hvad betyder Skyjo?",
+          "content": "En Skyjo er en kolonne med 3 identiske kort i spillet."
+        },
+        "pronounce": {
+          "title": "Hvordan udtaler man Skyjo?",
+          "content": "Ordet Skyjo udtales [Skyjoe]."
+        },
+        "how-to-play": {
+          "title": "Hvordan spiller man Skyjo?",
+          "content": "For at spille Skyjo skal hver spiller have uddelt 12 kort med billedsiden nedad. Målet er at have så få point som muligt ved at vende og udskifte kort. I hver tur trækker du et kort fra bunken eller afkastbunken og beslutter derefter at erstatte et af dine synlige kort. Nummererede kort er deres point værd, specialkort har handlinger. Spillet slutter, når en spiller har vendt alle sine kort. Spilleren med færrest point vinder. Du kan tjekke <rules>reglerne</rules> for mere information."
+        },
+        "how-to-win": {
+          "title": "Hvordan vinder man i Skyjo?",
+          "content": "For at vinde i Skyjo er det afgørende at have den lavest mulige score. For at opnå dette skal du anvende en afbalanceret strategi mellem at have de laveste kort, afsløre dine kort og skabe kolonner af identiske kort. Undgå at vende først, medmindre du er markant foran med synlige kort. Husk at beholde allerede synlige kort for at forsøge at skabe kolonner med dem, i stedet for at optimere dem individuelt."
+        }
+      },
+      "banner": {
+        "title": "Jeg har brug for <gform>din feedback</gform> for at forme Skymos fremtid!"
+      },
+      "name-input-placeholder": "Navn",
+      "explanation": {
+        "title": "Hvad er Skyjo?",
+        "button": "Se reglerne",
+        "content": "Skyjo er et spændende kortspil og et fremragende brætspil, som nydes af spilfans over hele verden. Dette multiplayer-kortspil er designet til mellem 2 og 8 spillere, hvor hver spiller modtager 12 kort, der i starten er skjulte. Hovedmålet med spillet er at score så få point som muligt. Spillet slutter, så snart en spiller når 100 point. Spillets regler er enkle og lette at forstå, hvilket gør det til et ideelt valg til spilaftener med familie eller venner. Spilentusiaster vil glæde sig over at høre, at det nu er muligt at spille Skyjo online gratis!"
+      }
+    },
+    "Search": {
+      "tags": {
+        "tag": {
+          "long-game": "Langt spil",
+          "classic": "Klassisk",
+          "custom": "Brugerdefineret",
+          "column": "Kolonne",
+          "row": "Række",
+          "short-game": "Kort spil"
+        },
+        "title": "Filtre:",
+        "no-tags-available": "Ingen flere tags tilgængelige"
+      },
+      "no-games-found": "Ingen spil fundet",
+      "head": {
+        "title": "Find offentlige Skymo-spil | Spil Skyjo Online",
+        "description": "Leder du efter et Skymo-spil at deltage i? Gennemse tilgængelige offentlige spil, og begynd at spille Skyjo online med det samme med andre spillere. Spil gratis nu!",
+        "keywords": "Skymo, Skyjo, Skyjo online, find spil, deltag i spil, offentlige spil, online multiplayer, spil med andre, hurtigt spil, gratis online spil, åbne spil, online kortspil, multiplayer kortspil"
+      },
+      "header": {
+        "title": "Offentlige spil",
+        "back": "Tilbage til startside",
+        "refresh": "Opdater spil-listen",
+        "create-button": {
+          "title": "Opret et offentligt spil"
+        }
+      },
+      "game-of": "{name}s spil"
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "user-provided-information": {
+            "items": "Indsendelser af feedbackformularer (inklusive valgfri e-mailadresser)",
+            "title": "Brugerleverede oplysninger",
+            "description": "Vi indsamler:"
+          },
+          "title": "Oplysninger vi indsamler",
+          "anonymous-usage-data": {
+            "title": "Anonyme brugsdata",
+            "description": "Vi bruger PostHog, et analyseværktøj, til at indsamle anonyme data om, hvordan du bruger vores hjemmeside. Dette omfatter:",
+            "items": "Sidevisninger;;Web vitals (præstationsmålinger);;Svar på undersøgelser (hvis du vælger at deltage)"
+          },
+          "game-data": {
+            "title": "Spildata",
+            "description": "Vi gemmer midlertidigt:",
+            "items": "Brugernavne og valg af avatarer;;Spilelementer og fremskridt"
+          },
+          "local-storage-data": {
+            "title": "Lokal lagringsdata",
+            "description": "Vi gemmer i din browsers lokale lager:",
+            "items": "Sprogindstillinger;;Spilindstillinger"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "Vi bruger essentielle cookies for at aktivere kernen i vores hjemmeside:",
+            "items": "Sessionscookies: Vi bruger en sessionscookie (skymo-io) til at opretholde din forbindelse til vores spilservere. Denne cookie er afgørende for spillets funktionalitet og udløber efter 24 timer. Disse cookies sporer dig ikke på tværs af websteder og bruges kun til at levere den tjeneste, du har anmodet om"
+          }
+        },
+        "how-we-use-your-information": {
+          "title": "Sådan bruger vi dine oplysninger",
+          "items": "Forbedr vores hjemmeside og brugeroplevelse;;Analyser brugsmønstre og ydeevne;;Besvar feedback og supportanmodninger;;Faciliter gameplay"
+        },
+        "data-sharing": {
+          "title": "Datadeling",
+          "description": "Vi deler ikke dine personlige oplysninger med tredjeparter. Anonyme brugsdata behandles af PostHog, vores analyseudbyder."
+        },
+        "your-rights-and-choices": {
+          "title": "Dine rettigheder og valg",
+          "description": "Da vi primært indsamler anonyme data, kan vi ikke identificere eller tilgå personlige oplysninger, der er specifikke for individuelle brugere. Du har dog følgende rettigheder og valgmuligheder:",
+          "items": "Lokal lagring: Du kan til enhver tid rydde din browsers lokale lagring for at fjerne gemte præferencer;;Feedback: Hvis du har indsendt feedback med en e-mailadresse, kan du kontakte os for at anmode om sletning heraf;;Fravalg af analyse: Du kan fravælge indsamling af analysedata ved at aktivere din browsers \"Do Not Track\"-indstilling eller bruge privatlivsfokuserede browsere, der blokerer analysescripts;;Spildata: Spilrelaterede data slettes automatisk, når alle spillere forlader et spil"
+        },
+        "back": "Tilbage til startsiden",
+        "title": "Fortrolighedspolitik",
+        "last-update": {
+          "date-format": "ÅÅÅÅ-MM-DD - tt:mmA",
+          "text": "Sidst opdateret: {date}"
+        },
+        "data-storage-and-retention": {
+          "title": "Datalagring og -opbevaring",
+          "items": "Anonyme brugsdata gemmes på servere inden for Den Europæiske Union og opbevares i op til 1 år;;Spildata gemmes i vores database i Frankfurt, Tyskland. Disse data opbevares, så længe spil er aktive. Når alle spillere forlader et spil, slettes de tilknyttede data;;Oplysninger, der er gemt i din browsers lokale lager, forbliver der, indtil du rydder dine browserdata;;Indsendelser via feedbackformular opbevares kun med det formål at svare og overveje forslag til udvikling"
+        },
+        "childrens-privacy": {
+          "title": "Børns privatliv",
+          "description": "Skymo har ingen aldersbegrænsninger. Vi indsamler ikke bevidst personlige oplysninger fra børn."
+        },
+        "changes-to-this-policy": {
+          "title": "Ændringer til denne politik",
+          "description": "Vi opdaterer muligvis denne politik fra tid til anden. Vi giver dig besked om eventuelle ændringer ved at offentliggøre den nye politik på denne side."
+        },
+        "contact-us": {
+          "title": "Kontakt os",
+          "description": "Hvis du har spørgsmål til denne fortrolighedspolitik, bedes du kontakte os via vores feedbackformular på hjemmesiden, Discord-server eller GitHub."
+        }
+      },
+      "head": {
+        "title": "Fortrolighedspolitik | Skymo - Skyjo Online Kortspil",
+        "description": "Privatlivspolitik for Skymo. Lær, hvordan vi beskytter dine data, mens du nyder vores Skyjo-kortspil. Gennemsigtig praksis og sikker spiloplevelse.",
+        "keywords": "Skymo, Skyjo, Skyjo Online, fortrolighedspolitik, databeskyttelse, online spil fortrolighed, sikker gaming, brugerdata, GDPR, CCPA, datasikkerhed"
+      }
+    },
+    "Create": {
+      "head": {
+        "title": "Opret et Skymo-spil | Spil Skyjo Online",
+        "description": "Start et nyt Skymo-spil online! Opret private eller offentlige rum, inviter dine venner, og nyd Skyjo sammen. Spil nu gratis!",
+        "keywords": "Skymo, Skyjo, Skyjo online, opret spil, start spil, privat spil, offentligt spil, spil med venner, online multiplayer, gratis onlinespil, tilpasset spil"
+      },
+      "loading-text": "Opretter dit spil…"
+    },
+    "Maintenance": {
+      "title": "Sitet er under vedligeholdelse",
+      "description": "Vi opdaterer i øjeblikket siden, prøv venligst igen senere.",
+      "github-alt": "Se kildekoden på GitHub"
+    },
+    "NotFound": {
+      "title": "Fejl 404",
+      "description": "Siden du leder efter, findes ikke.",
+      "go-back-to-homepage": "Gå tilbage til startsiden"
+    },
+    "Lobby": {
+      "title": "{name}'s spil",
+      "leave-to-home": "Gå til startside",
+      "leave-to-public-game-list": "Forlad til offentlig spil-liste",
+      "go-back-to-settings": "Gå tilbage til indstillinger",
+      "settings": {
+        "private": {
+          "tooltip": {
+            "on": "Dette spil er privat, kun folk med linket kan deltage",
+            "off": "Denne del er offentlig, alle kan deltage efter validering af parametrene"
+          }
+        },
+        "reset-settings": "Nulstil indstillinger",
+        "validation-warning": "Spilindstillinger kan ikke ændres, når de er blevet valideret",
+        "validate-settings": "Valider indstillinger",
+        "max-players": {
+          "label": "Maksimalt antal spillere",
+          "title": "Maksimalt antal spillere: {number}"
+        },
+        "remove-identical-column": "Fjern identiske kolonner",
+        "remove-identical-row": "Fjern identiske rækker",
+        "nb-columns": {
+          "label": "Antal kolonner",
+          "title": "$number kolonner"
+        },
+        "nb-rows": {
+          "label": "Antal rækker",
+          "title": "$number rækker"
+        },
+        "initial-turned-count": {
+          "label": "Antal kort, der oprindeligt er afsløret",
+          "title": "Ved spillets start vil {number} af dine kort blive afsløret"
+        },
+        "show-current-score": {
+          "label": "Vis den aktuelle score under spillet"
+        },
+        "score-to-end-game": {
+          "label": "Score for at afslutte spillet",
+          "title": "Spillet slutter, når en spiller når {number} point"
+        },
+        "first-player-penalty-type": {
+          "label": "Første spillers straffetype",
+          "description": "Straf anvendes, hvis den første spiller, der afslører alle sine kort, ikke har det mindste antal point (gælder ikke, hvis scoren er mindre end eller lig med 0)",
+          "item": {
+            "flat-only": "Kun flad",
+            "multiplier-only": "Kun multiplikator",
+            "flat-then-multiplier": "Flad og derefter Multiplikator",
+            "multiplier-then-flat": "Multiplikator derefter flad"
+          },
+          "placeholder": "Vælg en straffetype"
+        },
+        "first-player-flat-penalty": {
+          "label": "Første spillers score flad straf",
+          "title": "Der tilføjes yderligere {number} point til den første spillers score"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Første spillers strafmultiplikator for score",
+          "title": "Den første spillers score vil blive ganget med {number}, hvis den ikke er strengt lavere end de andre scores i spillet"
+        }
+      },
+      "start-game-button": "Start spillet",
+      "cancel": "Annuller",
+      "game-starting-in": "Spillet starter om {seconds}",
+      "waiting-host-to-start": "Venter på, at værten starter spillet",
+      "player-section": {
+        "title": "Spillere {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Vælg et antal spillere",
+          "item": "{value} spillere"
+        }
+      },
+      "waiting-host-to-confirm-game-settings": "Venter på, at værten validerer indstillingerne",
+      "not-enough-players-modal": {
+        "title": "Ikke nok spillere",
+        "description": "Du skal være mindst 2 spillere for at starte spillet.",
+        "private-description": "Brug det private link til at invitere venner!",
+        "public-description": "Inviter en ven, eller vent på, at en anden spiller tilslutter sig.",
+        "close": "Jeg forstår"
+      }
+    },
+    "ResultsPage": {
+      "title": "Spilresultater",
+      "rank": "Rang",
+      "player": "Spiller",
+      "leave-button": "Forlad spillet",
+      "score-per-round": "Score pr. runde",
+      "total": "Total",
+      "player-want-to-replay": "Spillere, der vil spille igen:",
+      "replay-button": {
+        "cancel": "Afspil ikke igen",
+        "replay": "Gentag"
+      }
+    },
+    "Rules": {
+      "head": {
+        "title": "Sådan spiller du Skymo | Skyjo kortspil online",
+        "description": "Lær at spille Skyjo med vores Skyjo-guide. Oplev reglerne, strategierne og tipsene til at mestre dette sjove online kortspil. Spil med venner nu!",
+        "keywords": "Skymo, Skyjo, Skyjo regler, hvordan man spiller Skyjo, Skyjo spil, kortspilsregler, online kortspil, spilinstruktioner, gameplay guide"
+      },
+      "title": "Skyjo spilleregler"
+    }
+  },
+  "components": {
+    "ChatForm": {
+      "message-input-placeholder": "Meddelelse",
+      "button-title": "Send",
+      "message-too-long": {
+        "description": "Beskeden er for lang (maks. 200 tegn)"
+      },
+      "unknown-command": {
+        "description": "Ukendt kommando"
+      }
+    },
+    "GameRules": {
+      "first-player-penalty-type": {
+        "4": "Multiplikator og derefter flad",
+        "label": "Straf for den første spiller, hvis han ikke har det mindste antal point: ",
+        "1": "Kun multiplikator",
+        "2": "Kun lejligheder",
+        "3": "Flad og derefter multiplikator"
+      },
+      "first-player-multiplier-penalty": "Multiplikatorstraf: {value}",
+      "first-player-flat-penalty": "Flad straf: {value}",
+      "button-title": "Vis spilleregler",
+      "title": "Spilleregler",
+      "remove-identical-column": "Fjern kolonne, hvis identiske kort: {value, select, true {ja} false {nej} other {ukendt}}",
+      "remove-identical-row": "Fjern række, hvis kort er identiske: {value, select, true {ja} false {nej} other {ukendt}}",
+      "card-per-column": "Antal kolonner: {value}",
+      "card-per-row": "Antal rækker: {value}",
+      "initial-turned-count": "Antal kort, der skal vendes i starten: {value}",
+      "score-to-end-game": "Antal point for at afslutte spillet: {value}"
+    },
+    "LanguageCombobox": {
+      "select-language": "Vælg sprog",
+      "search-language": "Søgesprog",
+      "no-language-found": "Ingen sprog fundet",
+      "locale": {
+        "de": "Tysk",
+        "en": "Engelsk",
+        "es": "Spansk",
+        "fr": "Fransk",
+        "it": "Italiensk",
+        "br": "Brezhoneg",
+        "ta": "Tamilsk"
+      }
+    },
+    "Rules": {
+      "round-start": {
+        "title": "Rundestart",
+        "choice": "valg {number}",
+        "content-2": "eller det første kort med billedsiden nedad fra trækbunken",
+        "end-of-turn": "Hans tur er så forbi, og det er den næste spillers tur (med uret).",
+        "content-1": "Spilleren kan vælge det første kort, der vendes fra afkastbunken",
+        "choice-1": {
+          "title": "Valg 1:",
+          "description": "Tag det første kort fra afkastbunken.",
+          "content": "Spilleren skal straks bytte dette kort med et af sine 12 kort og lægge det med billedsiden opad. Han kan frit vælge mellem kort med billedsiden opad og nedad. Skjulte kort må ikke ses før udvekslingen. Det udvekslede kort lægges med billedsiden opad på afkastbunken."
+        },
+        "choice-2": {
+          "title": "Valg 2:",
+          "description": "Tag det første kort med billedsiden nedad fra trækbunken.",
+          "content-1": "Spilleren kan se på kortet og vælge, om han vil bytte det med et af sine kort (skjult eller synligt) eller kassere det. Hvis han vil beholde det trukne kort, bytter han det med et af sine kort som beskrevet ovenfor i",
+          "content-2": "Hvis han ikke ønsker at beholde det trukne kort, lægger han det på afkastbunken og skal vende et af sine kort med billedsiden opad.",
+          "choice-1": "Valg 1"
+        }
+      },
+      "scoring": {
+        "title": "Scoring",
+        "description": "Spillere, der stadig har kort med billedsiden nedad, vender dem om. Hver spiller tæller sine samlede point.",
+        "list": {
+          "content-1": "Hvis det samlede antal point er positivt, lægger han det til det samlede antal point fra tidligere runder.",
+          "content-2": "Hvis totalen er negativ, trækkes den fra de samlede point for de foregående runder."
+        },
+        "first-to-finish": {
+          "content": "Hvis den spiller, der har afsluttet runden (den første til at have vendt alle sine kort), strengt taget ikke har opnået det laveste antal point for den runde, så fordobles summen af hans point for den runde.",
+          "note": {
+            "title": "Bemærk:",
+            "content": "Denne regel gælder kun for positive point!"
+          }
+        },
+        "example": {
+          "title": "Eksempel:",
+          "content": "Spiller A afslører alle sine kort og afslutter runden. Ved rundens afslutning har han 10 point, spiller B har 24 point, og spiller C har også 10 point. Da spiller A ikke strengt taget har det laveste antal point, fordobles hans point til 20."
+        }
+      },
+      "cards-section-title": "{number} spilkort:",
+      "game-goal": {
+        "title": "Spilmål",
+        "content": "Skyjo-spillet spilles over flere runder og slutter, så snart en spiller når 100 point eller mere. Spilleren med færrest point vinder spillet."
+      },
+      "round-preparation": {
+        "title": "Klargøring af runde",
+        "content-1": "Først får hver spiller tildelt 12 kort med billedsiden nedad. Dernæst lægges ét kort fra trækbunken med billedsiden opad midt på bordet, hvilket danner begyndelsen på afkastbunken. De resterende kort lægges med billedsiden nedad ved siden af hinanden og danner trækbunken.",
+        "content-2": "Hver spiller placerer sine 12 kort i fire kolonner med tre kort med billedsiden nedad foran sig. Til sidst vender hver spiller to kort efter eget valg med billedsiden opad."
+      },
+      "special-rule": {
+        "title": "Specialregel:",
+        "content": "Hvis en spiller har 3 identiske kort i en kolonne, kasserer spilleren disse 3 kort ved at lægge dem på afkastbunken. Hvis en kolonne af identiske kort opnås ved at udveksle med et kort fra trækbunken eller afkastbunken, skal de tre identiske kort altid lægges på afkastbunken efter det udvekslede kort."
+      },
+      "round-end": {
+        "title": "Rundens afslutning",
+        "content-1": "Når en spiller har afsløret alle sine kort, har han spillet sin sidste tur.",
+        "content-2": "Alle efterfølgende spillere spiller én gang mere for at fuldføre runden."
+      },
+      "end-of-game": {
+        "title": "Spillet slut",
+        "content": "Ved slutningen af hver runde lægges hver spillers point til den samlede score opnået i de tidligere runder. Spillet slutter, så snart en spiller når 100 point eller mere. Spilleren med den laveste score vinder spillet."
+      }
+    },
+    "AfkKick": {
+      "warning": {
+        "description": "Du vil blive smidt ud af spillet, hvis du forbliver inaktiv.",
+        "title": "AFK-advarsel"
+      },
+      "kicked": {
+        "title": "Sparket ud pga. inaktivitet",
+        "description": "Du er blevet smidt ud af spillet, fordi du har været AFK for mange gange."
+      },
+      "player-kicked": {
+        "title": "Spiller smidt ud",
+        "description": "{playerName} er blevet smidt ud af spillet på grund af inaktivitet."
+      }
+    },
+    "ReportDialog": {
+      "title": "Rapportér {username}",
+      "report-username": "Rapportér brugernavnet",
+      "select-message": "Vælg den meddelelse, der skal rapporteres",
+      "description": "Rapportér brugernavnet eller en besked fra {username}, hvis det virker upassende.",
+      "report-message": "Rapportér en besked",
+      "select-message-placeholder": "Vælg en besked",
+      "no-messages": "Ingen beskeder fundet fra denne bruger",
+      "cancel": "Annuller",
+      "submit": "Rapport",
+      "toast": {
+        "report-submitted": {
+          "title": "Rapport indsendt",
+          "description": "Tak for din rapport, du har bidraget til at forbedre spillets kvalitet."
+        }
+      }
+    },
+    "AppearanceSelect": {
+      "light": "Lys",
+      "dark": "Mørk",
+      "system": "System"
+    },
+    "Chat": {
+      "title": "Chat"
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Rapporter besked"
+      }
+    },
+    "CopyLink": {
+      "message": "Link kopieret!",
+      "button-title": "Kopier link"
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} ulæst meddelelse{count, plural, =1 {} other {r}}"
+    },
+    "DiscardPile": {
+      "title": "Aflægsbunke",
+      "throw": "Kast"
+    },
+    "DrawPile": {
+      "title": "Trækstak"
+    },
+    "EndRoundDialog": {
+      "title": "Rundens afslutning",
+      "description": "Næste runde starter om få sekunder…"
+    },
+    "Feedback": {
+      "title": "Giv feedback",
+      "description": "Du kan skrive feedback for at hjælpe os med at forbedre spillet.",
+      "toast": {
+        "success": {
+          "title": "Tak for din feedback!",
+          "description": "Din indsigt har hjulpet os med at forbedre vores spilhjemmeside, og vi er oprigtigt taknemmelige."
+        },
+        "error": {
+          "title": "Der opstod en fejl. Prøv igen."
+        }
+      },
+      "email-input": {
+        "label": "Din e-mail (valgfrit)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Din besked",
+        "placeholder": "Fortæl os, hvad du tænker, bemærker eller ønsker at…"
+      },
+      "button-title": "Send"
+    },
+    "Footer": {
+      "explanation": "Hvad er Skyjo?",
+      "rules": "Spilleregler",
+      "feedback": "Giv feedback",
+      "buy-game": "Køb spillet",
+      "status": "Serverstatus",
+      "home": "Hjem",
+      "release-notes": "Udgivelsesnoter",
+      "privacy-policy": "Fortrolighedspolitik",
+      "disclaimer": {
+        "not-affiliated": "Denne hjemmeside er ikke tilknyttet skaberne eller distributørerne af Skyjo",
+        "rights-owned": "Alle rettigheder til navnet og spilmekanikken i Skyjo ejes af Alexander Bernhardt og Magilano",
+        "responsible-content": "Ejeren af dette websted er ikke ansvarlig for brugergenereret indhold (brugernavne, beskeder)"
+      },
+      "attribution": {
+        "avatars": "Avatarer skabt af Freepik - Flaticon"
+      }
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Opret forbindelse til spillet igen",
+      "join-game-button": "Deltag i spillet",
+      "find-game-button": "Find et spil",
+      "create-game-button": "Opret et {type, select, private {privat} public {offentligt} other {ukendt}} spil"
+    },
+    "MenuDropdown": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "rules": "Regler",
+      "feedback": "Giv feedback",
+      "discord": "Discord",
+      "settings": "Indstillinger"
+    },
+    "OpponentBoard": {
+      "disconnected": "Spilleren har forladt spillet. En bot vil spille for dem i de næste par omgange, indtil de genopretter forbindelsen."
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Modstandere:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Du"
+    },
+    "PWABanner": {
+      "title": "Installer Skymo på din enhed!",
+      "Chrome": "Klik på knappen 'Installer' for at installere",
+      "FirefoxAndroid": "Tryk på menuikonet, derefter 'Føj til startskærm' for at installere",
+      "Safari": "Tryk på deleikonet, og derefter 'Føj til Dock' for at installere",
+      "ChromeAndroid": "Tryk på menuikonet, og derefter 'Føj til startskærm' for at installere",
+      "ChromeIOS": "Tryk på deleikonet, rul ned, og tryk på \"Føj til hjemmeskærm\" for at installere",
+      "FirefoxIOS": "Tryk på menuikonet, derefter på deleikonet, rul og tryk på \"Føj til hjemmeskærm\" for at installere",
+      "SamsungBrowser": "Tryk på menuikonet, derefter 'Føj side til', derefter 'Startskærm' for at installere",
+      "SafariIOS": "Tryk på deleikonet, rul ned, og tryk på \"Føj til hjemmeskærm\" for at installere",
+      "install-button": {
+        "content": "Installer",
+        "title": "Installer appen"
+      }
+    },
+    "RulesDialog": {
+      "title": "Spilleregler",
+      "trigger": {
+        "aria-label": "Vis spilleregler"
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Vis resultattavle"
+    },
+    "ScoreDialog": {
+      "title": "Score",
+      "description": "{name} har vundet med {score} point!"
+    },
+    "ScoreSheet": {
+      "see-scores": "Se resultater"
+    },
+    "ScoreTable": {
+      "name": "Navn",
+      "round": "Rund",
+      "total": "Total"
+    },
+    "SettingsDialog": {
+      "title": "Indstillinger",
+      "general": {
+        "title": "Generelt",
+        "language": "Sprog",
+        "language-warn": "Kan kun ændres på startsiden",
+        "appearance": "Udseende"
+      },
+      "display": {
+        "title": "Skærm",
+        "mobile": {
+          "title": "Mobil",
+          "switch-to-player-who-is-playing": "Skift automatisk til den spiller, der spiller",
+          "show-preview-opponents-cards": "Vis en forhåndsvisning af modstandernes kort på modstanderlisten"
+        },
+        "chat": {
+          "title": "Chat",
+          "chat-visibility": "Chat-synlighed",
+          "chat-notification-size": {
+            "values": {
+              "normal": "Normal",
+              "big": "Stor",
+              "small": "Lille"
+            },
+            "label": "Størrelse på chatnotifikation"
+          }
+        },
+        "gameplay": {
+          "title": "Gameplay",
+          "gameboard-size": {
+            "label": "Størrelse på dit spillebræt",
+            "big-warning": "Kan ødelægge skærmen på mobilen",
+            "values": {
+              "big": "Stor",
+              "normal": "Normal"
+            }
+          },
+          "enlarge-active-player-board": "Forstør brættet for den spiller, hvis tur det er",
+          "timer": {
+            "label": "Timer-visningstilstand",
+            "description": "Smart'-tilstand viser timeren ved halvleg og de sidste 15 sekunder.",
+            "modes": {
+              "never": "Aldrig",
+              "smart": "Smart",
+              "always": "Altid"
+            }
+          }
+        }
+      },
+      "audio": {
+        "title": "Lyd",
+        "toggle": {
+          "label": "Slå lyd til"
+        },
+        "volume": {
+          "label": "Lydstyrke ({volume}%)"
+        }
+      }
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Rapportér {username}",
+        "kick": "Smide {username} ud",
+        "vote-to-kick": "Stem for at smide {username} ud",
+        "ban": "Bandlys {username}",
+        "mute": "Slå lyden fra {username}",
+        "unmute": "Slå lyd til for {username}"
+      }
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "title": "Stem for at smide {playerName} ud",
+        "kick-button": {
+          "alt": "Smide {playerName} ud",
+          "label": "Spark"
+        },
+        "ignore-button": {
+          "alt": "Ignorer afstemningen om at smide {playerName} ud",
+          "label": "Ignorer"
+        }
+      },
+      "player-has-voted": {
+        "title": "Stem for at smide {playerName} ud",
+        "description": "Du har stemt {vote, select, true {for} false {imod} other {stemt}}"
+      },
+      "vote-against-you": {
+        "title": "Stem for at smide dig ud",
+        "description": "Der er blevet anmodet om en afstemning om at smide dig ud."
+      },
+      "vote-failed": {
+        "title": "Afstemningen om at smide {playerName} ud mislykkedes",
+        "description": "Der er ikke nok stemmer til at smide {playerName} ud"
+      },
+      "vote-against-you-failed": {
+        "title": "Du blev ikke smidt ud",
+        "description": "Der er ikke stemmer nok til at sparke dig ud"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} er blevet smidt ud",
+        "description": "Afstemningen om at smide {playerName} ud er lykkedes."
+      },
+      "vote-against-you-succeeded": {
+        "title": "Du er blevet smidt ud",
+        "description": "Spillere har stemt for at smide dig ud af spillet."
+      },
+      "you-kick-player": {
+        "title": "Du har smidt {playerName} ud"
+      },
+      "host-kick": {
+        "title": "{playerName} er blevet smidt ud af spillet af værten"
+      },
+      "host-kick-you": {
+        "title": "Du er blevet smidt ud af spillet af værten"
+      }
+    }
+  },
+  "utils": {
+    "avatar": {
+      "bee": "bi",
+      "crab": "krabbe",
+      "dog": "hund",
+      "eagle": "ørn",
+      "elephant": "elefant",
+      "fox": "ræv",
+      "frog": "frø",
+      "jellyfish": "gople",
+      "koala": "koala",
+      "octopus": "blæksprutte",
+      "penguin": "pingvin",
+      "toucan": "tukan",
+      "turtle": "skildpadde",
+      "whale": "hval",
+      "owl": "ugle",
+      "cat": "kat"
+    },
+    "skymo": {
+      "waiting": "Venter på spillere",
+      "turn-cards": "Vend {number} kort",
+      "waiting-opponents-to-turn-cards": "Venter på modstander{nbOpponents, plural, =1 {} other {e}} for at vende {number} kort{number, plural, =1 {} other {}}",
+      "turn": {
+        "chooseAPile": "Vælg en bunke",
+        "throwOrReplace": "Erstat eller kassér",
+        "replaceACard": "Erstat et kort",
+        "turnACard": "Træk et kort"
+      },
+      "player-turn": "Det er {playerName}s tur",
+      "last-turn": "Sidste tur!",
+      "game-stopped": "Spillet stoppet",
+      "round-over": "Runde afsluttet",
+      "game-ended": "Spillet er slut!"
+    },
+    "chat": {
+      "player-joined": "{username} er med i spillet",
+      "player-left": "{username} forlod spillet",
+      "player-reconnect": "{username} genoprettede forbindelse til spillet",
+      "argument-required": "Der kræves et eller flere argumenter for kommandoen: {command}",
+      "player-already-muted": "{username} er allerede slået fra",
+      "player-muted": "{username} er nu slået fra",
+      "player-not-muted": "{username} er ikke slået fra",
+      "player-unmuted": "{username} er ikke længere slået fra",
+      "wizz-sent": "Du har sendt et wizz til {targetUsername}!",
+      "wizz-self": "Du er blevet wiz'et af {initiatorUsername}!",
+      "wizz-other": "{initiatorUsername} har wizzet {targetUsername}!"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "Serveren er længere tid end forventet om at svare. Du kan prøve at genindlæse siden og prøve igen."
+        },
+        "game-not-found": {
+          "description": "Det spil, du leder efter, findes ikke"
+        },
+        "cannot-reconnect": {
+          "description": "Det er ikke længere muligt at genoprette forbindelse til spillet, tiden til at genoprette forbindelse er udløbet"
+        },
+        "game-is-full": {
+          "description": "Spillet er fyldt, du kan ikke deltage"
+        },
+        "game-already-started": {
+          "description": "Spillet er allerede startet"
+        },
+        "player-banned": {
+          "description": "Du er blevet udelukket fra dette spil"
+        },
+        "rate-limit": {
+          "title": "Du sender for mange anmodninger",
+          "description": "Vent venligst et par sekunder, før du prøver igen"
+        }
+      }
+    }
+  },
+  "contexts": {
+    "ReportContext": {
+      "report-against-you": {
+        "description": "Dit brugernavn eller en af dine beskeder er blevet rapporteret og er blevet anset for upassende. Gentag venligst ikke denne adfærd.",
+        "title": "Du er blevet smidt ud på grund af en rapport"
+      },
+      "report": {
+        "title": "{playerName} er blevet smidt ud på grund af en anmeldelse"
+      }
+    },
+    "BanContext": {
+      "unexpected-error": {
+        "description": "Der opstod en uventet fejl under udelukkelse af en spiller",
+        "title": "Der opstod en uventet fejl"
+      },
+      "not-allowed": {
+        "title": "Du har ikke tilladelse til at forbyde",
+        "description": "Du har ikke tilladelse til at udelukke en spiller"
+      },
+      "player-not-found": {
+        "title": "Spilleren, der skal udelukkes, findes ikke",
+        "description": "Spilleren, der skal udelukkes, findes ikke i spillet"
+      },
+      "player-banned": {
+        "title": "{playerName} er blevet udelukket",
+        "description": "{playerName} er blevet udelukket af værten"
+      },
+      "you-were-banned": {
+        "title": "Du er blevet udelukket",
+        "description": "Du er blevet udelukket fra spillet af værten"
+      }
+    },
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "title": "Spillet blev ikke fundet",
+          "description": "Spillet, du forsøgte at genoprette forbindelse til, eksisterer ikke længere"
+        }
+      },
+      "connection-lost": "Forbindelse tabt. Forsøger at genoprette forbindelse...",
+      "reconnection": "Forbindelse genoprettet"
+    }
+  },
+  "head": {
+    "description": "Spil Skyjo online gratis med Skymo! Et tempofyldt multiplayer-kortspil, hvor strategi møder sjov. Udfordr venner, vend kort, og sigt efter den laveste score for at vinde!",
+    "keywords": "Skymo, Skyjo, Skyjo online, multiplayer spil, kortspil, spil med venner, gratis online spil, online kortspil",
+    "title": "Skymo | Spil Skyjo kortspil gratis online"
+  }
+}
