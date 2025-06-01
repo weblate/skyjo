@@ -30,7 +30,6 @@ import {
   PaletteIcon,
   SettingsIcon,
   SunIcon,
-  UserIcon,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
@@ -120,21 +119,18 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
         <DropdownMenuGroup>
           {variant === "account" && user && (
             <>
-              <div className="flex flex-col items-start px-2 py-1.5">
-                <span className="text-sm font-medium">
-                  {user?.name ?? t("guest")}
-                </span>
+              <DropdownMenuItem>
+                <Link href="/profile" className="flex flex-col">
+                  <span className="text-sm font-medium text-left">
+                    {user?.name ?? t("guest")}
+                  </span>
 
-                <span className="text-sm text-gray-500">@{user.username}</span>
-              </div>
-              <DropdownMenuSeparator />
-
-              <DropdownMenuItem asChild>
-                <Link href="/profile" className="flex items-center">
-                  <UserIcon className="mr-2 size-4" />
-                  <span>{t("profile")}</span>
+                  <span className="text-sm text-gray-500 text-left">
+                    {user.username}
+                  </span>
                 </Link>
               </DropdownMenuItem>
+              <DropdownMenuSeparator />
             </>
           )}
 
