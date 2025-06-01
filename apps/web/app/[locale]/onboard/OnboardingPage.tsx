@@ -36,7 +36,7 @@ const OnboardingPage = () => {
   const router = useRouter()
   const t = useTranslations("pages.Onboarding")
   const { getAvatar, avatarIndex } = useUser()
-  const { user } = useAuth()
+  const { user, refetch } = useAuth()
   const form = useForm({
     resolver: zodResolver(
       user?.hasOAuth ? onboardingSchema : onboardingWithPasswordSchema,
@@ -104,7 +104,8 @@ const OnboardingPage = () => {
       return res.json()
     },
     onSuccess: () => {
-      router.replace("/profile")
+      refetch()
+      router.replace("/")
     },
     onError: (error) => {
       console.error(error)
