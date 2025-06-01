@@ -1,1 +1,769 @@
-{}
+{
+  "head": {
+    "description": "Mängi Skyjot võrgus tasuta Skymoga! Kiire tempoga mitme mängijaga kaardimäng, kus strateegia kohtub lõbuga. Esita sõpradele väljakutse, pööra kaarte ja püüa võitmiseks saada madalaim punktisumma!",
+    "keywords": "Skymo, Skyjo, Skyjo online, mitmikmäng, kaardimäng, mängi sõpradega, tasuta võrgumängud, online-kaardimängud",
+    "title": "Skymo | Mängi Skyjo kaardimängu võrgus tasuta"
+  },
+  "pages": {
+    "Index": {
+      "banner": {
+        "title": "Vajan <gform>teie tagasisidet</gform>, et kujundada Skymo tulevikku!"
+      },
+      "explanation": {
+        "title": "Mis on Skyjo?",
+        "content": "Skyjo on põnev kaardimäng ja suurepärane lauamäng, mida naudivad mänguhuvilised üle kogu maailma. See mitme mängijaga kaardimäng on mõeldud 2 kuni 8 mängijale, kus iga mängija saab 12 algselt peidetud kaarti. Mängu peamine eesmärk on koguda võimalikult vähe punkte. Mäng lõpeb niipea, kui üks mängija jõuab 100 punktini. Mängureeglid on lihtsad ja kergesti arusaadavad, mistõttu on see ideaalne valik mänguõhtuteks pere või sõpradega. Mänguhuvilistel on hea meel teada saada, et nüüd on võimalik Skyjot tasuta veebis mängida!",
+        "button": "Vaata reegleid"
+      },
+      "name-input-placeholder": "Nimi",
+      "faq": {
+        "pronounce": {
+          "content": "Sõna Skyjo hääldatakse [Skyjoe].",
+          "title": "Kuidas hääldatakse Skyjo'd?"
+        },
+        "play-classic-with-action": {
+          "title": "Kas klassikalist Skyjo'd saab mängida Skyjo Actioniga?",
+          "content": "Jah, peate lihtsalt eemaldama tegevuskaardid. Kui mängite veebiversiooni, valige Skyjo mängimiseks klassikaline versioon."
+        },
+        "title": "Korduma kippuvad küsimused (KKK)",
+        "meaning": {
+          "title": "Mida tähendab Skyjo?",
+          "content": "Skyjo on mängus 3 identsest kaardist koosnev veerg."
+        },
+        "how-to-play": {
+          "title": "Kuidas mängida Skyjo'd?",
+          "content": "Skyjo mängimiseks jaga igale mängijale 12 kaarti pildipool allapoole. Eesmärk on saada kaartide ümberpööramise ja vahetamise teel võimalikult vähe punkte. Igal käigul tõmba kaart pakist või kõrvaldamispakist, seejärel otsusta, kas asendada üks oma nähtavatest kaartidest. Nummerdatud kaardid on väärt oma punktide jagu, erikaartidel on tegevused. Mäng lõpeb, kui mängija on kõik oma kaardid ümber pööranud. Võidab mängija, kellel on kõige vähem punkte. Lisateabe saamiseks vaata <rules>reegleid</rules>."
+        },
+        "how-to-win": {
+          "title": "Kuidas võita Skyjo's?",
+          "content": "Skyjo mängus võitmiseks on oluline saavutada võimalikult madal punktisumma. Selle saavutamiseks rakenda tasakaalustatud strateegiat, mis hõlmab madalaimate kaartide omamist, oma kaartide paljastamist ja samade kaartide veergude loomist. Väldi esimesena pööramist, välja arvatud juhul, kui oled nähtavate kaartidega märkimisväärselt ees. Pea meeles, et hoia juba nähtavaid kaarte, et proovida nendega veerge luua, mitte optimeerida neid eraldi."
+        }
+      }
+    },
+    "Search": {
+      "head": {
+        "description": "Kas otsid Skymo mängu, millega liituda? Sirvi saadaolevaid avalikke mänge ja hakka koheselt teiste mängijatega Skyjot võrgus mängima. Mängi kohe tasuta!",
+        "keywords": "Skymo, Skyjo, Skyjo online, leia mäng, liitu mänguga, avalikud mängud, võrgumäng, mängi teistega, kiirmäng, tasuta võrgumängud, avatud mängud, võrgukaardimäng, mitmikmänguga kaardimäng",
+        "title": "Leia avalikke Skymo mänge | Mängi Skyjo Online'i"
+      },
+      "header": {
+        "back": "Tagasi avalehele",
+        "title": "Avalikud mängud",
+        "refresh": "Värskenda mängude loendit",
+        "create-button": {
+          "title": "Loo avalik mäng"
+        }
+      },
+      "tags": {
+        "title": "Filtrid:",
+        "no-tags-available": "Silte pole enam saadaval",
+        "tag": {
+          "classic": "Klassikaline",
+          "custom": "Kohandatud",
+          "column": "Veerg",
+          "row": "Rida",
+          "short-game": "Lühimäng",
+          "long-game": "Pikk mäng"
+        }
+      },
+      "no-games-found": "Mänge ei leitud",
+      "game-of": "{name}' mäng"
+    },
+    "Create": {
+      "loading-text": "Mängu loomine…",
+      "head": {
+        "title": "Loo Skymo mäng | Mängi Skyjo Online'is",
+        "description": "Alusta uut Skymo mängu võrgus! Loo privaatseid või avalikke tube, kutsu oma sõpru ja nautige koos Skyjo lõbu. Mängi kohe tasuta!",
+        "keywords": "Skymo, Skyjo, Skyjo online, loo mäng, alusta mängu, privaatne mäng, avalik mäng, mängi sõpradega, võrgumäng, tasuta võrgumängud, kohandatud mäng"
+      }
+    },
+    "Maintenance": {
+      "title": "Sait on hoolduses",
+      "description": "Uuendame praegu saiti, proovige hiljem uuesti.",
+      "github-alt": "Vaata lähtekoodi GitHubis"
+    },
+    "Lobby": {
+      "settings": {
+        "remove-identical-column": "Eemalda identsed veerud",
+        "first-player-penalty-type": {
+          "item": {
+            "multiplier-then-flat": "Korrutaja, seejärel tasane",
+            "multiplier-only": "Ainult kordaja",
+            "flat-only": "Ainult korterid",
+            "flat-then-multiplier": "Kõigepealt lame, siis kordaja"
+          },
+          "label": "Esimese mängija karistuse tüüp",
+          "description": "Karistus rakendub, kui esimene mängija, kes kõik oma kaardid paljastab, ei oma kõige väiksemat punktisummat (ei rakendu, kui punktisumma on väiksem või võrdne 0-ga)",
+          "placeholder": "Vali karistuse tüüp"
+        },
+        "first-player-flat-penalty": {
+          "label": "Esimese mängija skoori tasane karistus",
+          "title": "Esimese mängija punktisummale lisatakse veel {number} punkti"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Esimese mängija karistuspunktide kordaja",
+          "title": "Esimese mängija tulemus korrutatakse {number}ga, kui see ei ole rangelt väiksem mängu teistest tulemustest"
+        },
+        "private": {
+          "tooltip": {
+            "off": "See osa on avalik, igaüks saab liituda pärast parameetrite kinnitamist",
+            "on": "See mäng on privaatne, liituda saavad ainult lingiga inimesed"
+          }
+        },
+        "reset-settings": "Lähtesta seaded",
+        "validation-warning": "Mängu sätteid ei saa pärast nende kinnitamist muuta",
+        "validate-settings": "Valideeri seaded",
+        "max-players": {
+          "label": "Mängijate maksimaalne arv",
+          "title": "Mängijate maksimaalne arv: {number}"
+        },
+        "remove-identical-row": "Eemalda identsed read",
+        "nb-columns": {
+          "label": "Veergude arv",
+          "title": "$number veergu"
+        },
+        "nb-rows": {
+          "label": "Ridade arv",
+          "title": "$number rida"
+        },
+        "initial-turned-count": {
+          "label": "Algselt avatud kaartide arv",
+          "title": "Mängu alguses avaldatakse {number} teie kaardist"
+        },
+        "show-current-score": {
+          "label": "Näita mängu ajal praegust skoori"
+        },
+        "score-to-end-game": {
+          "label": "Tulemus mängu lõpetamiseks",
+          "title": "Mäng lõpeb, kui mängija saavutab {number} punkti"
+        }
+      },
+      "player-section": {
+        "select": {
+          "placeholder": "Vali mängijate arv",
+          "item": "{value} mängijat"
+        },
+        "title": "Mängijad {nbPlayers}/{maxPlayers}"
+      },
+      "not-enough-players-modal": {
+        "title": "Mängijaid pole piisavalt",
+        "description": "Mängu alustamiseks peab olema vähemalt 2 mängijat.",
+        "public-description": "Kutsu sõber või oota, kuni teine mängija liitub.",
+        "private-description": "Kasuta privaatset linki sõprade kutsumiseks!",
+        "close": "Ma saan aru"
+      },
+      "title": "{name} mäng",
+      "leave-to-home": "Mine avalehele",
+      "leave-to-public-game-list": "Jäta avalike mängude loendisse",
+      "go-back-to-settings": "Mine tagasi seadetesse",
+      "waiting-host-to-confirm-game-settings": "Ootan, kuni host seaded valideerib",
+      "start-game-button": "Alusta mängu",
+      "cancel": "Tühista",
+      "game-starting-in": "Mäng algab {seconds} pärast",
+      "waiting-host-to-start": "Ootan, et host mängu alustaks"
+    },
+    "ResultsPage": {
+      "replay-button": {
+        "cancel": "Ära uuesti esita",
+        "replay": "Kordus"
+      },
+      "leave-button": "Lahku mängust",
+      "title": "Mängu tulemused",
+      "rank": "Järjestus",
+      "player": "Mängija",
+      "score-per-round": "Skoor vooru kohta",
+      "total": "Kokku",
+      "player-want-to-replay": "Mängijad, kes soovivad uuesti mängida:"
+    },
+    "PrivacyPolicy": {
+      "head": {
+        "title": "Privaatsuspoliitika | Skymo – Skyjo online-kaardimäng",
+        "description": "Privaatsuspoliitika Skymo jaoks. Lugege, kuidas me kaitseme teie andmeid, samal ajal kui naudite meie Skyjo kaardimängu. Läbipaistvad tavad ja turvaline mängukogemus.",
+        "keywords": "Skymo, Skyjo, Skyjo Online, privaatsuspoliitika, andmekaitse, võrgumängude privaatsus, turvaline mängimine, kasutajaandmed, GDPR, CCPA, andmeturve"
+      },
+      "content": {
+        "back": "Tagasi avalehele",
+        "information-we-collect": {
+          "user-provided-information": {
+            "title": "Kasutaja esitatud teave",
+            "items": "Tagasisidevormi esitamised (sh valikulised e-posti aadressid)",
+            "description": "Kogume:"
+          },
+          "game-data": {
+            "title": "Mänguandmed",
+            "description": "Salvestame ajutiselt:",
+            "items": "Kasutajanimed ja avatari valikud;;Mänguelemendid ja edenemine"
+          },
+          "cookies": {
+            "title": "Küpsised",
+            "description": "Me kasutame olulisi küpsiseid, et võimaldada meie veebisaidi põhifunktsioone:",
+            "items": "Seansiküpsised: Kasutame seansiküpsist (skymo-io), et hoida teie ühendust meie mänguserveritega. See küpsis on mängu funktsionaalsuse jaoks hädavajalik ja aegub 24 tunni pärast. Need küpsised ei jälgi teid veebisaitidel ja neid kasutatakse ainult teie soovitud teenuse pakkumiseks"
+          },
+          "title": "Kogutav teave",
+          "anonymous-usage-data": {
+            "title": "Anonüümsed kasutusandmed",
+            "description": "Me kasutame analüüsitööriista PostHog, et koguda anonüümseid andmeid selle kohta, kuidas te meie veebisaiti kasutate. See hõlmab järgmist:",
+            "items": "Lehevaatamised;;Veebi elutähtsad näitajad (jõudlusmõõdikud);;Küsitluse vastused (kui otsustate osaleda)"
+          },
+          "local-storage-data": {
+            "title": "Kohaliku salvestusruumi andmed",
+            "description": "Salvestame teie brauseri kohalikku salvestusruumi:",
+            "items": "Keeleeelistused;;Mänguseadete eelistused"
+          }
+        },
+        "childrens-privacy": {
+          "title": "Laste privaatsus",
+          "description": "Skymol ei ole vanusepiiranguid. Me ei kogu teadlikult laste isikuandmeid."
+        },
+        "contact-us": {
+          "title": "Võta meiega ühendust",
+          "description": "Kui teil on selle privaatsuspoliitika kohta küsimusi, võtke meiega ühendust meie veebisaidi tagasisidevormi, Discordi serveri või GitHubi kaudu."
+        },
+        "title": "Privaatsuspoliitika",
+        "last-update": {
+          "text": "Viimati värskendatud: {date}",
+          "date-format": "AAAA-KK-PP - hh:mmA"
+        },
+        "how-we-use-your-information": {
+          "title": "Kuidas me teie teavet kasutame",
+          "items": "Täiustada meie veebisaiti ja kasutajakogemust;;Analüüsida kasutusmustreid ja jõudlust;;Vastata tagasisidele ja tugipäringutele;;Hõlbustada mängimist"
+        },
+        "data-storage-and-retention": {
+          "title": "Andmete salvestamine ja säilitamine",
+          "items": "Anonüümsed kasutusandmed salvestatakse serverites Euroopa Liidus ja säilitatakse kuni 1 aasta;;Mänguandmed salvestatakse meie andmebaasi, mis asub Frankfurdis, Saksamaal. Neid andmeid hoitakse aktiivsete mängude kestuse aja. Kui kõik mängijad mängust lahkuvad, kustutatakse seotud andmed;;Teie brauseri kohalikku salvestusruumi salvestatud teave jääb sinna, kuni te oma brauseri andmed kustutate;;Tagasisidevormi esitused säilitatakse ainult vastamise ja arendusettepanekute kaalumise eesmärgil"
+        },
+        "data-sharing": {
+          "title": "Andmete jagamine",
+          "description": "Me ei jaga teie isikuandmeid ühegi kolmanda osapoolega. Anonüümseid kasutusandmeid töötleb meie analüütikateenuse pakkuja PostHog."
+        },
+        "your-rights-and-choices": {
+          "title": "Teie õigused ja valikud",
+          "description": "Kuna kogume peamiselt anonüümseid andmeid, ei saa me tuvastada ega pääseda ligi ühegi üksiku kasutaja isiklikule teabele. Siiski on teil järgmised õigused ja valikud:",
+          "items": "Kohalik salvestusruum: saate salvestatud eelistuste eemaldamiseks igal ajal oma brauseri kohaliku salvestusruumi tühjendada;;Tagasiside: kui olete esitanud tagasisidet koos e-posti aadressiga, võite meiega ühendust võtta, et taotleda selle kustutamist;;Analüütikast loobumine: saate analüütikaandmete kogumisest loobuda, lubades oma brauseri „Ära jälgi” seade või kasutades privaatsusele keskendunud brausereid, mis blokeerivad analüütikaskripte;;Mänguandmed: mänguga seotud andmed kustutatakse automaatselt, kui kõik mängijad mängust lahkuvad"
+        },
+        "changes-to-this-policy": {
+          "title": "Muudatused selles poliitikas",
+          "description": "Võime seda poliitikat aeg-ajalt uuendada. Teavitame teid muudatustest, postitades uue poliitika sellele lehele."
+        }
+      }
+    },
+    "NotFound": {
+      "title": "Viga 404",
+      "description": "Lehte, mida otsite, ei eksisteeri.",
+      "go-back-to-homepage": "Mine tagasi avalehele"
+    },
+    "Rules": {
+      "head": {
+        "title": "Kuidas mängida Skymot | Skyjo kaardimäng võrgus",
+        "description": "Õpi mängima Skyjo'd meie Skyjo juhendi abil. Avasta reeglid, strateegiad ja näpunäited, et omandada see lõbus online-kaardimäng. Mängi sõpradega kohe!",
+        "keywords": "Skymo, Skyjo, Skyjo reeglid, kuidas mängida Skyjo'd, Skyjo mäng, kaardimängu reeglid, online kaardimäng, mängujuhised, mängujuhend"
+      },
+      "title": "Skyjo mängureeglid"
+    }
+  },
+  "components": {
+    "Feedback": {
+      "button-title": "Saada",
+      "title": "Anna tagasisidet",
+      "description": "Saate kirjutada tagasisidet, et aidata meil mängu paremaks muuta.",
+      "toast": {
+        "success": {
+          "title": "Aitäh tagasiside eest!",
+          "description": "Teie teadmised on aidanud meil oma mängude veebisaiti täiustada ja oleme tõeliselt tänulikud."
+        },
+        "error": {
+          "title": "Ilmnes viga, proovige uuesti."
+        }
+      },
+      "email-input": {
+        "label": "Teie e-post (valikuline)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Teie sõnum",
+        "placeholder": "Anna meile teada, mida arvad, märkad või soovid…"
+      }
+    },
+    "Footer": {
+      "feedback": "Anna tagasisidet",
+      "status": "Serveri olek",
+      "home": "Avaleht",
+      "release-notes": "Väljalaskemärkmed",
+      "privacy-policy": "Privaatsuspoliitika",
+      "disclaimer": {
+        "not-affiliated": "See veebisait ei ole seotud Skyjo loojate ega levitajatega",
+        "rights-owned": "Kõik õigused Skyjo nimele ja mängumehhanismidele kuuluvad Alexander Bernhardtile ja Magilanole",
+        "responsible-content": "Selle saidi omanik ei vastuta ühegi kasutaja loodud sisu (kasutajanimed, sõnumid) eest"
+      },
+      "buy-game": "Osta mäng",
+      "explanation": "Mis on Skyjo?",
+      "rules": "Mängureeglid",
+      "attribution": {
+        "avatars": "Avatari loonud Freepik - Flaticon"
+      }
+    },
+    "GameRules": {
+      "title": "Mängureeglid",
+      "button-title": "Näita mängureegleid",
+      "remove-identical-column": "Eemalda veerg, kui kaardid on identsed: {value, select, true {jah} false {ei} other {teadmata}}",
+      "remove-identical-row": "Eemalda rida, kui kaardid on identsed: {value, select, true {jah} false {ei} other {teadmata}}",
+      "card-per-column": "Veergude arv: {value}",
+      "card-per-row": "Ridade arv: {value}",
+      "initial-turned-count": "Kaartide arv, mida alguses pöörata: {value}",
+      "score-to-end-game": "Mängu lõpetamiseks vajalike punktide arv: {value}",
+      "first-player-penalty-type": {
+        "label": "Karistuse tüüp esimesele mängijale, kui tal ei ole vähimat punktide arvu: ",
+        "1": "Ainult kordaja",
+        "2": "Ainult korterid",
+        "3": "Lame siis kordaja",
+        "4": "Korrutaja, siis fikseeritud"
+      },
+      "first-player-multiplier-penalty": "Korrutaja karistus: {value}",
+      "first-player-flat-penalty": "Lamekaristus: {value}"
+    },
+    "MenuDropdown": {
+      "discord": "Discord",
+      "settings": "Sätted",
+      "rules": "Reeglid",
+      "feedback": "Anna tagasisidet",
+      "button": {
+        "aria-label": "Menüü"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Teie"
+    },
+    "PWABanner": {
+      "Safari": "Puudutage jagamise ikooni, seejärel installimiseks „Lisa dokki”",
+      "Chrome": "Klõpsake installimiseks nupul „Installi”",
+      "title": "Installige Skymo oma seadmesse!",
+      "FirefoxAndroid": "Puudutage menüüikooni, seejärel installimiseks valikut „Lisa avakuvale”",
+      "ChromeAndroid": "Puudutage menüüikooni, seejärel valikut „Lisa avakuvale”, et installida",
+      "FirefoxIOS": "Puudutage menüüikooni, seejärel jagamisikooni, kerige ja puudutage installimiseks valikut „Lisa avakuvale”",
+      "SafariIOS": "Puudutage jagamise ikooni, seejärel kerige ja puudutage installimiseks „Lisa avakuvale”",
+      "install-button": {
+        "title": "Installige rakendus",
+        "content": "Installi"
+      },
+      "SamsungBrowser": "Puuduta menüüikooni, seejärel „Lisa leht asukohta“, seejärel „Avakuva“, et installida",
+      "ChromeIOS": "Puudutage jagamise ikooni, seejärel kerige ja puudutage installimiseks „Lisa avakuvale”"
+    },
+    "Rules": {
+      "round-start": {
+        "title": "Ringi algus",
+        "choice": "valik {number}",
+        "choice-1": {
+          "title": "Valik 1:",
+          "description": "Võta esimene kaart viskamispakist.",
+          "content": "Mängija peab selle kaardi koheselt vahetama ühe oma 12 kaardi vastu ja asetama selle lauale pildipool ülespoole. Ta saab vabalt valida pildipool ülespoole ja pildipool allapoole olevate kaartide vahel. Peidetud kaarte ei tohi enne vahetust näha. Vahetatud kaart asetatakse pildipool ülespoole viskamispakile."
+        },
+        "content-1": "Mängija saab valida äraviskehunnikust esimese ülespööratud kaardi",
+        "choice-2": {
+          "title": "Valik 2:",
+          "description": "Võta tõmbepakist esimene kaart tagurpidi.",
+          "content-1": "Mängija saab kaarti vaadata ja valida, kas vahetada see ühe oma kaardi (peidetud või nähtava) vastu või visata see ära. Kui ta soovib tõmmatud kaardi endale jätta, vahetab ta selle ühe oma kaardiga, nagu eespool kirjeldatud",
+          "content-2": "Kui ta ei soovi tõmmatud kaarti hoida, asetab ta selle äraviskamise pakile ja peab ühe oma kaardi lauale pöörama.",
+          "choice-1": "Valik 1"
+        },
+        "content-2": "või tõmbepaki esimene tagurpidi kaart",
+        "end-of-turn": "Tema käik on siis läbi ja järgmise mängija käik (päripäeva)."
+      },
+      "scoring": {
+        "title": "Punktiarvestus",
+        "description": "Mängijad, kellel on veel kaardid tagurpidi, pööravad need õigetpidi. Iga mängija loeb oma punktid kokku.",
+        "example": {
+          "title": "Näide:",
+          "content": "Mängija A näitab kõik oma kaardid ja lõpetab vooru. Vooru lõpus on tal 10 punkti, mängijal B on 24 punkti ja mängijal C samuti 10 punkti. Kuna mängijal A ei ole rangelt kõige vähem punkte, kahekordistatakse tema punktid 20-ks."
+        },
+        "list": {
+          "content-1": "Kui punktide kogusumma on positiivne, lisab ta selle eelmiste voorude punktide kogusummale.",
+          "content-2": "Kui kogusumma on negatiivne, lahutatakse see eelmiste voorude punktide kogusummast."
+        },
+        "first-to-finish": {
+          "content": "Kui mängija, kes on vooru lõpetanud (1. mängija, kes on kõik oma kaardid ümber pööranud), ei ole rangelt võttes saanud selle vooru madalaimat punktisummat, siis tema punktisumma selle vooru eest kahekordistatakse.",
+          "note": {
+            "title": "Palun pange tähele:",
+            "content": "See reegel kehtib ainult positiivsete punktide kohta!"
+          }
+        }
+      },
+      "end-of-game": {
+        "content": "Iga vooru lõpus lisatakse iga mängija punktid eelmistes voorudes saadud kogusummale. Mäng lõpeb niipea, kui mängija saavutab 100 või rohkem punkti. Mängu võidab madalaima punktisummaga mängija.",
+        "title": "Mängu lõpp"
+      },
+      "cards-section-title": "{number} mängukaarti:",
+      "game-goal": {
+        "title": "Mängu eesmärk",
+        "content": "Mängu Skyjo mängitakse mitu vooru ja see lõpeb niipea, kui mängija saavutab 100 või rohkem punkti. Mängu võidab mängija, kellel on kõige vähem punkte."
+      },
+      "round-preparation": {
+        "title": "Ringi ettevalmistus",
+        "content-2": "Iga mängija asetab oma 12 kaarti nelja kolmerealisse veergu pildipool allapoole enda ette. Lõpuks keerab iga mängija kaks enda valitud kaarti pildipool ülespoole.",
+        "content-1": "Kõigepealt jagatakse igale mängijale 12 kaarti pildipool allapoole. Seejärel asetatakse üks kaart tõmbepakist pildipool ülespoole laua keskele, moodustades äraviskamispaki alguse. Ülejäänud kaardid asetatakse pildipool allapoole üksteise kõrvale ja moodustavad tõmbepaki."
+      },
+      "special-rule": {
+        "title": "Erireegel:",
+        "content": "Kui mängijal on veerus 3 identset kaarti, viskab mängija need 3 kaarti ära, asetades need äraviskamispakki. Kui identsete kaartide veerg saadakse vahetades kaardiga tõmbepakist või äraviskamispakist, tuleb kolm identset kaarti alati asetada äraviskamispakki pärast vahetatud kaarti."
+      },
+      "round-end": {
+        "content-2": "Kõik järgnevad mängijad mängivad vooru lõpetamiseks veel kord.",
+        "title": "Vooru lõpp",
+        "content-1": "Kui mängija on paljastanud kõik oma kaardid, on ta mänginud oma viimase käigu."
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Näita tulemustabelit"
+    },
+    "ScoreDialog": {
+      "title": "Skoor",
+      "description": "{name} on võitnud {score} punktiga!"
+    },
+    "SettingsDialog": {
+      "display": {
+        "mobile": {
+          "show-preview-opponents-cards": "Kuva vastaste kaartide eelvaade vastaste loendis",
+          "title": "Mobiilne",
+          "switch-to-player-who-is-playing": "Lülitu automaatselt mängivale mängijale"
+        },
+        "chat": {
+          "title": "Vestlus",
+          "chat-visibility": "Vestluse nähtavus",
+          "chat-notification-size": {
+            "label": "Vestlusteatise suurus",
+            "values": {
+              "small": "Väike",
+              "normal": "Tavaline",
+              "big": "Suur"
+            }
+          }
+        },
+        "gameplay": {
+          "timer": {
+            "modes": {
+              "smart": "Arukas",
+              "always": "Alati",
+              "never": "Mitte kunagi"
+            },
+            "label": "Taimeri kuvamisrežiim",
+            "description": "Nutikas režiim kuvab taimeri poolel ajal ja viimasel 15 sekundil."
+          },
+          "title": "Mänguviis",
+          "gameboard-size": {
+            "big-warning": "Võib mobiilis ekraani lõhkuda",
+            "values": {
+              "normal": "Tavaline",
+              "big": "Suur"
+            },
+            "label": "Mängulaua suurus"
+          },
+          "enlarge-active-player-board": "Suurenda selle mängija lauda, kelle kord on"
+        },
+        "title": "Kuva"
+      },
+      "audio": {
+        "title": "Heli",
+        "toggle": {
+          "label": "Luba heli"
+        },
+        "volume": {
+          "label": "Helitugevus ({volume}%)"
+        }
+      },
+      "title": "Seaded",
+      "general": {
+        "title": "Üldine",
+        "language": "Keel",
+        "language-warn": "Muudetav ainult avalehel",
+        "appearance": "Välimus"
+      }
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Teata kasutajast {username}",
+        "kick": "Viska välja {username}",
+        "vote-to-kick": "Hääleta kasutaja {username} eemaldamise poolt",
+        "ban": "Keela {username}",
+        "unmute": "Vaigistuse tühistamine {username}",
+        "mute": "Vaigista {username}"
+      }
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "kick-button": {
+          "label": "Eemalda",
+          "alt": "Viska {playerName} välja"
+        },
+        "ignore-button": {
+          "alt": "Eira hääletust mängija {playerName} eemaldamiseks",
+          "label": "Eira"
+        },
+        "title": "Hääleta mängija {playerName} väljaheitmise poolt"
+      },
+      "vote-against-you-failed": {
+        "title": "Teid ei eemaldatud",
+        "description": "Hääli sinu väljaheitmiseks ei ole piisavalt"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} on eemaldatud",
+        "description": "Hääletus mängija {playerName} eemaldamiseks õnnestus."
+      },
+      "vote-against-you-succeeded": {
+        "title": "Teid on välja visatud",
+        "description": "Mängijad on hääletanud teie mängust välja viskamise poolt."
+      },
+      "you-kick-player": {
+        "title": "Olete mängija {playerName} välja visanud"
+      },
+      "player-has-voted": {
+        "title": "Hääleta mängija {playerName} välja viskamise poolt",
+        "description": "Olete hääletanud {vote, select, true {poolt} false {vastu} other {hääletanud}}"
+      },
+      "vote-against-you": {
+        "title": "Hääleta sinu väljaviskamise poolt",
+        "description": "Teie väljaheitmiseks on palutud hääletust."
+      },
+      "vote-failed": {
+        "title": "Hääletus mängija {playerName} eemaldamiseks ebaõnnestus",
+        "description": "Hääli ei ole piisavalt, et {playerName} välja visata"
+      },
+      "host-kick": {
+        "title": "{playerName} on võõrustaja poolt mängust välja visatud"
+      },
+      "host-kick-you": {
+        "title": "Mängu võõrustaja on teid mängust välja visanud"
+      }
+    },
+    "AfkKick": {
+      "player-kicked": {
+        "title": "Mängija eemaldatud",
+        "description": "Mängija {playerName} on tegevusetuse tõttu mängust välja visatud."
+      },
+      "warning": {
+        "title": "AFK hoiatus",
+        "description": "Mängust eemaldatakse sind, kui sa jääd passiivseks."
+      },
+      "kicked": {
+        "title": "Eemaldatud passiivsuse tõttu",
+        "description": "Teid on mängust välja visatud liiga sagedase AFK-s olemise tõttu."
+      }
+    },
+    "ReportDialog": {
+      "description": "Teatage kasutajanimest või sõnumist kasutajalt {username}, kui see tundub sobimatu.",
+      "report-username": "Teavita kasutajanime",
+      "title": "Teata kasutajast {username}",
+      "report-message": "Teata sõnumist",
+      "select-message": "Valige teade, millest teatada",
+      "select-message-placeholder": "Vali sõnum",
+      "no-messages": "Sellelt kasutajalt ei leitud sõnumeid",
+      "cancel": "Tühista",
+      "submit": "Aruanne",
+      "toast": {
+        "report-submitted": {
+          "title": "Aruanne esitatud",
+          "description": "Aitäh teile aruande eest, olete aidanud parandada mängu kvaliteeti."
+        }
+      }
+    },
+    "AppearanceSelect": {
+      "light": "Hele",
+      "dark": "Tume",
+      "system": "Süsteem"
+    },
+    "Chat": {
+      "title": "Vestlus"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Sõnum",
+      "button-title": "Saada",
+      "message-too-long": {
+        "description": "Sõnum on liiga pikk (maks 200 märki)"
+      },
+      "unknown-command": {
+        "description": "Tundmatu käsk"
+      }
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Teata sõnumist"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} lugemata sõnum{count, plural, =1 {} other {it}}"
+    },
+    "CopyLink": {
+      "message": "Link kopeeritud!",
+      "button-title": "Kopeeri link"
+    },
+    "DiscardPile": {
+      "title": "Viskamispakk",
+      "throw": "Viska"
+    },
+    "DrawPile": {
+      "title": "Tõmbepakk"
+    },
+    "EndRoundDialog": {
+      "title": "Vooru lõpp",
+      "description": "Järgmine voor algab mõne sekundi pärast…"
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Ühenda mänguga uuesti",
+      "join-game-button": "Liitu mänguga",
+      "find-game-button": "Leia mäng",
+      "create-game-button": "Loo {type, select, private {privaatne} public {avalik} other {tundmatu}} mäng"
+    },
+    "LanguageCombobox": {
+      "locale": {
+        "de": "Saksa",
+        "en": "Inglise",
+        "es": "Hispaania",
+        "fr": "Prantsuse",
+        "it": "Itaalia keel",
+        "br": "Bretooni",
+        "ta": "Tamili"
+      },
+      "select-language": "Vali keel",
+      "search-language": "Otsingukeel",
+      "no-language-found": "Keelevalikut ei leitud"
+    },
+    "OpponentBoard": {
+      "disconnected": "Mängija lahkus mängust. Bot mängib nende eest järgmiste käikude ajal, kuni nad uuesti ühenduvad."
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Vastased:"
+      }
+    },
+    "RulesDialog": {
+      "title": "Mängureeglid",
+      "trigger": {
+        "aria-label": "Näita mängureegleid"
+      }
+    },
+    "ScoreSheet": {
+      "see-scores": "See hindab"
+    },
+    "ScoreTable": {
+      "name": "Nimi",
+      "round": "Ümar",
+      "total": "Kokku"
+    }
+  },
+  "utils": {
+    "chat": {
+      "player-reconnect": "{username} ühendus mänguga taastus",
+      "argument-required": "Käsu jaoks on vaja ühte või mitut argumenti: {command}",
+      "player-joined": "{username} liitus mänguga",
+      "player-left": "{username} lahkus mängust",
+      "player-already-muted": "{username} on juba vaigistatud",
+      "player-muted": "{username} on nüüd vaigistatud",
+      "player-not-muted": "{username} ei ole vaigistatud",
+      "player-unmuted": "{username} ei ole enam vaigistatud",
+      "wizz-sent": "Sa saatsid {targetUsername} kasutajale wizzi!",
+      "wizz-self": "Teid on wizzinud {initiatorUsername}!",
+      "wizz-other": "{initiatorUsername} on {targetUsername} ära võlunud!"
+    },
+    "avatar": {
+      "penguin": "pingviin",
+      "toucan": "tuukan",
+      "turtle": "kilpkonn",
+      "whale": "vaala",
+      "bee": "mesilane",
+      "crab": "krabi",
+      "dog": "koer",
+      "eagle": "kotkas",
+      "elephant": "elevant",
+      "fox": "rebane",
+      "frog": "konn",
+      "jellyfish": "meduus",
+      "koala": "koala",
+      "octopus": "kaheksajalg",
+      "owl": "öökull",
+      "cat": "kass"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "Serveri vastamine võtab oodatust kauem aega. Võite proovida lehte uuesti laadida ja uuesti proovida."
+        },
+        "game-not-found": {
+          "description": "Otsitavat mängu ei eksisteeri"
+        },
+        "game-is-full": {
+          "description": "Mäng on täis, te ei saa liituda"
+        },
+        "cannot-reconnect": {
+          "description": "Mänguga uuesti ühenduse loomine pole enam võimalik, uuesti ühenduse loomise aeg on möödas"
+        },
+        "game-already-started": {
+          "description": "Mäng on juba alanud"
+        },
+        "player-banned": {
+          "description": "Teid on sellest mängust keelatud"
+        },
+        "rate-limit": {
+          "title": "Päringuid on liiga palju",
+          "description": "Palun oodake mõni sekund enne uuesti proovimist"
+        }
+      }
+    },
+    "skymo": {
+      "waiting": "Ootan mängijaid",
+      "turn-cards": "Pööra {number} kaart{number, plural, =1 {} other {i}}",
+      "turn": {
+        "chooseAPile": "Vali pakk",
+        "throwOrReplace": "Asenda või viska ära",
+        "replaceACard": "Asenda kaart",
+        "turnACard": "Pööra kaarti"
+      },
+      "waiting-opponents-to-turn-cards": "Ootan, kuni vastane{nbOpponents, plural, =1 {} other {d}} keerab {number} kaardi{number, plural, =1 {} other {d}}",
+      "player-turn": "On {playerName} kord",
+      "last-turn": "Viimane käik!",
+      "game-stopped": "Mäng peatati",
+      "round-over": "Voor lõppes",
+      "game-ended": "Mäng läbi!"
+    }
+  },
+  "contexts": {
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "description": "Mängu, millega üritasid uuesti ühendust luua, enam ei eksisteeri",
+          "title": "Mängu ei leitud"
+        }
+      },
+      "connection-lost": "Ühendus katkes. Proovin uuesti ühendust luua...",
+      "reconnection": "Ühendus taastatud"
+    },
+    "BanContext": {
+      "you-were-banned": {
+        "title": "Teid on keelatud",
+        "description": "Teid on mängust hosti poolt keelatud"
+      },
+      "unexpected-error": {
+        "title": "Ootamatu viga ilmnes",
+        "description": "Mängija keelamisel ilmnes ootamatu viga"
+      },
+      "not-allowed": {
+        "title": "Teil pole keelustamiseks luba",
+        "description": "Teil pole luba mängijat keelata"
+      },
+      "player-not-found": {
+        "title": "Mängijat, keda keelata, ei eksisteeri",
+        "description": "Mängijat, keda keelata, mängus ei eksisteeri"
+      },
+      "player-banned": {
+        "title": "{playerName} on keelatud",
+        "description": "{playerName} on hosti poolt keelatud"
+      }
+    },
+    "ReportContext": {
+      "report": {
+        "title": "{playerName} on teate tõttu välja visatud"
+      },
+      "report-against-you": {
+        "title": "Teid on teate tõttu välja visatud",
+        "description": "Teie kasutajanimi või üks teie sõnumitest on raporteeritud ja seda on peetud sobimatuks. Palun ärge korrake sellist käitumist."
+      }
+    }
+  }
+}
