@@ -139,7 +139,7 @@ describe("Game", () => {
           {
             id: crypto.randomUUID(),
             name: "player1",
-            userId: player.userId,
+            userId: player.userId ?? null,
             avatar: Constants.AVATARS.BEE,
             socketId: TEST_SOCKET_ID,
             connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
@@ -929,7 +929,7 @@ describe("Game", () => {
             id: player.id,
             name: player.name,
             avatar: Constants.AVATARS.BEE,
-            userId: player.userId,
+            userId: player.userId ?? null,
             cards: player.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,
@@ -951,7 +951,7 @@ describe("Game", () => {
             id: opponent.id,
             name: opponent.name,
             avatar: Constants.AVATARS.ELEPHANT,
-            userId: opponent.userId,
+            userId: opponent.userId ?? null,
             cards: opponent.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,

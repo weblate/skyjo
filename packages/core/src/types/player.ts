@@ -29,6 +29,6 @@ export type PlayerRedisDb = {
   afkCount: number
   consecutiveAfkCount: number
   turnStartTime: number | null
-  userId?: number
+  userId: number | null
   cards: CardRedisDb[][]
 }
