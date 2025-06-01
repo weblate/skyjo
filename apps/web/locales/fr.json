@@ -354,7 +354,7 @@
       "initial-turned-count": "Nombre de cartes à retourner au début : {value}",
       "score-to-end-game": "Nombre de points pour finir la partie : {value}",
       "first-player-penalty-type": {
-        "label": "Type de pénalité pour le premier joueur s'il n'a pas le plus petit nombre de points : ",
+        "label": "Type de pénalité pour le premier joueur s'il n'a pas le plus petit nombre de points : ",
         "1": "Multiplicateur uniquement",
         "2": "Fixe uniquement",
         "3": "Fixe puis multiplicateur",
