@@ -8,8 +8,6 @@ import type { Socket } from "socket.io"
 export interface SocketData {
   gameCode: string
   playerId: string
-  user?: UserDb
-  session?: SessionDb
 }
 
 export type GameSocket = Socket<
@@ -17,4 +15,7 @@ export type GameSocket = Socket<
   ServerToClientEvents,
   Record<string, unknown>,
   SocketData
->
+> & {
+  user?: UserDb
+  session?: SessionDb
+}

@@ -13,7 +13,6 @@ export type PlayerToJson = {
   connectionStatus: ConnectionStatus
   scores: PlayerScores
   turnStartTime: number | null
-  userId: string | null
   cards: CardToJson[][]
 }
 
@@ -30,6 +29,6 @@ export type PlayerRedisDb = {
   afkCount: number
   consecutiveAfkCount: number
   turnStartTime: number | null
-  userId: string | null
+  userId?: number
   cards: CardRedisDb[][]
 }

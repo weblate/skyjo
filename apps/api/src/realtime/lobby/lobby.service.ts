@@ -31,7 +31,7 @@ export class LobbyService extends BaseService {
   ) {
     const game = await this.getGame(gameCode)
 
-    const player = new Player(playerToCreate, socket.id)
+    const player = new Player(playerToCreate, socket.id, socket.user?.id)
 
     if (game.isPlayerBanned(player)) {
       throw new CError(`Player tried to join a game but is banned.`, {
@@ -218,7 +218,7 @@ export class LobbyService extends BaseService {
     playerToCreate: CreatePlayer,
     isPrivateGame: boolean,
   ) {
-    const player = new Player(playerToCreate, socket.id)
+    const player = new Player(playerToCreate, socket.id, socket.user?.id)
     const game = new Game({
       hostId: player.id,
       settings: new Settings(isPrivateGame),

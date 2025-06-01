@@ -47,7 +47,7 @@ describe("Player", () => {
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
-      userId: null,
+      userId: undefined,
       cards: [],
     }
 
@@ -76,7 +76,7 @@ describe("Player", () => {
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
-      userId: null,
+      userId: undefined,
       cards: [
         [new Card(0), new Card(1), new Card(2)],
         [new Card(3), new Card(4), new Card(5)],
@@ -412,7 +412,6 @@ describe("Player", () => {
         turnStartTime: null,
         score: 0,
         scores: [],
-        userId: null,
         wantsReplay: false,
         connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
       })

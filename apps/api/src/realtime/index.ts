@@ -1,5 +1,6 @@
 import { Server as HttpServer } from "http"
 import { reportRouter } from "@/realtime/report/report.router.js"
+import { userMiddleware } from "@/realtime/utils/userMiddleware.js"
 import type { ServerType } from "@hono/node-server"
 import { Logger } from "@skymo/logger"
 import { banRouter } from "./ban/ban.router.js"
@@ -27,6 +28,7 @@ export const initializeSocketServer = async (server: ServerType) => {
       })
     })
 
+    io.use(userMiddleware)
     io.on("connection", (socket: GameSocket) => {
       Logger.debug(`New socket connection: ${socket.id}`)
       lobbyRouter(socket)
