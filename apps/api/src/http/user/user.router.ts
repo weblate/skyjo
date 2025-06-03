@@ -1,30 +1,48 @@
-import { getUserGames } from "@/http/user/user.service.js"
-import { zValidator } from "@hono/zod-validator"
-import { gameHistoryQuerySchema } from "@skymo/shared/validations"
+import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
+import {
+  getUserByUsername,
+  getUserGames,
+  getUserStats,
+} from "@/http/user/user.service.js"
 import { Hono } from "hono"
+import { RateLimiterMemory } from "rate-limiter-flexible"
 
 export const userRouter = new Hono().basePath("/users")
 
+const userGamesRateLimiter = new RateLimiterMemory({
+  keyPrefix: "get-user",
+  points: 5,
+  duration: 60,
+})
+
 userRouter.get(
-  "/:username/games",
-  zValidator("query", gameHistoryQuerySchema),
+  `/:username`,
+  createRateLimiterMiddleware(userGamesRateLimiter),
   async (c) => {
     const username = c.req.param("username")
-    if (!username) {
-      return c.json({ error: "Username is required" }, 400)
-    }
-
-    const query = c.req.valid("query")
 
     try {
-      const games = await getUserGames(username, query)
+      const user = await getUserByUsername(username)
+      if (!user) {
+        return c.json({ error: "not-found" }, 404)
+      }
+
+      const gamesPromise = getUserGames(username, {
+        limit: 20,
+        offset: 0,
+      })
+
+      const statsPromise = getUserStats(username)
+
+      const [games, stats] = await Promise.all([gamesPromise, statsPromise])
 
       return c.json({
-        success: true,
+        user,
         games,
+        stats,
       })
     } catch (_error) {
-      return c.json({ error: "Internal server error" }, 500)
+      return c.json({ error: "unknown" }, 500)
     }
   },
 )

@@ -9,7 +9,7 @@ import {
 } from "@skymo/database/schema"
 import { type Locales, UserError } from "@skymo/shared/constants"
 import type { GameHistoryQuery } from "@skymo/shared/validations"
-import { desc, eq } from "drizzle-orm"
+import { avg, count, desc, eq, sql, sum } from "drizzle-orm"
 
 interface CreateUserParams {
   email: string
@@ -139,4 +139,33 @@ export async function getUserGames(
     .offset(offset)
 
   return games
+}
+
+export async function getUserStats(username: string) {
+  const [result] = await db
+    .select({
+      totalGames: count(playerTable.id),
+      wins: sum(sql`CASE WHEN ${playerTable.winner} = true THEN 1 ELSE 0 END`),
+      averageRank: avg(playerTable.rank),
+    })
+    .from(playerTable)
+    .innerJoin(gameTable, eq(playerTable.gameId, gameTable.id))
+    .innerJoin(userTable, eq(playerTable.userId, userTable.id))
+    .where(eq(userTable.username, username))
+
+  if (!result || result.totalGames === 0) {
+    return null
+  }
+
+  const totalGames = Number(result.totalGames)
+  const wins = Number(result.wins || 0)
+  const winRate = totalGames > 0 ? (wins / totalGames) * 100 : 0
+  const averageRank = Number(result.averageRank || 0)
+
+  return {
+    totalGames,
+    wins,
+    winRate,
+    averageRank,
+  }
 }
