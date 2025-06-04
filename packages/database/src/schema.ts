@@ -1,3 +1,4 @@
+import type { SettingsRedisDb } from "@skymo/core"
 import { locales } from "@skymo/shared/constants"
 import type { InferSelectModel } from "drizzle-orm"
 import {
@@ -13,7 +14,6 @@ import {
   uniqueIndex,
   varchar,
 } from "drizzle-orm/pg-core"
-import type { GameRedisDb } from "../../core/dist/src/index.js"
 
 export const avatarEnum = pgEnum("avatar", [
   "bee",
@@ -112,7 +112,7 @@ export type SessionDb = InferSelectModel<typeof sessionTable>
 export const gameTable = pgTable("games", {
   id: serial("id").primaryKey(),
   code: varchar("code", { length: 8 }),
-  settings: json("settings").$type<GameRedisDb["settings"]>(),
+  settings: json("settings").$type<SettingsRedisDb>(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

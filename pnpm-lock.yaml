@@ -390,6 +390,9 @@ importers:
 
   packages/database:
     dependencies:
+      '@skymo/core':
+        specifier: workspace:*
+        version: link:../core
       '@skymo/shared':
         specifier: workspace:*
         version: link:../shared
