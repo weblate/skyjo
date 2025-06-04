@@ -32,3 +32,10 @@ export interface SettingsRedisDb {
   firstPlayerFlatPenalty: number
   showCurrentScore: boolean
 }
+
+export type PublicGameTag =
+  | "classic"
+  | "column"
+  | "row"
+  | "short-game"
+  | "long-game"

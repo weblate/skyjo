@@ -1,6 +1,6 @@
 import { GameRepository } from "@/redis/game.repository.js"
-import type { Game, Player } from "@skymo/core"
-import type { PublicGame, PublicGameTag } from "@skymo/shared/types"
+import { type Game, type Player, constructTagArray } from "@skymo/core"
+import type { PublicGame } from "@skymo/shared/types"
 
 const gameRepository = new GameRepository()
 
@@ -14,18 +14,6 @@ export async function getRedisPublicGames(
 }
 
 //#region private methods
-function constructTagArray(game: Game) {
-  const tags: PublicGameTag[] = []
-
-  if (game.settings.isClassicSettings()) tags.push("classic")
-  if (game.settings.removeIdenticalRow) tags.push("row")
-  if (game.settings.removeIdenticalColumn) tags.push("column")
-  if (game.settings.scoreToEndGame > 100) tags.push("long-game")
-  if (game.settings.scoreToEndGame < 100) tags.push("short-game")
-
-  return tags
-}
-
 function parsePublicGamePlayers(players: Player[]): PublicGame["players"] {
   return players.map((p) => ({ id: p.id, avatar: p.avatar, name: p.name }))
 }
@@ -36,7 +24,7 @@ function parsePublicGame(game: Game): PublicGame {
     hostName: game.players.find((p) => game.isHost(p.id))?.name ?? "",
     players: parsePublicGamePlayers(game.players),
     maxPlayers: game.settings.maxPlayers,
-    tags: constructTagArray(game),
+    tags: constructTagArray(game.settings),
   }
 }
 
