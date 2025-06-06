@@ -120,13 +120,13 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
           {variant === "account" && user && (
             <>
               <DropdownMenuItem>
-                <Link href="/profile" className="flex flex-col">
+                <Link href={`/u/${user.username}`} className="flex flex-col w-full">
                   <span className="text-sm font-medium text-left">
-                    {user?.name ?? t("guest")}
+                    {user?.name}
                   </span>
 
                   <span className="text-sm text-gray-500 text-left">
-                    {user.username}
+                    {user?.username}
                   </span>
                 </Link>
               </DropdownMenuItem>

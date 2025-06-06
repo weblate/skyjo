@@ -1,11 +1,4 @@
-import type { Game, PlayerToJson } from "@skymo/core"
-
-export type PublicGameTag =
-  | "classic"
-  | "column"
-  | "row"
-  | "short-game"
-  | "long-game"
+import type { Game, PlayerToJson, PublicGameTag } from "@skymo/core"
 
 export interface PublicGame extends Pick<Game, "code"> {
   hostName: string

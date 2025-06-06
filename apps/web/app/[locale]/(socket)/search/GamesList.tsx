@@ -1,11 +1,12 @@
+import { GameTag } from "@/components/GameTag/GameTag"
 import { JoinGameButton } from "@/components/JoinGameButton"
-import { PublicGame, type PublicGameTag } from "@skymo/shared/types"
+import { PublicGameTag } from "@skymo/core"
+import { PublicGame } from "@skymo/shared/types"
 import { Gamepad2Icon } from "lucide-react"
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { Dispatch, Fragment, SetStateAction } from "react"
-import { GameTag } from "./GameTag"
 
 interface GamesListProps {
   games: PublicGame[] | undefined

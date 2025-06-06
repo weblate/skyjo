@@ -626,6 +626,42 @@
         "rate-limit": "Trop de requêtes. Veuillez réessayer plus tard.",
         "send-failed": "Échec de l'envoi du code PIN. Veuillez réessayer."
       }
+    },
+    "UserProfile": {
+      "head": {
+        "title": "Profil de {username} | Skymo - Jeu de Cartes Skyjo en Ligne",
+        "description": "Consultez le profil de {username} sur Skymo. Vérifiez ses statistiques de jeu, son activité récente et ses réalisations dans Skyjo en ligne.",
+        "keywords": "Skymo,Skyjo,profil utilisateur,statistiques joueur,statistiques de jeu,parties récentes,réalisations,jeu de cartes en ligne"
+      },
+      "not-found": {
+        "title": "Utilisateur Introuvable",
+        "description": "L'utilisateur \"{username}\" n'existe pas ou a peut-être changé son nom d'utilisateur.",
+        "back-to-home": "Retour à l'Accueil"
+      },
+      "error": {
+        "title": "Quelque Chose s'est Mal Passé",
+        "description": "Nous avons rencontré une erreur lors du chargement de ce profil. Veuillez réessayer plus tard.",
+        "back-to-home": "Retour à l'Accueil"
+      },
+      "stats": {
+        "total-games": "Total des Parties",
+        "win-rate": "Taux de Victoire",
+        "average-rank": "Rang Moyen"
+      },
+      "sections": {
+        "achievements": "Réalisations",
+        "achievements-coming-soon": "Le système de réalisations arrive bientôt !",
+        "recent-activity": "Activité Récente"
+      },
+      "recent-activity": {
+        "no-activity": "Aucune activité récente à afficher.",
+        "game-code": "Partie #{code}",
+        "rank": "Rang #{rank}",
+        "winner": "Gagnant"
+      },
+      "search": {
+        "placeholder": "Rechercher un nom d'utilisateur"
+      }
     }
   },
   "components": {

@@ -9,7 +9,7 @@ import {
 } from "@skymo/database/schema"
 import { type Locales, UserError } from "@skymo/shared/constants"
 import type { GameHistoryQuery } from "@skymo/shared/validations"
-import { avg, count, desc, eq, sql, sum } from "drizzle-orm"
+import { avg, count, eq, sql, sum } from "drizzle-orm"
 
 interface CreateUserParams {
   email: string
@@ -121,24 +121,70 @@ export async function getUserGames(
   username: string,
   { limit = 20, offset = 0 }: GameHistoryQuery,
 ) {
-  const games = await db
-    .select({
-      id: gameTable.id,
-      code: gameTable.code,
-      settings: gameTable.settings,
-      createdAt: gameTable.createdAt,
-      finishedAt: gameTable.finishedAt,
-      rank: playerTable.rank,
-    })
-    .from(gameTable)
-    .innerJoin(playerTable, eq(gameTable.id, playerTable.gameId))
-    .innerJoin(userTable, eq(playerTable.userId, userTable.id))
-    .where(eq(userTable.username, username))
-    .limit(limit)
-    .orderBy(desc(gameTable.finishedAt))
-    .offset(offset)
+  // Single optimized query using CTE to get user's games with all players and host
+  const gamePlayerResults = await db.execute(sql`
+    WITH user_game_ids AS (
+      SELECT DISTINCT g.id, g.finished_at
+      FROM ${gameTable} g
+      INNER JOIN ${playerTable} p ON g.id = p.game_id
+      INNER JOIN ${userTable} u ON p.user_id = u.id
+      WHERE u.username = ${username}
+      ORDER BY g.finished_at DESC
+      LIMIT ${limit} OFFSET ${offset}
+    )
+    SELECT 
+      g.id as game_id,
+      g.code as game_code,
+      g.settings as game_settings,
+      g.created_at as game_created_at,
+      g.finished_at as game_finished_at,
+      p.name as player_name,
+      u.username as player_username,
+      p.avatar as player_avatar,
+      p.rank as player_rank,
+      host_player.name as host_name
+    FROM user_game_ids ugi
+    INNER JOIN ${gameTable} g ON ugi.id = g.id
+    INNER JOIN ${playerTable} p ON g.id = p.game_id
+    LEFT JOIN ${userTable} u ON p.user_id = u.id
+    LEFT JOIN ${playerTable} host_player ON g.host_id = host_player.id
+    ORDER BY g.finished_at DESC, p.rank ASC
+  `)
 
-  return games
+  // Group players by game efficiently
+  const gamesMap = new Map()
+
+  for (const row of gamePlayerResults.rows) {
+    const gameId = row.game_id
+
+    if (!gamesMap.has(gameId)) {
+      gamesMap.set(gameId, {
+        id: gameId,
+        code: row.game_code,
+        settings: row.game_settings,
+        createdAt: row.game_created_at,
+        finishedAt: row.game_finished_at,
+        hostName: row.host_name,
+        players: [],
+      })
+    }
+
+    const game = gamesMap.get(gameId)
+
+    // Check if this player is the requesting user and set their rank
+    if (row.player_username === username) {
+      game.rank = row.player_rank
+    }
+
+    game.players.push({
+      name: row.player_name,
+      username: row.player_username,
+      avatar: row.player_avatar,
+      rank: row.player_rank,
+    })
+  }
+
+  return Array.from(gamesMap.values())
 }
 
 export async function getUserStats(username: string) {

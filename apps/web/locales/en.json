@@ -412,6 +412,42 @@
         "rate-limit": "Too many requests. Please try again later.",
         "send-failed": "Failed to send PIN. Please try again."
       }
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'s Profile | Skymo - Skyjo Online Card Game",
+        "description": "View {username}'s profile on Skymo. Check their game statistics, recent activity, and achievements in Skyjo online.",
+        "keywords": "Skymo,Skyjo,user profile,player stats,game statistics,recent games,achievements,online card game"
+      },
+      "not-found": {
+        "title": "User Not Found",
+        "description": "The user \"{username}\" doesn't exist or may have changed their username.",
+        "back-to-home": "Back to Homepage"
+      },
+      "error": {
+        "title": "Something Went Wrong",
+        "description": "We encountered an error while loading this profile. Please try again later.",
+        "back-to-home": "Back to Homepage"
+      },
+      "stats": {
+        "total-games": "Total Games",
+        "win-rate": "Win Rate",
+        "average-rank": "Average Rank"
+      },
+      "sections": {
+        "achievements": "Achievements",
+        "achievements-coming-soon": "Achievements system coming soon!",
+        "recent-activity": "Recent Activity"
+      },
+      "recent-activity": {
+        "no-activity": "No recent activity to show.",
+        "game-code": "Game #{code}",
+        "rank": "Rank #{rank}",
+        "winner": "Winner"
+      },
+      "search": {
+        "placeholder": "Search username"
+      }
     }
   },
   "components": {
