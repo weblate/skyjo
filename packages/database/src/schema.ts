@@ -1,6 +1,6 @@
 import type { SettingsRedisDb } from "@skymo/core"
 import { locales } from "@skymo/shared/constants"
-import type { InferSelectModel } from "drizzle-orm"
+import { type InferSelectModel, relations } from "drizzle-orm"
 import {
   boolean,
   integer,
@@ -112,6 +112,7 @@ export type SessionDb = InferSelectModel<typeof sessionTable>
 export const gameTable = pgTable("games", {
   id: serial("id").primaryKey(),
   code: varchar("code", { length: 8 }),
+  hostId: integer("host_id"),
   settings: json("settings").$type<SettingsRedisDb>(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
@@ -120,6 +121,14 @@ export const gameTable = pgTable("games", {
     .notNull()
     .defaultNow(),
 })
+export const gameRelations = relations(gameTable, ({ one }) => ({
+  host: one(playerTable, {
+    fields: [gameTable.hostId],
+    references: [playerTable.id],
+    relationName: "host",
+  }),
+}))
+
 export type GameDb = InferSelectModel<typeof gameTable>
 
 export const playerTable = pgTable("players", {
@@ -130,7 +139,7 @@ export const playerTable = pgTable("players", {
   userId: integer("user_id").references(() => userTable.id),
   winner: boolean("winner"),
   avatar: avatarEnum("avatar").notNull(),
-  username: varchar("username", { length: 20 }).notNull(),
+  name: varchar("name", { length: 20 }).notNull(),
   score: smallint("score").notNull().default(0),
   rank: smallint("rank").notNull(),
   connectionStatus: smallint("connection_status").notNull().default(1),

@@ -2,6 +2,7 @@ import { db } from "@/postgres.js"
 import { gameTable, playerTable, scoreTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import type { GameStorageJobData } from "@skymo/worker-types"
+import { eq } from "drizzle-orm"
 
 export class GameStorageTask {
   public static async storeGame(jobData: GameStorageJobData): Promise<void> {
@@ -68,7 +69,7 @@ export class GameStorageTask {
           gameId: gameDbId,
           userId: player.userId,
           avatar: player.avatar,
-          username: player.name,
+          name: player.name,
           score: player.score,
           rank: player.rank,
           connectionStatus: player.connectionStatus,
@@ -78,7 +79,19 @@ export class GameStorageTask {
         const playerRecords = await tx
           .insert(playerTable)
           .values(playerInserts)
-          .returning({ id: playerTable.id, username: playerTable.username })
+          .returning({ id: playerTable.id, name: playerTable.name })
+
+        // Update game record with hostId based on game.hostId
+        const hostPlayerIndex = playersWithRanks.findIndex(
+          (player) => player.id === game.hostId,
+        )
+
+        if (hostPlayerIndex !== -1 && playerRecords[hostPlayerIndex]) {
+          await tx
+            .update(gameTable)
+            .set({ hostId: playerRecords[hostPlayerIndex].id })
+            .where(eq(gameTable.id, gameDbId))
+        }
 
         // Insert scores for each player
         const scoreInserts = []
