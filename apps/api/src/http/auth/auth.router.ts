@@ -115,6 +115,7 @@ authRouter.post("/verify", async (c) => {
           username: user.username,
           avatar: user.avatar,
           hasOAuth: !!(user.googleId || user.facebookId),
+          email: user.email,
           onboardingCompleted: user.onboardingCompleted,
         },
       },
