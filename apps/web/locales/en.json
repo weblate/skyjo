@@ -448,6 +448,97 @@
       "search": {
         "placeholder": "Search username"
       }
+    },
+    "Settings": {
+      "head": {
+        "title": "Account Settings | Skymo - Skyjo Online Card Game",
+        "description": "Manage your account settings on Skymo. Change your display name, username, email, password, and account preferences."
+      },
+      "title": "Account Settings",
+      "description": "Manage your account and personal information.",
+      "Navigation": {
+        "profile": "Profile",
+        "account": "Account",
+        "password": "Password"
+      },
+      "buttons": {
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "delete-account": "Delete Account",
+        "confirm-delete": "Yes, Delete My Account"
+      },
+      "messages": {
+        "save-success": "Settings saved successfully!",
+        "save-error": "Failed to save settings. Please try again.",
+        "delete-confirmation": "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.",
+        "username-taken": "This username is already taken.",
+        "email-taken": "This email is already in use.",
+        "password-incorrect": "Current password is incorrect.",
+        "delete-success": "We acknowledge your request to delete your account. You will receive an email when your account has been deleted."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profile",
+      "fields": {
+        "name": {
+          "label": "Display name",
+          "description": "Your name displayed to other players in games.",
+          "placeholder": "Enter your name",
+          "submit": "Save name"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Your avatar displayed on your profile.",
+          "placeholder": "Select your avatar",
+          "submit": "Save avatar"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Account",
+      "fields": {
+        "username": {
+          "label": "Username",
+          "description": "Your unique username used for your profile URL.",
+          "placeholder": "Enter your username",
+          "submit": "Save username"
+        },
+        "email": {
+          "label": "Email Address",
+          "description": "Your email address used for login and important notifications.",
+          "placeholder": "Enter your email",
+          "submit": "Save email"
+        }
+      },
+      "delete-account": {
+        "title": "Delete Account",
+        "description": "Delete your account and all associated data. This action cannot be undone and all your data will be permanently removed.",
+        "button": "Delete Account",
+        "confirmation": {
+          "description": "This action cannot be undone. To confirm, type DELETE in the box below.",
+          "input-label": "Type DELETE to confirm",
+          "input-placeholder": "DELETE"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Change password",
+      "fields": {
+        "password": {
+          "label": "Password",
+          "description": "Change your account password.",
+          "current-password": "Current Password",
+          "new-password": "New Password",
+          "confirm-password": "Confirm New Password",
+          "current-placeholder": "Enter your current password",
+          "new-placeholder": "Enter your new password",
+          "confirm-placeholder": "Confirm your new password",
+          "submit": "Save password"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Current password is incorrect."
+      }
     }
   },
   "components": {
@@ -608,7 +699,8 @@
       "language": "Language",
       "feedback": "Leave a feedback",
       "discord": "Discord",
-      "settings": "Settings",
+      "settings": "Game settings",
+      "account-settings": "Account settings",
       "logout": "Log out",
       "login": "Login",
       "signup": "Create an account"

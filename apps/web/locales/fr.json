@@ -662,6 +662,94 @@
       "search": {
         "placeholder": "Rechercher un nom d'utilisateur"
       }
+    },
+    "Settings": {
+      "head": {
+        "title": "Paramètres du Compte | Skymo - Jeu de Cartes Skyjo en Ligne",
+        "description": "Gérez vos paramètres de compte sur Skymo. Changez votre nom d'affichage, nom d'utilisateur, email, mot de passe et préférences de compte."
+      },
+      "title": "Paramètres du Compte",
+      "description": "Gérez votre compte et vos informations personnelles.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Compte",
+        "password": "Mot de passe"
+      },
+      "buttons": {
+        "save": "Enregistrer les Modifications",
+        "saving": "Enregistrement...",
+        "delete-account": "Supprimer le Compte",
+        "confirm-delete": "Oui, Supprimer Mon Compte"
+      },
+      "messages": {
+        "save-success": "Paramètres enregistrés avec succès !",
+        "save-error": "Impossible d'enregistrer les paramètres. Veuillez réessayer.",
+        "delete-confirmation": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action ne peut pas être annulée et toutes vos données seront définitivement supprimées.",
+        "password-incorrect": "Le mot de passe actuel est incorrect.",
+        "username-taken": "Ce nom d'utilisateur est déjà pris.",
+        "email-taken": "Cet email est déjà utilisé.",
+        "delete-success": "Nous avons reçu votre demande de suppression de compte. Vous recevrez un email lorsque votre compte sera supprimé."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Nom d'affichage",
+          "description": "Votre nom affiché aux autres joueurs dans les parties.",
+          "placeholder": "Entrez votre nom",
+          "submit": "Modifier mon nom"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Votre avatar affiché sur votre profil.",
+          "placeholder": "Sélectionnez votre avatar",
+          "submit": "Modifier mon avatar"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Compte",
+      "fields": {
+        "username": {
+          "label": "Nom d'Utilisateur",
+          "description": "Votre nom d'utilisateur unique utilisé pour l'URL de votre profil.",
+          "placeholder": "Entrez votre nom d'utilisateur",
+          "submit": "Modifier mon nom d'utilisateur"
+        },
+        "email": {
+          "label": "Adresse Email",
+          "description": "Votre adresse email utilisée pour la connexion et les notifications importantes.",
+          "placeholder": "Entrez votre email",
+          "submit": "Modifier mon email"
+        }
+      },
+      "delete-account": {
+        "title": "Supprimer le Compte",
+        "description": "Supprimez votre compte et toutes les données associées. Cette action ne peut pas être annulée et toutes vos données seront définitivement supprimées.",
+        "button": "Supprimer le Compte",
+        "confirmation": {
+          "description": "Cette action ne peut pas être annulée. Pour confirmer, tapez SUPPRIMER dans la zone ci-dessous.",
+          "input-label": "Tapez SUPPRIMER pour confirmer",
+          "input-placeholder": "SUPPRIMER"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Changer de mot de passe",
+      "fields": {
+        "password": {
+          "label": "Mot de Passe",
+          "description": "Changez votre mot de passe de compte.",
+          "current-password": "Mot de Passe Actuel",
+          "new-password": "Nouveau Mot de Passe",
+          "confirm-password": "Confirmer le Nouveau Mot de Passe",
+          "current-placeholder": "Entrez votre mot de passe actuel",
+          "new-placeholder": "Entrez votre nouveau mot de passe",
+          "confirm-placeholder": "Confirmez votre nouveau mot de passe",
+          "submit": "Modifier mon mot de passe"
+        }
+      }
     }
   },
   "components": {

@@ -10,33 +10,33 @@ import { ClassValue } from "clsx"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
 
-const backgroundVariants = cva(
+export const backgroundVariants = cva(
   "rounded-full border-2 border-black size-20 flex items-center justify-center",
   {
     variants: {
       avatar: {
-        [CoreConstants.AVATARS.BEE]: "bg-blue-200",
-        [CoreConstants.AVATARS.CRAB]: "bg-teal-200",
-        [CoreConstants.AVATARS.DOG]: "bg-sky-200",
-        [CoreConstants.AVATARS.EAGLE]: "bg-indigo-200",
-        [CoreConstants.AVATARS.ELEPHANT]: "bg-orange-200",
-        [CoreConstants.AVATARS.FOX]: "bg-violet-200",
-        [CoreConstants.AVATARS.FROG]: "bg-rose-200",
-        [CoreConstants.AVATARS.JELLYFISH]: "bg-emerald-200",
-        [CoreConstants.AVATARS.KOALA]: "bg-amber-200",
-        [CoreConstants.AVATARS.OCTOPUS]: "bg-cyan-200",
-        [CoreConstants.AVATARS.PENGUIN]: "bg-slate-200",
-        [CoreConstants.AVATARS.TOUCAN]: "bg-yellow-200",
-        [CoreConstants.AVATARS.TURTLE]: "bg-purple-200",
-        [CoreConstants.AVATARS.WHALE]: "bg-orange-200",
-        [CoreConstants.AVATARS.OWL]: "bg-teal-200",
-        [CoreConstants.AVATARS.CAT]: "bg-amber-200",
+        [CoreConstants.AVATARS.BEE]: "bg-blue-200 dark:bg-blue-400",
+        [CoreConstants.AVATARS.CRAB]: "bg-teal-200 dark:bg-teal-400",
+        [CoreConstants.AVATARS.DOG]: "bg-sky-200 dark:bg-sky-400",
+        [CoreConstants.AVATARS.EAGLE]: "bg-indigo-200 dark:bg-indigo-400",
+        [CoreConstants.AVATARS.ELEPHANT]: "bg-orange-200 dark:bg-orange-400",
+        [CoreConstants.AVATARS.FOX]: "bg-violet-200 dark:bg-violet-400",
+        [CoreConstants.AVATARS.FROG]: "bg-rose-200 dark:bg-rose-400",
+        [CoreConstants.AVATARS.JELLYFISH]: "bg-emerald-200 dark:bg-emerald-400",
+        [CoreConstants.AVATARS.KOALA]: "bg-amber-200 dark:bg-amber-400",
+        [CoreConstants.AVATARS.OCTOPUS]: "bg-cyan-200 dark:bg-cyan-400",
+        [CoreConstants.AVATARS.PENGUIN]: "bg-slate-200 dark:bg-slate-400",
+        [CoreConstants.AVATARS.TOUCAN]: "bg-yellow-200 dark:bg-yellow-400",
+        [CoreConstants.AVATARS.TURTLE]: "bg-purple-200 dark:bg-purple-400",
+        [CoreConstants.AVATARS.WHALE]: "bg-orange-200 dark:bg-orange-400",
+        [CoreConstants.AVATARS.OWL]: "bg-teal-200 dark:bg-teal-400",
+        [CoreConstants.AVATARS.CAT]: "bg-amber-200 dark:bg-amber-400",
       },
     },
   },
 )
 
-const avatarVariants = cva("dark:opacity-75 select-none", {
+export const avatarVariants = cva("dark:opacity-90 select-none", {
   variants: {
     avatar: {
       [CoreConstants.AVATARS.BEE]: "",
@@ -88,7 +88,7 @@ export const UserProfile = async ({
     },
   ]
 
-  const avatar = CoreConstants.AVATARS.WHALE
+  const avatar = user.avatar
 
   return (
     <div className={cn("space-y-6 flex flex-col", className)}>

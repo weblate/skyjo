@@ -82,6 +82,7 @@ export const AccountDeletedEmail = ({ locale }: AccountDeletedEmailProps) => {
 
 AccountDeletedEmail.PreviewProps = {
   locale: "en",
+  content: undefined,
 } satisfies AccountDeletedEmailProps
 
 export default AccountDeletedEmail

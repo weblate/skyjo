@@ -1,4 +1,5 @@
 import { db } from "@/db/index.js"
+import { hashPassword, verifyPassword } from "@/http/auth/lib/password.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import type { Avatar } from "@skymo/core"
 import {
@@ -8,8 +9,15 @@ import {
   userTable,
 } from "@skymo/database/schema"
 import { type Locales, UserError } from "@skymo/shared/constants"
-import type { GameHistoryQuery } from "@skymo/shared/validations"
-import { avg, count, eq, sql, sum } from "drizzle-orm"
+import type {
+  GameHistoryQuery,
+  UpdateAvatar,
+  UpdateEmail,
+  UpdateName,
+  UpdatePassword,
+  UpdateUsername,
+} from "@skymo/shared/validations"
+import { and, avg, count, eq, ne, sql, sum } from "drizzle-orm"
 
 interface CreateUserParams {
   email: string
@@ -59,6 +67,7 @@ export async function createUser({
       onboardingCompleted: userTable.onboardingCompleted,
       createdAt: userTable.createdAt,
       updatedAt: userTable.updatedAt,
+      deletedAt: userTable.deletedAt,
     })
 
   const user = row?.[0]
@@ -215,6 +224,167 @@ export async function getUserStats(username: string) {
     averageRank,
   }
 }
+
+// User settings update functions
+export async function updateUserName(userId: number, data: UpdateName) {
+  const [updatedUser] = await db
+    .update(userTable)
+    .set({
+      name: data.name,
+      updatedAt: new Date(),
+    })
+    .where(eq(userTable.id, userId))
+    .returning({
+      id: userTable.id,
+      email: userTable.email,
+      username: userTable.username,
+      avatar: userTable.avatar,
+      name: userTable.name,
+      locale: userTable.locale,
+      onboardingCompleted: userTable.onboardingCompleted,
+    })
+
+  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  return updatedUser
+}
+
+export async function updateUserUsername(userId: number, data: UpdateUsername) {
+  // Check if username is available
+  const existingUser = await db
+    .select({ id: userTable.id })
+    .from(userTable)
+    .where(and(eq(userTable.username, data.username), ne(userTable.id, userId)))
+    .limit(1)
+
+  if (existingUser.length > 0) {
+    throw new Error(UserError.USERNAME_TAKEN)
+  }
+
+  const [updatedUser] = await db
+    .update(userTable)
+    .set({
+      username: data.username,
+      updatedAt: new Date(),
+    })
+    .where(eq(userTable.id, userId))
+    .returning({
+      id: userTable.id,
+      email: userTable.email,
+      username: userTable.username,
+      avatar: userTable.avatar,
+      name: userTable.name,
+      locale: userTable.locale,
+      onboardingCompleted: userTable.onboardingCompleted,
+    })
+
+  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  return updatedUser
+}
+
+export async function updateUserEmail(userId: number, data: UpdateEmail) {
+  // Check if email is already in use
+  const existingUser = await db
+    .select({ id: userTable.id })
+    .from(userTable)
+    .where(and(eq(userTable.email, data.email), ne(userTable.id, userId)))
+    .limit(1)
+
+  if (existingUser.length > 0) {
+    throw new Error(UserError.EMAIL_TAKEN)
+  }
+
+  const [updatedUser] = await db
+    .update(userTable)
+    .set({
+      email: data.email,
+      emailVerified: false, // Reset email verification
+      updatedAt: new Date(),
+    })
+    .where(eq(userTable.id, userId))
+    .returning({
+      id: userTable.id,
+      email: userTable.email,
+      username: userTable.username,
+      avatar: userTable.avatar,
+      name: userTable.name,
+      locale: userTable.locale,
+      onboardingCompleted: userTable.onboardingCompleted,
+    })
+
+  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  return updatedUser
+}
+
+export async function updateUserPassword(userId: number, data: UpdatePassword) {
+  // Get current user to verify current password
+  const [user] = await db
+    .select({ password: userTable.password })
+    .from(userTable)
+    .where(eq(userTable.id, userId))
+    .limit(1)
+
+  if (!user || !user.password) {
+    throw new Error(UserError.INVALID_CURRENT_PASSWORD)
+  }
+
+  // Verify current password
+  const isValidPassword = await verifyPassword(
+    user.password,
+    data.currentPassword,
+  )
+  if (!isValidPassword) {
+    throw new Error(UserError.INVALID_CURRENT_PASSWORD)
+  }
+
+  // Hash new password and update
+  const hashedPassword = await hashPassword(data.newPassword)
+
+  const [updatedUser] = await db
+    .update(userTable)
+    .set({
+      password: hashedPassword,
+      updatedAt: new Date(),
+    })
+    .where(eq(userTable.id, userId))
+    .returning({
+      id: userTable.id,
+      email: userTable.email,
+      username: userTable.username,
+      avatar: userTable.avatar,
+      name: userTable.name,
+      locale: userTable.locale,
+      onboardingCompleted: userTable.onboardingCompleted,
+    })
+
+  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  return updatedUser
+}
+
+export async function updateUserAvatar(
+  userId: number,
+  { avatar }: UpdateAvatar,
+) {
+  const [updatedUser] = await db
+    .update(userTable)
+    .set({
+      avatar,
+      updatedAt: new Date(),
+    })
+    .where(eq(userTable.id, userId))
+    .returning({
+      id: userTable.id,
+      email: userTable.email,
+      username: userTable.username,
+      avatar: userTable.avatar,
+      name: userTable.name,
+      locale: userTable.locale,
+      onboardingCompleted: userTable.onboardingCompleted,
+    })
+
+  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  return updatedUser
+}
+
 export async function deleteUser(userId: number) {
   const [userData] = await db
     .select({
@@ -268,12 +438,15 @@ export async function deleteUser(userId: number) {
     })
     .where(eq(playerTable.userId, userId))
 
-  await mailerQueue.add("account-deleted", {
-    to: userData.email,
-    template: "account-deleted",
-    locale: userData.locale,
-    content: {
-      userName: userData.name || undefined,
+  await mailerQueue.add(
+    "account-deleted",
+    {
+      to: userData.email,
+      template: "account-deleted",
+      locale: userData.locale,
+      content: {
+        userName: userData.name || undefined,
+      },
     },
-  })
+  )
 }
