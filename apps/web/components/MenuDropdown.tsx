@@ -193,14 +193,16 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
         <DropdownMenuGroup>
           <DropdownMenuItem onClick={openSettings}>
             <SettingsIcon className="mr-2 size-4" />
-            <span>{t("settings")}</span>
+            <span>{user ? t("game-settings") : t("settings")}</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Link href="/settings" className="flex items-center w-full">
-              <UserCog2Icon className="mr-2 size-4" />
-              <span>{t("account-settings")}</span>
-            </Link>
-          </DropdownMenuItem>
+          {user && (
+            <DropdownMenuItem>
+              <Link href="/settings" className="flex items-center w-full">
+                <UserCog2Icon className="mr-2 size-4" />
+                <span>{t("account-settings")}</span>
+              </Link>
+            </DropdownMenuItem>
+          )}
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
