@@ -1,9 +1,6 @@
 import { db } from "@/db/index.js"
-import { sha256 } from "@oslojs/crypto/sha2"
-import {
-  encodeBase32LowerCaseNoPadding,
-  encodeHexLowerCase,
-} from "@oslojs/encoding"
+import { hashToken } from "@/utils/randomString.js"
+import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding"
 import {
   type SessionDb,
   type UserDb,
@@ -73,7 +70,7 @@ export function generateSessionToken(): string {
 }
 
 export function createSessionId(token: string): string {
-  const sessionId = encodeHexLowerCase(sha256(new TextEncoder().encode(token)))
+  const sessionId = hashToken(token)
   return sessionId
 }
 

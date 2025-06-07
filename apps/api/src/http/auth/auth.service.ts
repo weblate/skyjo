@@ -11,9 +11,7 @@ import {
 } from "@/http/session/session.service.js"
 import { createUser } from "@/http/user/user.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
-import { generateRandomToken } from "@/utils/randomString.js"
-import { sha3_256 } from "@oslojs/crypto/sha3"
-import { encodeHexLowerCase } from "@oslojs/encoding"
+import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 import {
   passwordResetTable,
   sessionTable,
@@ -269,7 +267,7 @@ export async function requestPasswordReset(data: ForgotPassword) {
   // Store new token
   await db.insert(passwordResetTable).values({
     userId: userRecord.id,
-    token: encodeHexLowerCase(sha3_256(new TextEncoder().encode(token))),
+    token: hashToken(token),
     expiresAt,
   })
 
@@ -290,9 +288,7 @@ export async function requestPasswordReset(data: ForgotPassword) {
 export async function resetPassword(data: ResetPassword) {
   const { token, password } = data
 
-  const hashedToken = encodeHexLowerCase(
-    sha3_256(new TextEncoder().encode(token)),
-  )
+  const hashedToken = hashToken(token)
 
   // Find valid token
   const resetRecord = await db
