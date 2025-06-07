@@ -354,7 +354,7 @@
       "success": {
         "title": "Password Reset Successfully",
         "message": "Your password has been reset. You can now log in with your new password.",
-        "back": "Go to Login"
+        "back": "Login"
       },
       "error": {
         "title": "Invalid Reset Link",
