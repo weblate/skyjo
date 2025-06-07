@@ -56,7 +56,7 @@ const SelectAvatar = ({
               alt={tAvatar(avatar)}
               title={tAvatar(avatar)}
               className={cn(
-                "select-none size-16 sm:size-20 dark:opacity-75",
+                "select-none size-16 sm:size-20 dark:opacity-90",
                 className,
               )}
               priority

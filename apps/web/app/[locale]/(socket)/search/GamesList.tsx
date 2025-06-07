@@ -112,7 +112,7 @@ const PublicGameRow = ({
                 width={20}
                 height={20}
                 alt={tAvatar(player.avatar)}
-                className="select-none dark:opacity-75"
+                className="select-none dark:opacity-90"
                 title={player.name}
                 priority
               />
