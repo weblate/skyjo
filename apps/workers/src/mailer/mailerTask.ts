@@ -1,9 +1,11 @@
 import { ENV } from "@env"
 import {
+  AccountDeletedEmail,
   ResetPasswordEmail,
   type TransactionalLocales,
   VerifyEmail,
   type VerifyEmailContent,
+  getAccountDeletedEmailSubject,
   getLocale,
   getResetPasswordEmailSubject,
   getVerifyEmailSubject,
@@ -66,6 +68,14 @@ export class MailerTask {
         from: "Skymo <no-reply@skymo.online>",
         subject: getResetPasswordEmailSubject(locale),
         react: ResetPasswordEmail,
+      } as EmailTemplateReact<T>
+    }
+
+    if (templateName === "account-deleted") {
+      return {
+        from: "Skymo <no-reply@skymo.online>",
+        subject: getAccountDeletedEmailSubject(locale),
+        react: AccountDeletedEmail,
       } as EmailTemplateReact<T>
     }
 

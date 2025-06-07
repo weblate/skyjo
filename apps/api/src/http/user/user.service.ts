@@ -1,5 +1,5 @@
 import { db } from "@/db/index.js"
-import { hashPassword } from "@/http/auth/lib/password.js"
+import { mailerQueue } from "@/utils/mailer.js"
 import type { Avatar } from "@skymo/core"
 import {
   type UserDb,
@@ -214,4 +214,66 @@ export async function getUserStats(username: string) {
     winRate,
     averageRank,
   }
+}
+export async function deleteUser(userId: number) {
+  const [userData] = await db
+    .select({
+      email: userTable.email,
+      name: userTable.name,
+      locale: userTable.locale,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, userId))
+    .limit(1)
+
+  if (!userData) throw new Error(UserError.NOT_FOUND)
+
+  let username = "deleted_user"
+  let i = 0
+
+  while (true) {
+    const existingUser = await db
+      .select({ id: userTable.id })
+      .from(userTable)
+      .where(eq(userTable.username, username))
+      .limit(1)
+
+    if (existingUser.length === 0) break
+    if (i === 19) throw new Error(UserError.UNEXPECTED_ERROR)
+
+    username = `${username}_${Math.floor(1000 + Math.random() * 9000)}`
+    i++
+  }
+
+  await db
+    .update(userTable)
+    .set({
+      email: "deleted_user@skymo.online",
+      username: username,
+      name: "deleted_user",
+      avatar: "owl",
+      googleId: null,
+      facebookId: null,
+      updatedAt: new Date(),
+      deletedAt: new Date(),
+    })
+    .where(eq(userTable.id, userId))
+
+  await db
+    .update(playerTable)
+    .set({
+      name: "deleted_user",
+      avatar: "owl",
+      userId: null,
+    })
+    .where(eq(playerTable.userId, userId))
+
+  await mailerQueue.add("account-deleted", {
+    to: userData.email,
+    template: "account-deleted",
+    locale: userData.locale,
+    content: {
+      userName: userData.name || undefined,
+    },
+  })
 }

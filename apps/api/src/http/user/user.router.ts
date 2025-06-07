@@ -1,13 +1,19 @@
+import {
+  type AuthContextVariables,
+  authMiddleware,
+} from "@/http/middlewares/auth.middleware.js"
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 import {
+  deleteUser,
   getUserByUsername,
   getUserGames,
   getUserStats,
 } from "@/http/user/user.service.js"
+import { Logger } from "@skymo/logger"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 
-export const userRouter = new Hono().basePath("/users")
+export const userRouter = new Hono<AuthContextVariables>().basePath("/users")
 
 const userGamesRateLimiter = new RateLimiterMemory({
   keyPrefix: "get-user",
@@ -43,6 +49,27 @@ userRouter.get(
       })
     } catch (_error) {
       return c.json({ error: "unknown" }, 500)
+    }
+  },
+)
+const deleteAccountRateLimiter = new RateLimiterMemory({
+  keyPrefix: "delete-account",
+  points: 1,
+  duration: 1,
+})
+userRouter.delete(
+  "/me",
+  authMiddleware,
+  createRateLimiterMiddleware(deleteAccountRateLimiter),
+  async (c) => {
+    const user = c.get("user")
+
+    try {
+      await deleteUser(user.id)
+      return c.json({ success: true })
+    } catch (error) {
+      Logger.error("Failed to delete account", { error })
+      return c.json({ success: false, error: "Failed to delete account" }, 500)
     }
   },
 )

@@ -1,16 +1,19 @@
 import type {
+  AccountDeletedEmailContent,
   Locales,
   ResetPasswordEmailContent,
   TransactionalLocales,
   VerifyEmailContent,
 } from "@skymo/transactional"
 
-export type EmailTemplateName = "verify-pin" | "reset-password"
+export type EmailTemplateName = "verify-pin" | "reset-password" | "account-deleted"
 
 export type EmailContent<T extends EmailTemplateName> = T extends "verify-pin"
   ? VerifyEmailContent
   : T extends "reset-password"
   ? ResetPasswordEmailContent
+  : T extends "account-deleted"
+  ? AccountDeletedEmailContent
   : never
 type EmailableProps<T extends EmailTemplateName> = {
   locale: TransactionalLocales
