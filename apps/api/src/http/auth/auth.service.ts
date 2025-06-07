@@ -298,6 +298,10 @@ export async function requestPasswordReset(data: ForgotPassword) {
 export async function resetPassword(data: ResetPassword) {
   const { token, password } = data
 
+  const hashedToken = encodeHexLowerCase(
+    sha3_256(new TextEncoder().encode(token)),
+  )
+
   // Find valid token
   const resetRecord = await db
     .select({
@@ -306,7 +310,7 @@ export async function resetPassword(data: ResetPassword) {
       expiresAt: passwordResetTable.expiresAt,
     })
     .from(passwordResetTable)
-    .where(eq(passwordResetTable.token, token))
+    .where(eq(passwordResetTable.token, hashedToken))
     .limit(1)
 
   if (resetRecord.length === 0) {
