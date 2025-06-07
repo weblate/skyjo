@@ -11,7 +11,7 @@ import {
 } from "@/http/session/session.service.js"
 import { createUser } from "@/http/user/user.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
-import { type RandomReader, generateRandomString } from "@oslojs/crypto/random"
+import { generateRandomToken } from "@/utils/randomString.js"
 import { sha3_256 } from "@oslojs/crypto/sha3"
 import { encodeHexLowerCase } from "@oslojs/encoding"
 import {
@@ -37,14 +37,6 @@ import { and, eq, ne, or } from "drizzle-orm"
 import type { Context } from "hono"
 import { deleteCookie, getCookie } from "hono/cookie"
 import { hashPassword, verifyPassword } from "./lib/password.js"
-
-const random: RandomReader = {
-  read(bytes) {
-    crypto.getRandomValues(bytes)
-  },
-}
-
-const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 export async function signup(c: Context, data: Signup) {
   const { email, locale } = data
@@ -266,7 +258,7 @@ export async function requestPasswordReset(data: ForgotPassword) {
 
   const userRecord = user[0]
 
-  const token = generateRandomString(random, alphabet, 64)
+  const token = generateRandomToken()
   const expiresAt = new Date(Date.now() + 60 * 60 * 1000) // 1 hour
 
   // Remove any existing password reset tokens for this user
