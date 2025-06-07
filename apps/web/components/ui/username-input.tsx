@@ -41,8 +41,7 @@ export const UsernameInput = <
     useUsernameValidation(watchedUsername)
 
   const getUsernameValidationIcon = useCallback(() => {
-    if (!watchedUsername || watchedUsername.length < 3)
-      return <LoaderCircleIcon className="size-4 animate-spin text-gray-400" />
+    if (watchedUsername === "" || watchedUsername.length < 3) return null
 
     if (isCheckingUsername)
       return <LoaderCircleIcon className="size-4 animate-spin text-gray-400" />
