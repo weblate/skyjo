@@ -132,7 +132,7 @@ export function SettingsAccount() {
           onSubmit={emailForm.handleSubmit(handleUpdateEmail)}
           className="space-y-5"
         >
-          <div className="space-y-0.5">
+          <div className="space-y-1">
             <Label htmlFor="email">{tAccount("fields.email.label")}</Label>
             <FormDescription>
               {tAccount("fields.email.description")}

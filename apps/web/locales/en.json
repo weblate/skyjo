@@ -362,6 +362,18 @@
       },
       "back": "Back to Login"
     },
+    "RevertEmail": {
+      "success": {
+        "title": "Email change reverted",
+        "message": "Your email change has been successfully reverted and your account has been secured. Please check your email for password reset instructions.",
+        "close": "You can now close this page."
+      },
+      "error": {
+        "title": "Error",
+        "invalidToken": "This reversion link is invalid or has expired."
+      },
+      "back": "Back to Login"
+    },
     "OAuthCallbackPage": {
       "title": "Redirecting in progress…"
     },
@@ -505,7 +517,7 @@
         },
         "email": {
           "label": "Email Address",
-          "description": "Your email address used for login and important notifications.",
+          "description": "Your email address used for login and important notifications. For security, a warning email will be sent to your current address when you change it.",
           "placeholder": "Enter your email",
           "submit": "Save email"
         }

@@ -1,13 +1,19 @@
 import { db } from "@/db/index.js"
+import { requestPasswordReset } from "@/http/auth/auth.service.js"
 import { hashPassword, verifyPassword } from "@/http/auth/lib/password.js"
+import { invalidateUserSessions } from "@/http/session/session.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
+import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 import type { Avatar } from "@skymo/core"
 import {
   type UserDb,
+  emailChangeTable,
   gameTable,
+  passwordResetTable,
   playerTable,
   userTable,
 } from "@skymo/database/schema"
+import { Logger } from "@skymo/logger"
 import { type Locales, UserError } from "@skymo/shared/constants"
 import type {
   GameHistoryQuery,
@@ -17,6 +23,7 @@ import type {
   UpdatePassword,
   UpdateUsername,
 } from "@skymo/shared/validations"
+import dayjs from "dayjs"
 import { and, avg, count, eq, ne, sql, sum } from "drizzle-orm"
 
 interface CreateUserParams {
@@ -130,7 +137,6 @@ export async function getUserGames(
   username: string,
   { limit = 20, offset = 0 }: GameHistoryQuery,
 ) {
-  // Single optimized query using CTE to get user's games with all players and host
   const gamePlayerResults = await db.execute(sql`
     WITH user_game_ids AS (
       SELECT DISTINCT g.id, g.finished_at
@@ -180,7 +186,6 @@ export async function getUserGames(
 
     const game = gamesMap.get(gameId)
 
-    // Check if this player is the requesting user and set their rank
     if (row.player_username === username) {
       game.rank = row.player_rank
     }
@@ -249,7 +254,6 @@ export async function updateUserName(userId: number, data: UpdateName) {
 }
 
 export async function updateUserUsername(userId: number, data: UpdateUsername) {
-  // Check if username is available
   const existingUser = await db
     .select({ id: userTable.id })
     .from(userTable)
@@ -281,42 +285,130 @@ export async function updateUserUsername(userId: number, data: UpdateUsername) {
   return updatedUser
 }
 
-export async function updateUserEmail(userId: number, data: UpdateEmail) {
-  // Check if email is already in use
-  const existingUser = await db
-    .select({ id: userTable.id })
-    .from(userTable)
-    .where(and(eq(userTable.email, data.email), ne(userTable.id, userId)))
+export async function updateUserEmail(user: UserDb, data: UpdateEmail) {
+  const oldEmail = user.email
+  const newEmail = data.email
+
+  const reversionToken = generateRandomToken()
+  const hashedReversionToken = hashToken(reversionToken)
+  const expiresAt = dayjs().add(7, "days").toDate()
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(userTable)
+      .set({
+        email: newEmail,
+        emailVerified: false,
+        updatedAt: new Date(),
+      })
+      .where(eq(userTable.id, user.id))
+
+    await tx.insert(emailChangeTable).values({
+      userId: user.id,
+      oldEmail,
+      newEmail,
+      token: hashedReversionToken,
+      expiresAt,
+    })
+  })
+
+  // Send warning email to old address
+  const reversionUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/revert-email/${encodeURIComponent(reversionToken)}`
+
+  await mailerQueue.add("email-change-warning", {
+    to: oldEmail,
+    template: "email-change-warning",
+    locale: user.locale,
+    content: {
+      newEmail,
+      reversionUrl,
+    },
+  })
+  Logger.info("Email change warning sent", {
+    userId: user.id,
+    oldEmail,
+    newEmail,
+  })
+
+  return {
+    id: user.id,
+    email: newEmail,
+    username: user.username,
+    avatar: user.avatar,
+    name: user.name,
+    locale: user.locale,
+    onboardingCompleted: user.onboardingCompleted,
+  }
+}
+
+export async function revertEmail(token: string) {
+  const hashedToken = hashToken(token)
+
+  const [emailChange] = await db
+    .select({
+      id: emailChangeTable.id,
+      userId: emailChangeTable.userId,
+      oldEmail: emailChangeTable.oldEmail,
+      newEmail: emailChangeTable.newEmail,
+      expiresAt: emailChangeTable.expiresAt,
+    })
+    .from(emailChangeTable)
+    .where(eq(emailChangeTable.token, hashedToken))
     .limit(1)
 
-  if (existingUser.length > 0) {
-    throw new Error(UserError.EMAIL_TAKEN)
+  if (!emailChange) {
+    throw new Error("Invalid reversion token")
   }
 
-  const [updatedUser] = await db
-    .update(userTable)
-    .set({
-      email: data.email,
-      emailVerified: false, // Reset email verification
-      updatedAt: new Date(),
-    })
-    .where(eq(userTable.id, userId))
-    .returning({
-      id: userTable.id,
-      email: userTable.email,
-      username: userTable.username,
-      avatar: userTable.avatar,
-      name: userTable.name,
-      locale: userTable.locale,
-      onboardingCompleted: userTable.onboardingCompleted,
-    })
+  if (emailChange.expiresAt < new Date()) {
+    await db
+      .delete(emailChangeTable)
+      .where(eq(emailChangeTable.id, emailChange.id))
+    throw new Error("Reversion token has expired")
+  }
 
-  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
-  return updatedUser
+  const [userData] = await db
+    .select({
+      locale: userTable.locale,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, emailChange.userId))
+    .limit(1)
+
+  if (!userData) {
+    throw new Error(UserError.NOT_FOUND)
+  }
+
+  await db.transaction(async (tx) => {
+    await tx
+      .update(userTable)
+      .set({
+        email: emailChange.oldEmail,
+        emailVerified: true,
+        updatedAt: new Date(),
+      })
+      .where(eq(userTable.id, emailChange.userId))
+
+    await tx
+      .delete(emailChangeTable)
+      .where(eq(emailChangeTable.id, emailChange.id))
+
+    await tx
+      .delete(passwordResetTable)
+      .where(eq(passwordResetTable.userId, emailChange.userId))
+  })
+
+  await invalidateUserSessions(emailChange.userId)
+
+  await requestPasswordReset({ email: emailChange.oldEmail })
+  return {
+    success: true,
+    message:
+      "Email change has been reverted and your account has been secured. Please check your email for password reset instructions.",
+  }
 }
 
 export async function updateUserPassword(userId: number, data: UpdatePassword) {
-  // Get current user to verify current password
   const [user] = await db
     .select({ password: userTable.password })
     .from(userTable)
@@ -327,7 +419,6 @@ export async function updateUserPassword(userId: number, data: UpdatePassword) {
     throw new Error(UserError.INVALID_CURRENT_PASSWORD)
   }
 
-  // Verify current password
   const isValidPassword = await verifyPassword(
     user.password,
     data.currentPassword,
@@ -336,7 +427,6 @@ export async function updateUserPassword(userId: number, data: UpdatePassword) {
     throw new Error(UserError.INVALID_CURRENT_PASSWORD)
   }
 
-  // Hash new password and update
   const hashedPassword = await hashPassword(data.newPassword)
 
   const [updatedUser] = await db
@@ -438,15 +528,10 @@ export async function deleteUser(userId: number) {
     })
     .where(eq(playerTable.userId, userId))
 
-  await mailerQueue.add(
-    "account-deleted",
-    {
-      to: userData.email,
-      template: "account-deleted",
-      locale: userData.locale,
-      content: {
-        userName: userData.name || undefined,
-      },
-    },
-  )
+  await mailerQueue.add("account-deleted", {
+    to: userData.email,
+    template: "account-deleted",
+    locale: userData.locale,
+    content: undefined,
+  })
 }

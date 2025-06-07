@@ -719,7 +719,7 @@
         },
         "email": {
           "label": "Adresse Email",
-          "description": "Votre adresse email utilisée pour la connexion et les notifications importantes.",
+          "description": "Votre adresse email utilisée pour la connexion et les notifications importantes. Pour la sécurité, un email d'avertissement sera envoyé à votre adresse actuelle lorsque vous la modifiez.",
           "placeholder": "Entrez votre email",
           "submit": "Modifier mon email"
         }

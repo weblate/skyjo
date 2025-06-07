@@ -98,6 +98,21 @@ export const passwordResetTable = pgTable("password_resets", {
 })
 export type PasswordResetDb = InferSelectModel<typeof passwordResetTable>
 
+export const emailChangeTable = pgTable("email_changes", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id")
+    .notNull()
+    .references(() => userTable.id),
+  oldEmail: varchar("old_email", { length: 255 }).notNull(),
+  newEmail: varchar("new_email", { length: 255 }).notNull(),
+  token: varchar("token", { length: 255 }).notNull().unique(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+})
+export type EmailChangeDb = InferSelectModel<typeof emailChangeTable>
+
 export const sessionTable = pgTable("sessions", {
   id: text("id").primaryKey(),
   userId: integer("user_id")

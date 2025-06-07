@@ -1,11 +1,13 @@
 import { ENV } from "@env"
 import {
   AccountDeletedEmail,
+  EmailChangeWarningEmail,
   ResetPasswordEmail,
   type TransactionalLocales,
   VerifyEmail,
   type VerifyEmailContent,
   getAccountDeletedEmailSubject,
+  getEmailChangeWarningSubject,
   getLocale,
   getResetPasswordEmailSubject,
   getVerifyEmailSubject,
@@ -76,6 +78,14 @@ export class MailerTask {
         from: "Skymo <no-reply@skymo.online>",
         subject: getAccountDeletedEmailSubject(locale),
         react: AccountDeletedEmail,
+      } as EmailTemplateReact<T>
+    }
+
+    if (templateName === "email-change-warning") {
+      return {
+        from: "Skymo <support@skymo.online>",
+        subject: getEmailChangeWarningSubject(locale),
+        react: EmailChangeWarningEmail,
       } as EmailTemplateReact<T>
     }
 

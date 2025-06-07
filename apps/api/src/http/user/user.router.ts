@@ -8,6 +8,7 @@ import {
   getUserByUsername,
   getUserGames,
   getUserStats,
+  revertEmail,
   updateUserAvatar,
   updateUserEmail,
   updateUserName,
@@ -138,7 +139,7 @@ userRouter.patch(
     const user = c.get("user")
 
     try {
-      const updatedUser = await updateUserEmail(user.id, data)
+      const updatedUser = await updateUserEmail(user, data)
       return c.json({ success: true, user: updatedUser })
     } catch (error) {
       if (error instanceof Error && error.message === UserError.EMAIL_TAKEN) {
@@ -146,6 +147,26 @@ userRouter.patch(
       }
       Logger.error("Failed to update email", { error })
       return c.json({ success: false, error: "Failed to update email" }, 500)
+    }
+  },
+)
+
+const revertEmailRateLimiter = new RateLimiterMemory({
+  keyPrefix: "revert-email",
+  points: 5,
+  duration: 60,
+})
+userRouter.get(
+  "/me/revert-email/:token",
+  createRateLimiterMiddleware(revertEmailRateLimiter),
+  async (c) => {
+    try {
+      const token = c.req.param("token")
+      const result = await revertEmail(token)
+      return c.json({ success: true, message: result.message })
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error"
+      return c.json({ success: false, error: message }, 400)
     }
   },
 )
