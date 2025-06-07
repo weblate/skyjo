@@ -1,6 +1,6 @@
 "use client"
 
-import { FormDescription, FormItem, FormMessage } from "@/components/ui/form"
+import { FormDescription, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
@@ -41,10 +41,12 @@ export const UsernameInput = <
     useUsernameValidation(watchedUsername)
 
   const getUsernameValidationIcon = useCallback(() => {
-    if (!watchedUsername || watchedUsername.length < 3) return null
+    if (!watchedUsername || watchedUsername.length < 3)
+      return <LoaderCircleIcon className="size-4 animate-spin text-gray-400" />
 
     if (isCheckingUsername)
       return <LoaderCircleIcon className="size-4 animate-spin text-gray-400" />
+
     if (usernameError || !usernameAvailability)
       return <XIcon className="size-4 text-red-500" />
 
@@ -61,7 +63,9 @@ export const UsernameInput = <
     if (usernameError) return t("error.username-availability-error")
 
     if (usernameAvailability) return t("availability.available")
-    else return t("availability.taken")
+    if (usernameAvailability === false) return t("availability.taken")
+
+    return null
   }, [
     watchedUsername,
     isCheckingUsername,
@@ -104,7 +108,6 @@ export const UsernameInput = <
           {getUsernameValidationMessage()}
         </div>
       )}
-      <FormMessage />
     </FormItem>
   )
 }
@@ -138,7 +141,7 @@ export const useUsernameValidation = (username: string) => {
           credentials: "include",
           next: {
             revalidate: 10,
-          }
+          },
         },
       )
 
@@ -150,6 +153,8 @@ export const useUsernameValidation = (username: string) => {
     },
     enabled: !!usernameToCheck,
     retry: false,
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
   })
 
   return {
