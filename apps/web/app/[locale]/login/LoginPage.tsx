@@ -2,7 +2,7 @@
 
 import GoogleOAuthButton from "@/components/GoogleOAuthButton"
 import { Button } from "@/components/ui/button"
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Form, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-input"
@@ -46,7 +46,7 @@ const LoginPage = () => {
         throw new Error(result.error || "Login failed")
       }
     },
-    onSuccess: () => router.push("/profile"),
+    onSuccess: () => router.push("/"),
     onError: (error) => {
       console.error(error)
       if (error.message === AuthError.LOGIN_INVALID_CREDENTIALS) {
@@ -87,7 +87,6 @@ const LoginPage = () => {
                     autoComplete="login"
                     {...field}
                   />
-                  <FormMessage />
                 </FormItem>
               )}
             />
@@ -102,7 +101,6 @@ const LoginPage = () => {
                     autoComplete="password"
                     {...field}
                   />
-                  <FormMessage />
                 </FormItem>
               )}
             />
