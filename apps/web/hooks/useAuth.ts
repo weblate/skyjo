@@ -1,5 +1,6 @@
 "use client"
 
+import { useRouter } from "@/i18n/routing"
 import { Avatar } from "@skymo/core"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 
@@ -15,6 +16,7 @@ interface AuthenticatedUser {
 
 export const useAuth = () => {
   const queryClient = useQueryClient()
+  const router = useRouter()
 
   const {
     data: user,
@@ -60,6 +62,7 @@ export const useAuth = () => {
       }
     },
     onSuccess: () => {
+      router.push("/")
       queryClient.setQueryData(["authenticated-user"], null)
       queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
     },
