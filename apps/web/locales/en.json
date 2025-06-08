@@ -444,7 +444,9 @@
       "stats": {
         "total-games": "Total Games",
         "win-rate": "Win Rate",
-        "average-rank": "Average Rank"
+        "average-rank": "Average Rank",
+        "public": "Public",
+        "private": "Private"
       },
       "sections": {
         "achievements": "Achievements",

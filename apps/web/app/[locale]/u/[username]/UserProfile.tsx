@@ -9,6 +9,7 @@ import { cva } from "class-variance-authority"
 import { ClassValue } from "clsx"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
+import { UserStats } from "./components/UserStats"
 
 export const backgroundVariants = cva(
   "rounded-full border-2 border-black size-20 flex items-center justify-center",
@@ -61,7 +62,7 @@ export const avatarVariants = cva("dark:opacity-90 select-none", {
 
 interface UserProfileProps {
   user: UserProfileType
-  stats: UserGameStats
+  stats: UserGameStats | null
   locale: Locales
   className?: ClassValue
 }
@@ -72,21 +73,6 @@ export const UserProfile = async ({
   className,
 }: UserProfileProps) => {
   const tAvatar = await getTranslations({ locale, namespace: "utils.avatar" })
-  const t = await getTranslations({ locale, namespace: "pages.UserProfile" })
-  const statItems = [
-    {
-      label: t("stats.total-games"),
-      value: stats?.totalGames?.toString() || "0",
-    },
-    {
-      label: t("stats.win-rate"),
-      value: stats?.winRate ? `${stats.winRate.toFixed(1)}%` : "0%",
-    },
-    {
-      label: t("stats.average-rank"),
-      value: stats?.averageRank ? `#${stats.averageRank.toFixed(1)}` : "-",
-    },
-  ]
 
   const avatar = user.avatar
 
@@ -114,18 +100,7 @@ export const UserProfile = async ({
           </div>
         </div>
 
-        <div className="flex flex-row justify-evenly test:justify-end test:gap-8 items-end w-full max-w-screen-sm mx-auto test:mx-0">
-          {statItems.map((item) => (
-            <div key={item.label} className="flex flex-col items-center w-32">
-              <p className="text-sm text-black/60 dark:text-dark-font/60">
-                {item.label}
-              </p>
-              <p className="text-lg font-medium text-black dark:text-dark-font text-center test:text-left">
-                {item.value}
-              </p>
-            </div>
-          ))}
-        </div>
+        <UserStats stats={stats} locale={locale} />
       </div>
     </div>
   )

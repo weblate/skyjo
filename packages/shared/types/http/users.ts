@@ -7,10 +7,28 @@ export interface UserProfile {
 }
 
 export interface UserGameStats {
-  totalGames: number
-  wins: number
-  winRate: number
-  averageRank: number
+  totalGames: {
+    public: number
+    private: number
+    total: number
+  }
+
+  wins: {
+    public: number
+    private: number
+    total: number
+  }
+
+  winRate: {
+    public: number
+    private: number
+    total: number
+  }
+  averageRank: {
+    public: number
+    private: number
+    total: number
+  }
 }
 
 export interface UserRecentActivity {

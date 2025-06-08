@@ -646,7 +646,211 @@
       "stats": {
         "total-games": "Total des Parties",
         "win-rate": "Taux de Victoire",
-        "average-rank": "Rang Moyen"
+        "average-rank": "Rang Moyen",
+        "public": "Publique",
+        "private": "Privée"
+      },
+      "sections": {
+        "achievements": "Réalisations",
+        "achievements-coming-soon": "Le système de réalisations arrive bientôt !",
+        "recent-activity": "Activité Récente"
+      },
+      "recent-activity": {
+        "no-activity": "Aucune activité récente à afficher.",
+        "game-code": "Partie #{code}",
+        "rank": "Rang #{rank}",
+        "winner": "Gagnant"
+      },
+      "search": {
+        "placeholder": "Rechercher un nom d'utilisateur"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Paramètres du Compte | Skymo - Jeu de Cartes Skyjo en Ligne",
+        "description": "Gérez vos paramètres de compte sur Skymo. Changez votre nom d'affichage, nom d'utilisateur, email, mot de passe et préférences de compte."
+      },
+      "title": "Paramètres du Compte",
+      "description": "Gérez votre compte et vos informations personnelles.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Compte",
+        "password": "Mot de passe"
+      },
+      "buttons": {
+        "save": "Enregistrer les Modifications",
+        "saving": "Enregistrement...",
+        "delete-account": "Supprimer le Compte",
+        "confirm-delete": "Oui, Supprimer Mon Compte"
+      },
+      "messages": {
+        "save-success": "Paramètres enregistrés avec succès !",
+        "save-error": "Impossible d'enregistrer les paramètres. Veuillez réessayer.",
+        "delete-confirmation": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action ne peut pas être annulée et toutes vos données seront définitivement supprimées.",
+        "password-incorrect": "Le mot de passe actuel est incorrect.",
+        "username-taken": "Ce nom d'utilisateur est déjà pris.",
+        "email-taken": "Cet email est déjà utilisé.",
+        "account-deletion-scheduled": "Votre demande de suppression de compte a été prise en compte et sera traitée dans 48 heures. Un email vous sera envoyé pour confirmer la suppression.",
+        "account-deletion-failed": "Une erreur est survenue lors de la suppression de votre compte. Veuillez réessayer."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Nom d'affichage",
+          "description": "Votre nom affiché aux autres joueurs dans les parties.",
+          "placeholder": "Entrez votre nom",
+          "submit": "Modifier mon nom"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Votre avatar affiché sur votre profil.",
+          "placeholder": "Sélectionnez votre avatar",
+          "submit": "Modifier mon avatar"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Compte",
+      "fields": {
+        "username": {
+          "label": "Nom d'Utilisateur",
+          "description": "Votre nom d'utilisateur unique utilisé pour l'URL de votre profil.",
+          "placeholder": "Entrez votre nom d'utilisateur",
+          "submit": "Modifier mon nom d'utilisateur"
+        },
+        "email": {
+          "label": "Adresse Email",
+          "description": "Votre adresse email utilisée pour la connexion et les notifications importantes. Pour la sécurité, un email d'avertissement sera envoyé à votre adresse actuelle lorsque vous la modifiez.",
+          "placeholder": "Entrez votre email",
+          "submit": "Modifier mon email"
+        }
+      },
+      "delete-account": {
+        "title": "Supprimer mon compte",
+        "description": "Supprimez votre compte et toutes les données associées. Cette action ne peut pas être annulée et toutes vos données seront définitivement supprimées.",
+        "warning": "Vous ne pourrez pas récupérer votre compte si vous le supprimez.",
+        "confirmation": {
+          "description": "En confirmant, un compte à rebours de 48 heures démarre : vous recevrez un email avec un lien pour annuler la suppression si vous changez d'avis. Votre compte restera accessible durant ce délai. Passé les 48 heures, il sera définitivement supprimé et un email de confirmation vous sera envoyé.",
+          "input-label": "Tapez SUPPRIMER pour confirmer",
+          "input-placeholder": "SUPPRIMER",
+          "cancel-button": "Annuler",
+          "delete-button": "Supprimer mon compte"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Changer de mot de passe",
+      "fields": {
+        "password": {
+          "label": "Mot de Passe",
+          "description": "Changez votre mot de passe de compte.",
+          "current-password": "Mot de Passe Actuel",
+          "new-password": "Nouveau Mot de Passe",
+          "confirm-password": "Confirmer le Nouveau Mot de Passe",
+          "current-placeholder": "Entrez votre mot de passe actuel",
+          "new-placeholder": "Entrez votre nouveau mot de passe",
+          "confirm-placeholder": "Confirmez votre nouveau mot de passe",
+          "submit": "Modifier mon mot de passe"
+        }
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Token invalide",
+      "success": {
+        "title": "Suppression du compte annulée",
+        "description": "La suppression de votre compte a été annulée avec succès. Votre compte est sécurisé et ne sera pas supprimé.",
+        "secure-message": "Votre compte est maintenant sécurisé et restera actif. Vous pouvez continuer à utiliser votre compte normalement."
+      },
+      "failed": {
+        "title": "Échec de l'annulation",
+        "description": "Nous n'avons pas pu annuler la suppression de votre compte. Veuillez réessayer ou contacter le support.",
+        "general-error": "Une erreur est survenue lors de l'annulation de la suppression de votre compte. Veuillez réessayer ou contacter le support.",
+        "help-message": "Une erreur est survenue lors de l'annulation de la suppression de votre compte. Veuillez réessayer ou contacter le support."
+      },
+      "expired": {
+        "title": "Lien d'annulation expiré",
+        "description": "Ce lien d'annulation a expiré. Si vous souhaitez toujours conserver votre compte, veuillez contacter le support.",
+        "help-message": "La période d'annulation de 48 heures a expiré. Veuillez contacter le support si vous avez besoin d'aide."
+      },
+      "actions": {
+        "return-homepage": "Retour à l'accueil"
+      }
+    },
+    "OAuthCallbackPage": {
+      "title": "Redirection en cours…"
+    },
+    "Onboarding": {
+      "title": "Embarquement en cours...",
+      "subtitle": "Complétez votre profil et lancez-vous dans l'aventure Skymo !",
+      "form": {
+        "name": {
+          "label": "Nom du joueur",
+          "placeholder": "Micheeel",
+          "description": "Affiché aux autres joueurs dans les parties"
+        },
+        "username": {
+          "label": "Nom d'utilisateur",
+          "placeholder": "micheel442",
+          "description": "Pour la connexion et les profil"
+        },
+        "password": {
+          "label": "Mot de passe",
+          "placeholder": "Entrez votre mot de passe"
+        },
+        "submit": "Prêt à jouer !",
+        "errors": {
+          "username-taken": "Déjà pris !",
+          "username-availability-error": "Impossible de vérifier la disponibilité du nom d'utilisateur",
+          "default": "Une erreur est survenue, veuillez réessayer."
+        }
+      }
+    },
+    "Verify": {
+      "head": {
+        "title": "Vérifier l'email | Skymo - Jeu de Cartes Skyjo",
+        "description": "Vérifiez votre adresse email pour finaliser votre compte Skymo et commencer à jouer à Skyjo en ligne avec vos amis.",
+        "keywords": "Skymo,Skyjo,vérification email,vérifier compte,jeu de cartes en ligne"
+      },
+      "title": "Vérifiez votre email",
+      "description": "Nous avons envoyé un code à 6 chiffres à votre adresse email. Veuillez le saisir ci-dessous.",
+      "resend": {
+        "countdown": "Renvoyer le code dans {seconds}s",
+        "prompt": "Vous n'avez pas reçu le code ?",
+        "button": "Demander un nouveau code",
+        "sending": "Envoi en cours..."
+      },
+      "toast": {
+        "success": "Email vérifié avec succès !",
+        "error": "Code PIN invalide. Veuillez réessayer.",
+        "resend-success": "Un nouvel email a été envoyé.",
+        "rate-limit": "Trop de requêtes. Veuillez réessayer plus tard.",
+        "send-failed": "Échec de l'envoi du code PIN. Veuillez réessayer."
+      }
+    },
+    "UserProfile": {
+      "head": {
+        "title": "Profil de {username} | Skymo - Jeu de Cartes Skyjo en Ligne",
+        "description": "Consultez le profil de {username} sur Skymo. Vérifiez ses statistiques de jeu, son activité récente et ses réalisations dans Skyjo en ligne.",
+        "keywords": "Skymo,Skyjo,profil utilisateur,statistiques joueur,statistiques de jeu,parties récentes,réalisations,jeu de cartes en ligne"
+      },
+      "not-found": {
+        "title": "Utilisateur Introuvable",
+        "description": "L'utilisateur \"{username}\" n'existe pas ou a peut-être changé son nom d'utilisateur.",
+        "back-to-home": "Retour à l'Accueil"
+      },
+      "error": {
+        "title": "Quelque Chose s'est Mal Passé",
+        "description": "Nous avons rencontré une erreur lors du chargement de ce profil. Veuillez réessayer plus tard.",
+        "back-to-home": "Retour à l'Accueil"
+      },
+      "stats": {
+        "total-games": "Total des Parties",
+        "win-rate": "Taux de Victoire",
+        "average-rank": "Rang Moyen",
+        "public": "Publique",
+        "private": "Privée"
       },
       "sections": {
         "achievements": "Réalisations",

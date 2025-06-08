@@ -202,7 +202,7 @@ export async function getUserGames(
 }
 
 export async function getUserStats(username: string) {
-  const [result] = await db
+  const [publicResult] = await db
     .select({
       totalGames: count(playerTable.id),
       wins: sum(sql`CASE WHEN ${playerTable.winner} = true THEN 1 ELSE 0 END`),
@@ -211,22 +211,77 @@ export async function getUserStats(username: string) {
     .from(playerTable)
     .innerJoin(gameTable, eq(playerTable.gameId, gameTable.id))
     .innerJoin(userTable, eq(playerTable.userId, userTable.id))
-    .where(eq(userTable.username, username))
+    .where(
+      and(
+        eq(userTable.username, username),
+        sql`(${gameTable.settings}->>'private')::boolean = false`,
+      ),
+    )
 
-  if (!result || result.totalGames === 0) {
+  const [privateResult] = await db
+    .select({
+      totalGames: count(playerTable.id),
+      wins: sum(sql`CASE WHEN ${playerTable.winner} = true THEN 1 ELSE 0 END`),
+      averageRank: avg(playerTable.rank),
+    })
+    .from(playerTable)
+    .innerJoin(gameTable, eq(playerTable.gameId, gameTable.id))
+    .innerJoin(userTable, eq(playerTable.userId, userTable.id))
+    .where(
+      and(
+        eq(userTable.username, username),
+        sql`(${gameTable.settings}->>'private')::boolean = true`,
+      ),
+    )
+  const publicTotalGames = Number(publicResult?.totalGames || 0)
+  const privateTotalGames = Number(privateResult?.totalGames || 0)
+  const totalGames = publicTotalGames + privateTotalGames
+
+  const publicWins = Number(publicResult?.wins || 0)
+  const privateWins = Number(privateResult?.wins || 0)
+  const totalWins = publicWins + privateWins
+
+  const publicWinRate =
+    publicTotalGames > 0 ? (publicWins / publicTotalGames) * 100 : 0
+  const privateWinRate =
+    privateTotalGames > 0 ? (privateWins / privateTotalGames) * 100 : 0
+  const totalWinRate = totalGames > 0 ? (totalWins / totalGames) * 100 : 0
+
+  const publicAverageRank = Number(publicResult?.averageRank || 0)
+  const privateAverageRank = Number(privateResult?.averageRank || 0)
+  const totalAverageRank =
+    totalGames > 0
+      ? (publicAverageRank * publicTotalGames +
+          privateAverageRank * privateTotalGames) /
+        totalGames
+      : 0
+
+  // If no games at all, return null
+  if (publicTotalGames === 0 && privateTotalGames === 0) {
     return null
   }
 
-  const totalGames = Number(result.totalGames)
-  const wins = Number(result.wins || 0)
-  const winRate = totalGames > 0 ? (wins / totalGames) * 100 : 0
-  const averageRank = Number(result.averageRank || 0)
-
   return {
-    totalGames,
-    wins,
-    winRate,
-    averageRank,
+    totalGames: {
+      public: publicTotalGames,
+      private: privateTotalGames,
+      total: totalGames,
+    },
+    wins: {
+      public: publicWins,
+      private: privateWins,
+      total: totalWins,
+    },
+    winRate: {
+      public: publicWinRate,
+      private: privateWinRate,
+      total: totalWinRate,
+    },
+    averageRank: {
+      public: publicAverageRank,
+      private: privateAverageRank,
+      total: totalAverageRank,
+    },
   }
 }
 
