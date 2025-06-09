@@ -1,4 +1,5 @@
 "use client"
+
 import { Chat } from "@/components/Chat"
 import { KickVote } from "@/components/KickVote"
 import withAuth from "@/components/withAuth"
@@ -38,5 +39,4 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
     </GameProvider>
   )
 }
-
 export default withAuth(GameLayout)

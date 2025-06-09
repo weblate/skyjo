@@ -1,6 +1,5 @@
 "use client"
 
-import { DeleteAccount } from "@/app/[locale]/settings/account/DeleteAccount"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -26,6 +25,7 @@ import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
 import { useSettingsApi } from "../useSettingsApi"
+import { DeleteAccount } from "./DeleteAccount"
 
 export function SettingsAccount() {
   const t = useTranslations("pages.Settings")

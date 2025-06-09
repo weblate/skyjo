@@ -1,4 +1,4 @@
-import OnboardingPage from "@/app/[locale]/onboard/OnboardingPage"
+import OnboardingPage from "./OnboardingPage"
 
 const OnboardingServerPage = () => {
   return <OnboardingPage />

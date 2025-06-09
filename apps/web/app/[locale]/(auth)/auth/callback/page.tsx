@@ -1,4 +1,4 @@
-import CallbackLogic from "@/app/[locale]/auth/callback/CallbackPage"
+import CallbackLogic from "@/app/[locale]/(auth)/auth/callback/CallbackPage"
 import { routing } from "@/i18n/routing"
 import { Locales } from "@skymo/shared/constants"
 import { getTranslations } from "next-intl/server"

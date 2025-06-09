@@ -9,7 +9,7 @@ import { cva } from "class-variance-authority"
 import { ClassValue } from "clsx"
 import { getTranslations } from "next-intl/server"
 import Image from "next/image"
-import { UserStats } from "./components/UserStats"
+import { UserStats } from "./UserStats"
 
 export const backgroundVariants = cva(
   "rounded-full border-2 border-black size-20 flex items-center justify-center",

@@ -1,4 +1,4 @@
-import SignupPage from "@/app/[locale]/signup/SignupPage"
+import SignupPage from "./SignupPage"
 
 const SignupServerPageProps = () => {
   return <SignupPage />
