@@ -1,8 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
-import { useUser } from "@/contexts/UserContext"
 import { useRouter } from "@/i18n/routing"
 import { getLastGameIfPossible } from "@/utils/reconnection"
 import { useTranslations } from "next-intl"
@@ -18,7 +18,7 @@ const GameLobbyButtons = ({
   hideReconnectButton = false,
 }: GameLobbyButtonsProps) => {
   const { reconnectGame, joinGame } = useSocket()
-  const { getUser, name, saveUserInLocalStorage } = useUser()
+  const { getPlayer, name, savePlayer } = usePlayer()
   const t = useTranslations("components.GameLobbyButtons")
   const router = useRouter()
 
@@ -40,18 +40,19 @@ const GameLobbyButtons = ({
   }
 
   const handleJoiningGame = async () => {
-    const player = getUser()
+    savePlayer()
+    const player = getPlayer()
 
     joinGame(player, gameCode!, errorCallback)
   }
 
   const handleFindingGame = async () => {
-    saveUserInLocalStorage()
+    savePlayer()
     router.replace("/search")
   }
 
   const handleGameCreation = async () => {
-    saveUserInLocalStorage()
+    savePlayer()
     router.replace("/create?private=true")
   }
 

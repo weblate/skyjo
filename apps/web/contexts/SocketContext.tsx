@@ -1,6 +1,6 @@
 "use client"
 
-import { useUser } from "@/contexts/UserContext"
+import { usePlayer } from "@/contexts/PlayerContext"
 import { useRouter } from "@/i18n/routing"
 import {
   addReconnectionDateToLastGame,
@@ -56,7 +56,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const t = useTranslations("contexts.SocketContext")
   const tSocketError = useTranslations("utils.socket.error")
   const router = useRouter()
-  const { setPlayerId } = useUser()
+  const { setPlayerId } = usePlayer()
 
   const [socket, setSocket] = useState<GameSocket | null>(null)
 

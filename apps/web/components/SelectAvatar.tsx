@@ -1,6 +1,6 @@
 "use client"
 
-import { AVATARS_ARRAY } from "@/contexts/UserContext"
+import { AVATARS_ARRAY } from "@/contexts/PlayerContext"
 import { cn } from "@/lib/utils"
 import { ClassValue } from "clsx"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
@@ -13,21 +13,27 @@ interface SelectAvatarProps {
   className?: ClassValue
   value: number
   onChange: (avatarIndex: number) => void
+  disabled?: boolean
 }
 const SelectAvatar = ({
   containerClassName,
   className,
   value,
   onChange,
+  disabled,
 }: SelectAvatarProps) => {
   const tAvatar = useTranslations("utils.avatar")
 
   const handlePrevious = () => {
+    if (disabled) return
+
     const newIndex = value === 0 ? AVATARS_ARRAY.length - 1 : value - 1
     onChange(newIndex)
   }
 
   const handleNext = () => {
+    if (disabled) return
+
     const newIndex = value === AVATARS_ARRAY.length - 1 ? 0 : value + 1
     onChange(newIndex)
   }

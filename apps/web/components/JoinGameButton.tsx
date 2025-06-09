@@ -1,8 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
-import { useUser } from "@/contexts/UserContext"
 import { cn } from "@/lib/utils"
 import { ClassValue } from "clsx"
 import { useTranslations } from "next-intl"
@@ -25,13 +25,13 @@ export const JoinGameButton = ({
   onError,
 }: JoinGameButtonProps) => {
   const t = useTranslations("components.GameLobbyButtons")
-  const { getUser, name } = useUser()
+  const { getPlayer, name } = usePlayer()
   const { joinGame } = useSocket()
 
   const handleJoiningGame = async () => {
     setLoading(true)
     Howler.ctx.resume()
-    const player = getUser()
+    const player = getPlayer()
 
     joinGame(player, gameCode, onError)
   }

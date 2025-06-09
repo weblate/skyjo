@@ -1,4 +1,5 @@
 import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
 import { Locales } from "@skymo/shared/constants"
@@ -50,6 +51,7 @@ export async function generateMetadata(props: CreateLayoutProps) {
 export default async function CreateLayout({ children }: CreateLayoutProps) {
   return (
     <>
+      <Navbar />
       {children}
       <Footer />
     </>

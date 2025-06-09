@@ -17,7 +17,7 @@ import {
   UsernameInput,
   useUsernameValidation,
 } from "@/components/ui/username-input"
-import { AVATARS_ARRAY, useUser } from "@/contexts/UserContext"
+import { AVATARS_ARRAY, usePlayer } from "@/contexts/PlayerContext"
 import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "@/i18n/routing"
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -35,7 +35,7 @@ import { z } from "zod"
 const OnboardingPage = () => {
   const router = useRouter()
   const t = useTranslations("pages.Onboarding")
-  const { getAvatar, avatarIndex } = useUser()
+  const { getAvatar, avatarIndex } = usePlayer()
   const { user, refetch } = useAuth()
   const form = useForm({
     resolver: zodResolver(
@@ -143,6 +143,10 @@ const OnboardingPage = () => {
     return AVATARS_ARRAY[index]
   }
 
+  const onSubmit = (data: z.infer<typeof onboardingSchema>) => {
+    mutate(data)
+  }
+
   return (
     <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4 py-10">
       <div className="px-4 max-w-sm flex flex-col w-full">
@@ -154,25 +158,18 @@ const OnboardingPage = () => {
         </p>
 
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit(
-              (data) => mutate(data),
-              (error) => {
-                console.error(error)
-              },
-            )}
-            className="space-y-2"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-2">
             <FormField
               control={form.control}
               name="avatar"
-              render={() => (
+              render={({ field }) => (
                 <FormItem className="space-y-1 flex justify-center">
                   <SelectAvatar
-                    value={getAvatarIndexFromName(form.getValues("avatar"))}
-                    onChange={(index) =>
-                      form.setValue("avatar", getAvatarNameFromIndex(index))
-                    }
+                    value={getAvatarIndexFromName(field.value)}
+                    onChange={(index) => {
+                      field.onChange(getAvatarNameFromIndex(index))
+                    }}
+                    disabled={isPending}
                   />
                   <FormMessage />
                 </FormItem>
@@ -194,6 +191,7 @@ const OnboardingPage = () => {
                     placeholder={t("form.name.placeholder")}
                     autoComplete="name"
                     {...field}
+                    disabled={isPending}
                   />
                   <FormMessage />
                 </FormItem>
@@ -225,6 +223,7 @@ const OnboardingPage = () => {
                       placeholder={t("form.password.placeholder")}
                       autoComplete="new-password"
                       {...field}
+                      disabled={isPending}
                     />
                     <PasswordRequirements password={watchedPassword} />
                   </FormItem>
@@ -244,7 +243,7 @@ const OnboardingPage = () => {
               <Button
                 type="submit"
                 className="w-full"
-                disabled={isPending || !isFormValid()}
+                disabled={!isFormValid() || isPending}
                 loading={isPending}
               >
                 {t("form.submit")}

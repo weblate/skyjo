@@ -3,7 +3,7 @@
 import GameLobbyButtons from "@/components/GameLobbyButtons"
 import SelectAvatar from "@/components/SelectAvatar"
 import { Input } from "@/components/ui/input"
-import { useUser } from "@/contexts/UserContext"
+import { usePlayer } from "@/contexts/PlayerContext"
 import { useTranslations } from "next-intl"
 import { ChangeEvent } from "react"
 
@@ -15,7 +15,7 @@ interface Props {
 
 const IndexPage = ({ searchParams }: Props) => {
   const t = useTranslations("pages.Index")
-  const { name, setName, avatarIndex, setAvatarIndex } = useUser()
+  const { name, setName, avatarIndex, setAvatarIndex } = usePlayer()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value

@@ -1,8 +1,8 @@
 "use client"
 
+import { usePlayer } from "@/contexts/PlayerContext"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSocket } from "@/contexts/SocketContext"
-import { useUser } from "@/contexts/UserContext"
 import { usePathname } from "@/i18n/routing"
 import { Constants as CoreConstants, SystemMessageType } from "@skymo/core"
 import {
@@ -59,7 +59,7 @@ const ChatContext = createContext<ChatContext | undefined>(undefined)
 
 const ChatProvider = ({ children }: PropsWithChildren) => {
   const { socket } = useSocket()
-  const { name } = useUser()
+  const { name } = usePlayer()
   const {
     settings: { chatVisibility },
   } = useSettings()
