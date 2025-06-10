@@ -4,11 +4,12 @@ import {
 } from "@/http/middlewares/auth.middleware.js"
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 import {
-  deleteUser,
+  cancelAccountDeletion,
   getUserByUsername,
   getUserGames,
   getUserStats,
   revertEmail,
+  scheduleAccountDeletion,
   updateUserAvatar,
   updateUserEmail,
   updateUserName,
@@ -228,6 +229,26 @@ userRouter.patch(
   },
 )
 
+const cancelAccountDeletionRateLimiter = new RateLimiterMemory({
+  keyPrefix: "cancel-account-deletion",
+  points: 5,
+  duration: 60,
+})
+userRouter.post(
+  "/cancel-account-deletion/:token",
+  createRateLimiterMiddleware(cancelAccountDeletionRateLimiter),
+  async (c) => {
+    try {
+      const token = c.req.param("token")
+      const result = await cancelAccountDeletion(token)
+      return c.json({ success: true, message: result.message })
+    } catch (error) {
+      const message = error instanceof Error ? error.message : "Unknown error"
+      return c.json({ success: false, error: message }, 400)
+    }
+  },
+)
+
 const deleteAccountRateLimiter = new RateLimiterMemory({
   keyPrefix: "delete-account",
   points: 5,
@@ -241,7 +262,7 @@ userRouter.delete(
     const user = c.get("user")
 
     try {
-      await deleteUser(user.id)
+      await scheduleAccountDeletion(user.id)
       return c.json({ success: true })
     } catch (error) {
       Logger.error("Failed to delete account", { error })

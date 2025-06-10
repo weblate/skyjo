@@ -19,7 +19,7 @@ const buttonVariants = cva(
         white: "bg-white dark:bg-white/90 text-black dark:text-black",
         blue: "bg-blue-600/80 dark:bg-blue-600/80 text-white dark:text-white/90",
         destructive:
-          "bg-red-600 hover:bg-red-700 dark:bg-red-600 dark:hover:bg-red-700 text-white dark:text-black dark:border-0",
+          "bg-red-600 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900 text-white dark:text-black dark:border-0",
       },
       shadow: {
         true: "shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:shadow-[2px_2px_0px_0px_rgba(137,137,137)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0)] dark:active:shadow-[0px_0px_0px_0px_rgba(137,137,137)]",
@@ -42,7 +42,7 @@ const loadingContainerVariants = cva(
         primary: "bg-button dark:bg-dark-button",
         white: "bg-white dark:bg-dark-button",
         blue: "bg-blue-600/80 dark:bg-blue-600/80",
-        destructive: "bg-red-600 dark:bg-red-600",
+        destructive: "bg-red-600 dark:bg-red-800",
       },
     },
   },

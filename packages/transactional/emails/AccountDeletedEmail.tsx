@@ -1,5 +1,5 @@
 import { createIntl } from "@formatjs/intl"
-import { Heading, Img, Link, Section, Text } from "@react-email/components"
+import { Heading, Hr, Img, Link, Section, Text } from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
 import React from "react"
 import { BaseEmail } from "../src/components/BaseEmail.js"
@@ -13,22 +13,26 @@ import type { DefaultProps } from "../src/types.ts"
 
 const messages: Record<TransactionalLocales, Record<string, string>> = {
   en: {
-    subject: "Sad to see you go! Your Skymo Account Has Been Deleted 👋",
-    preview: "Your Skymo account has been successfully deleted as requested.",
+    subject: "Your Skymo account has been deleted",
+    preview: "Confirmation that your Skymo account has been permanently deleted.",
     logoAlt: "Skymo Logo",
-    welcome: "Account Deletion Confirmation",
-    body: "We're writing to confirm that your Skymo account has been successfully deleted as requested. All your personal information has been removed from our systems.",
+    title: "Your Account Has Been Deleted",
+    body: "This is to confirm that your Skymo account and all associated data have been permanently deleted as requested.",
     farewell:
-      "Thank you for being part of the Skymo community. We're sorry to see you go! 🙏",
+      "Thank you for being a part of the Skymo community. We hope to see you again 🤧",
+    feedback:
+      "If you have a moment to share why you left, simply reply to this email. Your feedback is invaluable and helps us improve.",
   },
   fr: {
-    subject: "Triste de vous voir partir ! Votre compte Skymo a été supprimé 👋",
-    preview: "Votre compte Skymo a été supprimé avec succès comme demandé.",
+    subject: "Votre compte Skymo a bien été supprimé",
+    preview: "Confirmation que votre compte Skymo a été définitivement supprimé.",
     logoAlt: "Logo Skymo",
-    welcome: "Confirmation de suppression de compte",
-    body: "Nous vous écrivons pour confirmer que votre compte Skymo a été supprimé avec succès comme demandé. Toutes vos informations personnelles ont été supprimées de nos systèmes.",
+    title: "Votre compte a été supprimé",
+    body: "Nous vous confirmons que votre compte Skymo et toutes les données associées ont été définitivement supprimés, comme vous l'avez demandé.",
     farewell:
-      "Merci d'avoir fait partie de la communauté Skymo. Nous sommes désolés de vous voir partir ! 🙏",
+      "Merci d'avoir fait partie de la communauté Skymo. Nous espérons vous revoir un jour 🤧",
+    feedback:
+      "Si vous avez un moment pour nous dire pourquoi vous êtes parti, il vous suffit de répondre à cet e-mail. Vos retours sont précieux et nous aident à nous améliorer.",
   },
 }
 
@@ -63,7 +67,7 @@ export const AccountDeletedEmail = ({ locale }: AccountDeletedEmailProps) => {
         </Section>
 
         <Heading className="mx-0 mt-8 mb-6 p-0 text-center font-normal text-[24px] text-black">
-          {intl.formatMessage({ id: "welcome" })}
+          {intl.formatMessage({ id: "title" })}
         </Heading>
 
         <Text className="text-sm text-black leading-[24px] text-center">
@@ -72,6 +76,12 @@ export const AccountDeletedEmail = ({ locale }: AccountDeletedEmailProps) => {
 
         <Text className="text-sm text-black leading-[24px] mt-8 font-medium text-center">
           {intl.formatMessage({ id: "farewell" })}
+        </Text>
+
+        <Hr className="mx-0 my-[26px] w-full border border-[#eaeaea] border-solid" />
+
+        <Text className="text-sm text-gray-500 leading-[24px] text-center">
+          {intl.formatMessage({ id: "feedback" })}
         </Text>
 
         <Footer locale={locale} />

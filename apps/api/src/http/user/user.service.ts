@@ -2,11 +2,13 @@ import { db } from "@/db/index.js"
 import { requestPasswordReset } from "@/http/auth/auth.service.js"
 import { hashPassword, verifyPassword } from "@/http/auth/lib/password.js"
 import { invalidateUserSessions } from "@/http/session/session.service.js"
+import { accountDeletionQueue } from "@/utils/accountDeletion.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 import type { Avatar } from "@skymo/core"
 import {
   type UserDb,
+  accountDeletionTable,
   emailChangeTable,
   gameTable,
   passwordResetTable,
@@ -530,9 +532,10 @@ export async function updateUserAvatar(
   return updatedUser
 }
 
-export async function deleteUser(userId: number) {
+export async function scheduleAccountDeletion(userId: number) {
   const [userData] = await db
     .select({
+      id: userTable.id,
       email: userTable.email,
       name: userTable.name,
       locale: userTable.locale,
@@ -543,50 +546,110 @@ export async function deleteUser(userId: number) {
 
   if (!userData) throw new Error(UserError.NOT_FOUND)
 
-  let username = "deleted_user"
-  let i = 0
+  const [existingRequest] = await db
+    .select()
+    .from(accountDeletionTable)
+    .where(eq(accountDeletionTable.userId, userId))
+    .limit(1)
 
-  while (true) {
-    const existingUser = await db
-      .select({ id: userTable.id })
-      .from(userTable)
-      .where(eq(userTable.username, username))
-      .limit(1)
+  if (existingRequest) {
+    throw new Error("Account deletion is already scheduled")
+  }
 
-    if (existingUser.length === 0) break
-    if (i === 19) throw new Error(UserError.UNEXPECTED_ERROR)
+  const cancellationToken = generateRandomToken(64)
+  const hashedToken = hashToken(cancellationToken)
+  const delay = 48 * 60 * 60 * 1000 // 48 hours
+  const expiresAt = dayjs().add(delay, "ms").toDate()
 
-    username = `${username}_${Math.floor(1000 + Math.random() * 9000)}`
-    i++
+  const job = await accountDeletionQueue.add(
+    `delete-account-${userId}`,
+    {
+      userId: userData.id,
+    },
+    {
+      delay,
+      jobId: `delete-account-${userId}`,
+    },
+  )
+
+  if (!job?.id) {
+    throw new Error("Failed to schedule account deletion")
+  }
+
+  // Store the deletion request in the database
+  await db.insert(accountDeletionTable).values({
+    userId: userData.id,
+    jobId: job.id,
+    token: hashedToken,
+    expiresAt: expiresAt,
+  })
+
+  const cancellationUrl = `${process.env.FRONTEND_URL}/cancel-account-deletion/${cancellationToken}`
+
+  await mailerQueue.add("account-deletion-scheduled", {
+    to: userData.email,
+    template: "account-deletion-scheduled",
+    locale: userData.locale,
+    content: {
+      cancellationUrl,
+    },
+  })
+
+  Logger.info(`Account deletion scheduled for user ${userId}`, {
+    userId,
+    userEmail: userData.email,
+    jobId: job.id,
+    expiresAt,
+  })
+}
+
+export async function cancelAccountDeletion(token: string) {
+  const hashedToken = hashToken(token)
+
+  const [deletionRequest] = await db
+    .select({
+      id: accountDeletionTable.id,
+      userId: accountDeletionTable.userId,
+      jobId: accountDeletionTable.jobId,
+      expiresAt: accountDeletionTable.expiresAt,
+    })
+    .from(accountDeletionTable)
+    .where(eq(accountDeletionTable.token, hashedToken))
+    .limit(1)
+
+  if (!deletionRequest) {
+    throw new Error("Invalid or expired cancellation token")
+  }
+
+  if (deletionRequest.expiresAt < new Date()) {
+    // Clean up expired request
+    await db
+      .delete(accountDeletionTable)
+      .where(eq(accountDeletionTable.id, deletionRequest.id))
+    throw new Error("Cancellation period has expired")
+  }
+
+  // Remove the scheduled job from the queue
+  try {
+    await accountDeletionQueue.remove(deletionRequest.jobId)
+  } catch (error) {
+    Logger.warn(`Failed to remove job ${deletionRequest.jobId} from queue`, {
+      jobId: deletionRequest.jobId,
+      error,
+    })
   }
 
   await db
-    .update(userTable)
-    .set({
-      email: "deleted_user@skymo.online",
-      username: username,
-      name: "deleted_user",
-      avatar: "owl",
-      googleId: null,
-      facebookId: null,
-      updatedAt: new Date(),
-      deletedAt: new Date(),
-    })
-    .where(eq(userTable.id, userId))
+    .delete(accountDeletionTable)
+    .where(eq(accountDeletionTable.id, deletionRequest.id))
 
-  await db
-    .update(playerTable)
-    .set({
-      name: "deleted_user",
-      avatar: "owl",
-      userId: null,
-    })
-    .where(eq(playerTable.userId, userId))
-
-  await mailerQueue.add("account-deleted", {
-    to: userData.email,
-    template: "account-deleted",
-    locale: userData.locale,
-    content: undefined,
+  Logger.info(`Account deletion cancelled for user ${deletionRequest.userId}`, {
+    userId: deletionRequest.userId,
+    jobId: deletionRequest.jobId,
   })
+
+  return {
+    success: true,
+    message: "Account deletion has been successfully cancelled.",
+  }
 }

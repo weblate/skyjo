@@ -13,12 +13,12 @@ const footerMessages = {
   en: {
     joinDiscord: "Join our Community on Discord!",
     discordAlt: "Discord Logo",
-    copyright: "© 2025 Skymo. All rights reserved",
+    copyright: "© {year} Skymo. All rights reserved",
   },
   fr: {
     joinDiscord: "Rejoignez notre communauté sur Discord !",
     discordAlt: "Logo Discord",
-    copyright: "© 2025 Skymo. Tous droits réservés",
+    copyright: "© {year} Skymo. Tous droits réservés",
   },
 }
 interface FooterProps {
@@ -50,8 +50,13 @@ export const Footer = ({ locale }: FooterProps) => {
         </Link>
       </Container>
 
-      <Text className="text-gray-500 text-xs leading-[24px] text-center mt-[26px]">
-        {intl.formatMessage({ id: "copyright" })}
+      <Text className="text-gray-500 text-xs leading-[24px] text-center">
+        {intl.formatMessage(
+          {
+            id: "copyright",
+          },
+          { year: new Date().getFullYear() },
+        )}
       </Text>
     </>
   )

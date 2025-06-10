@@ -43,8 +43,10 @@ export function DeleteAccount() {
   return (
     <div className="space-y-4">
       <div>
-        <h4 className="font-medium text-xl text-red-600">{t("title")}</h4>
-        <p className="text-sm text-red-600 mt-1">
+        <h4 className="font-medium text-xl text-red-600 dark:text-red-700">
+          {t("title")}
+        </h4>
+        <p className="text-sm text-red-600 dark:text-red-700 mt-1">
           {t("description")}
         </p>
       </div>
@@ -56,10 +58,10 @@ export function DeleteAccount() {
             {t("button")}
           </Button>
         </DialogTrigger>
-        <DialogContent className="max-w-md">
+        <DialogContent className="max-w-xl">
           <DialogHeader>
             <DialogTitle>{t("title")}</DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="pt-1 text-justify ">
               {t("confirmation.description")}
             </DialogDescription>
           </DialogHeader>
@@ -79,16 +81,21 @@ export function DeleteAccount() {
             </div>
           </div>
           <DialogFooter>
-            <Button color="white" onClick={() => handleDialogClose(false)}>
-              Cancel
+            <Button
+              color="white"
+              onClick={() => handleDialogClose(false)}
+              shadow={false}
+            >
+              {t("confirmation.cancel-button")}
             </Button>
             <Button
               color="destructive"
               loading={loading === "delete"}
               disabled={!isDeleteEnabled}
               onClick={handleDeleteAccount}
+              shadow={false}
             >
-              {t("button")}
+              {t("confirmation.delete-button")}
             </Button>
           </DialogFooter>
         </DialogContent>

@@ -1,12 +1,14 @@
 import { ENV } from "@env"
 import {
   AccountDeletedEmail,
+  AccountDeletionScheduledEmail,
   EmailChangeWarningEmail,
   ResetPasswordEmail,
   type TransactionalLocales,
   VerifyEmail,
   type VerifyEmailContent,
   getAccountDeletedEmailSubject,
+  getAccountDeletionScheduledEmailSubject,
   getEmailChangeWarningSubject,
   getLocale,
   getResetPasswordEmailSubject,
@@ -29,26 +31,31 @@ export class MailerTask {
   }
 
   async sendEmail<T extends EmailTemplateName>(job: MailerJobData<T>) {
-    const { to, template: templateName, locale: userLocale, content } = job
+    const { to, template, locale, content } = job
 
-    const supportedLocale = getLocale(userLocale)
-
-    const template = this.getTypedTemplate(
-      templateName,
-      supportedLocale,
+    const resolvedLocale = getLocale(locale)
+    const emailTemplate = this.getTypedTemplate(
+      template,
+      resolvedLocale,
       content,
     )
 
-    if (!template) return
+    if (!emailTemplate) {
+      throw new Error(`Unknown email template: ${template}`)
+    }
+
+    const { from, subject, react } = emailTemplate
+
+    const reactElement = createElement(react, {
+      locale: resolvedLocale,
+      content,
+    })
 
     await this.resend.emails.send({
-      from: template.from,
+      from,
       to,
-      subject: template.subject,
-      react: createElement(template.react, {
-        locale: supportedLocale,
-        content,
-      }),
+      subject,
+      react: reactElement,
     })
   }
 
@@ -78,6 +85,14 @@ export class MailerTask {
         from: "Skymo <no-reply@skymo.online>",
         subject: getAccountDeletedEmailSubject(locale),
         react: AccountDeletedEmail,
+      } as EmailTemplateReact<T>
+    }
+
+    if (templateName === "account-deletion-scheduled") {
+      return {
+        from: "Skymo <no-reply@skymo.online>",
+        subject: getAccountDeletionScheduledEmailSubject(locale),
+        react: AccountDeletionScheduledEmail,
       } as EmailTemplateReact<T>
     }
 

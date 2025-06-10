@@ -1,4 +1,5 @@
 import type {
+  AccountDeletionScheduledContent,
   EmailChangeWarningContent,
   Locales,
   ResetPasswordEmailContent,
@@ -10,6 +11,7 @@ export type EmailTemplateName =
   | "verify-pin"
   | "reset-password"
   | "account-deleted"
+  | "account-deletion-scheduled"
   | "email-change-warning"
   | "email-change-reverted"
 
@@ -19,9 +21,11 @@ export type EmailContent<T extends EmailTemplateName> = T extends "verify-pin"
     ? ResetPasswordEmailContent
     : T extends "account-deleted"
       ? undefined
-      : T extends "email-change-warning"
-        ? EmailChangeWarningContent
-        : never
+      : T extends "account-deletion-scheduled"
+        ? AccountDeletionScheduledContent
+        : T extends "email-change-warning"
+          ? EmailChangeWarningContent
+          : never
 
 type EmailableProps<T extends EmailTemplateName> = {
   locale: TransactionalLocales

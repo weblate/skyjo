@@ -156,13 +156,16 @@ export function useSettingsApi() {
       )
 
       if (!response.ok) {
-        throw new Error("Failed to delete account")
+        const error = await response.json()
+        throw new Error(error.error || "Failed to schedule account deletion")
       }
 
+      toast.success(t("messages.account-deletion-scheduled"))
       logout()
-      toast.success(t("messages.delete-success"))
-    } catch (_error) {
-      toast.error("Failed to delete account. Please try again.")
+    } catch (error) {
+      const message = error instanceof Error ? error.message : t("messages.account-deletion-failed")
+      toast.error(message)
+      throw error
     } finally {
       setLoading(null)
     }

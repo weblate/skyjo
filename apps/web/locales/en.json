@@ -488,7 +488,8 @@
         "username-taken": "This username is already taken.",
         "email-taken": "This email is already in use.",
         "password-incorrect": "Current password is incorrect.",
-        "delete-success": "We acknowledge your request to delete your account. You will receive an email when your account has been deleted."
+        "account-deletion-scheduled": "Your account deletion request has been taken into account and will be processed in 48 hours. You will receive an email to confirm the deletion.",
+        "account-deletion-failed": "An error occurred while deleting your account. Please try again."
       }
     },
     "SettingsProfile": {
@@ -525,13 +526,15 @@
         }
       },
       "delete-account": {
-        "title": "Delete Account",
+        "title": "Delete my account",
         "description": "Delete your account and all associated data. This action cannot be undone and all your data will be permanently removed.",
-        "button": "Delete Account",
+        "button": "Delete account",
         "confirmation": {
-          "description": "This action cannot be undone. To confirm, type DELETE in the box below.",
+          "description": "By confirming, a 48-hour countdown begins: you will receive an email with a link to cancel the deletion if you change your mind. Your account will remain accessible during this period. After 48 hours, it will be permanently deleted and you will receive a confirmation email.",
           "input-label": "Type DELETE to confirm",
-          "input-placeholder": "DELETE"
+          "input-placeholder": "DELETE",
+          "cancel-button": "Cancel",
+          "delete-button": "Delete my account"
         }
       }
     },
@@ -552,6 +555,28 @@
       },
       "messages": {
         "password-incorrect": "Current password is incorrect."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Invalid token",
+      "success": {
+        "title": "Account Deletion Cancelled",
+        "description": "Your account deletion has been successfully cancelled. Your account is safe and will not be deleted.",
+        "secure-message": "Your account is now secure and will remain active. You can continue using your account normally."
+      },
+      "failed": {
+        "title": "Cancellation Failed",
+        "description": "We couldn't cancel your account deletion. Please try again or contact support.",
+        "general-error": "Something went wrong while trying to cancel your account deletion. Please try again or contact support.",
+        "help-message": "Something went wrong while trying to cancel your account deletion. Please try again or contact support."
+      },
+      "expired": {
+        "title": "Cancellation Link Expired",
+        "description": "This cancellation link has expired. If you still want to keep your account, please contact support.",
+        "help-message": "The 48-hour cancellation period has expired. Please contact support if you need assistance."
+      },
+      "actions": {
+        "return-homepage": "Return to Homepage"
       }
     }
   },

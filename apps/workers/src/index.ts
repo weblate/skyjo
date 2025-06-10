@@ -1,3 +1,4 @@
+import { createAccountDeletionWorker } from "@/account-deletion/accountDeletionQueue.js"
 import { createGameCleanupWorker } from "@/game-cleanup/gameCleanupQueue.js"
 import { createPostgresCleanupWorker } from "@/postgres-cleanup/postgresCleanupQueue.js"
 import { Logger } from "@skymo/logger"
@@ -6,6 +7,7 @@ import { createGameStorageWorker } from "@/game-storage/gameStorageQueue.js"
 import { createMailerWorker } from "@/mailer/mailerQueue.js"
 import { initializePostgresCleanupScheduler, postgresCleanupQueue } from "@/postgres-cleanup/postgresCleanup.js"
 
+const accountDeletionWorker = createAccountDeletionWorker()
 const gameCleanupWorker = createGameCleanupWorker()
 const postgresCleanupWorker = createPostgresCleanupWorker()
 const mailerWorker = createMailerWorker()
@@ -29,6 +31,7 @@ setInterval(() => {
 async function gracefulShutdown() {
   Logger.info("Shutdown signal received")
 
+  await accountDeletionWorker.close()
   await gameCleanupWorker.close()
   await postgresCleanupWorker.close()
   await mailerWorker.close()
