@@ -62,11 +62,11 @@
         "remove-identical-row": "Eliminar filas idénticas",
         "nb-columns": {
           "label": "Número de columnas",
-          "title": "$número de columnas"
+          "title": "$number de columnas"
         },
         "nb-rows": {
           "label": "Número de filas",
-          "title": "$número de filas"
+          "title": "$number de filas"
         },
         "initial-turned-count": {
           "label": "Número de cartas inicialmente reveladas",
@@ -90,7 +90,7 @@
           "label": "Tipo de penalización del primer jugador",
           "description": "Se aplica penalización si el primer jugador en revelar todas sus cartas no tiene el menor número de puntos (no aplica si la puntuación es menor o igual a 0)",
           "item": {
-            "flat-only": "Solo piso",
+            "flat-only": "Solo fijo",
             "flat-then-multiplier": "Plano y luego Multiplicador",
             "multiplier-then-flat": "Multiplicador y luego Fijo",
             "multiplier-only": "Solo multiplicador"
@@ -119,7 +119,7 @@
       "title": "Partida de {name}",
       "leave-to-home": "Ir a la página de inicio",
       "leave-to-public-game-list": "Ir a la lista pública de partidas",
-      "waiting-host-to-start": "Esperando a que el hostistrador inicie la partida",
+      "waiting-host-to-start": "Esperando a que el anfitrión inicie la partida",
       "go-back-to-settings": "Volver a los ajustes",
       "not-enough-players-modal": {
         "private-description": "¡Usa el enlace privado para invitar amigos!",
@@ -154,7 +154,7 @@
           "anonymous-usage-data": {
             "title": "Datos de uso anónimos",
             "description": "Utilizamos PostHog, una herramienta de análisis, para recopilar datos anónimos sobre su uso de nuestra página web. Esto incluye:",
-            "items": "Visitas a la página; Web vitals (métricas de rendimiento); Respuestas a las encuestas (si decide participar)"
+            "items": "Visitas a la página;;Web vitals (métricas de rendimiento);;Respuestas a las encuestas (si decide participar)"
           },
           "title": "Información que recopilamos",
           "game-data": {
@@ -205,7 +205,7 @@
         "your-rights-and-choices": {
           "title": "Derechos y opciones",
           "description": "Dado que recopilamos principalmente datos anónimos, no podemos identificar ni acceder a información personal específica de ningún usuario individual. Sin embargo, usted tiene los siguientes derechos y opciones:",
-          "items": "Almacenamiento local: Puede borrar el almacenamiento local de su navegador en cualquier momento para eliminar las preferencias guardadas;;Comentarios: Si ha enviado comentarios con una dirección de correo electrónico, puede ponerse en contacto con nosotros para solicitar su eliminación: Puede excluirse de la recopilación de datos analíticos activando la opción \"No rastrear\" de su navegador o utilizando navegadores de privacidad que bloqueen las secuencias de comandos analíticas: Los datos relacionados con el juego se eliminan automáticamente cuando todos los jugadores abandonan la partida"
+          "items": "Almacenamiento local: Puede borrar el almacenamiento local de su navegador en cualquier momento para eliminar las preferencias guardadas;;Comentarios: Si ha enviado comentarios con una dirección de correo electrónico, puede ponerse en contacto con nosotros para solicitar su eliminación;;Puede excluirse de la recopilación de datos analíticos activando la opción \"No rastrear\" de su navegador o utilizando navegadores de privacidad que bloqueen las secuencias de comandos analíticas;;Los datos relacionados con el juego se eliminan automáticamente cuando todos los jugadores abandonan la partida"
         }
       },
       "head": {
@@ -239,7 +239,7 @@
           "custom": "Personalizada",
           "column": "Columna",
           "row": "Fila",
-          "short-game": "Partida rápido",
+          "short-game": "Partida rápida",
           "long-game": "Partida larga"
         }
       },
@@ -339,7 +339,7 @@
       }
     },
     "ChatMessageList": {
-      "unread-messages": "{count} mensaje no leído{count, plural, =1 {mensaje sin leer} otro {mensajes sin leer}}"
+      "unread-messages": "{count} mensaje{count, plural, one {} other {s}} no leído{count, plural, =1 {mensaje sin leer} other {s}}"
     },
     "CopyLink": {
       "message": "¡Enlace copiado!",
@@ -609,7 +609,7 @@
         "label": "Tipo de penalización para el primer jugador si no tiene el menor número de puntos: ",
         "4": "Multiplicador y luego fijo",
         "1": "Solo multiplicador",
-        "2": "Solo piso",
+        "2": "Solo fijo",
         "3": "Plano y luego multiplicador"
       }
     },
