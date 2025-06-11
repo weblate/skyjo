@@ -42,7 +42,7 @@
           "title": "'$number righe'"
         },
         "initial-turned-count": {
-          "label": "Numero di carte inizialmente rivelate",
+          "label": "Numero di carte girate all'inizio di un giro",
           "title": "All'inizio della partita, {number} delle tue carte verranno rivelate"
         },
         "score-to-end-game": {
