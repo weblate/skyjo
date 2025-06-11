@@ -61,8 +61,8 @@
           "custom": "Aangepast",
           "column": "Column",
           "row": "Rij",
-          "short-game": "Korte spel",
-          "long-game": "Lange termijn"
+          "short-game": "Kort spel",
+          "long-game": "Lang spel"
         }
       },
       "game-of": "Het spel van '{name}",
@@ -89,7 +89,7 @@
     "Lobby": {
       "title": "Het spel van '{name}",
       "leave-to-home": "Terug naar de homepage",
-      "leave-to-public-game-list": "Aan openbare spellijst toevoegen",
+      "leave-to-public-game-list": "Terug naar openbare spellijst",
       "go-back-to-settings": "Ga terug naar instellingen",
       "settings": {
         "private": {
@@ -132,13 +132,13 @@
           "placeholder": "Selecteer een sanctietype",
           "item": {
             "multiplier-only": "Alleen vermenigvuldiger",
-            "flat-only": "Alleen plat",
-            "flat-then-multiplier": "Vlak dan Vermenigvuldiger",
-            "multiplier-then-flat": "Vermenigvuldiger dan Vlak"
+            "flat-only": "Alleen vast bedrag",
+            "flat-then-multiplier": "Vast dan Vermenigvuldiger",
+            "multiplier-then-flat": "Vermenigvuldiger dan Vast"
           }
         },
         "first-player-flat-penalty": {
-          "label": "Eerste speler scoort vlakke straf",
+          "label": "Vaste strafscore eerste speler",
           "title": "Er worden {number} extra punten toegevoegd aan de score van de eerste speler"
         },
         "first-player-multiplier-penalty": {
@@ -216,7 +216,7 @@
           },
           "cookies": {
             "description": "Wij gebruiken essentiële cookies om de basisfuncties van onze website mogelijk te maken:",
-            "items": "Sessiecookies: Wij gebruiken een sessiecookie (skymo-io) om uw verbinding met onze gameservers te onderhouden. Deze cookie is essentieel voor de functionaliteit van het spel en verloopt na 24 uur. Deze cookies volgen u niet op verschillende websites en worden alleen gebruikt om de door u gevraagde dienst te leveren",
+            "items": "Sessiecookies: Wij gebruiken een sessiecookie (skymo-io) om uw verbinding met onze gameservers te onderhouden. Deze cookie is essentieel voor de functionaliteit van het spel en verloopt na 24 uur;;Deze cookies volgen u niet op verschillende websites en worden alleen gebruikt om de door u gevraagde dienst te leveren",
             "title": "Cookies"
           }
         },
@@ -360,7 +360,7 @@
         "1": "Alleen vermenigvuldiger",
         "2": "Alleen plat",
         "3": "Eerst plat, dan vermenigvuldiger",
-        "4": "Vermenigvuldiger dan vlak"
+        "4": "Vermenigvuldiger dan vast"
       },
       "first-player-multiplier-penalty": "Vermenigvuldigingsstraf: {value}",
       "first-player-flat-penalty": "Vaste boete: {value}",
