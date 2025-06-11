@@ -103,7 +103,7 @@
           "title": "Maximale Spieleranzahl: {number}"
         },
         "first-player-penalty-type": {
-          "description": "Strafe wird angewendet, wenn der erste Spieler, der alle seine Karten aufdeckt, nicht die geringste Punktzahl hat (gilt nicht, wenn die Punktzahl kleiner oder gleich",
+          "description": "Strafe wird angewendet, wenn der erste Spieler, der alle seine Karten aufdeckt, nicht die geringste Punktzahl hat (gilt nicht, wenn die Punktzahl kleiner oder gleich 0 ist)",
           "placeholder": "Wähle die Art der Strafe",
           "item": {
             "multiplier-only": "Nur Multiplikator",
@@ -118,7 +118,7 @@
           "title": "Zusätzliche {number} Punkte werden zur Punktzahl des ersten Spielers hinzugefügt"
         },
         "first-player-multiplier-penalty": {
-          "title": "Die Punktzahl des ersten Spielers wird mit {number} multipliziert, wenn sie nicht niedriger ist als die anderen Punktzahlen des Spiels",
+          "title": "Die Punktzahl des ersten Spielers wird mit {number} multipliziert, wenn sie strikt niedriger ist als die anderen Punktzahlen des Spiels",
           "label": "Strafmultiplikator für den Punktestand des ersten Spielers"
         }
       },
@@ -141,7 +141,7 @@
         "private-description": "Nutze den privaten Link, um Freunde einzuladen!",
         "close": "Ich verstehe"
       },
-      "waiting-host-to-start": "Warte auf den Host das Spiel zu starten",
+      "waiting-host-to-start": "Warte darauf, dass der Host das Spiel startet",
       "waiting-host-to-confirm-game-settings": "Warte auf den Host die Einstellungen zu bestätigen",
       "start-game-button": "Starte das Spiel"
     },
@@ -310,9 +310,9 @@
       "first-player-penalty-type": {
         "label": "Art der Strafe für den ersten Spieler, wenn er nicht die kleinste Punktzahl hat: ",
         "1": "Nur Multiplikator",
-        "2": "Nur flach",
+        "2": "Nur pauschal",
         "3": "Flach, dann Multiplikator",
-        "4": "Multiplikator, dann fix"
+        "4": "Multiplikator, dann pauschal"
       },
       "initial-turned-count": "Anzahl der zu Beginn aufgedeckten Karten: {value}",
       "button-title": "Spielregeln anzeigen",
