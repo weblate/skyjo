@@ -76,8 +76,8 @@
           "placeholder": "Välj en strafftyp",
           "item": {
             "multiplier-only": "Endast multiplikator",
-            "flat-only": "Endast lägenhet",
-            "flat-then-multiplier": "Platt sedan Multiplikator",
+            "flat-only": "Endast fast belopp",
+            "flat-then-multiplier": "Fast belopp sedan Multiplikator",
             "multiplier-then-flat": "Multiplikator sedan fast"
           }
         },
@@ -155,7 +155,7 @@
           "cookies": {
             "title": "Cookies",
             "description": "Vi använder nödvändiga cookies för att aktivera kärnfunktioner på vår webbplats:",
-            "items": "Sessionscookies: Vi använder en sessionscookie (skymo-io) för att upprätthålla din anslutning till våra spelserverar. Denna cookie är nödvändig för spelets funktionalitet och upphör att gälla efter 24 timmar. Dessa cookies spårar dig inte över webbplatser och används endast för att tillhandahålla den tjänst du har begärt"
+            "items": "Sessionscookies: Vi använder en sessionscookie (skymo-io) för att upprätthålla din anslutning till våra spelserverar. Denna cookie är nödvändig för spelets funktionalitet och upphör att gälla efter 24 timmar;;Dessa cookies spårar dig inte över webbplatser och används endast för att tillhandahålla den tjänst du har begärt"
           }
         },
         "how-we-use-your-information": {
@@ -209,7 +209,7 @@
           "column": "Kolumn",
           "row": "Rad",
           "short-game": "Kort spel",
-          "long-game": "Långsiktigt spel"
+          "long-game": "Långt spel"
         }
       },
       "no-games-found": "Inga spel hittades",
@@ -275,7 +275,7 @@
         "1": "Endast multiplikator",
         "2": "Endast lägenhet",
         "label": "Strafftyp för den första spelaren om han inte har det minsta antalet poäng: ",
-        "3": "Platt sedan multiplikator",
+        "3": "Fast belopp sedan Multiplikator",
         "4": "Multiplikator sedan fast"
       },
       "first-player-multiplier-penalty": "Multiplikatorstraff: {value}",
@@ -442,7 +442,7 @@
       }
     },
     "ChatMessageList": {
-      "unread-messages": "{count} oläst meddelande{count, plural, =1 {} other {n}}"
+      "unread-messages": "{count} {count, plural, =1{oläst meddelande} other {olästa meddelanden}}"
     },
     "CopyLink": {
       "message": "Länk kopierad!",
