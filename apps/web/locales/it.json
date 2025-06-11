@@ -39,7 +39,7 @@
         },
         "nb-rows": {
           "label": "Numero di righe",
-          "title": "'$number righe'"
+          "title": "$number righe"
         },
         "initial-turned-count": {
           "label": "Numero di carte girate all'inizio di un giro",
@@ -68,9 +68,9 @@
           "description": "La penalità viene applicata se il primo giocatore a rivelare tutte le sue carte non ha il minor numero di punti (non si applica se il punteggio è inferiore o uguale a 0)",
           "item": {
             "multiplier-only": "Solo moltiplicatore",
-            "flat-only": "Solo appartamento",
-            "flat-then-multiplier": "Piatto poi Moltiplicatore",
-            "multiplier-then-flat": "'Moltiplicatore poi Piatto'"
+            "flat-only": "Solo fisso",
+            "flat-then-multiplier": "Moltiplicatore poi fisso",
+            "multiplier-then-flat": "Moltiplicatore poi fisso"
           },
           "label": "Tipo di penalità primo giocatore",
           "placeholder": "Selezionare un tipo di penalità"
@@ -82,7 +82,7 @@
         "reset-settings": "Reimposta impostazioni",
         "nb-columns": {
           "label": "Numero di colonne",
-          "title": "'$number colonne'"
+          "title": "$number colonne"
         }
       },
       "player-section": {
@@ -326,7 +326,7 @@
     "AppearanceSelect": {
       "system": "Sistema",
       "light": "Luce",
-      "dark": "'Scuro'"
+      "dark": "Scuro"
     },
     "Feedback": {
       "button-title": "Invia",
@@ -382,7 +382,7 @@
       "status": "Stato del server",
       "feedback": "Lascia un feedback",
       "attribution": {
-        "avatars": "'Avatar creati da Freepik - Flaticon'"
+        "avatars": "Avatar creati da Freepik - Flaticon"
       }
     },
     "ScoreDialog": {
@@ -458,7 +458,7 @@
         "3": "'Flat e poi moltiplicatore'",
         "label": "Tipo di penalità per il primo giocatore se non ha il minor numero di punti: ",
         "1": "Solo moltiplicatore",
-        "2": "Solo appartamento",
+        "2": "Solo fisso",
         "4": "Moltiplicatore poi fisso"
       },
       "remove-identical-column": "Rimuovi colonna se carte identiche: {value, select, true {sì} false {no} other {sconosciuto}}",
@@ -576,7 +576,7 @@
       "title": "Chat"
     },
     "ChatMessageList": {
-      "unread-messages": "'{count} messaggio non letto{count, plural, =1 {} other {i}}'"
+      "unread-messages": "{count} messaggi{count, plural, =1 {o} other {}} non letto"
     },
     "ScoreTable": {
       "total": "Totale",
@@ -709,12 +709,12 @@
         "chooseAPile": "Scegli un mazzo"
       },
       "last-turn": "Ultimo turno!",
-      "waiting-opponents-to-turn-cards": "In attesa che l'avversario{nbOpponents, plural, =1 {} other {i}} giri {number} carta{number, plural, =1 {} other {e}}",
+      "waiting-opponents-to-turn-cards": "In attesa che l'avversar{nbOpponents, plural, =1 {io} other {i}} giri {number} cart{number, plural, =1 {a} other {e}}",
       "game-stopped": "Gioco fermato",
       "round-over": "Round terminato",
       "game-ended": "Game over!",
       "waiting": "In attesa di giocatori",
-      "turn-cards": "Gira {number} carta",
+      "turn-cards": "Gira {number} cart{number, plural, =1 {a} other {e}}",
       "player-turn": "È il turno di {playerName}"
     }
   },
