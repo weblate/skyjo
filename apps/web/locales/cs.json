@@ -37,7 +37,7 @@
       "banner": {
         "title": "Potřebuji <gform>vaši zpětnou vazbu</gform> pro formování budoucnosti Skymo!"
       },
-      "name-input-placeholder": "Název"
+      "name-input-placeholder": "Jméno"
     },
     "Search": {
       "header": {
@@ -80,9 +80,9 @@
       "settings": {
         "first-player-penalty-type": {
           "item": {
-            "flat-only": "Pouze byt",
+            "flat-only": "Pouze pevná",
             "multiplier-only": "Pouze násobitel",
-            "flat-then-multiplier": "Nejdřív fixní pak násobitel",
+            "flat-then-multiplier": "Nejdřív pevná, pak násobitel",
             "multiplier-then-flat": "Násobitel a poté pevná hodnota"
           },
           "label": "Typ penalizace prvního hráče",
@@ -124,7 +124,7 @@
           "title": "Hra skončí, když hráč dosáhne {number} bodů"
         },
         "first-player-flat-penalty": {
-          "label": "Penalizace prvního hráče za rovný výsledek",
+          "label": "Pevná penalizace prvního hráče",
           "title": "Prvnímu hráči bude přičteno dalších {number} bodů"
         },
         "first-player-multiplier-penalty": {
@@ -147,7 +147,7 @@
         "close": "Rozumím"
       },
       "title": "Hra hráče {name}",
-      "leave-to-home": "Přejít na domovskou stránku",
+      "leave-to-home": "Domů",
       "go-back-to-settings": "Vrátit se do nastavení",
       "leave-to-public-game-list": "Opustit veřejný seznam her",
       "start-game-button": "Spustit hru",
@@ -298,8 +298,8 @@
       "first-player-penalty-type": {
         "label": "Typ penalizace pro prvního hráče, pokud nemá nejmenší počet bodů: ",
         "1": "Pouze násobitel",
-        "2": "Pouze byt",
-        "3": "Paušál a poté násobitel",
+        "2": "Pouze pevná",
+        "3": "Pevná a poté násobitel",
         "4": "Násobitel a poté fixní hodnota"
       },
       "first-player-multiplier-penalty": "Penalizace násobitele: {value}"
@@ -509,7 +509,7 @@
       }
     },
     "AppearanceSelect": {
-      "light": "Světlo",
+      "light": "Světlý",
       "dark": "Tmavý",
       "system": "Systém"
     },
@@ -602,8 +602,8 @@
       "see-scores": "Zobrazit skóre"
     },
     "ScoreTable": {
-      "name": "Název",
-      "round": "Zaokrouhlit",
+      "name": "Jméno",
+      "round": "Kolo",
       "total": "Celkem"
     },
     "Avatar": {
@@ -639,7 +639,7 @@
       "select-message-placeholder": "Vyberte zprávu",
       "no-messages": "Nenalezeny žádné zprávy od tohoto uživatele",
       "cancel": "Zrušit",
-      "submit": "Zpráva",
+      "submit": "Nahlásit",
       "toast": {
         "report-submitted": {
           "title": "Hlášení odesláno",
@@ -651,7 +651,7 @@
   "utils": {
     "chat": {
       "player-already-muted": "Uživatel {username} je již ztlumen",
-      "player-unmuted": "{username} už nemá ztlumený zvuk",
+      "player-unmuted": "Ztlumení hráče {username} bylo zrušeno",
       "wizz-self": "Byl jste wizznut uživatelem {initiatorUsername}!",
       "player-joined": "{username} se připojil/a ke hře",
       "player-left": "{username} opustil hru",
@@ -663,7 +663,7 @@
       "wizz-other": "{initiatorUsername} poslal/a wizz uživateli {targetUsername}!"
     },
     "avatar": {
-      "bee": "Včela",
+      "bee": "včela",
       "crab": "krab",
       "fox": "liška",
       "jellyfish": "medúza",
@@ -673,7 +673,7 @@
       "koala": "koala",
       "octopus": "chobotnice",
       "penguin": "tučňák",
-      "toucan": "Tukan",
+      "toucan": "tukan",
       "turtle": "želva",
       "whale": "velryba",
       "owl": "sova",
