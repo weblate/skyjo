@@ -69,7 +69,7 @@
           "content-2": "Jeśli nie chce zatrzymać dobranej karty, kładzie ją na stosie kart odrzuconych i musi odkryć jedną ze swoich kart.",
           "choice-1": "Wybór 1"
         },
-        "end-of-turn": "Jego tura dobiega końca i następuje kolej kolejnego gracza (zgodnie z ruchem wskazówek zegara)."
+        "end-of-turn": "Jego tura się kończy i następuje kolej na następnego gracza (zgodnie z ruchem wskazówek zegara)."
       },
       "special-rule": {
         "title": "Specjalna zasada:",
@@ -142,7 +142,7 @@
       "throw": "Rzuć"
     },
     "DrawPile": {
-      "title": "Talia kart"
+      "title": "Stos dobierania"
     },
     "EndRoundDialog": {
       "title": "Koniec rundy",
@@ -248,7 +248,7 @@
     },
     "ScoreTable": {
       "name": "Nazwa",
-      "round": "Zaokrąglij",
+      "round": "Runda",
       "total": "Suma"
     },
     "SettingsDialog": {
@@ -375,7 +375,7 @@
       "select-message-placeholder": "Wybierz wiadomość",
       "no-messages": "Nie znaleziono wiadomości od tego użytkownika",
       "cancel": "Anuluj",
-      "submit": "Raport",
+      "submit": "Zgłoś",
       "toast": {
         "report-submitted": {
           "title": "Raport przesłany",
@@ -568,7 +568,7 @@
         },
         "reset-settings": "Resetuj ustawienia",
         "validation-warning": "Ustawień gry nie można modyfikować po ich zatwierdzeniu",
-        "validate-settings": "Sprawdź ustawienia",
+        "validate-settings": "Zatwierdź ustawienia",
         "max-players": {
           "label": "Maksymalna liczba graczy",
           "title": "Maksymalna liczba graczy: {number}"
@@ -601,7 +601,7 @@
           "item": {
             "multiplier-only": "Tylko mnożnik",
             "flat-only": "Tylko mieszkanie",
-            "flat-then-multiplier": "Płaski, potem mnożnik",
+            "flat-then-multiplier": "Najpierw stała, potem mnożnik",
             "multiplier-then-flat": "Mnożnik, potem wartość stała"
           }
         },
@@ -711,7 +711,7 @@
     "chat": {
       "argument-required": "Jedno lub więcej argumentów jest wymaganych dla polecenia: {command}",
       "wizz-sent": "Wysłałeś/aś wizz do {targetUsername}!",
-      "wizz-self": "Zostałeś zaczepiony przez {initiatorUsername}!",
+      "wizz-self": "Otrzymałeś/aś wizz od {initiatorUsername}!",
       "player-unmuted": "{username} nie jest już wyciszony",
       "wizz-other": "{initiatorUsername} wysłał(a) wizz do {targetUsername}!",
       "player-joined": "{username} dołączył do gry",
