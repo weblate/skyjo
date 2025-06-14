@@ -1,3 +1,4 @@
+/* istanbul ignore file --@preserve */
 import type { Settings } from "@/class/Settings.js"
 import { Constants } from "../constants.js"
 import type { PublicGameTag, SettingsRedisDb } from "../types/settings.js"

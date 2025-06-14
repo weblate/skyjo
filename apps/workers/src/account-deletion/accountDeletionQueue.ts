@@ -2,7 +2,7 @@ import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
 import type { AccountDeletionJobData } from "@skymo/worker-types"
 import { Worker } from "bullmq"
-import { AccountDeletionTask } from "./accountDeletionTask.js"
+import { AccountDeletionTask } from "./AccountDeletionTask.js"
 
 /**
  * Worker that processes account deletion jobs

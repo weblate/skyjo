@@ -1,4 +1,4 @@
-const locales = [
+export const locales = [
   "bar",
   "br",
   "cs",
