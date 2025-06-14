@@ -46,7 +46,7 @@
           "placeholder": "Wähle e Strof-Typ us",
           "item": {
             "multiplier-only": "Numme Multiplikator",
-            "flat-only": "Numme flach",
+            "flat-only": "Numme Pauschal",
             "flat-then-multiplier": "Flach und denn Multiplikator",
             "multiplier-then-flat": "Multiplier denn Flat"
           }
@@ -465,7 +465,7 @@
             "label": "Timer-Ahzeigemodus",
             "description": "Im Smart-Modus wird de Timer bi de Halbziit und de letschte 15 Sekunde aazeigt.",
             "modes": {
-              "never": "Nöd eso schnäll",
+              "never": "Niemals",
               "smart": "Gschid",
               "always": "Immer"
             }
@@ -677,7 +677,7 @@
       "octopus": "Oktopus",
       "penguin": "Pinguin",
       "toucan": "Toucan",
-      "bee": "Im Kontext der Software-Lokalisierung, wo es oft um kurze, prägnante Begriffe geht und die technische Genauigkeit wichtig ist, würde ich \"Biini\" oder \"Imme\" vorschlagen, je nachdem, ob es sich um eine einzelne Biene oder um das Konzept der Bienen im Allgemeinen handelt.\n\nWenn es sich um das Tier \"Biene\" handelt, ist \"Biini\" die gängigste und verständlichste Übersetzung im Schweizerdeutschen.\n\nWenn es sich um einen technischen Kontext handelt, wo \"bee\" vielleicht als Abkürzung oder Code-Name verwendet wird, würde man es oft einfach als \"Bee\" belassen, um die technische Konsistenz zu wahren.\n\nOhne weiteren Kontext würde ich \"Biini\" vorschlagen.\n\n**Biini**",
+      "bee": "Biini",
       "crab": "Chrabe",
       "dog": "Hund",
       "eagle": "Adler",
