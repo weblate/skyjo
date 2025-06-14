@@ -86,17 +86,17 @@
         "remove-identical-column": "Eemalda identsed veerud",
         "first-player-penalty-type": {
           "item": {
-            "multiplier-then-flat": "Korrutaja, seejärel tasane",
-            "multiplier-only": "Ainult kordaja",
-            "flat-only": "Ainult korterid",
-            "flat-then-multiplier": "Kõigepealt lame, siis kordaja"
+            "multiplier-then-flat": "Korrutaja, seejärel fikseeritud",
+            "multiplier-only": "Korrutaja, seejärel tasane",
+            "flat-only": "Ainult fikseeritud",
+            "flat-then-multiplier": "Fikseeritud, seejärel kordaja"
           },
           "label": "Esimese mängija karistuse tüüp",
           "description": "Karistus rakendub, kui esimene mängija, kes kõik oma kaardid paljastab, ei oma kõige väiksemat punktisummat (ei rakendu, kui punktisumma on väiksem või võrdne 0-ga)",
           "placeholder": "Vali karistuse tüüp"
         },
         "first-player-flat-penalty": {
-          "label": "Esimese mängija skoori tasane karistus",
+          "label": "Esimese mängija skoori fikseeritud karistus",
           "title": "Esimese mängija punktisummale lisatakse veel {number} punkti"
         },
         "first-player-multiplier-penalty": {
@@ -313,12 +313,12 @@
       "first-player-penalty-type": {
         "label": "Karistuse tüüp esimesele mängijale, kui tal ei ole vähimat punktide arvu: ",
         "1": "Ainult kordaja",
-        "2": "Ainult korterid",
-        "3": "Lame siis kordaja",
+        "2": "Ainult fikseeritud",
+        "3": "Fikseeritud, seejärel kordaja",
         "4": "Korrutaja, siis fikseeritud"
       },
       "first-player-multiplier-penalty": "Korrutaja karistus: {value}",
-      "first-player-flat-penalty": "Lamekaristus: {value}"
+      "first-player-flat-penalty": "Fikseeritud karistus: {value}"
     },
     "MenuDropdown": {
       "discord": "Discord",
@@ -448,7 +448,7 @@
           },
           "title": "Mänguviis",
           "gameboard-size": {
-            "big-warning": "Võib mobiilis ekraani lõhkuda",
+            "big-warning": "Võib mobiiliekraanil kuva rikkuda",
             "values": {
               "normal": "Tavaline",
               "big": "Suur"
@@ -666,7 +666,7 @@
       "penguin": "pingviin",
       "toucan": "tuukan",
       "turtle": "kilpkonn",
-      "whale": "vaala",
+      "whale": "vaal",
       "bee": "mesilane",
       "crab": "krabi",
       "dog": "koer",
@@ -762,7 +762,7 @@
       },
       "report-against-you": {
         "title": "Teid on teate tõttu välja visatud",
-        "description": "Teie kasutajanimi või üks teie sõnumitest on raporteeritud ja seda on peetud sobimatuks. Palun ärge korrake sellist käitumist."
+        "description": "Teie kasutajanimest või ühest teie sõnumist on teatatud ning seda on peetud sobimatuks. Palun ärge sellist käitumist korrake."
       }
     }
   }
