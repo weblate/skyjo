@@ -1,0 +1,769 @@
+{
+  "head": {
+    "description": "Speel Skyjo online gratis mit Skymo! N flink Multiplayer-Koartenspeel, wier Strategie un Spooß sik draapt. Foordere Fründe uut, dreih Koarten um un sorge foar de läichste Punktetaal, um to winnen!",
+    "keywords": "Skymo,Skyjo,Skyjo online,multiplayer spiel,koartenspiel,speel mit fründe,kostenlose online spiele,online koartenspiele",
+    "title": "Skymo | Speel Skyjo Koartenspiel Online Kostenloos"
+  },
+  "pages": {
+    "Index": {
+      "name-input-placeholder": "Noome",
+      "banner": {
+        "title": "Ik bruuk <gform>dien Feedback</gform>, om de Tokumst fon Skymo tou foarmjen!"
+      },
+      "faq": {
+        "how-to-win": {
+          "content": "Uum bie Skyjo to winnen, is et essentieel, dät du ju läichste Punktetaal muugelk heest. Uum dit to beloangjen, nimt een uutwoogene Strategie an twiske dät Heben fon do läichste Koarten, dät Apdäkken fon dien Koarten, un dät Moakjen fon Riegen fon identiske Koarten. Fermied dät eerste Uumeklapjen, buute wan du düütelk in't Foaruut bäst mäd sichtboare Koarten. Toank deeran, al sichtboare Koarten to behoolen, uum to fersäiken, Riegen deeruut to moakjen, anstee fon do eenpeld to optimierjen.",
+          "title": "Wo win ik bie Skyjo?"
+        },
+        "title": "Oft stelde Froagen (FAQ)",
+        "meaning": {
+          "title": "Wat betjut Skyjo?",
+          "content": "N Skyjo is ne Spalte fon 3 identiske Koarten in dät Spil."
+        },
+        "pronounce": {
+          "title": "Woans spräkt me Skyjo uut?",
+          "content": "Dat Woud Skyjo wäd [Skyjoe] uutsprooken."
+        },
+        "how-to-play": {
+          "title": "Wo speel ik Skyjo?",
+          "content": "Uum Skyjo tou spiljen, deelt {0} Koarten an älke Spieler mäd ju Bielde deel. Dät Siel is, so min Punkte as muugelk tou hääben, truch dät Uumeklapjen un Uuttuuskjen fon Koarten. Älke Tour, luuk ne Koarte fon dän Stappel of Ofläägestapel, dan äntscheed, een fon dien sichtboare Koarten tou ärsätten. Nummerierde Koarten sunt hiere Punkte wäid, spezielle Koarten hääbe Aktschonen. Dät Spil eendet, wan n Spieler aal sien Koarten uumeklapped häd. Die Spieler mäd do minste Punkte wint. Du koast <rules>do Räägele</rules> foar moor Information ätterkiekje."
+        },
+        "play-classic-with-action": {
+          "title": "Kannst du klassisk Skyjo mit Skyjo Action speelen?",
+          "content": "Jap, du bruukst man bloot do Aksjoonkoarten wäch tou moakjen. Wan du ju Online-Version spielst, wääl ju klassiske Version uut, uum Skyjo tou spieljen."
+        }
+      },
+      "explanation": {
+        "title": "Wat is Skyjo?",
+        "content": "Skyjo is n spoulend Koartenspäl un n uutstäärked Boordspäl, dät fon Späl-Fans uur de ganse Waareld spield wäd. Düt Multiplayer-Koartenspäl is moaked foar 2 bit 8 Spälere, wier älken Späler 12 Koarten kricht, do in't eerste ferbuurgen sunt. Dät Hauddoel fon dät Späl is, so min Punkte as muugelk tou kriegen. Dät Späl eendet, so gau as aan Späler 100 Punkte roaked. Do Spälreegele sunt eenfach un licht tou ferstounden, wät dät tou ne ideale Val moaket foar Späl-Äiwen mäd Familie of Früünde. Späl-Enthusiasten wäide sik froaije tou heeren, dät et nu muugelk is, Skyjo online foar niks tou spiljen!",
+        "button": "Kiek de Regeln"
+      }
+    },
+    "Search": {
+      "tags": {
+        "tag": {
+          "row": "Riege",
+          "classic": "Klassisk",
+          "custom": "Benutzerdefiniert",
+          "column": "Spalte",
+          "short-game": "Kuut Spil",
+          "long-game": "Lange Tied"
+        },
+        "title": "Filter:",
+        "no-tags-available": "Keen Tags mehr to kriegen"
+      },
+      "head": {
+        "title": "Fien apenbiere Skymo-Spiele | Spiel Skyjo Online",
+        "description": "Säikst du ätter n Skymo-Spil, wier du meemoakje koanst? Koam bie do eepentelke Spile un fang fluks oun, Skyjo online tou spieljen mäd uur Spilere. Spiel nu foar free!",
+        "keywords": "Skymo,Skyjo,Skyjo online,Spiel fiende,Spiel bitreede,aapenlieke Spiele,online-Multiplayer,mit uurde speele,flinke Spiel,kostenloose online-Spiele,aapen Spiele,online Koartenspiel,Multiplayer Koartenspiel"
+      },
+      "header": {
+        "back": "Trüch tou Startsied",
+        "title": "Eepentelke Spellen",
+        "refresh": "Spoulenlieste apfräskje",
+        "create-button": {
+          "title": "Moak n apentlich Speel"
+        }
+      },
+      "no-games-found": "Neen Spoulen fuunen",
+      "game-of": "Dät Spil fon {name}"
+    },
+    "Lobby": {
+      "settings": {
+        "validation-warning": "Spul-Instellengen konnen nit annerd wäide, wan se eenmol goudkäänd wuuden sunt",
+        "nb-columns": {
+          "title": "$number Spalten",
+          "label": "Antall Spalten"
+        },
+        "nb-rows": {
+          "label": "Antaal Riege",
+          "title": "$number Riegen"
+        },
+        "private": {
+          "tooltip": {
+            "on": "Dit Spil is privoat, bloot Ljuude mäd dän Link konnen meedo",
+            "off": "Dissen Deel is eepentelk, älkuneen kon biehoalje ätter dät Bestätigjen fon do Parameter"
+          }
+        },
+        "reset-settings": "Instellengen trüchsetten",
+        "validate-settings": "Stellenge validerje",
+        "max-players": {
+          "label": "Maximoale Antaal Spilere",
+          "title": "Maximoale Antaal Spielere: {number}"
+        },
+        "remove-identical-column": "Entfäär glieke Spalten",
+        "remove-identical-row": "Identiske Riegen wechdoon",
+        "initial-turned-count": {
+          "label": "Antall Koarten, do touhoop apdeckt wieren",
+          "title": "Bi't Begjin fon't Spil wäide {number} fon dien Koarten apdäi moaked"
+        },
+        "show-current-score": {
+          "label": "Wies den aktuälle Stound wiesend dät Spil"
+        },
+        "score-to-end-game": {
+          "label": "Punkte, um dat Speel to been",
+          "title": "Dat Speel is to Ende, wan een Spöler {number} Punkte hett"
+        },
+        "first-player-penalty-type": {
+          "description": "Straf wäd anwoand, wan die eerste Spieler, die aal sien Koarten wiest, nit ju litste Antaal Punkte häd (gäildt nit, wan die Punktestound minner af gliek 0 is)",
+          "label": "Eerste Speler Stroaf Oard",
+          "placeholder": "Wähl en Stroaf-Typ ut",
+          "item": {
+            "multiplier-only": "Bloot Multiplikator",
+            "flat-only": "Bloot",
+            "multiplier-then-flat": "Multiplikator un dan Flat",
+            "flat-then-multiplier": "Flak dan Multiplikator"
+          }
+        },
+        "first-player-flat-penalty": {
+          "label": "Eerste Spelerstraaf",
+          "title": "N touätzlich {number} Punkte wäide tou dän Stound fon dän eerste Spieler bietouföiged"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Eerste Speler Sien Straaf-Multiplikator",
+          "title": "De Punktetaal fon dän eerste Spieler wäd mäd {number} multiplisierd, wan ju nit strikt minner is as do uur Punktetaale fon dät Spil"
+        }
+      },
+      "cancel": "Ofbreke",
+      "not-enough-players-modal": {
+        "public-description": "N Fründ inläden of tö en anner Spöler töwachten.",
+        "private-description": "Gebruik de private Link, om Fründe intoladen!",
+        "title": "Nich genooch Spölers",
+        "description": "Du skälst tominst 2 Spielere weese, uum dät Spiel tou beginnen.",
+        "close": "Ik ferstounde"
+      },
+      "title": "Dät Spil fon {name}",
+      "leave-to-home": "Gung to huussiede",
+      "leave-to-public-game-list": "Ferlätje tou apenbeere Speelliste",
+      "go-back-to-settings": "Gung tourääch tou do Ienstaalengen",
+      "start-game-button": "Start dat Spul",
+      "game-starting-in": "Spul fangt an in {seconds}",
+      "waiting-host-to-confirm-game-settings": "Wachtje, bit de Host de Instellengen valideert",
+      "waiting-host-to-start": "Wachtje op de host, dat er dat Spul start",
+      "player-section": {
+        "title": "Spölers {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Wähl een Tall Spölers",
+          "item": "{value} Spöllere"
+        }
+      }
+    },
+    "ResultsPage": {
+      "player": "Spöler",
+      "title": "Speelresultoate",
+      "replay-button": {
+        "replay": "Replay",
+        "cancel": "Nich nochmoals speelen"
+      },
+      "rank": "Rang",
+      "score-per-round": "Punkte pro Runde",
+      "total": "Totaal",
+      "player-want-to-replay": "Spölers, do wier spöle wälle:",
+      "leave-button": "t Spul ferlätje"
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "anonymous-usage-data": {
+            "description": "Wi bruuke PostHog, n Analyse-Reewe, uum anonyme Doaten tou sammeljen, wo du uus Websiede bruukst. Dät is:",
+            "items": "Siedenweergaven;;Web Vitals (Leistungskennzahlen);;Enkätantworten (wan du mitmaken wolt)",
+            "title": "Anonyme Gebruuksinformatie"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "Wi bruuke nödige Cookies, uum de Käärupgååwe fon uus Websiede tou ärreeken:",
+            "items": "Sitzungs-Cookies: Wi bruuke n Sitzungs-Cookie (skymo-io), uum ju Ferbiendenge tou uus Spil-Servere aptouheeltoan. Düt Cookie is essentiell foar ju Funktionalität fon dät Spil un lapt ätter 24 Uuren ou. Disse Cookies foulgje die nit uur Websieden un wäide bloot bruukt, uum dän Tjoonst tou leewern, dän du anfräiged hääst"
+          },
+          "title": "Information, ju der sammelje",
+          "user-provided-information": {
+            "title": "Fom Bruker anroosene Informatschoon",
+            "description": "Wi sammelje:",
+            "items": "Ienstuurd Feedback (inkl. E-Mail-Adres, wenn angegeven)"
+          },
+          "game-data": {
+            "title": "Spöldaten",
+            "description": "Wi spiekere tydelk:",
+            "items": "Noome un Bielden; Spul-Elemente un Foutskeed"
+          },
+          "local-storage-data": {
+            "title": "Lokale Spiekerdoaten",
+            "description": "Wi spiekern in dien Browser sin {localStorage}:",
+            "items": "Spraak-Instellenge;;Spul-Instellenge"
+          }
+        },
+        "data-storage-and-retention": {
+          "title": "Spiekerenge un Beheelden fon Doaten",
+          "items": "Anonyme Gebruuksdoaten wäide ap Servere binne ju Europäiske Union spiekerd un foar bit tou 1 Jier behoolde;;Spieldoaten wäide in uus Doatenboank in Frankfurt, Düütsklound spiekerd. Disse Doaten wäide foar ju Duur fon aktive Spiele behoolde. So gau as aal Spielere n Spiel ferlääse, wäide do deeran ferbuundene Doaten läsked;;Informatione, do in dän lokoale Spieker fon dien Browser spiekerd wäide, blieuwe deer, bit du dien Browserdoaten läskest;;Ienseendengen fon Feedback-Formulare wäide bloot behoolde, uum tou äntwoudjen un Foarsleeke foar ju Äntwikkelenge tou berücksichtigjen"
+        },
+        "data-sharing": {
+          "description": "Wi deele dien persöönelke Doaten nich mit Drüdde. Anonyme Benutsengsdoaten wäide ferärbeided fon PostHog, uus Analyse-Anbieder.",
+          "title": "Doaten-Deelen"
+        },
+        "back": "Trüch tou ju Startsiede",
+        "title": "Privacy Policy",
+        "last-update": {
+          "text": "Lääst aktualisiert: {date}",
+          "date-format": "JJJJ-MM-DD - hh:mmA"
+        },
+        "how-we-use-your-information": {
+          "title": "Wo Wie Jo Information Bruuke",
+          "items": "Ferbeeterje uus Website un Bruukerbeleewnis;;Bruukmuuster un Leistung analyseerje;;Antwoorde ap Feedback un Unnerstüttengs-Anfroagen;;Spilferloop eenfacher moakje"
+        },
+        "your-rights-and-choices": {
+          "title": "Dien Gjuch un dien Köär",
+          "description": "Wi sammelje foaral anonyme Doaten, deeruum konne wi kien persöönelke Informatione, do tou n bestimden Benutser heere, identifizierje of deeran kuume. Man Se hääbe do foulgjende Gjuchte un Woalmöjligkeede:",
+          "items": "Local Storage: Du koanst dien Browser sien Lokale Spieker to jeeder Tied loosmoakje, uum spiekerde Ienstaalengen wächtouhoaljen;;Feedback: Wan du Feedback mäd ne E-Mail-Adrässe ienseended hääst, koanst du uus kontaktierje, uum dät wächtouhoaljen;;Analytics Opt-Out: Du koanst die fon dät Sammeljen fon Analysedaten outmäldje, truch dät Aktivierjen fon dien Browser sien \"Do Not Track\"-Ienstaalenge of truch dät Benutsjen fon privacy-fokussierde Browser, do Analyse-Skripte blokkierje;;Game Data: Spil-relateerde Doaten wäide automatisk wächtich moaked, wan aal Spielere n Spil ferlääse"
+        },
+        "childrens-privacy": {
+          "title": "Kinnerprivatsphäre",
+          "description": "Skymo häd nääi Ooldersbegränsengen. Wie sammelje nääi wissentelk persöönelke Doaten fon Bäidene."
+        },
+        "changes-to-this-policy": {
+          "title": "Ännerengen an disse Politik",
+          "description": "Wi konnen disse Politik fon Tied tou Tied ap dät näie staale. Wi wäide Jou fon aal Annerengen in Kenntnis sätte, indem wi ju näie Politik ap disse Siede poste."
+        },
+        "contact-us": {
+          "title": "Kontaktoarje Uns",
+          "description": "Wan Du Froagen tou disse Privatsphärenpolitik hääst, kontaktier uus dan uur uus Feedback-Formular ap ju Websiede, Discord-Server of GitHub."
+        }
+      },
+      "head": {
+        "title": "Privatsphäre-Polize | Skymo - Skyjo Online Koartenspeel",
+        "description": "Privatsphäärbeleid foar Skymo. Leer, wo wie Dien Doaten schutsje, wilst Du uus Skyjo Koartenspil gnau. Transparente Praktiken un sichere Spilferfoaren.",
+        "keywords": "Skymo, Skyjo, Skyjo Online, privacy policy, data protection, online game privacy, secure gaming, user data, GDPR, CCPA, data security"
+      }
+    },
+    "Create": {
+      "head": {
+        "title": "Moak n Skymo-Spil | Spil Skyjo Online",
+        "description": "Begin nu en online Skymo-Speel! Moak private of eepene Rume, lääd dien Fründe ien, un hääv Spooß touhoope mäd Skyjo. Speel nu foar niks!",
+        "keywords": "Skymo, Skyjo, Skyjo online, Spul moakje, Spul starte, privoat Spul, eepentelk Spul, mäd Fründe spiedje, Online-Multiplayer, kostenloose Online-Spule, anner Spul"
+      },
+      "loading-text": "Dien Spul wäd moaked…"
+    },
+    "Maintenance": {
+      "github-alt": "Kiekje de Kode-Wälle ap GitHub",
+      "title": "Siede is in Underhoolt",
+      "description": "Wi sünd ap t Tied ap d' Siede, fersäikje Se t' leeter noch es."
+    },
+    "NotFound": {
+      "title": "Feeler 404",
+      "description": "Ju Siede, ju Du soekst, exestiert nit.",
+      "go-back-to-homepage": "Gung tourääch tou ju Startsiede"
+    },
+    "Rules": {
+      "head": {
+        "description": "Lees, wo du Skyjo speele kanns mit uus Skymo-Anwiesenge. Finde ruut uur do Räägele, Strategien un do Tipe, uum dit sjouke Online-Koartespil tou behearskjen. Speel nu touhoope mäd dien Fründe!",
+        "title": "Wo speel ik Skymo | Skyjo Koartspul Online",
+        "keywords": "Skymo, Skyjo, Skyjo-Regeln, wo speel ik Skyjo, Skyjo-Speel, Koartenspeel-Regeln, Online-Koartenspeel, Speel-Anwiesengen, Speelwies-Anwiesengen"
+      },
+      "title": "Skyjo Speelregeln"
+    }
+  },
+  "components": {
+    "GameLobbyButtons": {
+      "create-game-button": "Moak n {type, select, private {privoat} public {eepenbier} other {uunbekoand}} Spil",
+      "reconnect-game-button": "Neei mit dät Spil ferbiende",
+      "join-game-button": "Doo mit in't Spul",
+      "find-game-button": "Fín Spul"
+    },
+    "GameRules": {
+      "first-player-penalty-type": {
+        "1": "Bloot Multiplikator",
+        "2": "Bloot",
+        "label": "Straaf-Typ för de eerste Speler, wenn he nich de lüttste Tall an Punkten hett: ",
+        "3": "Flat then multiplier",
+        "4": "Multiplikator dan flak"
+      },
+      "title": "Spulregeln",
+      "remove-identical-column": "Spalte wechhaale, wan identiske Koarten: {value, select, true {je} false {na} other {uunbekoand}}",
+      "button-title": "Wies Spulregeln",
+      "remove-identical-row": "Riege wechdöön, wan identiske Koarten: {value, select, true {ja} false {nee} other {uutnoomen}}",
+      "card-per-column": "Antall Spalten: {value}",
+      "card-per-row": "Antall Riege: {value}",
+      "initial-turned-count": "Antahl Koarten, do tou'e Ounfang uumtoudraien: {value}",
+      "score-to-end-game": "Antall Punkte, um dat Speel to been'en: {value}",
+      "first-player-multiplier-penalty": "Multiplikatorstraaf: {value}",
+      "first-player-flat-penalty": "Faste Stroafe: {value}"
+    },
+    "Rules": {
+      "round-start": {
+        "choice-1": {
+          "title": "Keuze 1:",
+          "description": "Nim ju eerste Koarte fon dän Ouleegestapel.",
+          "content": "De Spöler mutt disse Koarte glieks mit een fon sien 12 Koarten uuttuuskje un apen ap dän Doisch lääse. Hie duur fräi wääle twiske apene un ferstoppede Koarten. Ferstoppede Koarten duurden foar dän Uuttuusk nit ienkieked wäide. Ju uuttuuskede Koarte wäd apen ap dän Ouleegedienst laid."
+        },
+        "title": "Runde-Start",
+        "choice": "Keuze {number}",
+        "content-1": "De Speler kon de eerste Koarte wähle, ju uut dän Ouloage-Stapel uumekoard wuude",
+        "content-2": "of ju eerste Koarte mäd ju Bielde ätter unner fon dän Luudestapel",
+        "choice-2": {
+          "title": "Keuze 2:",
+          "description": "Nim ju eerste Koarte mäd ju Bielde ätter unnen fon dän Täkstapel.",
+          "content-1": "De Spöler kann sik ju Koarte ankiekje un sik uutsäike, of hie ju foar een fon sien Koarten (ferstäärken of sjoobar) uuttuuske wol of ju wächsmiede wol. Wan hie ju leekene Koarte behoolde wol, tuusket hie ju mäd een fon sien Koarten, as buppe in de {0} beschrieuwen",
+          "choice-1": "Keuze 1",
+          "content-2": "Wan he de tilde Koarte nit hoolde wol, dan lait he ju ap dän Ouloagestapel un mout een fon sien Koarten apende truch uumekeehre."
+        },
+        "end-of-turn": "Sien Tour is dan to Ende, un de {nextPlayer} is an de Reihe (mit de Klok wie)."
+      },
+      "scoring": {
+        "title": "Punkte",
+        "first-to-finish": {
+          "note": {
+            "title": "Bitje beachte:",
+            "content": "Disse Regel jält bloot foar positive Punkte!"
+          },
+          "content": "Wan de Speler, die ju Runde ousleeten häd (die 1. die aal sien Koarten uumelääsen häd), strikt nuumen, nit ju läichste Punkte-Antaal foar disse Runde kreegen häd, dan wäd ju Summe fon sien Punkte foar disse Runde ferdubbelje."
+        },
+        "example": {
+          "title": "Biespil:",
+          "content": "Speler A wiest al sien Koarten un Slutt de Runne af. An dat Enn' vun de Runne hett he 10 Punkte, Speler B hett 24 Punkte un Speler C hett ok 10 Punkte. Wiel Speler A nich strikt de leegste Tall an Punkte hett, wurrn sien Punkte verdubbelt to 20."
+        },
+        "description": "Spölers, do noch Koarten ferkehrt liggen hääbe, draaie do nu ap. Älke Spöler tält sien ganse Punkte.",
+        "list": {
+          "content-1": "Wan dät Totaal fon Punkte positiev is, dan lukket er dät tou dät Totaal fon Punkte fon do foarige Rubben.",
+          "content-2": "Is dät Totaal negativ, wäd dät fon do {total_points} fon do foarige Ruunden subtrahiert."
+        }
+      },
+      "cards-section-title": "{number} Speelkorten:",
+      "game-goal": {
+        "title": "Spul-Siel",
+        "content": "Dat Skyjo-Speel warrt över mehrder Runnen speelt un is to Enn, so gau as een Spöler 100 Punkte oder mehr hett. De Spöler mit de minnsten Punkte winnt dat Speel."
+      },
+      "round-preparation": {
+        "title": "Runde Foarbereedeng",
+        "content-1": "Eerst warrt {card_count} Koarten mit de Achtersiet na baven an jedeen Spöler utdeelt. Dernaa warrt een Koort ut de Treckstapel mit de Vördersiet na baven in de Midden vun de Disch leggt, un billt so de Anfang vun de Afleggstapel. De restlichen Koorten warrt mit de Achtersiet na baven blangen'anner leggt un billt de Treckstapel.",
+        "content-2": "Elke Spöler lääset sien 12 Koarten in fjauer Riegen fon tjo Koarten ferdäkt foar sik deel. Tou lääst dräit älke Spöler twoo Koarten ätter Woal ap."
+      },
+      "special-rule": {
+        "title": "Spezielle Regel:",
+        "content": "Wan n Speler 3 lieke Koarten in ne Riege häd, smit die Speler disse 3 Koarten wäch, truch dät hie do ap dän Ouleegebierich lait. Wan ne Riege fon lieke Koarten truch dät Uuttuuskjen mäd ne Koarte fon dän Luukebierich of Ouleegebierich kriegen wäd, mouten do tjo lieke Koarten altied ap dän Ouleegebierich laid wäide ätter ju uuttuuskede Koarte."
+      },
+      "round-end": {
+        "content-2": "Aal do ätterfoulgjende Spielere spiedje noch insen, uum ju Runde outousluuten.",
+        "title": "Eende fon ju Runde",
+        "content-1": "As n Speler aal sien Koarten openboard hät, dan hät er sien lääste Toorn spield."
+      },
+      "end-of-game": {
+        "title": "Eende fon't Spul",
+        "content": "An dät Eende fon älke Runde wäide do Punkte fon älke Spieler tou dän Totaalscore, die in do foarige Runden kriegen wuude, bietouföiged. Dät Spil eendet, sodraast n Spieler 100 Punkte of moor roaked. Die Spieler mäd dän läichsten Score wint dät Spil."
+      }
+    },
+    "SettingsDialog": {
+      "display": {
+        "title": "Wiesje",
+        "mobile": {
+          "switch-to-player-who-is-playing": "Automatisk wikselje nei de spiler, {who_is_playing}",
+          "title": "Mobiel",
+          "show-preview-opponents-cards": "Wies en Foorschau fon do Juunspreekerkoarten in ju Juunspreekerlieste"
+        },
+        "chat": {
+          "title": "Snak",
+          "chat-visibility": "Sichtboarhaid fon dän Chat",
+          "chat-notification-size": {
+            "label": "Grööte fon Tjoot-Bescheed",
+            "values": {
+              "small": "Lüttje",
+              "normal": "Normaal",
+              "big": "Groot"
+            }
+          }
+        },
+        "gameplay": {
+          "title": "Gameplay",
+          "gameboard-size": {
+            "big-warning": "Kann dat Display op mobiel stuk moake",
+            "values": {
+              "normal": "Normaal",
+              "big": "Groot"
+            },
+            "label": "Grööte fon dien Speelbrääd"
+          },
+          "enlarge-active-player-board": "Fergratterje dät Boord fon dän Spieler, die an de Riege is",
+          "timer": {
+            "label": "Wiesmodus för de Tiedteller",
+            "description": "Smart mode' wiest de timer an de heale Tied un de lääste 15 Sekunnen an.",
+            "modes": {
+              "never": "Nimmer",
+              "smart": "Klook",
+              "always": "Aaltied"
+            }
+          }
+        }
+      },
+      "audio": {
+        "volume": {
+          "label": "Luudstärke ({volume}%)"
+        },
+        "title": "Audio",
+        "toggle": {
+          "label": "Audio an"
+        }
+      },
+      "title": "Instellengen",
+      "general": {
+        "language-warn": "Bloot ap ju Startsiede tou annerjen",
+        "appearance": "Uutsjoon",
+        "title": "Algemeen",
+        "language": "Spräke"
+      }
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "kick-button": {
+          "label": "Träie",
+          "alt": "Smiet {playerName} rut"
+        },
+        "title": "Stäme, {playerName} ruuttosmieten",
+        "ignore-button": {
+          "alt": "Ignorjeer ju Stämme, uum {playerName} ruuttousmieten",
+          "label": "Overslaan"
+        }
+      },
+      "vote-succeeded": {
+        "title": "{playerName} is rutschmieten wuuden",
+        "description": "Ju Stämmenge uum {playerName} tou smiten is glukked."
+      },
+      "player-has-voted": {
+        "title": "Stäme, {playerName} ruuttosmieten",
+        "description": "Du hääst {vote, select, true {foar} false {juun} other {wääld}} stämd"
+      },
+      "vote-against-you": {
+        "title": "Stäm die {0} ruut tou smieten",
+        "description": "N Andrag, uut uus to smieten, is anfräiged wuuden."
+      },
+      "vote-failed": {
+        "title": "t Afstemmen, {playerName} ruut tou smieten, is misglukked",
+        "description": "D'r sünd nich genaug Stimmen, um {playerName} ruttosmieten"
+      },
+      "vote-against-you-failed": {
+        "title": "Du wuurnje nit rutschmeten",
+        "description": "D'r sünd nich noog Stimmen, {0} ruuttosmieten"
+      },
+      "vote-against-you-succeeded": {
+        "title": "Du bäst rutschmeten",
+        "description": "Spölers hääbe afstoomd, di ut dät Spöäl tu smieten."
+      },
+      "you-kick-player": {
+        "title": "Du hääst {playerName} ruutskmätjet"
+      },
+      "host-kick": {
+        "title": "{playerName} is fon de Host ut dät Spil smeten wuuden"
+      },
+      "host-kick-you": {
+        "title": "Du büst vun {host} ut dat Speel smeten worrn"
+      }
+    },
+    "ReportDialog": {
+      "title": "Melde {username}",
+      "select-message-placeholder": "Säik {a} Bouk",
+      "description": "Mälde de Gebruukersnaam of n Naricht van {username}, wan et ünnötich is.",
+      "report-username": "Mäld de Gebrukersnaam",
+      "report-message": "Meld en Naricht",
+      "select-message": "Säik de Naricht uut, ju Du mälde woltst",
+      "no-messages": "Keen Narichten fun dissen Benutser funnen",
+      "cancel": "Ofbreke",
+      "submit": "Bericht",
+      "toast": {
+        "report-submitted": {
+          "title": "Bericht inreicht",
+          "description": "Moin, danke för dien Bericht, du hest mithulpen, de Qualität vun't Speel to verbeetern."
+        }
+      }
+    },
+    "AppearanceSelect": {
+      "light": "Lucht",
+      "dark": "Dunkel",
+      "system": "Systeem"
+    },
+    "Chat": {
+      "title": "Snak"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Nachricht",
+      "button-title": "Sende",
+      "message-too-long": {
+        "description": "Ju Naricht is tou lang (max. 200 Teekene)"
+      },
+      "unknown-command": {
+        "description": "Uunbekoanden Befäl"
+      }
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Bericht Nachriicht"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} unläsen Naricht{count, plural, =1 {} s}"
+    },
+    "CopyLink": {
+      "message": "Ferbunnung kopierd!",
+      "button-title": "Kopier Link"
+    },
+    "EndRoundDialog": {
+      "description": "De naiste Runde fangt in {seconds} Sekunnen an…",
+      "title": "Eende fon ju Runde"
+    },
+    "DiscardPile": {
+      "title": "Ofläächpel",
+      "throw": "Smiet"
+    },
+    "DrawPile": {
+      "title": "Tekstapel"
+    },
+    "Feedback": {
+      "title": "Lät en Feedback tourüch",
+      "description": "Du koanst uus n Feedback schrieuwe, uum uus tou hälpen, dät Spil tou ferbeeterjen.",
+      "toast": {
+        "success": {
+          "title": "Moin, danke för dien Feedback!",
+          "description": "Jouw Insichten hääbe uus holpen, uus Spul-Websteed to ferbeetern, un wi sände die deerfoar wuddelk dankboar."
+        },
+        "error": {
+          "title": "N Fehler is apkeemen, fersäik et jädden wier."
+        }
+      },
+      "email-input": {
+        "label": "Dien E-Mail (fakultativ)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Dien Naricht",
+        "placeholder": "Deel uus dien Meenenge, Anmäärkengen of Wonske mit…"
+      },
+      "button-title": "Sende"
+    },
+    "Footer": {
+      "feedback": "Lät en Feedback tourüch",
+      "buy-game": "Koop dat Spul",
+      "explanation": "Wat is Skyjo?",
+      "rules": "Spulregeln",
+      "status": "Serverstatus",
+      "home": "Heem",
+      "release-notes": "Release-Notizen",
+      "privacy-policy": "Privacy policy",
+      "disclaimer": {
+        "not-affiliated": "Disse Websiede is neen Deel fon do Skäppere of Ferdeelere fon Skyjo",
+        "rights-owned": "Aal Gjuchte an dän Skyjo-Noome un ju Spilmechanik heere tou Alexander Bernhardt un Magilano",
+        "responsible-content": "De Besitter fon disse Siede is nit feroantwoudelk foar Inhoold, die fon Benutsere moaked wuude (Benutsernoomen, Ättergjuchte)"
+      },
+      "attribution": {
+        "avatars": "Avatare moaked fon Freepik - Flaticon"
+      }
+    },
+    "LanguageCombobox": {
+      "select-language": "Wähl Sproak",
+      "search-language": "Sproak söke",
+      "no-language-found": "Neen Sproake fuunen",
+      "locale": {
+        "de": "Düütsk",
+        "en": "Engelsk",
+        "es": "Spoansk",
+        "fr": "Frantsöösk",
+        "it": "Italienisk",
+        "br": "Brezhoneg",
+        "ta": "Tamil"
+      }
+    },
+    "MenuDropdown": {
+      "button": {
+        "aria-label": "Menü"
+      },
+      "rules": "Regeln",
+      "feedback": "Lät en Feedback tourüch",
+      "discord": "Discord",
+      "settings": "Instellengen"
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Juunspölers:"
+      }
+    },
+    "OpponentBoard": {
+      "disconnected": "De Spöler is ut dat Speel gungen. N Bot wirt nu för him spöle bit he wier online is."
+    },
+    "PlayerBoard": {
+      "you": "Du"
+    },
+    "PWABanner": {
+      "title": "Installier Skymo ap dien Reedschap!",
+      "Safari": "Tippje dat Deel-Ikoon, dan 'An't Dock touföigje' uum tou installierjen",
+      "Chrome": "Klickje op de 'Install' Knop, uum tou installierjen",
+      "FirefoxAndroid": "Tippje ap dät Menü-Ikon, dan 'Tou Startsied touföigje' uum tou installierjen",
+      "ChromeAndroid": "Tippje ap dät Menü-Ikon, dan 'Tou Startsied touföigje' uum tou installierjen",
+      "SamsungBrowser": "Tippje op dät Menü-Ikoon, dan 'Siede touföigje tou', dan 'Startschierm' uum tou installierjen",
+      "ChromeIOS": "Tippje op dät Deel-Ikoon, scrollje un tippje dan op 'Tou Startschierm touföigje' uum tou installierjen",
+      "FirefoxIOS": "Tippje dat Menü-Ikoon, dan dat Deel-Ikoon, scrollje dan un tippbje 'Tou Startsäärge touföögje' uum tou installierjen",
+      "SafariIOS": "Tippje op dät Deel-Ikoon, scrollje un tippje dan op 'Tou Startschierm touföigje' uum tou installierjen",
+      "install-button": {
+        "title": "Installier de App",
+        "content": "Installere"
+      }
+    },
+    "RulesDialog": {
+      "title": "Spulregeln",
+      "trigger": {
+        "aria-label": "Wies Spulregeln"
+      }
+    },
+    "ScoreSheet": {
+      "see-scores": "Kiek de Punkte"
+    },
+    "Scoreboard": {
+      "button-title": "Wies {score_type} an"
+    },
+    "ScoreDialog": {
+      "title": "Punkte",
+      "description": "{name} häd wunnen mäd {score} Punkte !"
+    },
+    "ScoreTable": {
+      "name": "Noome",
+      "round": "Rund",
+      "total": "Totaal"
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Melde {username}",
+        "kick": "Smiet {username} ruut",
+        "vote-to-kick": "Stämme {username} ruut",
+        "ban": "Ferbanne {username}",
+        "mute": "Stil {username}",
+        "unmute": "Ton an {username}"
+      }
+    },
+    "AfkKick": {
+      "warning": {
+        "title": "AFK-Woarschau",
+        "description": "Du wäärst ut dät Spil smeten, wan du inaktiv blieuwen dääst."
+      },
+      "kicked": {
+        "title": "Rutschmieten weegen Inaktivität",
+        "description": "Du büst ut dät Spul smeten wuuden, deeruum dät du tou oafte AFK waas."
+      },
+      "player-kicked": {
+        "title": "Spöler rutschmeten",
+        "description": "{playerName} is ut dät Spil smeten wuuden weegen Inaktivität."
+      }
+    }
+  },
+  "utils": {
+    "chat": {
+      "player-joined": "{username} is in dät Spil keemen",
+      "player-left": "{username} is ut dät Spul geen",
+      "player-reconnect": "{username} is wier in't Spul keemen",
+      "wizz-sent": "Du hääst n Wizz an {targetUsername} soand!",
+      "argument-required": "Een of meer Argumente sünd nödig foar Befehl: {command}",
+      "player-already-muted": "{username} is al stilskalt",
+      "player-muted": "{username} is nu stom moaked",
+      "player-not-muted": "{username} is nich stumm schalten",
+      "player-unmuted": "{username} is nu nich mehr stumm schalten",
+      "wizz-self": "Du bäst wizzed {initiatorUsername}!",
+      "wizz-other": "{initiatorUsername} het {targetUsername} anwizzed!"
+    },
+    "avatar": {
+      "toucan": "toucan",
+      "turtle": "Schildpadd",
+      "bee": "Imme",
+      "crab": "Krabbe",
+      "dog": "Hund",
+      "eagle": "Aadler",
+      "elephant": "Elefant",
+      "koala": "Koala",
+      "octopus": "Oktopus",
+      "penguin": "Pinguin",
+      "fox": "Fuchs",
+      "whale": "Waalfisk",
+      "frog": "Paddje",
+      "jellyfish": "Kwabbel",
+      "owl": "Uul",
+      "cat": "Kat"
+    },
+    "socket": {
+      "error": {
+        "rate-limit": {
+          "description": "Wachje asjebleeft n poor Sekunde, eer Se et nochmoals versäike",
+          "title": "Du schickst toufuul Anfroagen"
+        },
+        "timeout": {
+          "description": "De Server bruukt langer as verwacht, uum tou antoordjen. Du koanst versäike, de Siede näi tou leeden un et nochmoals tou versäiken."
+        },
+        "game-not-found": {
+          "description": "Dät Spil, dät Du soekst, rakt et nit"
+        },
+        "cannot-reconnect": {
+          "description": "Dat is nu nich langer möögelk, sik weer mit dat Speel to verbunnen, de Tied, sik weer to verbunnen, is aflopen"
+        },
+        "game-is-full": {
+          "description": "t Spul is ful, du koanst nit meedoen"
+        },
+        "game-already-started": {
+          "description": "Dat Spööl is al anfangen"
+        },
+        "player-banned": {
+          "description": "Du bäst ut dissen Spööl utsleeten"
+        }
+      }
+    },
+    "skymo": {
+      "waiting-opponents-to-turn-cards": "Wachtsje op {nbOpponents, plural, =1 {juun Juunspöiler} other {Juunspöilere}} uum {number} Koarte{number, plural, =1 {} other {n}} tou luuken",
+      "turn": {
+        "chooseAPile": "Säik {pile_count} Stäppel",
+        "throwOrReplace": "Uutwesselen of wächsmieten",
+        "replaceACard": "Ne Koarte uutwiedselje",
+        "turnACard": "N Koarte draaie"
+      },
+      "player-turn": "T is {playerName} sien Tour",
+      "last-turn": "Lääste Tour!",
+      "waiting": "Wachtje op Spölers",
+      "game-stopped": "Speel stopped",
+      "round-over": "Runde is to Ende",
+      "game-ended": "Spul foarby!",
+      "turn-cards": "Draai {number} Koarte{number, plural, =1 {} other {n}}"
+    }
+  },
+  "contexts": {
+    "BanContext": {
+      "not-allowed": {
+        "description": "Du hest {keene} Ferlöövnis, n Speler tou bannen",
+        "title": "Du hest {permission} nit, {action} to bannen"
+      },
+      "player-not-found": {
+        "title": "De Spöler, die {player} speere skäl, is der nich",
+        "description": "De Speler, die {0} spele, is nit in de Spöle"
+      },
+      "player-banned": {
+        "title": "{playerName} is spärd wuuden",
+        "description": "{playerName} is fon dän Host speerd wuuden"
+      },
+      "you-were-banned": {
+        "title": "Du bäst spärd wurrn",
+        "description": "Du büst dän Speel fon dän Host ferbeeden wuuden"
+      },
+      "unexpected-error": {
+        "title": "N uunferwachted Fehler is apkeemen",
+        "description": "Där is n uunferwachted Fehler aptreeden, as n Speler ferbeeden wuude"
+      }
+    },
+    "ReportContext": {
+      "report-against-you": {
+        "description": "Dien Gebruukersnoome of een fon dien Ättergjuchte wuude anmälded un wuude as uungungend ienskät. Wät dät Verhoolden nit wier.",
+        "title": "Du büst rutschmeeten {gender:word:wuuden|wuuden} weegen n Melden"
+      },
+      "report": {
+        "title": "{playerName} is rutschmieten wuuden weegen n Mäldenge"
+      }
+    },
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "title": "Spul nich funnen",
+          "description": "Dät Späl, wier Du fersoacht hääst wier tou ferbienden, bestoant nit moor"
+        }
+      },
+      "connection-lost": "Ferbinnen ferlearen. Besykje opnij te ferbinen...",
+      "reconnection": "Ferbinnen wier glükt"
+    }
+  }
+}

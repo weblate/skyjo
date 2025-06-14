@@ -1,0 +1,769 @@
+{
+  "components": {
+    "Rules": {
+      "scoring": {
+        "first-to-finish": {
+          "content": "Wenn de Speler, de Runn afslaten hett (de eerste, de all sien Koorten ümdreiht hett), nich, streng nahmen, de minnste Tall Punkten för disse Runn kregen hett, denn warrt de Summ vun sien Punkten för disse Runn verdubbelt.",
+          "note": {
+            "title": "Beacht warrt:",
+            "content": "Disse Regel gellt blots för positive Punkten!"
+          }
+        },
+        "title": "Punkten",
+        "description": "Spelers, de noch Koorten verdeckt hefft, dreihn de op. Elk Speler tellt sien sammelten Punkten.",
+        "list": {
+          "content-1": "Wenn de Punkttall positiv is, denn leggt he de to de Punkttall vun de vörigen Runnen to.",
+          "content-2": "Wenn dat Ganze negativ is, warrt dat vun de Gesamttall Punkten vun de vörigen Runnen aftrocken."
+        },
+        "example": {
+          "title": "Bispill:",
+          "content": "Speler A wiest all sien Koorten un maakt de Runn to Enn. An't Enn vun de Runn hett he 10 Punkten, Speler B hett 24 Punkten un Speler C hett ok 10 Punkten. Wiel Speler A nich strikt de leegste Tall an Punkten hett, warrt sien Punkten op 20 verdubbelt."
+        }
+      },
+      "round-start": {
+        "choice-1": {
+          "title": "Wahl 1:",
+          "description": "Nehm de eerste Koort vun den Ablagestapel.",
+          "content": "De Speler mutt disse Koort foorts mit een vun sien 12 Koorten tuuschen un se apen henleggen. He kann free wählen twüschen apene un verdeckte Koorten. Verdeckte Koorten dröövt vör den Tuusch nich ankeken warrn. De tuuschte Koort warrt apen op den Afleggstapel leggt."
+        },
+        "title": "Rundstart",
+        "choice": "Wahl {number}",
+        "content-1": "De Speler kann de eerste Kaart, de vun den Affleggstapel ümdreiht warrt, utsöken",
+        "content-2": "oder de eerste Kaart mit de Ünnersiet na baven vun den Treckstapel",
+        "choice-2": {
+          "title": "Wahl 2:",
+          "description": "Neem de eerste Koort mit de Siet na ünnen vun den Treckstapel.",
+          "content-1": "De Speler kann sik de Koort ankieken un utsöken, wat he de gegen een vun sien Koorten (versteken oder sichtbor) uttuuschen oder afleggen will. Wenn he de trocken Koort behollen will, tuuscht he de mit een vun sien Koorten ut, so as baven in de",
+          "choice-1": "Wahl 1",
+          "content-2": "Wenn he de trocken Koort nich behollen will, leggt he se op den Afleggstapel un mutt een vun sien Koorten apenleggen."
+        },
+        "end-of-turn": "Sien Toog is denn vörbi, un de nächste Speler is an de Reeg (in'n Klockenwiesersinn)."
+      },
+      "special-rule": {
+        "title": "Sünnerregel:",
+        "content": "Wenn en Speler 3 lieke Koorten in en Reeg hett, smitt de Speler disse 3 Koorten weg, indem he se op den Afleggstapel leggt. Wenn en Reeg vun lieke Koorten dör en Tuusch mit en Koort vun den Treckstapel oder Afleggstapel tostann kummt, mööt de dree lieken Koorten jümmer op den Afleggstapel leggt warrn na de tuuschte Koort."
+      },
+      "end-of-game": {
+        "title": "Enn vun't Speel",
+        "content": "An't Enn vun jede Runn warrt de Punkten vun jeden Speler to dat Gesamtresultat ut de vörigen Runnen dorto rekent. Dat Speel is to Enn, so gau as en Speler 100 Punkten oder mehr hett. De Speler mit de minnsten Punkten winnt dat Speel."
+      },
+      "cards-section-title": "{number} Speelkorten:",
+      "game-goal": {
+        "title": "Speel-Teel",
+        "content": "Dat Skyjo-Speel warrt över mehrere Runnen speelt un is to Enn, so gau as en Speler 100 Punkten oder mehr hett. De Speler mit de minnsten Punkten winnt dat Speel."
+      },
+      "round-preparation": {
+        "title": "Rund Vörbereiden",
+        "content-1": "Toeerst kriggt jeedeen Speler 12 Koorten verdeckt utdeelt. Dorna warrt een Koort vun’n Treckstapel apen in de Midd vun’n Disch leggt un billt so den Anfang vun’n Afleggstapel. De restlichen Koorten warrt verdeckt blangen’anner leggt un billt den Treckstapel.",
+        "content-2": "Elk Speler leggt sien 12 Koorten in veer Regen vun dree Koorten verdeckt vör sik hen. Toletzt dreht elk Speler twee Koorten na Wahl apen."
+      },
+      "round-end": {
+        "title": "Enn vun de Runn",
+        "content-1": "Wenn en Speler all sien Koorten opdeckt hett, hett he sien letzten Tog speelt.",
+        "content-2": "All nafolgen Spelers speelt noch eenmal, üm de Runn vull to maken."
+      }
+    },
+    "DrawPile": {
+      "title": "Treckstapel"
+    },
+    "GameRules": {
+      "first-player-penalty-type": {
+        "3": "Eerst gliek, denn mal",
+        "label": "Straaf-Oort för den eersten Speler, wenn he nich de lüttste Tall an Punkten hett: ",
+        "1": "Blots Multiplikater",
+        "2": "Bloots Evenen",
+        "4": "Multiplikater denn gliek"
+      },
+      "button-title": "Wies Speelregeln",
+      "title": "Speelregeln",
+      "remove-identical-column": "Nimm Spool weg, wenn de Koorten liek sünd: {value, select, true {jo} false {nee} other {unbekannt}}",
+      "remove-identical-row": "Reeg rutnehmen, wenn Korten gliek sünd: {value, select, true {jo} false {nee} other {unbekannt}}",
+      "card-per-column": "Antall Spalten: {value}",
+      "card-per-row": "Tall Regen: {value}",
+      "initial-turned-count": "Antall Koorten, de an'n Anfang ümdreiht warrn mööt: {value}",
+      "score-to-end-game": "Tall vun Punkten, üm dat Speel to beenn: {value}",
+      "first-player-multiplier-penalty": "Multiplikater-Straaf: {value}",
+      "first-player-flat-penalty": "Faste Straaf: {value}"
+    },
+    "LanguageCombobox": {
+      "locale": {
+        "br": "Brezhoneg",
+        "de": "Düütsch",
+        "en": "Engelsch",
+        "es": "Spaansch",
+        "fr": "Franzöösch",
+        "it": "Italienisch",
+        "ta": "Tamil"
+      },
+      "select-language": "Spraak utsöken",
+      "search-language": "Söökspraak",
+      "no-language-found": "Keen Spraak funnen"
+    },
+    "RulesDialog": {
+      "title": "Speelregeln",
+      "trigger": {
+        "aria-label": "Wies Speelregeln"
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Wies de Punktetafel"
+    },
+    "SettingsDialog": {
+      "display": {
+        "chat": {
+          "title": "Snack",
+          "chat-visibility": "Snack-Sichtborkeit",
+          "chat-notification-size": {
+            "label": "Grött vun de Chat-Mellen",
+            "values": {
+              "small": "Lütt",
+              "normal": "Normal",
+              "big": "Groot"
+            }
+          }
+        },
+        "title": "Anwiesen",
+        "mobile": {
+          "title": "Mobil",
+          "switch-to-player-who-is-playing": "Wessel automaatsch to den Speler, de jüst speelt",
+          "show-preview-opponents-cards": "Wies en Vörschau vun de Koorten vun de Gegners in de Gegnerlist"
+        },
+        "gameplay": {
+          "title": "Speelwies",
+          "gameboard-size": {
+            "label": "Grött vun dien Speelbrett",
+            "big-warning": "Kann Display op Mobil kaputt maken",
+            "values": {
+              "normal": "Normal",
+              "big": "Groot"
+            }
+          },
+          "enlarge-active-player-board": "Vergrötter dat Brett vun den Speler, de an de Reeg is",
+          "timer": {
+            "label": "Tietanzeigmodus",
+            "description": "De kloge Modus wiest den Timer bi Halftiet un de letzten 15 Sekunnen.",
+            "modes": {
+              "never": "Nienich",
+              "smart": "Kloog",
+              "always": "Jümmer"
+            }
+          }
+        }
+      },
+      "title": "Instellungen",
+      "general": {
+        "title": "Generaal",
+        "language": "Spraak",
+        "language-warn": "Bloots op de Startsiet to ännern",
+        "appearance": "Utsehn"
+      },
+      "audio": {
+        "title": "Audio",
+        "toggle": {
+          "label": "Toon anmaken"
+        },
+        "volume": {
+          "label": "Luudstärk ({volume}%)"
+        }
+      }
+    },
+    "KickVote": {
+      "vote-against-you-succeeded": {
+        "description": "De Spelers hebbt afstimmt, di ut dat Speel to smieten.",
+        "title": "Du büst rutschmeten worrn"
+      },
+      "player-has-not-voted": {
+        "title": "Stimm för't Rutschmieten vun {playerName}",
+        "kick-button": {
+          "alt": "Smiet {playerName} rut",
+          "label": "Kick"
+        },
+        "ignore-button": {
+          "alt": "Överseeh de Afstimmen, {playerName} ruttosmieten",
+          "label": "Översehn"
+        }
+      },
+      "player-has-voted": {
+        "title": "Stimm för't Rutschmieten vun {playerName}",
+        "description": "Du hest {vote, select, true {för} false {gegen} other {afstimmt}} stimmt"
+      },
+      "vote-against-you": {
+        "title": "Stimm di ruttosmieten",
+        "description": "En Afstimmen, üm di ruttosmieten, is anfraagt worrn."
+      },
+      "vote-failed": {
+        "title": "De Afstimmen, {playerName} ruttosmieten, is scheefgahn",
+        "description": "Dor sünd nich noog Stimmen, üm {playerName} ruttosmieten"
+      },
+      "vote-against-you-failed": {
+        "title": "Du wörrn nich sparrt",
+        "description": "Dor sünd nich noog Stimmen, üm di ruttosmieten"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} is rutschmeten worrn",
+        "description": "De Afstimmen, {playerName} ruttosmieten, hett Spood hatt."
+      },
+      "you-kick-player": {
+        "title": "Du hest {playerName} rutsmeten"
+      },
+      "host-kick": {
+        "title": "{playerName} is vun'n Host ut dat Speel smeten worrn"
+      },
+      "host-kick-you": {
+        "title": "Du büst vun'n Host ut dat Speel smeten worrn"
+      }
+    },
+    "AfkKick": {
+      "player-kicked": {
+        "title": "Speler rutschmeten",
+        "description": "{playerName} is ut dat Speel smeten worrn, vun wegen dat he nich aktiv weer."
+      },
+      "warning": {
+        "title": "AFK Wohrschoo",
+        "description": "Du warrst ut dat Speel smeten, wenn du inaktiv bliffst."
+      },
+      "kicked": {
+        "title": "Rutsmeten wegen Untätigkeit",
+        "description": "Du büst ut dat Speel smeten worrn, wiel du to faken AFK weerst."
+      }
+    },
+    "ReportDialog": {
+      "no-messages": "Keen Narichten vun dissen Bruker funnen",
+      "title": "Mell {username}",
+      "report-username": "Mell den Brukernaam",
+      "description": "Meld den Brukernaam oder en Naricht vun {username}, wenn dat unpassend utsütt.",
+      "report-message": "Mell en Naricht",
+      "select-message": "Söök de Naricht ut, de mellt warrn schall",
+      "select-message-placeholder": "Söök en Naricht ut",
+      "cancel": "Afbreken",
+      "submit": "Bericht",
+      "toast": {
+        "report-submitted": {
+          "title": "Bericht inlevert",
+          "description": "Hartlichen Dank för dien Bericht, du hest dormit hulpen, de Qualität vun't Speel to verbetern."
+        }
+      }
+    },
+    "AppearanceSelect": {
+      "light": "Licht",
+      "dark": "Düster",
+      "system": "System"
+    },
+    "Chat": {
+      "title": "Snack"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Naricht",
+      "button-title": "Sennen",
+      "message-too-long": {
+        "description": "De Naricht is to lang (max 200 Teken)"
+      },
+      "unknown-command": {
+        "description": "Unbekannt Kommando"
+      }
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Meldung mellen"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} unlesene Naricht{count, plural, =1 {} other {en}}"
+    },
+    "CopyLink": {
+      "message": "Koppel kopeert!",
+      "button-title": "Kopieer Lenk"
+    },
+    "DiscardPile": {
+      "title": "Aflaggstapel",
+      "throw": "Smiet"
+    },
+    "EndRoundDialog": {
+      "title": "Enn vun de Runn",
+      "description": "De nächste Runn fangt in en poor Sekunnen an…"
+    },
+    "Feedback": {
+      "title": "Giff en Feedback",
+      "description": "Du kannst uns en Feedback schrieven, üm uns to helpen, dat Speel to verbetern.",
+      "toast": {
+        "success": {
+          "title": "Dank di för dien Torüchmellen!",
+          "description": "Dien Insichten hebbt uns hulpen, uns Speelwebsteed to verbetern, un wi sünd di wohrhaftig dankboor."
+        },
+        "error": {
+          "title": "Dor is en Fehler passeert, versöök dat noch mal."
+        }
+      },
+      "email-input": {
+        "label": "Dien E-Mail (kannst du ingeven)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Dien Naricht",
+        "placeholder": "Vertell uns, wat du denkst, noteer oder wullt to…"
+      },
+      "button-title": "Sennen"
+    },
+    "Footer": {
+      "feedback": "Giff en Feedback",
+      "buy-game": "Koop dat Speel",
+      "explanation": "Wat is Skyjo?",
+      "rules": "Speelregeln",
+      "status": "Serverstatus",
+      "home": "Heem",
+      "release-notes": "Rutkamen-Narichten",
+      "privacy-policy": "Datenschuulverkloren",
+      "disclaimer": {
+        "not-affiliated": "Disse Websteed is nich verbunnen mit de Makers oder Verköpers vun Skyjo",
+        "rights-owned": "All Rechten an den Naam Skyjo un de Speelmechanik sünd Eegendom vun Alexander Bernhardt un Magilano",
+        "responsible-content": "De Eegener vun disse Siet is nich verantwoortlich för Inholt, de vun Brukers maakt warrt (Bruker-Naams, Narichten)"
+      },
+      "attribution": {
+        "avatars": "Avatars maakt vun Freepik - Flaticon"
+      }
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Wedder mit dat Speel verbinnen",
+      "join-game-button": "Maak bi't Speel mit",
+      "find-game-button": "Söök en Speel",
+      "create-game-button": "Maak en {type, select, private {privaat} public {apen} other {unbekannt} } Speel"
+    },
+    "MenuDropdown": {
+      "button": {
+        "aria-label": "Spieskoort"
+      },
+      "rules": "Regeln",
+      "feedback": "Giff en Feedback",
+      "discord": "Discord",
+      "settings": "Instellungen"
+    },
+    "OpponentBoard": {
+      "disconnected": "De Speler hett dat Speel verlaten. En Bot warrt för em spelen in de nächsten poor Törns, bet he sik wedder verbinnen deit."
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Gegners:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Du"
+    },
+    "PWABanner": {
+      "title": "Install Skymo op dien Reedschop!",
+      "Safari": "Tipp dat Deel-Icoon an, denn 'To'n Dock tofögen' to'n Installeren",
+      "Chrome": "Klick op den 'Install'-Knoop, üm to installeren",
+      "FirefoxAndroid": "Tipp dat Menü-Icoon an, denn 'To Startbildschirm tofögen' to'n Installeren",
+      "ChromeAndroid": "Tipp dat Menü-Icoon an, denn 'To Startbildschierm tofögen' to'n Installeern",
+      "SamsungBrowser": "Tipp dat Menü-Icoon an, denn 'Siet tofögen to', denn 'Startbildschirm' to'n Installeren",
+      "ChromeIOS": "Tipp dat Deel-Icoon an, rull denn un tipp 'To Startbildschirm tofögen' an, üm dat to installeern",
+      "FirefoxIOS": "Tipp dat Menü-Icoon an, denn dat Deel-Icoon, rull denn rünner un tipp 'To'n Startbildschirm tofögen' an, üm to installeren",
+      "SafariIOS": "Tipp dat Deel-Icoon an, rull denn un tipp 'To Startbildschirm tofögen' an, üm dat to installeern",
+      "install-button": {
+        "title": "Installier de App",
+        "content": "Installeren"
+      }
+    },
+    "ScoreDialog": {
+      "title": "Punktetall",
+      "description": "{name} hett wunnen mit {score} Punkten!"
+    },
+    "ScoreSheet": {
+      "see-scores": "Kiek de Resultaten"
+    },
+    "ScoreTable": {
+      "name": "Naam",
+      "round": "Rund",
+      "total": "Alltohoop"
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Mellen {username}",
+        "kick": "Smiet {username} rut",
+        "vote-to-kick": "Stimm för't Rutschmieten vun {username}",
+        "ban": "Sperr {username}",
+        "mute": "Stumm schalten {username}",
+        "unmute": "Stille vun {username} nehmen"
+      }
+    }
+  },
+  "pages": {
+    "Search": {
+      "head": {
+        "description": "Sökst du en Skymo-Speel, wo du mitmaken kannst? Kiekt di de apentlichen Spelen an un fangt glieks an, Skyjo online mit annere Spelers to spelen. Speel nu gratis!",
+        "title": "Finn apentliche Skymo-Spelen | Speel Skyjo Online",
+        "keywords": "Skymo,Skyjo,Skyjo online,Speel finnen,Speel bipeddern,apen Spelen,online Mehrspeler,mit annern spelen,fix spelen,kostenlose online Spelen,apen Spelen,online Koortenspeel,Mehrspeler Koortenspeel"
+      },
+      "header": {
+        "back": "Trüch na de Startsiet",
+        "title": "Apenliche Spelen",
+        "create-button": {
+          "title": "Maak en apen Speel"
+        },
+        "refresh": "Frisch de Spelenlist op"
+      },
+      "tags": {
+        "title": "Filters:",
+        "no-tags-available": "Keen Tags mehr to kriegen",
+        "tag": {
+          "classic": "Klassisch",
+          "custom": "Sülvst maakt",
+          "column": "Koolonn",
+          "row": "Reeg",
+          "short-game": "Kort Speel",
+          "long-game": "Lang Speel"
+        }
+      },
+      "no-games-found": "Keen Spelen funnen",
+      "game-of": "{name} sien Speel"
+    },
+    "Lobby": {
+      "settings": {
+        "nb-columns": {
+          "label": "Tall vun Spalten",
+          "title": "$number Spalten"
+        },
+        "initial-turned-count": {
+          "label": "Tall vun Koorten, de toeerst opdeckt warrt",
+          "title": "Bi'n Anfang vun't Speel warrt {number} vun dien Koorten opdeckt"
+        },
+        "private": {
+          "tooltip": {
+            "on": "Dit Speel is privat, bloots Lüüd mit den Lenk köönt mitmaken",
+            "off": "Disse Deel is apen, elkeen kann mitmaken, nadem de Parameter nakeken sünd"
+          }
+        },
+        "reset-settings": "Instellen torüchsetten",
+        "validation-warning": "Speelinstellen köönt nich ännert warrn, wenn se eenmal bestätigt sünd",
+        "validate-settings": "Instellen nakieken",
+        "max-players": {
+          "label": "Maximaltall vun Spelers",
+          "title": "Gröttste Tall Spelers: {number}"
+        },
+        "remove-identical-column": "Schoon lieke Spalten weg",
+        "score-to-end-game": {
+          "title": "Dat Speel is to Enn, wenn en Speler {number} Punkte hett",
+          "label": "Maak den Punkt, üm dat Speel to beenn'n"
+        },
+        "remove-identical-row": "Identische Regen wegmaken",
+        "first-player-penalty-type": {
+          "label": "Eerste Speler Straaf-Typ",
+          "description": "Straaf warrt anwennt, wenn de eerste Speler, de all sien Koorten wiest, nich de lüttste Tall an Punkten hett (gellt nich, wenn de Punkttall lütter oder liek 0 is)",
+          "placeholder": "Söök en Straaf-Typ ut",
+          "item": {
+            "multiplier-only": "Blots Multiplikater",
+            "flat-only": "Bloots Evenhuus",
+            "flat-then-multiplier": "Eerst Fast denn Multiplikater",
+            "multiplier-then-flat": "Multiplikater denn Flat"
+          }
+        },
+        "nb-rows": {
+          "label": "Tall vun Regen",
+          "title": "$number Regen"
+        },
+        "show-current-score": {
+          "label": "Wies den aktuellen Punktestand wiel dat Speel"
+        },
+        "first-player-flat-penalty": {
+          "label": "Eerste Speler maakt flache Straaf",
+          "title": "Noch {number} Punkten warrt to dat Resultaat vun den eersten Speler toföögt"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Eerste Speler Straaf-Multiplikater-Score",
+          "title": "De Punktetall vun den eersten Speler warrt mit {number} multiplizeert, wenn se nich strikt lütter is as de annern Punktetallen vun dat Speel"
+        }
+      },
+      "title": "{name} sien Speel",
+      "leave-to-home": "Gah na de Startpagina",
+      "leave-to-public-game-list": "Na de apenliche Speellist övergahn",
+      "go-back-to-settings": "Gah torüch na de Instellungen",
+      "start-game-button": "Fang dat Speel an",
+      "cancel": "Afbreken",
+      "game-starting-in": "Speel fangt an in {seconds}",
+      "waiting-host-to-start": "Wachten, dat de Host dat Speel anfangt",
+      "waiting-host-to-confirm-game-settings": "Wachten, dat de Host de Instellungen nakeken hett",
+      "player-section": {
+        "title": "Spelers {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Söök en Tall Spelers ut",
+          "item": "{value} Spelers"
+        }
+      },
+      "not-enough-players-modal": {
+        "title": "Nich noog Spelers",
+        "description": "Du musst tomindst twee Spelers wesen, üm dat Speel to starten.",
+        "public-description": "Nöög en Fründ in oder tööv, bit en annern Speler mitmaken deit.",
+        "private-description": "Bruuk den privaten Lenk, üm Frünnen intoladen!",
+        "close": "Ik verstah"
+      }
+    },
+    "ResultsPage": {
+      "rank": "Rang",
+      "title": "Speelergevnisse",
+      "player": "Speler",
+      "score-per-round": "Punkten per Runn",
+      "total": "Alltohoop",
+      "player-want-to-replay": "Spelers, de noch mal spelen wüllt:",
+      "replay-button": {
+        "cancel": "Nich wedder afspelen",
+        "replay": "Wedder afspelen"
+      },
+      "leave-button": "Verlaat dat Speel"
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "local-storage-data": {
+            "items": "Spraakinstellen;;Speelinstellen",
+            "title": "Lokaal Spieker-Daten",
+            "description": "Wi spiekert in dien Nettkieker sien lokaal Spieker:"
+          },
+          "title": "Informatschonen, de wi sammelt",
+          "anonymous-usage-data": {
+            "title": "Anonyme Bruukdaten",
+            "description": "Wi bruukt PostHog, en Analyse-Warktüüch, üm anonyme Daten doröver to sammeln, woans du uns Websteed bruukst. Dorto höört:",
+            "items": "Siedenansichten;;Web-Vitals (Performance-Metriken);;Ümfragenantwoorten (wenn du deelnehmen wullt)"
+          },
+          "user-provided-information": {
+            "title": "Vun Brukers ingeven Informatschoon",
+            "description": "Wi sammelt:",
+            "items": "Trüggmellen-Formular-Insennen (insluutend fakultative E-Mail-Adressen)"
+          },
+          "game-data": {
+            "title": "Speeldaten",
+            "description": "Wi spiekert vörlöpig:",
+            "items": "Brukernamens un Avatar-Utwahl;;Speelelementen un Vörankamen"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "Wi bruukt nödige Cookies, üm de Karnfunkschoon vun uns Websteed to mööglich to maken:",
+            "items": "Sitzungs-Cookies: Wi bruukt en Sitzungs-Cookie (skymo-io), üm Dien Verbinnen to uns Speelservers to hollen. Dit Cookie is nödich för de Funkschoon vun dat Speel un löppt na 24 Stünnen af;;Disse Cookies verfolgt Di nich över Websteden henweg un warrt blots bruukt, üm den Deenst to levern, den Du anfraagt hest"
+          }
+        },
+        "back": "Trüch na de Startsiet",
+        "title": "Datenschuulverkloren",
+        "last-update": {
+          "text": "Toletzt aktualiseert: {date}",
+          "date-format": "JJJJ-MM-DD - hh:mmA"
+        },
+        "how-we-use-your-information": {
+          "title": "Wo wi Dien Informatschonen bruukt",
+          "items": "Verbetert uns Websteed un Brukerbeleven;;Analyseer Bruuksmuster un Performance;;Antwoort op Feedback un Supportanfragen;;Maakt dat Speel mööglich"
+        },
+        "data-storage-and-retention": {
+          "title": "Datenspeicherung un -beholden",
+          "items": "Anonyme Bruukdaten warrt op Servers binnen de Europääsche Union spiekert un bet to 1 Johr fasthollen;;Speeldaten warrt in uns Datenbank in Frankfort an'n Main, Düütschland, spiekert. Disse Daten warrt för de Duur vun aktive Spelen behollen. Wenn all Spelers en Speel verlaten hebbt, warrt de tohören Daten löscht;;Informatschonen, de in'n lokalen Spieker vun Dien Browser spiekert sünd, blievt dor, bet Du Dien Browserdaten löschen deihst;;Inschicken vun Feedback-Formularen warrt blots behollen, üm to antwoorten un Vörslääg för de Entwickeln to bedenken"
+        },
+        "data-sharing": {
+          "title": "Daten-Deelen",
+          "description": "Wi deelt Dien persöönlich Informatschoon nich mit drütte Parteien. Anonyme Bruukdaten warrt vun PostHog, unsen Analyse-Anbeder, verarbeidt."
+        },
+        "your-rights-and-choices": {
+          "title": "Dien Rechten un Wahlmööglichkeiten",
+          "description": "Wiel wi vör allen anonyme Daten sammelt, köönt wi kien persönliche Informatschonen to enkelte Brukers faststellen oder dorop togriepen. Man, du hest de nafolgen Rechten un Mööglichkeiten:",
+          "items": "Lokaal Spieker: Du kannst dien Browser sien lokaal Spieker jümmers leddig maken, üm spiekert Instellungen wegtonehmen;;Feedback: Wenn du Feedback mit en E-Mail-Adress afgeven hest, kannst du uns kontakten, üm dat Löschen to beandragen;;Analys-Opt-Out: Du kannst di vun de Sammeln vun Analys-Daten utmellen, indem du dien Browser sien \"Do Not Track\"-Instellen anstellst oder privacy-fokuseerte Browser bruukst, de Analys-Skripten blockeert;;Speel-Daten: Speel-relevante Daten warrt automaatsch löscht, wenn all Spelers en Speel verlaten doot"
+        },
+        "childrens-privacy": {
+          "title": "Kinner ehr Privatsphäär",
+          "description": "Skymo hett keen Öllersbeschränkungen. Wi sammelt nich wissentlich persönliche Informatschonen vun Kinner."
+        },
+        "changes-to-this-policy": {
+          "title": "Ännern an disse Politik",
+          "description": "Wi köönt disse Politik vun Tiet to Tiet aktualiseern. Wi warrt Di över all Ännern Bescheed geven, indem wi de ne’e Politik op disse Siet instellen doot."
+        },
+        "contact-us": {
+          "title": "Kuntakt opnehmen",
+          "description": "Wenn du Fragen to disse Datenschuulpolitik hest, nimm geern Kuntakt mit uns op över uns Feedback-Formular op de Websteed, unsen Discord-Server oder GitHub."
+        }
+      },
+      "head": {
+        "title": "Datenschuul | Skymo - Skyjo Online Koortenspeel",
+        "description": "Datenschutzerklärung för Skymo. Leer, woans wi dien Daten schuult, wiel du uns Skyjo Koortenspeel genietst. Dörsichtige Praktiken un en sekere Speelerfohren.",
+        "keywords": "Skymo,Skyjo,Skyjo Online,Privatsphärenrichtlienen,Dateschuul,Online-Speel-Privatsphäär,seker Speelen,Brukerdaten,DSGVO,CCPA,Datensekerheit"
+      }
+    },
+    "Rules": {
+      "title": "Skyjo Speelregeln",
+      "head": {
+        "title": "Woans man Skymo speelt | Skyjo Koortenspeel Online",
+        "description": "Lehr, woans du Skyjo speelst mit unsen Skymo-Wieser. Föhr de Regeln, Strategien un Tipps rut, üm dit lustige Online-Koortenspeel to meistern. Speel nu mit Frünnen!",
+        "keywords": "Skymo,Skyjo,Skyjo Regeln,woans speelt man Skyjo,Skyjo Speel,Koortenspeel Regeln,online Koortenspeel,Speelanwiesen,Speelguide"
+      }
+    },
+    "Index": {
+      "banner": {
+        "title": "Ik bruuk <gform>dien Feedback</gform>, üm de Tokunft vun Skymo to gestalten!"
+      },
+      "name-input-placeholder": "Naam",
+      "explanation": {
+        "title": "Wat is Skyjo?",
+        "button": "Kiek de Regeln",
+        "content": "Skyjo is en spannend Koortenspeel un en utstekend Brettspeel, dat Speelfans op de ganze Welt geern speelt. Dit Mehrspeler-Koortenspeel is för 2 bet 8 Spelers utleggt, wobi jeder Speler 12 Koorten kriggt, de toeerst versteken sünd. Dat Hööftteel vun dat Speel is, so wenig Punkten as mööglich to kriegen. Dat Speel is to Enn, so gau as een Speler 100 Punkten reckt hett. De Regeln vun dat Speel sünd eenfach un licht to verstahn, wat dat to en ideale Wahl för Speelavends mit Familie oder Frünnen maakt. Speel-Enthusiasten warrt sik freun to höörn, dat nu mööglich is, Skyjo online gratis to spelen!"
+      },
+      "faq": {
+        "title": "Faken stellte Fragen (FSF)",
+        "meaning": {
+          "title": "Wat bedüüdt Skyjo?",
+          "content": "En Skyjo is en Reeg vun 3 lieke Koorten in dat Speel."
+        },
+        "pronounce": {
+          "title": "Wo sprikt man Skyjo ut?",
+          "content": "Dat Woort Skyjo warrt [Skyjoe] utspraken."
+        },
+        "how-to-play": {
+          "title": "Wo speelt man Skyjo?",
+          "content": "Üm Skyjo to spelen, deelt man je 12 Koorten mit de Bildsiet na ünnen an jeden Speler ut. Dat Teel is, de minnsten Punkten to hebben, indem man Koorten ümdreiht un tuuscht. In jeden Tog treckt man en Koort vun'n Stapel oder vun'n Affleggstapel un beslütt denn, een vun de sichtboren Koorten to ersetten. Tallenkoorten sünd jemehr Punkten weert, Sünnerkoorten hebbt Akschonen. Dat Speel is to Enn, wenn en Speler all sien Koorten ümdreiht hett. De Speler mit de minnsten Punkten winnt. Du kannst <rules>de Regeln</rules> för mehr Informatschoon nakieken."
+        },
+        "how-to-win": {
+          "title": "Woans winnt man bi Skyjo?",
+          "content": "Üm bi Skyjo to winnen, is dat wichtig, de sietste Punkttohl mööglich to hebben. Üm dat to schaffen, bruuk en utgleken Strategie twüschen dat Hebben vun de sietsten Koorten, dat Opdecken vun dien Koorten un dat Billen vun Reegen ut lieke Koorten. Vermied dat Opdecken as Eerste, buten wenn du düütlich vörut büst mit sichtbore Koorten. Denk doran, al sichtbore Koorten to behollen, üm to versöken, dorut Reegen to billen, anstatt se enkelt to optimeren."
+        },
+        "play-classic-with-action": {
+          "title": "Kannst du klassisch Skyjo mit Skyjo Action spelen?",
+          "content": "Jo, du bruukst blots de Akschoonskorten wegtonehmen. Wenn du de Online-Version speelst, wähl de klassische Version, üm Skyjo to spelen."
+        }
+      }
+    },
+    "Create": {
+      "head": {
+        "title": "Maak en Skymo-Speel | Speel Skyjo Online",
+        "keywords": "Skymo,Skyjo,Skyjo online,Speel anleggen,Speel anfangen,privaat Speel,apen Speel,mit Frünnen spelen,online Mehrspeler,kostenlose Online-Spelen,egen Speel",
+        "description": "Fang en nee Skymo-Speel online an! Maak private oder apentliche Rüüme, nöög dien Frünnen in un heff tosamen Spaaß an Skyjo. Speel nu gratis!"
+      },
+      "loading-text": "Dien Speel warrt maakt…"
+    },
+    "Maintenance": {
+      "github-alt": "Kiek den Kood-Born op GitHub",
+      "title": "Siet ünner Pleeg",
+      "description": "Wi sünd jüst dorbi, de Siet to aktualiseern, versöök dat later noch mal."
+    },
+    "NotFound": {
+      "title": "Fehler 404",
+      "description": "De Siet, de du söökst, gifft dat nich.",
+      "go-back-to-homepage": "Gah trüch na de Startsiet"
+    }
+  },
+  "utils": {
+    "skymo": {
+      "waiting": "Wachten op Spelers",
+      "last-turn": "Leste Runn!",
+      "game-stopped": "Speel anhollen",
+      "turn-cards": "Dreih {number} Koort{number, plural, =1 {} other {en}}",
+      "waiting-opponents-to-turn-cards": "Wachten op den Gegenspeler{nbOpponents, plural, =1 {} anner {s}}, de {number} Koort{number, plural, =1 {} anner {s}} to dreihn",
+      "turn": {
+        "chooseAPile": "Söök di en Stapel ut",
+        "throwOrReplace": "Utwesseln oder wegsmieten",
+        "replaceACard": "Tuusch en Koort ut",
+        "turnACard": "Treck en Koort"
+      },
+      "player-turn": "Dat is {playerName} sien Tourn",
+      "round-over": "Rund afslaten",
+      "game-ended": "Speel vörbi!"
+    },
+    "avatar": {
+      "eagle": "Aadler",
+      "elephant": "Elefant",
+      "fox": "Foss",
+      "bee": "Imm",
+      "crab": "Krabbe",
+      "dog": "Hund",
+      "frog": "Pogge",
+      "jellyfish": "Quall",
+      "koala": "Koala",
+      "octopus": "Kraken",
+      "cat": "Katt",
+      "penguin": "Pinguiin",
+      "toucan": "Tukan",
+      "turtle": "Schildkröt",
+      "whale": "Waalfisch",
+      "owl": "Uul"
+    },
+    "socket": {
+      "error": {
+        "player-banned": {
+          "description": "Du büst vun dit Speel utsperrt worrn"
+        },
+        "timeout": {
+          "description": "De Server bruukt länger as dacht, üm to antwoorten. Du kannst versöken, de Siet nee to laden un dat noch mal to probéren."
+        },
+        "game-not-found": {
+          "description": "Dat Speel, dat du söökst, gifft dat nich"
+        },
+        "cannot-reconnect": {
+          "description": "Dat is nich länger mööglich, sik wedder mit dat Speel to verbinnen, de Tiet för't Wedderverbinnen is aflopen"
+        },
+        "game-is-full": {
+          "description": "Dat Speel is vull, du kannst nich mitmaken"
+        },
+        "game-already-started": {
+          "description": "Dat Speel hett al anfungen"
+        },
+        "rate-limit": {
+          "title": "Du schickst to veel Anfragen",
+          "description": "Wesen Se mal en poor Sekunnen, ehr Se dat noch mal versöken"
+        }
+      }
+    },
+    "chat": {
+      "player-joined": "{username} is in't Speel instegen",
+      "player-left": "{username} hett dat Speel verlaten",
+      "player-reconnect": "{username} hett sik wedder mit dat Speel verbunnen",
+      "argument-required": "Een oder mehr Argumenten sünd nödig för Befehl: {command}",
+      "player-already-muted": "{username} is al stumm schalt",
+      "wizz-sent": "Du hest en Wizz an {targetUsername} schickt!",
+      "wizz-self": "Du büst vun {initiatorUsername} wizz't worrn!",
+      "wizz-other": "{initiatorUsername} hett {targetUsername} wizz !",
+      "player-muted": "{username} is nu stumm schalt't",
+      "player-not-muted": "{username} is nich stumm schalt",
+      "player-unmuted": "{username} is nich länger stumm schalt"
+    }
+  },
+  "contexts": {
+    "ReportContext": {
+      "report-against-you": {
+        "title": "Du büst rutsmeten worrn wegen en Melden",
+        "description": "Dien Brukernaam oder een vun dien Narichten is mellt worrn un is as unpassend ansehn worrn. Maak dat nich noch mal."
+      },
+      "report": {
+        "title": "{playerName} is wegen en Melden rutschmeten worrn"
+      }
+    },
+    "SocketContext": {
+      "reconnection": "Wedderverbinnen hett klappt",
+      "recover-error": {
+        "game-not-found": {
+          "title": "Speel nich funnen",
+          "description": "Dat Speel, mit dat du wedder verbinnen wullst, gifft dat nich mehr"
+        }
+      },
+      "connection-lost": "Verbinnen weg. Versöök nee to verbinnen..."
+    },
+    "BanContext": {
+      "not-allowed": {
+        "title": "Du hest keen Verlööv to'n Spärren",
+        "description": "Du hest keen Verlööf, en Speler to bannen"
+      },
+      "player-not-found": {
+        "title": "De Speler, de sparrt warrn schall, gifft dat nich",
+        "description": "De Speler, de utslaten warrn schall, gifft dat nich in't Speel"
+      },
+      "player-banned": {
+        "title": "{playerName} is sparrt worrn",
+        "description": "{playerName} is vun'n Host utslaten worrn"
+      },
+      "you-were-banned": {
+        "title": "Du büst verbannt worrn",
+        "description": "Du büst vun't Speel utslaten worrn vun'n Host"
+      },
+      "unexpected-error": {
+        "title": "Dor is en unverwacht Fehler opkamen",
+        "description": "En unverwacht Fehler is opkamen, as en Speler utslaten warrn schull"
+      }
+    }
+  },
+  "head": {
+    "title": "Skymo | Speel Skyjo Koortenspeel online free",
+    "description": "Speel Skyjo online gratis mit Skymo! Een flink-flott Mehrspeler-Koortenspeel, wo Strategie un Spaaß tosamenkaamt. Foder Frünnen rut, dreih Koorten üm un versöök, de sietste Punktentall to kriegen, üm to winnen!",
+    "keywords": "Skymo,Skyjo,Skyjo online,Multiplayer-Speel,Koortenspeel,speel mit Frünnen,free online Spelen,online Koortenspelen"
+  }
+}

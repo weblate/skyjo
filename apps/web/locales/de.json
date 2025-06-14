@@ -1,1 +1,765 @@
-{}
+{
+  "head": {
+    "title": "Skyjo Online spielen | Skyjo Online",
+    "keywords": "Skymo,Skyjo,Skyjo online,Mehrspielerspiel,Kartenspiel,mit Freunden spielen,kostenlose Online-Spiele,Online-Kartenspiele",
+    "description": "Spiele Skyjo online kostenlos mit Skymo! Ein temporeiches Mehrspieler-Kartenspiel, bei dem Strategie und Spaß aufeinandertreffen. Fordere Freunde heraus, decke Karten auf und versuche, den niedrigsten Punktestand zu erreichen, um zu gewinnen!"
+  },
+  "pages": {
+    "Index": {
+      "explanation": {
+        "button": "Regeln anzeigen",
+        "title": "Was ist Skyjo?",
+        "content": "Skyjo ist ein aufregendes Kartenspiel und ein ausgezeichnetes Brettspiel, das von Spielefans auf der ganzen Welt gespielt wird. Dieses Mehrspieler-Kartenspiel ist für 2 bis 8 Spieler konzipiert, wobei jeder Spieler 12 Karten erhält, die zunächst verdeckt sind. Das Hauptziel des Spiels ist es, so wenige Punkte wie möglich zu sammeln. Das Spiel endet, sobald ein Spieler 100 Punkte erreicht. Die Spielregeln sind einfach und leicht verständlich, was es zu einer idealen Wahl für Spieleabende mit Familie oder Freunden macht. Spielebegeisterte werden erfreut sein zu erfahren, dass es jetzt möglich ist, Skyjo kostenlos online zu spielen!"
+      },
+      "name-input-placeholder": "Name",
+      "faq": {
+        "title": "Häufig gestellte Fragen (FAQ)",
+        "meaning": {
+          "title": "Was bedeutet Skyjo?",
+          "content": "Ein Skyjo ist eine Spalte mit 3 identischen Karten im Spiel."
+        },
+        "pronounce": {
+          "title": "Wie wird Skyjo ausgesprochen?",
+          "content": "Das Wort Skyjo wird [Skyjoe] ausgesprochen."
+        },
+        "how-to-play": {
+          "title": "Wie wird Skyjo gespielt?",
+          "content": "Um Skyjo zu spielen, teile jedem Spieler 12 verdeckte Karten aus. Das Ziel ist es, so wenige Punkte wie möglich zu haben, indem man Karten aufdeckt und austauscht. Ziehe in jedem Zug eine Karte vom Stapel oder Ablagestapel und entscheide dann, ob du eine deiner sichtbaren Karten ersetzt. Zahlenkarten sind ihre Punkte wert, Spezialkarten haben Aktionen. Das Spiel endet, wenn ein Spieler alle seine Karten aufgedeckt hat. Der Spieler mit den wenigsten Punkten gewinnt. Du kannst <rules>die Regeln</rules> für weitere Informationen überprüfen."
+        },
+        "how-to-win": {
+          "title": "Wie gewinnt man in Skyjo?",
+          "content": "Um bei Skyjo zu gewinnen, ist es wichtig, die niedrigste Punktzahl zu haben. Um dies zu erreichen, wende eine ausgewogene Strategie an zwischen dem Sammeln der niedrigsten Karten, dem Aufdecken deiner Karten und dem Erstellen von Spalten mit identischen Karten. Vermeide es, als Erster alle Karten aufzudecken, es sei denn, du liegst mit deinen sichtbaren Karten deutlich vorne. Denke daran, bereits sichtbare Karten zu behalten, um zu versuchen, Spalten mit ihnen zu bilden, anstatt sie einzeln zu optimieren."
+        },
+        "play-classic-with-action": {
+          "title": "Kann man klassisches Skyjo mit Skyjo Action spielen?",
+          "content": "Ja, du musst nur die Aktionskarten entfernen. Wenn du die Online-Version spielst, wähle die klassische Version aus, um Skyjo zu spielen."
+        }
+      }
+    },
+    "Search": {
+      "no-games-found": "Keine Spiele gefunden",
+      "head": {
+        "title": "Öffentliche Skymo-Spiele finden | Skyjo Online spielen",
+        "description": "Suchst du nach einem Skymo-Spiel zum Mitmachen? Durchsuche verfügbare öffentliche Spiele und beginne sofort online Skyjo mit anderen Spielern zu spielen. Spiele jetzt kostenlos!",
+        "keywords": "Skymo,Skyjo,Skyjo online,Spiel finden,Spiel beitreten,öffentliche Spiele,Online-Mehrspieler,mit anderen spielen,Schnellspiel,kostenlose Online-Spiele,offene Spiele,Online-Kartenspiel,Mehrspieler-Kartenspiel"
+      },
+      "header": {
+        "back": "Zurück zur Startseite",
+        "refresh": "Spiel-Liste aktualisieren",
+        "create-button": {
+          "title": "Erstelle ein öffentliches Spiel"
+        },
+        "title": "Öffentliche Spiele"
+      },
+      "tags": {
+        "tag": {
+          "short-game": "Kurzes Spiel",
+          "long-game": "Langes Spiel",
+          "classic": "Klassik",
+          "custom": "Benutzerdefiniert",
+          "column": "Spalte",
+          "row": "Zeile"
+        },
+        "title": "Filter:",
+        "no-tags-available": "Keine Tags mehr verfügbar"
+      },
+      "game-of": "{name}'s Spiel"
+    },
+    "Lobby": {
+      "leave-to-public-game-list": "Zur öffentlichen Spieleliste zurückkehren",
+      "settings": {
+        "reset-settings": "Einstellungen zurücksetzen",
+        "nb-rows": {
+          "title": "$number Zeilen",
+          "label": "Anzahl der Zeilen"
+        },
+        "validation-warning": "Spieleinstellungen können nicht mehr geändert werden, sobald sie validiert wurden",
+        "validate-settings": "Einstellungen validieren",
+        "remove-identical-column": "Identische Spalten entfernen",
+        "remove-identical-row": "Identische Zeilen entfernen",
+        "private": {
+          "tooltip": {
+            "on": "Dieses Spiel ist privat, nur Personen mit dem Link können beitreten",
+            "off": "Dieser Teil ist öffentlich, jeder kann nach der Validierung der Parameter beitreten"
+          }
+        },
+        "initial-turned-count": {
+          "label": "Anzahl der anfangs aufgedeckten Karten",
+          "title": "Zu Beginn des Spiels werden {number} deiner Karten aufgedeckt"
+        },
+        "show-current-score": {
+          "label": "Zeige den aktuellen Punktestand während des Spiels"
+        },
+        "nb-columns": {
+          "label": "Spaltenanzahl",
+          "title": "$number Spalten"
+        },
+        "score-to-end-game": {
+          "label": "Punktzahl zum Beenden des Spiels",
+          "title": "Das Spiel endet, wenn ein Spieler {number} Punkte erreicht"
+        },
+        "max-players": {
+          "label": "Maximale Spieleranzahl",
+          "title": "Maximale Spieleranzahl: {number}"
+        },
+        "first-player-penalty-type": {
+          "description": "Strafe wird angewendet, wenn der erste Spieler, der alle seine Karten aufdeckt, nicht die geringste Punktzahl hat (gilt nicht, wenn die Punktzahl kleiner oder gleich 0 ist)",
+          "placeholder": "Wähle die Art der Strafe",
+          "item": {
+            "multiplier-only": "Nur Multiplikator",
+            "flat-only": "Nur pauschal",
+            "flat-then-multiplier": "Pauschal, dann Multiplikator",
+            "multiplier-then-flat": "Multiplikator, dann pauschal"
+          },
+          "label": "Art der Strafe für den ersten Spieler"
+        },
+        "first-player-flat-penalty": {
+          "label": "Pauschale Punkte Strafe für den ersten Spieler",
+          "title": "Zusätzliche {number} Punkte werden zur Punktzahl des ersten Spielers hinzugefügt"
+        },
+        "first-player-multiplier-penalty": {
+          "title": "Die Punktzahl des ersten Spielers wird mit {number} multipliziert, wenn sie strikt niedriger ist als die anderen Punktzahlen des Spiels",
+          "label": "Strafmultiplikator für den Punktestand des ersten Spielers"
+        }
+      },
+      "title": "{name}'s Spiel",
+      "leave-to-home": "Zur Startseite zurückkehren",
+      "go-back-to-settings": "Zu den Einstellungen zurückkehren",
+      "player-section": {
+        "select": {
+          "placeholder": "Wähle die Anzahl der Spieler",
+          "item": "{value} Spieler"
+        },
+        "title": "Spieler {nbPlayers}/{maxPlayers}"
+      },
+      "game-starting-in": "Spiel startet in {seconds}",
+      "cancel": "Zurück",
+      "not-enough-players-modal": {
+        "title": "Nicht genügend Spieler",
+        "description": "Du musst mindestens 2 Spieler sein, um das Spiel zu starten.",
+        "public-description": "Lade einen Freund ein oder warte darauf, dass ein anderer Spieler beitritt.",
+        "private-description": "Nutze den privaten Link, um Freunde einzuladen!",
+        "close": "Ich verstehe"
+      },
+      "waiting-host-to-start": "Warte darauf, dass der Host das Spiel startet",
+      "waiting-host-to-confirm-game-settings": "Warte auf den Host die Einstellungen zu bestätigen",
+      "start-game-button": "Starte das Spiel"
+    },
+    "Maintenance": {
+      "description": "Wir aktualisieren derzeit die Seite, bitte versuche es später noch einmal.",
+      "github-alt": "Quellcode auf GitHub ansehen",
+      "title": "Seite wird gewartet"
+    },
+    "Create": {
+      "head": {
+        "title": "Ein Skymo-Spiel erstellen | Skyjo Online spielen",
+        "description": "Starte ein neues Skymo-Spiel online! Erstelle private oder öffentliche Räume, lade deine Freunde ein und genieße den Spaß von Skyjo zusammen. Spiele jetzt kostenlos!",
+        "keywords": "Skymo,Skyjo,Skyjo online,Spiel erstellen,Spiel starten,privates Spiel,öffentliches Spiel,mit Freunden spielen,Online-Mehrspieler,kostenlose Online-Spiele,benutzerdefiniertes Spiel"
+      },
+      "loading-text": "Dein Spiel wird erstellt…"
+    },
+    "NotFound": {
+      "title": "Fehler 404",
+      "go-back-to-homepage": "Gehe zurück zur Startseite",
+      "description": "Die Seite, die du suchst, existiert nicht."
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "anonymous-usage-data": {
+            "description": "Wir verwenden PostHog, ein Analysetool, um anonyme Daten darüber zu sammeln, wie du unsere Website nutzt. Dies umfasst:",
+            "title": "Anonyme Nutzungsdaten",
+            "items": "Seitenaufrufe;;Web Vitals (Leistungsmetriken);;Umfrageantworten (falls du dich zur Teilnahme entscheidest)"
+          },
+          "game-data": {
+            "items": "Benutzernamen und Avatar-Auswahl;;Spielelemente und Fortschritt",
+            "title": "Spieldaten",
+            "description": "Wir speichern temporär:"
+          },
+          "cookies": {
+            "description": "Wir verwenden essenzielle Cookies, um die Kernfunktionalität unserer Website zu ermöglichen:",
+            "title": "Cookies",
+            "items": "Session-Cookies: Wir verwenden einen Session-Cookie (skymo-io), um deine Verbindung zu unseren Spielservern aufrechtzuerhalten. Dieser Cookie ist für die Funktionalität des Spiels unerlässlich und läuft nach 24 Stunden ab. Diese Cookies verfolgen dich nicht über Websites hinweg und werden nur verwendet, um den von dir angeforderten Dienst bereitzustellen"
+          },
+          "user-provided-information": {
+            "title": "Benutzerbereitgestellte Informationen",
+            "description": "Wir sammeln:",
+            "items": "Feedback-Formular-Übermittlungen (einschließlich optionaler E-Mail-Adressen)"
+          },
+          "title": "Informationen, die wir sammeln",
+          "local-storage-data": {
+            "description": "Wir speichern im lokalen Speicher deines Browsers:",
+            "items": "Spracheinstellungen;;Spieleinstellungsvorlieben",
+            "title": "Local Storage Daten"
+          }
+        },
+        "data-sharing": {
+          "title": "Datenweitergabe",
+          "description": "Wir geben Ihre persönlichen Daten nicht an Dritte weiter. Anonymisierte Nutzungsdaten werden von PostHog, unserem Analyseanbieter, verarbeitet."
+        },
+        "back": "Zurück zur Startseite",
+        "title": "Datenschutzrichtlinie",
+        "last-update": {
+          "text": "Zuletzt aktualisiert: {date}",
+          "date-format": "DD.MM.YYYY - hh:mmA"
+        },
+        "your-rights-and-choices": {
+          "title": "Ihre Rechte und Wahlmöglichkeiten",
+          "description": "Da wir hauptsächlich anonyme Daten erfassen, können wir keine personenbezogenen Informationen einzelner Nutzer identifizieren oder darauf zugreifen. Sie haben jedoch die folgenden Rechte und Wahlmöglichkeiten:",
+          "items": "Lokaler Speicher: Sie können den lokalen Speicher Ihres Browsers jederzeit löschen, um gespeicherte Einstellungen zu entfernen;;Feedback: Wenn Sie Feedback mit einer E-Mail-Adresse übermittelt haben, können Sie uns kontaktieren, um dessen Löschung zu beantragen;;Analytics Opt-Out: Sie können die Erfassung von Analysedaten deaktivieren, indem Sie die \"Do Not Track\"-Einstellung Ihres Browsers aktivieren oder datenschutzorientierte Browser verwenden, die Analytics-Skripte blockieren;;Spieldaten: Spielbezogene Daten werden automatisch gelöscht, wenn alle Spieler ein Spiel verlassen"
+        },
+        "childrens-privacy": {
+          "title": "Datenschutz für Kinder",
+          "description": "Skymo unterliegt keinen Altersbeschränkungen. Wir erfassen wissentlich keine personenbezogenen Daten von Kindern."
+        },
+        "changes-to-this-policy": {
+          "title": "Änderungen an dieser Richtlinie",
+          "description": "Wir können diese Richtlinie von Zeit zu Zeit aktualisieren. Wir werden dich über Änderungen informieren, indem wir die neue Richtlinie auf dieser Seite veröffentlichen."
+        },
+        "contact-us": {
+          "title": "Kontaktiere uns",
+          "description": "Wenn du Fragen zu dieser Datenschutzrichtlinie hast, kontaktiere uns bitte über unser Feedback-Formular auf der Website, den Discord-Server oder GitHub."
+        },
+        "how-we-use-your-information": {
+          "title": "Wie wir deine Informationen nutzen",
+          "items": "Unsere Website und Benutzererfahrung verbessern;;Nutzungsmuster und Leistung analysieren;;Auf Feedback und Support-Anfragen antworten;;Gameplay ermöglichen"
+        },
+        "data-storage-and-retention": {
+          "items": "Anonyme Nutzungsdaten werden auf Servern innerhalb der Europäischen Union gespeichert und bis zu 1 Jahr aufbewahrt;;Spieldaten werden in unserer Datenbank in Frankfurt, Deutschland gespeichert. Diese Daten werden für die Dauer aktiver Spiele aufbewahrt. Sobald alle Spieler ein Spiel verlassen, werden die zugehörigen Daten gelöscht;;Im lokalen Speicher Ihres Browsers gespeicherte Informationen verbleiben dort, bis Sie Ihre Browserdaten löschen;;Feedback-Formular-Einsendungen werden nur zum Zweck der Beantwortung und Berücksichtigung von Entwicklungsvorschlägen aufbewahrt",
+          "title": "Datenspeicherung und -aufbewahrung"
+        }
+      },
+      "head": {
+        "title": "Datenschutzrichtlinie | Skymo - Skyjo Online-Kartenspiel",
+        "keywords": "Skymo,Skyjo,Skyjo Online,Datenschutzrichtlinie,Datenschutz,Online-Spiel-Datenschutz,sicheres Spielen,Benutzerdaten,DSGVO,CCPA,Datensicherheit",
+        "description": "Datenschutzrichtlinie für Skymo. Erfahre, wie wir deine Daten schützen, während du unser Skyjo-Kartenspiel genießt. Transparente Praktiken und sichere Spielerfahrung."
+      }
+    },
+    "ResultsPage": {
+      "player-want-to-replay": "Spieler, die nochmal spielen wollen:",
+      "replay-button": {
+        "replay": "Nochmal spielen",
+        "cancel": "Nicht nochmal spielen"
+      },
+      "leave-button": "Spiel verlassen",
+      "score-per-round": "Punkte pro Runde",
+      "total": "Gesamt",
+      "title": "Spielergebnis",
+      "rank": "Rang/Stufe",
+      "player": "Spieler"
+    },
+    "Rules": {
+      "head": {
+        "title": "Wie man Skymo spielt | Skyjo Kartenspiel Online",
+        "description": "Lerne mit unserem Skyjo-Guide, wie du Skyjo spielst. Entdecke die Regeln, Strategien und Tipps, um dieses unterhaltsame Online-Kartenspiel zu meistern. Spiele jetzt mit Freunden!",
+        "keywords": "Skymo, Skyjo, Skyjo Regeln, Skyjo spielen, Skyjo Spiel, Kartenspielregeln, Online-Kartenspiel, Spielanleitung, Gameplay-Guide"
+      },
+      "title": "Skyjo Spielregeln"
+    }
+  },
+  "contexts": {
+    "BanContext": {
+      "unexpected-error": {
+        "title": "Unerwarteter Fehler aufgetreten",
+        "description": "Unerwarteter Fehler beim Bannen eines Spielers aufgetreten"
+      },
+      "player-banned": {
+        "title": "{playerName} wurde gebannt",
+        "description": "{playerName} wurde vom Host gebannt"
+      },
+      "you-were-banned": {
+        "title": "Du wurdest gebannt",
+        "description": "Du wurdest vom Host gebannt"
+      },
+      "player-not-found": {
+        "description": "Der zu bannende Spieler existiert nicht im Spiel",
+        "title": "Der zu bannende Spieler existiert nicht"
+      },
+      "not-allowed": {
+        "description": "Du hast keine Berechtigung, einen Spieler zu bannen",
+        "title": "Du hast keine Berechtigung zum Bannen"
+      }
+    },
+    "ReportContext": {
+      "report-against-you": {
+        "description": "Dein Benutzername oder eine deiner Nachrichten wurde gemeldet und als unangemessen eingestuft. Bitte wiederhole dieses Verhalten nicht.",
+        "title": "Du wurdest aufgrund einer Meldung aus dem Spiel entfernt"
+      },
+      "report": {
+        "title": "{playerName} wurde aufgrund einer Meldung aus dem Spiel entfernt"
+      }
+    },
+    "SocketContext": {
+      "connection-lost": "Verbindung verloren. Versuche, die Verbindung wiederherzustellen …",
+      "recover-error": {
+        "game-not-found": {
+          "title": "Spiel nicht gefunden",
+          "description": "Das Spiel, mit dem du dich verbinden wolltest, existiert nicht mehr"
+        }
+      },
+      "reconnection": "Wiederherstellung der Verbindung erfolgreich"
+    }
+  },
+  "components": {
+    "GameRules": {
+      "title": "Spielregeln",
+      "card-per-row": "Anzahl der Zeilen: {value}",
+      "card-per-column": "Anzahl Spalten: {value}",
+      "score-to-end-game": "Anzahl der Punkte, um das Spiel zu beenden: {value}",
+      "first-player-multiplier-penalty": "Multiplikator-Malus: {value}",
+      "first-player-penalty-type": {
+        "label": "Art der Strafe für den ersten Spieler, wenn er nicht die kleinste Punktzahl hat: ",
+        "1": "Nur Multiplikator",
+        "2": "Nur pauschal",
+        "3": "Flach, dann Multiplikator",
+        "4": "Multiplikator, dann pauschal"
+      },
+      "initial-turned-count": "Anzahl der zu Beginn aufgedeckten Karten: {value}",
+      "button-title": "Spielregeln anzeigen",
+      "remove-identical-row": "Zeile entfernen, wenn Karten identisch sind: {value, select, true {ja} false {nein} other {unbekannt}}",
+      "remove-identical-column": "Spalte entfernen, wenn Karten identisch sind: {value, select, true {ja} false {nein} other {unbekannt}}",
+      "first-player-flat-penalty": "Feste Strafe: {value}"
+    },
+    "LanguageCombobox": {
+      "locale": {
+        "fr": "Französisch",
+        "es": "Spanisch",
+        "en": "Englisch",
+        "de": "Deutsch",
+        "br": "Bretonisch",
+        "ta": "Tamil",
+        "it": "Italienisch"
+      },
+      "no-language-found": "Keine Sprache gefunden",
+      "select-language": "Sprache auswählen",
+      "search-language": "Sprache suchen"
+    },
+    "Footer": {
+      "disclaimer": {
+        "rights-owned": "Alle Rechte am Namen und den Spielmechaniken von Skyjo gehören Alexander Bernhardt und Magilano",
+        "not-affiliated": "Diese Website steht in keiner Verbindung zu den Erstellern oder Vertreibern von Skyjo",
+        "responsible-content": "Der Betreiber dieser Seite ist nicht verantwortlich für nutzergenerierte Inhalte (Benutzernamen, Nachrichten)"
+      },
+      "release-notes": "Release Notes",
+      "feedback": "Gib uns Feedback",
+      "attribution": {
+        "avatars": "Avatare erstellt von Freepik – Flaticon"
+      },
+      "explanation": "Was ist Skyjo?",
+      "home": "Startseite",
+      "status": "Serverstatus",
+      "rules": "Spielregeln",
+      "buy-game": "Kaufe das Spiel",
+      "privacy-policy": "Datenschutzrichtlinie"
+    },
+    "SettingsDialog": {
+      "audio": {
+        "volume": {
+          "label": "Lautstärke ({volume}%)"
+        },
+        "title": "Audio",
+        "toggle": {
+          "label": "Audio aktivieren"
+        }
+      },
+      "display": {
+        "chat": {
+          "chat-notification-size": {
+            "values": {
+              "big": "Groß",
+              "small": "Klein",
+              "normal": "Normal"
+            },
+            "label": "Größe der Chat-Benachrichtigung"
+          },
+          "chat-visibility": "Sichtbarkeit des Chats",
+          "title": "Chat"
+        },
+        "mobile": {
+          "show-preview-opponents-cards": "Zeige eine Vorschau der gegnerischen Karten in der Gegnerliste",
+          "title": "Mobil",
+          "switch-to-player-who-is-playing": "Automatisch zum aktuell spielenden Spieler wechseln"
+        },
+        "title": "Anzeige",
+        "gameplay": {
+          "timer": {
+            "label": "Timer-Anzeigemodus",
+            "description": "Der Smart-Modus zeigt den Timer zur Halbzeit und in den letzten 15 Sekunden an.",
+            "modes": {
+              "smart": "Intelligent",
+              "never": "Nie",
+              "always": "Immer"
+            }
+          },
+          "gameboard-size": {
+            "label": "Größe deines Spielbretts",
+            "big-warning": "Kann Anzeige auf Mobilgeräten negativ beeinträchtigen",
+            "values": {
+              "normal": "Normal",
+              "big": "Groß"
+            }
+          },
+          "title": "Spielablauf"
+        }
+      },
+      "title": "Einstellungen",
+      "general": {
+        "appearance": "Erscheinungsbild",
+        "language-warn": "Nur auf der Startseite änderbar",
+        "title": "Allgemein",
+        "language": "Sprache"
+      }
+    },
+    "ChatMessage": {
+      "context-menu": {
+        "report": "Nachricht melden"
+      },
+      "separator": ": "
+    },
+    "CopyLink": {
+      "button-title": "Link kopieren",
+      "message": "Link kopiert!"
+    },
+    "Chat": {
+      "title": "Chat"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Nachricht",
+      "message-too-long": {
+        "description": "Die Nachricht ist zu lang (max. 200 Zeichen)"
+      },
+      "unknown-command": {
+        "description": "Unbekannter Befehl"
+      },
+      "button-title": "Senden"
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} ungelesene Nachricht{count, plural, =1 {} other {en}}"
+    },
+    "DiscardPile": {
+      "throw": "Ablegen",
+      "title": "Ablagestapel"
+    },
+    "DrawPile": {
+      "title": "Nachziehstapel"
+    },
+    "EndRoundDialog": {
+      "title": "Rundenende",
+      "description": "Die nächste Runde startet in wenigen Sekunden…"
+    },
+    "Rules": {
+      "round-preparation": {
+        "content-2": "Jeder Spieler legt seine 12 Karten verdeckt in vier Spalten zu je drei Karten vor sich ab. Zum Schluss dreht jeder Spieler zwei Karten seiner Wahl auf.",
+        "title": "Rundenvorbereitung",
+        "content-1": "Zuerst erhält jeder Spieler 12 Karten verdeckt. Danach wird eine Karte vom Nachziehstapel offen in die Mitte des Tisches gelegt, um den Anfang des Ablagestapels zu bilden. Die restlichen Karten werden verdeckt nebeneinander gelegt und bilden den Nachziehstapel."
+      },
+      "special-rule": {
+        "title": "Sonderregel:",
+        "content": "Wenn ein Spieler 3 identische Karten in einer Spalte hat, wirft er diese 3 Karten ab, indem er sie auf den Ablagestapel legt. Wenn eine Spalte mit identischen Karten durch Tauschen mit einer Karte vom Nachziehstapel oder Ablagestapel erhalten wird, müssen die drei identischen Karten nach der getauschten Karte immer auf den Ablagestapel gelegt werden."
+      },
+      "scoring": {
+        "first-to-finish": {
+          "note": {
+            "content": "Diese Regel gilt nur für positive Punkte!",
+            "title": "Bitte beachte:"
+          },
+          "content": "Wenn der Spieler, der die Runde beendet hat (der Erste, der alle seine Karten umgedreht hat), nicht die genau genommen niedrigste Punktzahl für diese Runde erreicht hat, dann wird die Summe seiner Punkte für diese Runde verdoppelt."
+        },
+        "title": "Spielergebnis",
+        "list": {
+          "content-2": "Wenn die Summe negativ ist, wird sie von der Gesamtpunktzahl der vorherigen Runden abgezogen.",
+          "content-1": "Wenn die Gesamtpunktzahl positiv ist, addiert er sie zur Gesamtpunktzahl aus den vorherigen Runden."
+        },
+        "example": {
+          "title": "Beispiel:",
+          "content": "Spieler A deckt alle seine Karten auf und beendet die Runde. Am Ende der Runde hat er 10 Punkte, Spieler B hat 24 Punkte und Spieler C hat ebenfalls 10 Punkte. Da Spieler A nicht die strikt niedrigste Punktzahl hat, werden seine Punkte auf 20 verdoppelt."
+        },
+        "description": "Spieler, die noch verdeckte Karten haben, drehen diese um. Jeder Spieler zählt seine Gesamtpunktzahl."
+      },
+      "round-start": {
+        "choice-1": {
+          "title": "Wahl 1:",
+          "description": "Nimm die erste Karte vom Ablagestapel.",
+          "content": "Der Spieler muss diese Karte sofort mit einer seiner 12 Karten tauschen und offen ablegen. Er kann frei zwischen offenen und verdeckten Karten wählen. Verdeckte Karten dürfen vor dem Tausch nicht eingesehen werden. Die getauschte Karte wird offen auf den Ablagestapel gelegt."
+        },
+        "choice-2": {
+          "choice-1": "Wahl 1",
+          "content-2": "Wenn er die gezogene Karte nicht behalten möchte, legt er sie auf den Ablagestapel und muss eine seiner Karten aufdecken.",
+          "description": "Nimm die erste verdeckte Karte vom Nachziehstapel.",
+          "title": "Wahl 2:",
+          "content-1": "Der Spieler kann die Karte ansehen und wählen, ob er sie gegen eine seiner (verdeckten oder offenen) Karten tauschen oder ablegen möchte. Wenn er die gezogene Karte behalten möchte, tauscht er sie wie oben beschrieben mit einer seiner Karten"
+        },
+        "title": "Rundenstart",
+        "choice": "Wahl {number}",
+        "end-of-turn": "Sein Zug ist dann beendet und der nächste Spieler ist an der Reihe (im Uhrzeigersinn).",
+        "content-1": "Der Spieler kann die erste umgedrehte Karte vom Ablagestapel wählen",
+        "content-2": "oder die erste verdeckte Karte des Nachziehstapels"
+      },
+      "game-goal": {
+        "title": "Spielziel",
+        "content": "Das Skyjo-Spiel wird über mehrere Runden gespielt und endet, sobald ein Spieler 100 Punkte oder mehr erreicht hat. Der Spieler mit den wenigsten Punkten gewinnt das Spiel."
+      },
+      "round-end": {
+        "content-1": "Wenn ein Spieler alle seine Karten aufgedeckt hat, hat er seinen letzten Zug gespielt.",
+        "title": "Rundenende",
+        "content-2": "Alle nachfolgenden Spieler spielen noch einmal, um die Runde zu beenden."
+      },
+      "end-of-game": {
+        "title": "Spielende",
+        "content": "Am Ende jeder Runde werden die Punkte jedes Spielers zur Gesamtpunktzahl aus den vorherigen Runden addiert. Das Spiel endet, sobald ein Spieler 100 oder mehr Punkte erreicht. Der Spieler mit der niedrigsten Punktzahl gewinnt das Spiel."
+      },
+      "cards-section-title": "{number} Spielkarten:"
+    },
+    "ScoreDialog": {
+      "description": "{name} hat mit {score} Punkten gewonnen!",
+      "title": "Punktzahl"
+    },
+    "AppearanceSelect": {
+      "dark": "Dunkel",
+      "light": "Hell",
+      "system": "System"
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Erneut mit dem Spiel verbinden",
+      "join-game-button": "Dem Spiel beitreten",
+      "create-game-button": "Erstelle ein {type, select, private {privates} public {öffentliches} other {unbekanntes}} Spiel",
+      "find-game-button": "Finde ein Spiel"
+    },
+    "Feedback": {
+      "title": "Gib Feedback",
+      "button-title": "Senden",
+      "toast": {
+        "success": {
+          "description": "Deine Einblicke haben uns geholfen, unsere Game-Website zu verbessern, und dafür sind wir dir wirklich dankbar.",
+          "title": "Vielen Dank für dein Feedback!"
+        },
+        "error": {
+          "title": "Ein Fehler ist aufgetreten, bitte versuche es erneut."
+        }
+      },
+      "email-input": {
+        "label": "Deine E-Mail (optional)",
+        "placeholder": "example@example.com"
+      },
+      "description": "Du kannst uns Feedback geben, um uns zu helfen, das Spiel zu verbessern.",
+      "message-input": {
+        "label": "Deine Nachricht",
+        "placeholder": "Sag uns, was du denkst, bemerkst oder möchtest …"
+      }
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "{username} melden",
+        "kick": "Kicke {username}",
+        "mute": "{username} stummschalten",
+        "ban": "{username} ausschließen (bannen)",
+        "unmute": "Stummschaltung von {username} aufheben",
+        "vote-to-kick": "Für das Rauswerfen von {username} stimmen"
+      }
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Gegner:"
+      }
+    },
+    "MenuDropdown": {
+      "discord": "Discord",
+      "settings": "Einstellungen",
+      "button": {
+        "aria-label": "Menü"
+      },
+      "rules": "Regeln",
+      "feedback": "Gib uns Feedback"
+    },
+    "RulesDialog": {
+      "trigger": {
+        "aria-label": "Spielregeln anzeigen"
+      },
+      "title": "Spielregeln"
+    },
+    "ScoreTable": {
+      "round": "Runde",
+      "name": "Name",
+      "total": "Gesamt"
+    },
+    "Scoreboard": {
+      "button-title": "Punktestand anzeigen"
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "ignore-button": {
+          "alt": "Ignoriere die Abstimmung zum Rauswurf von {playerName}",
+          "label": "Ignorieren"
+        },
+        "kick-button": {
+          "label": "Kicke",
+          "alt": "Kicke {playerName}"
+        },
+        "title": "Stimme für Rauswurf von {playerName}"
+      },
+      "vote-succeeded": {
+        "description": "Die Abstimmung zum Rauswurf von {playerName} war erfolgreich.",
+        "title": "{playerName} wurde gekickt"
+      },
+      "vote-against-you-succeeded": {
+        "title": "Du wurdest gekickt",
+        "description": "Spieler haben dafür gestimmt, dich aus dem Spiel zu werfen."
+      },
+      "you-kick-player": {
+        "title": "Du hast {playerName} gekickt"
+      },
+      "player-has-voted": {
+        "title": "Stimme für Rauswurf von {playerName}",
+        "description": "Du hast {vote, select, true {für} false {gegen} other {abgestimmt}}"
+      },
+      "host-kick": {
+        "title": "{playerName} wurde vom Host aus dem Spiel geworfen"
+      },
+      "vote-failed": {
+        "description": "Es gibt nicht genug Stimmen, um {playerName} zu kicken",
+        "title": "Die Abstimmung, {playerName} zu kicken, ist fehlgeschlagen"
+      },
+      "vote-against-you-failed": {
+        "title": "Du wurdest nicht gekickt",
+        "description": "Es gibt nicht genug Stimmen, um dich zu kicken"
+      },
+      "vote-against-you": {
+        "title": "Stimme ab, dich zu kicken",
+        "description": "Es wurde ein Antrag gestellt, dich zu kicken."
+      },
+      "host-kick-you": {
+        "title": "Du wurdest vom Host aus dem Spiel geworfen"
+      }
+    },
+    "PWABanner": {
+      "ChromeAndroid": "Tippe auf das Menüsymbol und dann auf „Zum Startbildschirm hinzufügen“, um die Installation durchzuführen",
+      "Safari": "Tippe auf das Teilen-Symbol und dann auf „Zum Dock hinzufügen“, um es zu installieren",
+      "title": "Installiere Skymo auf deinem Gerät!",
+      "Chrome": "Klicke auf den Button „Installieren“, um die Installation zu starten",
+      "FirefoxAndroid": "Tippe auf das Menüsymbol und dann auf „Zum Startbildschirm hinzufügen“, um es zu installieren",
+      "FirefoxIOS": "Tippe auf das Menü-Symbol, dann auf das Teilen-Symbol, scrolle und tippe dann auf „Zum Home-Bildschirm hinzufügen“, um es zu installieren",
+      "SafariIOS": "Tippe auf das Teilen-Symbol, scrolle dann und tippe auf „Zum Home-Bildschirm hinzufügen“, um es zu installieren",
+      "install-button": {
+        "content": "Installieren",
+        "title": "App installieren"
+      },
+      "ChromeIOS": "Tippe auf das Teilen-Symbol, scrolle dann und tippe auf „Zum Home-Bildschirm hinzufügen“, um es zu installieren",
+      "SamsungBrowser": "Tippe auf das Menüsymbol, dann auf „Zu Seite hinzufügen“, dann auf „Startbildschirm“, um die Installation durchzuführen"
+    },
+    "OpponentBoard": {
+      "disconnected": "Der Spieler hat das Spiel verlassen. Ein Bot spielt für ihn in den nächsten Runden, bis er sich wieder verbindet."
+    },
+    "AfkKick": {
+      "player-kicked": {
+        "title": "Spieler gekickt",
+        "description": "{playerName} wurde wegen Inaktivität aus dem Spiel geworfen."
+      },
+      "warning": {
+        "title": "AFK-Warnung",
+        "description": "Du wirst aus dem Spiel geworfen, wenn du inaktiv bleibst."
+      },
+      "kicked": {
+        "title": "Wegen Inaktivität gekickt",
+        "description": "Du wurdest aus dem Spiel geworfen, weil du zu oft AFK warst."
+      }
+    },
+    "ReportDialog": {
+      "cancel": "Abbrechen",
+      "submit": "Bericht",
+      "no-messages": "Keine Nachrichten von diesem Benutzer gefunden",
+      "toast": {
+        "report-submitted": {
+          "title": "Bericht eingereicht",
+          "description": "Vielen Dank für deinen Bericht, du hast dazu beigetragen, die Qualität des Spiels zu verbessern."
+        }
+      },
+      "title": "{username} melden",
+      "description": "Melde den Benutzernamen oder eine Nachricht von {username}, wenn sie unangemessen erscheint.",
+      "report-username": "Melde den Benutzernamen",
+      "select-message": "Wähle die zu meldende Nachricht aus",
+      "select-message-placeholder": "Wähle eine Nachricht aus",
+      "report-message": "Eine Nachricht melden"
+    },
+    "PlayerBoard": {
+      "you": "Du"
+    },
+    "ScoreSheet": {
+      "see-scores": "Siehe Ergebnisse"
+    }
+  },
+  "utils": {
+    "skymo": {
+      "turn": {
+        "replaceACard": "Eine Karte ersetzen",
+        "chooseAPile": "Wähle einen Stapel",
+        "turnACard": "Eine Karte aufdecken",
+        "throwOrReplace": "Ersetzen oder verwerfen"
+      },
+      "last-turn": "Letzte Runde!",
+      "round-over": "Runde beendet",
+      "player-turn": "{playerName} ist an der Reihe",
+      "game-stopped": "Spiel gestoppt",
+      "waiting-opponents-to-turn-cards": "Warte darauf, dass dein Gegner {number} Karte{number, plural, =1 {} other {n}} aufdeckt",
+      "game-ended": "Spiel vorbei!",
+      "waiting": "Warte auf Spieler",
+      "turn-cards": "Drehe {number} Karte{number, plural, =1 {} other {n}}"
+    },
+    "avatar": {
+      "fox": "Fuchs",
+      "elephant": "Elefant",
+      "koala": "Koala",
+      "octopus": "Oktopus",
+      "crab": "Krebs",
+      "frog": "Frosch",
+      "jellyfish": "Qualle",
+      "cat": "Katze",
+      "owl": "Eule",
+      "bee": "Biene",
+      "turtle": "Schildkröte",
+      "dog": "Hund",
+      "penguin": "Pinguin",
+      "eagle": "Adler",
+      "toucan": "Tukan",
+      "whale": "Wal"
+    },
+    "chat": {
+      "wizz-self": "Du wurdest von {initiatorUsername} angewizzed!",
+      "player-not-muted": "{username} ist nicht stummgeschaltet",
+      "player-joined": "{username} ist dem Spiel beigetreten",
+      "player-already-muted": "{username} ist bereits stummgeschaltet",
+      "player-unmuted": "{username} ist nicht länger stummgeschaltet",
+      "argument-required": "Für diesen Befehl sind ein oder mehrere Argumente erforderlich: {command}",
+      "player-left": "{username} hat das Spiel verlassen",
+      "player-muted": "{username} ist jetzt stummgeschaltet",
+      "wizz-other": "{initiatorUsername} hat {targetUsername} angewizzed!",
+      "wizz-sent": "Du hast {targetUsername} einen Wizz geschickt!",
+      "player-reconnect": "{username} hat sich wieder mit dem Spiel verbunden"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "Der Server benötigt mehr Zeit als erwartet, um zu antworten. Du kannst versuchen, die Seite neu zu laden und es erneut zu versuchen."
+        },
+        "game-is-full": {
+          "description": "Das Spiel ist voll, du kannst nicht beitreten"
+        },
+        "cannot-reconnect": {
+          "description": "Es ist nicht mehr möglich, die Verbindung zum Spiel wiederherzustellen, die Zeit zur Wiederherstellung der Verbindung ist abgelaufen"
+        },
+        "game-not-found": {
+          "description": "Das gesuchte Spiel existiert nicht"
+        },
+        "game-already-started": {
+          "description": "Das Spiel hat bereits begonnen"
+        },
+        "player-banned": {
+          "description": "Du wurdest von diesem Spiel ausgeschlossen (gebannt)"
+        },
+        "rate-limit": {
+          "title": "Du sendest zu viele Anfragen",
+          "description": "Bitte warte ein paar Sekunden, bevor du es erneut versuchst"
+        }
+      }
+    }
+  }
+}

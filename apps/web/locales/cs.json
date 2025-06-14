@@ -1,0 +1,769 @@
+{
+  "head": {
+    "title": "Skymo | Hrajte karetní hru Skyjo online zdarma",
+    "description": "Hrajte Skyjo online zdarma se Skymo! Svižná karetní hra pro více hráčů, kde se strategie snoubí se zábavou. Vyzvěte přátele, otáčejte karty a snažte se získat nejnižší skóre pro vítězství!",
+    "keywords": "Skymo,Skyjo,Skyjo online,hra pro více hráčů,karetní hra,hraj s přáteli,hry zdarma online,online karetní hry"
+  },
+  "pages": {
+    "Index": {
+      "explanation": {
+        "title": "Co je Skyjo?",
+        "content": "Skyjo je vzrušující karetní hra a vynikající desková hra, kterou si užívají fanoušci her po celém světě. Tato karetní hra pro více hráčů je určena pro 2 až 8 hráčů, kde každý hráč obdrží 12 karet, které jsou zpočátku skryté. Hlavním cílem hry je získat co nejméně bodů. Hra končí, jakmile jeden hráč dosáhne 100 bodů. Pravidla hry jsou jednoduchá a snadno pochopitelná, což z ní dělá ideální volbu pro herní večery s rodinou nebo přáteli. Nadšenci her budou potěšeni zjištěním, že nyní je možné hrát Skyjo online zdarma!",
+        "button": "Zobrazit pravidla"
+      },
+      "faq": {
+        "how-to-play": {
+          "title": "Jak hrát Skyjo?",
+          "content": "Při hře Skyjo rozdejte každému hráči 12 karet lícem dolů. Cílem je mít co nejméně bodů otáčením a výměnou karet. V každém tahu si vezměte kartu z balíčku nebo z odhazovacího balíčku a poté se rozhodněte, kterou z vašich viditelných karet vyměníte. Číselné karty mají hodnotu svých bodů, speciální karty mají akce. Hra končí, když hráč otočí všechny své karty. Vyhrává hráč s nejnižším počtem bodů. Více informací najdete v <rules>pravidlech</rules>."
+        },
+        "how-to-win": {
+          "title": "Jak vyhrát ve Skyjo?",
+          "content": "K vítězství ve Skyjo je zásadní mít co nejnižší skóre. K tomu je potřeba zvolit vyváženou strategii mezi držením nejnižších karet, odhalováním karet a vytvářením sloupců se stejnými kartami. Neotáčejte karty jako první, pokud nemáte výrazný náskok s již viditelnými kartami. Pamatujte, že je lepší ponechat si již viditelné karty a snažit se z nich vytvořit sloupce, než je optimalizovat jednotlivě."
+        },
+        "title": "Často kladené dotazy (FAQ)",
+        "meaning": {
+          "title": "Co znamená Skyjo?",
+          "content": "Skyjo je sloupec 3 stejných karet ve hře."
+        },
+        "pronounce": {
+          "title": "Jak se vyslovuje Skyjo?",
+          "content": "Slovo Skyjo se vyslovuje [Skyjoe]."
+        },
+        "play-classic-with-action": {
+          "title": "Můžete hrát klasické Skyjo se Skyjo Action?",
+          "content": "Ano, stačí odstranit akční karty. Pokud hrajete online verzi, vyberte klasickou verzi pro hraní Skyjo."
+        }
+      },
+      "banner": {
+        "title": "Potřebuji <gform>vaši zpětnou vazbu</gform> pro formování budoucnosti Skymo!"
+      },
+      "name-input-placeholder": "Jméno"
+    },
+    "Search": {
+      "header": {
+        "refresh": "Obnovit seznam her",
+        "create-button": {
+          "title": "Vytvořit veřejnou hru"
+        },
+        "back": "Zpět na úvodní stránku",
+        "title": "Veřejné hry"
+      },
+      "tags": {
+        "tag": {
+          "custom": "Vlastní",
+          "column": "Sloupec",
+          "row": "Řádek",
+          "classic": "Klasický",
+          "short-game": "Krátká hra",
+          "long-game": "Dlouhá hra"
+        },
+        "title": "Filtry:",
+        "no-tags-available": "Nejsou k dispozici žádné další štítky"
+      },
+      "head": {
+        "title": "Najít veřejné hry Skymo | Hrát Skyjo online",
+        "description": "Hledáte Skymo hru, ke které se můžete připojit? Procházejte dostupné veřejné hry a začněte hrát Skyjo online okamžitě s ostatními hráči. Hrajte zdarma hned teď!",
+        "keywords": "Skymo,Skyjo,Skyjo online,najít hru,připojit se ke hře,veřejné hry,online pro více hráčů,hrát s ostatními,rychlá hra,hry zdarma online,otevřené hry,online karetní hra,karetní hra pro více hráčů"
+      },
+      "no-games-found": "Nebyly nalezeny žádné hry",
+      "game-of": "Hra hráče {name}"
+    },
+    "Create": {
+      "head": {
+        "description": "Začněte novou hru Skymo online! Vytvářejte soukromé nebo veřejné místnosti, pozvěte své přátele a užijte si společnou zábavu ve hře Skyjo. Hrajte nyní zdarma!",
+        "title": "Vytvořit hru Skymo | Hrát Skyjo Online",
+        "keywords": "Skymo,Skyjo,Skyjo online,vytvořit hru,začít hru,soukromá hra,veřejná hra,hrát s přáteli,online pro více hráčů,hry zdarma online,vlastní hra"
+      },
+      "loading-text": "Vytváření vaší hry…"
+    },
+    "Lobby": {
+      "settings": {
+        "first-player-penalty-type": {
+          "item": {
+            "flat-only": "Pouze pevná",
+            "multiplier-only": "Pouze násobitel",
+            "flat-then-multiplier": "Nejdřív pevná, pak násobitel",
+            "multiplier-then-flat": "Násobitel a poté pevná hodnota"
+          },
+          "label": "Typ penalizace prvního hráče",
+          "description": "Penalizace se uplatní, pokud první hráč, který odhalí všechny své karty, nemá nejmenší počet bodů (neplatí, pokud je skóre menší nebo rovno 0)",
+          "placeholder": "Vyberte typ penalizace"
+        },
+        "private": {
+          "tooltip": {
+            "on": "Tato hra je soukromá, připojit se mohou pouze lidé s odkazem",
+            "off": "Tato část je veřejná, po ověření parametrů se může připojit kdokoli"
+          }
+        },
+        "reset-settings": "Obnovit nastavení",
+        "validation-warning": "Nastavení hry nelze po potvrzení změnit",
+        "validate-settings": "Ověřit nastavení",
+        "max-players": {
+          "label": "Maximální počet hráčů",
+          "title": "Maximální počet hráčů: {number}"
+        },
+        "remove-identical-column": "Odstranit stejné sloupce",
+        "remove-identical-row": "Odstranit duplicitní řádky",
+        "nb-columns": {
+          "label": "Počet sloupců",
+          "title": "$number sloupců"
+        },
+        "nb-rows": {
+          "label": "Počet řádků",
+          "title": "$number řádků"
+        },
+        "initial-turned-count": {
+          "label": "Počet karet odhalených na začátku",
+          "title": "Na začátku hry bude odhaleno {number} vašich karet"
+        },
+        "show-current-score": {
+          "label": "Zobrazit aktuální skóre během hry"
+        },
+        "score-to-end-game": {
+          "label": "Skóre pro ukončení hry",
+          "title": "Hra skončí, když hráč dosáhne {number} bodů"
+        },
+        "first-player-flat-penalty": {
+          "label": "Pevná penalizace prvního hráče",
+          "title": "Prvnímu hráči bude přičteno dalších {number} bodů"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Násobitel penalizace skóre prvního hráče",
+          "title": "Skóre prvního hráče bude vynásobeno {number}, pokud není striktně nižší než ostatní skóre ve hře"
+        }
+      },
+      "player-section": {
+        "title": "Hráči {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Vyberte počet hráčů",
+          "item": "{value} hráčů"
+        }
+      },
+      "not-enough-players-modal": {
+        "public-description": "Pozvěte přítele nebo počkejte, až se připojí další hráč.",
+        "title": "Nedostatek hráčů",
+        "description": "Ke spuštění hry potřebujete alespoň 2 hráče.",
+        "private-description": "Použijte soukromý odkaz k pozvání přátel!",
+        "close": "Rozumím"
+      },
+      "title": "Hra hráče {name}",
+      "leave-to-home": "Domů",
+      "go-back-to-settings": "Vrátit se do nastavení",
+      "leave-to-public-game-list": "Opustit veřejný seznam her",
+      "start-game-button": "Spustit hru",
+      "cancel": "Zrušit",
+      "game-starting-in": "Hra začíná za {seconds}",
+      "waiting-host-to-start": "Čekání na hostitele, až spustí hru",
+      "waiting-host-to-confirm-game-settings": "Čekání na ověření nastavení hostitelem"
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "information-we-collect": {
+          "local-storage-data": {
+            "description": "Do místního úložiště vašeho prohlížeče ukládáme:",
+            "title": "Místní úložiště dat",
+            "items": "Jazykové předvolby;;Předvolby nastavení hry"
+          },
+          "title": "Informace, které shromažďujeme",
+          "anonymous-usage-data": {
+            "title": "Anonymní údaje o používání",
+            "description": "Používáme PostHog, analytický nástroj, ke sběru anonymních dat o tom, jak používáte naše webové stránky. To zahrnuje:",
+            "items": "Zobrazení stránek;;Web vitals (metriky výkonu);;Odpovědi z průzkumu (pokud se rozhodnete zúčastnit)"
+          },
+          "user-provided-information": {
+            "title": "Informace poskytnuté uživatelem",
+            "description": "Shromažďujeme:",
+            "items": "Odeslané formuláře zpětné vazby (včetně volitelných e-mailových adres)"
+          },
+          "game-data": {
+            "title": "Herní data",
+            "description": "Dočasně ukládáme:",
+            "items": "Uživatelská jména a výběr avatarů;;Herní prvky a postup"
+          },
+          "cookies": {
+            "title": "Soubory cookie",
+            "description": "Používáme nezbytné cookies pro zajištění základních funkcí našich webových stránek:",
+            "items": "Relační cookies: Používáme relační cookie (skymo-io) k udržení vašeho připojení k našim herním serverům. Tato cookie je nezbytná pro funkčnost hry a vyprší po 24 hodinách;;Tyto cookies vás nesledují napříč webovými stránkami a jsou používány pouze k poskytování vámi požadované služby"
+          }
+        },
+        "how-we-use-your-information": {
+          "items": "Vylepšit naše webové stránky a uživatelský zážitek;;Analyzovat vzorce používání a výkon;;Reagovat na zpětnou vazbu a požadavky na podporu;;Usnadnit hraní",
+          "title": "Jak využíváme vaše údaje"
+        },
+        "your-rights-and-choices": {
+          "title": "Vaše práva a možnosti",
+          "description": "Vzhledem k tomu, že shromažďujeme především anonymní údaje, nemůžeme identifikovat ani přistupovat k osobním údajům konkrétního uživatele. Máte však následující práva a možnosti:",
+          "items": "Místní úložiště: Uložené preference můžete kdykoli vymazat vyčištěním místního úložiště prohlížeče;;Zpětná vazba: Pokud jste odeslali zpětnou vazbu s e-mailovou adresou, můžete nás kontaktovat a požádat o její smazání;;Odmítnutí analytiky: Sběr analytických dat můžete odmítnout povolením nastavení \"Do Not Track\" ve vašem prohlížeči nebo použitím prohlížečů zaměřených na soukromí, které blokují analytické skripty;;Herní data: Herní data jsou automaticky smazána, když všichni hráči opustí hru"
+        },
+        "childrens-privacy": {
+          "title": "Ochrana soukromí dětí",
+          "description": "Skymo nemá žádná věková omezení. Vědomě neshromažďujeme osobní údaje od dětí."
+        },
+        "changes-to-this-policy": {
+          "title": "Změny těchto zásad",
+          "description": "Tuto zásadu můžeme čas od času aktualizovat. O jakýchkoli změnách vás budeme informovat zveřejněním nových zásad na této stránce."
+        },
+        "back": "Zpět na úvodní stránku",
+        "title": "Zásady ochrany osobních údajů",
+        "last-update": {
+          "text": "Naposledy aktualizováno: {date}",
+          "date-format": "RRRR-MM-DD - hh:mmA"
+        },
+        "data-storage-and-retention": {
+          "title": "Ukládání a uchovávání dat",
+          "items": "Anonymní údaje o používání jsou uchovávány na serverech v Evropské unii po dobu až 1 roku;;Herní data jsou uložena v naší databázi ve Frankfurtu v Německu. Tato data jsou uchovávána po dobu aktivních her. Jakmile všichni hráči opustí hru, související data jsou smazána;;Informace uložené v lokálním úložišti vašeho prohlížeče tam zůstávají, dokud nevymažete data prohlížeče;;Odeslané formuláře zpětné vazby jsou uchovávány pouze za účelem odpovědi a zvážení návrhů pro vývoj"
+        },
+        "data-sharing": {
+          "title": "Sdílení dat",
+          "description": "Vaše osobní údaje nesdílíme s žádnými třetími stranami. Anonymní údaje o používání zpracovává PostHog, náš poskytovatel analytických služeb."
+        },
+        "contact-us": {
+          "title": "Kontaktujte nás",
+          "description": "Pokud máte jakékoliv dotazy ohledně těchto Zásad ochrany osobních údajů, kontaktujte nás prosím prostřednictvím formuláře zpětné vazby na webových stránkách, Discord serveru nebo GitHubu."
+        }
+      },
+      "head": {
+        "title": "Zásady ochrany osobních údajů | Skymo - Skyjo Online karetní hra",
+        "description": "Zásady ochrany osobních údajů pro Skymo. Zjistěte, jak chráníme vaše data při hraní naší karetní hry Skyjo. Transparentní postupy a bezpečný herní zážitek.",
+        "keywords": "Skymo,Skyjo,Skyjo Online,zásady ochrany osobních údajů,ochrana údajů,ochrana soukromí v online hrách,bezpečné hraní,uživatelská data,GDPR,CCPA,zabezpečení dat"
+      }
+    },
+    "Maintenance": {
+      "title": "Stránka v údržbě",
+      "github-alt": "Zobrazit zdrojový kód na GitHubu",
+      "description": "V současné době aktualizujeme stránky, zkuste to prosím později."
+    },
+    "NotFound": {
+      "title": "Chyba 404",
+      "description": "Stránka, kterou hledáte, neexistuje.",
+      "go-back-to-homepage": "Zpět na domovskou stránku"
+    },
+    "ResultsPage": {
+      "title": "Výsledky hry",
+      "rank": "Pořadí",
+      "player": "Hráč",
+      "score-per-round": "Body za kolo",
+      "total": "Celkem",
+      "player-want-to-replay": "Hráči, kteří chtějí hrát znovu:",
+      "replay-button": {
+        "cancel": "Neopakovat",
+        "replay": "Přehrát znovu"
+      },
+      "leave-button": "Opustit hru"
+    },
+    "Rules": {
+      "head": {
+        "title": "Jak hrát Skymo | Skyjo karetní hra online",
+        "description": "Naučte se hrát Skyjo s naším průvodcem Skymo. Objevte pravidla, strategie a tipy, jak zvládnout tuto zábavnou online karetní hru. Hrajte s přáteli hned teď!",
+        "keywords": "Skymo,Skyjo,pravidla Skyjo,jak hrát Skyjo,hra Skyjo,pravidla karetní hry,online karetní hra,herní instrukce,herní průvodce"
+      },
+      "title": "Pravidla hry Skyjo"
+    }
+  },
+  "components": {
+    "Footer": {
+      "privacy-policy": "Zásady ochrany osobních údajů",
+      "disclaimer": {
+        "not-affiliated": "Tato webová stránka není spojena s tvůrci ani distributory hry Skyjo",
+        "rights-owned": "Veškerá práva k názvu Skyjo a herní mechanice vlastní Alexander Bernhardt a Magilano",
+        "responsible-content": "Vlastník těchto stránek nenese odpovědnost za obsah vytvořený uživateli (uživatelská jména, zprávy)"
+      },
+      "feedback": "Zanechte zpětnou vazbu",
+      "buy-game": "Koupit hru",
+      "explanation": "Co je Skyjo?",
+      "rules": "Pravidla hry",
+      "status": "Stav serveru",
+      "home": "Domů",
+      "release-notes": "Poznámky k vydání",
+      "attribution": {
+        "avatars": "Avatary vytvořené Freepik - Flaticon"
+      }
+    },
+    "GameLobbyButtons": {
+      "join-game-button": "Připojit se ke hře",
+      "reconnect-game-button": "Znovu se připojit ke hře",
+      "find-game-button": "Najít hru",
+      "create-game-button": "Vytvořit {type, select, private {soukromou} public {veřejnou} other {neznámou}} hru"
+    },
+    "GameRules": {
+      "button-title": "Zobrazit pravidla hry",
+      "first-player-flat-penalty": "Fixní penále: {value}",
+      "title": "Pravidla hry",
+      "remove-identical-column": "Odstranit sloupec při identických kartách: {value, select, true {ano} false {ne} other {neznámé}}",
+      "remove-identical-row": "Odstranit řádek při shodných kartách: {value, select, true {ano} false {ne} other {neznámé}}",
+      "card-per-column": "Počet sloupců: {value}",
+      "card-per-row": "Počet řádků: {value}",
+      "initial-turned-count": "Počet karet k otočení na začátku: {value}",
+      "score-to-end-game": "Počet bodů pro ukončení hry: {value}",
+      "first-player-penalty-type": {
+        "label": "Typ penalizace pro prvního hráče, pokud nemá nejmenší počet bodů: ",
+        "1": "Pouze násobitel",
+        "2": "Pouze pevná",
+        "3": "Pevná a poté násobitel",
+        "4": "Násobitel a poté fixní hodnota"
+      },
+      "first-player-multiplier-penalty": "Penalizace násobitele: {value}"
+    },
+    "LanguageCombobox": {
+      "select-language": "Vyberte jazyk",
+      "search-language": "Jazyk vyhledávání",
+      "no-language-found": "Nebyl nalezen žádný jazyk",
+      "locale": {
+        "de": "Němčina",
+        "en": "Angličtina",
+        "es": "Španělština",
+        "fr": "Francouzština",
+        "it": "Italština",
+        "br": "Bretonština",
+        "ta": "tamilština"
+      }
+    },
+    "PWABanner": {
+      "Chrome": "Klikněte na tlačítko 'Instalovat' pro instalaci",
+      "title": "Nainstalujte si Skymo do svého zařízení!",
+      "Safari": "Klepněte na ikonu sdílení a poté na 'Přidat na panel' pro instalaci",
+      "FirefoxAndroid": "Klepněte na ikonu menu a poté na 'Přidat na plochu' pro instalaci",
+      "ChromeAndroid": "Klepněte na ikonu menu a poté na 'Přidat na plochu' pro instalaci",
+      "SamsungBrowser": "Klepněte na ikonu menu, poté na 'Přidat stránku do' a následně na 'Domovská obrazovka' pro instalaci",
+      "ChromeIOS": "Klepněte na ikonu sdílení, poté přejděte dolů a klepnutím na 'Přidat na plochu' proveďte instalaci",
+      "FirefoxIOS": "Klepněte na ikonu menu, poté na ikonu sdílení, pak posuňte dolů a klepněte na 'Přidat na plochu' pro instalaci",
+      "SafariIOS": "Klepněte na ikonu sdílení, poté přejděte dolů a klepnutím na 'Přidat na plochu' proveďte instalaci",
+      "install-button": {
+        "title": "Nainstalovat aplikaci",
+        "content": "Instalovat"
+      }
+    },
+    "Rules": {
+      "round-start": {
+        "choice-2": {
+          "title": "Volba 2:",
+          "description": "Vezměte první kartu lícem dolů z dobíracího balíčku.",
+          "content-1": "Hráč se může na kartu podívat a rozhodnout se, zda si ji vymění za jednu ze svých karet (skrytou nebo viditelnou) nebo ji odhodí. Pokud si chce vytaženou kartu ponechat, vymění ji za jednu ze svých karet, jak je popsáno výše v",
+          "choice-1": "Volba 1",
+          "content-2": "Pokud si nechce ponechat vytaženou kartu, položí ji na odhazovací balíček a musí otočit lícem nahoru jednu ze svých karet."
+        },
+        "title": "Začátek kola",
+        "choice": "volba {number}",
+        "content-1": "Hráč si může vybrat první kartu otočenou z odkládacího balíčku",
+        "content-2": "nebo první lícem dolů otočenou kartu z dobíracího balíčku",
+        "choice-1": {
+          "title": "Volba 1:",
+          "description": "Vezměte první kartu z odhazovacího balíčku.",
+          "content": "Hráč musí okamžitě vyměnit tuto kartu za jednu ze svých 12 karet a položit ji lícem nahoru. Může si volně vybrat mezi kartami otočenými lícem nahoru i lícem dolů. Skryté karty nesmí být před výměnou prohlédnuty. Vyměněná karta se položí lícem nahoru na odhazovací balíček."
+        },
+        "end-of-turn": "Jeho tah končí a na řadě je další hráč (po směru hodinových ručiček)."
+      },
+      "scoring": {
+        "first-to-finish": {
+          "note": {
+            "title": "Vezměte prosím na vědomí:",
+            "content": "toto pravidlo platí pouze pro kladné body!"
+          },
+          "content": "Pokud hráč, který dokončil kolo (první, který otočil všechny své karty), nezískal v daném kole nejnižší počet bodů, jeho bodový součet za toto kolo se zdvojnásobí."
+        },
+        "example": {
+          "title": "Příklad:",
+          "content": "Hráč A odhalí všechny své karty a ukončí kolo. Na konci kola má 10 bodů, hráč B má 24 bodů a hráč C má také 10 bodů. Jelikož hráč A nemá jednoznačně nejnižší počet bodů, jeho body se zdvojnásobí na 20."
+        },
+        "title": "Bodování",
+        "description": "Hráči, kteří mají stále karty lícem dolů, je otočí lícem nahoru. Každý hráč spočítá své celkové body.",
+        "list": {
+          "content-1": "Pokud je součet bodů kladný, přičte se k celkovému počtu bodů z předchozích kol.",
+          "content-2": "Pokud je součet záporný, odečte se od celkového počtu bodů z předchozích kol."
+        }
+      },
+      "cards-section-title": "{number} herních karet:",
+      "game-goal": {
+        "title": "Cíl hry",
+        "content": "Hra Skyjo se hraje na několik kol a končí, jakmile některý z hráčů dosáhne 100 nebo více bodů. Hru vyhrává hráč s nejmenším počtem bodů."
+      },
+      "round-preparation": {
+        "title": "Příprava kola",
+        "content-1": "Nejprve každý hráč dostane 12 karet lícem dolů. Poté se jedna karta z dobíracího balíčku položí lícem nahoru doprostřed stolu a vytvoří tak začátek odhazovacího balíčku. Zbývající karty se položí lícem dolů vedle sebe a vytvoří dobírací balíček.",
+        "content-2": "Každý hráč položí svých 12 karet do čtyř sloupců po třech kartách lícem dolů před sebe. Nakonec si každý hráč otočí lícem nahoru dvě karty podle svého výběru."
+      },
+      "special-rule": {
+        "title": "Speciální pravidlo:",
+        "content": "Pokud má hráč ve sloupci 3 stejné karty, odhodí tyto 3 karty na odhazovací balíček. Pokud je sloupec stejných karet získán výměnou karty z dobíracího nebo odhazovacího balíčku, musí být tyto tři stejné karty vždy umístěny na odhazovací balíček po výměně karty."
+      },
+      "round-end": {
+        "title": "Konec kola",
+        "content-1": "Když hráč odhalí všechny své karty, odehrál své poslední kolo.",
+        "content-2": "Všichni následující hráči hrají ještě jednou pro dokončení kola."
+      },
+      "end-of-game": {
+        "title": "Konec hry",
+        "content": "Na konci každého kola se body každého hráče přičtou k celkovému skóre získanému v předchozích kolech. Hra končí, jakmile některý z hráčů dosáhne 100 nebo více bodů. Hráč s nejnižším počtem bodů vyhrává hru."
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Zobrazit výsledkovou tabuli"
+    },
+    "ScoreDialog": {
+      "title": "Skóre",
+      "description": "{name} vyhrál s {score} body!"
+    },
+    "SettingsDialog": {
+      "display": {
+        "chat": {
+          "title": "Chat",
+          "chat-visibility": "Viditelnost chatu",
+          "chat-notification-size": {
+            "label": "Velikost oznámení chatu",
+            "values": {
+              "small": "Malý",
+              "normal": "Normální",
+              "big": "Velký"
+            }
+          }
+        },
+        "title": "Zobrazit",
+        "mobile": {
+          "title": "Mobilní",
+          "switch-to-player-who-is-playing": "Automaticky přepnout na hráče, který právě hraje",
+          "show-preview-opponents-cards": "Zobrazit náhled karet protivníků v seznamu protivníků"
+        },
+        "gameplay": {
+          "title": "Hratelnost",
+          "gameboard-size": {
+            "label": "Velikost vaší herní desky",
+            "big-warning": "Může narušit zobrazení na mobilních zařízeních",
+            "values": {
+              "normal": "Normální",
+              "big": "Velký"
+            }
+          },
+          "enlarge-active-player-board": "Zvětšit hrací plochu hráče, který je na tahu",
+          "timer": {
+            "label": "Režim zobrazení časovače",
+            "description": "Chytrý režim zobrazuje časovač v poločase a posledních 15 sekund.",
+            "modes": {
+              "never": "Nikdy",
+              "smart": "Chytrý",
+              "always": "Vždy"
+            }
+          }
+        }
+      },
+      "title": "Nastavení",
+      "general": {
+        "title": "Obecné",
+        "language": "Jazyk",
+        "language-warn": "Lze změnit pouze na domovské stránce",
+        "appearance": "Vzhled"
+      },
+      "audio": {
+        "title": "Zvuk",
+        "toggle": {
+          "label": "Povolit zvuk"
+        },
+        "volume": {
+          "label": "Hlasitost ({volume}%)"
+        }
+      }
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "kick-button": {
+          "alt": "Vyhodit {playerName}",
+          "label": "Vykopnout"
+        },
+        "title": "Hlasovat pro vyloučení {playerName}",
+        "ignore-button": {
+          "alt": "Ignorovat hlasování o vyhození hráče {playerName}",
+          "label": "Ignorovat"
+        }
+      },
+      "player-has-voted": {
+        "title": "Hlasovat pro vyloučení {playerName}",
+        "description": "Hlasoval/a jste {vote, select, true {pro} false {proti} other {hlasování}}"
+      },
+      "vote-against-you": {
+        "title": "Hlasování o vašem vyhození",
+        "description": "Bylo požádáno o vaše vyhození."
+      },
+      "vote-failed": {
+        "title": "Hlasování o vyhození hráče {playerName} selhalo",
+        "description": "Není dostatek hlasů pro vyhození hráče {playerName}"
+      },
+      "vote-against-you-failed": {
+        "title": "Nebyl jsi vyhozen",
+        "description": "Není dostatek hlasů pro vaše vyhození"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} byl vyhozen",
+        "description": "Hlasování o vyhození hráče {playerName} bylo úspěšné."
+      },
+      "vote-against-you-succeeded": {
+        "title": "Byl/a jste vyhozen/a",
+        "description": "Hráči odhlasovali vaše vyhození ze hry."
+      },
+      "you-kick-player": {
+        "title": "Vyhodil/a jsi hráče {playerName}"
+      },
+      "host-kick": {
+        "title": "{playerName} byl vyhozen ze hry hostitelem"
+      },
+      "host-kick-you": {
+        "title": "Byli jste vyhozeni ze hry hostitelem"
+      }
+    },
+    "AppearanceSelect": {
+      "light": "Světlý",
+      "dark": "Tmavý",
+      "system": "Systém"
+    },
+    "Chat": {
+      "title": "Chat"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Zpráva",
+      "button-title": "Odeslat",
+      "message-too-long": {
+        "description": "Zpráva je příliš dlouhá (max. 200 znaků)"
+      },
+      "unknown-command": {
+        "description": "Neznámý příkaz"
+      }
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Nahlásit zprávu"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} nepřečtená zpráva{count, plural, =1 {} other {y}}"
+    },
+    "CopyLink": {
+      "message": "Odkaz zkopírován!",
+      "button-title": "Kopírovat odkaz"
+    },
+    "DiscardPile": {
+      "title": "Odkládací balíček",
+      "throw": "Hodit"
+    },
+    "DrawPile": {
+      "title": "Dobírací balíček"
+    },
+    "EndRoundDialog": {
+      "title": "Konec kola",
+      "description": "Další kolo začne za několik sekund…"
+    },
+    "Feedback": {
+      "title": "Zanechte zpětnou vazbu",
+      "description": "Můžete napsat zpětnou vazbu, která nám pomůže vylepšit hru.",
+      "toast": {
+        "success": {
+          "title": "Děkujeme za vaši zpětnou vazbu!",
+          "description": "Vaše postřehy nám pomohly vylepšit naše herní stránky a jsme za to opravdu vděční."
+        },
+        "error": {
+          "title": "Došlo k chybě, zkuste to prosím znovu."
+        }
+      },
+      "email-input": {
+        "label": "Váš e-mail (nepovinné)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Vaše zpráva",
+        "placeholder": "Řekněte nám, co si myslíte, poznamenáte nebo chcete…"
+      },
+      "button-title": "Odeslat"
+    },
+    "MenuDropdown": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "rules": "Pravidla",
+      "feedback": "Zanechte zpětnou vazbu",
+      "discord": "Discord",
+      "settings": "Nastavení"
+    },
+    "OpponentBoard": {
+      "disconnected": "Hráč opustil hru. Po následující tahy za něj bude hrát bot, dokud se znovu nepřipojí."
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Protivníci:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Vy"
+    },
+    "RulesDialog": {
+      "title": "Pravidla hry",
+      "trigger": {
+        "aria-label": "Zobrazit pravidla hry"
+      }
+    },
+    "ScoreSheet": {
+      "see-scores": "Zobrazit skóre"
+    },
+    "ScoreTable": {
+      "name": "Jméno",
+      "round": "Kolo",
+      "total": "Celkem"
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Nahlásit {username}",
+        "kick": "Vyhodit {username}",
+        "vote-to-kick": "Hlasovat pro vyhození {username}",
+        "ban": "Zakázat {username}",
+        "mute": "Ztlumit {username}",
+        "unmute": "Zrušit ztlumení uživatele {username}"
+      }
+    },
+    "AfkKick": {
+      "warning": {
+        "title": "Upozornění na AFK",
+        "description": "Pokud zůstanete neaktivní, budete ze hry vyhozen(a)."
+      },
+      "kicked": {
+        "title": "Vyhozen kvůli neaktivitě",
+        "description": "Byl/a jste vyhozen/a ze hry kvůli příliš častému AFK."
+      },
+      "player-kicked": {
+        "title": "Hráč vyhozen",
+        "description": "{playerName} byl vyhozen ze hry kvůli neaktivitě."
+      }
+    },
+    "ReportDialog": {
+      "title": "Nahlásit {username}",
+      "description": "Nahlaste uživatelské jméno nebo zprávu od {username}, pokud se vám zdá nevhodná.",
+      "report-username": "Nahlásit uživatelské jméno",
+      "report-message": "Nahlásit zprávu",
+      "select-message": "Vyberte zprávu k nahlášení",
+      "select-message-placeholder": "Vyberte zprávu",
+      "no-messages": "Nenalezeny žádné zprávy od tohoto uživatele",
+      "cancel": "Zrušit",
+      "submit": "Nahlásit",
+      "toast": {
+        "report-submitted": {
+          "title": "Hlášení odesláno",
+          "description": "Děkujeme za vaše hlášení, přispěli jste ke zlepšení kvality hry."
+        }
+      }
+    }
+  },
+  "utils": {
+    "chat": {
+      "player-already-muted": "Uživatel {username} je již ztlumen",
+      "player-unmuted": "Ztlumení hráče {username} bylo zrušeno",
+      "wizz-self": "Byl jste wizznut uživatelem {initiatorUsername}!",
+      "player-joined": "{username} se připojil/a ke hře",
+      "player-left": "{username} opustil hru",
+      "player-reconnect": "{username} se znovu připojil ke hře",
+      "argument-required": "Pro příkaz je vyžadován jeden nebo více argumentů: {command}",
+      "player-muted": "{username} byl ztlumen",
+      "player-not-muted": "{username} není ztlumen",
+      "wizz-sent": "Poslal/a jsi wizz uživateli {targetUsername}!",
+      "wizz-other": "{initiatorUsername} poslal/a wizz uživateli {targetUsername}!"
+    },
+    "avatar": {
+      "bee": "včela",
+      "crab": "krab",
+      "fox": "liška",
+      "jellyfish": "medúza",
+      "eagle": "orel",
+      "elephant": "slon",
+      "frog": "žába",
+      "koala": "koala",
+      "octopus": "chobotnice",
+      "penguin": "tučňák",
+      "toucan": "tukan",
+      "turtle": "želva",
+      "whale": "velryba",
+      "owl": "sova",
+      "cat": "kočka",
+      "dog": "pes"
+    },
+    "skymo": {
+      "waiting": "Čekání na hráče",
+      "turn-cards": "Otočte {number} kart{number, plural, =1 {u} other {y}}",
+      "waiting-opponents-to-turn-cards": "Čekání na protihráč{nbOpponents, plural, =1 {e} other {e}}, až otočí {number} kart{number, plural, =1 {u} other {y}}",
+      "turn": {
+        "chooseAPile": "Vyberte hromádku",
+        "throwOrReplace": "Nahradit nebo zahodit",
+        "replaceACard": "Nahradit kartu",
+        "turnACard": "Otočit kartu"
+      },
+      "player-turn": "{playerName} je na tahu",
+      "last-turn": "Poslední kolo!",
+      "game-stopped": "Hra zastavena",
+      "round-over": "Kolo dokončeno",
+      "game-ended": "Konec hry!"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "Serveru trvá odpověď déle, než se očekávalo. Můžete zkusit znovu načíst stránku a zkusit to znovu."
+        },
+        "game-not-found": {
+          "description": "Hra, kterou hledáte, neexistuje"
+        },
+        "cannot-reconnect": {
+          "description": "Není již možné se znovu připojit ke hře, čas pro opětovné připojení vypršel"
+        },
+        "game-is-full": {
+          "description": "Hra je plná, nemůžete se připojit"
+        },
+        "game-already-started": {
+          "description": "Hra již začala"
+        },
+        "player-banned": {
+          "description": "Byl(a) jste vyloučen(a) z této hry"
+        },
+        "rate-limit": {
+          "title": "Posíláte příliš mnoho požadavků",
+          "description": "Zkuste to prosím znovu za několik sekund"
+        }
+      }
+    }
+  },
+  "contexts": {
+    "ReportContext": {
+      "report": {
+        "title": "Hráč {playerName} byl vyloučen z důvodu nahlášení"
+      },
+      "report-against-you": {
+        "description": "Vaše uživatelské jméno nebo jedna z vašich zpráv byla nahlášena a shledána nevhodnou. Prosím, neopakujte toto chování.",
+        "title": "Byli jste vykopnuti na základě nahlášení"
+      }
+    },
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "title": "Hra nenalezena",
+          "description": "Hra, ke které jste se snažili znovu připojit, již neexistuje"
+        }
+      },
+      "connection-lost": "Připojení ztraceno. Pokus o opětovné připojení...",
+      "reconnection": "Znovu připojeno"
+    },
+    "BanContext": {
+      "not-allowed": {
+        "title": "Nemáte oprávnění k zákazu",
+        "description": "Nemáte oprávnění zabanovat hráče"
+      },
+      "player-not-found": {
+        "title": "Hráč k zabanování neexistuje",
+        "description": "Hráč k zabanování ve hře neexistuje"
+      },
+      "player-banned": {
+        "title": "{playerName} byl zabanován",
+        "description": "Hráč {playerName} byl zabanován hostitelem"
+      },
+      "you-were-banned": {
+        "title": "Byl/a jste zablokován/a",
+        "description": "Hostitel vás vyloučil ze hry"
+      },
+      "unexpected-error": {
+        "title": "Došlo k neočekávané chybě",
+        "description": "Při blokování hráče došlo k neočekávané chybě"
+      }
+    }
+  }
+}

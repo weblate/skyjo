@@ -1,0 +1,769 @@
+{
+  "pages": {
+    "Index": {
+      "name-input-placeholder": "Namn",
+      "faq": {
+        "pronounce": {
+          "title": "Hur uttalar man Skyjo?",
+          "content": "Ordet Skyjo uttalas [Skyjoe]."
+        },
+        "how-to-win": {
+          "title": "Hur vinner man i Skyjo?",
+          "content": "För att vinna i Skyjo är det viktigt att ha lägsta möjliga poäng. För att uppnå detta, anta en balanserad strategi mellan att ha de lägsta korten, avslöja dina kort och skapa kolumner med identiska kort. Undvik att vända först om du inte ligger betydligt före med synliga kort. Kom ihåg att behålla redan synliga kort för att försöka skapa kolumner med dem, snarare än att optimera dem individuellt."
+        },
+        "title": "Vanliga frågor (FAQ)",
+        "meaning": {
+          "title": "Vad betyder Skyjo?",
+          "content": "En Skyjo är en kolumn med 3 identiska kort i spelet."
+        },
+        "how-to-play": {
+          "title": "Hur spelar man Skyjo?",
+          "content": "För att spela Skyjo, dela ut 12 kort med baksidan uppåt till varje spelare. Målet är att ha så få poäng som möjligt genom att vända och byta kort. Varje tur drar du ett kort från leken eller slänghögen, och bestämmer sedan om du vill ersätta ett av dina synliga kort. Numrerade kort är värda sina poäng, specialkort har åtgärder. Spelet avslutas när en spelare har vänt alla sina kort. Spelaren med minst poäng vinner. Du kan läsa <rules>reglerna</rules> för mer information."
+        },
+        "play-classic-with-action": {
+          "title": "Kan du spela klassiska Skyjo med Skyjo Action?",
+          "content": "Ja, du behöver bara ta bort actionkorten. Om du spelar onlineversionen väljer du den klassiska versionen för att spela Skyjo."
+        }
+      },
+      "banner": {
+        "title": "Jag behöver <gform>din feedback</gform> för att forma Skymos framtid!"
+      },
+      "explanation": {
+        "title": "Vad är Skyjo?",
+        "content": "Skyjo är ett spännande kortspel och ett utmärkt brädspel som uppskattas av spelfantaster över hela världen. Detta kortspel för flera spelare är utformat för 2 till 8 spelare, där varje spelare får 12 kort, initialt dolda. Huvudmålet med spelet är att få så få poäng som möjligt. Spelet avslutas så snart en spelare når 100 poäng. Spelreglerna är enkla och lätta att förstå, vilket gör det till ett idealiskt val för spelkvällar med familj eller vänner. Spelentusiaster kommer att bli glada över att få veta att det nu är möjligt att spela Skyjo online gratis!",
+        "button": "Se reglerna"
+      }
+    },
+    "Lobby": {
+      "settings": {
+        "nb-rows": {
+          "title": "$number rader",
+          "label": "Antal rader"
+        },
+        "private": {
+          "tooltip": {
+            "on": "Det här spelet är privat, bara de med länken kan gå med",
+            "off": "Denna del är publik, vem som helst kan ansluta efter att ha validerat parametrarna"
+          }
+        },
+        "reset-settings": "Återställ inställningar",
+        "validation-warning": "Spelinställningarna kan inte ändras när de har validerats",
+        "max-players": {
+          "label": "Maximalt antal spelare",
+          "title": "Maximalt antal spelare: {number}"
+        },
+        "validate-settings": "Validera inställningar",
+        "remove-identical-column": "Ta bort identiska kolumner",
+        "remove-identical-row": "Ta bort identiska rader",
+        "nb-columns": {
+          "label": "Antal kolumner",
+          "title": "$number kolumner"
+        },
+        "initial-turned-count": {
+          "label": "Antal kort som visas initialt",
+          "title": "Vid spelets början kommer {number} av dina kort att avslöjas"
+        },
+        "show-current-score": {
+          "label": "Visa aktuell poäng under spelets gång"
+        },
+        "score-to-end-game": {
+          "label": "Poäng för att avsluta spelet",
+          "title": "Spelet avslutas när en spelare når {number} poäng"
+        },
+        "first-player-penalty-type": {
+          "label": "Första spelares strafftyp",
+          "description": "Straff utdöms om den första spelaren att visa alla sina kort inte har det lägsta antalet poäng (gäller ej om poängen är mindre än eller lika med 0)",
+          "placeholder": "Välj en strafftyp",
+          "item": {
+            "multiplier-only": "Endast multiplikator",
+            "flat-only": "Endast fast belopp",
+            "flat-then-multiplier": "Fast belopp sedan Multiplikator",
+            "multiplier-then-flat": "Multiplikator sedan fast"
+          }
+        },
+        "first-player-flat-penalty": {
+          "label": "Första spelarens poäng, fast straff",
+          "title": "Ytterligare {number} poäng kommer att läggas till den första spelarens poäng"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Straffmultiplikator för första spelares poäng",
+          "title": "Den första spelarens poäng kommer att multipliceras med {number} om den inte är strikt lägre än spelets andra poäng"
+        }
+      },
+      "title": "{name}s spel",
+      "leave-to-home": "Gå till startsidan",
+      "leave-to-public-game-list": "Lämna till offentlig spellista",
+      "go-back-to-settings": "Gå tillbaka till inställningarna",
+      "start-game-button": "Starta spelet",
+      "cancel": "Avbryt",
+      "game-starting-in": "Spelet startar om {seconds}",
+      "waiting-host-to-start": "Väntar på att värden ska starta spelet",
+      "waiting-host-to-confirm-game-settings": "Väntar på att värden ska validera inställningarna",
+      "player-section": {
+        "title": "Spelare {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Välj antal spelare",
+          "item": "{value} spelare"
+        }
+      },
+      "not-enough-players-modal": {
+        "title": "Inte tillräckligt många spelare",
+        "description": "Du måste vara minst 2 spelare för att starta spelet.",
+        "public-description": "Bjud in en vän eller vänta på att en annan spelare ansluter.",
+        "private-description": "Använd den privata länken för att bjuda in vänner!",
+        "close": "Jag förstår"
+      }
+    },
+    "PrivacyPolicy": {
+      "content": {
+        "data-sharing": {
+          "title": "Datadelning",
+          "description": "Vi delar inte dina personuppgifter med tredje part. Anonym användningsdata behandlas av PostHog, vår analysleverantör."
+        },
+        "contact-us": {
+          "title": "Kontakta oss",
+          "description": "Om du har några frågor om denna integritetspolicy, vänligen kontakta oss via vårt feedbackformulär på webbplatsen, Discord-servern eller GitHub."
+        },
+        "back": "Tillbaka till startsidan",
+        "title": "Integritetspolicy",
+        "last-update": {
+          "text": "Senast uppdaterad: {date}",
+          "date-format": "YYYY-MM-DD - hh:mmA"
+        },
+        "information-we-collect": {
+          "title": "Information vi samlar in",
+          "anonymous-usage-data": {
+            "title": "Anonym användningsdata",
+            "description": "Vi använder PostHog, ett analysverktyg, för att samla in anonym data om hur du använder vår webbplats. Detta inkluderar:",
+            "items": "Sidvisningar;;Webbstatistik (prestandamått);;Enkätssvar (om du väljer att delta)"
+          },
+          "user-provided-information": {
+            "title": "Användarangiven information",
+            "description": "Vi samlar in:",
+            "items": "Inskickade feedbackformulär (inklusive valfria e-postadresser)"
+          },
+          "game-data": {
+            "title": "Speldata",
+            "description": "Vi lagrar tillfälligt:",
+            "items": "Användarnamn och avatarval;;Spelmoment och framsteg"
+          },
+          "local-storage-data": {
+            "title": "Lokal lagringsdata",
+            "description": "Vi lagrar i din webbläsares lokala lagring:",
+            "items": "Språkinställningar;;Spelinställningar"
+          },
+          "cookies": {
+            "title": "Cookies",
+            "description": "Vi använder nödvändiga cookies för att aktivera kärnfunktioner på vår webbplats:",
+            "items": "Sessionscookies: Vi använder en sessionscookie (skymo-io) för att upprätthålla din anslutning till våra spelserverar. Denna cookie är nödvändig för spelets funktionalitet och upphör att gälla efter 24 timmar;;Dessa cookies spårar dig inte över webbplatser och används endast för att tillhandahålla den tjänst du har begärt"
+          }
+        },
+        "how-we-use-your-information": {
+          "title": "Hur vi använder din information",
+          "items": "Förbättra vår webbplats och användarupplevelse;;Analysera användningsmönster och prestanda;;Svara på feedback och supportförfrågningar;;Underlätta spelupplevelsen"
+        },
+        "data-storage-and-retention": {
+          "title": "Datalagring och -bevarande",
+          "items": "Anonym användningsdata lagras på servrar inom Europeiska unionen och behålls i upp till 1 år;;Speldata lagras i vår databas som finns i Frankfurt, Tyskland. Denna data behålls under aktiva spels varaktighet. När alla spelare lämnar ett spel raderas tillhörande data;;Information som lagras i din webbläsares lokala lagring finns kvar tills du rensar din webbläsardata;;Inskickade feedbackformulär behålls endast i syfte att svara och överväga förslag för utveckling"
+        },
+        "your-rights-and-choices": {
+          "title": "Dina rättigheter och val",
+          "description": "Eftersom vi huvudsakligen samlar in anonym data kan vi inte identifiera eller komma åt personlig information som är specifik för någon enskild användare. Du har dock följande rättigheter och valmöjligheter:",
+          "items": "Lokal lagring: Du kan när som helst rensa din webbläsares lokala lagring för att ta bort sparade inställningar;;Feedback: Om du har skickat feedback med en e-postadress kan du kontakta oss för att begära att den raderas;;Analysavregistrering: Du kan välja bort insamling av analysdata genom att aktivera din webbläsares \"Do Not Track\"-inställning eller använda integritetsfokuserade webbläsare som blockerar analysskript;;Speldata: Spelrelaterad data raderas automatiskt när alla spelare lämnar ett spel"
+        },
+        "childrens-privacy": {
+          "title": "Barns integritet",
+          "description": "Skymo har inga åldersbegränsningar. Vi samlar inte medvetet in personuppgifter från barn."
+        },
+        "changes-to-this-policy": {
+          "title": "Ändringar i denna policy",
+          "description": "Vi kan komma att uppdatera denna policy från tid till annan. Vi kommer att meddela dig om eventuella ändringar genom att publicera den nya policyn på denna sida."
+        }
+      },
+      "head": {
+        "title": "Integritetspolicy | Skymo - Skyjo Online Card Game",
+        "description": "Integritetspolicy för Skymo. Lär dig hur vi skyddar dina uppgifter medan du spelar vårt kortspel Skyjo. Transparenta rutiner och säker spelupplevelse.",
+        "keywords": "Skymo, Skyjo, Skyjo Online, integritetspolicy, dataskydd, integritet för onlinespel, säkert spelande, användardata, GDPR, CCPA, datasäkerhet"
+      }
+    },
+    "Search": {
+      "head": {
+        "title": "Hitta offentliga Skymo-spel | Spela Skyjo Online",
+        "description": "Letar du efter ett Skymo-spel att gå med i? Bläddra bland tillgängliga offentliga spel och börja spela Skyjo online direkt med andra spelare. Spela gratis nu!",
+        "keywords": "Skymo, Skyjo, Skyjo online, hitta spel, gå med i spel, offentliga spel, onlinemultiplayer, spela med andra, snabbspel, gratis onlinespel, öppna spel, onlinekortspel, flerspelarkortspel"
+      },
+      "header": {
+        "back": "Tillbaka till startsidan",
+        "title": "Offentliga spel",
+        "refresh": "Uppdatera spellistan",
+        "create-button": {
+          "title": "Skapa ett offentligt spel"
+        }
+      },
+      "tags": {
+        "title": "Filter:",
+        "no-tags-available": "Inga fler taggar tillgängliga",
+        "tag": {
+          "classic": "Klassisk",
+          "custom": "Anpassad",
+          "column": "Kolumn",
+          "row": "Rad",
+          "short-game": "Kort spel",
+          "long-game": "Långt spel"
+        }
+      },
+      "no-games-found": "Inga spel hittades",
+      "game-of": "{name}s spel"
+    },
+    "Create": {
+      "head": {
+        "title": "Skapa ett Skymo-spel | Spela Skyjo Online",
+        "description": "Starta ett nytt Skymo-spel online! Skapa privata eller offentliga rum, bjud in dina vänner och njut av det roliga med Skyjo tillsammans. Spela nu gratis!",
+        "keywords": "Skymo, Skyjo, Skyjo online, skapa spel, starta spel, privat spel, offentligt spel, spela med vänner, onlinemultiplayer, gratis onlinespel, anpassat spel"
+      },
+      "loading-text": "Skapar ditt spel…"
+    },
+    "Maintenance": {
+      "title": "Webbplatsen under underhåll",
+      "description": "Vi uppdaterar för närvarande webbplatsen, vänligen försök igen senare.",
+      "github-alt": "Se källkoden på GitHub"
+    },
+    "NotFound": {
+      "title": "Fel 404",
+      "description": "Sidan du letar efter finns inte.",
+      "go-back-to-homepage": "Gå tillbaka till startsidan"
+    },
+    "ResultsPage": {
+      "title": "Spelresultat",
+      "rank": "Rank",
+      "player": "Spelare",
+      "score-per-round": "Poäng per omgång",
+      "total": "Totalt",
+      "player-want-to-replay": "Spelare som vill spela om:",
+      "replay-button": {
+        "cancel": "Spela inte upp igen",
+        "replay": "Spela upp igen"
+      },
+      "leave-button": "Lämna spelet"
+    },
+    "Rules": {
+      "head": {
+        "title": "Hur man spelar Skymo | Skyjo kortspel online",
+        "description": "Lär dig spela Skyjo med vår Skyjo-guide. Upptäck regler, strategier och tips för att bemästra detta roliga onlinekortspel. Spela med vänner nu!",
+        "keywords": "Skymo, Skyjo, Skyjo regler, hur man spelar Skyjo, Skyjo spel, kortspelsregler, onlinekortspel, spelinstruktioner, spelguide"
+      },
+      "title": "Skyjo spelregler"
+    }
+  },
+  "components": {
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Rapportera meddelande"
+      }
+    },
+    "GameRules": {
+      "button-title": "Visa spelregler",
+      "title": "Spelregler",
+      "remove-identical-column": "Ta bort kolumn om identiska kort: {value, select, true {ja} false {nej} other {okänd}}",
+      "remove-identical-row": "Ta bort rad om korten är identiska: {value, select, true {ja} false {nej} other {okänt}}",
+      "card-per-column": "Antal kolumner: {value}",
+      "card-per-row": "Antal rader: {value}",
+      "initial-turned-count": "Antal kort att vända i början: {value}",
+      "score-to-end-game": "Antal poäng för att avsluta spelet: {value}",
+      "first-player-penalty-type": {
+        "1": "Endast multiplikator",
+        "2": "Endast lägenhet",
+        "label": "Strafftyp för den första spelaren om han inte har det minsta antalet poäng: ",
+        "3": "Fast belopp sedan Multiplikator",
+        "4": "Multiplikator sedan fast"
+      },
+      "first-player-multiplier-penalty": "Multiplikatorstraff: {value}",
+      "first-player-flat-penalty": "Fast straff: {value}"
+    },
+    "LanguageCombobox": {
+      "locale": {
+        "es": "Spanska",
+        "de": "Tyska",
+        "fr": "Franska",
+        "it": "Italienska",
+        "en": "Engelska",
+        "br": "Bretonsk",
+        "ta": "Tamil"
+      },
+      "select-language": "Välj språk",
+      "search-language": "Sök språk",
+      "no-language-found": "Inget språk hittades"
+    },
+    "RulesDialog": {
+      "title": "Spelregler",
+      "trigger": {
+        "aria-label": "Visa spelregler"
+      }
+    },
+    "Rules": {
+      "special-rule": {
+        "title": "Specialregel:",
+        "content": "Om en spelare har 3 identiska kort i en kolumn, kastar spelaren dessa 3 kort genom att placera dem på kasthögen. Om en kolumn med identiska kort erhålls genom att byta med ett kort från draghögen eller kasthögen, måste de tre identiska korten alltid placeras på kasthögen efter det utbytta kortet."
+      },
+      "round-end": {
+        "title": "Slut på omgången",
+        "content-1": "När en spelare har avslöjat alla sina kort har han spelat sitt sista drag.",
+        "content-2": "Alla efterföljande spelare spelar en gång till för att slutföra omgången."
+      },
+      "scoring": {
+        "first-to-finish": {
+          "note": {
+            "content": "Denna regel gäller endast för positiva poäng!",
+            "title": "Observera:"
+          },
+          "content": "Om spelaren som har avslutat omgången (den första att ha vänt upp alla sina kort) inte har erhållit, strikt talat, det lägsta antalet poäng för den omgången, så dubbleras summan av hans poäng för den omgången."
+        },
+        "title": "Poängsättning",
+        "description": "Spelare som fortfarande har kort nedåtvända vänder upp dem. Varje spelare räknar sina totala poäng.",
+        "list": {
+          "content-1": "Om den totala poängen är positiv lägger han till den till den totala poängen från tidigare omgångar.",
+          "content-2": "Om summan är negativ dras den från den totala poängen för de föregående omgångarna."
+        },
+        "example": {
+          "title": "Exempel:",
+          "content": "Spelare A visar alla sina kort och avslutar omgången. I slutet av omgången har han 10 poäng, spelare B har 24 poäng och spelare C har också 10 poäng. Eftersom spelare A inte strikt har det lägsta antalet poäng, dubbleras hans poäng till 20."
+        }
+      },
+      "cards-section-title": "{number} spelkort:",
+      "game-goal": {
+        "title": "Spelmål",
+        "content": "Skyjo-spelet spelas över flera omgångar och avslutas så snart en spelare når 100 poäng eller mer. Spelaren med minst poäng vinner spelet."
+      },
+      "round-preparation": {
+        "title": "Rundberedning",
+        "content-1": "Först får varje spelare 12 kort med framsidan nedåt. Därefter läggs ett kort från draghögen med framsidan uppåt i mitten av bordet, vilket bildar början på slänghögen. De återstående korten placeras med framsidan nedåt bredvid varandra och bildar draghögen.",
+        "content-2": "Varje spelare placerar sina 12 kort i fyra kolumner med tre kort med framsidan nedåt framför sig. Slutligen vänder varje spelare upp två valfria kort med framsidan uppåt."
+      },
+      "round-start": {
+        "title": "Rundstart",
+        "choice": "val {number}",
+        "content-1": "Spelaren kan välja det första kortet som vänds upp från slänghögen",
+        "content-2": "eller det första nedåtvända kortet från draghögen",
+        "choice-1": {
+          "title": "Val 1:",
+          "description": "Ta det första kortet från slänghögen.",
+          "content": "Spelaren måste omedelbart byta ut detta kort mot ett av sina 12 kort och lägga det med framsidan uppåt. Han kan fritt välja mellan kort med framsidan uppåt och nedåt. Dolda kort får inte ses före bytet. Det utbytta kortet läggs med framsidan uppåt på slänghögen."
+        },
+        "choice-2": {
+          "title": "Val 2:",
+          "description": "Ta det första kortet med framsidan nedåt från draghögen.",
+          "choice-1": "Val 1",
+          "content-2": "Om han inte vill behålla det dragna kortet, lägger han det på kasthögen och måste vända upp ett av sina kort.",
+          "content-1": "Spelaren kan titta på kortet och välja om han vill byta ut det mot ett av sina kort (dollt eller synligt) eller kasta det. Om han vill behålla det dragna kortet, byter han ut det mot ett av sina kort enligt beskrivningen ovan i"
+        },
+        "end-of-turn": "Hans tur är då över, och det är nästa spelares tur (medsols)."
+      },
+      "end-of-game": {
+        "title": "Slut på spelet",
+        "content": "I slutet av varje omgång läggs varje spelares poäng till den totala poängen från tidigare omgångar. Spelet avslutas så snart en spelare når 100 poäng eller mer. Spelaren med lägst poäng vinner spelet."
+      }
+    },
+    "SettingsDialog": {
+      "general": {
+        "language-warn": "Kan endast ändras på startsidan",
+        "title": "Allmänt",
+        "language": "Språk",
+        "appearance": "Utseende"
+      },
+      "title": "Inställningar",
+      "display": {
+        "title": "Visa",
+        "mobile": {
+          "title": "Mobil",
+          "switch-to-player-who-is-playing": "Växla automatiskt till spelaren som spelar",
+          "show-preview-opponents-cards": "Visa en förhandsgranskning av motståndares kort i motståndarlistan"
+        },
+        "chat": {
+          "title": "Chatt",
+          "chat-visibility": "Chattvisning",
+          "chat-notification-size": {
+            "label": "Storlek på chattavisering",
+            "values": {
+              "small": "Liten",
+              "normal": "Normal",
+              "big": "Stor"
+            }
+          }
+        },
+        "gameplay": {
+          "title": "Spelupplägg",
+          "gameboard-size": {
+            "label": "Storleken på ditt spelbräde",
+            "big-warning": "Kan skada skärmen på mobilen",
+            "values": {
+              "normal": "Normal",
+              "big": "Stor"
+            }
+          },
+          "enlarge-active-player-board": "Förstora spelplanen för den spelare vars tur det är",
+          "timer": {
+            "label": "Visningsläge för timer",
+            "description": "Smart läge visar timern vid halvtid och de sista 15 sekunderna.",
+            "modes": {
+              "never": "Aldrig",
+              "smart": "Smart",
+              "always": "Alltid"
+            }
+          }
+        }
+      },
+      "audio": {
+        "title": "Ljud",
+        "toggle": {
+          "label": "Aktivera ljud"
+        },
+        "volume": {
+          "label": "Volym ({volume}%)"
+        }
+      }
+    },
+    "AppearanceSelect": {
+      "light": "Ljus",
+      "dark": "Mörk",
+      "system": "System"
+    },
+    "Chat": {
+      "title": "Chatt"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Meddelande",
+      "button-title": "Skicka",
+      "message-too-long": {
+        "description": "Meddelandet är för långt (max 200 tecken)"
+      },
+      "unknown-command": {
+        "description": "Okänt kommando"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} {count, plural, =1{oläst meddelande} other {olästa meddelanden}}"
+    },
+    "CopyLink": {
+      "message": "Länk kopierad!",
+      "button-title": "Kopiera länk"
+    },
+    "DiscardPile": {
+      "title": "Kastad hög",
+      "throw": "Kasta"
+    },
+    "DrawPile": {
+      "title": "Draghög"
+    },
+    "EndRoundDialog": {
+      "title": "Slut på omgången",
+      "description": "Nästa omgång startar om några sekunder…"
+    },
+    "Feedback": {
+      "title": "Lämna feedback",
+      "description": "Du kan skriva feedback för att hjälpa oss att förbättra spelet.",
+      "toast": {
+        "success": {
+          "title": "Tack för din feedback!",
+          "description": "Dina insikter har hjälpt oss att förbättra vår spelwebbplats, och vi är verkligen tacksamma."
+        },
+        "error": {
+          "title": "Ett fel uppstod, försök igen."
+        }
+      },
+      "email-input": {
+        "label": "Din e-post (valfritt)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Ditt meddelande",
+        "placeholder": "Berätta för oss vad du tycker, notera eller vill…"
+      },
+      "button-title": "Skicka"
+    },
+    "Footer": {
+      "feedback": "Lämna feedback",
+      "buy-game": "Köp spelet",
+      "explanation": "Vad är Skyjo?",
+      "rules": "Spelregler",
+      "status": "Serverstatus",
+      "home": "Hem",
+      "release-notes": "Versionsinformation",
+      "privacy-policy": "Integritetspolicy",
+      "disclaimer": {
+        "not-affiliated": "Denna webbplats är inte ansluten till skaparna eller distributörerna av Skyjo",
+        "rights-owned": "Alla rättigheter till namnet Skyjo och spelmekaniken ägs av Alexander Bernhardt och Magilano",
+        "responsible-content": "Ägaren av den här webbplatsen ansvarar inte för något användargenererat innehåll (användarnamn, meddelanden)"
+      },
+      "attribution": {
+        "avatars": "Avatarer skapade av Freepik - Flaticon"
+      }
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Återanslut till spelet",
+      "join-game-button": "Gå med i spelet",
+      "find-game-button": "Hitta ett spel",
+      "create-game-button": "Skapa ett {type, select, private {privat} public {publikt} other {okänt}} spel"
+    },
+    "MenuDropdown": {
+      "button": {
+        "aria-label": "Meny"
+      },
+      "rules": "Regler",
+      "feedback": "Lämna feedback",
+      "discord": "Discord",
+      "settings": "Inställningar"
+    },
+    "OpponentBoard": {
+      "disconnected": "Spelaren har lämnat spelet. En bot kommer att spela för dem under de närmaste omgångarna tills de återansluter."
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Motståndare:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Du"
+    },
+    "PWABanner": {
+      "title": "Installera Skymo på din enhet!",
+      "Safari": "Tryck på delningsikonen och sedan på \"Lägg till i Dock\" för att installera",
+      "Chrome": "Klicka på knappen \"Installera\" för att installera",
+      "FirefoxAndroid": "Tryck på menyikonen och sedan på \"Lägg till på startskärmen\" för att installera",
+      "ChromeAndroid": "Tryck på menyikonen och sedan på \"Lägg till på startskärmen\" för att installera",
+      "SamsungBrowser": "Tryck på menyikonen, sedan \"Lägg till sida i\", sedan \"Startskärmen\" för att installera",
+      "ChromeIOS": "Tryck på delningsikonen, scrolla sedan och tryck på \"Lägg till på hemskärmen\" för att installera",
+      "FirefoxIOS": "Tryck på menyikonen, sedan på delningsikonen, scrolla sedan och tryck på \"Lägg till på hemskärmen\" för att installera",
+      "SafariIOS": "Tryck på delningsikonen, scrolla sedan och tryck på \"Lägg till på hemskärmen\" för att installera",
+      "install-button": {
+        "title": "Installera appen",
+        "content": "Installera"
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Visa resultattavla"
+    },
+    "ScoreDialog": {
+      "title": "Poäng",
+      "description": "{name} har vunnit med {score} poäng!"
+    },
+    "ScoreSheet": {
+      "see-scores": "Visa resultat"
+    },
+    "ScoreTable": {
+      "name": "Namn",
+      "round": "Runda",
+      "total": "Totalt"
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Rapportera {username}",
+        "kick": "Sparkar {username}",
+        "vote-to-kick": "Rösta för att sparka {username}",
+        "ban": "Banna {username}",
+        "mute": "Stäng av ljudet för {username}",
+        "unmute": "Slå på ljudet för {username}"
+      }
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "ignore-button": {
+          "label": "Ignorera",
+          "alt": "Ignorera omröstningen om att sparka {playerName}"
+        },
+        "title": "Rösta för att sparka {playerName}",
+        "kick-button": {
+          "alt": "Spark {playerName}",
+          "label": "Spark"
+        }
+      },
+      "player-has-voted": {
+        "title": "Rösta för att sparka {playerName}",
+        "description": "Du har röstat {vote, select, true {för} false {emot} other {röstat}}"
+      },
+      "vote-against-you": {
+        "title": "Rösta för att sparka dig",
+        "description": "En omröstning om att avlägsna dig har begärts."
+      },
+      "vote-failed": {
+        "title": "Omröstningen om att sparka {playerName} misslyckades",
+        "description": "Det finns inte tillräckligt många röster för att kasta ut {playerName}"
+      },
+      "vote-against-you-failed": {
+        "title": "Du blev inte utsparkad",
+        "description": "Det finns inte tillräckligt många röster för att rösta bort dig"
+      },
+      "vote-against-you-succeeded": {
+        "description": "Spelare har röstat för att sparka ut dig ur spelet.",
+        "title": "Du har blivit utsparkad"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} har blivit kickad",
+        "description": "Omröstningen om att sparka {playerName} lyckades."
+      },
+      "you-kick-player": {
+        "title": "Du har sparkat {playerName}"
+      },
+      "host-kick": {
+        "title": "{playerName} har blivit utsparkad från spelet av värden"
+      },
+      "host-kick-you": {
+        "title": "Du har blivit utsparkad från spelet av värden"
+      }
+    },
+    "AfkKick": {
+      "warning": {
+        "title": "AFK-varning",
+        "description": "Du kommer att sparkas ut från spelet om du förblir inaktiv."
+      },
+      "kicked": {
+        "title": "Usparkad på grund av inaktivitet",
+        "description": "Du har blivit utsparkad från spelet på grund av att du varit AFK för många gånger."
+      },
+      "player-kicked": {
+        "title": "Spelare utsparkad",
+        "description": "{playerName} har sparkats från spelet på grund av inaktivitet."
+      }
+    },
+    "ReportDialog": {
+      "title": "Rapportera {username}",
+      "description": "Rapportera användarnamnet eller ett meddelande från {username} om det verkar olämpligt.",
+      "report-username": "Rapportera användarnamnet",
+      "report-message": "Rapportera ett meddelande",
+      "select-message": "Välj meddelandet att rapportera",
+      "select-message-placeholder": "Välj ett meddelande",
+      "no-messages": "Inga meddelanden hittades från den här användaren",
+      "cancel": "Avbryt",
+      "submit": "Rapport",
+      "toast": {
+        "report-submitted": {
+          "description": "Tack för din rapport, du har bidragit till att förbättra kvaliteten på spelet.",
+          "title": "Rapport inskickad"
+        }
+      }
+    }
+  },
+  "contexts": {
+    "ReportContext": {
+      "report-against-you": {
+        "title": "Du har blivit utsparkad på grund av en anmälan",
+        "description": "Ditt användarnamn eller ett av dina meddelanden har rapporterats och ansetts olämpligt. Upprepa inte detta beteende."
+      },
+      "report": {
+        "title": "{playerName} har blivit kickad på grund av en anmälan"
+      }
+    },
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "title": "Spelet hittades inte",
+          "description": "Spelet du försökte återansluta till finns inte längre"
+        }
+      },
+      "connection-lost": "Anslutningen bruten. Försöker återansluta...",
+      "reconnection": "Återanslutningen lyckades"
+    },
+    "BanContext": {
+      "not-allowed": {
+        "title": "Du har inte behörighet att avstänga",
+        "description": "Du har inte behörighet att avstänga en spelare"
+      },
+      "player-not-found": {
+        "title": "Spelaren att banna finns inte",
+        "description": "Spelaren som ska blockeras finns inte i spelet"
+      },
+      "player-banned": {
+        "title": "{playerName} har blivit avstängd",
+        "description": "{playerName} har blivit avstängd av värden"
+      },
+      "you-were-banned": {
+        "title": "Du har blivit avstängd",
+        "description": "Du har blivit avstängd från spelet av värden"
+      },
+      "unexpected-error": {
+        "title": "Ett oväntat fel uppstod",
+        "description": "Ett oväntat fel uppstod när en spelare bannlystes"
+      }
+    }
+  },
+  "head": {
+    "title": "Skymo | Spela Skyjo kortspel online gratis",
+    "description": "Spela Skyjo online gratis med Skymo! Ett fartfyllt flerspelarkortspel där strategi möter nöje. Utmana vänner, vänd kort och sikta på lägst poäng för att vinna!",
+    "keywords": "Skymo, Skyjo, Skyjo online, flerspelarspel, kortspel, spela med vänner, gratis onlinespel, onlinekortspel"
+  },
+  "utils": {
+    "skymo": {
+      "waiting": "Väntar på spelare",
+      "turn-cards": "Vänd kort {number}",
+      "waiting-opponents-to-turn-cards": "Väntar på att motståndare{nbOpponents, plural, =1 {} other {s}} ska vända {number} kort{number, plural, =1 {} other {s}}",
+      "turn": {
+        "chooseAPile": "Välj en hög",
+        "throwOrReplace": "Ersätt eller kassera",
+        "replaceACard": "Byt ut ett kort",
+        "turnACard": "Dra ett kort"
+      },
+      "player-turn": "Det är {playerName}s tur",
+      "last-turn": "Sista draget!",
+      "game-stopped": "Spelet stoppades",
+      "round-over": "Omgången avslutad",
+      "game-ended": "Spelet slut!"
+    },
+    "chat": {
+      "player-left": "{username} lämnade spelet",
+      "player-joined": "{username} gick med i spelet",
+      "player-reconnect": "{username} återanslöt till spelet",
+      "argument-required": "Ett eller flera argument krävs för kommandot: {command}",
+      "player-already-muted": "{username} är redan tystad",
+      "player-muted": "{username} är nu tystad",
+      "player-not-muted": "{username} är inte tystad",
+      "player-unmuted": "{username} är inte längre tystad",
+      "wizz-sent": "Du har skickat en vink till {targetUsername}!",
+      "wizz-self": "Du har blivit vinkad av {initiatorUsername}!",
+      "wizz-other": "{initiatorUsername} har wizzat {targetUsername}!"
+    },
+    "avatar": {
+      "bee": "bi",
+      "crab": "krabba",
+      "dog": "hund",
+      "eagle": "örn",
+      "elephant": "elefant",
+      "fox": "räv",
+      "frog": "groda",
+      "jellyfish": "maneter",
+      "koala": "koala",
+      "octopus": "bläckfisk",
+      "penguin": "pingvin",
+      "toucan": "tukan",
+      "turtle": "sköldpadda",
+      "whale": "val",
+      "owl": "uggla",
+      "cat": "katt"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "Servern svarar långsammare än förväntat. Du kan försöka att ladda om sidan och försöka igen."
+        },
+        "game-not-found": {
+          "description": "Spelet du letar efter finns inte"
+        },
+        "cannot-reconnect": {
+          "description": "Det går inte längre att återansluta till spelet, tiden för återanslutning har löpt ut"
+        },
+        "game-is-full": {
+          "description": "Spelet är fullt, du kan inte ansluta"
+        },
+        "game-already-started": {
+          "description": "Spelet har redan startat"
+        },
+        "player-banned": {
+          "description": "Du har blivit avstängd från det här spelet"
+        },
+        "rate-limit": {
+          "title": "Du skickar för många förfrågningar",
+          "description": "Vänta några sekunder innan du försöker igen"
+        }
+      }
+    }
+  }
+}
