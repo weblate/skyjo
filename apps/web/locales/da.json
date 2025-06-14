@@ -156,7 +156,7 @@
     "Lobby": {
       "title": "{name}'s spil",
       "leave-to-home": "Gå til startside",
-      "leave-to-public-game-list": "Forlad til offentlig spil-liste",
+      "leave-to-public-game-list": "Tilbage til offentlige spil",
       "go-back-to-settings": "Gå tilbage til indstillinger",
       "settings": {
         "private": {
@@ -197,7 +197,7 @@
           "label": "Første spillers straffetype",
           "description": "Straf anvendes, hvis den første spiller, der afslører alle sine kort, ikke har det mindste antal point (gælder ikke, hvis scoren er mindre end eller lig med 0)",
           "item": {
-            "flat-only": "Kun flad",
+            "flat-only": "Kun fast",
             "multiplier-only": "Kun multiplikator",
             "flat-then-multiplier": "Flad og derefter Multiplikator",
             "multiplier-then-flat": "Multiplikator derefter flad"
@@ -243,7 +243,7 @@
       "player-want-to-replay": "Spillere, der vil spille igen:",
       "replay-button": {
         "cancel": "Afspil ikke igen",
-        "replay": "Gentag"
+        "replay": "Spil igen"
       }
     },
     "Rules": {
@@ -271,7 +271,7 @@
         "4": "Multiplikator og derefter flad",
         "label": "Straf for den første spiller, hvis han ikke har det mindste antal point: ",
         "1": "Kun multiplikator",
-        "2": "Kun lejligheder",
+        "2": "Kun fast straf",
         "3": "Flad og derefter multiplikator"
       },
       "first-player-multiplier-penalty": "Multiplikatorstraf: {value}",
@@ -385,7 +385,7 @@
       "select-message-placeholder": "Vælg en besked",
       "no-messages": "Ingen beskeder fundet fra denne bruger",
       "cancel": "Annuller",
-      "submit": "Rapport",
+      "submit": "Rapportér",
       "toast": {
         "report-submitted": {
           "title": "Rapport indsendt",
@@ -558,7 +558,7 @@
           "title": "Gameplay",
           "gameboard-size": {
             "label": "Størrelse på dit spillebræt",
-            "big-warning": "Kan ødelægge skærmen på mobilen",
+            "big-warning": "Kan forstyrre visningen på mobilen",
             "values": {
               "big": "Stor",
               "normal": "Normal"
@@ -589,7 +589,7 @@
     "Avatar": {
       "context-menu": {
         "report": "Rapportér {username}",
-        "kick": "Smide {username} ud",
+        "kick": "Smid {username} ud",
         "vote-to-kick": "Stem for at smide {username} ud",
         "ban": "Bandlys {username}",
         "mute": "Slå lyden fra {username}",
@@ -601,7 +601,7 @@
         "title": "Stem for at smide {playerName} ud",
         "kick-button": {
           "alt": "Smide {playerName} ud",
-          "label": "Spark"
+          "label": "Spark ud"
         },
         "ignore-button": {
           "alt": "Ignorer afstemningen om at smide {playerName} ud",
@@ -670,7 +670,7 @@
         "chooseAPile": "Vælg en bunke",
         "throwOrReplace": "Erstat eller kassér",
         "replaceACard": "Erstat et kort",
-        "turnACard": "Træk et kort"
+        "turnACard": "Vend et kort"
       },
       "player-turn": "Det er {playerName}s tur",
       "last-turn": "Sidste tur!",
@@ -725,7 +725,7 @@
         "title": "Du er blevet smidt ud på grund af en rapport"
       },
       "report": {
-        "title": "{playerName} er blevet smidt ud på grund af en anmeldelse"
+        "title": "{playerName} er blevet smidt ud på grund af en indberetning"
       }
     },
     "BanContext": {
