@@ -319,7 +319,7 @@
           "title": "Biespil:",
           "content": "Speler A wiest al sien Koarten un Slutt de Runne af. An dat Enn' vun de Runne hett he 10 Punkte, Speler B hett 24 Punkte un Speler C hett ok 10 Punkte. Wiel Speler A nich strikt de leegste Tall an Punkte hett, wurrn sien Punkte verdubbelt to 20."
         },
-        "description": "Spölers, {who} noch Koarten ferkehrt liggen hääbe, mööge do nu apen draaie. {Each} Spöler tält sien ganse Punkte.",
+        "description": "Spölers, do noch Koarten ferkehrt liggen hääbe, draaie do nu ap. Älke Spöler tält sien ganse Punkte.",
         "list": {
           "content-1": "Wan dät Totaal fon Punkte positiev is, dan lukket er dät tou dät Totaal fon Punkte fon do foarige Rubben.",
           "content-2": "Is dät Totaal negativ, wäd dät fon do {total_points} fon do foarige Ruunden subtrahiert."
@@ -546,7 +546,7 @@
       "privacy-policy": "Privacy policy",
       "disclaimer": {
         "not-affiliated": "Disse Websiede is neen Deel fon do Skäppere of Ferdeelere fon Skyjo",
-        "rights-owned": "Aal {rights} tou de {Skyjo} Noome un {game} {mechanics} heere tou {Alexander} {Bernhardt} un {Magilano}",
+        "rights-owned": "Aal Gjuchte an dän Skyjo-Noome un ju Spilmechanik heere tou Alexander Bernhardt un Magilano",
         "responsible-content": "De Besitter fon disse Siede is nit feroantwoudelk foar Inhoold, die fon Benutsere moaked wuude (Benutsernoomen, Ättergjuchte)"
       },
       "attribution": {
@@ -590,7 +590,7 @@
     "PWABanner": {
       "title": "Installier Skymo ap dien Reedschap!",
       "Safari": "Tippje dat Deel-Ikoon, dan 'An't Dock touföigje' uum tou installierjen",
-      "Chrome": "Klickje op de 'Install' Knop, {om te installeren}",
+      "Chrome": "Klickje op de 'Install' Knop, uum tou installierjen",
       "FirefoxAndroid": "Tippje ap dät Menü-Ikon, dan 'Tou Startsied touföigje' uum tou installierjen",
       "ChromeAndroid": "Tippje ap dät Menü-Ikon, dan 'Tou Startsied touföigje' uum tou installierjen",
       "SamsungBrowser": "Tippje op dät Menü-Ikoon, dan 'Siede touföigje tou', dan 'Startschierm' uum tou installierjen",
@@ -665,7 +665,7 @@
     "avatar": {
       "toucan": "toucan",
       "turtle": "Schildpadd",
-      "bee": "bee",
+      "bee": "Imme",
       "crab": "Krabbe",
       "dog": "Hund",
       "eagle": "Aadler",
@@ -684,7 +684,7 @@
       "error": {
         "rate-limit": {
           "description": "Wachje asjebleeft n poor Sekunde, eer Se et nochmoals versäike",
-          "title": "Du schickst {var} Anfroagen"
+          "title": "Du schickst toufuul Anfroagen"
         },
         "timeout": {
           "description": "De Server bruukt langer as verwacht, uum tou antoordjen. Du koanst versäike, de Siede näi tou leeden un et nochmoals tou versäiken."
