@@ -580,13 +580,25 @@
       "search-language": "Мова пошуку",
       "no-language-found": "Мову не знайдено",
       "locale": {
-        "de": "Німецька",
-        "en": "Англійська",
-        "es": "Іспанська",
-        "fr": "Французька",
-        "it": "Італійська",
-        "br": "Бретонська",
-        "ta": "Тамільська"
+        "en": "English",
+        "it": "Italiano",
+        "de": "Deutsch",
+        "es": "Español",
+        "fr": "Français",
+        "br": "Brezhoneg",
+        "ta": "தமிழ்",
+        "bar": "Bavarian",
+        "cs": "Čeština",
+        "da": "Dansk",
+        "el": "Ελληνικά",
+        "et": "Eesti",
+        "frs": "Eastern Frisian",
+        "gsw": "Alemannisch",
+        "nds": "Plattdeutsch",
+        "nl": "Nederlands",
+        "pl": "Polski",
+        "sv": "Svenska",
+        "uk": "Українська"
       }
     },
     "PlayerBoard": {

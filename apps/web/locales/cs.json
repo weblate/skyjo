@@ -309,13 +309,25 @@
       "search-language": "Jazyk vyhledávání",
       "no-language-found": "Nebyl nalezen žádný jazyk",
       "locale": {
-        "de": "Němčina",
-        "en": "Angličtina",
-        "es": "Španělština",
-        "fr": "Francouzština",
-        "it": "Italština",
-        "br": "Bretonština",
-        "ta": "tamilština"
+        "en": "English",
+        "it": "Italiano",
+        "de": "Deutsch",
+        "es": "Español",
+        "fr": "Français",
+        "br": "Brezhoneg",
+        "ta": "தமிழ்",
+        "bar": "Bavarian",
+        "cs": "Čeština",
+        "da": "Dansk",
+        "el": "Ελληνικά",
+        "et": "Eesti",
+        "frs": "Eastern Frisian",
+        "gsw": "Alemannisch",
+        "nds": "Plattdeutsch",
+        "nl": "Nederlands",
+        "pl": "Polski",
+        "sv": "Svenska",
+        "uk": "Українська"
       }
     },
     "PWABanner": {

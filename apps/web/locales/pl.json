@@ -196,13 +196,25 @@
       "search-language": "Wyszukaj język",
       "no-language-found": "Nie znaleziono języka",
       "locale": {
-        "fr": "Francuski",
-        "it": "Włoski",
-        "br": "Bretoński",
-        "ta": "tamilski",
-        "de": "Niemiecki",
-        "en": "Angielski",
-        "es": "Angielski"
+        "en": "English",
+        "it": "Italiano",
+        "de": "Deutsch",
+        "es": "Español",
+        "fr": "Français",
+        "br": "Brezhoneg",
+        "ta": "தமிழ்",
+        "bar": "Bavarian",
+        "cs": "Čeština",
+        "da": "Dansk",
+        "el": "Ελληνικά",
+        "et": "Eesti",
+        "frs": "Eastern Frisian",
+        "gsw": "Alemannisch",
+        "nds": "Plattdeutsch",
+        "nl": "Nederlands",
+        "pl": "Polski",
+        "sv": "Svenska",
+        "uk": "Українська"
       }
     },
     "MenuDropdown": {
