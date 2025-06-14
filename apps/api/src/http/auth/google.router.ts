@@ -33,7 +33,7 @@ googleRouter.get("/login/google", async (c) => {
     return c.json(
       {
         success: false,
-        message: "Failed to initiate Google login.",
+        error: AuthError.OAUTH_LOGIN_INITIATION_FAILED,
       },
       500,
     )
@@ -46,16 +46,23 @@ googleRouter.get("/login/google/callback", async (c) => {
   const storedState = getCookie(c, "google_oauth_state")
   const codeVerifier = getCookie(c, "google_oauth_code_verifier")
   if (!code || !state || !storedState || !codeVerifier) {
-    return c.json({
-      success: false,
-      error: AuthError.OAUTH_RESTART_PROCESS,
-    }, 400)
+    return c.json(
+      {
+        success: false,
+        error: AuthError.OAUTH_RESTART_PROCESS,
+      },
+      400,
+    )
   }
+
   if (storedState !== state) {
-    return c.json({
-      success: false,
-      error: AuthError.OAUTH_RESTART_PROCESS,
-    }, 400)
+    return c.json(
+      {
+        success: false,
+        error: AuthError.OAUTH_RESTART_PROCESS,
+      },
+      400,
+    )
   }
 
   deleteCookie(c, "google_oauth_state")
@@ -70,23 +77,23 @@ googleRouter.get("/login/google/callback", async (c) => {
       error instanceof Error &&
       error.message === AuthError.OAUTH_ID_TOKEN_MISSING
     ) {
-      return c.json({
-        success: false,
-        error: AuthError.OAUTH_ID_TOKEN_MISSING,
-      }, 400)
+      return c.json(
+        {
+          success: false,
+          error: AuthError.OAUTH_ID_TOKEN_MISSING,
+        },
+        400,
+      )
     }
 
-    if (
-      error instanceof Error &&
-      error.message === AuthError.OAUTH_PARSE_USER_INFO_FAILED
-    ) {
-      return c.json({
+    Logger.error("Google login callback error:", { error })
+    return c.json(
+      {
         success: false,
-        error: AuthError.OAUTH_PARSE_USER_INFO_FAILED,
-      }, 500)
-    }
-
-    throw error
+        error: AuthError.UNKNOWN_AUTH_ERROR,
+      },
+      500,
+    )
   }
 })
 

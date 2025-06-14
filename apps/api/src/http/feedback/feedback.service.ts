@@ -1,5 +1,5 @@
 import { ENV } from "@env"
-import { CError } from "@skymo/error"
+import { Logger } from "@skymo/logger"
 import type { Feedback } from "@skymo/shared/validations"
 import { createTransport } from "nodemailer"
 import type { Options } from "nodemailer/lib/mailer/index.js"
@@ -26,16 +26,6 @@ export function sendFeedback({ email, message }: Feedback) {
   }
 
   mailer.sendMail(mailOptions, (error) => {
-    if (error) {
-      throw new CError("Error while sending feedback", {
-        meta: {
-          email,
-          message,
-          error,
-        },
-      })
-    }
+    Logger.error("Error to feedback email in queue:", { error })
   })
-
-  return true
 }

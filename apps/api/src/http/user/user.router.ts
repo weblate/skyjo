@@ -45,7 +45,7 @@ userRouter.get(
     try {
       const user = await getUserByUsername(username)
       if (!user) {
-        return c.json({ error: "not-found" }, 404)
+        return c.json({ success: false, error: UserError.NOT_FOUND }, 404)
       }
 
       const gamesPromise = getUserGames(username, {
@@ -58,12 +58,14 @@ userRouter.get(
       const [games, stats] = await Promise.all([gamesPromise, statsPromise])
 
       return c.json({
+        success: true,
         user,
         games,
         stats,
       })
-    } catch (_error) {
-      return c.json({ error: "unknown" }, 500)
+    } catch (error) {
+      Logger.error("Error getting user games:", { error })
+      return c.json({ success: false, error: UserError.GET_USER_ERROR }, 500)
     }
   },
 )
@@ -87,7 +89,7 @@ userRouter.patch(
       return c.json({ success: true, user: updatedUser })
     } catch (error) {
       Logger.error("Failed to update name", { error })
-      return c.json({ success: false, error: "Failed to update name" }, 500)
+      return c.json({ success: false, error: UserError.UPDATE_NAME_ERROR }, 500)
     }
   },
 )
@@ -114,13 +116,14 @@ userRouter.patch(
         error instanceof Error &&
         error.message === UserError.USERNAME_TAKEN
       ) {
-        return c.json(
-          { success: false, error: "Username is already taken" },
-          409,
-        )
+        return c.json({ success: false, error: UserError.USERNAME_TAKEN }, 400)
       }
+
       Logger.error("Failed to update username", { error })
-      return c.json({ success: false, error: "Failed to update username" }, 500)
+      return c.json(
+        { success: false, error: UserError.UPDATE_USERNAME_ERROR },
+        500,
+      )
     }
   },
 )
@@ -144,10 +147,14 @@ userRouter.patch(
       return c.json({ success: true, user: updatedUser })
     } catch (error) {
       if (error instanceof Error && error.message === UserError.EMAIL_TAKEN) {
-        return c.json({ success: false, error: "Email is already in use" }, 409)
+        return c.json({ success: false, error: UserError.EMAIL_TAKEN }, 400)
       }
+
       Logger.error("Failed to update email", { error })
-      return c.json({ success: false, error: "Failed to update email" }, 500)
+      return c.json(
+        { success: false, error: UserError.UPDATE_EMAIL_ERROR },
+        500,
+      )
     }
   },
 )
@@ -163,11 +170,14 @@ userRouter.get(
   async (c) => {
     try {
       const token = c.req.param("token")
-      const result = await revertEmail(token)
-      return c.json({ success: true, message: result.message })
+      await revertEmail(token)
+      return c.json({ success: true })
     } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error"
-      return c.json({ success: false, error: message }, 400)
+      Logger.error("Failed to revert email", { error })
+      return c.json(
+        { success: false, error: UserError.REVERT_EMAIL_ERROR },
+        400,
+      )
     }
   },
 )
@@ -195,12 +205,16 @@ userRouter.patch(
         error.message === UserError.INVALID_CURRENT_PASSWORD
       ) {
         return c.json(
-          { success: false, error: "Current password is incorrect" },
+          { success: false, error: UserError.INVALID_CURRENT_PASSWORD },
           400,
         )
       }
+
       Logger.error("Failed to update password", { error })
-      return c.json({ success: false, error: "Failed to update password" }, 500)
+      return c.json(
+        { success: false, error: UserError.UPDATE_PASSWORD_ERROR },
+        500,
+      )
     }
   },
 )
@@ -224,10 +238,27 @@ userRouter.patch(
       return c.json({ success: true, user: updatedUser })
     } catch (error) {
       Logger.error("Failed to update avatar", { error })
-      return c.json({ success: false, error: "Failed to update avatar" }, 500)
+      return c.json(
+        { success: false, error: UserError.UPDATE_AVATAR_ERROR },
+        500,
+      )
     }
   },
 )
+
+userRouter.post("/me/delete-account", authMiddleware, async (c) => {
+  const user = c.get("user")
+  try {
+    await scheduleAccountDeletion(user.id)
+    return c.json({ success: true })
+  } catch (error) {
+    Logger.error("Failed to schedule account deletion", { error })
+    return c.json(
+      { success: false, error: UserError.DELETE_ACCOUNT_ERROR },
+      500,
+    )
+  }
+})
 
 const cancelAccountDeletionRateLimiter = new RateLimiterMemory({
   keyPrefix: "cancel-account-deletion",
@@ -240,33 +271,14 @@ userRouter.post(
   async (c) => {
     try {
       const token = c.req.param("token")
-      const result = await cancelAccountDeletion(token)
-      return c.json({ success: true, message: result.message })
-    } catch (error) {
-      const message = error instanceof Error ? error.message : "Unknown error"
-      return c.json({ success: false, error: message }, 400)
-    }
-  },
-)
-
-const deleteAccountRateLimiter = new RateLimiterMemory({
-  keyPrefix: "delete-account",
-  points: 5,
-  duration: 60,
-})
-userRouter.delete(
-  "/me",
-  authMiddleware,
-  createRateLimiterMiddleware(deleteAccountRateLimiter),
-  async (c) => {
-    const user = c.get("user")
-
-    try {
-      await scheduleAccountDeletion(user.id)
+      await cancelAccountDeletion(token)
       return c.json({ success: true })
     } catch (error) {
-      Logger.error("Failed to delete account", { error })
-      return c.json({ success: false, error: "Failed to delete account" }, 500)
+      Logger.error("Failed to cancel account deletion", { error })
+      return c.json(
+        { success: false, error: UserError.CANCEL_DELETE_ACCOUNT_ERROR },
+        400,
+      )
     }
   },
 )

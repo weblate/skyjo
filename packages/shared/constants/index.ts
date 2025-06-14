@@ -1,3 +1,6 @@
 export * from "./auth.js"
 export * from "./user-error.js"
 export * from "./locales.js"
+export * from "./http-errors.js"
+export * from "./feedback-error.js"
+export * from "./user-verification-error.js"

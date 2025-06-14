@@ -7,42 +7,51 @@ import {
   userVerificationTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
+import { UserVerificationError } from "@skymo/shared/constants"
+import dayjs from "dayjs"
 import { and, eq } from "drizzle-orm"
 
 export async function sendVerifyPin(email: string) {
-  const userResult = await db
-    .select()
-    .from(userTable)
-    .where(and(eq(userTable.email, email), eq(userTable.emailVerified, false)))
-    .limit(1)
+  try {
+    const userResult = await db
+      .select()
+      .from(userTable)
+      .where(
+        and(eq(userTable.email, email), eq(userTable.emailVerified, false)),
+      )
+      .limit(1)
 
-  const user = userResult?.[0]
-  if (!user) {
-    Logger.warn("User not found or already verified", {
-      email,
+    const user = userResult?.[0]
+    if (!user) {
+      Logger.info("User not found or already verified", {
+        email,
+      })
+
+      return
+    }
+
+    const locale = user.locale
+
+    const pin = await generateVerifyPin(user)
+
+    await mailerQueue.add("verify-pin", {
+      to: email,
+      template: "verify-pin",
+      locale,
+      content: {
+        pin,
+      },
     })
-
-    return
+  } catch (error) {
+    Logger.error("Error sending verification pin", { error })
+    throw new Error(UserVerificationError.SEND_PIN_ERROR)
   }
-
-  const locale = user.locale
-
-  const pin = await generateVerifyPin(user)
-
-  await mailerQueue.add("verify-pin", {
-    to: email,
-    template: "verify-pin",
-    locale,
-    content: {
-      pin,
-    },
-  })
 }
 
 export async function generateVerifyPin(user: UserDb) {
   const pin = randomInt(0, 1000000).toString().padStart(6, "0")
   // 10 minutes
-  const expiresAt = new Date(Date.now() + 1000 * 60 * 10)
+  const expiresAt = dayjs().add(10, "minutes").toDate()
 
   const existingPinResult = await db
     .select()
@@ -77,7 +86,9 @@ export async function verifyPin(email: string, pin: string) {
     .where(and(eq(userVerificationTable.pin, pin), eq(userTable.email, email)))
     .limit(1)
 
-  if (!result) return false
+  if (!result) {
+    throw new Error(UserVerificationError.INVALID_PIN)
+  }
 
   const { users: user, user_verifications } = result
 
@@ -85,7 +96,7 @@ export async function verifyPin(email: string, pin: string) {
   if (user_verifications.expiresAt < new Date()) {
     await generateVerifyPin(user)
 
-    return false
+    throw new Error(UserVerificationError.EXPIRED_PIN)
   }
 
   await db
@@ -96,6 +107,4 @@ export async function verifyPin(email: string, pin: string) {
   await db
     .delete(userVerificationTable)
     .where(eq(userVerificationTable.id, user_verifications.id))
-
-  return true
 }

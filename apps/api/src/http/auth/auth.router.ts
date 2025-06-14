@@ -15,8 +15,18 @@ import {
 } from "@/http/middlewares/auth.middleware.js"
 import { validateSessionToken } from "@/http/session/session.service.js"
 import { zValidator } from "@hono/zod-validator"
-import { AuthError, SESSION_COOKIE_NAME } from "@skymo/shared/constants"
-import { forgotPasswordSchema, loginSchema, resetPasswordSchema, signupSchema } from "@skymo/shared/validations"
+import { Logger } from "@skymo/logger"
+import {
+  AuthError,
+  SESSION_COOKIE_NAME,
+  UserError,
+} from "@skymo/shared/constants"
+import {
+  forgotPasswordSchema,
+  loginSchema,
+  resetPasswordSchema,
+  signupSchema,
+} from "@skymo/shared/validations"
 import {
   onboardingSchema,
   usernameAvailabilitySchema,
@@ -38,11 +48,12 @@ authRouter.post("/signup", zValidator("json", signupSchema), async (c) => {
       },
       201,
     )
-  } catch (_e) {
+  } catch (error) {
+    Logger.error("Error signing up", { error })
     return c.json(
       {
         success: false,
-        error: "An error occurred during signup.",
+        error: AuthError.SIGNUP_ERROR,
       },
       500,
     )
@@ -74,7 +85,14 @@ authRouter.post("/login", zValidator("json", loginSchema), async (c) => {
       )
     }
 
-    throw error
+    Logger.error("Error logging in", { error })
+    return c.json(
+      {
+        success: false,
+        error: AuthError.LOGIN_ERROR,
+      },
+      500,
+    )
   }
 })
 
@@ -85,8 +103,7 @@ authRouter.post("/verify", async (c) => {
     return c.json(
       {
         success: false,
-        error: "Unauthorized",
-        reason: "Missing session token",
+        error: AuthError.SESSION_TOKEN_MISSING,
       },
       401,
     )
@@ -99,8 +116,7 @@ authRouter.post("/verify", async (c) => {
       return c.json(
         {
           success: false,
-          error: "Unauthorized",
-          reason: "Invalid session token",
+          error: AuthError.SESSION_INVALID,
         },
         401,
       )
@@ -122,7 +138,14 @@ authRouter.post("/verify", async (c) => {
       200,
     )
   } catch (error) {
-    throw error
+    Logger.error("Error verifying session", { error })
+    return c.json(
+      {
+        success: false,
+        error: AuthError.VERIFY_SESSION_ERROR,
+      },
+      500,
+    )
   }
 })
 
@@ -130,19 +153,26 @@ authRouter.post("/logout", authMiddleware, async (c) => {
   try {
     await logout(c)
 
-    return c.json({}, 200)
+    return c.json({ success: true }, 200)
   } catch (error) {
     if (error instanceof Error && error.message === AuthError.LOGOUT_FAILED) {
       return c.json(
         {
           success: false,
-          message: "An error occurred during logout.",
+          error: AuthError.LOGOUT_FAILED,
         },
         500,
       )
     }
 
-    throw error
+    Logger.error("Error verifying session", { error })
+    return c.json(
+      {
+        success: false,
+        error: AuthError.LOGOUT_ERROR,
+      },
+      500,
+    )
   }
 })
 
@@ -150,7 +180,7 @@ authRouter.get("/me", authMiddleware, async (c) => {
   try {
     const user = await getCurrentUser(c)
 
-    return c.json({ user })
+    return c.json({ user, success: true })
   } catch (error) {
     if (
       error instanceof Error &&
@@ -159,24 +189,29 @@ authRouter.get("/me", authMiddleware, async (c) => {
       return c.json(
         {
           success: false,
-          user: null,
+          error: AuthError.SESSION_NOT_FOUND,
         },
         401,
       )
-    } else if (
-      error instanceof Error &&
-      error.message === AuthError.USER_NOT_FOUND
-    ) {
+    }
+    if (error instanceof Error && error.message === UserError.NOT_FOUND) {
       return c.json(
         {
           success: false,
-          user: null,
+          error: UserError.NOT_FOUND,
         },
         404,
       )
     }
 
-    throw error
+    Logger.error("Error getting current user", { error })
+    return c.json(
+      {
+        success: false,
+        error: UserError.GET_USER_ERROR,
+      },
+      500,
+    )
   }
 })
 
@@ -198,23 +233,24 @@ authRouter.post(
         200,
       )
     } catch (error) {
-    if (
+      if (
         error instanceof Error &&
         error.message === AuthError.USERNAME_TAKEN
       ) {
         return c.json(
           {
             success: false,
-            error: "Username is already taken",
+            error: AuthError.USERNAME_TAKEN,
           },
-          409,
+          400,
         )
       }
 
+      Logger.error("Error checking username availability", { error })
       return c.json(
         {
           success: false,
-          error: "An error occurred during onboarding",
+          error: AuthError.ONBOARDING_ERROR,
         },
         500,
       )
@@ -239,11 +275,12 @@ authRouter.post(
         },
         200,
       )
-    } catch (_error) {
+    } catch (error) {
+      Logger.error("Error checking username availability", { error })
       return c.json(
         {
           success: false,
-          error: "An error occurred while checking username availability",
+          error: AuthError.CHECK_USERNAME_ERROR,
         },
         500,
       )
@@ -251,64 +288,72 @@ authRouter.post(
   },
 )
 
-authRouter.post("/forgot-password", zValidator("json", forgotPasswordSchema), async (c) => {
-  const data = c.req.valid("json")
-  try {
-    await requestPasswordReset(data)
+authRouter.post(
+  "/forgot-password",
+  zValidator("json", forgotPasswordSchema),
+  async (c) => {
+    const data = c.req.valid("json")
+    try {
+      await requestPasswordReset(data)
 
-    return c.json(
-      {
-        success: true,
-        message: "If an account with this email exists, a password reset link has been sent.",
-      },
-      200,
-    )
-  } catch (_e) {
-    return c.json(
-      {
-        success: false,
-        error: "An error occurred while processing your request.",
-      },
-      500,
-    )
-  }
-})
-
-authRouter.post("/reset-password", zValidator("json", resetPasswordSchema), async (c) => {
-  const data = c.req.valid("json")
-  try {
-    await resetPassword(data)
-
-    return c.json(
-      {
-        success: true,
-        message: "Password has been reset successfully.",
-      },
-      200,
-    )
-  } catch (error) {
-    if (
-      error instanceof Error &&
-      (error.message === AuthError.RESET_TOKEN_INVALID ||
-       error.message === AuthError.RESET_TOKEN_EXPIRED)
-    ) {
+      return c.json(
+        {
+          success: true,
+        },
+        200,
+      )
+    } catch (error) {
+      Logger.error("Error requesting password reset", { error })
       return c.json(
         {
           success: false,
-          error: error.message,
+          error: AuthError.FORGOT_PASSWORD_ERROR,
         },
-        400,
+        500,
       )
     }
+  },
+)
 
-    return c.json(
-      {
-        success: false,
-        error: "An error occurred while resetting your password.",
-      },
-      500,
-    )
-  }
-})
+authRouter.post(
+  "/reset-password",
+  zValidator("json", resetPasswordSchema),
+  async (c) => {
+    const data = c.req.valid("json")
+    try {
+      await resetPassword(data)
+
+      return c.json(
+        {
+          success: true,
+        },
+        200,
+      )
+    } catch (error) {
+      if (
+        error instanceof Error &&
+        (error.message === AuthError.RESET_TOKEN_INVALID ||
+          error.message === AuthError.RESET_TOKEN_EXPIRED)
+      ) {
+        return c.json(
+          {
+            success: false,
+            error: error.message,
+          },
+          400,
+        )
+      }
+
+      Logger.error("Error resetting password", { error })
+      return c.json(
+        {
+          success: false,
+          error: AuthError.RESET_PASSWORD_ERROR,
+        },
+        500,
+      )
+    }
+  },
+)
 
 export { authRouter }

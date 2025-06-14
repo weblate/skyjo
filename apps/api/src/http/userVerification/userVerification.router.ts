@@ -9,6 +9,7 @@ import {
 } from "@/http/userVerification/userVerification.service.js"
 import { zValidator } from "@hono/zod-validator"
 import { Logger } from "@skymo/logger"
+import { UserVerificationError } from "@skymo/shared/constants"
 import { verifyPinSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
@@ -43,7 +44,10 @@ userVerificationRouter.get(
       Logger.error(`Error when sending a verify email to ${user?.email}`, {
         error,
       })
-      return c.json({ success: false }, 500)
+      return c.json(
+        { success: false, error: UserVerificationError.SEND_PIN_ERROR },
+        500,
+      )
     }
   },
 )
@@ -57,9 +61,31 @@ userVerificationRouter.post(
     const user = c.get("user")
     const { pin } = await c.req.json()
 
-    const success = await verifyPin(user.email, pin)
+    try {
+      await verifyPin(user.email, pin)
+      return c.json({ success: true })
+    } catch (error) {
+      if (error instanceof Error) {
+        if (error.message === UserVerificationError.INVALID_PIN) {
+          return c.json(
+            { success: false, error: UserVerificationError.INVALID_PIN },
+            400,
+          )
+        }
+        if (error.message === UserVerificationError.EXPIRED_PIN) {
+          return c.json(
+            { success: false, error: UserVerificationError.EXPIRED_PIN },
+            400,
+          )
+        }
+      }
 
-    return c.json({ success })
+      Logger.error("Error verifying pin", { error })
+      return c.json(
+        { success: false, error: UserVerificationError.VERIFY_PIN_ERROR },
+        500,
+      )
+    }
   },
 )
 
