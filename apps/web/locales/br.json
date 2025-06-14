@@ -124,7 +124,7 @@
           "placeholder": "Dibab un doare kastiz",
           "item": {
             "multiplier-only": "Lieskementer hepken",
-            "flat-only": "Kastiz plad hepken",
+            "flat-only": "Kastiz fiks hepken",
             "flat-then-multiplier": "Kastiz plad ha lieskementer",
             "multiplier-then-flat": "Lieskementer ha kastiz plad da c'houde"
           },
@@ -160,7 +160,7 @@
         "title": "N'eus ket a-walc'h a c'hoarierien",
         "description": "Ret eo deoc'h bezañ da nebeutañ 2 c'hoarier evit kregiñ gant ar c'hoari.",
         "public-description": "Pediñ ur mignon pe gortoz un c'hoarier all da gemer perzh.",
-        "private-description": "Implijit al liamm prevez evit pedin ho toueed!",
+        "private-description": "Implijit al liamm prevez evit pediñ ho mignoned!",
         "close": "Me a gompren"
       },
       "waiting-host-to-start": "O c'hortoz an ostiz da loc'hañ ar c'hoari",
@@ -353,9 +353,9 @@
         "gameplay": {
           "timer": {
             "modes": {
-              "always": "Biken",
+              "always": "Atav",
               "never": "Biken",
-              "smart": "Klañv"
+              "smart": "Furf"
             },
             "description": "Eus ar mod 'Smart' e vez diskwelet an amzerier en hanter-amzer hag an 15 segondenn diwezhañ.",
             "label": "Mod diskouez amzerier"
@@ -420,7 +420,7 @@
         "description": "Ar vouezhiadeg evit skarzhañ {playerName} a zo bet gounezet."
       },
       "you-kick-player": {
-        "title": "Skoet ho peus {playerName}"
+        "title": "Skarzhet ho peus {playerName}"
       },
       "host-kick": {
         "title": "{playerName} zo bet skoet er-maez eus ar c'hoari gant an ostiz"
@@ -626,7 +626,7 @@
       },
       "report-message": "Danevellit ur gemennadenn",
       "no-messages": "N'eus bet kavet kemennadenn ebet eus an implijer-mañ",
-      "submit": "Danevell",
+      "submit": "Danevelliñ",
       "title": "Danevell {username}",
       "cancel": "Nullañ"
     },
@@ -640,7 +640,7 @@
       },
       "warning": {
         "title": "AFK Kemenn",
-        "description": "Bez' e vi skarzhet eus ar c'hoari ma chomez digenvez."
+        "description": "Skarzhet e vi eus ar c'hoari ma chomez dizober."
       },
       "player-kicked": {
         "title": "C'hoarier Skarzhet",
@@ -744,7 +744,7 @@
         "title": "Berzet oc'h bet"
       },
       "player-not-found": {
-        "title": "Ar c'hoarier da verzañ ne glot ket",
+        "title": "N'eus ket eus ar c'hoarier da verzañ",
         "description": "Ar c'hoarier da verzañ n'eus ket anezhañ er c'hoari"
       },
       "player-banned": {
