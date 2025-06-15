@@ -1,6 +1,6 @@
 ---
-description:
-globs:
+description: 
+globs: 
 alwaysApply: true
 ---
 # State Operations Package (`packages/state-operations`)
@@ -18,3 +18,4 @@ This package provides pure functions for creating and applying game state operat
 
 ## Notes
 - All logic is pure and deterministic for easy testing and replay.
+- Adheres to the main [TypeScript best practices](mdc:.cursor/rules/lib/typescript.mdc).

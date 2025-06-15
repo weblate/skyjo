@@ -15,5 +15,7 @@ This package provides shared TypeScript types and Zod validation schemas for use
 - **[`tsconfig.json`](mdc:packages/shared/tsconfig.json)**: TypeScript configuration.
 
 ## Notes
+- Provides shared [TypeScript](mdc:.cursor/rules/lib/typescript.mdc) types and [Zod](mdc:.cursor/rules/lib/zod.mdc) validation schemas.
 - All types and schemas are designed for maximum reusability and type safety.
 - No runtime logic; only types and validation.
+- **Key Technology**: Zod is used for all schema validation.

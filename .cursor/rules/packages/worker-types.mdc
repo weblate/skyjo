@@ -1,0 +1,21 @@
+---
+description: This rule file provides informations about the worker-types package, the types it contains.
+globs: packages/worker-types/**/*.*
+alwaysApply: false
+---
+# Worker Types Package (`packages/worker-types`)
+
+This package contains shared TypeScript types for jobs processed by background workers. It ensures type safety between the applications that queue jobs (like the `api`) and the `workers` that process them.
+
+## Key Files & Directories:
+- **[`types/`](mdc:packages/worker-types/types)**: Main directory for type definitions.
+  - **[`index.ts`](mdc:packages/worker-types/types/index.ts)**: Exports all types from this package.
+  - **[`gameCleanup.ts`](mdc:packages/worker-types/types/gameCleanup.ts)**: Defines `GameCleanupJobData` for cleaning up completed games.
+  - **[`gameStorage.ts`](mdc:packages/worker-types/types/gameStorage.ts)**: Defines `GameStorageJobData` for persisting game state.
+  - **[`mailer.ts`](mdc:packages/worker-types/types/mailer.ts)**: Defines `MailerJobData` and related types for sending transactional emails.
+- **[`package.json`](mdc:packages/worker-types/package.json)**: Dependencies and package configuration.
+- **[`tsconfig.json`](mdc:packages/worker-types/tsconfig.json)**: TypeScript configuration.
+
+## Notes
+- This package should only contain type definitions and simple, shared validation schemas, following [TypeScript best practices](mdc:.cursor/rules/lib/typescript.mdc).
+- It helps decouple the API from the workers, allowing them to be developed and deployed independently.

@@ -20,6 +20,10 @@ This project is a Next.js app for the Skymo game, located in [`apps/web`](mdc:ap
   - UI primitives: [`components/ui/`](mdc:apps/web/components/ui)
   - Card-related: [`components/Card/`](mdc:apps/web/components/Card)
 
+## Static Assets
+- All static assets: [`public/`](mdc:apps/web/public)
+  - Images, fonts, and other static files.
+
 ## Contexts & State
 - React contexts for game, user, chat, etc: [`contexts/`](mdc:apps/web/contexts)
 - Custom hooks: [`hooks/`](mdc:apps/web/hooks)
@@ -32,6 +36,8 @@ This project is a Next.js app for the Skymo game, located in [`apps/web`](mdc:ap
 ## Internationalization
 - i18n helpers: [`i18n/`](mdc:apps/web/i18n)
 - Locale files: [`locales/`](mdc:apps/web/locales)
+  - **File Naming**: Locale files must be in `PascalCase` (e.g., `EnUs.ts`, `FrFr.ts`).
+  - **String Casing**: Keys within the locale files must be in `kebab-case` (e.g., `'my-translation-key': 'My Translation'`).
 
 ## Styling
 - Tailwind config: [`tailwind.config.ts`](mdc:apps/web/tailwind.config.ts)
@@ -44,6 +50,14 @@ This project is a Next.js app for the Skymo game, located in [`apps/web`](mdc:ap
 - Package/deps/scripts: [`package.json`](mdc:apps/web/package.json)
 - Next.js config: [`next.config.mjs`](mdc:apps/web/next.config.mjs)
 - Readme: [`README.md`](mdc:apps/web/README.md)
+
+## Notes
+- Built with [Next.js (App Router)](mdc:.cursor/rules/lib/next-js.mdc), [React](mdc:.cursor/rules/lib/react.mdc), and [TypeScript](mdc:.cursor/rules/lib/typescript.mdc).
+- Styling is done with [Tailwind CSS](mdc:.cursor/rules/lib/tailwind.mdc) and [Shadcn UI](mdc:.cursor/rules/lib/shadcn.mdc) components.
+- State management uses React Context and custom hooks, with data fetching handled by [TanStack Query](mdc:.cursor/rules/lib/tanstack-query.mdc).
+- Internationalization (i18n) is handled via `next-intl`.
+- Testing is done with [Vitest](mdc:.cursor/rules/lib/vitest.mdc).
+- For new features, prefer minimal, self-documenting components and strict types.
 
 ---
 - All code is TypeScript, type-exact, and uses React best practices.
