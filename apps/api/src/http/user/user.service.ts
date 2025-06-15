@@ -16,7 +16,7 @@ import {
   userTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
-import { type Locales, UserError } from "@skymo/shared/constants"
+import { type Locales } from "@skymo/shared/constants"
 import type {
   GameHistoryQuery,
   UpdateAvatar,
@@ -80,7 +80,7 @@ export async function createUser({
     })
 
   const user = row?.[0]
-  if (!user) throw new Error(UserError.UNEXPECTED_ERROR)
+  if (!user) throw new Error("unexpected-error")
 
   return user
 }
@@ -115,7 +115,7 @@ export async function createUsername(name: string) {
       .limit(1)
 
     if (existingUser.length === 0) break
-    if (i === 19) throw new Error(UserError.CREATION_FAILED)
+    if (i === 19) throw new Error("creation-failed")
   }
 
   return username
@@ -306,7 +306,7 @@ export async function updateUserName(userId: number, data: UpdateName) {
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
-  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  if (!updatedUser) throw new Error("unexpected-error")
   return updatedUser
 }
 
@@ -318,7 +318,7 @@ export async function updateUserUsername(userId: number, data: UpdateUsername) {
     .limit(1)
 
   if (existingUser.length > 0) {
-    throw new Error(UserError.USERNAME_TAKEN)
+    throw new Error("username-taken")
   }
 
   const [updatedUser] = await db
@@ -338,7 +338,7 @@ export async function updateUserUsername(userId: number, data: UpdateUsername) {
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
-  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  if (!updatedUser) throw new Error("unexpected-error")
   return updatedUser
 }
 
@@ -432,9 +432,7 @@ export async function revertEmail(token: string) {
     .where(eq(userTable.id, emailChange.userId))
     .limit(1)
 
-  if (!userData) {
-    throw new Error(UserError.NOT_FOUND)
-  }
+  if (!userData) throw new Error("not-found")
 
   await db.transaction(async (tx) => {
     await tx
@@ -458,11 +456,6 @@ export async function revertEmail(token: string) {
   await invalidateUserSessions(emailChange.userId)
 
   await requestPasswordReset({ email: emailChange.oldEmail })
-  return {
-    success: true,
-    message:
-      "Email change has been reverted and your account has been secured. Please check your email for password reset instructions.",
-  }
 }
 
 export async function updateUserPassword(userId: number, data: UpdatePassword) {
@@ -472,17 +465,13 @@ export async function updateUserPassword(userId: number, data: UpdatePassword) {
     .where(eq(userTable.id, userId))
     .limit(1)
 
-  if (!user || !user.password) {
-    throw new Error(UserError.INVALID_CURRENT_PASSWORD)
-  }
+  if (!user || !user.password) throw new Error("invalid-current-password")
 
   const isValidPassword = await verifyPassword(
     user.password,
     data.currentPassword,
   )
-  if (!isValidPassword) {
-    throw new Error(UserError.INVALID_CURRENT_PASSWORD)
-  }
+  if (!isValidPassword) throw new Error("invalid-current-password")
 
   const hashedPassword = await hashPassword(data.newPassword)
 
@@ -503,7 +492,7 @@ export async function updateUserPassword(userId: number, data: UpdatePassword) {
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
-  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  if (!updatedUser) throw new Error("unexpected-error")
   return updatedUser
 }
 
@@ -528,7 +517,7 @@ export async function updateUserAvatar(
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
-  if (!updatedUser) throw new Error(UserError.UNEXPECTED_ERROR)
+  if (!updatedUser) throw new Error("unexpected-error")
   return updatedUser
 }
 
@@ -544,7 +533,7 @@ export async function scheduleAccountDeletion(userId: number) {
     .where(eq(userTable.id, userId))
     .limit(1)
 
-  if (!userData) throw new Error(UserError.NOT_FOUND)
+  if (!userData) throw new Error("not-found")
 
   const [existingRequest] = await db
     .select()
@@ -647,9 +636,4 @@ export async function cancelAccountDeletion(token: string) {
     userId: deletionRequest.userId,
     jobId: deletionRequest.jobId,
   })
-
-  return {
-    success: true,
-    message: "Account deletion has been successfully cancelled.",
-  }
 }

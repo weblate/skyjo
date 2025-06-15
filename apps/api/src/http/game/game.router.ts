@@ -5,15 +5,12 @@ import { getPublicGamesQuerySchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 
-export const gameRouter = new Hono().basePath("/games")
-
 const publicGamesRateLimiter = new RateLimiterMemory({
   keyPrefix: "public-games",
   points: 20,
   duration: 30,
 })
-
-gameRouter.get(
+export const gameRouter = new Hono().get(
   "/public",
   createRateLimiterMiddleware(publicGamesRateLimiter),
   zValidator("query", getPublicGamesQuerySchema),
@@ -22,11 +19,6 @@ gameRouter.get(
 
     const games = await getRedisPublicGames(query.nbPerPage, query.page)
 
-    return c.json({
-      success: true,
-      games,
-      page: query.page,
-      length: query.nbPerPage,
-    })
+    return c.json({ games, page: query.page, length: query.nbPerPage }, 200)
   },
 )

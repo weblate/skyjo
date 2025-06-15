@@ -18,11 +18,7 @@ import {
   userTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
-import {
-  AuthError,
-  SESSION_COOKIE_NAME,
-  locales,
-} from "@skymo/shared/constants"
+import { SESSION_COOKIE_NAME, locales } from "@skymo/shared/constants"
 import type {
   ForgotPassword,
   LoginUser,
@@ -66,19 +62,21 @@ export async function signup(c: Context, data: Signup) {
 export async function login(c: Context, data: LoginUser) {
   const { login, password } = data
 
+  const username = login.replace("@", "")
+
   const user = await db
     .select()
     .from(userTable)
-    .where(or(eq(userTable.email, login), eq(userTable.username, login)))
+    .where(or(eq(userTable.email, login), eq(userTable.username, username)))
     .limit(1)
 
   if (user.length === 0 || !user[0].password) {
-    throw new Error(AuthError.LOGIN_INVALID_CREDENTIALS)
+    throw new Error("login-invalid-credentials")
   }
 
   const isValidPassword = await verifyPassword(user[0].password, password)
   if (!isValidPassword) {
-    throw new Error(AuthError.LOGIN_INVALID_CREDENTIALS)
+    throw new Error("login-invalid-credentials")
   }
 
   const token = generateSessionToken()
@@ -150,13 +148,13 @@ export async function logout(c: Context) {
       error,
     })
 
-    throw new Error(AuthError.LOGOUT_FAILED)
+    throw new Error("logout-failed")
   }
 }
 
 export async function getCurrentUser(c: Context) {
   const sessionIdFromCookie = getCookie(c, SESSION_COOKIE_NAME)
-  if (!sessionIdFromCookie) throw new Error(AuthError.SESSION_NOT_FOUND)
+  if (!sessionIdFromCookie) throw new Error("session-not-found")
 
   const session = await db
     .select()
@@ -166,7 +164,7 @@ export async function getCurrentUser(c: Context) {
 
   if (session.length === 0) {
     deleteCookie(c, SESSION_COOKIE_NAME)
-    throw new Error(AuthError.SESSION_NOT_FOUND)
+    throw new Error("session-not-found")
   }
 
   const user = await db
@@ -187,7 +185,7 @@ export async function getCurrentUser(c: Context) {
     .where(eq(userTable.id, session[0].userId))
     .limit(1)
 
-  if (user.length === 0) throw new Error(AuthError.USER_NOT_FOUND)
+  if (user.length === 0) throw new Error("user-not-found")
 
   return user[0]
 }
@@ -195,7 +193,7 @@ export async function getCurrentUser(c: Context) {
 export async function completeOnboarding(userId: number, data: Onboarding) {
   const isAvailable = await checkUsernameAvailability(data.username, userId)
 
-  if (!isAvailable) throw new Error(AuthError.USERNAME_TAKEN)
+  if (!isAvailable) throw new Error("username-taken")
 
   const [updatedUser] = await db
     .update(userTable)
@@ -302,7 +300,7 @@ export async function resetPassword(data: ResetPassword) {
     .limit(1)
 
   if (resetRecord.length === 0) {
-    throw new Error(AuthError.RESET_TOKEN_INVALID)
+    throw new Error("reset-token-invalid")
   }
 
   const reset = resetRecord[0]
@@ -312,7 +310,7 @@ export async function resetPassword(data: ResetPassword) {
     await db
       .delete(passwordResetTable)
       .where(eq(passwordResetTable.id, reset.id))
-    throw new Error(AuthError.RESET_TOKEN_EXPIRED)
+    throw new Error("reset-token-expired")
   }
 
   const hashedPassword = await hashPassword(password)

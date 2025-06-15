@@ -4,9 +4,18 @@
   "version": "1.58.0",
   "private": true,
   "type": "module",
+  "exports": {
+    "./hc": {
+      "import": {
+        "default": "./dist/hc/src/hc.js",
+        "types": "./dist/hc/src/hc.d.ts"
+      }
+    }
+  },
   "scripts": {
     "dev": "tsx watch --env-file=.env src/index.ts",
-    "build": "tsc --project tsconfig.prod.json && pnpx tsc-alias --project tsconfig.prod.json",
+    "build": "tsc --project tsconfig.prod.json && pnpx tsc-alias --project tsconfig.prod.json && pnpm build:hc",
+    "build:hc": "tsc --project tsconfig.hc.json && pnpx tsc-alias --project tsconfig.hc.json",
     "prod": "tsx dist/src/index.js",
     "biome:check": "pnpm biome check --write .",
     "test": "vitest",

@@ -1,4 +1,4 @@
-import { initializeHttpServer } from "@/http/index.js"
+import { httpApp } from "@/http/index.js"
 import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
@@ -130,7 +130,7 @@ const startServer = async () => {
     })
 
     await initializeSocketServer(server)
-    initializeHttpServer(app)
+    app.route("/", httpApp)
 
     PlayerAfkQueueService.getInstance()
     RevealCardsAfkQueueService.getInstance()

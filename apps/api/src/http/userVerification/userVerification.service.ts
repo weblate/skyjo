@@ -7,45 +7,37 @@ import {
   userVerificationTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
-import { UserVerificationError } from "@skymo/shared/constants"
 import dayjs from "dayjs"
 import { and, eq } from "drizzle-orm"
 
 export async function sendVerifyPin(email: string) {
-  try {
-    const userResult = await db
-      .select()
-      .from(userTable)
-      .where(
-        and(eq(userTable.email, email), eq(userTable.emailVerified, false)),
-      )
-      .limit(1)
+  const userResult = await db
+    .select()
+    .from(userTable)
+    .where(and(eq(userTable.email, email), eq(userTable.emailVerified, false)))
+    .limit(1)
 
-    const user = userResult?.[0]
-    if (!user) {
-      Logger.info("User not found or already verified", {
-        email,
-      })
-
-      return
-    }
-
-    const locale = user.locale
-
-    const pin = await generateVerifyPin(user)
-
-    await mailerQueue.add("verify-pin", {
-      to: email,
-      template: "verify-pin",
-      locale,
-      content: {
-        pin,
-      },
+  const user = userResult?.[0]
+  if (!user) {
+    Logger.info("User not found or already verified", {
+      email,
     })
-  } catch (error) {
-    Logger.error("Error sending verification pin", { error })
-    throw new Error(UserVerificationError.SEND_PIN_ERROR)
+
+    return
   }
+
+  const locale = user.locale
+
+  const pin = await generateVerifyPin(user)
+
+  await mailerQueue.add("verify-pin", {
+    to: email,
+    template: "verify-pin",
+    locale,
+    content: {
+      pin,
+    },
+  })
 }
 
 export async function generateVerifyPin(user: UserDb) {
@@ -87,7 +79,7 @@ export async function verifyPin(email: string, pin: string) {
     .limit(1)
 
   if (!result) {
-    throw new Error(UserVerificationError.INVALID_PIN)
+    throw new Error("invalid-pin")
   }
 
   const { users: user, user_verifications } = result
@@ -96,7 +88,7 @@ export async function verifyPin(email: string, pin: string) {
   if (user_verifications.expiresAt < new Date()) {
     await generateVerifyPin(user)
 
-    throw new Error(UserVerificationError.EXPIRED_PIN)
+    throw new Error("expired-pin")
   }
 
   await db

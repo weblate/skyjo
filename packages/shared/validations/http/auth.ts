@@ -9,9 +9,9 @@ export const signupSchema = z.object({
 export type Signup = z.infer<typeof signupSchema>
 
 export const loginSchema = z.object({
-  // login either email or userTag
-  login: z.string().min(3),
-  password: z.string().min(10),
+  // login either email or username
+  login: z.string(),
+  password: z.string(),
 })
 export type LoginUser = z.infer<typeof loginSchema>
 

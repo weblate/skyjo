@@ -2,14 +2,11 @@ import { loginGoogle } from "@/http/auth/auth.service.js"
 import { createGoogleAuthorizationURL } from "@/http/auth/lib/google.js"
 import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
-import { AuthError } from "@skymo/shared/constants"
 import { Hono } from "hono"
 import { deleteCookie, getCookie, setCookie } from "hono/cookie"
 import type { CookieOptions } from "hono/utils/cookie"
 
-const googleRouter = new Hono()
-
-googleRouter.get("/login/google", async (c) => {
+export const googleRouter = new Hono().get("/login/google", async (c) => {
   try {
     const { url, state, codeVerifier } = createGoogleAuthorizationURL()
 
@@ -24,45 +21,23 @@ googleRouter.get("/login/google", async (c) => {
     setCookie(c, "google_oauth_state", state, cookieOptions)
     setCookie(c, "google_oauth_code_verifier", codeVerifier, cookieOptions)
 
-    return c.json({
-      success: true,
-      redirectUrl: url.toString(),
-    })
+    return c.json({ redirectUrl: url.toString() }, 200)
   } catch (error) {
     Logger.error("Google login initiation route error:", { error })
-    return c.json(
-      {
-        success: false,
-        error: AuthError.OAUTH_LOGIN_INITIATION_FAILED,
-      },
-      500,
-    )
+    return c.json({ error: "oauth-login-initiation-failed" }, 500)
   }
 })
-
-googleRouter.get("/login/google/callback", async (c) => {
+.get("/login/google/callback", async (c) => {
   const code = c.req.query("code")
   const state = c.req.query("state")
   const storedState = getCookie(c, "google_oauth_state")
   const codeVerifier = getCookie(c, "google_oauth_code_verifier")
   if (!code || !state || !storedState || !codeVerifier) {
-    return c.json(
-      {
-        success: false,
-        error: AuthError.OAUTH_RESTART_PROCESS,
-      },
-      400,
-    )
+    return c.json({ error: "oauth-restart-process" }, 400)
   }
 
   if (storedState !== state) {
-    return c.json(
-      {
-        success: false,
-        error: AuthError.OAUTH_RESTART_PROCESS,
-      },
-      400,
-    )
+    return c.json({ error: "oauth-restart-process" }, 400)
   }
 
   deleteCookie(c, "google_oauth_state")
@@ -73,28 +48,11 @@ googleRouter.get("/login/google/callback", async (c) => {
 
     return c.redirect(`${ENV.WEBSITE_URL}/auth/callback`)
   } catch (error) {
-    if (
-      error instanceof Error &&
-      error.message === AuthError.OAUTH_ID_TOKEN_MISSING
-    ) {
-      return c.json(
-        {
-          success: false,
-          error: AuthError.OAUTH_ID_TOKEN_MISSING,
-        },
-        400,
-      )
+    if (error instanceof Error) {
+      return c.json({ error: error.message }, 400)
     }
 
     Logger.error("Google login callback error:", { error })
-    return c.json(
-      {
-        success: false,
-        error: AuthError.UNKNOWN_AUTH_ERROR,
-      },
-      500,
-    )
+    return c.json({ error: "unknown-auth-error" }, 500)
   }
 })
-
-export { googleRouter }

@@ -9,14 +9,9 @@ import {
 } from "@/http/userVerification/userVerification.service.js"
 import { zValidator } from "@hono/zod-validator"
 import { Logger } from "@skymo/logger"
-import { UserVerificationError } from "@skymo/shared/constants"
 import { verifyPinSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
-
-const userVerificationRouter = new Hono<AuthContextVariables>().basePath(
-  "/verification",
-)
 
 const sendVerifyRateLimiter = new RateLimiterMemory({
   keyPrefix: "send-verify",
@@ -30,63 +25,44 @@ const verifyRateLimiter = new RateLimiterMemory({
   duration: 30,
 })
 
-userVerificationRouter.get(
-  "send-pin",
-  createRateLimiterMiddleware(sendVerifyRateLimiter),
-  authMiddleware,
-  async (c) => {
-    const user = c.get("user")
-    try {
-      await sendVerifyPin(user.email)
+export const userVerificationRouter = new Hono<AuthContextVariables>()
+  .get(
+    "send-pin",
+    createRateLimiterMiddleware(sendVerifyRateLimiter),
+    authMiddleware,
+    async (c) => {
+      const user = c.get("user")
+      try {
+        await sendVerifyPin(user.email)
 
-      return c.json({ success: true })
-    } catch (error) {
-      Logger.error(`Error when sending a verify email to ${user?.email}`, {
-        error,
-      })
-      return c.json(
-        { success: false, error: UserVerificationError.SEND_PIN_ERROR },
-        500,
-      )
-    }
-  },
-)
-
-userVerificationRouter.post(
-  "try-pin",
-  authMiddleware,
-  zValidator("json", verifyPinSchema),
-  createRateLimiterMiddleware(verifyRateLimiter),
-  async (c) => {
-    const user = c.get("user")
-    const { pin } = await c.req.json()
-
-    try {
-      await verifyPin(user.email, pin)
-      return c.json({ success: true })
-    } catch (error) {
-      if (error instanceof Error) {
-        if (error.message === UserVerificationError.INVALID_PIN) {
-          return c.json(
-            { success: false, error: UserVerificationError.INVALID_PIN },
-            400,
-          )
-        }
-        if (error.message === UserVerificationError.EXPIRED_PIN) {
-          return c.json(
-            { success: false, error: UserVerificationError.EXPIRED_PIN },
-            400,
-          )
-        }
+        return c.json({}, 200)
+      } catch (error) {
+        Logger.error(`Error when sending a verify email to ${user?.email}`, {
+          error,
+        })
+        return c.json({ error: "send-pin-error" }, 500)
       }
+    },
+  )
+  .post(
+    "try-pin",
+    authMiddleware,
+    zValidator("json", verifyPinSchema),
+    createRateLimiterMiddleware(verifyRateLimiter),
+    async (c) => {
+      const user = c.get("user")
+      const { pin } = await c.req.json()
 
-      Logger.error("Error verifying pin", { error })
-      return c.json(
-        { success: false, error: UserVerificationError.VERIFY_PIN_ERROR },
-        500,
-      )
-    }
-  },
-)
+      try {
+        await verifyPin(user.email, pin)
+        return c.json({}, 200)
+      } catch (error) {
+        if (error instanceof Error) {
+          return c.json({ error: error.message }, 400)
+        }
 
-export { userVerificationRouter }
+        Logger.error("Error verifying pin", { error })
+        return c.json({ error: "verify-pin-error" }, 500)
+      }
+    },
+  )
