@@ -34,6 +34,9 @@
           "title": "Kann man klassisches Skyjo mit Skyjo Action spielen?",
           "content": "Ja, du musst nur die Aktionskarten entfernen. Wenn du die Online-Version spielst, wähle die klassische Version aus, um Skyjo zu spielen."
         }
+      },
+      "banner": {
+        "title": "Ich brauche <gform>Dein Feedback</gform>, um die Zukunft von Skymo zu gestalten!"
       }
     },
     "Search": {
@@ -322,25 +325,25 @@
     },
     "LanguageCombobox": {
       "locale": {
-        "en": "English",
-        "it": "Italiano",
+        "en": "Englisch",
+        "it": "Italiensch",
         "de": "Deutsch",
-        "es": "Español",
-        "fr": "Français",
-        "br": "Brezhoneg",
-        "ta": "தமிழ்",
-        "bar": "Bavarian",
-        "cs": "Čeština",
-        "da": "Dansk",
-        "el": "Ελληνικά",
-        "et": "Eesti",
-        "frs": "Eastern Frisian",
+        "es": "Spanisch",
+        "fr": "Französisch",
+        "br": "Bretonisch",
+        "ta": "Tamil",
+        "bar": "Bayerisch",
+        "cs": "Tschechisch",
+        "da": "Dänisch",
+        "el": "Griechisch",
+        "et": "Estnisch",
+        "frs": "Ostfriesisch",
         "gsw": "Alemannisch",
         "nds": "Plattdeutsch",
-        "nl": "Nederlands",
-        "pl": "Polski",
-        "sv": "Svenska",
-        "uk": "Українська"
+        "nl": "Niederländisch",
+        "pl": "Polnisch",
+        "sv": "Schwedisch",
+        "uk": "Ukrainisch"
       },
       "no-language-found": "Keine Sprache gefunden",
       "select-language": "Sprache auswählen",
@@ -411,7 +414,8 @@
               "big": "Groß"
             }
           },
-          "title": "Spielablauf"
+          "title": "Spielablauf",
+          "enlarge-active-player-board": "Das Brett des Spielers, der am Zug ist, vergrößern"
         }
       },
       "title": "Einstellungen",
