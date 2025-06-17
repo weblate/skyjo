@@ -5,7 +5,6 @@ import {
   backgroundVariants,
 } from "@/app/[locale]/u/[username]/UserProfile"
 import { Button } from "@/components/ui/button"
-import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import { Avatar, Constants as CoreConstants } from "@skymo/core"
 import { UpdateAvatarError } from "@skymo/shared/types"
@@ -45,14 +44,22 @@ export function AvatarSelector({
 
     setLoading(true)
     try {
-      const response = await client.users.me.avatar.$patch({
-        json: {
-          avatar: selectedAvatar,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/me/avatar`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            avatar: selectedAvatar,
+          }),
         },
-      })
+      )
 
-      if (!response.ok) {
-        const error = await jsonError<UpdateAvatarError>(response)
+      if (!res.ok) {
+        const error = await jsonError<UpdateAvatarError>(res)
         toast.error(tErrors(error))
       }
 

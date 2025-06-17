@@ -7,7 +7,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-input"
 import { Link, useRouter } from "@/i18n/routing"
-import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { LoginError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -36,8 +35,13 @@ const LoginPage = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: LoginUser) => {
       setApiError(null)
-      const res = await client.auth.login.$post({
-        json: payload,
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
+        method: "POST",
+        credentials: "include",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(payload),
       })
 
       if (!res.ok) {
@@ -70,6 +74,14 @@ const LoginPage = () => {
             {apiError}
           </div>
         )}
+
+        <GoogleOAuthButton />
+
+        <div className="my-6 flex items-center">
+          <div className="flex-1 border-t border-gray-300" />
+          <div className="mx-4 text-sm text-gray-600">Or</div>
+          <div className="flex-1 border-t border-gray-300" />
+        </div>
 
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
@@ -119,14 +131,6 @@ const LoginPage = () => {
             </Button>
           </form>
         </Form>
-
-        <div className="my-6 flex items-center">
-          <div className="flex-1 border-t border-gray-300" />
-          <div className="mx-4 text-sm text-gray-600">Or</div>
-          <div className="flex-1 border-t border-gray-300" />
-        </div>
-
-        <GoogleOAuthButton />
 
         <div className="mt-6 text-center text-sm">
           <span className="text-gray-600">{t("signup.description")} </span>

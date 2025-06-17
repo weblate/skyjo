@@ -20,7 +20,6 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
-import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { FeedbackError } from "@skymo/shared/types"
@@ -52,8 +51,10 @@ const FeedbackForm = ({ setOpen }: FeedbackProps) => {
     if (!values.message) return
 
     try {
-      const res = await client.feedbacks.$post({
-        json: values,
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/feedbacks`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(values),
       })
 
       if (!res.ok) {

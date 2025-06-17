@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button"
-import { client } from "@/lib/rpc"
 import type { OauthLoginError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useTranslations } from "next-intl"
@@ -14,7 +13,13 @@ const GoogleOAuthButton = () => {
 
   const actionClick = async () => {
     try {
-      const response = await client.auth.login.google.$get()
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/login/google`,
+        {
+          method: "GET",
+          credentials: "include",
+        },
+      )
 
       if (!response.ok) {
         const error = await jsonError<OauthLoginError>(response)

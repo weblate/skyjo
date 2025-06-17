@@ -1,4 +1,5 @@
 import { authRouter } from "@/http/auth/auth.router.js"
+import { googleRouter } from "@/http/auth/google.router.js"
 import { feedbackRouter } from "@/http/feedback/feedback.router.js"
 import { gameRouter } from "@/http/game/game.router.js"
 import { userRouter } from "@/http/user/user.router.js"
@@ -24,6 +25,7 @@ const httpApp = new Hono()
     })
   })
   .route("/auth", authRouter)
+  .route("/auth/google", googleRouter)
   .route("/games", gameRouter)
   .route("/feedbacks", feedbackRouter)
   .route("/users", userRouter)

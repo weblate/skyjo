@@ -3,7 +3,6 @@
 import { FormDescription, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import type { CheckUsernameError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -137,9 +136,15 @@ export const useUsernameValidation = (username: string) => {
     queryFn: async () => {
       if (!usernameToCheck) return null
 
-      const res = await client.auth["check-username"].$post({
-        json: { username: usernameToCheck },
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/check-username`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ username: usernameToCheck }),
+        },
+      )
 
       if (!res.ok) {
         const error = await jsonError<CheckUsernameError>(res)

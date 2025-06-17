@@ -1,7 +1,6 @@
 "use client"
 
 import { useRouter } from "@/i18n/routing"
-import { client } from "@/lib/rpc"
 import { Avatar } from "@skymo/core"
 import { LogoutError, VerifyError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -24,44 +23,15 @@ export const useAuth = () => {
   const router = useRouter()
   const tErrors = useTranslations("errors")
 
-  const {
-    data: user,
-    isLoading,
-    error,
-    refetch,
-  } = useQuery({
-    queryKey: ["authenticated-user"],
-    queryFn: async (): Promise<AuthenticatedUser | undefined> => {
-      try {
-        const response = await client.auth.verify.$post()
-
-        if (!response.ok) {
-          const error = await jsonError<VerifyError>(response)
-          toast.error(tErrors(error))
-          return undefined
-        }
-
-        const result = await response.json()
-        return {
-          ...result.user,
-          name: result.user.name ?? undefined,
-          username: result.user.username ?? undefined,
-        }
-      } catch (error) {
-        console.error(error)
-        toast.error(tErrors("unexpected-error"))
-      }
-    },
-    retry: 0,
-    refetchOnWindowFocus: false,
-    staleTime: 30 * 60 * 1000, // 30 minutes
-    gcTime: 30 * 60 * 1000, // 30 minutes
-  })
-
   const logoutMutation = useMutation({
     mutationFn: async () => {
       try {
-        const response = await client.auth.logout.$post()
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
+          {
+            method: "POST",
+          },
+        )
 
         if (!response.ok) {
           const error = await jsonError<LogoutError>(response)
@@ -85,6 +55,44 @@ export const useAuth = () => {
       queryClient.setQueryData(["authenticated-user"], null)
       queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
     },
+  })
+
+  const {
+    data: user,
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
+    queryKey: ["authenticated-user"],
+    queryFn: async (): Promise<AuthenticatedUser | undefined> => {
+      try {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`,
+          {
+            method: "POST",
+            credentials: "include",
+          },
+        )
+
+        if (!response.ok) {
+          const error = await jsonError<VerifyError>(response)
+          throw new Error(error)
+        }
+
+        const result = await response.json()
+        return {
+          ...result.user,
+          name: result.user.name ?? undefined,
+          username: result.user.username ?? undefined,
+        }
+      } catch (error) {
+        console.error(error)
+      }
+    },
+    retry: 0,
+    refetchOnWindowFocus: false,
+    staleTime: 30 * 60 * 1000, // 30 minutes
+    gcTime: 30 * 60 * 1000, // 30 minutes
   })
 
   return {

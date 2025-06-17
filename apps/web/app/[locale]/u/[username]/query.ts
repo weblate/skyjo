@@ -1,4 +1,3 @@
-import { client } from "@/lib/rpc"
 import { UserProfileResponse } from "@skymo/shared/types"
 import { ApiResponse } from "@skymo/shared/types"
 
@@ -6,9 +5,9 @@ export async function fetchUserProfile(
   username: string,
 ): Promise<ApiResponse<UserProfileResponse, "not-found" | "unknown">> {
   try {
-    const response = await client.users[":username"].$get({
-      param: { username },
-    })
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/${username}`,
+    )
 
     if (!response.ok) {
       if (response.status === 404) {

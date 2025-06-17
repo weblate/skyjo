@@ -5,7 +5,6 @@ import { Form, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link, useRouter } from "@/i18n/routing"
-import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Locales } from "@skymo/shared/constants"
 import { SignupError } from "@skymo/shared/types"
@@ -45,9 +44,17 @@ const SignupPage = () => {
         email: data.email,
         locale,
       }
-      const res = await client.auth.signup.$post({
-        json: payload,
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        },
+      )
 
       if (!res.ok) {
         const error = await jsonError<SignupError>(res)

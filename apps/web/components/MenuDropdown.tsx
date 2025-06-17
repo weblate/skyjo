@@ -195,7 +195,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
             <SettingsIcon className="mr-2 size-4" />
             <span>{user ? t("game-settings") : t("settings")}</span>
           </DropdownMenuItem>
-          {user && (
+          {user && variant === "account" && (
             <DropdownMenuItem>
               <Link
                 href="/settings/profile"

@@ -7,7 +7,6 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { useRouter } from "@/i18n/routing"
-import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { SendPinError, VerifyPinError } from "@skymo/shared/types"
@@ -45,9 +44,17 @@ const VerifyPage = () => {
   } = useMutation({
     mutationFn: async (payload: VerifyPin) => {
       setOtpStatus(undefined)
-      const res = await client.verification["try-pin"].$post({
-        json: payload,
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/verification/try-pin`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        },
+      )
 
       if (!res.ok) {
         const error = await jsonError<VerifyPinError>(res)
@@ -76,7 +83,13 @@ const VerifyPage = () => {
       form.resetField("pin")
       resetVerifyPin()
 
-      const res = await client.verification["send-pin"].$get()
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/verification/send-pin`,
+        {
+          method: "GET",
+          credentials: "include",
+        },
+      )
 
       if (!res.ok) {
         const error = await jsonError<SendPinError>(res)

@@ -6,7 +6,6 @@ import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-input"
 import { Link } from "@/i18n/routing"
-import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { ResetPasswordError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -41,12 +40,19 @@ const ResetPasswordPage = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: ResetPassword) => {
       setApiError(null)
-      const res = await client.auth["reset-password"].$post({
-        json: {
-          ...payload,
-          token,
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            ...payload,
+            token,
+          }),
         },
-      })
+      )
 
       if (!res.ok) {
         const error = await jsonError<ResetPasswordError>(res)

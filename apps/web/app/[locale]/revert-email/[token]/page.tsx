@@ -1,6 +1,5 @@
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
-import { client } from "@/lib/rpc"
 import { Locales } from "@skymo/shared/constants"
 import type { RevertEmailError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -22,9 +21,9 @@ interface RevertEmailResult {
 
 async function revertEmail(token: string): Promise<RevertEmailResult> {
   try {
-    const res = await client.users.me["revert-email"][":token"].$get({
-      param: { token },
-    })
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/me/revert-email/${token}`,
+    )
 
     if (!res.ok) {
       const error = await jsonError<RevertEmailError>(res)

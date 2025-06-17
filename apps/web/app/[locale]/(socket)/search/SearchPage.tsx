@@ -3,7 +3,6 @@
 import { GamesList } from "@/app/[locale]/(socket)/search/GamesList"
 import { TagsFilter } from "@/app/[locale]/(socket)/search/TagsFilter"
 import { useRouter } from "@/i18n/routing"
-import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import { PublicGameTag } from "@skymo/core"
 import type { GetPublicGamesError, PublicGame } from "@skymo/shared/types"
@@ -29,12 +28,9 @@ const SearchPageComponent = () => {
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["publicGames", page],
     queryFn: async (): Promise<PublicGame[]> => {
-      const res = await client.games.public.$get({
-        query: {
-          nbPerPage: MAX_GAMES_PER_PAGE.toString(),
-          page: page.toString(),
-        },
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/games/public?nbPerPage=${MAX_GAMES_PER_PAGE}&page=${page}`,
+      )
 
       if (!res.ok) {
         const error = await jsonError<GetPublicGamesError>(res)

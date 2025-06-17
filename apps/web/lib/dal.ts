@@ -1,6 +1,5 @@
 import "server-only"
 
-import { hcWithType } from "@skymo/api/hc"
 import { Avatar } from "@skymo/core"
 import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import type { VerifyError } from "@skymo/shared/types"
@@ -19,11 +18,6 @@ export interface SessionData {
   onboardingCompleted: boolean
 }
 
-// Create a server-side client for session verification
-const serverClient = hcWithType(
-  process.env.NEXT_PUBLIC_API_URL || "http://localhost:8787",
-)
-
 export const verifySession = cache(async (): Promise<SessionData | null> => {
   const cookieStore = await cookies()
   const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME)
@@ -31,9 +25,10 @@ export const verifySession = cache(async (): Promise<SessionData | null> => {
   if (!sessionCookie?.value) return null
 
   try {
-    const response = await serverClient.auth.verify.$post(
-      {},
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`,
       {
+        method: "POST",
         headers: {
           Cookie: `${SESSION_COOKIE_NAME}=${sessionCookie.value}`,
         },

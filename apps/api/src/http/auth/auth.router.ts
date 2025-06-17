@@ -43,7 +43,7 @@ const loginRateLimiter = new RateLimiterMemory({
 
 const verifyRateLimiter = new RateLimiterMemory({
   points: 2,
-  duration: 30, // 30 seconds
+  duration: 3,
 })
 
 const onboardingRateLimiter = new RateLimiterMemory({

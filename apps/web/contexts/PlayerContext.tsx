@@ -1,7 +1,6 @@
 "use client"
 
 import { useAuth } from "@/hooks/useAuth"
-import { client } from "@/lib/rpc"
 import {
   Avatar,
   Constants as CoreConstants,
@@ -44,7 +43,12 @@ interface PlayerContext {
 const PlayerContext = createContext<PlayerContext | undefined>(undefined)
 
 const PlayerProvider = ({ children }: PropsWithChildren) => {
-  const { user: authUser, isAuthenticated, refetch } = useAuth()
+  const {
+    user: authUser,
+    isAuthenticated,
+    isLoading: authLoading,
+    refetch,
+  } = useAuth()
   const tErrors = useTranslations("errors")
   const [preferredName, setPreferredName] = useLocalStorage<string>(
     USERNAME_KEY,
@@ -54,7 +58,7 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
   const [preferredAvatarIndex, setPreferredAvatarIndex] =
     useLocalStorage<number>(AVATAR_KEY)
 
-  const [name, setName] = useState<string>("Ano")
+  const [name, setName] = useState<string>("")
   const [avatarIndex, setAvatarIndex] = useState<number>(-1)
   const [playerId, setPlayerId] = useState<string>("")
 
@@ -67,36 +71,50 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
   }
 
   useEffect(() => {
-    if (localStorage) {
-      let initialName = ""
-      let initialAvatarIndex = -1
+    if (typeof window === "undefined" || authLoading) return
 
-      // Priority 1: Use authenticated user data if available
-      if (isAuthenticated && authUser) {
-        initialName = authUser.name || ""
-        if (authUser.avatar) {
-          initialAvatarIndex = getAvatarIndexFromName(authUser.avatar)
-        }
-      }
-      // Priority 2: Use localStorage if no auth or auth data is incomplete
-      else {
-        if (preferredName) {
-          initialName = preferredName
-        }
-        if (preferredAvatarIndex !== undefined && preferredAvatarIndex >= 0) {
-          initialAvatarIndex = preferredAvatarIndex
-        }
-      }
+    let initialName = ""
+    let initialAvatarIndex = -1
 
-      // Priority 3: Random avatar fallback if nothing is set
-      if (initialAvatarIndex === -1) {
-        initialAvatarIndex = Math.floor(Math.random() * AVATARS_ARRAY.length)
+    // Priority 1: Use authenticated user data if available
+    if (isAuthenticated && authUser) {
+      initialName = authUser.name || ""
+      if (authUser.avatar) {
+        initialAvatarIndex = getAvatarIndexFromName(authUser.avatar)
       }
-
-      setName(initialName)
-      setAvatarIndex(initialAvatarIndex)
     }
-  }, [])
+    // Priority 2: Use localStorage if no auth or auth data is incomplete
+    else {
+      if (preferredName) {
+        initialName = preferredName
+      }
+      if (preferredAvatarIndex !== undefined && preferredAvatarIndex >= 0) {
+        initialAvatarIndex = preferredAvatarIndex
+      }
+    }
+
+    // Priority 3: Random avatar fallback if nothing is set
+    if (initialAvatarIndex === -1) {
+      initialAvatarIndex = Math.floor(Math.random() * AVATARS_ARRAY.length)
+    }
+
+    // Only update if values have actually changed to avoid infinite loops
+    setName((currentName) => {
+      return initialName !== currentName ? initialName : currentName
+    })
+    setAvatarIndex((currentIndex) => {
+      return initialAvatarIndex !== currentIndex
+        ? initialAvatarIndex
+        : currentIndex
+    })
+  }, [
+    authLoading,
+    isAuthenticated,
+    authUser?.name,
+    authUser?.avatar,
+    preferredName,
+    preferredAvatarIndex,
+  ])
 
   const getAvatar = () => {
     return getAvatarNameFromIndex(avatarIndex)
@@ -110,9 +128,15 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
 
       if (name !== authUser.name) {
         hasAnUpdate = true
-        const nameResponse = await client.users.me.name.$patch({
-          json: { name },
-        })
+        const nameResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/me/name`,
+          {
+            method: "PATCH",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name }),
+          },
+        )
 
         if (!nameResponse.ok) {
           const error = await jsonError<UpdateNameError>(nameResponse)
@@ -123,9 +147,15 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
 
       if (newAvatar !== authUser.avatar) {
         hasAnUpdate = true
-        const avatarResponse = await client.users.me.avatar.$patch({
-          json: { avatar: newAvatar },
-        })
+        const avatarResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/me/avatar`,
+          {
+            method: "PATCH",
+            credentials: "include",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ avatar: newAvatar }),
+          },
+        )
 
         if (!avatarResponse.ok) {
           const error = await jsonError<UpdateAvatarError>(avatarResponse)
@@ -159,7 +189,7 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
   }
 
   const getPlayer = () => {
-    return { name: name ?? "Ano", avatar: getAvatar() }
+    return { name: name || "Ano", avatar: getAvatar() }
   }
 
   const value = useMemo(
@@ -174,7 +204,7 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
       playerId,
       setPlayerId,
     }),
-    [name, avatarIndex, playerId],
+    [name, avatarIndex, playerId, savePlayer, getAvatar, getPlayer],
   )
 
   return (

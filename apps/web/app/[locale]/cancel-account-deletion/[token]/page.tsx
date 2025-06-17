@@ -2,7 +2,6 @@ import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
-import { client } from "@/lib/rpc"
 import { CancelAccountDeletionError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { CheckCircle, XCircle } from "lucide-react"
@@ -17,11 +16,12 @@ async function cancelAccountDeletion(
   token: string,
 ): Promise<CancelAccountDeletionResult> {
   try {
-    const res = await client.users.me["cancel-deletion"][":token"].$post({
-      param: {
-        token,
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_API_URL}/users/me/cancel-deletion/${token}`,
+      {
+        method: "POST",
       },
-    })
+    )
 
     if (!res.ok) {
       const error = await jsonError<CancelAccountDeletionError>(res)

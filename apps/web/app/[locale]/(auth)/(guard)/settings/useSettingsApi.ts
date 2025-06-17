@@ -1,5 +1,4 @@
 import { useAuth } from "@/hooks/useAuth"
-import { client } from "@/lib/rpc"
 import type {
   DeleteAccountError,
   UpdateEmailError,
@@ -27,9 +26,17 @@ export function useSettingsApi() {
   const updateProfile = async (data: UpdateName) => {
     setLoading("profile")
     try {
-      const response = await client.users.me.name.$patch({
-        json: data,
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/me/name`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        },
+      )
 
       if (!response.ok) {
         const error = await jsonError<UpdateNameError>(response)
@@ -48,9 +55,17 @@ export function useSettingsApi() {
   const updateUsername = async (data: UpdateUsername) => {
     setLoading("username")
     try {
-      const response = await client.users.me.username.$patch({
-        json: data,
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/me/username`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        },
+      )
 
       if (!response.ok) {
         const error = await jsonError<UpdateUsernameError>(response)
@@ -69,9 +84,17 @@ export function useSettingsApi() {
   const updateEmail = async (data: UpdateEmail) => {
     setLoading("email")
     try {
-      const response = await client.users.me.email.$patch({
-        json: data,
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/me/email`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        },
+      )
 
       if (!response.ok) {
         const error = await jsonError<UpdateEmailError>(response)
@@ -90,9 +113,17 @@ export function useSettingsApi() {
   const updatePassword = async (data: UpdatePassword) => {
     setLoading("password")
     try {
-      const response = await client.users.me.password.$patch({
-        json: data,
-      })
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/me/password`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(data),
+        },
+      )
 
       if (!response.ok) {
         const error = await jsonError<UpdatePasswordError>(response)
@@ -110,7 +141,13 @@ export function useSettingsApi() {
   const deleteAccount = async () => {
     setLoading("delete")
     try {
-      const response = await client.users.me.delete.$post()
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/me/delete`,
+        {
+          method: "POST",
+          credentials: "include",
+        },
+      )
 
       if (!response.ok) {
         const error = await jsonError<DeleteAccountError>(response)

@@ -20,7 +20,6 @@ import {
 import { AVATARS_ARRAY, usePlayer } from "@/contexts/PlayerContext"
 import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "@/i18n/routing"
-import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { OnboardingError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -90,9 +89,17 @@ const OnboardingPage = () => {
         ? { name: data.name, username: data.username, avatar: data.avatar }
         : data
 
-      const res = await client.auth.onboard.$post({
-        json: payload,
-      })
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/auth/onboard`,
+        {
+          method: "POST",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(payload),
+        },
+      )
 
       if (!res.ok) {
         const error = await jsonError<OnboardingError>(res)
