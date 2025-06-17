@@ -20,8 +20,11 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
+import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
+import type { FeedbackError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { feedbackSchema } from "@skymo/shared/validations"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction, useTransition } from "react"
@@ -35,6 +38,7 @@ interface FeedbackProps {
 }
 const FeedbackForm = ({ setOpen }: FeedbackProps) => {
   const t = useTranslations("components.Feedback")
+  const tErrors = useTranslations("errors")
   const [isPending, startTransition] = useTransition()
   const form = useForm({
     resolver: zodResolver(feedbackSchema),
@@ -47,29 +51,25 @@ const FeedbackForm = ({ setOpen }: FeedbackProps) => {
   const submitAction = async (values: z.infer<typeof feedbackSchema>) => {
     if (!values.message) return
 
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/feedbacks`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(values),
-      },
-    )
+    try {
+      const res = await client.feedbacks.$post({
+        json: values,
+      })
 
-    const data = await response.json()
+      if (!res.ok) {
+        const error = await jsonError<FeedbackError>(res)
+        toast.error(tErrors(error))
+      }
 
-    if (data.success) {
       form.reset()
-
       setOpen(false)
       toast.success(t("toast.success.title"), {
         description: t("toast.success.description"),
         duration: 8000,
       })
-    } else {
-      toast.error(t("toast.error.title"), {
+    } catch (error) {
+      console.log(error)
+      toast.error(tErrors("feedback-error"), {
         duration: 3000,
       })
     }

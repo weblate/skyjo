@@ -1,7 +1,6 @@
 import {
   checkUsernameAvailability,
   completeOnboarding,
-  getCurrentUser,
   login,
   logout,
   requestPasswordReset,
@@ -13,6 +12,7 @@ import {
   type AuthContextVariables,
   authMiddleware,
 } from "@/http/middlewares/auth.middleware.js"
+import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 import { validateSessionToken } from "@/http/session/session.service.js"
 import { zValidator } from "@hono/zod-validator"
 import { Logger } from "@skymo/logger"
@@ -29,68 +29,118 @@ import {
 } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { getCookie } from "hono/cookie"
+import { RateLimiterMemory } from "rate-limiter-flexible"
+
+const signupRateLimiter = new RateLimiterMemory({
+  points: 5,
+  duration: 600, // 10 minutes
+})
+
+const loginRateLimiter = new RateLimiterMemory({
+  points: 10,
+  duration: 60, // 1 minute
+})
+
+const verifyRateLimiter = new RateLimiterMemory({
+  points: 2,
+  duration: 30, // 30 seconds
+})
+
+const onboardingRateLimiter = new RateLimiterMemory({
+  points: 10,
+  duration: 60, // 1 minute
+})
+
+const checkUsernameRateLimiter = new RateLimiterMemory({
+  points: 5,
+  duration: 9, // 9 seconds
+})
+
+const forgotPasswordRateLimiter = new RateLimiterMemory({
+  points: 5,
+  duration: 60, // 1 minute
+})
+
+const resetPasswordRateLimiter = new RateLimiterMemory({
+  points: 5,
+  duration: 60, // 1 minute
+})
 
 const authRouter = new Hono<AuthContextVariables>()
   .route("", googleRouter)
-  .post("/signup", zValidator("json", signupSchema), async (c) => {
-    const data = c.req.valid("json")
-    try {
-      await signup(c, data)
+  .post(
+    "/signup",
+    zValidator("json", signupSchema),
+    createRateLimiterMiddleware(signupRateLimiter),
+    async (c) => {
+      const data = c.req.valid("json")
+      try {
+        await signup(c, data)
 
-      return c.json({}, 201)
-    } catch (error) {
-      Logger.error("Error signing up", { error })
-      return c.json({ error: "signup-error" }, 500)
-    }
-  })
-  .post("/login", zValidator("json", loginSchema), async (c) => {
-    const data = c.req.valid("json")
-    try {
-      await login(c, data)
+        return c.json({}, 201)
+      } catch (error) {
+        Logger.error("Error signing up", { error })
+        return c.json({ error: "signup-error" }, 500)
+      }
+    },
+  )
+  .post(
+    "/login",
+    zValidator("json", loginSchema),
+    createRateLimiterMiddleware(loginRateLimiter),
+    async (c) => {
+      const data = c.req.valid("json")
+      try {
+        await login(c, data)
 
-      return c.json({}, 200)
-    } catch (error) {
-      if (error instanceof Error) {
-        return c.json({ error: error.message }, 401)
+        return c.json({}, 200)
+      } catch (error) {
+        if (error instanceof Error) {
+          return c.json({ error: error.message }, 401)
+        }
+
+        Logger.error("Error logging in", { error })
+        return c.json({ error: "login-error" }, 500)
+      }
+    },
+  )
+  .post(
+    "/verify",
+    createRateLimiterMiddleware(verifyRateLimiter),
+    async (c) => {
+      const sessionToken = getCookie(c, SESSION_COOKIE_NAME)
+
+      if (!sessionToken) {
+        return c.json({ error: "session-token-missing" }, 400)
       }
 
-      Logger.error("Error logging in", { error })
-      return c.json({ error: "login-error" }, 500)
-    }
-  })
-  .post("/verify", async (c) => {
-    const sessionToken = getCookie(c, SESSION_COOKIE_NAME)
+      try {
+        const { session, user } = await validateSessionToken(sessionToken)
 
-    if (!sessionToken) {
-      return c.json({ error: "session-token-missing" }, 401)
-    }
+        if (!session || !user) {
+          return c.json({ error: "session-invalid" }, 401)
+        }
 
-    try {
-      const { session, user } = await validateSessionToken(sessionToken)
-
-      if (!session || !user) {
-        return c.json({ error: "session-invalid" }, 401)
-      }
-
-      return c.json(
-        {
-          user: {
-            emailVerified: user.emailVerified,
-            name: user.name,
-            username: user.username,
-            avatar: user.avatar,
-            hasOAuth: !!(user.googleId || user.facebookId),
-            email: user.email,
-            onboardingCompleted: user.onboardingCompleted,
+        return c.json(
+          {
+            user: {
+              emailVerified: user.emailVerified,
+              name: user.name,
+              username: user.username,
+              avatar: user.avatar,
+              hasOAuth: !!(user.googleId || user.facebookId),
+              email: user.email,
+              onboardingCompleted: user.onboardingCompleted,
+            },
           },
-        },
-        200,
-      )
-    } catch (error) {
-      Logger.error("Error verifying session", { error })
-      return c.json({ error: "verify-session-error" }, 500)
-    }
-  })
+          200,
+        )
+      } catch (error) {
+        Logger.error("Error verifying session", { error })
+        return c.json({ error: "verify-session-error" }, 500)
+      }
+    },
+  )
   .post("/logout", authMiddleware, async (c) => {
     try {
       await logout(c)
@@ -110,26 +160,11 @@ const authRouter = new Hono<AuthContextVariables>()
       )
     }
   })
-
-authRouter
-  .get("/me", authMiddleware, async (c) => {
-    try {
-      const user = await getCurrentUser(c)
-
-      return c.json({ user })
-    } catch (error) {
-      if (error instanceof Error) {
-        return c.json({ error: error.message }, 400)
-      }
-
-      Logger.error("Error getting current user", { error })
-      return c.json({ error: "get-user-error" }, 500)
-    }
-  })
   .post(
     "/onboard",
     authMiddleware,
     zValidator("json", onboardingSchema),
+    createRateLimiterMiddleware(onboardingRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
@@ -151,6 +186,7 @@ authRouter
     "/check-username",
     authMiddleware,
     zValidator("json", usernameAvailabilitySchema),
+    createRateLimiterMiddleware(checkUsernameRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
@@ -170,6 +206,7 @@ authRouter
   .post(
     "/forgot-password",
     zValidator("json", forgotPasswordSchema),
+    createRateLimiterMiddleware(forgotPasswordRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       try {
@@ -185,6 +222,7 @@ authRouter
   .post(
     "/reset-password",
     zValidator("json", resetPasswordSchema),
+    createRateLimiterMiddleware(resetPasswordRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       try {

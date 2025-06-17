@@ -1,8 +1,13 @@
 "use client"
 
 import { useRouter } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
 import { Avatar } from "@skymo/core"
+import { LogoutError, VerifyError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
+import { toast } from "sonner"
 
 interface AuthenticatedUser {
   emailVerified: boolean
@@ -17,6 +22,7 @@ interface AuthenticatedUser {
 export const useAuth = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
+  const tErrors = useTranslations("errors")
 
   const {
     data: user,
@@ -25,20 +31,26 @@ export const useAuth = () => {
     refetch,
   } = useQuery({
     queryKey: ["authenticated-user"],
-    queryFn: async (): Promise<AuthenticatedUser> => {
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        },
-      )
-      if (!res.ok) {
-        throw new Error("Failed to verify user")
+    queryFn: async (): Promise<AuthenticatedUser | undefined> => {
+      try {
+        const response = await client.auth.verify.$post()
+
+        if (!response.ok) {
+          const error = await jsonError<VerifyError>(response)
+          toast.error(tErrors(error))
+          return undefined
+        }
+
+        const result = await response.json()
+        return {
+          ...result.user,
+          name: result.user.name ?? undefined,
+          username: result.user.username ?? undefined,
+        }
+      } catch (error) {
+        console.error(error)
+        toast.error(tErrors("unexpected-error"))
       }
-      const result = await res.json()
-      return result.user
     },
     retry: 0,
     refetchOnWindowFocus: false,
@@ -48,17 +60,18 @@ export const useAuth = () => {
 
   const logoutMutation = useMutation({
     mutationFn: async () => {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          credentials: "include",
-        },
-      )
+      try {
+        const response = await client.auth.logout.$post()
 
-      if (!response.ok) {
-        throw new Error("Logout failed")
+        if (!response.ok) {
+          const error = await jsonError<LogoutError>(response)
+          toast.error(tErrors(error))
+        }
+
+        return response.json()
+      } catch (error) {
+        console.log(error)
+        toast.error(tErrors("unexpected-error"))
       }
     },
     onSuccess: () => {
@@ -68,13 +81,13 @@ export const useAuth = () => {
     },
     onError: (error) => {
       console.error("Logout error:", error)
+
       queryClient.setQueryData(["authenticated-user"], null)
       queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
     },
   })
 
   return {
-    // Authentication state
     user,
     isLoading,
     error,

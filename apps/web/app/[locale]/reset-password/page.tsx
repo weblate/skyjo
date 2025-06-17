@@ -18,7 +18,10 @@ export async function generateMetadata(props: ResetPasswordPageProps) {
   const { locale } = await props.params
   if (!routing.locales.includes(locale)) notFound()
 
-  const t = await getTranslations({ locale, namespace: "pages.ForgotPassword.head" })
+  const t = await getTranslations({
+    locale,
+    namespace: "pages.ForgotPassword.head",
+  })
 
   const currentUrl = getCurrentUrl("reset-password", locale)
 

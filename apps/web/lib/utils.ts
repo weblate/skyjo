@@ -34,7 +34,10 @@ export const getRedirectionUrl = (code: string, status: GameStatus) => {
 /**
  * Format number in compact notation (1K, 12.3K, etc.)
  */
-export function formatCompactNumber(value: number, locale: string = "en"): string {
+export function formatCompactNumber(
+  value: number,
+  locale: string = "en",
+): string {
   return new Intl.NumberFormat(locale, {
     notation: "compact",
     maximumFractionDigits: 1,

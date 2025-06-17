@@ -15,4 +15,4 @@ export default async function AccountPage() {
       <SettingsAccount />
     </div>
   )
-} 
+}

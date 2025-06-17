@@ -5,8 +5,11 @@ import {
   backgroundVariants,
 } from "@/app/[locale]/u/[username]/UserProfile"
 import { Button } from "@/components/ui/button"
+import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import { Avatar, Constants as CoreConstants } from "@skymo/core"
+import { UpdateAvatarError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { CheckIcon } from "lucide-react"
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
@@ -26,6 +29,7 @@ export function AvatarSelector({
   const t = useTranslations("pages.Settings.messages")
   const tProfile = useTranslations("pages.SettingsProfile")
   const tAvatar = useTranslations("utils.avatar")
+  const tErrors = useTranslations("errors")
 
   const [selectedAvatar, setSelectedAvatar] = useState(currentAvatar)
   const [loading, setLoading] = useState(false)
@@ -41,27 +45,21 @@ export function AvatarSelector({
 
     setLoading(true)
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/me/avatar`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ avatar: selectedAvatar }),
-          credentials: "include",
+      const response = await client.users.me.avatar.$patch({
+        json: {
+          avatar: selectedAvatar,
         },
-      )
+      })
 
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || "Failed to update avatar")
+        const error = await jsonError<UpdateAvatarError>(response)
+        toast.error(tErrors(error))
       }
 
       onAvatarChange(selectedAvatar)
       toast.success(t("save-success"))
-    } catch (_error) {
-      toast.error(t("save-error"))
+    } catch {
+      toast.error(tErrors("unexpected-error"))
       setSelectedAvatar(currentAvatar)
     } finally {
       setLoading(false)

@@ -5,7 +5,10 @@ interface SeparatorProps {
   orientation?: "horizontal" | "vertical"
 }
 
-export function Separator({ className, orientation = "horizontal" }: SeparatorProps) {
+export function Separator({
+  className,
+  orientation = "horizontal",
+}: SeparatorProps) {
   return (
     <div
       className={cn(
@@ -15,4 +18,4 @@ export function Separator({ className, orientation = "horizontal" }: SeparatorPr
       )}
     />
   )
-} 
+}

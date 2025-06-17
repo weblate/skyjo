@@ -1,5 +1,6 @@
 "use client"
 
+import { useSettingsApi } from "@/app/[locale]/(auth)/(guard)/settings/useSettingsApi"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -24,11 +25,9 @@ import {
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { useForm } from "react-hook-form"
-import { useSettingsApi } from "../useSettingsApi"
 import { DeleteAccount } from "./DeleteAccount"
 
 export function SettingsAccount() {
-  const t = useTranslations("pages.Settings")
   const tAccount = useTranslations("pages.SettingsAccount")
   const { user } = useAuth()
   const { loading, updateUsername, updateEmail } = useSettingsApi()
@@ -47,7 +46,6 @@ export function SettingsAccount() {
     },
   })
 
-  // Update form values when user data becomes available
   useEffect(() => {
     if (user) {
       usernameForm.reset({
@@ -60,32 +58,22 @@ export function SettingsAccount() {
   }, [user, usernameForm, emailForm])
 
   const handleUpdateUsername = async (data: UpdateUsername) => {
-    try {
-      await updateUsername(data)
-    } catch (error) {
-      if (
-        error instanceof Error &&
-        error.message === t("messages.username-taken")
-      ) {
-        usernameForm.setError("username", {
-          message: error.message,
-        })
-      }
+    const error = await updateUsername(data)
+
+    if (error) {
+      usernameForm.setError("username", {
+        message: error,
+      })
     }
   }
 
   const handleUpdateEmail = async (data: UpdateEmail) => {
-    try {
-      await updateEmail(data)
-    } catch (error) {
-      if (
-        error instanceof Error &&
-        error.message === t("messages.email-taken")
-      ) {
-        emailForm.setError("email", {
-          message: error.message,
-        })
-      }
+    const error = await updateEmail(data)
+
+    if (error) {
+      emailForm.setError("email", {
+        message: error,
+      })
     }
   }
 

@@ -6,8 +6,10 @@ import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-input"
 import { Link } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { AuthError } from "@skymo/shared/constants"
+import { ResetPasswordError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { ResetPassword, resetPasswordSchema } from "@skymo/shared/validations"
 import { useMutation } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
@@ -17,8 +19,9 @@ import { useForm } from "react-hook-form"
 
 const ResetPasswordPage = () => {
   const params = useParams()
-  const token = params.token as string | undefined
+  const token = params.token as string
   const t = useTranslations("pages.ResetPassword")
+  const tErrors = useTranslations("errors")
 
   const form = useForm({
     resolver: zodResolver(resetPasswordSchema),
@@ -30,7 +33,7 @@ const ResetPasswordPage = () => {
   })
 
   const [isSuccess, setIsSuccess] = useState(false)
-  const [apiError, setApiError] = useState<string | null>(null)
+  const [apiError, setApiError] = useState<ResetPasswordError | null>(null)
 
   const watchedPassword = form.watch("password")
   const watchedConfirmPassword = form.watch("confirmPassword")
@@ -38,23 +41,17 @@ const ResetPasswordPage = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: ResetPassword) => {
       setApiError(null)
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/reset-password`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            ...payload,
-            token,
-          }),
-          credentials: "include",
+      const res = await client.auth["reset-password"].$post({
+        json: {
+          ...payload,
+          token,
         },
-      )
+      })
 
       if (!res.ok) {
-        const result = await res.json()
-        console.log(result)
-        throw new Error(result.error || "Request failed")
+        const error = await jsonError<ResetPasswordError>(res)
+        setApiError(error)
+        return
       }
 
       return res.json()
@@ -64,23 +61,9 @@ const ResetPasswordPage = () => {
     },
     onError: (error) => {
       console.error(error)
-      setApiError(error.message)
+      setApiError("reset-password-error")
     },
   })
-
-  if (!token) {
-    return (
-      <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4">
-        <div className="max-w-sm flex flex-col w-full text-center -translate-y-12">
-          <h1 className="text-2xl font-medium mb-6">{t("error.title")}</h1>
-          <p className="text-gray-600 mb-6">{t("error.invalidToken")}</p>
-          <Link href="/login">
-            <Button className="w-full">{t("back")}</Button>
-          </Link>
-        </div>
-      </div>
-    )
-  }
 
   if (isSuccess) {
     return (
@@ -147,13 +130,7 @@ const ResetPasswordPage = () => {
 
             {apiError && (
               <div className="text-red-600 text-sm text-center">
-                {apiError === AuthError.RESET_TOKEN_INVALID &&
-                  t("form.error.invalidToken")}
-                {apiError === AuthError.RESET_TOKEN_EXPIRED &&
-                  t("form.error.expiredToken")}
-                {apiError !== AuthError.RESET_TOKEN_INVALID &&
-                  apiError !== AuthError.RESET_TOKEN_EXPIRED &&
-                  t("form.error.default")}
+                {tErrors(apiError)}
               </div>
             )}
 

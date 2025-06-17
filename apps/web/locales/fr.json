@@ -268,10 +268,6 @@
         "email": {
           "label": "Email",
           "button": "Continuer avec l'email"
-        },
-        "error": {
-          "invalid-email": "Email invalide",
-          "default": "Une erreur est survenue, veuillez réessayer."
         }
       },
       "already-have-account": {
@@ -295,8 +291,8 @@
           "label": "Mot de passe"
         },
         "error": {
-          "invalid-credentials": "Email ou mot de passe incorrect",
-          "default": "Une erreur est survenue, veuillez réessayer."
+          "login-invalid-credentials": "Email ou mot de passe incorrect",
+          "login-error": "Une erreur est survenue, veuillez réessayer."
         },
         "submit": "Connexion"
       },
@@ -568,12 +564,7 @@
           "label": "Mot de passe",
           "placeholder": "Entrez votre mot de passe"
         },
-        "submit": "Prêt à jouer !",
-        "errors": {
-          "username-taken": "Déjà pris !",
-          "username-availability-error": "Impossible de vérifier la disponibilité du nom d'utilisateur",
-          "default": "Une erreur est survenue, veuillez réessayer."
-        }
+        "submit": "Prêt à jouer !"
       }
     }
   },
@@ -1133,5 +1124,61 @@
         "description": "Votre pseudonyme ou un de vos messages a été signalé et a été jugé inapproprié. Merci de ne pas répéter ce comportement."
       }
     }
+  },
+  "errors": {
+    "invalid-credentials": "L'email ou le mot de passe que vous avez saisi est incorrect. Veuillez réessayer.",
+    "logout-failed": "Nous n'avons pas pu vous déconnecter. Veuillez fermer votre navigateur pour terminer la session.",
+    "session-not-found": "Votre session a expiré ou n'est pas valide. Veuillez vous reconnecter.",
+    "user-not-found": "Nous n'avons pas pu trouver de compte avec ces informations.",
+    "session-invalid": "Votre session n'est pas valide. Veuillez vous reconnecter pour continuer.",
+    "session-expired": "Votre session a expiré. Veuillez vous reconnecter pour continuer.",
+    "session-token-missing": "Votre token de session est manquant. Veuillez vous connecter pour en obtenir un nouveau.",
+    "onboarding-error": "Il y a eu un problème pour compléter votre profil. Veuillez réessayer.",
+    "reset-token-invalid": "Le token de réinitialisation que vous avez fourni n'est pas valide. Veuillez en demander un nouveau.",
+    "reset-token-expired": "Votre token de réinitialisation de mot de passe a expiré. Veuillez en demander un nouveau.",
+    "password-reset-failed": "Nous n'avons pas pu réinitialiser votre mot de passe. Veuillez réessayer.",
+    "forgot-password-error": "Il y a eu un problème lors du traitement de votre demande de réinitialisation de mot de passe. Veuillez réessayer plus tard.",
+    "reset-password-error": "Nous n'avons pas pu réinitialiser votre mot de passe. Veuillez réessayer.",
+    "oauth-restart-process": "Quelque chose s'est mal passé lors de l'authentification. Veuillez réessayer de vous connecter.",
+    "oauth-id-token-missing": "Nous n'avons pas reçu de token d'identification du fournisseur d'authentification. Veuillez réessayer.",
+    "oauth-account-creation-failed": "Nous n'avons pas pu créer un compte avec les informations de votre fournisseur. Veuillez réessayer.",
+    "oauth-login-initiation-failed": "Nous n'avons pas pu démarrer le processus de connexion. Veuillez réessayer dans quelques instants.",
+    "verify-session-error": "Nous n'avons pas pu vérifier votre session. Veuillez vous déconnecter et vous reconnecter.",
+    "signup-error": "Nous n'avons pas pu créer votre compte pour le moment. Veuillez réessayer plus tard.",
+    "login-error": "Il y a eu un problème lors de votre connexion. Veuillez réessayer.",
+    "logout-error": "Une erreur inattendue s'est produite lors de votre déconnexion.",
+    "check-username-error": "Nous n'avons pas pu vérifier si le nom d'utilisateur est disponible. Veuillez réessayer.",
+    "unknown-auth-error": "Une erreur d'authentification inconnue s'est produite. Veuillez réessayer.",
+    "user-creation-failed": "Nous n'avons pas pu créer l'utilisateur pour le moment. Veuillez réessayer.",
+    "get-user-error": "Nous n'avons pas pu récupérer le profil utilisateur. Veuillez réessayer plus tard.",
+    "get-user-games-error": "Nous n'avons pas pu charger les parties de l'utilisateur. Veuillez actualiser la page.",
+    "get-user-stats-error": "Nous n'avons pas pu charger les statistiques de l'utilisateur. Veuillez actualiser la page.",
+    "user-verification-not-found": "L'utilisateur que vous recherchez n'a pas pu être trouvé.",
+    "username-taken": "Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.",
+    "username-same-as-current": "C'est déjà votre nom d'utilisateur.",
+    "email-taken": "Cette adresse email est déjà utilisée. Veuillez en utiliser une différente.",
+    "email-same-as-current": "C'est déjà votre adresse email.",
+    "invalid-current-password": "Le mot de passe actuel que vous avez saisi est incorrect.",
+    "update-name-error": "Nous n'avons pas pu mettre à jour votre nom. Veuillez réessayer.",
+    "update-username-error": "Nous n'avons pas pu mettre à jour votre nom d'utilisateur. Veuillez réessayer.",
+    "update-email-error": "Nous n'avons pas pu mettre à jour votre adresse email. Veuillez réessayer.",
+    "revert-email-error": "Nous n'avons pas pu annuler votre changement d'email. Veuillez contacter le support.",
+    "update-password-error": "Nous n'avons pas pu mettre à jour votre mot de passe. Veuillez réessayer.",
+    "update-avatar-error": "Nous n'avons pas pu mettre à jour votre avatar. Veuillez réessayer.",
+    "delete-account-error": "Nous n'avons pas pu traiter votre demande de suppression de compte. Veuillez réessayer.",
+    "cancel-delete-account-error": "Nous n'avons pas pu annuler votre suppression de compte. Veuillez contacter le support.",
+    "unexpected-error": "Une erreur inattendue s'est produite. Veuillez réessayer.",
+    "internal-server-error": "Notre serveur a rencontré un problème. Veuillez réessayer plus tard.",
+    "unauthorized": "Vous n'êtes pas autorisé à effectuer cette action.",
+    "forbidden": "Vous n'avez pas la permission d'accéder à cette ressource.",
+    "not-found": "La ressource que vous recherchez n'a pas pu être trouvée.",
+    "too-many-requests": "Vous avez envoyé trop de requêtes. Veuillez patienter un moment et réessayer.",
+    "ip-not-found": "Nous n'avons pas pu identifier votre adresse IP. Veuillez vérifier votre connexion.",
+    "invalid-request": "Votre requête n'était pas valide. Veuillez vérifier les données et réessayer.",
+    "feedback-error": "Nous n'avons pas pu envoyer votre commentaire. Veuillez réessayer.",
+    "send-pin-error": "Nous n'avons pas pu envoyer un code PIN de vérification à votre email. Veuillez réessayer.",
+    "verify-pin-error": "Nous n'avons pas pu vérifier votre code PIN. Veuillez réessayer.",
+    "invalid-pin": "Le code PIN que vous avez saisi est incorrect. Veuillez réessayer.",
+    "expired-pin": "Le code PIN que vous avez saisi a expiré. Nous vous en avons envoyé un nouveau."
   }
 }

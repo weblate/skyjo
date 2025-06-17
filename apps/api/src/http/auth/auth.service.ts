@@ -148,7 +148,7 @@ export async function logout(c: Context) {
       error,
     })
 
-    throw new Error("logout-failed")
+    throw new Error("logout-error")
   }
 }
 
@@ -164,7 +164,7 @@ export async function getCurrentUser(c: Context) {
 
   if (session.length === 0) {
     deleteCookie(c, SESSION_COOKIE_NAME)
-    throw new Error("session-not-found")
+    throw new Error("get-user-error")
   }
 
   const user = await db
@@ -185,7 +185,16 @@ export async function getCurrentUser(c: Context) {
     .where(eq(userTable.id, session[0].userId))
     .limit(1)
 
-  if (user.length === 0) throw new Error("user-not-found")
+  if (user.length === 0) {
+    Logger.error(
+      "User not found with getCurrentUser. This should not happen.",
+      {
+        sessionId: sessionIdFromCookie,
+      },
+    )
+    deleteCookie(c, SESSION_COOKIE_NAME)
+    throw new Error("get-user-error")
+  }
 
   return user[0]
 }

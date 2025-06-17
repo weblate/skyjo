@@ -7,8 +7,11 @@ import {
   InputOTPSlot,
 } from "@/components/ui/input-otp"
 import { useRouter } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
+import type { SendPinError, VerifyPinError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { VerifyPin, verifyPinSchema } from "@skymo/shared/validations"
 import { useMutation } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
@@ -23,6 +26,7 @@ type OtpStatus = "success" | "error" | undefined
 const VerifyPage = () => {
   const router = useRouter()
   const t = useTranslations("pages.Verify")
+  const tErrors = useTranslations("errors")
 
   const form = useForm({
     resolver: zodResolver(verifyPinSchema),
@@ -34,20 +38,6 @@ const VerifyPage = () => {
   const [resendCooldown, setResendCooldown] = useState(0)
   const [otpStatus, setOtpStatus] = useState<OtpStatus>(undefined)
 
-  const pinUnsuccessfull = () => {
-    setOtpStatus("error")
-    toast.error(t("toast.error"))
-  }
-
-  const pinSuccessfull = () => {
-    setOtpStatus("success")
-    toast.success(t("toast.success"))
-
-    setTimeout(() => {
-      router.push("/onboard")
-    }, 3000)
-  }
-
   const {
     mutate: verifyPin,
     isPending: isVerifyingPin,
@@ -55,27 +45,28 @@ const VerifyPage = () => {
   } = useMutation({
     mutationFn: async (payload: VerifyPin) => {
       setOtpStatus(undefined)
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/verification/try-pin`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          credentials: "include",
-        },
-      )
+      const res = await client.verification["try-pin"].$post({
+        json: payload,
+      })
 
-      const result = await res.json()
-      if (!res.ok || !result.success) {
-        throw new Error(result.error || t("toast.error"))
+      if (!res.ok) {
+        const error = await jsonError<VerifyPinError>(res)
+        toast.error(tErrors(error))
       }
 
-      return result
+      return res.json()
     },
-    onSuccess: () => pinSuccessfull(),
+    onSuccess: () => {
+      setOtpStatus("success")
+      toast.success(t("toast.success"))
+
+      setTimeout(() => {
+        router.push("/onboard")
+      }, 3000)
+    },
     onError: (error: Error) => {
       console.log(error)
-      pinUnsuccessfull()
+      toast.error(tErrors("verify-pin-error"))
     },
   })
 
@@ -84,17 +75,12 @@ const VerifyPage = () => {
       setOtpStatus(undefined)
       form.resetField("pin")
       resetVerifyPin()
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/verification/send-pin`,
-        {
-          credentials: "include",
-        },
-      )
+
+      const res = await client.verification["send-pin"].$get()
 
       if (!res.ok) {
-        throw new Error(
-          res.status === 429 ? t("toast.rate-limit") : t("toast.send-failed"),
-        )
+        const error = await jsonError<SendPinError>(res)
+        toast.error(tErrors(error))
       }
 
       return res.json()
@@ -104,7 +90,8 @@ const VerifyPage = () => {
       setResendCooldown(COOLDOWN_SECONDS)
     },
     onError: (error: Error) => {
-      toast.error(error.message)
+      console.log(error)
+      toast.error(tErrors("send-pin-error"))
     },
   })
 

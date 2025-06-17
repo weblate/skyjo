@@ -2,8 +2,47 @@ import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
+import { CancelAccountDeletionError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { CheckCircle, XCircle } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+
+type CancelAccountDeletionResult = {
+  success: boolean
+  error: CancelAccountDeletionError | null
+}
+
+async function cancelAccountDeletion(
+  token: string,
+): Promise<CancelAccountDeletionResult> {
+  try {
+    const res = await client.users.me["cancel-deletion"][":token"].$post({
+      param: {
+        token,
+      },
+    })
+
+    if (!res.ok) {
+      const error = await jsonError<CancelAccountDeletionError>(res)
+      return {
+        success: false,
+        error,
+      }
+    }
+
+    return {
+      success: true,
+      error: null,
+    }
+  } catch (error) {
+    console.error("Account deletion cancellation error:", error)
+    return {
+      success: false,
+      error: "cancel-account-deletion-error",
+    }
+  }
+}
 
 interface CancelAccountDeletionPageProps {
   params: Promise<{
@@ -11,53 +50,19 @@ interface CancelAccountDeletionPageProps {
     token: string
   }>
 }
-
-async function cancelAccountDeletion(token: string) {
-  try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/cancel-account-deletion/${encodeURIComponent(token)}`,
-      {
-        method: "POST",
-      },
-    )
-
-    if (!res.ok) {
-      const result = await res.json()
-      return {
-        success: false,
-        error: result.error || "Request failed",
-        expired: result.error?.includes("expired") || false,
-      }
-    }
-
-    const result = await res.json()
-    return {
-      success: result.success || true,
-      error: null,
-      expired: false,
-    }
-  } catch (error) {
-    console.error("Account deletion cancellation error:", error)
-    return {
-      success: false,
-      error: "Network error occurred",
-      expired: false,
-    }
-  }
-}
-
 export default async function CancelAccountDeletionPage({
   params,
 }: CancelAccountDeletionPageProps) {
   const { token } = await params
   const t = await getTranslations("pages.CancelAccountDeletion")
+  const tErrors = await getTranslations("errors")
 
   const result = await cancelAccountDeletion(token)
 
   const getIcon = () => {
     if (result.success) {
       return <CheckCircle className="h-16 w-16 text-green-500 mx-auto" />
-    } else if (result.expired) {
+    } else if (result.error?.includes("expired")) {
       return <XCircle className="h-16 w-16 text-red-500 mx-auto" />
     } else {
       return <XCircle className="h-16 w-16 text-red-500 mx-auto" />
@@ -67,7 +72,7 @@ export default async function CancelAccountDeletionPage({
   const getTitle = () => {
     if (result.success) {
       return t("success.title")
-    } else if (result.expired) {
+    } else if (result.error?.includes("expired")) {
       return t("expired.title")
     } else {
       return t("failed.title")
@@ -77,7 +82,7 @@ export default async function CancelAccountDeletionPage({
   const getDescription = () => {
     if (result.success) {
       return t("success.description")
-    } else if (result.expired) {
+    } else if (result.error?.includes("expired")) {
       return t("expired.description")
     } else {
       return result.error || t("failed.description")
@@ -114,12 +119,10 @@ export default async function CancelAccountDeletionPage({
               </div>
             )}
 
-            {!result.success && (
+            {result.error && (
               <div className="space-y-4">
                 <div className="text-sm text-red-700 dark:text-red-400 bg-red-50 dark:bg-red-900/20 p-4 rounded-lg">
-                  {result.expired
-                    ? t("expired.help-message")
-                    : t("failed.help-message")}
+                  {tErrors(result.error)}
                 </div>
               </div>
             )}

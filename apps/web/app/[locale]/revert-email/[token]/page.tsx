@@ -1,6 +1,9 @@
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
+import { client } from "@/lib/rpc"
 import { Locales } from "@skymo/shared/constants"
+import type { RevertEmailError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import RevertEmailPage from "./RevertEmailPage"
 
 interface RevertEmailPageParams {
@@ -12,22 +15,27 @@ interface RevertEmailPageProps {
   params: Promise<RevertEmailPageParams>
 }
 
-async function revertEmail(token: string) {
+interface RevertEmailResult {
+  success: boolean
+  error: RevertEmailError | null
+}
+
+async function revertEmail(token: string): Promise<RevertEmailResult> {
   try {
-    const res = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/users/me/revert-email/${encodeURIComponent(token)}`,
-    )
+    const res = await client.users.me["revert-email"][":token"].$get({
+      param: { token },
+    })
 
     if (!res.ok) {
-      const result = await res.json()
-      console.log(result)
-      return { success: false, error: "Request failed" }
+      const error = await jsonError<RevertEmailError>(res)
+      console.log(error)
+      return { success: false, error }
     }
 
     return { success: true, error: null }
   } catch (error) {
     console.error("Email revert error:", error)
-    return { success: false, error: "Network error occurred" }
+    return { success: false, error: "revert-email-error" }
   }
 }
 
@@ -36,7 +44,9 @@ export default async function Page({ params }: RevertEmailPageProps) {
 
   if (!token) {
     return (
-      <RevertEmailPage result={{ success: false, error: "Invalid token" }} />
+      <RevertEmailPage
+        result={{ success: false, error: "invalid-reversion-token" }}
+      />
     )
   }
 

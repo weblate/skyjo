@@ -288,7 +288,7 @@ export async function getUserStats(username: string) {
 }
 
 // User settings update functions
-export async function updateUserName(userId: number, data: UpdateName) {
+export async function updateName(userId: number, data: UpdateName) {
   const [updatedUser] = await db
     .update(userTable)
     .set({
@@ -306,11 +306,10 @@ export async function updateUserName(userId: number, data: UpdateName) {
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
-  if (!updatedUser) throw new Error("unexpected-error")
   return updatedUser
 }
 
-export async function updateUserUsername(userId: number, data: UpdateUsername) {
+export async function updateUsername(userId: number, data: UpdateUsername) {
   const existingUser = await db
     .select({ id: userTable.id })
     .from(userTable)
@@ -338,11 +337,10 @@ export async function updateUserUsername(userId: number, data: UpdateUsername) {
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
-  if (!updatedUser) throw new Error("unexpected-error")
   return updatedUser
 }
 
-export async function updateUserEmail(user: UserDb, data: UpdateEmail) {
+export async function updateEmail(user: UserDb, data: UpdateEmail) {
   const oldEmail = user.email
   const newEmail = data.email
 
@@ -414,14 +412,14 @@ export async function revertEmail(token: string) {
     .limit(1)
 
   if (!emailChange) {
-    throw new Error("Invalid reversion token")
+    throw new Error("invalid-reversion-token")
   }
 
   if (emailChange.expiresAt < new Date()) {
     await db
       .delete(emailChangeTable)
       .where(eq(emailChangeTable.id, emailChange.id))
-    throw new Error("Reversion token has expired")
+    throw new Error("expired-reversion-token")
   }
 
   const [userData] = await db
@@ -432,7 +430,12 @@ export async function revertEmail(token: string) {
     .where(eq(userTable.id, emailChange.userId))
     .limit(1)
 
-  if (!userData) throw new Error("not-found")
+  if (!userData) {
+    Logger.error("User not found", {
+      userId: emailChange.userId,
+    })
+    return
+  }
 
   await db.transaction(async (tx) => {
     await tx
@@ -458,7 +461,7 @@ export async function revertEmail(token: string) {
   await requestPasswordReset({ email: emailChange.oldEmail })
 }
 
-export async function updateUserPassword(userId: number, data: UpdatePassword) {
+export async function updatePassword(userId: number, data: UpdatePassword) {
   const [user] = await db
     .select({ password: userTable.password })
     .from(userTable)
@@ -492,14 +495,10 @@ export async function updateUserPassword(userId: number, data: UpdatePassword) {
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
-  if (!updatedUser) throw new Error("unexpected-error")
   return updatedUser
 }
 
-export async function updateUserAvatar(
-  userId: number,
-  { avatar }: UpdateAvatar,
-) {
+export async function updateAvatar(userId: number, { avatar }: UpdateAvatar) {
   const [updatedUser] = await db
     .update(userTable)
     .set({
@@ -517,7 +516,6 @@ export async function updateUserAvatar(
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
-  if (!updatedUser) throw new Error("unexpected-error")
   return updatedUser
 }
 
@@ -607,7 +605,7 @@ export async function cancelAccountDeletion(token: string) {
     .limit(1)
 
   if (!deletionRequest) {
-    throw new Error("Invalid or expired cancellation token")
+    throw new Error("invalid-cancellation-token")
   }
 
   if (deletionRequest.expiresAt < new Date()) {
@@ -615,7 +613,7 @@ export async function cancelAccountDeletion(token: string) {
     await db
       .delete(accountDeletionTable)
       .where(eq(accountDeletionTable.id, deletionRequest.id))
-    throw new Error("Cancellation period has expired")
+    throw new Error("expired-cancellation-token")
   }
 
   // Remove the scheduled job from the queue

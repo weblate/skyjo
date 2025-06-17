@@ -3,31 +3,24 @@
 import { GamesList } from "@/app/[locale]/(socket)/search/GamesList"
 import { TagsFilter } from "@/app/[locale]/(socket)/search/TagsFilter"
 import { useRouter } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
 import { PublicGameTag } from "@skymo/core"
-import { PublicGame } from "@skymo/shared/types"
+import type { GetPublicGamesError, PublicGame } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { useQuery } from "@tanstack/react-query"
 import { HomeIcon, PlusIcon, RefreshCwIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
 import { useState } from "react"
+import { toast } from "sonner"
 
 const MAX_GAMES_PER_PAGE = 20
-const fetchPublicGames = async (page = 1): Promise<PublicGame[]> => {
-  const response = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/games/public?nbPerPage=${MAX_GAMES_PER_PAGE}&page=${page}`,
-  ).then((res) => res.json())
-
-  if (response.error) {
-    throw new Error(response.error)
-  }
-
-  return response.games
-}
 
 const SearchPageComponent = () => {
   const router = useRouter()
   const t = useTranslations("pages.Search.header")
+  const tErrors = useTranslations("errors")
 
   const [buttonLoading, setButtonLoading] = useState(false)
   const [selectedTags, setSelectedTags] = useState<PublicGameTag[]>([])
@@ -35,7 +28,23 @@ const SearchPageComponent = () => {
   const page = 1
   const { data, isFetching, refetch } = useQuery({
     queryKey: ["publicGames", page],
-    queryFn: () => fetchPublicGames(page),
+    queryFn: async (): Promise<PublicGame[]> => {
+      const res = await client.games.public.$get({
+        query: {
+          nbPerPage: MAX_GAMES_PER_PAGE.toString(),
+          page: page.toString(),
+        },
+      })
+
+      if (!res.ok) {
+        const error = await jsonError<GetPublicGamesError>(res)
+        toast.error(tErrors(error))
+        return []
+      }
+
+      const { games } = await res.json()
+      return games
+    },
     refetchInterval: 30000,
     retryDelay: (attemptIndex) => {
       return Math.min(1000 * 2 ** attemptIndex, 30000)

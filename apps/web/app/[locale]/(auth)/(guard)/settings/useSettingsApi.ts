@@ -1,9 +1,18 @@
 import { useAuth } from "@/hooks/useAuth"
-import {
-  type UpdateEmail,
-  type UpdateName,
-  type UpdatePassword,
-  type UpdateUsername,
+import { client } from "@/lib/rpc"
+import type {
+  DeleteAccountError,
+  UpdateEmailError,
+  UpdateNameError,
+  UpdatePasswordError,
+  UpdateUsernameError,
+} from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
+import type {
+  UpdateEmail,
+  UpdateName,
+  UpdatePassword,
+  UpdateUsername,
 } from "@skymo/shared/validations"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
@@ -11,33 +20,26 @@ import { toast } from "sonner"
 
 export function useSettingsApi() {
   const t = useTranslations("pages.Settings")
+  const tErrors = useTranslations("errors")
   const { refetch, logout } = useAuth()
   const [loading, setLoading] = useState<string | null>(null)
 
   const updateProfile = async (data: UpdateName) => {
     setLoading("profile")
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/me/name`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(data),
-        },
-      )
+      const response = await client.users.me.name.$patch({
+        json: data,
+      })
 
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || "Failed to update profile")
+        const error = await jsonError<UpdateNameError>(response)
+        return tErrors(error)
       }
 
       await refetch()
       toast.success(t("messages.save-success"))
-    } catch (_error) {
-      toast.error(t("messages.save-error"))
+    } catch {
+      return tErrors("update-name-error")
     } finally {
       setLoading(null)
     }
@@ -46,32 +48,19 @@ export function useSettingsApi() {
   const updateUsername = async (data: UpdateUsername) => {
     setLoading("username")
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/me/username`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(data),
-        },
-      )
+      const response = await client.users.me.username.$patch({
+        json: data,
+      })
 
       if (!response.ok) {
-        const error = await response.json()
-        if (response.status === 409) {
-          throw new Error(t("messages.username-taken"))
-        }
-        throw new Error(error.error || "Failed to update username")
+        const error = await jsonError<UpdateUsernameError>(response)
+        return tErrors(error)
       }
 
       await refetch()
       toast.success(t("messages.save-success"))
-    } catch (error) {
-      const message = error instanceof Error ? error.message : t("messages.save-error")
-      toast.error(message)
-      throw error
+    } catch {
+      return tErrors("update-username-error")
     } finally {
       setLoading(null)
     }
@@ -80,32 +69,19 @@ export function useSettingsApi() {
   const updateEmail = async (data: UpdateEmail) => {
     setLoading("email")
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/me/email`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(data),
-        },
-      )
+      const response = await client.users.me.email.$patch({
+        json: data,
+      })
 
       if (!response.ok) {
-        const error = await response.json()
-        if (response.status === 409) {
-          throw new Error(t("messages.email-taken"))
-        }
-        throw new Error(error.error || "Failed to update email")
+        const error = await jsonError<UpdateEmailError>(response)
+        return tErrors(error)
       }
 
       await refetch()
       toast.success(t("messages.save-success"))
-    } catch (error) {
-      const message = error instanceof Error ? error.message : t("messages.save-error")
-      toast.error(message)
-      throw error
+    } catch {
+      return tErrors("update-email-error")
     } finally {
       setLoading(null)
     }
@@ -114,31 +90,18 @@ export function useSettingsApi() {
   const updatePassword = async (data: UpdatePassword) => {
     setLoading("password")
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/me/password`,
-        {
-          method: "PATCH",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          credentials: "include",
-          body: JSON.stringify(data),
-        },
-      )
+      const response = await client.users.me.password.$patch({
+        json: data,
+      })
 
       if (!response.ok) {
-        const error = await response.json()
-        if (response.status === 400) {
-          throw new Error(t("messages.password-incorrect"))
-        }
-        throw new Error(error.error || "Failed to update password")
+        const error = await jsonError<UpdatePasswordError>(response)
+        return tErrors(error)
       }
 
       toast.success(t("messages.save-success"))
-    } catch (error) {
-      const message = error instanceof Error ? error.message : t("messages.save-error")
-      toast.error(message)
-      throw error
+    } catch {
+      return tErrors("update-password-error")
     } finally {
       setLoading(null)
     }
@@ -147,25 +110,17 @@ export function useSettingsApi() {
   const deleteAccount = async () => {
     setLoading("delete")
     try {
-      const response = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/users/me`,
-        {
-          method: "DELETE",
-          credentials: "include",
-        },
-      )
+      const response = await client.users.me.delete.$post()
 
       if (!response.ok) {
-        const error = await response.json()
-        throw new Error(error.error || "Failed to schedule account deletion")
+        const error = await jsonError<DeleteAccountError>(response)
+        return tErrors(error)
       }
 
       toast.success(t("messages.account-deletion-scheduled"))
       logout()
-    } catch (error) {
-      const message = error instanceof Error ? error.message : t("messages.account-deletion-failed")
-      toast.error(message)
-      throw error
+    } catch {
+      return tErrors("delete-account-error")
     } finally {
       setLoading(null)
     }
@@ -179,4 +134,4 @@ export function useSettingsApi() {
     updatePassword,
     deleteAccount,
   }
-} 
+}

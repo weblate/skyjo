@@ -5,7 +5,10 @@ import { Logger } from "@skymo/logger"
 import "@env"
 import { createGameStorageWorker } from "@/game-storage/gameStorageQueue.js"
 import { createMailerWorker } from "@/mailer/mailerQueue.js"
-import { initializePostgresCleanupScheduler, postgresCleanupQueue } from "@/postgres-cleanup/postgresCleanup.js"
+import {
+  initializePostgresCleanupScheduler,
+  postgresCleanupQueue,
+} from "@/postgres-cleanup/postgresCleanup.js"
 
 const accountDeletionWorker = createAccountDeletionWorker()
 const gameCleanupWorker = createGameCleanupWorker()

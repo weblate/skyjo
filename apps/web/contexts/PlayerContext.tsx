@@ -1,12 +1,16 @@
 "use client"
 
 import { useAuth } from "@/hooks/useAuth"
+import { client } from "@/lib/rpc"
 import {
   Avatar,
   Constants as CoreConstants,
   CreatePlayer,
   createPlayer,
 } from "@skymo/core"
+import type { UpdateAvatarError, UpdateNameError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
+import { useTranslations } from "next-intl"
 import {
   Dispatch,
   PropsWithChildren,
@@ -18,6 +22,7 @@ import {
   useState,
 } from "react"
 import { useLocalStorage } from "react-use"
+import { toast } from "sonner"
 
 const USERNAME_KEY = "username"
 const AVATAR_KEY = "Avatar-index"
@@ -40,6 +45,7 @@ const PlayerContext = createContext<PlayerContext | undefined>(undefined)
 
 const PlayerProvider = ({ children }: PropsWithChildren) => {
   const { user: authUser, isAuthenticated, refetch } = useAuth()
+  const tErrors = useTranslations("errors")
   const [preferredName, setPreferredName] = useLocalStorage<string>(
     USERNAME_KEY,
     "Ano",
@@ -96,46 +102,35 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
     return getAvatarNameFromIndex(avatarIndex)
   }
 
-  const updateUserProfile = async (newName: string, newAvatar: Avatar) => {
+  const updateUserProfile = async (name: string, newAvatar: Avatar) => {
     if (!isAuthenticated || !authUser) return
 
     try {
       let hasAnUpdate = false
-      if (newName !== authUser.name) {
+
+      if (name !== authUser.name) {
         hasAnUpdate = true
-        const nameResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/users/me/name`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({ name: newName }),
-          },
-        )
+        const nameResponse = await client.users.me.name.$patch({
+          json: { name },
+        })
 
         if (!nameResponse.ok) {
-          throw new Error("Failed to update name")
+          const error = await jsonError<UpdateNameError>(nameResponse)
+          toast.error(tErrors(error))
+          return
         }
       }
 
       if (newAvatar !== authUser.avatar) {
         hasAnUpdate = true
-        const avatarResponse = await fetch(
-          `${process.env.NEXT_PUBLIC_API_URL}/users/me/avatar`,
-          {
-            method: "PATCH",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            credentials: "include",
-            body: JSON.stringify({ avatar: newAvatar }),
-          },
-        )
+        const avatarResponse = await client.users.me.avatar.$patch({
+          json: { avatar: newAvatar },
+        })
 
         if (!avatarResponse.ok) {
-          throw new Error("Failed to update avatar")
+          const error = await jsonError<UpdateAvatarError>(avatarResponse)
+          toast.error(tErrors(error))
+          return
         }
       }
 
@@ -144,6 +139,9 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
       }
     } catch (error) {
       console.error("Failed to update user profile:", error)
+
+      toast.error(tErrors("update-name-error"))
+      toast.error(tErrors("update-avatar-error"))
     }
   }
 

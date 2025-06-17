@@ -19,7 +19,7 @@ export async function sendVerifyPin(email: string) {
 
   const user = userResult?.[0]
   if (!user) {
-    Logger.info("User not found or already verified", {
+    Logger.info("User not found or already verified. Skipping email sending.", {
       email,
     })
 

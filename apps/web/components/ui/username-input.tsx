@@ -3,7 +3,10 @@
 import { FormDescription, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { client } from "@/lib/rpc"
 import { cn } from "@/lib/utils"
+import type { CheckUsernameError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { useQuery } from "@tanstack/react-query"
 import {
   CheckIcon,
@@ -14,6 +17,7 @@ import {
 import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 import { ControllerRenderProps, FieldPath, FieldValues } from "react-hook-form"
+import { toast } from "sonner"
 
 interface UsernameInputProps<
   TFieldValues extends FieldValues = FieldValues,
@@ -59,7 +63,6 @@ export const UsernameInput = <
     if (!watchedUsername || watchedUsername.length < 3) return null
 
     if (isCheckingUsername) return t("availability.checking")
-    if (usernameError) return t("error.username-availability-error")
 
     if (usernameAvailability) return t("availability.available")
     if (usernameAvailability === false) return t("availability.taken")
@@ -112,6 +115,8 @@ export const UsernameInput = <
 }
 
 export const useUsernameValidation = (username: string) => {
+  const tErrors = useTranslations("errors")
+
   const [usernameToCheck, setUsernameToCheck] = useState<string>("")
 
   useEffect(() => {
@@ -131,22 +136,17 @@ export const useUsernameValidation = (username: string) => {
     queryKey: ["username-availability", usernameToCheck],
     queryFn: async () => {
       if (!usernameToCheck) return null
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/check-username`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ username: usernameToCheck }),
-          credentials: "include",
-          next: {
-            revalidate: 10,
-          },
-        },
-      )
+
+      const res = await client.auth["check-username"].$post({
+        json: { username: usernameToCheck },
+      })
 
       if (!res.ok) {
-        throw new Error("Failed to check username availability")
+        const error = await jsonError<CheckUsernameError>(res)
+        toast.error(tErrors(error))
+        return false
       }
+
       const result = await res.json()
       return result.available
     },

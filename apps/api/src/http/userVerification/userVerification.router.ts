@@ -28,8 +28,8 @@ const verifyRateLimiter = new RateLimiterMemory({
 export const userVerificationRouter = new Hono<AuthContextVariables>()
   .get(
     "send-pin",
-    createRateLimiterMiddleware(sendVerifyRateLimiter),
     authMiddleware,
+    createRateLimiterMiddleware(sendVerifyRateLimiter),
     async (c) => {
       const user = c.get("user")
       try {

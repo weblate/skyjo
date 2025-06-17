@@ -7,17 +7,21 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-input"
 import { Link, useRouter } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
-import { AuthError } from "@skymo/shared/constants"
+import type { LoginError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { LoginUser, loginSchema } from "@skymo/shared/validations"
 import { useMutation } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 
 const LoginPage = () => {
   const router = useRouter()
   const t = useTranslations("pages.Login")
+  const tErrors = useTranslations("errors")
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -27,109 +31,106 @@ const LoginPage = () => {
     },
   })
 
-  const [apiError, setApiError] = useState<
-    "invalid-credentials" | "default" | null
-  >(null)
+  const [apiError, setApiError] = useState<string | null>(null)
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: LoginUser) => {
       setApiError(null)
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/auth/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(payload),
-        credentials: "include",
+      const res = await client.auth.login.$post({
+        json: payload,
       })
-      console.log(res)
+
       if (!res.ok) {
-        const result = await res.json()
-        throw new Error(result.error || "Login failed")
+        const error = await jsonError<LoginError>(res)
+        setApiError(tErrors(error))
+        return
       }
+
+      const result = await res.json()
+      return result
     },
     onSuccess: () => router.push("/"),
     onError: (error) => {
       console.error(error)
-      if (error.message === AuthError.LOGIN_INVALID_CREDENTIALS) {
-        setApiError(AuthError.LOGIN_INVALID_CREDENTIALS)
-      } else {
-        setApiError("default")
-      }
+      toast.error(tErrors("login-error"))
     },
   })
 
-  return (
-    <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4 ">
-      <div className="max-w-sm flex flex-col w-full -translate-y-12">
-        <h1 className="text-2xl text-center font-medium mb-6">{t("title")}</h1>
+  const onSubmit = (data: LoginUser) => {
+    mutate(data)
+  }
 
-        <div className="flex flex-col gap-2">
-          <GoogleOAuthButton />
-        </div>
-        <div className="flex flex-row items-center gap-2 mt-6 mb-2">
-          <hr className="w-full border border-black dark:border-white" />
-          <p className="text-center text-black dark:text-white">Or</p>
-          <hr className="w-full border border-black dark:border-white" />
-        </div>
+  return (
+    <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4">
+      <div className="max-w-sm flex flex-col w-full -translate-y-12">
+        <h1 className="text-2xl font-medium mb-6 text-center">{t("title")}</h1>
+
+        {apiError && (
+          <div className="mb-4 p-3 text-sm text-red-600 bg-red-50 border border-red-200 rounded-md">
+            {apiError}
+          </div>
+        )}
+
         <Form {...form}>
-          <form
-            onSubmit={form.handleSubmit((data) => mutate(data))}
-            className="space-y-2"
-          >
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
             <FormField
               control={form.control}
               name="login"
               render={({ field }) => (
-                <FormItem className="space-y-1">
+                <FormItem>
                   <Label htmlFor="login">{t("form.login.label")}</Label>
                   <Input
                     id="login"
                     type="text"
                     autoComplete="login"
+                    disabled={isPending}
                     {...field}
                   />
                 </FormItem>
               )}
             />
+
             <FormField
               control={form.control}
               name="password"
               render={({ field }) => (
-                <FormItem className="space-y-1">
-                  <Label htmlFor="password">{t("form.password.label")}</Label>
+                <FormItem>
+                  <div className="flex items-center justify-between">
+                    <Label htmlFor="password">{t("form.password.label")}</Label>
+                    <Link
+                      href="/reset-password"
+                      className="text-sm text-gray-600 hover:text-gray-900"
+                    >
+                      {t("forgot-password")}
+                    </Link>
+                  </div>
                   <PasswordInput
                     id="password"
                     autoComplete="password"
+                    disabled={isPending}
                     {...field}
                   />
                 </FormItem>
               )}
             />
-            {apiError && (
-              <div className="text-red-600 text-sm">
-                {t(`form.error.${apiError}`)}
-              </div>
-            )}
-            <Link
-              href="/reset-password"
-              className="text-sm underline underline-offset-2 text-blue-600 dark:text-blue-400"
-            >
-              {t("forgot-password")}
-            </Link>
-            <div />
-            <Button type="submit" className="w-full" disabled={isPending}>
+
+            <Button type="submit" className="w-full" loading={isPending}>
               {t("form.submit")}
             </Button>
           </form>
         </Form>
 
-        <div className="text-center mt-8 flex flex-row items-center justify-center gap-1">
-          <p className="text-sm text-black dark:text-dark-font">
-            {t("signup.description")}
-          </p>
-          <Link
-            href="/signup"
-            className="text-sm font-medium underline underline-offset-2 text-blue-600 dark:text-blue-400"
-          >
+        <div className="my-6 flex items-center">
+          <div className="flex-1 border-t border-gray-300" />
+          <div className="mx-4 text-sm text-gray-600">Or</div>
+          <div className="flex-1 border-t border-gray-300" />
+        </div>
+
+        <GoogleOAuthButton />
+
+        <div className="mt-6 text-center text-sm">
+          <span className="text-gray-600">{t("signup.description")} </span>
+          <Link href="/signup" className="text-blue-600 hover:text-blue-800">
             {t("signup.link")}
           </Link>
         </div>

@@ -5,8 +5,11 @@ import { Form, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link, useRouter } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Locales } from "@skymo/shared/constants"
+import { SignupError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { useMutation } from "@tanstack/react-query"
 import { MailIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -22,6 +25,7 @@ const SignupPage = () => {
   const { locale } = useParams<SignupParams>()
   const router = useRouter()
   const t = useTranslations("pages.Signup")
+  const tErrors = useTranslations("errors")
 
   const form = useForm({
     resolver: zodResolver(
@@ -32,7 +36,7 @@ const SignupPage = () => {
     },
   })
 
-  const [apiError, setApiError] = useState<string | null>(null)
+  const [apiError, setApiError] = useState<SignupError | null>(null)
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: { email: string }) => {
@@ -41,25 +45,20 @@ const SignupPage = () => {
         email: data.email,
         locale,
       }
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          credentials: "include",
-        },
-      )
-      console.log(res)
+      const res = await client.auth.signup.$post({
+        json: payload,
+      })
+
       if (!res.ok) {
-        const result = await res.json()
-        throw new Error(result.error || "Signup failed")
+        const error = await jsonError<SignupError>(res)
+        setApiError(error)
+        return
       }
     },
     onSuccess: () => router.replace("/verify"),
     onError: (error) => {
       console.error(error)
-      setApiError(error.message)
+      setApiError("signup-error")
     },
   })
 
@@ -101,12 +100,7 @@ const SignupPage = () => {
               )}
             />
             {apiError && (
-              <div className="text-red-600 text-sm">
-                {apiError}
-                {apiError.includes("invalid-email")
-                  ? t("form.error.invalid-email")
-                  : t("form.error.default")}
-              </div>
+              <div className="text-red-600 text-sm">{tErrors(apiError)}</div>
             )}
             <Button type="submit" className="w-full" disabled={isPending}>
               <MailIcon className="w-4 h-4 mr-2" />

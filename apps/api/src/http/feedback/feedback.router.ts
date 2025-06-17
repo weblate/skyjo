@@ -14,8 +14,8 @@ const feedbackRateLimiter = new RateLimiterMemory({
 
 export const feedbackRouter = new Hono().post(
   "/",
-  createRateLimiterMiddleware(feedbackRateLimiter),
   zValidator("json", feedbackSchema),
+  createRateLimiterMiddleware(feedbackRateLimiter),
   (c) => {
     try {
       const { email, message } = c.req.valid("json")

@@ -5,7 +5,10 @@ import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Link } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
+import type { ForgotPasswordError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { ForgotPassword, forgotPasswordSchema } from "@skymo/shared/validations"
 import { useMutation } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
@@ -14,6 +17,7 @@ import { useForm } from "react-hook-form"
 
 const ResetPasswordFormPage = () => {
   const t = useTranslations("pages.ForgotPassword")
+  const tErrors = useTranslations("errors")
 
   const form = useForm({
     resolver: zodResolver(forgotPasswordSchema),
@@ -23,24 +27,19 @@ const ResetPasswordFormPage = () => {
   })
 
   const [isSuccess, setIsSuccess] = useState(false)
-  const [apiError, setApiError] = useState<string | null>(null)
+  const [apiError, setApiError] = useState<ForgotPasswordError | null>(null)
 
   const { mutate, isPending } = useMutation({
     mutationFn: async (payload: ForgotPassword) => {
       setApiError(null)
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/forgot-password`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          credentials: "include",
-        },
-      )
+      const res = await client.auth["forgot-password"].$post({
+        json: payload,
+      })
 
       if (!res.ok) {
-        const result = await res.json()
-        throw new Error(result.error || "Request failed")
+        const error = await jsonError<ForgotPasswordError>(res)
+        setApiError(error)
+        return
       }
 
       return res.json()
@@ -50,7 +49,7 @@ const ResetPasswordFormPage = () => {
     },
     onError: (error) => {
       console.error(error)
-      setApiError(error.message)
+      setApiError("forgot-password-error")
     },
   })
 
@@ -97,7 +96,9 @@ const ResetPasswordFormPage = () => {
             />
 
             {apiError && (
-              <div className="text-red-600 text-sm text-center">{apiError}</div>
+              <div className="text-red-600 text-sm text-center">
+                {tErrors(apiError)}
+              </div>
             )}
 
             <Button type="submit" className="w-full" disabled={isPending}>

@@ -10,11 +10,11 @@ import {
   getUserStats,
   revertEmail,
   scheduleAccountDeletion,
-  updateUserAvatar,
-  updateUserEmail,
-  updateUserName,
-  updateUserPassword,
-  updateUserUsername,
+  updateAvatar,
+  updateEmail,
+  updateName,
+  updatePassword,
+  updateUsername,
 } from "@/http/user/user.service.js"
 import { zValidator } from "@hono/zod-validator"
 import { Logger } from "@skymo/logger"
@@ -108,14 +108,15 @@ export const userRouter = new Hono<AuthContextVariables>()
   .patch(
     "/me/name",
     authMiddleware,
-    createRateLimiterMiddleware(updateNameRateLimiter),
     zValidator("json", updateNameSchema),
+    createRateLimiterMiddleware(updateNameRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
 
       try {
-        await updateUserName(user.id, data)
+        await updateName(user.id, data)
+
         return c.json({}, 200)
       } catch (error) {
         Logger.error("Failed to update name", { error })
@@ -127,14 +128,14 @@ export const userRouter = new Hono<AuthContextVariables>()
   .patch(
     "/me/username",
     authMiddleware,
-    createRateLimiterMiddleware(updateUsernameRateLimiter),
     zValidator("json", updateUsernameSchema),
+    createRateLimiterMiddleware(updateUsernameRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
 
       try {
-        await updateUserUsername(user.id, data)
+        await updateUsername(user.id, data)
         return c.json({}, 200)
       } catch (error) {
         if (error instanceof Error) {
@@ -149,14 +150,14 @@ export const userRouter = new Hono<AuthContextVariables>()
   .patch(
     "/me/email",
     authMiddleware,
-    createRateLimiterMiddleware(updateEmailRateLimiter),
     zValidator("json", updateEmailSchema),
+    createRateLimiterMiddleware(updateEmailRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
 
       try {
-        await updateUserEmail(user, data)
+        await updateEmail(user, data)
         return c.json({}, 200)
       } catch (error) {
         if (error instanceof Error) {
@@ -175,24 +176,29 @@ export const userRouter = new Hono<AuthContextVariables>()
       try {
         const token = c.req.param("token")
         await revertEmail(token)
+
         return c.json({}, 200)
       } catch (error) {
+        if (error instanceof Error) {
+          return c.json({ error: error.message }, 400)
+        }
+
         Logger.error("Failed to revert email", { error })
-        return c.json({ error: "revert-email-error" }, 400)
+        return c.json({ error: "revert-email-error" }, 500)
       }
     },
   )
   .patch(
     "/me/password",
     authMiddleware,
-    createRateLimiterMiddleware(updatePasswordRateLimiter),
     zValidator("json", updatePasswordSchema),
+    createRateLimiterMiddleware(updatePasswordRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
 
       try {
-        await updateUserPassword(user.id, data)
+        await updatePassword(user.id, data)
         return c.json({}, 200)
       } catch (error) {
         if (error instanceof Error) {
@@ -207,22 +213,22 @@ export const userRouter = new Hono<AuthContextVariables>()
   .patch(
     "/me/avatar",
     authMiddleware,
-    createRateLimiterMiddleware(updateAvatarRateLimiter),
     zValidator("json", updateAvatarSchema),
+    createRateLimiterMiddleware(updateAvatarRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
 
       try {
-        await updateUserAvatar(user.id, data)
+        await updateAvatar(user.id, data)
         return c.json({}, 200)
       } catch (error) {
         Logger.error("Failed to update avatar", { error })
-        return c.json({ error: "update-avatar-error" }, 500)
+        return c.json({ error: "unexpected-error" }, 500)
       }
     },
   )
-  .post("/me/delete-account", authMiddleware, async (c) => {
+  .post("/me/delete", authMiddleware, async (c) => {
     const user = c.get("user")
     try {
       await scheduleAccountDeletion(user.id)
@@ -233,7 +239,7 @@ export const userRouter = new Hono<AuthContextVariables>()
     }
   })
   .post(
-    "/cancel-account-deletion/:token",
+    "/me/cancel-deletion/:token",
     createRateLimiterMiddleware(cancelAccountDeletionRateLimiter),
     async (c) => {
       try {
@@ -242,7 +248,7 @@ export const userRouter = new Hono<AuthContextVariables>()
         return c.json({}, 200)
       } catch (error) {
         Logger.error("Failed to cancel account deletion", { error })
-        return c.json({ error: "cancel-delete-account-error" }, 400)
+        return c.json({ error: "cancel-account-deletion-error" }, 500)
       }
     },
   )

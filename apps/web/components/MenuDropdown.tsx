@@ -197,7 +197,10 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
           </DropdownMenuItem>
           {user && (
             <DropdownMenuItem>
-              <Link href="/settings/profile" className="flex items-center w-full">
+              <Link
+                href="/settings/profile"
+                className="flex items-center w-full"
+              >
                 <UserCog2Icon className="mr-2 size-4" />
                 <span>{t("account-settings")}</span>
               </Link>

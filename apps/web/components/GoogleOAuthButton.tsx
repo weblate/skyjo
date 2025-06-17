@@ -1,39 +1,35 @@
 import { Button } from "@/components/ui/button"
+import { client } from "@/lib/rpc"
+import type { OauthLoginError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { useTransition } from "react"
 import { toast } from "sonner"
 
-type GoogleOAuthResponse =
-  | {
-      success: true
-      redirectUrl?: string
-    }
-  | {
-      success: false
-      message: string
-    }
-
 const GoogleOAuthButton = () => {
   const t = useTranslations("components.GoogleOAuthButton")
+  const tErrors = useTranslations("errors")
   const [isPending, startTransition] = useTransition()
 
   const actionClick = async () => {
-    const response = await fetch(
-      `${process.env.NEXT_PUBLIC_API_URL}/auth/login/google`,
-      {
-        credentials: "include",
-      },
-    )
-    const data = (await response.json()) as GoogleOAuthResponse
-    if (!data.success) {
-      console.error(data.message)
-      toast.error(t("error"))
-      return
-    }
+    try {
+      const response = await client.auth.login.google.$get()
 
-    if (data.redirectUrl) {
-      window.location.href = data.redirectUrl
+      if (!response.ok) {
+        const error = await jsonError<OauthLoginError>(response)
+        toast.error(tErrors(error))
+        return
+      }
+
+      const data = await response.json()
+      if (data.redirectUrl) {
+        window.location.href = data.redirectUrl
+      }
+    } catch (error) {
+      console.error(error)
+
+      toast.error(tErrors("oauth-login-initiation-failed"))
     }
   }
 

@@ -14,7 +14,8 @@ import type { DefaultProps } from "../src/types.ts"
 const messages: Record<TransactionalLocales, Record<string, string>> = {
   en: {
     subject: "Your Skymo account has been deleted",
-    preview: "Confirmation that your Skymo account has been permanently deleted.",
+    preview:
+      "Confirmation that your Skymo account has been permanently deleted.",
     logoAlt: "Skymo Logo",
     title: "Your Account Has Been Deleted",
     body: "This is to confirm that your Skymo account and all associated data have been permanently deleted as requested.",
@@ -25,7 +26,8 @@ const messages: Record<TransactionalLocales, Record<string, string>> = {
   },
   fr: {
     subject: "Votre compte Skymo a bien été supprimé",
-    preview: "Confirmation que votre compte Skymo a été définitivement supprimé.",
+    preview:
+      "Confirmation que votre compte Skymo a été définitivement supprimé.",
     logoAlt: "Logo Skymo",
     title: "Votre compte a été supprimé",
     body: "Nous vous confirmons que votre compte Skymo et toutes les données associées ont été définitivement supprimés, comme vous l'avez demandé.",

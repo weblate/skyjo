@@ -20,7 +20,10 @@ import {
 import { AVATARS_ARRAY, usePlayer } from "@/contexts/PlayerContext"
 import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "@/i18n/routing"
+import { client } from "@/lib/rpc"
 import { zodResolver } from "@hookform/resolvers/zod"
+import { OnboardingError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
 import {
   onboardingSchema,
   onboardingWithPasswordSchema,
@@ -35,6 +38,7 @@ import { z } from "zod"
 const OnboardingPage = () => {
   const router = useRouter()
   const t = useTranslations("pages.Onboarding")
+  const tErrors = useTranslations("errors")
   const { getAvatar, avatarIndex } = usePlayer()
   const { user, refetch } = useAuth()
   const form = useForm({
@@ -49,7 +53,7 @@ const OnboardingPage = () => {
     },
   })
 
-  const [apiError, setApiError] = useState<string | null>(null)
+  const [apiError, setApiError] = useState<OnboardingError | null>(null)
   const [showPassword, setShowPassword] = useState(false)
 
   const watchedUsername = form.watch("username")
@@ -86,19 +90,14 @@ const OnboardingPage = () => {
         ? { name: data.name, username: data.username, avatar: data.avatar }
         : data
 
-      const res = await fetch(
-        `${process.env.NEXT_PUBLIC_API_URL}/auth/onboard`,
-        {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(payload),
-          credentials: "include",
-        },
-      )
+      const res = await client.auth.onboard.$post({
+        json: payload,
+      })
 
       if (!res.ok) {
-        const result = await res.json()
-        throw new Error(result.error || "Onboarding failed")
+        const error = await jsonError<OnboardingError>(res)
+        setApiError(error)
+        return
       }
 
       return res.json()
@@ -109,10 +108,7 @@ const OnboardingPage = () => {
     },
     onError: (error) => {
       console.error(error)
-      // Don't show username taken error here as it's already shown in username validation
-      if (error.message !== "Username is already taken") {
-        setApiError(error.message)
-      }
+      setApiError("onboarding-error")
     },
   })
 
@@ -232,11 +228,7 @@ const OnboardingPage = () => {
             )}
 
             {apiError && (
-              <div className="text-red-600 text-sm">
-                {apiError === "Username is already taken"
-                  ? t("form.errors.username-taken")
-                  : t("form.errors.default")}
-              </div>
+              <div className="text-red-600 text-sm">{tErrors(apiError)}</div>
             )}
 
             <div className="w-full pt-2">
