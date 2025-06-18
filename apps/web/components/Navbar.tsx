@@ -31,12 +31,12 @@ const Navbar = ({ className }: NavbarProps) => {
           >
             {t("links.rules")}
           </Link>
-          {/* <Link
-            href="/ranking"
+          <Link
+            href="/leaderboard"
             className="text-black dark:text-dark-font px-2 py-1 hover:underline underline-offset-1 hover:underline-offset-4 transition-all duration-300 ease-in-out outline-black"
           >
-            {t("links.ranking")}
-          </Link> */}
+            {t("links.leaderboard")}
+          </Link>
         </div>
       </div>
 

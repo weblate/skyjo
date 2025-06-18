@@ -248,6 +248,26 @@
         }
       }
     },
+    "Leaderboard": {
+      "head": {
+        "title": "Leaderboard | Skymo - Skyjo Online Card Game",
+        "description": "View the top players on Skymo! Check out the best Skyjo players and their win rates in our competitive leaderboard.",
+        "keywords": "Skymo,Skyjo,leaderboard,top players,rankings,best players,win rate,competitive,online card game"
+      },
+      "title": "Top Players",
+      "subtitle": "Discover the best Skyjo players and compete for the top spots!",
+      "lastUpdated": "Last updated: {date}",
+      "columns": {
+        "rank": "Rank",
+        "player": "Player",
+        "wins": "Wins",
+        "totalGames": "Total Games",
+        "winRate": "Win Rate"
+      },
+      "noData": "No players found in the leaderboard yet.",
+      "error": "Unable to load the leaderboard at the moment.",
+      "tryAgainLater": "Please try again later."
+    },
     "Rules": {
       "head": {
         "title": "How to play Skymo | Skyjo Card Game Online",
@@ -561,7 +581,7 @@
     "Navbar": {
       "links": {
         "rules": "Rules",
-        "ranking": "Ranking"
+        "leaderboard": "Leaderboard"
       }
     },
     "LoginButton": {

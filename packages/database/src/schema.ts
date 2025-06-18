@@ -1,12 +1,13 @@
 import type { SettingsRedisDb } from "@skymo/core"
 import { locales } from "@skymo/shared/constants"
-import { type InferSelectModel, relations } from "drizzle-orm"
+import { type InferSelectModel, eq, relations, sql } from "drizzle-orm"
 import {
   boolean,
   integer,
   json,
   pgEnum,
   pgTable,
+  pgView,
   serial,
   smallint,
   text,
@@ -188,3 +189,36 @@ export const scoreTable = pgTable("scores", {
   round: integer("round").notNull(),
 })
 export type ScoreDb = InferSelectModel<typeof scoreTable>
+
+export const leaderboardView = pgView("leaderboard_view").as((qb) => {
+  return qb
+    .select({
+      rank: sql<number>`row_number() over (order by count(case when ${playerTable.winner} = true then 1 end) desc, round((count(case when ${playerTable.winner} = true then 1 end) * 100.0 / count(*)), 2) desc, count(*) desc, avg(${playerTable.score}) asc)`.as(
+        "rank",
+      ),
+      userId: userTable.id,
+      username: userTable.username,
+      avatar: userTable.avatar,
+      wins: sql<number>`count(case when ${playerTable.winner} = true then 1 end)`.as(
+        "wins",
+      ),
+      totalGames: sql<number>`count(*)`.as("total_games"),
+      winRate:
+        sql<number>`round((count(case when ${playerTable.winner} = true then 1 end) * 100.0 / count(*)), 2)`.as(
+          "win_rate",
+        ),
+    })
+    .from(userTable)
+    .innerJoin(playerTable, eq(userTable.id, playerTable.userId))
+    .where(
+      sql`${userTable.deletedAt} is null and ${playerTable.userId} is not null`,
+    )
+    .groupBy(userTable.id, userTable.username, userTable.avatar)
+    .having(sql`count(*) > 0`)
+    .orderBy(
+      sql`count(case when ${playerTable.winner} = true then 1 end) desc`,
+      sql`round((count(case when ${playerTable.winner} = true then 1 end) * 100.0 / count(*)), 2) desc`,
+      sql`count(*) desc`,
+      sql`avg(${playerTable.score}) asc`,
+    )
+})

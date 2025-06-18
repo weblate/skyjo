@@ -148,6 +148,13 @@
       "when": 1749466896773,
       "tag": "0020_powerful_stature",
       "breakpoints": true
+    },
+    {
+      "idx": 21,
+      "version": "7",
+      "when": 1750231232281,
+      "tag": "0021_legal_warbird",
+      "breakpoints": true
     }
   ]
 }

@@ -1,6 +1,13 @@
+import { db } from "@/db/index.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { type Game, type Player, constructTagArray } from "@skymo/core"
-import type { PublicGame } from "@skymo/shared/types"
+import { leaderboardView } from "@skymo/database/schema"
+import { Logger } from "@skymo/logger"
+import type {
+  LeaderboardEntry,
+  LeaderboardResponse,
+  PublicGame,
+} from "@skymo/shared/types"
 
 const gameRepository = new GameRepository()
 
@@ -11,6 +18,34 @@ export async function getRedisPublicGames(
   const games = await gameRepository.getPublicGames(nbPerPage, page)
 
   return parsePublicGames(games)
+}
+
+export async function getLeaderboard(
+  limit: number = 10,
+): Promise<LeaderboardResponse> {
+  try {
+    const results = await db.select().from(leaderboardView).limit(limit)
+
+    const leaderboard: LeaderboardEntry[] = results.map((row) => ({
+      rank: row.rank,
+      userId: row.userId.toString(),
+      username: row.username || "",
+      avatar: row.avatar,
+      wins: Number(row.wins),
+      totalGames: Number(row.totalGames),
+      winRate: Number(row.winRate),
+    }))
+
+    const response: LeaderboardResponse = {
+      leaderboard,
+      lastUpdated: new Date().toISOString(),
+    }
+
+    return response
+  } catch (error) {
+    Logger.error("Error getting leaderboard:", { error })
+    throw error
+  }
 }
 
 //#region private methods
