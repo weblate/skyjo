@@ -2,7 +2,7 @@
 
 import { useRouter } from "@/i18n/routing"
 import { Avatar } from "@skymo/core"
-import { LogoutError, VerifyError } from "@skymo/shared/types"
+import { LogoutError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
@@ -64,7 +64,7 @@ export const useAuth = () => {
     refetch,
   } = useQuery({
     queryKey: ["authenticated-user"],
-    queryFn: async (): Promise<AuthenticatedUser | undefined> => {
+    queryFn: async (): Promise<AuthenticatedUser | null> => {
       try {
         const response = await fetch(
           `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`,
@@ -75,8 +75,7 @@ export const useAuth = () => {
         )
 
         if (!response.ok) {
-          const error = await jsonError<VerifyError>(response)
-          throw new Error(error)
+          return null
         }
 
         const result = await response.json()
@@ -87,6 +86,7 @@ export const useAuth = () => {
         }
       } catch (error) {
         console.error(error)
+        return null
       }
     },
     retry: 0,
