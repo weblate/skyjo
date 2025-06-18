@@ -1,8 +1,8 @@
-name: Deploy Cleanup Worker
+name: Deploy Workers
 env:
   REGISTRY: ghcr.io
-  IMAGE_NAME: "${{ github.repository }}/cleanup-worker"
-  DOCKER_NAME: "cleanup-worker"
+  IMAGE_NAME: "${{ github.repository }}/workers"
+  DOCKER_NAME: "workers"
 
 on:
   push:
@@ -46,7 +46,7 @@ jobs:
         uses: docker/build-push-action@v4
         with:
           context: .
-          file: ./apps/cleanup-worker/Dockerfile
+          file: ./apps/workers/Dockerfile
           platforms: linux/arm64
           push: true
           tags: ${{ steps.meta.outputs.tags }}
@@ -72,9 +72,9 @@ jobs:
 
             cd skymo
             git pull
-            docker compose down cleanup-worker
-            docker compose pull cleanup-worker
-            docker compose up -d cleanup-worker
+            docker compose down workers
+            docker compose pull workers
+            docker compose up -d workers
 
             docker image prune -a
             docker volume prune -f
