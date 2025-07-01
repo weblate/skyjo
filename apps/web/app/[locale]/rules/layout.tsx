@@ -45,7 +45,9 @@ export async function generateMetadata(props: RulesLayoutProps) {
   return metadata
 }
 
-export default async function RulesLayout({ children }: Readonly<RulesLayoutProps>) {
+export default async function RulesLayout({
+  children,
+}: Readonly<RulesLayoutProps>) {
   return (
     <>
       <Navbar />

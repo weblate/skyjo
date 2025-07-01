@@ -9,7 +9,9 @@
   "scripts": {
     "biome:check": "pnpm biome check --write ."
   },
-  "dependencies": {},
+  "dependencies": {
+    "@skymo/core": "workspace:*"
+  },
   "devDependencies": {
     "@skymo/ts-config": "workspace:*",
     "@skymo/transactional": "workspace:*",

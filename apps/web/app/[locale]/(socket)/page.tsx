@@ -16,9 +16,9 @@ import Image from "next/image"
 import { use } from "react"
 import IndexPage from "./IndexPage"
 
-const RulesLink = ({ children }: { children: React.ReactNode }) => (
+const RulesLink = (chunks: React.ReactNode) => (
   <Link href="/rules" className="underline">
-    {children}
+    {chunks}
   </Link>
 )
 
@@ -104,7 +104,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
             <AccordionTrigger>{t("faq.how-to-play.title")}</AccordionTrigger>
             <AccordionContent>
               {t.rich("faq.how-to-play.content", {
-                rules: (chunks) => <RulesLink>{chunks}</RulesLink>,
+                rules: RulesLink,
               })}
             </AccordionContent>
           </AccordionItem>

@@ -1,4 +1,7 @@
-import { type ButtonProps, Button as ReactEmailButton } from "@react-email/components"
+import {
+  type ButtonProps,
+  Button as ReactEmailButton,
+} from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: needed when using createElement
 import React, { type ReactNode } from "react"
 

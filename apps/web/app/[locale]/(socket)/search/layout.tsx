@@ -48,7 +48,9 @@ export async function generateMetadata(props: SearchLayoutProps) {
   return metadata
 }
 
-export default async function SearchLayout({ children }: Readonly<SearchLayoutProps>) {
+export default async function SearchLayout({
+  children,
+}: Readonly<SearchLayoutProps>) {
   return (
     <>
       <Navbar />

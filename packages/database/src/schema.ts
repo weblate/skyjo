@@ -185,7 +185,7 @@ export const scoreTable = pgTable("scores", {
   playerId: integer("player_id")
     .notNull()
     .references(() => playerTable.id),
-  score: varchar("score").notNull(),
+  score: varchar("score", { length: 255 }).notNull(),
   round: integer("round").notNull(),
 })
 export type ScoreDb = InferSelectModel<typeof scoreTable>

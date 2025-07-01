@@ -542,6 +542,10 @@ importers:
         version: 5.8.3
 
   packages/worker-types:
+    dependencies:
+      '@skymo/core':
+        specifier: workspace:*
+        version: link:../core
     devDependencies:
       '@skymo/transactional':
         specifier: workspace:*

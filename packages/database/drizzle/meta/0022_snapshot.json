@@ -1,6 +1,6 @@
 {
-  "id": "31d6d9cf-c605-4a5d-8122-6517f46a9936",
-  "prevId": "fb6f7d98-fdab-4601-90e6-73ebb7526e98",
+  "id": "c67a7bb0-f7ff-4b51-a1f6-54c72f74f36c",
+  "prevId": "31d6d9cf-c605-4a5d-8122-6517f46a9936",
   "version": "7",
   "dialect": "postgresql",
   "tables": {
@@ -366,7 +366,7 @@
         },
         "score": {
           "name": "score",
-          "type": "varchar",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },

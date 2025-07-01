@@ -117,7 +117,7 @@ export class GameService extends BaseService {
     ])
     const stateManager = new GameStateTracker(game)
 
-    if (!game.selectedCardValue) {
+    if (game.selectedCardValue === null) {
       throw new CError(
         `Player try to discard a card but no card is selected.`,
         {
