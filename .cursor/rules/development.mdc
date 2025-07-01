@@ -1,0 +1,199 @@
+---
+description: 
+globs: 
+alwaysApply: true
+---
+# Project Overview
+
+This is a monorepo for the Skymo game platform, built with TypeScript, Node.js, React, and pnpm workspaces.
+
+## Main Directories
+
+### `apps/`
+This directory contains the deployable applications.
+
+- **`api/`**: The backend API server, built with Fastify. It handles HTTP requests, real-time communication via Socket.IO, and job queuing. See [api.mdc](mdc:.cursor/rules/apps/api.mdc) for more details.
+- **`web/`**: The frontend Next.js application. This is what users interact with in their browser. See [web.mdc](mdc:.cursor/rules/apps/web.mdc) for more details.
+- **`workers/`**: Background workers for handling asynchronous tasks like sending emails or cleaning up game data. See [workers.mdc](mdc:.cursor/rules/apps/workers.mdc) for more details.
+
+### `packages/`
+This directory contains shared code used across different applications in the monorepo.
+
+- **`core/`**: Contains the core game logic, including card effects, game rules, and state management. See [core.mdc](mdc:.cursor/rules/packages/core.mdc) for more details.
+- **`database/`**: Manages the PostgreSQL database schema using Drizzle ORM, including migrations and seed scripts. See [database.mdc](mdc:.cursor/rules/packages/database.mdc) for more details.
+- **`shared/`**: Holds shared code like TypeScript types, Zod validation schemas, and constants that are used by both the frontend and backend. See [shared.mdc](mdc:.cursor/rules/packages/shared.mdc) for more details.
+- **`state-operations/`**: Provides pure functions for creating and applying game state changes, ensuring deterministic behavior. See [state-operations.mdc](mdc:.cursor/rules/packages/state-operations.mdc) for more details.
+- **`logger/`**: A shared logging utility. See [logger.mdc](mdc:.cursor/rules/packages/logger.mdc) for more details.
+- **`error/`**: Custom error classes and error handling utilities. See [error.mdc](mdc:.cursor/rules/packages/error.mdc) for more details.
+- **`config/`**: Shared configuration files, such as `tsconfig.json` presets. See [config.mdc](mdc:.cursor/rules/packages/config.mdc) for more details.
+- **`transactional/`**: Components and templates for transactional emails. See [transactional.mdc](mdc:.cursor/rules/packages/transactional.mdc) for more details.
+- **`worker-types/`**: Shared types for worker queues and jobs. See [worker-types.mdc](mdc:.cursor/rules/packages/worker-types.mdc) for more details.
+
+## Key Files
+
+- **`pnpm-workspace.yaml`**: Defines the pnpm workspace, linking all the `apps` and `packages`.
+- **`turbo.json`**: Configures Turborepo for optimized build and task execution across the monorepo.
+- **`compose.dev.yml`**: Docker Compose file for setting up the development environment (PostgreSQL, Redis).
+- **`compose.yml`**: Docker Compose file for setting up the production environment (PostgreSQL, Redis).
+- **`lefthook.yml`**: Configures Git hooks for code quality checks before committing.
+
+# Development Workflow Rules
+
+## Development Environment
+- **Node.js**: Latest LTS version
+- **Package Manager**: pnpm (required for workspace support)
+- **IDE**: VSCode with recommended extensions
+- **Docker**: For database and Redis services
+- **Git**: Feature branch workflow with conventional commits
+
+## Getting Started
+```bash
+# Install dependencies
+pnpm install
+
+# Start development environment
+docker-compose -f compose.dev.yml up -d
+pnpm dev
+
+# Run specific app
+pnpm --filter api dev
+pnpm --filter web dev
+pnpm --filter workers dev
+```
+
+## Code Quality Tools
+
+### Biome Configuration
+- Unified linting and formatting with [biome.json](mdc:biome.json)
+- Replaces ESLint + Prettier for better performance
+- Automatic formatting on save
+- Consistent code style across all packages
+
+### Git Hooks with Lefthook
+Pre-commit hooks via [lefthook.yml](mdc:lefthook.yml):
+- Lint staged files
+- Type checking
+- Test affected packages
+- Conventional commit validation
+
+### TypeScript Configuration
+- Strict mode enabled everywhere
+- Shared base config in [packages/config/ts/](mdc:packages/config/ts)
+- Path mapping for clean imports (@/core, @/shared, etc.)
+- No any types allowed
+
+## Testing Strategy
+
+### Test Structure
+- Unit tests are co-located with the code they test, either in a `__tests__` subdirectory or with a `.test.ts` or `.spec.ts` extension.
+  - Example: A test for `src/utils/format.ts` would be at `src/utils/__tests__/format.test.ts`.
+- Integration tests: `tests/` directories in each app
+- E2E tests: Planned for critical user flows
+
+### Test Commands
+```bash
+# Run all tests
+pnpm test
+
+# Test specific package
+pnpm --filter @skyjo/core test
+
+# Watch mode
+pnpm test:watch
+```
+
+### Testing Guidelines
+- Test business logic thoroughly
+- Mock external dependencies
+- Use Vitest for a consistent testing experience
+- Focus on public API contracts, not implementation details
+- Each test should be independent
+- Use descriptive test names
+- Clean up mocks and side-effects between tests
+- After writing a new test, run it to ensure it works as expected and fails when it should.
+
+## Build and Deployment
+
+### Turbo Configuration
+Build orchestration via [turbo.json](mdc:turbo.json):
+- Optimized task caching
+- Parallel execution where possible
+- Clear dependency graph
+- Environment-specific builds
+
+### Build Commands
+```bash
+# Build all packages
+pnpm build
+
+# Build specific app
+pnpm --filter api build
+
+# Check types across workspace
+pnpm type-check
+```
+
+## Environment Management
+- `.env.local` for local development secrets
+- `.env.example` templates for required variables
+- Environment validation in each app
+- Separate configs for dev/staging/production
+
+## Database Development
+- Drizzle migrations in `packages/database/drizzle/`
+- Local PostgreSQL via Docker
+- Migration commands through workspace scripts
+- Seed data for development
+
+## Git Workflow
+### Branch Naming
+- `feat/feature-name` - New features
+- `fix/bug-description` - Bug fixes
+- `refactor/what-changed` - Code refactoring
+- `docs/update-readme` - Documentation updates
+
+### Commit Convention
+```
+type(scope): description
+
+feat(auth): add OAuth login support
+fix(game): resolve card dealing logic
+docs(api): update endpoint documentation
+refactor(core): simplify game state management
+```
+
+### Pull Request Process
+1. Create feature branch from main
+2. Implement changes with tests
+3. Ensure all checks pass (linting, tests, types)
+4. Create PR with clear description
+5. Code review and approval
+6. Merge to main
+
+## Performance Considerations
+- Bundle analysis for frontend
+- Database query optimization
+- Redis caching strategy
+- Real-time event throttling
+- Monitor package bundle sizes
+
+## Security Practices
+- Input validation using shared schemas
+- SQL injection prevention via Drizzle
+- XSS protection in React components
+- Rate limiting on API endpoints
+- Secure session management
+
+## Documentation
+- Code comments for complex business logic
+- README files for each package/app
+- API documentation for HTTP endpoints
+- Socket.io event documentation
+- Deployment and setup guides
+
+## Monitoring and Debugging
+- Structured logging with `@/logger`
+- Error tracking and alerting
+- Performance monitoring
+- Socket.io debugging tools
+- Database query logging in development

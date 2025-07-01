@@ -47,12 +47,6 @@ const RadioNumber = ({
           })}
           title={title?.replace("$number", index.toString())}
           key={index}
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              onChange(index)
-            }
-          }}
         >
           {index}
           <input
@@ -63,7 +57,7 @@ const RadioNumber = ({
             checked={selected === index}
             onChange={(e) => onChange(+e.target.value)}
             disabled={disabled || disabledRadioNumber.includes(index)}
-            hidden
+            className="sr-only"
           />
         </label>
       ))}

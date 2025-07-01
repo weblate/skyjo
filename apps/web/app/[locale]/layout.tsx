@@ -1,8 +1,9 @@
 import MaintenancePage from "@/app/[locale]/MaintenancePage"
 import Providers from "@/app/[locale]/providers"
-import { Locales, generateAlternatesLanguages, routing } from "@/i18n/routing"
+import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { PostHogServerClient } from "@/lib/posthog-server"
 import { getCurrentUrl } from "@/lib/utils"
+import { Locales } from "@skymo/shared/constants"
 import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getTranslations } from "next-intl/server"
@@ -134,7 +135,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 }
 
-export default async function LocaleLayout(props: LocaleLayoutProps) {
+export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   const { locale } = await props.params
   if (!routing.locales.includes(locale)) notFound()
 

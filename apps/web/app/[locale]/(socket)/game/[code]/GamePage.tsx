@@ -59,7 +59,7 @@ const GamePage = () => {
         </div>
         <div className="flex flex-row justify-end">
           <div className="flex flex-col gap-4 items-center justify-start">
-            <MenuDropdown />
+            <MenuDropdown variant="game" />
             <Scoreboard />
             <GameRules />
           </div>

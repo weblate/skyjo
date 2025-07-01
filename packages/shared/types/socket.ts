@@ -45,8 +45,3 @@ export interface ServerToClientEvents
     ServerToClientAfkEvents,
     ServerToClientBanEvents,
     ServerToClientErrorEvents {}
-
-export interface SocketData {
-  gameCode: string
-  playerId: string
-}

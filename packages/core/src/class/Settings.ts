@@ -1,6 +1,6 @@
-import type { GameDb } from "@/types/game.js"
-import type { SettingsToJson } from "@/types/settings.js"
+import type { SettingsRedisDb, SettingsToJson } from "@/types/settings.js"
 import { Constants, type FirstPlayerPenaltyType } from "../constants.js"
+import { isGameClassicSettings } from "../utils/settings.js"
 
 interface UpdateSettings {
   maxPlayers?: number
@@ -57,7 +57,7 @@ export class Settings implements SettingsInterface {
     if (maxPlayers) this.maxPlayers = maxPlayers
   }
 
-  populate(settings: GameDb["settings"]) {
+  populate(settings: SettingsRedisDb) {
     this.isConfirmed = settings.isConfirmed
     this.private = settings.private
     this.maxPlayers = settings.maxPlayers
@@ -113,24 +113,7 @@ export class Settings implements SettingsInterface {
   }
 
   isClassicSettings() {
-    return (
-      this.removeIdenticalColumn ===
-        Constants.DEFAULT_GAME_SETTINGS.REMOVE_IDENTICAL_COLUMN &&
-      this.removeIdenticalRow ===
-        Constants.DEFAULT_GAME_SETTINGS.REMOVE_IDENTICAL_ROW &&
-      this.initialTurnedCount ===
-        Constants.DEFAULT_GAME_SETTINGS.CARDS.INITIAL_TURNED_COUNT &&
-      this.cardPerRow === Constants.DEFAULT_GAME_SETTINGS.CARDS.PER_ROW &&
-      this.cardPerColumn === Constants.DEFAULT_GAME_SETTINGS.CARDS.PER_COLUMN &&
-      this.scoreToEndGame ===
-        Constants.DEFAULT_GAME_SETTINGS.SCORE_TO_END_GAME &&
-      this.firstPlayerMultiplierPenalty ===
-        Constants.DEFAULT_GAME_SETTINGS.FIRST_PLAYER_MULTIPLIER_PENALTY &&
-      this.firstPlayerPenaltyType ===
-        Constants.DEFAULT_GAME_SETTINGS.FIRST_PLAYER_PENALTY_TYPE &&
-      this.showCurrentScore ===
-        Constants.DEFAULT_GAME_SETTINGS.SHOW_CURRENT_SCORE
-    )
+    return isGameClassicSettings(this)
   }
 
   toJson() {

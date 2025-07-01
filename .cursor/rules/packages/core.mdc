@@ -14,10 +14,12 @@ This package contains the core game logic, types, and validation for Skyjo. It i
   - **[`validations/`](mdc:packages/core/src/validations)**: Zod schemas for validating game actions and state.
   - **[`constants.ts`](mdc:packages/core/src/constants.ts)**: Game constants and enums.
   - **[`index.ts`](mdc:packages/core/src/index.ts)**: Entry point for exports.
+  - **[`utils/`](mdc:packages/core/src/utils)**: All utils functions.
 - **[`tests/`](mdc:packages/core/tests)**: Unit tests for core logic.
 - **[`package.json`](mdc:packages/core/package.json)**: Dependencies and scripts.
 - **[`tsconfig.json`](mdc:packages/core/tsconfig.json)**: TypeScript configuration.
 
 ## Notes
-- All logic is pure TypeScript, no external dependencies except for validation.
-- Designed for maximum reusability and testability.
+- All logic is pure [TypeScript](mdc:.cursor/rules/lib/typescript.mdc), with no external dependencies except for validation.
+- Validation is handled by [Zod](mdc:.cursor/rules/lib/zod.mdc).
+- Designed for maximum reusability and testability, following [Vitest best practices](mdc:.cursor/rules/lib/vitest.mdc).

@@ -1,11 +1,12 @@
+import { GameTag } from "@/components/GameTag/GameTag"
 import { JoinGameButton } from "@/components/JoinGameButton"
-import { PublicGame, type PublicGameTag } from "@skymo/shared/types"
+import { PublicGameTag } from "@skymo/core"
+import { PublicGame } from "@skymo/shared/types"
 import { Gamepad2Icon } from "lucide-react"
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import Image from "next/image"
 import { Dispatch, Fragment, SetStateAction } from "react"
-import { GameTag } from "./GameTag"
 
 interface GamesListProps {
   games: PublicGame[] | undefined
@@ -18,7 +19,7 @@ interface GamesListProps {
 
 export const GamesList = ({
   games,
-  isFetching,
+  isFetching = false,
   buttonLoading,
   setButtonLoading,
   onTagClick,
@@ -111,7 +112,7 @@ const PublicGameRow = ({
                 width={20}
                 height={20}
                 alt={tAvatar(player.avatar)}
-                className="select-none dark:opacity-75"
+                className="select-none dark:opacity-90"
                 title={player.name}
                 priority
               />
@@ -140,7 +141,7 @@ const PublicGameRow = ({
   )
 }
 
-const LoadingPublicGames = () => {
+export const LoadingPublicGames = () => {
   return Array.from({ length: 2 }).map((_, index) => (
     <Fragment key={`loading-game-${index}`}>
       <m.div

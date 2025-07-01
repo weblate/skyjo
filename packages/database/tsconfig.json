@@ -1,0 +1,6 @@
+{
+  "extends": "@skymo/ts-config/base-package.json",
+  "compilerOptions": {
+    "rootDir": "."
+  }
+}

@@ -1,0 +1,35 @@
+name: Deploy
+
+on:
+  push:
+    tags:
+      - "v[0-9]+.[0-9]+.[0-9]+"
+
+jobs:
+  deploy-to-vps:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            # check if the directory exists. If not, clone the repository
+            if [ ! -d "skymo" ]; then
+              git clone https://github.com/maxentr/skymo.git
+            fi
+
+            cd skyjo
+            git fetch --tags
+            git checkout ${{ github.ref_name }}
+
+            docker compose build api
+            docker compose build workers
+
+            pnpm i
+            pnpm db:migrate
+
+            docker compose up -d api
+            docker compose up -d workers

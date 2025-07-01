@@ -1,7 +1,7 @@
+import { GameOperationManager } from "@/realtime/utils/GameOperationManager.js"
+import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { KickVoteRepository } from "@/redis/kickVote.repository.js"
-import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
-import { SocketManager } from "@/socketio/utils/SocketManager.js"
 import { Constants as CoreConstants, type Game } from "@skymo/core"
 import { Logger } from "@skymo/logger"
 import type { Job } from "bullmq"
@@ -33,8 +33,7 @@ export class KickVoteExpirationQueueService extends BaseQueueService<KickVoteExp
   }
 
   static getInstance(): KickVoteExpirationQueueService {
-    KickVoteExpirationQueueService.instance =
-      KickVoteExpirationQueueService.instance ??
+    KickVoteExpirationQueueService.instance ??=
       new KickVoteExpirationQueueService()
 
     return KickVoteExpirationQueueService.instance

@@ -3,107 +3,69 @@ description: Use this file to create and manage task lists in markdown files to 
 globs: 
 alwaysApply: false
 ---
-# Task List Management
+# Task Management Guidelines
 
-Guidelines for creating and managing task lists in markdown files to track project progress
+This document outlines the process for creating and managing tasks within this project. We use a folder-based system to track the progress of features and major tasks.
 
-## Task List Creation
+## Task Directory Structure
 
-1. Create task lists in a markdown file (in the project root):
+All tasks are managed within the `TASKS/` directory in the project root. Each major feature or task should have its own dedicated folder inside `TASKS/`.
 
-   - Use `TASKS.md` or a descriptive name relevant to the feature (e.g., `ASSISTANT_CHAT.md`)
-   - Include a clear title and description of the feature being implemented
+Example structure:
+```
+TASKS/
+└── feature-name.md
+```
 
-2. Structure the file with these sections:
+- **`TASKS/`**: The root directory for all task-related documentation.
+- **`feature-name.md`**: A markdown file named after the feature being implemented (e.g., `user-authentication`, `game-lobby-chat`).
 
-   ```markdown
-   # Feature Name Implementation
+## Task File Structure
 
-   Brief description of the feature and its purpose.
+Each file should be structured as follows:
 
-   ## Completed Tasks
+```markdown
+# Feature: [Feature Name]
 
-   - [x] Task 1 that has been completed
-   - [x] Task 2 that has been completed
+A brief description of the feature and its purpose.
 
-   ## In Progress Tasks
+## Task List
 
-   - [ ] Task 3 currently being worked on
-   - [ ] Task 4 to be completed soon
+- [ ] Sub-task 1
+- [ ] Sub-task 2
+- [x] Completed sub-task
 
-   ## Future Tasks
+## Implementation Plan
 
-   - [ ] Task 5 planned for future implementation
-   - [ ] Task 6 planned for future implementation
+A detailed description of how the feature will be implemented. This can include:
+- Architecture decisions
+- Data flow diagrams
+- Technical components needed
 
-   ## Implementation Plan
+## Relevant Files
 
-   Detailed description of how the feature will be implemented.
+List of files that are created or modified for this feature.
 
-   ### Relevant Files
+- `path/to/file1.ts` - Description of the file's purpose.
+- `path/to/file2.tsx` - Description of the file's purpose.
 
-   - path/to/file1.ts - Description of purpose
-   - path/to/file2.ts - Description of purpose
-   ```
+## Relevant Cursor Rules
 
-## Task List Maintenance
+If the implementation involves specific libraries, frameworks, or technologies that have corresponding Cursor Rules, they should be referenced here. This helps ensure consistency and adherence to best practices.
 
-1. Update the task list as you progress:
-
-   - Mark tasks as completed by changing `[ ]` to `[x]`
-   - Add new tasks as they are identified
-   - Move tasks between sections as appropriate
-
-2. Keep "Relevant Files" section updated with:
-
-   - File paths that have been created or modified
-   - Brief descriptions of each file's purpose
-   - Status indicators (e.g., ✅) for completed components
-
-3. Add implementation details:
-   - Architecture decisions
-   - Data flow descriptions
-   - Technical components needed
-   - Environment configuration
+- [React Best Practices](mdc:.cursor/rules/lib/react.mdc)
+- [Next.js Guidelines](mdc:.cursor/rules/lib/next-js.mdc)
+- [Database Schema](mdc:.cursor/rules/packages/database.mdc)
+```
 
 ## AI Instructions
 
-When working with task lists, the AI should:
+When working on tasks, the AI should:
 
-1. Regularly update the task list file after implementing significant components
-2. Mark completed tasks with [x] when finished
-3. Add new tasks discovered during implementation
-4. Maintain the "Relevant Files" section with accurate file paths and descriptions
-5. Document implementation details, especially for complex features
-6. When implementing tasks one by one, first check which task to implement next
-7. After implementing a task, update the file to reflect progress
-
-## Example Task Update
-
-When updating a task from "In Progress" to "Completed":
-
-```markdown
-## In Progress Tasks
-
-- [ ] Implement database schema
-- [ ] Create API endpoints for data access
-
-## Completed Tasks
-
-- [x] Set up project structure
-- [x] Configure environment variables
-```
-
-Should become:
-
-```markdown
-## In Progress Tasks
-
-- [ ] Create API endpoints for data access
-
-## Completed Tasks
-
-- [x] Set up project structure
-- [x] Configure environment variables
-- [x] Implement database schema
-```
+1.  Before starting a new feature, create a new directory in `TASKS/` and a `TASK.md` file.
+2.  Break down the feature into a checklist of sub-tasks in `TASK.md`.
+3.  Regularly update the `TASK.md` file to reflect progress by checking off completed tasks (`[x]`).
+4.  Keep the "Relevant Files" section updated with all created or modified files.
+5.  Document implementation details in the "Implementation Plan" section.
+6.  Identify and link to any relevant Cursor Rules in the "Relevant Cursor Rules" section.
+7.  When asked to work on a task, first consult the corresponding `TASK.md` file to understand the scope and status.

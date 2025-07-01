@@ -1,0 +1,29 @@
+{
+  "name": "@skymo/database",
+  "description": "PostgreSQL database schema and setup for Skymo",
+  "version": "1.0.0",
+  "type": "module",
+  "types": "./dist/*.d.ts",
+  "exports": {
+    "./schema": "./src/schema.ts",
+    "./client": "./src/client.ts"
+  },
+  "scripts": {
+    "biome:check": "pnpm biome check --write .",
+    "db:generate": "pnpm drizzle-kit generate",
+    "db:migrate": "pnpm drizzle-kit migrate"
+  },
+  "dependencies": {
+    "@skymo/core": "workspace:*",
+    "@skymo/shared": "workspace:*",
+    "drizzle-orm": "^0.43.1",
+    "pg": "^8.13.1"
+  },
+  "devDependencies": {
+    "@skymo/ts-config": "workspace:*",
+    "@types/node": "^22.14.1",
+    "@types/pg": "^8.11.10",
+    "drizzle-kit": "^0.31.1",
+    "typescript": "^5.8.3"
+  }
+}

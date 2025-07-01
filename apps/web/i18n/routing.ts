@@ -1,29 +1,7 @@
+import { locales } from "@skymo/shared/constants"
 import { createNavigation } from "next-intl/navigation"
 import { defineRouting } from "next-intl/routing"
 import { Languages } from "next/dist/lib/metadata/types/alternative-urls-types"
-
-const locales = [
-  "bar",
-  "br",
-  "cs",
-  "da",
-  "de",
-  "el",
-  "en",
-  "es",
-  "et",
-  "fr",
-  "frs",
-  "gsw",
-  "it",
-  "nds",
-  "nl",
-  "pl",
-  "sv",
-  "ta",
-  "uk",
-] as const
-export type Locales = (typeof locales)[number]
 
 export const routing = defineRouting({
   locales,

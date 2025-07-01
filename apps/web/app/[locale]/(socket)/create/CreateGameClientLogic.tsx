@@ -1,8 +1,8 @@
 "use client"
 
 import { GameCard } from "@/components/Card/GameCard"
+import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
-import { useUser } from "@/contexts/UserContext"
 import { CardToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
@@ -18,34 +18,47 @@ const generateRandomCard = (isVisible: boolean): CardToJson => {
   }
 }
 
+const initialCard: CardToJson = {
+  id: "loading-cards",
+  value: 0,
+  isVisible: true,
+}
+
 const CreateGameClientLogic = () => {
-  const { getUser } = useUser()
-  const { socket, createGame } = useSocket()
+  const { getPlayer } = usePlayer()
+  const { createGame } = useSocket()
   const searchParams = useSearchParams()
   const t = useTranslations("pages.Create")
   const [loading, setLoading] = useState(false)
 
-  const [card, setCard] = useState<CardToJson>(generateRandomCard(true))
+  const [card, setCard] = useState<CardToJson>(initialCard)
 
   const privateQueryParam = searchParams.get("private")
 
   const isPrivate = privateQueryParam === "true"
 
   useEffect(() => {
-    // loading card animation
+    setCard(generateRandomCard(true))
+  }, [])
+
+  useEffect(() => {
     const interval = setInterval(() => {
       setCard((prev) => generateRandomCard(!prev.isVisible))
     }, 1000)
 
-    const player = getUser()
+    const handleCreateGame = async () => {
+      const player = getPlayer()
 
-    if (!loading) {
-      createGame(player, isPrivate)
-      setLoading(true)
+      if (!loading) {
+        createGame(player, isPrivate)
+        setLoading(true)
+      }
     }
 
+    handleCreateGame()
+
     return () => clearInterval(interval)
-  }, [socket, isPrivate])
+  }, [createGame, getPlayer, isPrivate, loading])
 
   return (
     <div className="h-svh w-full flex flex-col gap-2 items-center justify-center">

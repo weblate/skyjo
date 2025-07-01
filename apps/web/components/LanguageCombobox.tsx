@@ -23,7 +23,8 @@ import {
 } from "@/components/ui/popover"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
-import { Locales, routing, usePathname, useRouter } from "@/i18n/routing"
+import { routing, usePathname, useRouter } from "@/i18n/routing"
+import { Locales } from "@skymo/shared/constants"
 import { CheckIcon, ChevronsUpDown } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useSearchParams } from "next/navigation"
@@ -102,10 +103,11 @@ const LanguageCombobox = () => {
       <Popover open={open} onOpenChange={setOpen}>
         <PopoverTrigger asChild>
           <Button
-            variant="outline"
+            color="white"
+            shadow={false}
             role="input-list"
             aria-expanded={open}
-            className="justify-between w-[180px]"
+            className="justify-between w-[180px] dark:bg-dark-button text-black dark:text-dark-font"
             disabled={inGame}
           >
             {currentLocale
@@ -127,7 +129,7 @@ const LanguageCombobox = () => {
   return (
     <Drawer open={open} onOpenChange={setOpen}>
       <DrawerTrigger asChild>
-        <Button variant="outline" className="justify-start" disabled={inGame}>
+        <Button className="justify-start" disabled={inGame}>
           {currentLocale ? t(`locale.${currentLocale}`) : t("select-language")}
           <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
         </Button>

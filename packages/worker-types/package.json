@@ -1,0 +1,21 @@
+{
+  "name": "@skymo/worker-types",
+  "description": "Shared types between the workers and apps which use workers",
+  "version": "1.56.2",
+  "type": "module",
+  "exports": {
+    ".": "./types/index.ts"
+  },
+  "scripts": {
+    "biome:check": "pnpm biome check --write ."
+  },
+  "dependencies": {
+    "@skymo/core": "workspace:*"
+  },
+  "devDependencies": {
+    "@skymo/ts-config": "workspace:*",
+    "@skymo/transactional": "workspace:*",
+    "typescript": "^5.8.3",
+    "@types/react": "19.1.1"
+  }
+}

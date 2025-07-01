@@ -12,9 +12,9 @@ coverage
 .next/
 out/
 build
-
-# build
 dist
+.react-email/
+
 
 # misc
 .DS_Store
@@ -63,3 +63,4 @@ meili_data
 # Task list
 TODO.md
 TASKS.md
+TASKS

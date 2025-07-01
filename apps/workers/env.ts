@@ -1,0 +1,38 @@
+import { config } from "dotenv"
+import { z } from "zod"
+
+config()
+
+export const envSchema = z.object({
+  NODE_ENV: z.enum(["development", "production", "test"]),
+  APP_NAME: z.string({ message: "APP_NAME must be set in .env file" }),
+
+  REDIS_URL: z.string({ message: "REDIS_URL must be set in .env file" }),
+
+  POSTGRES_URL: z.string({ message: "POSTGRES_URL must be set in .env file" }),
+
+  SEQ_URL: z.string({ message: "SEQ_URL must be set in .env file" }),
+  SEQ_API_KEY: z.string({ message: "SEQ_API_KEY must be set in .env file" }),
+
+  // Mailer
+  RESEND_API_KEY: z.string({
+    message: "RESEND_API_KEY must be set in .env file",
+  }),
+
+  // Links
+  FRONT_URL: z.string({ message: "FRONT_URL must be set in .env file" }),
+  DISCORD_URL: z.string({ message: "DISCORD_URL must be set in .env file" }),
+  SUPPORT_EMAIL: z.string({
+    message: "SUPPORT_EMAIL must be set in .env file",
+  }),
+})
+
+const parsedEnv = envSchema.safeParse(process.env)
+
+if (!parsedEnv.success) {
+  console.error(parsedEnv.error.message)
+  process.exit(1)
+}
+
+export const ENV = parsedEnv.data
+export type Env = z.infer<typeof envSchema>

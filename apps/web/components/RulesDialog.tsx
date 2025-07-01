@@ -22,7 +22,7 @@ const RulesDialog = ({ open, onOpenChange }: RulesDialogProps) => {
         <DialogHeader className="px-6">
           <DialogTitle className="text-2xl">{t("title")}</DialogTitle>
         </DialogHeader>
-        <div className="flex flex-col gap-6 text-black dark:text-dark-font bg-container dark:bg-dark-container overflow-y-auto">
+        <div className="flex flex-col gap-6 text-black dark:text-dark-font bg-container dark:bg-dark-container overflow-y-auto px-6">
           <Rules />
         </div>
       </DialogContent>

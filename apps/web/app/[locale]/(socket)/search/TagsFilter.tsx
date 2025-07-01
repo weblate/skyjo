@@ -3,11 +3,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { PublicGameTag } from "@skymo/shared/types"
+import { PublicGameTag } from "@skymo/core"
 import { PlusCircleIcon } from "lucide-react"
 import { AnimatePresence } from "motion/react"
 import { useTranslations } from "next-intl"
-import { GameTag } from "./GameTag"
+import { GameTag } from "../../../../components/GameTag/GameTag"
 
 const allTags: PublicGameTag[] = [
   "classic",

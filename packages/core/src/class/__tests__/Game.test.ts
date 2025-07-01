@@ -5,7 +5,7 @@ import {
   type LastTurnStatus,
   type TurnStatus,
 } from "../../constants.js"
-import type { GameDb } from "../../types/game.js"
+import type { GameRedisDb } from "../../types/game.js"
 import { Card } from "../Card.js"
 import { Game } from "../Game.js"
 import { Player } from "../Player.js"
@@ -30,7 +30,7 @@ describe("Game", () => {
   beforeEach(() => {
     vi.clearAllMocks()
     player = new Player(
-      { username: "player1", avatar: Constants.AVATARS.BEE },
+      { name: "player1", avatar: Constants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     settings = new Settings()
@@ -45,12 +45,13 @@ describe("Game", () => {
       getSocket: vi.fn(),
       kickSocket: vi.fn(),
       delayNewRound: vi.fn(),
+      endGame: vi.fn(),
     }
     game.setOperationManager(operationManager)
     game.addPlayer(player)
 
     opponent = new Player(
-      { username: "opponent2", avatar: Constants.AVATARS.ELEPHANT },
+      { name: "opponent2", avatar: Constants.AVATARS.ELEPHANT },
       "socketId456",
     )
     game.addPlayer(opponent)
@@ -65,7 +66,7 @@ describe("Game", () => {
 
   describe("populate", () => {
     it("should populate the class without players", () => {
-      const gameDb: GameDb = {
+      const gameDb: GameRedisDb = {
         id: crypto.randomUUID(),
         code: "code",
         hostId: player.id,
@@ -81,7 +82,7 @@ describe("Game", () => {
         selectedCardValue: null,
         firstToFinishPlayerId: null,
         bannedPlayerIds: [],
-        bannedUsernames: [],
+        bannedNames: [],
         players: [],
 
         settings: {
@@ -118,7 +119,7 @@ describe("Game", () => {
     })
 
     it("should populate the class with players", () => {
-      const gameDb: GameDb = {
+      const gameDb: GameRedisDb = {
         id: crypto.randomUUID(),
         hostId: player.id,
         isFull: false,
@@ -134,11 +135,12 @@ describe("Game", () => {
         selectedCardValue: null,
         firstToFinishPlayerId: null,
         bannedPlayerIds: [],
-        bannedUsernames: [],
+        bannedNames: [],
         players: [
           {
             id: crypto.randomUUID(),
             name: "player1",
+            userId: player.userId ?? null,
             avatar: Constants.AVATARS.BEE,
             socketId: TEST_SOCKET_ID,
             connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
@@ -235,7 +237,7 @@ describe("Game", () => {
     it("should add player", () => {
       settings.maxPlayers = 3
       const newPlayer = new Player(
-        { username: "player3", avatar: Constants.AVATARS.TURTLE },
+        { name: "player3", avatar: Constants.AVATARS.TURTLE },
         "socketId789",
       )
 
@@ -246,7 +248,7 @@ describe("Game", () => {
     it("should not add player if max players is reached", () => {
       settings.maxPlayers = 2
       const newPlayer = new Player(
-        { username: "player3", avatar: Constants.AVATARS.TURTLE },
+        { name: "player3", avatar: Constants.AVATARS.TURTLE },
         "socketId789",
       )
 
@@ -922,12 +924,13 @@ describe("Game", () => {
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
         bannedPlayerIds: game.bannedPlayerIds,
-        bannedUsernames: game.bannedUsernames,
+        bannedNames: game.bannedNames,
         players: [
           {
             id: player.id,
             name: player.name,
             avatar: Constants.AVATARS.BEE,
+            userId: player.userId ?? null,
             cards: player.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,
@@ -949,6 +952,7 @@ describe("Game", () => {
             id: opponent.id,
             name: opponent.name,
             avatar: Constants.AVATARS.ELEPHANT,
+            userId: opponent.userId ?? null,
             cards: opponent.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,
@@ -987,7 +991,7 @@ describe("Game", () => {
         processingAfk: game.processingAfk,
         createdAt: game.createdAt,
         updatedAt: game.updatedAt,
-      } satisfies GameDb)
+      } satisfies GameRedisDb)
     })
   })
 
@@ -1264,7 +1268,7 @@ describe("Game", () => {
       game.turn = 0
       opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
       const thirdPlayer = new Player(
-        { username: "player3", avatar: Constants.AVATARS.TURTLE },
+        { name: "player3", avatar: Constants.AVATARS.TURTLE },
         "socketId789",
       )
       game.addPlayer(thirdPlayer)
@@ -1487,11 +1491,11 @@ describe("Game", () => {
     it("should set the player with the highest score as the first player", async () => {
       // Setup players with different scores
       const player1 = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
       const player2 = new Player(
-        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
 
@@ -1510,11 +1514,11 @@ describe("Game", () => {
     it("should handle tie by choosing player with highest card", async () => {
       // Setup players with tied scores but different max values
       const player1 = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
       const player2 = new Player(
-        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
 
@@ -1533,11 +1537,11 @@ describe("Game", () => {
     it("should handle complete tie by randomizing", async () => {
       // Setup players with identical scores
       const player1 = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
       const player2 = new Player(
-        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
 
@@ -1569,11 +1573,11 @@ describe("Game", () => {
     it("should skip disconnected players", async () => {
       // Setup players with one disconnected
       const player1 = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
       const player2 = new Player(
-        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
 
@@ -1593,7 +1597,7 @@ describe("Game", () => {
     it("should handle case when no players have scores", async () => {
       // Setup players with no scores
       const player1 = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
 
@@ -1612,7 +1616,7 @@ describe("Game", () => {
   describe("disconnectPlayer", () => {
     it("should set player connection status to disconnected", async () => {
       const player = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
       game.players = [player]
@@ -1626,11 +1630,11 @@ describe("Game", () => {
 
     it("should change host if disconnected player is host", async () => {
       const player1 = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
       const player2 = new Player(
-        { username: "Player2", avatar: Constants.AVATARS.BEE },
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
         "socket2",
       )
 
@@ -1648,7 +1652,7 @@ describe("Game", () => {
 
     it("should kick socket if it exists", async () => {
       const player = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
       game.players = [player]
@@ -1668,7 +1672,7 @@ describe("Game", () => {
 
     it("should remove player if game is not playing", async () => {
       const player = new Player(
-        { username: "Player1", avatar: Constants.AVATARS.BEE },
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
         "socket1",
       )
       game.players = [player]
@@ -1784,7 +1788,7 @@ describe("Game", () => {
     it("should add player id to bannedPlayerIds if not already included", () => {
       // Setup
       const targetPlayer = new Player(
-        { username: "target", avatar: Constants.AVATARS.BEE },
+        { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
       game.addPlayer(targetPlayer)
@@ -1800,7 +1804,7 @@ describe("Game", () => {
     it("should not add player id to bannedPlayerIds if already included", () => {
       // Setup
       const targetPlayer = new Player(
-        { username: "target", avatar: Constants.AVATARS.BEE },
+        { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
       game.addPlayer(targetPlayer)
@@ -1814,10 +1818,10 @@ describe("Game", () => {
       expect(game.bannedPlayerIds.length).toBe(1)
     })
 
-    it("should add player name to bannedUsernames if not already included", () => {
+    it("should add player name to bannedNames if not already included", () => {
       // Setup
       const targetPlayer = new Player(
-        { username: "target", avatar: Constants.AVATARS.BEE },
+        { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
       game.addPlayer(targetPlayer)
@@ -1826,25 +1830,25 @@ describe("Game", () => {
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedUsernames).toContain(targetPlayer.name)
-      expect(game.bannedUsernames.length).toBe(1)
+      expect(game.bannedNames).toContain(targetPlayer.name)
+      expect(game.bannedNames.length).toBe(1)
     })
 
-    it("should not add player name to bannedUsernames if already included", () => {
+    it("should not add player name to bannedNames if already included", () => {
       // Setup
       const targetPlayer = new Player(
-        { username: "target", avatar: Constants.AVATARS.BEE },
+        { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
       game.addPlayer(targetPlayer)
-      game.bannedUsernames.push(targetPlayer.name)
+      game.bannedNames.push(targetPlayer.name)
 
       // Execute
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedUsernames).toContain(targetPlayer.name)
-      expect(game.bannedUsernames.length).toBe(1)
+      expect(game.bannedNames).toContain(targetPlayer.name)
+      expect(game.bannedNames.length).toBe(1)
     })
   })
 
@@ -1852,7 +1856,7 @@ describe("Game", () => {
     it("should return true if player id is in bannedPlayerIds", () => {
       // Setup
       const targetPlayer = new Player(
-        { username: "target", avatar: Constants.AVATARS.BEE },
+        { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
       game.addPlayer(targetPlayer)
@@ -1862,14 +1866,14 @@ describe("Game", () => {
       expect(game.isPlayerBanned(targetPlayer)).toBe(true)
     })
 
-    it("should return true if player name is in bannedUsernames", () => {
+    it("should return true if player name is in bannedNames", () => {
       // Setup
       const targetPlayer = new Player(
-        { username: "target", avatar: Constants.AVATARS.BEE },
+        { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
       game.addPlayer(targetPlayer)
-      game.bannedUsernames.push(targetPlayer.name)
+      game.bannedNames.push(targetPlayer.name)
 
       // Execute & Verify
       expect(game.isPlayerBanned(targetPlayer)).toBe(true)
@@ -1878,7 +1882,7 @@ describe("Game", () => {
     it("should return false if player is not banned", () => {
       // Setup
       const targetPlayer = new Player(
-        { username: "target", avatar: Constants.AVATARS.BEE },
+        { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
       )
       game.addPlayer(targetPlayer)

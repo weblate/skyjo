@@ -1,10 +1,10 @@
 "use client"
 
 import FeedbackProvider from "@/contexts/FeedbackContext"
+import PlayerProvider from "@/contexts/PlayerContext"
 import RulesProvider from "@/contexts/RulesContext"
 import SettingsProvider from "@/contexts/SettingsContext"
-import UserProvider from "@/contexts/UserContext"
-import { Locales } from "@/i18n/routing"
+import { Locales } from "@skymo/shared/constants"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { LazyMotion, domAnimation } from "motion/react"
 import posthog from "posthog-js"
@@ -21,7 +21,7 @@ interface ProvidersProps {
 }
 const Providers = ({ children, locale }: ProvidersProps) => {
   useEffect(() => {
-    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
+    posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY as string, {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
       person_profiles: "identified_only",
       persistence: "memory",
@@ -44,11 +44,11 @@ const Providers = ({ children, locale }: ProvidersProps) => {
         <FeedbackProvider>
           <RulesProvider>
             <SettingsProvider locale={locale}>
-              <UserProvider>
+              <PlayerProvider>
                 <LazyMotion strict features={domAnimation}>
                   {children}
                 </LazyMotion>
-              </UserProvider>
+              </PlayerProvider>
             </SettingsProvider>
           </RulesProvider>
           <Toaster

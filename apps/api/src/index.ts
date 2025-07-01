@@ -1,11 +1,11 @@
-import { initializeHttpServer } from "@/http/index.js"
+import { httpApp } from "@/http/index.js"
 import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
 import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
+import { initializeSocketServer } from "@/realtime/index.js"
+import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { RedisClient } from "@/redis/client.js"
-import { initializeSocketServer } from "@/socketio/index.js"
-import { SocketManager } from "@/socketio/utils/SocketManager.js"
 import { ENV } from "@env"
 import { serve } from "@hono/node-server"
 import { Logger } from "@skymo/logger"
@@ -130,7 +130,7 @@ const startServer = async () => {
     })
 
     await initializeSocketServer(server)
-    initializeHttpServer(app)
+    app.route("/", httpApp)
 
     PlayerAfkQueueService.getInstance()
     RevealCardsAfkQueueService.getInstance()

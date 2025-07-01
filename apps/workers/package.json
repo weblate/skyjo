@@ -1,0 +1,34 @@
+{
+  "name": "@skymo/workers",
+  "description": "Workers for Skymo",
+  "version": "1.58.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "tsx --watch src/index.ts",
+    "build": "tsc --build",
+    "prod": "tsx dist/src/index.js",
+    "biome:check": "pnpm biome check --write ."
+  },
+  "dependencies": {
+    "@skymo/database": "workspace:*",
+    "@skymo/error": "workspace:*",
+    "@skymo/logger": "workspace:*",
+    "@skymo/transactional": "workspace:*",
+    "@skymo/worker-types": "workspace:*",
+    "bullmq": "^5.48.1",
+    "dotenv": "^16.5.0",
+    "drizzle-orm": "^0.43.1",
+    "react": "19.1.0",
+    "redis": "^4.7.0",
+    "resend": "^4.5.1",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@skymo/ts-config": "workspace:*",
+    "@types/node": "^22.14.1",
+    "@types/react": "^19.1.0",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}

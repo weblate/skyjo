@@ -54,7 +54,7 @@ const OpponentBoard = ({
               alt={ta(opponent.avatar)}
               title={ta(opponent.avatar)}
               className={cn(
-                "select-none dark:opacity-75 size-6 smh:size-8",
+                "select-none dark:opacity-90 size-6 smh:size-8",
                 isPlayerTurn && "animate-bounce",
               )}
               priority

@@ -325,12 +325,6 @@
       }
     },
     "SettingsDialog": {
-      "general": {
-        "title": "Hollek",
-        "language": "Yezh",
-        "language-warn": "Kemmañ war ar bajenn degemer hepken",
-        "appearance": "Neuz"
-      },
       "display": {
         "chat": {
           "chat-notification-size": {
@@ -680,17 +674,17 @@
       "cat": "kazh"
     },
     "chat": {
-      "player-joined": "{username} a zo deuet-tre",
-      "player-left": "{username} a zo aet kuit",
-      "player-reconnect": "{username} a zo adkennasket",
+      "player-joined": "{name} a zo deuet-tre",
+      "player-left": "{name} a zo aet kuit",
+      "player-reconnect": "{name} a zo adkennasket",
       "argument-required": "Un arguzenn pe meur a hini a zo goulennet gant an urzhiad: {command}",
-      "player-already-muted": "Mudet eo {username} endeo",
-      "player-muted": "Mudet eo bet {username}",
-      "player-not-muted": "N'eo ket mudet {username}",
-      "player-unmuted": "Divudet eo bet {username}",
-      "wizz-sent": "Kaset ho peus ur wizz da {targetUsername}!",
-      "wizz-self": "Wizzet hoc'h bet gant {initiatorUsername}!",
-      "wizz-other": "{initiatorUsername} en/he deus wizzet {targetUsername}!"
+      "player-already-muted": "Mudet eo {name} endeo",
+      "player-muted": "Mudet eo bet {name}",
+      "player-not-muted": "N'eo ket mudet {name}",
+      "player-unmuted": "Divudet eo bet {name}",
+      "wizz-sent": "Kaset ho peus ur wizz da {targetName}!",
+      "wizz-self": "Wizzet hoc'h bet gant {initiatorName}!",
+      "wizz-other": "{initiatorName} en/he deus wizzet {targetName}!"
     },
     "socket": {
       "error": {

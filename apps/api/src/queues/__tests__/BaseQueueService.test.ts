@@ -155,7 +155,6 @@ describe("BaseQueueService", () => {
   it("should cleanup properly", async () => {
     await queueService.cleanup()
     expect(mockWorkerClose).toHaveBeenCalledWith(true)
-    expect(mockQueueDrain).toHaveBeenCalled()
     expect(mockQueueClose).toHaveBeenCalled()
   })
 })

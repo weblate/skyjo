@@ -1,4 +1,4 @@
-import type { KickVoteDb, KickVoteToJson, Vote } from "@/types/kickVote.js"
+import type { KickVoteRedisDb, KickVoteToJson, Vote } from "@/types/kickVote.js"
 import { Constants } from "../constants.js"
 
 export interface KickVoteConstructorParams {
@@ -59,7 +59,7 @@ export class KickVote {
     }
   }
 
-  serialize(): KickVoteDb {
+  serialize(): KickVoteRedisDb {
     return {
       targetId: this.targetId,
       initiatorId: this.initiatorId,

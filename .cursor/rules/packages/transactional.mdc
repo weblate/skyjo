@@ -1,0 +1,24 @@
+---
+description: This rule file provides informations about the transactional package, the emails it contains.
+globs: packages/transactional/**/*.*
+alwaysApply: false
+---
+# Transactional Emails Package (`packages/transactional`)
+# Transactional Emails Package (`packages/transactional`)
+
+This package manages all transactional emails sent by the application, using React Email for templating.
+
+## Key Files & Directories:
+- **[`emails/`](mdc:packages/transactional/emails)**: Contains the React components for each email template.
+- **[`src/`](mdc:packages/transactional/src)**: Core utilities and shared components for email templates.
+  - **[`components/`](mdc:packages/transactional/src/components)**: Reusable React components like `BaseEmail`, `Button`, and `Footer`.
+  - **[`constants.ts`](mdc:packages/transactional/src/constants.ts)**: Shared constants, including URLs, support email, and supported locales.
+  - **[`utils/getLocale.ts`](mdc:packages/transactional/src/utils/getLocale.ts)**: Utility to resolve the user's locale for email internationalization.
+  - **[`index.ts`](mdc:packages/transactional/src/index.ts)**: Main entry point, exporting all necessary email components and utilities.
+- **[`package.json`](mdc:packages/transactional/package.json)**: Defines dependencies (`react-email`, `@react-email/components`) and scripts.
+- **[`tsconfig.json`](mdc:packages/transactional/tsconfig.json)**: TypeScript configuration for the package.
+
+## Notes
+- Emails are built with [React](mdc:.cursor/rules/lib/react.mdc) and support internationalization (i18n).
+- The package is self-contained and can be run in development mode to preview emails.
+- Styling is done with [Tailwind CSS](mdc:.cursor/rules/lib/tailwind.mdc).

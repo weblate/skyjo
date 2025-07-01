@@ -3,7 +3,7 @@ description:
 globs: packages/config/**
 alwaysApply: false
 ---
-# Config Package (`packages/config`)
+# Shared Config Package (`packages/config`)
 
 This package provides shared configuration files (JSON) for TypeScript and Node.js projects in the Skyjo monorepo.
 
