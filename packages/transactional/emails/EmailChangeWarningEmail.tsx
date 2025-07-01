@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { createIntl } from "@formatjs/intl"
 import { Heading, Hr, Img, Link, Section, Text } from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
@@ -152,7 +153,7 @@ EmailChangeWarningEmail.PreviewProps = {
   locale: "en",
   content: {
     newEmail: "email@example.com",
-    reversionUrl: "http://localhost:3000/revert-email/1234567890",
+    reversionUrl: `${WEBSITE_URL}/revert-email/1234567890`,
   },
 } satisfies EmailChangeWarningEmailProps
 

@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { createIntl } from "@formatjs/intl"
 import { Heading, Img, Link, Section, Text } from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
@@ -99,7 +100,7 @@ export const ResetPasswordEmail = ({
 ResetPasswordEmail.PreviewProps = {
   locale: "en",
   content: {
-    resetUrl: "https://skymo.online/reset-password/example-token",
+    resetUrl: `${WEBSITE_URL}/reset-password/example-token`,
   },
 } satisfies ResetPasswordEmailProps
 

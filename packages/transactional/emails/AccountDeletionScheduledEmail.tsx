@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { createIntl } from "@formatjs/intl"
 import { Heading, Hr, Img, Link, Section, Text } from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: <explanation>
@@ -125,8 +126,7 @@ export const AccountDeletionScheduledEmail = ({
 AccountDeletionScheduledEmail.PreviewProps = {
   locale: "en",
   content: {
-    cancellationUrl:
-      "https://skymo.online/cancel-account-deletion/example-token",
+    cancellationUrl: `${WEBSITE_URL}/cancel-account-deletion/example-token`,
   },
 } satisfies AccountDeletionScheduledEmailProps
 

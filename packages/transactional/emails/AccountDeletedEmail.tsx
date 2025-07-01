@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { createIntl } from "@formatjs/intl"
 import { Heading, Hr, Img, Link, Section, Text } from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: <explanation>

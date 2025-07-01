@@ -18,6 +18,13 @@ export const envSchema = z.object({
   RESEND_API_KEY: z.string({
     message: "RESEND_API_KEY must be set in .env file",
   }),
+
+  // Links
+  FRONT_URL: z.string({ message: "FRONT_URL must be set in .env file" }),
+  DISCORD_URL: z.string({ message: "DISCORD_URL must be set in .env file" }),
+  SUPPORT_EMAIL: z.string({
+    message: "SUPPORT_EMAIL must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)
