@@ -9,7 +9,9 @@
     "biome:check": "turbo run biome:check",
     "test": "turbo run test",
     "test:coverage": "turbo run test:coverage",
-    "test:ui": "turbo run test:ui"
+    "test:ui": "turbo run test:ui",
+    "db:generate": "turbo run db:generate",
+    "db:migrate": "turbo run db:migrate"
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
@@ -17,5 +19,5 @@
     "syncpack": "^13.0.3",
     "turbo": "^2.5.2"
   },
-  "packageManager": "pnpm@10.6.5"
+  "packageManager": "pnpm@10.12.4"
 }

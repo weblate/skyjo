@@ -9,7 +9,9 @@
     "./client": "./src/client.ts"
   },
   "scripts": {
-    "biome:check": "pnpm biome check --write ."
+    "biome:check": "pnpm biome check --write .",
+    "db:generate": "pnpm drizzle-kit generate",
+    "db:migrate": "pnpm drizzle-kit migrate"
   },
   "dependencies": {
     "@skymo/core": "workspace:*",

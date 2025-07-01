@@ -1,4 +1,4 @@
-name: Deploy API Development
+name: Deploy Development
 
 on:
   push:
@@ -18,12 +18,12 @@ jobs:
       - name: "Install Node"
         uses: actions/setup-node@v4
         with:
-          node-version: 22.10.0
+          node-version: 22.14.0
 
       - uses: pnpm/action-setup@v4
         name: Install pnpm
         with:
-          version: 10.6.5
+          version: 10.12.4
 
       - name: Install dependencies
         run: pnpm install
@@ -43,15 +43,18 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             # Use a separate directory for development
-            cd dev/skymo
+            if [ ! -d "dev/skyjo" ]; then
+              git clone https://github.com/maxentr/skyjo.git dev/skyjo
+            fi
 
+            cd dev/skyjo
             git pull
+            
+            docker compose -f compose.dev.yml build dev-api
+            docker compose -f compose.dev.yml build dev-workers
 
-            docker logout ghcr.io
+            pnpm i
+            pnpm db:migrate
 
-            docker compose -f compose.dev.yml down dev-api
-            docker compose -f compose.dev.yml pull dev-api
-            docker compose -f compose.dev.yml up -d dev-api --build
-
-            docker image prune -a
-            docker volume prune -f
+            docker compose -f compose.dev.yml up -d dev-api
+            docker compose -f compose.dev.yml up -d dev-workers
