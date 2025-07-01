@@ -45,7 +45,10 @@ export async function generateMetadata(props: VerifyProps) {
   return metadata
 }
 
-export default async function VerifyLayout({ children }: VerifyProps) {
+export default async function VerifyLayout({
+  children,
+  params: _params,
+}: Readonly<VerifyProps>) {
   const session = await verifySession()
 
   if (!session) {

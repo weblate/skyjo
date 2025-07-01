@@ -1,6 +1,5 @@
 import { createIntl } from "@formatjs/intl"
-import { Container, Text } from "@react-email/components"
-import { Hr, Img, Link } from "@react-email/components"
+import { Container, Hr, Img, Link, Text } from "@react-email/components"
 // biome-ignore lint/correctness/noUnusedImports: needed when using createElement
 import React from "react"
 import {

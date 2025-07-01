@@ -50,7 +50,7 @@ export async function generateMetadata(props: PrivacyPolicyLayoutProps) {
 
 export default async function PrivacyPolicyLayout({
   children,
-}: PrivacyPolicyLayoutProps) {
+}: Readonly<PrivacyPolicyLayoutProps>) {
   return (
     <>
       <Navbar />

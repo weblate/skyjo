@@ -21,9 +21,8 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
   }
 
   public static getInstance(): PlayerAfkQueueService {
-    if (!PlayerAfkQueueService.instance) {
-      PlayerAfkQueueService.instance = new PlayerAfkQueueService()
-    }
+    PlayerAfkQueueService.instance ??= new PlayerAfkQueueService()
+
     return PlayerAfkQueueService.instance
   }
 

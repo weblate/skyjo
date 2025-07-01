@@ -17,7 +17,6 @@ export interface SettingsLayoutProps {
   children: React.ReactNode
   params: Promise<SettingsLayoutParams>
 }
-
 export async function generateMetadata(props: SettingsLayoutProps) {
   const { locale } = await props.params
   if (!routing.locales.includes(locale)) notFound()
@@ -52,7 +51,8 @@ export async function generateMetadata(props: SettingsLayoutProps) {
 
 export default async function SettingsLayout({
   children,
-}: SettingsLayoutProps) {
+  params: _params,
+}: Readonly<SettingsLayoutProps>) {
   const t = await getTranslations("pages.Settings")
 
   return (

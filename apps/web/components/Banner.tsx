@@ -6,6 +6,17 @@ import { useTranslations } from "next-intl"
 interface BannerProps {
   className?: ClassValue
 }
+
+const GFormLink = (chunks: React.ReactNode) => (
+  <Link
+    href="https://forms.gle/CM9PV9H24KMFqDrXA"
+    target="_blank"
+    className="underline underline-offset-2 text-blue-500 font-semibold"
+  >
+    {chunks}
+  </Link>
+)
+
 const Banner = ({ className }: BannerProps) => {
   const t = useTranslations("components.Banner")
 
@@ -17,15 +28,7 @@ const Banner = ({ className }: BannerProps) => {
       )}
     >
       {t.rich("title", {
-        gform: (chunks) => (
-          <Link
-            href="https://forms.gle/CM9PV9H24KMFqDrXA"
-            target="_blank"
-            className="underline underline-offset-2 text-blue-500 font-semibold"
-          >
-            {chunks}
-          </Link>
-        ),
+        gform: GFormLink,
       })}
     </div>
   )

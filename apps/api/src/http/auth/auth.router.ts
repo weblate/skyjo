@@ -20,11 +20,9 @@ import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import {
   forgotPasswordSchema,
   loginSchema,
+  onboardingSchema,
   resetPasswordSchema,
   signupSchema,
-} from "@skymo/shared/validations"
-import {
-  onboardingSchema,
   usernameAvailabilitySchema,
 } from "@skymo/shared/validations"
 import { Hono } from "hono"
@@ -52,8 +50,8 @@ const onboardingRateLimiter = new RateLimiterMemory({
 })
 
 const checkUsernameRateLimiter = new RateLimiterMemory({
-  points: 5,
-  duration: 9, // 9 seconds
+  points: 30,
+  duration: 600, // 10 minutes
 })
 
 const forgotPasswordRateLimiter = new RateLimiterMemory({
@@ -128,7 +126,7 @@ const authRouter = new Hono<AuthContextVariables>()
               name: user.name,
               username: user.username,
               avatar: user.avatar,
-              hasOAuth: !!(user.googleId || user.facebookId),
+              hasOAuth: !!(user.googleId ?? user.facebookId),
               email: user.email,
               onboardingCompleted: user.onboardingCompleted,
             },
@@ -151,7 +149,7 @@ const authRouter = new Hono<AuthContextVariables>()
         return c.json({ error: error.message }, 500)
       }
 
-      Logger.error("Error verifying session", { error })
+      Logger.error("Error logging out", { error })
       return c.json(
         {
           error: "logout-error",

@@ -1,12 +1,12 @@
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 
-export interface ResetPasswordLayoutProps {
+interface ResetPasswordLayoutProps {
   children: React.ReactNode
 }
 export default async function ResetPasswordLayout({
   children,
-}: ResetPasswordLayoutProps) {
+}: Readonly<ResetPasswordLayoutProps>) {
   return (
     <>
       <Navbar />

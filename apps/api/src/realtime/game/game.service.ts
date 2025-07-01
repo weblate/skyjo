@@ -117,7 +117,17 @@ export class GameService extends BaseService {
     ])
     const stateManager = new GameStateTracker(game)
 
-    game.discardCard(game.selectedCardValue!)
+    if (!game.selectedCardValue) {
+      throw new CError(
+        `Player try to discard a card but no card is selected.`,
+        {
+          code: ErrorConstants.ERROR.NOT_ALLOWED,
+          shouldLog: false,
+        },
+      )
+    }
+
+    game.discardCard(game.selectedCardValue)
 
     await this.updateAndSendGame(game, stateManager)
   }

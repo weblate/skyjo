@@ -38,7 +38,7 @@ async function revertEmail(token: string): Promise<RevertEmailResult> {
   }
 }
 
-export default async function Page({ params }: RevertEmailPageProps) {
+export default async function Page({ params }: Readonly<RevertEmailPageProps>) {
   const { token } = await params
 
   if (!token) {

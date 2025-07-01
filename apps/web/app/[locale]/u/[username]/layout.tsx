@@ -51,7 +51,10 @@ export async function generateMetadata(props: UserLayoutProps) {
   return metadata
 }
 
-export default async function UserLayout({ children }: UserLayoutProps) {
+export default async function UserLayout({
+  children,
+  params: _params,
+}: Readonly<UserLayoutProps>) {
   return (
     <div className="min-h-screen bg-body dark:bg-dark-body">
       <Navbar />

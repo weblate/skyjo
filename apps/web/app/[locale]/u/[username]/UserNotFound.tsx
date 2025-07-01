@@ -31,22 +31,20 @@ export const UserNotFound = async ({ error, username }: UserNotFoundProps) => {
   }
 
   return (
-    <>
-      <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
-        <div className="bg-container dark:bg-dark-container rounded-lg border-2 border-black dark:border-dark-border p-12 text-center max-w-md">
-          <h1 className="text-2xl font-medium text-black dark:text-dark-font mb-4">
-            {t("error.title")}
-          </h1>
-          <p className="text-black/60 dark:text-dark-font/60 mb-6">
-            {t("error.description")}
-          </p>
-          <Link href="/">
-            <Button className="w-full sm:w-auto">
-              {t("error.back-to-home")}
-            </Button>
-          </Link>
-        </div>
+    <div className="flex flex-col items-center justify-center min-h-[60vh] gap-6">
+      <div className="bg-container dark:bg-dark-container rounded-lg border-2 border-black dark:border-dark-border p-12 text-center max-w-md">
+        <h1 className="text-2xl font-medium text-black dark:text-dark-font mb-4">
+          {t("error.title")}
+        </h1>
+        <p className="text-black/60 dark:text-dark-font/60 mb-6">
+          {t("error.description")}
+        </p>
+        <Link href="/">
+          <Button className="w-full sm:w-auto">
+            {t("error.back-to-home")}
+          </Button>
+        </Link>
       </div>
-    </>
+    </div>
   )
 }

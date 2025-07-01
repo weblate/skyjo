@@ -8,7 +8,7 @@ import { getTranslations } from "next-intl/server"
 interface UserPageProps {
   params: Promise<{ locale: Locales; username: string }>
 }
-export default async function UserPage({ params }: UserPageProps) {
+export default async function UserPage({ params }: Readonly<UserPageProps>) {
   const { username, locale } = await params
 
   const userProfile = await fetchUserProfile(username)

@@ -16,6 +16,12 @@ import Image from "next/image"
 import { use } from "react"
 import IndexPage from "./IndexPage"
 
+const RulesLink = ({ children }: { children: React.ReactNode }) => (
+  <Link href="/rules" className="underline">
+    {children}
+  </Link>
+)
+
 interface SearchParams {
   gameCode?: string
 }
@@ -25,12 +31,6 @@ interface IndexServerPageProps {
 const IndexServerPage = (props: IndexServerPageProps) => {
   const searchParams = use(props.searchParams)
   const t = useTranslations("pages.Index")
-
-  const rulesLink = (chunks: React.ReactNode) => (
-    <Link href="/rules" className="underline">
-      {chunks}
-    </Link>
-  )
 
   return (
     <div className="bg-body dark:bg-dark-body flex flex-col">
@@ -104,7 +104,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
             <AccordionTrigger>{t("faq.how-to-play.title")}</AccordionTrigger>
             <AccordionContent>
               {t.rich("faq.how-to-play.content", {
-                rules: rulesLink,
+                rules: (chunks) => <RulesLink>{chunks}</RulesLink>,
               })}
             </AccordionContent>
           </AccordionItem>

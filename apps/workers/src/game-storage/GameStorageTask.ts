@@ -4,6 +4,23 @@ import { Logger } from "@skymo/logger"
 import type { GameStorageJobData } from "@skymo/worker-types"
 import { eq } from "drizzle-orm"
 
+type PlayerRedisDb = GameStorageJobData["game"]["players"][0]
+type PlayerWithRank = PlayerRedisDb & { rank: number }
+
+type DatabaseTransaction = Parameters<Parameters<typeof db.transaction>[0]>[0]
+
+type PlayerRecord = {
+  id: number
+  name: string
+}
+
+type ScoreInsert = {
+  gameId: number
+  playerId: number
+  score: string
+  round: number
+}
+
 export class GameStorageTask {
   public static async storeGame(jobData: GameStorageJobData): Promise<void> {
     const { game } = jobData
@@ -30,41 +47,17 @@ export class GameStorageTask {
           throw new Error("Failed to insert game record")
         }
 
-        const gameRecord = gameRecords[0]
-        if (!gameRecord) {
-          throw new Error("No game record returned from insert")
-        }
+        const gameDbId = gameRecords[0]!.id
 
-        const gameDbId = gameRecord.id
-
-        // Store all players who participated in the game
-        const players = game.players
-
-        if (players.length === 0) {
+        if (game.players.length === 0) {
           Logger.info(`No players to store for game ${game.code}`)
           return
         }
 
-        const minScore =
-          players.length > 0 ? Math.min(...players.map((p) => p.score)) : 0
+        // Calculate player ranks and insert player records
+        const playersWithRanks = this.calculatePlayerRanks(game.players)
+        const minScore = Math.min(...game.players.map((p) => p.score))
 
-        // Sort players by score to calculate ranks (lower score = better rank)
-        const sortedPlayers = [...players].sort((a, b) => a.score - b.score)
-
-        // Calculate ranks (handle ties by giving the same rank)
-        const playersWithRanks = sortedPlayers.map((player, _index) => {
-          let rank = 1
-          // Find rank by counting how many players have a better (lower) score
-          for (let i = 0; i < sortedPlayers.length; i++) {
-            const otherPlayer = sortedPlayers[i]
-            if (otherPlayer && otherPlayer.score < player.score) {
-              rank++
-            }
-          }
-          return { ...player, rank }
-        })
-
-        // Insert player records
         const playerInserts = playersWithRanks.map((player) => ({
           gameId: gameDbId,
           userId: player.userId,
@@ -73,7 +66,7 @@ export class GameStorageTask {
           score: player.score,
           rank: player.rank,
           connectionStatus: player.connectionStatus,
-          winner: player.score === minScore ? true : false,
+          winner: player.score === minScore,
         }))
 
         const playerRecords = await tx
@@ -81,47 +74,22 @@ export class GameStorageTask {
           .values(playerInserts)
           .returning({ id: playerTable.id, name: playerTable.name })
 
-        // Update game record with hostId based on game.hostId
-        const hostPlayerIndex = playersWithRanks.findIndex(
-          (player) => player.id === game.hostId,
+        // Update game with host ID
+        await this.updateGameHostId(
+          tx,
+          gameDbId,
+          game.hostId,
+          playersWithRanks,
+          playerRecords,
         )
 
-        if (hostPlayerIndex !== -1 && playerRecords[hostPlayerIndex]) {
-          await tx
-            .update(gameTable)
-            .set({ hostId: playerRecords[hostPlayerIndex].id })
-            .where(eq(gameTable.id, gameDbId))
-        }
-
-        // Insert scores for each player
-        const scoreInserts = []
-
-        for (
-          let playerIndex = 0;
-          playerIndex < playersWithRanks.length;
-          playerIndex++
-        ) {
-          const player = playersWithRanks[playerIndex]
-          const playerRecord = playerRecords[playerIndex]
-
-          if (playerRecord && player) {
-            for (let round = 0; round < player.scores.length; round++) {
-              const roundScore = player.scores[round]
-              if (roundScore !== undefined) {
-                scoreInserts.push({
-                  gameId: gameDbId,
-                  playerId: playerRecord.id,
-                  score: roundScore.toString(),
-                  round: round + 1,
-                })
-              }
-            }
-          }
-        }
-
-        if (scoreInserts.length > 0) {
-          await tx.insert(scoreTable).values(scoreInserts)
-        }
+        // Insert player scores
+        const scoreCount = await this.insertPlayerScores(
+          tx,
+          gameDbId,
+          playersWithRanks,
+          playerRecords,
+        )
 
         Logger.info(
           `Successfully stored game ${game.code} with ${playerRecords.length} players`,
@@ -129,7 +97,7 @@ export class GameStorageTask {
             gameCode: game.code,
             gameDbId,
             playerCount: playerRecords.length,
-            scoreCount: scoreInserts.length,
+            scoreCount,
           },
         )
       })
@@ -141,5 +109,79 @@ export class GameStorageTask {
       })
       throw error
     }
+  }
+
+  private static calculatePlayerRanks(
+    players: PlayerRedisDb[],
+  ): PlayerWithRank[] {
+    const sortedPlayers = [...players].sort((a, b) => a.score - b.score)
+
+    return sortedPlayers.map((player) => {
+      let rank = 1
+      // Find rank by counting how many players have a better (lower) score
+      for (const otherPlayer of sortedPlayers) {
+        if (otherPlayer.score < player.score) {
+          rank++
+        }
+      }
+      return { ...player, rank }
+    })
+  }
+
+  private static async updateGameHostId(
+    tx: DatabaseTransaction,
+    gameDbId: number,
+    hostId: string,
+    playersWithRanks: PlayerWithRank[],
+    playerRecords: PlayerRecord[],
+  ): Promise<void> {
+    const hostPlayerIndex = playersWithRanks.findIndex(
+      (player) => player.id === hostId,
+    )
+
+    if (hostPlayerIndex !== -1) {
+      await tx
+        .update(gameTable)
+        .set({ hostId: playerRecords[hostPlayerIndex]!.id })
+        .where(eq(gameTable.id, gameDbId))
+    }
+  }
+
+  private static async insertPlayerScores(
+    tx: DatabaseTransaction,
+    gameDbId: number,
+    playersWithRanks: PlayerWithRank[],
+    playerRecords: PlayerRecord[],
+  ): Promise<number> {
+    const scoreInserts: ScoreInsert[] = []
+
+    for (
+      let playerIndex = 0;
+      playerIndex < playersWithRanks.length;
+      playerIndex++
+    ) {
+      const player = playersWithRanks[playerIndex]
+      const playerRecord = playerRecords[playerIndex]
+
+      if (playerRecord && player) {
+        for (let round = 0; round < player.scores.length; round++) {
+          const roundScore = player.scores[round]
+          if (roundScore !== undefined) {
+            scoreInserts.push({
+              gameId: gameDbId,
+              playerId: playerRecord.id,
+              score: roundScore.toString(),
+              round: round + 1,
+            })
+          }
+        }
+      }
+    }
+
+    if (scoreInserts.length > 0) {
+      await tx.insert(scoreTable).values(scoreInserts)
+    }
+
+    return scoreInserts.length
   }
 }

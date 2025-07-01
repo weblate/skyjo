@@ -33,8 +33,7 @@ export class GameStartCountdownQueueService extends BaseQueueService<GameStartCo
   }
 
   static getInstance(): GameStartCountdownQueueService {
-    GameStartCountdownQueueService.instance =
-      GameStartCountdownQueueService.instance ??
+    GameStartCountdownQueueService.instance ??=
       new GameStartCountdownQueueService()
 
     return GameStartCountdownQueueService.instance

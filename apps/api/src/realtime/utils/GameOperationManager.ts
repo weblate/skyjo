@@ -29,9 +29,8 @@ export class GameOperationManager implements GameOperationManagerInterface {
   }
 
   public static getInstance(): GameOperationManager {
-    if (!GameOperationManager.instance) {
-      GameOperationManager.instance = new GameOperationManager()
-    }
+    GameOperationManager.instance ??= new GameOperationManager()
+
     return GameOperationManager.instance
   }
 

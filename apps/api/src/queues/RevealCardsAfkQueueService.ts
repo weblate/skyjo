@@ -19,9 +19,8 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
   }
 
   public static getInstance(): RevealCardsAfkQueueService {
-    if (!RevealCardsAfkQueueService.instance) {
-      RevealCardsAfkQueueService.instance = new RevealCardsAfkQueueService()
-    }
+    RevealCardsAfkQueueService.instance ??= new RevealCardsAfkQueueService()
+
     return RevealCardsAfkQueueService.instance
   }
 

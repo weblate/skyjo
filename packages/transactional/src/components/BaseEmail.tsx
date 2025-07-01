@@ -1,6 +1,10 @@
-import { Container } from "@react-email/components"
-import { Body, Preview, Tailwind } from "@react-email/components"
-import { Html } from "@react-email/components"
+import {
+  Body,
+  Container,
+  Html,
+  Preview,
+  Tailwind,
+} from "@react-email/components"
 import type { ReactNode } from "react"
 // biome-ignore lint/correctness/noUnusedImports: needed when using createElement
 import React from "react"

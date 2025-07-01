@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils"
 import type { CheckUsernameError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useQuery } from "@tanstack/react-query"
+import { ClassValue } from "clsx"
 import {
   CheckIcon,
   LoaderCircleIcon,
@@ -75,6 +76,12 @@ export const UsernameInput = <
     t,
   ])
 
+  const getMessageTextColor = useCallback((): ClassValue => {
+    if (isCheckingUsername) return "text-gray-400"
+    if (usernameAvailability && !usernameError) return "text-green-600"
+    return "text-red-600"
+  }, [isCheckingUsername, usernameAvailability, usernameError])
+
   return (
     <FormItem>
       {label && <Label htmlFor="username">{label}</Label>}
@@ -96,16 +103,7 @@ export const UsernameInput = <
         </div>
       </div>
       {watchedUsername && watchedUsername.length >= 3 && (
-        <div
-          className={cn(
-            "text-xs",
-            isCheckingUsername
-              ? "text-gray-400"
-              : usernameAvailability && !usernameError
-                ? "text-green-600"
-                : "text-red-600",
-          )}
-        >
+        <div className={cn("text-xs", getMessageTextColor())}>
           {getUsernameValidationMessage()}
         </div>
       )}

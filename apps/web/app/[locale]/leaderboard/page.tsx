@@ -17,7 +17,6 @@ interface LeaderboardData {
   leaderboard: LeaderboardEntry[]
   lastUpdated: string
 }
-
 async function getLeaderboard(): Promise<LeaderboardData> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/games/leaderboard`,
@@ -43,11 +42,13 @@ function getRankIcon(rank: number) {
   }
 }
 
+interface LeaderboardPageProps {
+  params: Promise<{ locale: Locales }>
+}
+
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ locale: Locales }>
-}) {
+}: Readonly<LeaderboardPageProps>) {
   const { locale } = await params
   const t = await getTranslations({
     locale,
@@ -63,9 +64,7 @@ export async function generateMetadata({
 
 export default async function LeaderboardPage({
   params,
-}: {
-  params: Promise<{ locale: Locales }>
-}) {
+}: Readonly<LeaderboardPageProps>) {
   const { locale } = await params
   const t = await getTranslations({ locale, namespace: "pages.Leaderboard" })
 
@@ -163,7 +162,7 @@ export default async function LeaderboardPage({
         </div>
       </div>
     )
-  } catch (_error) {
+  } catch {
     return (
       <div className="container mx-auto px-4 py-8">
         <div className="text-center">

@@ -59,7 +59,6 @@ const SignupPage = () => {
       if (!res.ok) {
         const error = await jsonError<SignupError>(res)
         setApiError(error)
-        return
       }
     },
     onSuccess: () => router.replace("/verify"),

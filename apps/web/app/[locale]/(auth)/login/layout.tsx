@@ -45,7 +45,10 @@ export async function generateMetadata(props: LoginProps) {
   return metadata
 }
 
-export default async function LoginLayout({ children }: LoginProps) {
+export default async function LoginLayout({
+  children,
+  params: _params,
+}: Readonly<LoginProps>) {
   return (
     <>
       <Navbar />

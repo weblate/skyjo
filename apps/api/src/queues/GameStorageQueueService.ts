@@ -29,9 +29,8 @@ export class GameStorageQueueService {
   }
 
   public static getInstance(): GameStorageQueueService {
-    if (!GameStorageQueueService.instance) {
-      GameStorageQueueService.instance = new GameStorageQueueService()
-    }
+    GameStorageQueueService.instance ??= new GameStorageQueueService()
+
     return GameStorageQueueService.instance
   }
 

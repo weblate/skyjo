@@ -7,11 +7,11 @@ import { notFound } from "next/navigation"
 interface OAuthCallbackLayoutParams {
   locale: Locales
 }
-type OAuthCallbackServerPageProps = {
+interface OAuthCallbackServerPageProps {
   params: Promise<OAuthCallbackLayoutParams>
 }
 export default async function OauthCallbackServerPage(
-  props: OAuthCallbackServerPageProps,
+  props: Readonly<OAuthCallbackServerPageProps>,
 ) {
   const { locale } = await props.params
   if (!routing.locales.includes(locale)) notFound()

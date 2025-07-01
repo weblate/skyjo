@@ -26,7 +26,7 @@ export function ProfileSection() {
   const profileForm = useForm<UpdateName>({
     resolver: zodResolver(updateNameSchema),
     defaultValues: {
-      name: user?.name || "",
+      name: user?.name ?? "",
     },
   })
 

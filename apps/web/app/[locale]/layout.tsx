@@ -135,7 +135,7 @@ export const viewport: Viewport = {
   viewportFit: "cover",
 }
 
-export default async function LocaleLayout(props: LocaleLayoutProps) {
+export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   const { locale } = await props.params
   if (!routing.locales.includes(locale)) notFound()
 

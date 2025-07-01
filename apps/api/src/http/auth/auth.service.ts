@@ -12,6 +12,7 @@ import {
 import { createUser } from "@/http/user/user.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
+import { ENV } from "@env"
 import {
   passwordResetTable,
   sessionTable,
@@ -279,7 +280,7 @@ export async function requestPasswordReset(data: ForgotPassword) {
   })
 
   // Send email with reset link
-  const resetUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/reset-password/${encodeURIComponent(token)}`
+  const resetUrl = `${ENV.WEBSITE_URL}/reset-password/${encodeURIComponent(token)}`
 
   await mailerQueue.add("reset-password", {
     to: email,

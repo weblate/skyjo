@@ -10,8 +10,10 @@ export interface OnboardingProps {
   children: React.ReactNode
   params: Promise<OnboardingParams>
 }
-
-export default async function OnboardingLayout({ children }: OnboardingProps) {
+export default async function OnboardingLayout({
+  children,
+  params: _params,
+}: Readonly<OnboardingProps>) {
   const session = await verifySession()
 
   if (!session) {

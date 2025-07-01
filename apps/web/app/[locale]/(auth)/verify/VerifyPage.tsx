@@ -165,7 +165,7 @@ const VerifyPage = () => {
                       maxLength={6}
                       value={field.value}
                       onChange={handleOtpChange}
-                      disabled={isVerifyingPin || otpStatus === "success"}
+                      disabled={isVerifyingPin ?? otpStatus === "success"}
                       onComplete={(pinValue) => {
                         if (
                           verifyPinSchema.safeParse({ pin: pinValue }).success

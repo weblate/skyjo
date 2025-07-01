@@ -24,7 +24,7 @@ interface AvatarSelectorProps {
 export function AvatarSelector({
   currentAvatar = "bee",
   onAvatarChange,
-}: AvatarSelectorProps) {
+}: Readonly<AvatarSelectorProps>) {
   const t = useTranslations("pages.Settings.messages")
   const tProfile = useTranslations("pages.SettingsProfile")
   const tAvatar = useTranslations("utils.avatar")

@@ -45,7 +45,10 @@ export async function generateMetadata(props: ProfileProps) {
   return metadata
 }
 
-export default async function ProfileLayout({ children }: ProfileProps) {
+export default async function ProfileLayout({
+  children,
+  params: _params,
+}: Readonly<ProfileProps>) {
   return (
     <>
       <Navbar />

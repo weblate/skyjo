@@ -33,8 +33,7 @@ export class KickVoteExpirationQueueService extends BaseQueueService<KickVoteExp
   }
 
   static getInstance(): KickVoteExpirationQueueService {
-    KickVoteExpirationQueueService.instance =
-      KickVoteExpirationQueueService.instance ??
+    KickVoteExpirationQueueService.instance ??=
       new KickVoteExpirationQueueService()
 
     return KickVoteExpirationQueueService.instance

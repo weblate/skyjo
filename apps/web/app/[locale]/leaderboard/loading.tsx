@@ -16,7 +16,7 @@ export default function LeaderboardLoading() {
 
           <div className="divide-y">
             {Array.from({ length: 10 }).map((_, i) => (
-              <div key={i} className="p-4 flex items-center gap-4">
+              <div key={`leaderboard-loading-${i}`} className="p-4 flex items-center gap-4">
                 <Skeleton className="h-8 w-8 rounded" />
                 <Skeleton className="h-8 w-8 rounded-full" />
                 <Skeleton className="h-6 w-32" />

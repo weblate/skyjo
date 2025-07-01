@@ -78,7 +78,7 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
 
     // Priority 1: Use authenticated user data if available
     if (isAuthenticated && authUser) {
-      initialName = authUser.name || ""
+      initialName = authUser.name ?? ""
       if (authUser.avatar) {
         initialAvatarIndex = getAvatarIndexFromName(authUser.avatar)
       }
@@ -189,7 +189,7 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
   }
 
   const getPlayer = () => {
-    return { name: name || "Ano", avatar: getAvatar() }
+    return { name: name ?? "Ano", avatar: getAvatar() }
   }
 
   const value = useMemo(

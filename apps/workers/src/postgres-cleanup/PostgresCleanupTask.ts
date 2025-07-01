@@ -70,7 +70,7 @@ export class PostgresCleanupTask {
           .delete(emailChangeTable)
           .where(lt(emailChangeTable.expiresAt, now))
 
-        const deletedCount = result.rowCount || 0
+        const deletedCount = result.rowCount ?? 0
         totalDeleted += deletedCount
 
         Logger.debug(
@@ -112,7 +112,7 @@ export class PostgresCleanupTask {
           .delete(passwordResetTable)
           .where(lt(passwordResetTable.expiresAt, now))
 
-        const deletedCount = result.rowCount || 0
+        const deletedCount = result.rowCount ?? 0
         totalDeleted += deletedCount
 
         Logger.debug(

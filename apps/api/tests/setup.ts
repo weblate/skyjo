@@ -49,11 +49,11 @@ vi.mock("@/redis/client.ts", () => {
 
   return {
     RedisClient: class {
-      static instance = null
-      static connectionPromise = null
-      static connectionAttempts = 0
-      static MAX_CONNECTION_ATTEMPTS = 5
-      static isConnecting = false
+      static readonly instance = null
+      static readonly connectionPromise = null
+      static readonly connectionAttempts = 0
+      static readonly MAX_CONNECTION_ATTEMPTS = 5
+      static readonly isConnecting = false
 
       static async getClient() {
         return mockClient

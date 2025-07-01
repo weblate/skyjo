@@ -4,7 +4,7 @@ import { z } from "zod"
 export const passwordLowercaseRegex = /[a-z]/
 export const passwordUppercaseRegex = /[A-Z]/
 export const passwordNumberRegex = /\d/
-export const passwordSpecialCharRegex = /[!"#$%&'()*+,-./:;<=>?@\[\]^_`{|}~]/
+export const passwordSpecialCharRegex = /[!"#$%&'()*+,-./:;<=>?@[]^_`{|}~]/
 
 export const onboardingSchema = z.object({
   name: z
@@ -16,10 +16,7 @@ export const onboardingSchema = z.object({
     .string()
     .min(3, "Name must be at least 3 characters")
     .max(20, "Name must be at most 20 characters")
-    .regex(
-      /^[a-zA-Z0-9_]+$/,
-      "Name can only contain letters, numbers, and underscores",
-    ),
+    .regex(/^\w+$/, "Name can only contain letters, numbers, and underscores"),
   avatar: z.nativeEnum(Constants.AVATARS),
   password: z.string().optional(),
 })
@@ -62,7 +59,7 @@ export const updateUsernameSchema = z.object({
     .min(3, "Name must be at least 3 characters")
     .max(20, "Name must be at most 20 characters")
     .regex(
-      /^[a-zA-Z0-9_]+$/,
+      /^\w+$/,
       "Username can only contain letters, numbers, and underscores",
     ),
 })

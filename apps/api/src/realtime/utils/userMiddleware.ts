@@ -14,8 +14,8 @@ export const userMiddleware = async (
     const cookieHeader = socket.handshake.headers.cookie
     if (!cookieHeader) throw new Error("No cookie header")
 
-    const match = cookieHeader.match(
-      new RegExp(`${SESSION_COOKIE_NAME}=([^;]+)`),
+    const match = new RegExp(`${SESSION_COOKIE_NAME}=([^;]+)`).exec(
+      cookieHeader,
     )
     if (!match) throw new Error("No session token")
 
@@ -29,7 +29,7 @@ export const userMiddleware = async (
     socket.session = session
 
     next()
-  } catch (_err) {
+  } catch {
     socket.user = undefined
     socket.session = undefined
 

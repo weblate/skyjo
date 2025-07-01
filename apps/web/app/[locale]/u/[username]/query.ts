@@ -1,5 +1,4 @@
-import { UserProfileResponse } from "@skymo/shared/types"
-import { ApiResponse } from "@skymo/shared/types"
+import { ApiResponse, UserProfileResponse } from "@skymo/shared/types"
 
 export async function fetchUserProfile(
   username: string,
@@ -20,7 +19,7 @@ export async function fetchUserProfile(
       UserProfileResponse,
       "not-found" | "unknown"
     >
-  } catch (_error) {
+  } catch {
     return {
       error: "unknown",
     }

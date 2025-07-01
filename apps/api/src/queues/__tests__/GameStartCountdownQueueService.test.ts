@@ -262,56 +262,6 @@ describe("GameStartCountdownQueueService", () => {
         data: [{ test: "operations" }],
       })
     })
-
-    // it("should not update or send events if no changes exist", async () => {
-    //   // Mock no changes returned
-    //   vi.mocked(countdownService["gameRepository"].updateGame).mockClear()
-    //   vi.mocked(countdownService["socketManager"].sendToRoom).mockClear()
-
-    //   // Mock GameStateTracker to return null for changes
-    //   vi.mocked(
-    //     require("@/realtime/utils/GameStateTracker.js").GameStateTracker,
-    //   ).mockImplementationOnce(() => ({
-    //     getChanges: vi.fn().mockReturnValue(null),
-    //   }))
-
-    //   await countdownService["processJob"](mockJob)
-
-    //   // Check that neither updateGame nor sendToRoom were called
-    //   expect(
-    //     countdownService["gameRepository"].updateGame,
-    //   ).not.toHaveBeenCalled()
-    //   expect(
-    //     countdownService["socketManager"].sendToRoom,
-    //   ).not.toHaveBeenCalledWith(
-    //     expect.objectContaining({
-    //       event: "game:update",
-    //     }),
-    //   )
-    // })
-
-    // it("should throw and log error if game start fails", async () => {
-    //   const error = new Error("Test error")
-    //   mockGame.start = vi.fn().mockRejectedValue(error)
-
-    //   // Reset all mocks to ensure clean state
-    //   vi.clearAllMocks()
-
-    //   // Get a reference to the mocked Logger before the test
-    //   const { Logger } = require("@skymo/logger")
-
-    //   // Use the simpler expect().rejects pattern
-    //   await expect(countdownService["processJob"](mockJob)).rejects.toThrow(error)
-
-    //   // Verify error was logged with correct parameters
-    //   expect(Logger.error).toHaveBeenCalledWith(
-    //     `Error starting game test-game after countdown`,
-    //     expect.objectContaining({
-    //       error,
-    //       gameCode: "test-game",
-    //     }),
-    //   )
-    // })
   })
 
   describe("getGame", () => {

@@ -30,6 +30,7 @@ export const useAuth = () => {
           `${process.env.NEXT_PUBLIC_API_URL}/auth/logout`,
           {
             method: "POST",
+            credentials: "include",
           },
         )
 
@@ -38,16 +39,13 @@ export const useAuth = () => {
           toast.error(tErrors(error))
         }
 
-        return response.json()
+        router.push("/")
+        queryClient.setQueryData(["authenticated-user"], null)
+        queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
       } catch (error) {
         console.log(error)
         toast.error(tErrors("unexpected-error"))
       }
-    },
-    onSuccess: () => {
-      router.push("/")
-      queryClient.setQueryData(["authenticated-user"], null)
-      queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
     },
     onError: (error) => {
       console.error("Logout error:", error)

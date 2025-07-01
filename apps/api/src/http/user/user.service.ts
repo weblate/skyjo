@@ -5,6 +5,7 @@ import { invalidateUserSessions } from "@/http/session/session.service.js"
 import { accountDeletionQueue } from "@/utils/accountDeletion.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
+import { ENV } from "@env"
 import type { Avatar } from "@skymo/core"
 import {
   type UserDb,
@@ -235,12 +236,12 @@ export async function getUserStats(username: string) {
         sql`(${gameTable.settings}->>'private')::boolean = true`,
       ),
     )
-  const publicTotalGames = Number(publicResult?.totalGames || 0)
-  const privateTotalGames = Number(privateResult?.totalGames || 0)
+  const publicTotalGames = Number(publicResult?.totalGames ?? 0)
+  const privateTotalGames = Number(privateResult?.totalGames ?? 0)
   const totalGames = publicTotalGames + privateTotalGames
 
-  const publicWins = Number(publicResult?.wins || 0)
-  const privateWins = Number(privateResult?.wins || 0)
+  const publicWins = Number(publicResult?.wins ?? 0)
+  const privateWins = Number(privateResult?.wins ?? 0)
   const totalWins = publicWins + privateWins
 
   const publicWinRate =
@@ -249,8 +250,8 @@ export async function getUserStats(username: string) {
     privateTotalGames > 0 ? (privateWins / privateTotalGames) * 100 : 0
   const totalWinRate = totalGames > 0 ? (totalWins / totalGames) * 100 : 0
 
-  const publicAverageRank = Number(publicResult?.averageRank || 0)
-  const privateAverageRank = Number(privateResult?.averageRank || 0)
+  const publicAverageRank = Number(publicResult?.averageRank ?? 0)
+  const privateAverageRank = Number(privateResult?.averageRank ?? 0)
   const totalAverageRank =
     totalGames > 0
       ? (publicAverageRank * publicTotalGames +
@@ -368,7 +369,7 @@ export async function updateEmail(user: UserDb, data: UpdateEmail) {
   })
 
   // Send warning email to old address
-  const reversionUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/revert-email/${encodeURIComponent(reversionToken)}`
+  const reversionUrl = `${ENV.WEBSITE_URL}/revert-email/${encodeURIComponent(reversionToken)}`
 
   await mailerQueue.add("email-change-warning", {
     to: oldEmail,
@@ -468,7 +469,7 @@ export async function updatePassword(userId: number, data: UpdatePassword) {
     .where(eq(userTable.id, userId))
     .limit(1)
 
-  if (!user || !user.password) throw new Error("invalid-current-password")
+  if (!user?.password) throw new Error("invalid-current-password")
 
   const isValidPassword = await verifyPassword(
     user.password,

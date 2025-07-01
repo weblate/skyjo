@@ -57,15 +57,13 @@ export async function generateVerifyPin(user: UserDb) {
       .update(userVerificationTable)
       .set({ pin, expiresAt })
       .where(eq(userVerificationTable.id, existingPin.id))
-
-    return pin
+  } else {
+    await db.insert(userVerificationTable).values({
+      pin,
+      userId: user.id,
+      expiresAt,
+    })
   }
-
-  await db.insert(userVerificationTable).values({
-    pin,
-    userId: user.id,
-    expiresAt,
-  })
 
   return pin
 }

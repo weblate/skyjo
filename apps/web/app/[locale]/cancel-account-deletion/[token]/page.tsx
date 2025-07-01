@@ -52,7 +52,7 @@ interface CancelAccountDeletionPageProps {
 }
 export default async function CancelAccountDeletionPage({
   params,
-}: CancelAccountDeletionPageProps) {
+}: Readonly<CancelAccountDeletionPageProps>) {
   const { token } = await params
   const t = await getTranslations("pages.CancelAccountDeletion")
   const tErrors = await getTranslations("errors")
@@ -85,7 +85,7 @@ export default async function CancelAccountDeletionPage({
     } else if (result.error?.includes("expired")) {
       return t("expired.description")
     } else {
-      return result.error || t("failed.description")
+      return result.error ?? t("failed.description")
     }
   }
 
