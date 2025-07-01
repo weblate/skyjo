@@ -1,1 +1,0 @@
-ALTER TABLE "scores" ALTER COLUMN "score" SET DATA TYPE varchar(255);
