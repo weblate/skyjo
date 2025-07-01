@@ -43,11 +43,11 @@ jobs:
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
             # Use a separate directory for development
-            if [ ! -d "dev/skyjo" ]; then
-              git clone https://github.com/maxentr/skyjo.git dev/skyjo
+            if [ ! -d "dev/skymo" ]; then
+              git clone https://github.com/maxentr/skymo.git dev/skymo
             fi
 
-            cd dev/skyjo
+            cd dev/skymo
             git pull
             
             docker compose -f compose.dev.yml build dev-api
