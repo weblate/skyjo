@@ -324,27 +324,6 @@
       "first-player-flat-penalty": "Feste Strafe: {value}"
     },
     "LanguageCombobox": {
-      "locale": {
-        "en": "",
-        "it": "",
-        "de": "",
-        "es": "",
-        "fr": "",
-        "br": "",
-        "ta": "",
-        "bar": "",
-        "cs": "",
-        "da": "",
-        "el": "",
-        "et": "",
-        "frs": "",
-        "gsw": "",
-        "nds": "",
-        "nl": "",
-        "pl": "",
-        "sv": "",
-        "uk": ""
-      },
       "no-language-found": "Keine Sprache gefunden",
       "select-language": "Sprache auswählen",
       "search-language": "Sprache suchen"

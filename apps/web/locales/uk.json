@@ -578,28 +578,7 @@
     "LanguageCombobox": {
       "select-language": "Виберіть мову",
       "search-language": "Мова пошуку",
-      "no-language-found": "Мову не знайдено",
-      "locale": {
-        "en": "",
-        "it": "",
-        "de": "",
-        "es": "",
-        "fr": "",
-        "br": "",
-        "ta": "",
-        "bar": "",
-        "cs": "",
-        "da": "",
-        "el": "",
-        "et": "",
-        "frs": "",
-        "gsw": "",
-        "nds": "",
-        "nl": "",
-        "pl": "",
-        "sv": "",
-        "uk": ""
-      }
+      "no-language-found": "Мову не знайдено"
     },
     "PlayerBoard": {
       "you": "Ви"

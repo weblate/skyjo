@@ -436,27 +436,6 @@
       }
     },
     "LanguageCombobox": {
-      "locale": {
-        "en": "",
-        "it": "",
-        "de": "",
-        "es": "",
-        "fr": "",
-        "br": "",
-        "ta": "",
-        "bar": "",
-        "cs": "",
-        "da": "",
-        "el": "",
-        "et": "",
-        "frs": "",
-        "gsw": "",
-        "nds": "",
-        "nl": "",
-        "pl": "",
-        "sv": "",
-        "uk": ""
-      },
       "no-language-found": "Nessuna lingua trovata",
       "select-language": "Seleziona la lingua",
       "search-language": "Lingua di ricerca"

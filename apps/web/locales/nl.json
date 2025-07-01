@@ -371,28 +371,7 @@
     "LanguageCombobox": {
       "select-language": "Taal selecteren",
       "search-language": "Zoektaal",
-      "no-language-found": "Geen taal gevonden",
-      "locale": {
-        "en": "",
-        "it": "",
-        "de": "",
-        "es": "",
-        "fr": "",
-        "br": "",
-        "ta": "",
-        "bar": "",
-        "cs": "",
-        "da": "",
-        "el": "",
-        "et": "",
-        "frs": "",
-        "gsw": "",
-        "nds": "",
-        "nl": "",
-        "pl": "",
-        "sv": "",
-        "uk": ""
-      }
+      "no-language-found": "Geen taal gevonden"
     },
     "MenuDropdown": {
       "button": {

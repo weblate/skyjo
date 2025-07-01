@@ -86,27 +86,6 @@
       "first-player-flat-penalty": "Faste Straaf: {value}"
     },
     "LanguageCombobox": {
-      "locale": {
-        "en": "",
-        "it": "",
-        "de": "",
-        "es": "",
-        "fr": "",
-        "br": "",
-        "ta": "",
-        "bar": "",
-        "cs": "",
-        "da": "",
-        "el": "",
-        "et": "",
-        "frs": "",
-        "gsw": "",
-        "nds": "",
-        "nl": "",
-        "pl": "",
-        "sv": "",
-        "uk": ""
-      },
       "select-language": "Spraak utsöken",
       "search-language": "Söökspraak",
       "no-language-found": "Keen Spraak funnen"
