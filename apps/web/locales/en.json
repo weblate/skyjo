@@ -117,7 +117,7 @@
           "title": "At the start of the game, {number} of your cards will be revealed"
         },
         "show-current-score": {
-          "label": "Show the current score during the game"
+          "label": "Display score in real time"
         },
         "score-to-end-game": {
           "label": "Score to end the game",
