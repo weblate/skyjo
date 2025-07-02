@@ -6,9 +6,6 @@
   },
   "pages": {
     "Index": {
-      "banner": {
-        "title": "Ik heb <gform>uw feedback</gform> nodig om de toekomst van Skymo vorm te geven!"
-      },
       "name-input-placeholder": "Naam",
       "explanation": {
         "title": "Wat is Skyjo?",
@@ -310,9 +307,6 @@
         "success": {
           "title": "Bedankt voor uw feedback!",
           "description": "Uw inzichten hebben ons geholpen onze gamewebsite te verbeteren, en daar zijn we u erg dankbaar voor."
-        },
-        "error": {
-          "title": "Er is een fout opgetreden, probeer het opnieuw."
         }
       },
       "email-input": {
@@ -371,7 +365,27 @@
     "LanguageCombobox": {
       "select-language": "Taal selecteren",
       "search-language": "Zoektaal",
-      "no-language-found": "Geen taal gevonden"
+      "no-language-found": "Geen taal gevonden",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "MenuDropdown": {
       "button": {
@@ -494,53 +508,6 @@
     },
     "SettingsDialog": {
       "title": "Instellingen",
-      "general": {
-        "title": "Algemeen",
-        "language": "Taal",
-        "language-warn": "Alleen te wijzigen op de startpagina",
-        "appearance": "Uiterlijk"
-      },
-      "display": {
-        "title": "Weergave",
-        "mobile": {
-          "title": "Mobiel",
-          "switch-to-player-who-is-playing": "Schakel automatisch over naar de speler die aan het afspelen is",
-          "show-preview-opponents-cards": "Toon een voorvertoning van de kaarten van tegenstanders in de lijst met tegenstanders"
-        },
-        "chat": {
-          "chat-notification-size": {
-            "label": "Grootte chatmelding",
-            "values": {
-              "small": "Klein",
-              "normal": "Normaal",
-              "big": "Groot"
-            }
-          },
-          "title": "Chat",
-          "chat-visibility": "Zichtbaarheid van chat"
-        },
-        "gameplay": {
-          "enlarge-active-player-board": "Vergroot het bord van de speler wiens beurt het is",
-          "timer": {
-            "label": "Timerweergavemodus",
-            "description": "De slimme modus toont de timer op de helft van de tijd en de laatste 15 seconden.",
-            "modes": {
-              "never": "Nooit",
-              "smart": "Slim",
-              "always": "Altijd"
-            }
-          },
-          "title": "Gameplay",
-          "gameboard-size": {
-            "label": "Grootte van je speelbord",
-            "big-warning": "Kan weergave op mobiel verbreken",
-            "values": {
-              "normal": "Normaal",
-              "big": "Groot"
-            }
-          }
-        }
-      },
       "audio": {
         "title": "Audio",
         "toggle": {
@@ -624,7 +591,6 @@
     "ReportDialog": {
       "title": "Rapporteer {username}",
       "description": "Meld de gebruikersnaam of een bericht van {username} als het ongepast lijkt.",
-      "report-username": "Meld de gebruikersnaam",
       "report-message": "Een bericht rapporteren",
       "select-message": "Selecteer het bericht om te rapporteren",
       "select-message-placeholder": "Selecteer een bericht",

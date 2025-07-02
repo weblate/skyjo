@@ -34,9 +34,6 @@
           "title": "Peut-on jouer au Skyjo classique avec le Skyjo action ?",
           "content": "Oui, il vous suffit d'enlever les cartes actions. Si vous êtes sur la version en ligne, séléctionnez la version classique pour jouer au Skyjo."
         }
-      },
-      "banner": {
-        "title": "J'ai besoin de votre avis pour façonner le futur de Skymo!"
       }
     },
     "Search": {
@@ -105,8 +102,8 @@
           "label": "Nombre maximum de joueurs",
           "title": "Nombre maximum de joueurs: {number}"
         },
-        "remove-identical-column": "Supprimer la colonne si cartes identiques",
-        "remove-identical-row": "Supprimer la ligne si cartes identiques",
+        "remove-identical-column": "Supprimer les colonnes identiques",
+        "remove-identical-row": "Supprimer les lignes identiques",
         "nb-columns": {
           "label": "Nombre de colonnes",
           "title": "$number colonnes"
@@ -116,14 +113,14 @@
           "title": "$number lignes"
         },
         "initial-turned-count": {
-          "label": "Nombre de cartes retournées au début de la partie",
-          "title": "{number} cartes seront retournées au début de la partie"
+          "label": "Nombre de cartes initialement révélées",
+          "title": "Au début du jeu, {nombre} de vos cartes seront dévoilées"
         },
         "show-current-score": {
-          "label": "Afficher le score des joueurs pendant la partie"
+          "label": "Afficher le score en temps réel"
         },
         "score-to-end-game": {
-          "label": "Nombre de points pour finir la partie",
+          "label": "Score pour terminer la partie",
           "title": "{number} points seront nécessaires pour finir la partie"
         },
         "first-player-penalty-type": {
@@ -133,13 +130,13 @@
           "item": {
             "multiplier-only": "Multiplicateur seulement",
             "flat-only": "Pénalité plate seulement",
-            "flat-then-multiplier": "Pénalité plate puis multiplicateur",
-            "multiplier-then-flat": "Multiplicateur puis pénalité plate"
+            "flat-then-multiplier": "Pénalité fixe puis multiplicateur",
+            "multiplier-then-flat": "Multiplicateur puis pénalité fixe"
           }
         },
         "first-player-flat-penalty": {
-          "label": "Pénalité plate pour le premier joueur",
-          "title": "Le score du premier joueur sera ajouté par {number} si il n'est pas strictement inférieur aux autres scores de la partie"
+          "label": "Pénalité fixe pour le premier joueur",
+          "title": "{nombre} points supplémentaires sera ajouté au score du premier joueur"
         },
         "first-player-multiplier-penalty": {
           "label": "Multiplicateur de pénalité pour le score du premier joueur",
@@ -226,7 +223,7 @@
         },
         "data-storage-and-retention": {
           "title": "Stockage et conservation des données",
-          "items": "Les données d'utilisation anonymes sont stockées sur des serveurs au sein de l'Union européenne et conservées pendant un maximum d'un an;;Les données de jeu sont stockées dans notre base de données situées à Francfort, Allemagne. Ces données sont conservées pendant la durée des parties actives. Une fois que tous les joueurs quittent une partie, les données associées sont supprimées;;Les informations stockées dans le stockage local de votre navigateur y restent jusqu'à ce que vous effaciez les données de votre navigateur"
+          "items": "Les données d'utilisation anonymes sont stockées sur des serveurs au sein de l'Union européenne et conservées pendant un maximum d'un an;;Les données de jeu sont stockées dans notre base de données situées à Francfort, Allemagne. Ces données sont conservées pendant la durée des parties actives. Une fois que tous les joueurs quittent une partie, les données associées sont supprimées;;Les informations stockées dans le stockage local de votre navigateur y restent jusqu'à ce que vous effaciez les données de votre navigateur;;Les formulaires de retour d'information ne sont conservés que dans le but de répondre et d'examiner les suggestions de développement."
         },
         "data-sharing": {
           "title": "Partage des données",
@@ -281,317 +278,6 @@
     }
   },
   "components": {
-    "Signup": {
-      "head": {
-        "title": "Inscription | Skymo - Jeu de Cartes Skyjo",
-        "description": "Inscrivez-vous sur Skymo pour jouer à Skyjo en ligne. Créez votre compte en quelques clics et commencez à jouer immédiatement.",
-        "keywords": "Skymo,Skyjo,inscription,jeu de cartes en ligne,jeu Skyjo,jeu de cartes,jeu en ligne"
-      },
-      "title": "Inscription",
-      "or": "Ou",
-      "form": {
-        "email": {
-          "label": "Email",
-          "button": "Continuer avec l'email"
-        }
-      },
-      "already-have-account": {
-        "description": "Vous avez déjà un compte ?",
-        "link": "Connectez-vous"
-      }
-    },
-    "Login": {
-      "head": {
-        "title": "Connexion | Skymo - Jeu de Cartes Skyjo",
-        "description": "Connectez-vous à Skymo pour jouer à Skyjo en ligne. Entrez votre email et mot de passe pour accéder à votre compte et commencer à jouer immédiatement.",
-        "keywords": "Skymo,Skyjo,connexion,jeu de cartes en ligne,jeu Skyjo,jeu de cartes,jeu en ligne"
-      },
-      "title": "Connexion",
-      "or": "Ou",
-      "form": {
-        "login": {
-          "label": "Email ou nom d'utilisateur"
-        },
-        "password": {
-          "label": "Mot de passe"
-        },
-        "error": {
-          "login-invalid-credentials": "Email ou mot de passe incorrect",
-          "login-error": "Une erreur est survenue, veuillez réessayer."
-        },
-        "submit": "Connexion"
-      },
-      "signup": {
-        "description": "Vous n'avez pas de compte ?",
-        "link": "S'inscrire maintenant !"
-      },
-      "forgot-password": "Mot de passe oublié ?"
-    },
-    "ForgotPassword": {
-      "head": {
-        "title": "Mot de passe oublié | Skymo - Jeu de Cartes Skyjo",
-        "description": "Réinitialisez votre mot de passe Skymo pour retrouver l'accès à votre compte et continuer à jouer à Skyjo en ligne avec vos amis",
-        "keywords": "Skymo,Skyjo,mot de passe oublié,réinitialiser mot de passe,récupération compte,jeu de cartes en ligne"
-      },
-      "title": "Mot de passe oublié",
-      "description": "Entrez votre adresse email et nous vous enverrons un lien pour réinitialiser votre mot de passe",
-      "form": {
-        "email": {
-          "label": "Adresse email"
-        },
-        "submit": "Envoyer le lien",
-        "sending": "Envoi en cours..."
-      },
-      "success": {
-        "title": "Vérifiez votre email",
-        "message": "Si un compte avec cet email existe, un lien de réinitialisation a été envoyé.",
-        "back": "Retour à la connexion"
-      },
-      "back": "Retour à la connexion"
-    },
-    "ResetPassword": {
-      "head": {
-        "title": "Réinitialiser le mot de passe | Skymo - Jeu de Cartes Skyjo",
-        "description": "Créez un nouveau mot de passe pour votre compte Skymo pour retrouver l'accès et continuer à jouer à Skyjo en ligne",
-        "keywords": "Skymo,Skyjo,réinitialiser mot de passe,nouveau mot de passe,récupération compte,jeu de cartes en ligne"
-      },
-      "title": "Réinitialiser le mot de passe",
-      "description": "Entrez votre nouveau mot de passe ci-dessous",
-      "form": {
-        "password": {
-          "label": "Nouveau mot de passe"
-        },
-        "confirmPassword": {
-          "label": "Confirmer le nouveau mot de passe"
-        },
-        "submit": "Réinitialiser le mot de passe",
-        "resetting": "Réinitialisation...",
-        "error": {
-          "invalidToken": "Token de réinitialisation invalide ou manquant.",
-          "expiredToken": "Le token de réinitialisation a expiré. Veuillez en demander un nouveau.",
-          "default": "Une erreur est survenue lors de la réinitialisation de votre mot de passe."
-        }
-      },
-      "success": {
-        "title": "Mot de passe réinitialisé avec succès",
-        "message": "Votre mot de passe a été réinitialisé. Vous pouvez maintenant vous connecter avec votre nouveau mot de passe.",
-        "back": "Se connecter"
-      },
-      "error": {
-        "title": "Lien de réinitialisation invalide",
-        "invalidToken": "Ce lien de réinitialisation est invalide ou a expiré. Veuillez demander une nouvelle réinitialisation de mot de passe."
-      },
-      "back": "Retour à la connexion"
-    },
-    "RevertEmail": {
-      "success": {
-        "title": "Changement d'email annulé",
-        "message": "Votre changement d'email a été annulé avec succès et votre compte a été sécurisé. Veuillez vérifier votre email pour les instructions de réinitialisation de mot de passe.",
-        "close": "Vous pouvez maintenant fermer cette page."
-      },
-      "error": {
-        "title": "Erreur",
-        "invalidToken": "Ce lien d'annulation est invalide ou a expiré."
-      },
-      "back": "Retour à la connexion"
-    },
-    "OAuthCallbackPage": {
-      "title": "Redirection en cours…"
-    },
-    "Verify": {
-      "head": {
-        "title": "Vérifier l'email | Skymo - Jeu de Cartes Skyjo",
-        "description": "Vérifiez votre adresse email pour finaliser votre compte Skymo et commencer à jouer à Skyjo en ligne avec vos amis.",
-        "keywords": "Skymo,Skyjo,vérification email,vérifier compte,jeu de cartes en ligne"
-      },
-      "title": "Vérifiez votre email",
-      "description": "Nous avons envoyé un code à 6 chiffres à votre adresse email. Veuillez le saisir ci-dessous.",
-      "resend": {
-        "countdown": "Renvoyer le code dans {seconds}s",
-        "prompt": "Vous n'avez pas reçu le code ?",
-        "button": "Demander un nouveau code",
-        "sending": "Envoi en cours..."
-      },
-      "toast": {
-        "success": "Email vérifié avec succès !",
-        "error": "Code PIN invalide. Veuillez réessayer.",
-        "resend-success": "Un nouvel email a été envoyé.",
-        "rate-limit": "Trop de requêtes. Veuillez réessayer plus tard.",
-        "send-failed": "Échec de l'envoi du code PIN. Veuillez réessayer."
-      }
-    },
-    "UserProfile": {
-      "head": {
-        "title": "Profil de {username} | Skymo - Jeu de Cartes Skyjo en Ligne",
-        "description": "Consultez le profil de {username} sur Skymo. Vérifiez ses statistiques de jeu, son activité récente et ses réalisations dans Skyjo en ligne.",
-        "keywords": "Skymo,Skyjo,profil utilisateur,statistiques joueur,statistiques de jeu,parties récentes,réalisations,jeu de cartes en ligne"
-      },
-      "not-found": {
-        "title": "Utilisateur Introuvable",
-        "description": "L'utilisateur \"{username}\" n'existe pas ou a peut-être changé son nom d'utilisateur.",
-        "back-to-home": "Retour à l'Accueil"
-      },
-      "error": {
-        "title": "Quelque Chose s'est Mal Passé",
-        "description": "Nous avons rencontré une erreur lors du chargement de ce profil. Veuillez réessayer plus tard.",
-        "back-to-home": "Retour à l'Accueil"
-      },
-      "stats": {
-        "total-games": "Total des Parties",
-        "win-rate": "Taux de Victoire",
-        "average-rank": "Rang Moyen",
-        "public": "Publique",
-        "private": "Privée"
-      },
-      "sections": {
-        "achievements": "Réalisations",
-        "achievements-coming-soon": "Le système de réalisations arrive bientôt !",
-        "recent-activity": "Activité Récente"
-      },
-      "recent-activity": {
-        "no-activity": "Aucune activité récente à afficher.",
-        "game-code": "Partie #{code}",
-        "rank": "Rang #{rank}",
-        "winner": "Gagnant"
-      },
-      "search": {
-        "placeholder": "Rechercher un nom d'utilisateur"
-      }
-    },
-    "Settings": {
-      "head": {
-        "title": "Paramètres du Compte | Skymo - Jeu de Cartes Skyjo en Ligne",
-        "description": "Gérez vos paramètres de compte sur Skymo. Changez votre nom d'affichage, nom d'utilisateur, email, mot de passe et préférences de compte."
-      },
-      "title": "Paramètres du Compte",
-      "description": "Gérez votre compte et vos informations personnelles.",
-      "Navigation": {
-        "profile": "Profil",
-        "account": "Compte",
-        "password": "Mot de passe"
-      },
-      "buttons": {
-        "save": "Enregistrer les Modifications",
-        "saving": "Enregistrement...",
-        "delete-account": "Supprimer le Compte",
-        "confirm-delete": "Oui, Supprimer Mon Compte"
-      },
-      "messages": {
-        "save-success": "Paramètres enregistrés avec succès !",
-        "save-error": "Impossible d'enregistrer les paramètres. Veuillez réessayer.",
-        "delete-confirmation": "Êtes-vous sûr de vouloir supprimer votre compte ? Cette action ne peut pas être annulée et toutes vos données seront définitivement supprimées.",
-        "password-incorrect": "Le mot de passe actuel est incorrect.",
-        "username-taken": "Ce nom d'utilisateur est déjà pris.",
-        "email-taken": "Cet email est déjà utilisé.",
-        "account-deletion-scheduled": "Votre demande de suppression de compte a été prise en compte et sera traitée dans 48 heures. Un email vous sera envoyé pour confirmer la suppression.",
-        "account-deletion-failed": "Une erreur est survenue lors de la suppression de votre compte. Veuillez réessayer."
-      }
-    },
-    "SettingsProfile": {
-      "title": "Profil",
-      "fields": {
-        "name": {
-          "label": "Nom d'affichage",
-          "description": "Votre nom affiché aux autres joueurs dans les parties.",
-          "placeholder": "Entrez votre nom",
-          "submit": "Modifier mon nom"
-        },
-        "avatar": {
-          "label": "Avatar",
-          "description": "Votre avatar affiché sur votre profil.",
-          "placeholder": "Sélectionnez votre avatar",
-          "submit": "Modifier mon avatar"
-        }
-      }
-    },
-    "SettingsAccount": {
-      "title": "Compte",
-      "fields": {
-        "username": {
-          "label": "Nom d'Utilisateur",
-          "description": "Votre nom d'utilisateur unique utilisé pour l'URL de votre profil.",
-          "placeholder": "Entrez votre nom d'utilisateur",
-          "submit": "Modifier mon nom d'utilisateur"
-        },
-        "email": {
-          "label": "Adresse Email",
-          "description": "Votre adresse email utilisée pour la connexion et les notifications importantes. Pour la sécurité, un email d'avertissement sera envoyé à votre adresse actuelle lorsque vous la modifiez.",
-          "placeholder": "Entrez votre email",
-          "submit": "Modifier mon email"
-        }
-      },
-      "delete-account": {
-        "title": "Supprimer mon compte",
-        "description": "Supprimez votre compte et toutes les données associées. Cette action ne peut pas être annulée et toutes vos données seront définitivement supprimées.",
-        "warning": "Vous ne pourrez pas récupérer votre compte si vous le supprimez.",
-        "confirmation": {
-          "description": "En confirmant, un compte à rebours de 48 heures démarre : vous recevrez un email avec un lien pour annuler la suppression si vous changez d'avis. Votre compte restera accessible durant ce délai. Passé les 48 heures, il sera définitivement supprimé et un email de confirmation vous sera envoyé.",
-          "input-label": "Tapez SUPPRIMER pour confirmer",
-          "input-placeholder": "SUPPRIMER",
-          "cancel-button": "Annuler",
-          "delete-button": "Supprimer mon compte"
-        }
-      }
-    },
-    "SettingsPassword": {
-      "title": "Changer de mot de passe",
-      "fields": {
-        "password": {
-          "label": "Mot de Passe",
-          "description": "Changez votre mot de passe de compte.",
-          "current-password": "Mot de Passe Actuel",
-          "new-password": "Nouveau Mot de Passe",
-          "confirm-password": "Confirmer le Nouveau Mot de Passe",
-          "current-placeholder": "Entrez votre mot de passe actuel",
-          "new-placeholder": "Entrez votre nouveau mot de passe",
-          "confirm-placeholder": "Confirmez votre nouveau mot de passe",
-          "submit": "Modifier mon mot de passe"
-        }
-      }
-    },
-    "CancelAccountDeletion": {
-      "invalid-token": "Token invalide",
-      "success": {
-        "title": "Suppression du compte annulée",
-        "description": "La suppression de votre compte a été annulée avec succès. Votre compte est sécurisé et ne sera pas supprimé.",
-        "secure-message": "Votre compte est maintenant sécurisé et restera actif. Vous pouvez continuer à utiliser votre compte normalement."
-      },
-      "failed": {
-        "title": "Échec de l'annulation",
-        "description": "Nous n'avons pas pu annuler la suppression de votre compte. Veuillez réessayer ou contacter le support.",
-        "general-error": "Une erreur est survenue lors de l'annulation de la suppression de votre compte. Veuillez réessayer ou contacter le support.",
-        "help-message": "Une erreur est survenue lors de l'annulation de la suppression de votre compte. Veuillez réessayer ou contacter le support."
-      },
-      "expired": {
-        "title": "Lien d'annulation expiré",
-        "description": "Ce lien d'annulation a expiré. Si vous souhaitez toujours conserver votre compte, veuillez contacter le support.",
-        "help-message": "La période d'annulation de 48 heures a expiré. Veuillez contacter le support si vous avez besoin d'aide."
-      },
-      "actions": {
-        "return-homepage": "Retour à l'accueil"
-      }
-    },
-    "Onboarding": {
-      "title": "Embarquement en cours...",
-      "subtitle": "Complétez votre profil et lancez-vous dans l'aventure Skymo !",
-      "form": {
-        "name": {
-          "label": "Nom du joueur",
-          "placeholder": "Micheeel",
-          "description": "Affiché aux autres joueurs dans les parties"
-        },
-        "username": {
-          "label": "Nom d'utilisateur",
-          "placeholder": "micheel442",
-          "description": "Pour la connexion et les profil"
-        },
-        "password": {
-          "label": "Mot de passe",
-          "placeholder": "Entrez votre mot de passe"
-        },
-        "submit": "Prêt à jouer !"
-      }
-    },
     "Banner": {
       "title": "J'ai besoin de <gform>votre avis</gform> pour construire l'avenir de Skymo !"
     },
@@ -648,9 +334,6 @@
         "success": {
           "title": "Merci de nous avoir fait part de vos commentaires !",
           "description": "Vos commentaires nous ont aidés à améliorer notre site web sur les jeux, et nous vous en sommes très reconnaissants."
-        },
-        "error": {
-          "title": "Une erreur est survenue, veuillez réessayer."
         }
       },
       "email-input": {
@@ -709,7 +392,27 @@
     "LanguageCombobox": {
       "select-language": "Sélectionner la langue",
       "search-language": "Rechercher une langue",
-      "no-language-found": "Aucune langue trouvée"
+      "no-language-found": "Aucune langue trouvée",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "MenuDropdown": {
       "button": {
@@ -1076,11 +779,9 @@
     "logout-error": "Une erreur inattendue s'est produite lors de votre déconnexion.",
     "check-username-error": "Nous n'avons pas pu vérifier si le nom d'utilisateur est disponible. Veuillez réessayer.",
     "unknown-auth-error": "Une erreur d'authentification inconnue s'est produite. Veuillez réessayer.",
-    "user-creation-failed": "Nous n'avons pas pu créer l'utilisateur pour le moment. Veuillez réessayer.",
     "get-user-error": "Nous n'avons pas pu récupérer le profil utilisateur. Veuillez réessayer plus tard.",
     "get-user-games-error": "Nous n'avons pas pu charger les parties de l'utilisateur. Veuillez actualiser la page.",
     "get-user-stats-error": "Nous n'avons pas pu charger les statistiques de l'utilisateur. Veuillez actualiser la page.",
-    "user-verification-not-found": "L'utilisateur que vous recherchez n'a pas pu être trouvé.",
     "username-taken": "Ce nom d'utilisateur est déjà pris. Veuillez en choisir un autre.",
     "username-same-as-current": "C'est déjà votre nom d'utilisateur.",
     "email-taken": "Cette adresse email est déjà utilisée. Veuillez en utiliser une différente.",

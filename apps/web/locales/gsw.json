@@ -104,9 +104,6 @@
           "content": "Jo, du muesch eifach d'Aktionscharte usemache. Wenn d'Online-Version spielsch, wähl d'Klassisch-Version us zum Skyjo spiele."
         }
       },
-      "banner": {
-        "title": "Ich bruuch <gform>dii Feedback</gform>, zum d Zuekunft vo Skymo z gschalte!"
-      },
       "name-input-placeholder": "Name",
       "explanation": {
         "title": "Was isch Skyjo?",
@@ -350,7 +347,27 @@
     "LanguageCombobox": {
       "select-language": "Sprach usgwähle",
       "search-language": "Sprooch sueche",
-      "no-language-found": "Kei Sprach gfunde"
+      "no-language-found": "Kei Sprach gfunde",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "MenuDropdown": {
       "discord": "Discord",
@@ -428,54 +445,7 @@
       }
     },
     "SettingsDialog": {
-      "display": {
-        "chat": {
-          "chat-notification-size": {
-            "values": {
-              "big": "Gross",
-              "small": "Chlii",
-              "normal": "Normal"
-            },
-            "label": "Grössi vo de Chat-Benachrichtigung"
-          },
-          "title": "Chat",
-          "chat-visibility": "Chat-Sichtbarkeit"
-        },
-        "gameplay": {
-          "gameboard-size": {
-            "big-warning": "Cha Display uf Mobile kaputt mache",
-            "label": "D'Grössi vo dim Spiilbrätt",
-            "values": {
-              "normal": "Normal",
-              "big": "Gross"
-            }
-          },
-          "title": "Gameplay",
-          "enlarge-active-player-board": "Vergrössered s Spielfäld vom Spieler, wo dra isch",
-          "timer": {
-            "label": "Timer-Ahzeigemodus",
-            "description": "Im Smart-Modus wird de Timer bi de Halbziit und de letschte 15 Sekunde aazeigt.",
-            "modes": {
-              "never": "Niemals",
-              "smart": "Gschid",
-              "always": "Immer"
-            }
-          }
-        },
-        "title": "Aazeig",
-        "mobile": {
-          "title": "Mobile",
-          "switch-to-player-who-is-playing": "Automatisches Wächsle zum Spieler wo am Spiele isch",
-          "show-preview-opponents-cards": "Zeig e Vorschau vo de Charte vom Gägner i de Gägnerlischte"
-        }
-      },
       "title": "Istellige",
-      "general": {
-        "title": "Allgmein",
-        "language": "Sprach",
-        "language-warn": "Nur uf de Startsite änderbar",
-        "appearance": "Uusgseh"
-      },
       "audio": {
         "title": "Audio",
         "toggle": {
@@ -532,9 +502,6 @@
         "success": {
           "title": "Merci vielmol für dis Feedback!",
           "description": "Dini Iisichte händ üs ghoffe, üsi Game-Website z'verbessere, und mir sind dir würklich dankbar."
-        },
-        "error": {
-          "title": "Es isch en Fehler ufträte, bitte versuechs nomal."
         }
       },
       "email-input": {
@@ -617,7 +584,6 @@
       "total": "Total"
     },
     "ReportDialog": {
-      "report-username": "Mäld de Benutzername",
       "report-message": "Meld e Nachricht",
       "select-message": "Wähl d'Nachricht us, wo du wotsch mälde",
       "title": "Rapport {username}",

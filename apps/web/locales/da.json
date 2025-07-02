@@ -24,9 +24,6 @@
           "content": "For at vinde i Skyjo er det afgørende at have den lavest mulige score. For at opnå dette skal du anvende en afbalanceret strategi mellem at have de laveste kort, afsløre dine kort og skabe kolonner af identiske kort. Undgå at vende først, medmindre du er markant foran med synlige kort. Husk at beholde allerede synlige kort for at forsøge at skabe kolonner med dem, i stedet for at optimere dem individuelt."
         }
       },
-      "banner": {
-        "title": "Jeg har brug for <gform>din feedback</gform> for at forme Skymos fremtid!"
-      },
       "name-input-placeholder": "Navn",
       "explanation": {
         "title": "Hvad er Skyjo?",
@@ -288,7 +285,27 @@
     "LanguageCombobox": {
       "select-language": "Vælg sprog",
       "search-language": "Søgesprog",
-      "no-language-found": "Ingen sprog fundet"
+      "no-language-found": "Ingen sprog fundet",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "Rules": {
       "round-start": {
@@ -369,7 +386,6 @@
     },
     "ReportDialog": {
       "title": "Rapportér {username}",
-      "report-username": "Rapportér brugernavnet",
       "select-message": "Vælg den meddelelse, der skal rapporteres",
       "description": "Rapportér brugernavnet eller en besked fra {username}, hvis det virker upassende.",
       "report-message": "Rapportér en besked",
@@ -423,9 +439,6 @@
         "success": {
           "title": "Tak for din feedback!",
           "description": "Din indsigt har hjulpet os med at forbedre vores spilhjemmeside, og vi er oprigtigt taknemmelige."
-        },
-        "error": {
-          "title": "Der opstod en fejl. Prøv igen."
         }
       },
       "email-input": {
@@ -520,53 +533,6 @@
     },
     "SettingsDialog": {
       "title": "Indstillinger",
-      "general": {
-        "title": "Generelt",
-        "language": "Sprog",
-        "language-warn": "Kan kun ændres på startsiden",
-        "appearance": "Udseende"
-      },
-      "display": {
-        "title": "Skærm",
-        "mobile": {
-          "title": "Mobil",
-          "switch-to-player-who-is-playing": "Skift automatisk til den spiller, der spiller",
-          "show-preview-opponents-cards": "Vis en forhåndsvisning af modstandernes kort på modstanderlisten"
-        },
-        "chat": {
-          "title": "Chat",
-          "chat-visibility": "Chat-synlighed",
-          "chat-notification-size": {
-            "values": {
-              "normal": "Normal",
-              "big": "Stor",
-              "small": "Lille"
-            },
-            "label": "Størrelse på chatnotifikation"
-          }
-        },
-        "gameplay": {
-          "title": "Gameplay",
-          "gameboard-size": {
-            "label": "Størrelse på dit spillebræt",
-            "big-warning": "Kan forstyrre visningen på mobilen",
-            "values": {
-              "big": "Stor",
-              "normal": "Normal"
-            }
-          },
-          "enlarge-active-player-board": "Forstør brættet for den spiller, hvis tur det er",
-          "timer": {
-            "label": "Timer-visningstilstand",
-            "description": "Smart'-tilstand viser timeren ved halvleg og de sidste 15 sekunder.",
-            "modes": {
-              "never": "Aldrig",
-              "smart": "Smart",
-              "always": "Altid"
-            }
-          }
-        }
-      },
       "audio": {
         "title": "Lyd",
         "toggle": {

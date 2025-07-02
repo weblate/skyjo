@@ -181,9 +181,6 @@
           "content": "Jo, du muasst nua de Aktionskarten wegtuan. Wennst de Online-Version spuist, dann wehl de klassische Version aus, um Skyjo zum spuin."
         }
       },
-      "banner": {
-        "title": "I brauch <gform>dei Feedback</gform>, um de Zukunft vo Skymo zum gstoitn!"
-      },
       "name-input-placeholder": "Nama"
     },
     "Search": {
@@ -406,7 +403,27 @@
     "LanguageCombobox": {
       "select-language": "Språch auswähln",
       "search-language": "Sproch suacha",
-      "no-language-found": "Koane Sproch gfundn"
+      "no-language-found": "Koane Sproch gfundn",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "MenuDropdown": {
       "button": {
@@ -451,8 +468,7 @@
       "report-message": "A Nachricht meldn",
       "select-message": "Wähl d'Noachricht aus, de wo g'meldet wern soi",
       "select-message-placeholder": "Wähle a Nachricht aus",
-      "no-messages": "Koane Nachrichten vo dem Nutza gfundn",
-      "report-username": "Meld an Benutzernama"
+      "no-messages": "Koane Nachrichten vo dem Nutza gfundn"
     },
     "Chat": {
       "title": "Ratsch"
@@ -498,9 +514,6 @@
         "success": {
           "title": "Dank schee fia dei Rückmeldung!",
           "description": "Eire Einblicke ham uns ghoifa, unsare Spui-Webseitn z'verbessern, und mia san eich wirklich dankbar."
-        },
-        "error": {
-          "title": "A Fehler is aufdradn, bitte noamoi probiern."
         }
       },
       "email-input": {
@@ -566,53 +579,6 @@
     },
     "SettingsDialog": {
       "title": "Eihstellunga",
-      "general": {
-        "title": "Generoi",
-        "language": "Språch",
-        "language-warn": "Nua auf da Hoamseitn zum ändan",
-        "appearance": "Aussehen"
-      },
-      "display": {
-        "title": "Ozoag",
-        "mobile": {
-          "title": "Mobil",
-          "switch-to-player-who-is-playing": "Automatisch zum Spieler wechsla, der grod spuit",
-          "show-preview-opponents-cards": "Zeig a Vorschau vo de Kartn vom Gegna in da Gegnalistn"
-        },
-        "chat": {
-          "title": "Ratsch",
-          "chat-visibility": "Sichtbarkeit vom Chat",
-          "chat-notification-size": {
-            "label": "Gräß vom Benochrichtigungsfensterl vom Chat",
-            "values": {
-              "small": "Kloa",
-              "normal": "Ganz normal",
-              "big": "Groß"
-            }
-          }
-        },
-        "gameplay": {
-          "title": "Spuiart",
-          "gameboard-size": {
-            "values": {
-              "normal": "Normal",
-              "big": "Groß"
-            },
-            "label": "Größ vo deim Spui-Brett",
-            "big-warning": "Ko am Handy d'Anzeig z'brocha"
-          },
-          "enlarge-active-player-board": "Vagressere as Brett vom Spuier, der grod dro is",
-          "timer": {
-            "label": "Zeitanzeigemodus",
-            "description": "Da Smart-Modus zoagt d'Zeituhr bei da Hoibzeit und de letztn 15 Sekundn o.",
-            "modes": {
-              "never": "Niemois",
-              "smart": "Gscheid",
-              "always": "Imma"
-            }
-          }
-        }
-      },
       "audio": {
         "title": "Audio",
         "toggle": {

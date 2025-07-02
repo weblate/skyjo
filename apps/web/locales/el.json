@@ -1,9 +1,6 @@
 {
   "pages": {
     "Index": {
-      "banner": {
-        "title": "Χρειάζομαι <gform>τα σχόλιά σας</gform> για να διαμορφώσω το μέλλον του Skymo!"
-      },
       "explanation": {
         "button": "Δείτε τους κανόνες",
         "title": "Τι είναι το Skyjo;",
@@ -378,54 +375,7 @@
       }
     },
     "SettingsDialog": {
-      "display": {
-        "title": "Προβολή",
-        "mobile": {
-          "title": "Κινητό",
-          "switch-to-player-who-is-playing": "Αυτόματη εναλλαγή στον παίκτη που αγωνίζεται",
-          "show-preview-opponents-cards": "Εμφάνιση προεπισκόπησης των καρτών αντιπάλων στη λίστα αντιπάλων"
-        },
-        "chat": {
-          "title": "Συνομιλία",
-          "chat-visibility": "Ορατότητα συνομιλίας",
-          "chat-notification-size": {
-            "label": "Μέγεθος ειδοποίησης συνομιλίας",
-            "values": {
-              "small": "Μικρό",
-              "normal": "Κανονική",
-              "big": "Μεγάλο"
-            }
-          }
-        },
-        "gameplay": {
-          "title": "Gameplay",
-          "gameboard-size": {
-            "label": "Μέγεθος του ταμπλό του παιχνιδιού σας",
-            "big-warning": "Μπορεί να προκαλέσει προβλήματα στην εμφάνιση σε κινητά",
-            "values": {
-              "normal": "Κανονική",
-              "big": "Μεγάλο"
-            }
-          },
-          "enlarge-active-player-board": "Μεγέθυνση του πίνακα του παίκτη που έχει σειρά",
-          "timer": {
-            "label": "Λειτουργία εμφάνισης χρονοδιακόπτη",
-            "description": "Η έξυπνη λειτουργία εμφανίζει το χρονόμετρο στο ημίχρονο και στα τελευταία 15 δευτερόλεπτα.",
-            "modes": {
-              "never": "Ποτέ",
-              "smart": "Έξυπνο",
-              "always": "Πάντα"
-            }
-          }
-        }
-      },
       "title": "Ρυθμίσεις",
-      "general": {
-        "title": "Γενικά",
-        "language": "Γλώσσα",
-        "language-warn": "Αλλάζει μόνο στην αρχική σελίδα",
-        "appearance": "Εμφάνιση"
-      },
       "audio": {
         "title": "Ήχος",
         "toggle": {
@@ -476,9 +426,6 @@
         "success": {
           "title": "Ευχαριστούμε για τα σχόλιά σας!",
           "description": "Οι ιδέες σας μας βοήθησαν να βελτιώσουμε τον ιστότοπο του παιχνιδιού μας και είμαστε πραγματικά ευγνώμονες."
-        },
-        "error": {
-          "title": "Παρουσιάστηκε σφάλμα, παρακαλώ δοπκιμάστε ξανά."
         }
       },
       "email-input": {
@@ -503,7 +450,27 @@
     "LanguageCombobox": {
       "select-language": "Επιλογή γλώσσας",
       "search-language": "Γλώσσα αναζήτησης",
-      "no-language-found": "Δεν βρέθηκε γλώσσα"
+      "no-language-found": "Δεν βρέθηκε γλώσσα",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "OpponentsMobileView": {
       "opponents-list": {
@@ -619,7 +586,6 @@
     "ReportDialog": {
       "title": "Αναφορά {username}",
       "description": "Αναφέρετε το όνομα χρήστη ή ένα μήνυμα από το/τη {username}, αν φαίνεται ακατάλληλο.",
-      "report-username": "Αναφέρετε το όνομα χρήστη",
       "report-message": "Αναφορά μηνύματος",
       "select-message": "Επιλέξτε το μήνυμα για αναφορά",
       "select-message-placeholder": "Επιλέξτε ένα μήνυμα",

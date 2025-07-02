@@ -7,9 +7,6 @@
   "pages": {
     "Index": {
       "name-input-placeholder": "Noome",
-      "banner": {
-        "title": "Ik bruuk <gform>dien Feedback</gform>, om de Tokumst fon Skymo tou foarmjen!"
-      },
       "faq": {
         "how-to-win": {
           "content": "Uum bie Skyjo to winnen, is et essentieel, dät du ju läichste Punktetaal muugelk heest. Uum dit to beloangjen, nimt een uutwoogene Strategie an twiske dät Heben fon do läichste Koarten, dät Apdäkken fon dien Koarten, un dät Moakjen fon Riegen fon identiske Koarten. Fermied dät eerste Uumeklapjen, buute wan du düütelk in't Foaruut bäst mäd sichtboare Koarten. Toank deeran, al sichtboare Koarten to behoolen, uum to fersäiken, Riegen deeruut to moakjen, anstee fon do eenpeld to optimierjen.",
@@ -350,47 +347,6 @@
       }
     },
     "SettingsDialog": {
-      "display": {
-        "title": "Wiesje",
-        "mobile": {
-          "switch-to-player-who-is-playing": "Automatisk wikselje nei de spiler, {who_is_playing}",
-          "title": "Mobiel",
-          "show-preview-opponents-cards": "Wies en Foorschau fon do Juunspreekerkoarten in ju Juunspreekerlieste"
-        },
-        "chat": {
-          "title": "Snak",
-          "chat-visibility": "Sichtboarhaid fon dän Chat",
-          "chat-notification-size": {
-            "label": "Grööte fon Tjoot-Bescheed",
-            "values": {
-              "small": "Lüttje",
-              "normal": "Normaal",
-              "big": "Groot"
-            }
-          }
-        },
-        "gameplay": {
-          "title": "Gameplay",
-          "gameboard-size": {
-            "big-warning": "Kann dat Display op mobiel stuk moake",
-            "values": {
-              "normal": "Normaal",
-              "big": "Groot"
-            },
-            "label": "Grööte fon dien Speelbrääd"
-          },
-          "enlarge-active-player-board": "Fergratterje dät Boord fon dän Spieler, die an de Riege is",
-          "timer": {
-            "label": "Wiesmodus för de Tiedteller",
-            "description": "Smart mode' wiest de timer an de heale Tied un de lääste 15 Sekunnen an.",
-            "modes": {
-              "never": "Nimmer",
-              "smart": "Klook",
-              "always": "Aaltied"
-            }
-          }
-        }
-      },
       "audio": {
         "volume": {
           "label": "Luudstärke ({volume}%)"
@@ -400,13 +356,7 @@
           "label": "Audio an"
         }
       },
-      "title": "Instellengen",
-      "general": {
-        "language-warn": "Bloot ap ju Startsiede tou annerjen",
-        "appearance": "Uutsjoon",
-        "title": "Algemeen",
-        "language": "Spräke"
-      }
+      "title": "Instellengen"
     },
     "KickVote": {
       "player-has-not-voted": {
@@ -458,7 +408,6 @@
       "title": "Melde {username}",
       "select-message-placeholder": "Säik {a} Bouk",
       "description": "Mälde de Gebruukersnaam of n Naricht van {username}, wan et ünnötich is.",
-      "report-username": "Mäld de Gebrukersnaam",
       "report-message": "Meld en Naricht",
       "select-message": "Säik de Naricht uut, ju Du mälde woltst",
       "no-messages": "Keen Narichten fun dissen Benutser funnen",
@@ -520,9 +469,6 @@
         "success": {
           "title": "Moin, danke för dien Feedback!",
           "description": "Jouw Insichten hääbe uus holpen, uus Spul-Websteed to ferbeetern, un wi sände die deerfoar wuddelk dankboar."
-        },
-        "error": {
-          "title": "N Fehler is apkeemen, fersäik et jädden wier."
         }
       },
       "email-input": {
@@ -558,7 +504,24 @@
       "search-language": "Sproak söke",
       "no-language-found": "Neen Sproake fuunen",
       "locale": {
-        "uk": "Українська"
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
       }
     },
     "MenuDropdown": {

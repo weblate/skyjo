@@ -34,9 +34,6 @@
           "title": "Kann man klassisches Skyjo mit Skyjo Action spielen?",
           "content": "Ja, du musst nur die Aktionskarten entfernen. Wenn du die Online-Version spielst, wähle die klassische Version aus, um Skyjo zu spielen."
         }
-      },
-      "banner": {
-        "title": "Ich brauche <gform>Dein Feedback</gform>, um die Zukunft von Skymo zu gestalten!"
       }
     },
     "Search": {
@@ -326,7 +323,27 @@
     "LanguageCombobox": {
       "no-language-found": "Keine Sprache gefunden",
       "select-language": "Sprache auswählen",
-      "search-language": "Sprache suchen"
+      "search-language": "Sprache suchen",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "Footer": {
       "disclaimer": {
@@ -356,54 +373,7 @@
           "label": "Audio aktivieren"
         }
       },
-      "display": {
-        "chat": {
-          "chat-notification-size": {
-            "values": {
-              "big": "Groß",
-              "small": "Klein",
-              "normal": "Normal"
-            },
-            "label": "Größe der Chat-Benachrichtigung"
-          },
-          "chat-visibility": "Sichtbarkeit des Chats",
-          "title": "Chat"
-        },
-        "mobile": {
-          "show-preview-opponents-cards": "Zeige eine Vorschau der gegnerischen Karten in der Gegnerliste",
-          "title": "Mobil",
-          "switch-to-player-who-is-playing": "Automatisch zum aktuell spielenden Spieler wechseln"
-        },
-        "title": "Anzeige",
-        "gameplay": {
-          "timer": {
-            "label": "Timer-Anzeigemodus",
-            "description": "Der Smart-Modus zeigt den Timer zur Halbzeit und in den letzten 15 Sekunden an.",
-            "modes": {
-              "smart": "Intelligent",
-              "never": "Nie",
-              "always": "Immer"
-            }
-          },
-          "gameboard-size": {
-            "label": "Größe deines Spielbretts",
-            "big-warning": "Kann Anzeige auf Mobilgeräten negativ beeinträchtigen",
-            "values": {
-              "normal": "Normal",
-              "big": "Groß"
-            }
-          },
-          "title": "Spielablauf",
-          "enlarge-active-player-board": "Das Brett des Spielers, der am Zug ist, vergrößern"
-        }
-      },
-      "title": "Einstellungen",
-      "general": {
-        "appearance": "Erscheinungsbild",
-        "language-warn": "Nur auf der Startseite änderbar",
-        "title": "Allgemein",
-        "language": "Sprache"
-      }
+      "title": "Einstellungen"
     },
     "ChatMessage": {
       "context-menu": {
@@ -527,9 +497,6 @@
         "success": {
           "description": "Deine Einblicke haben uns geholfen, unsere Game-Website zu verbessern, und dafür sind wir dir wirklich dankbar.",
           "title": "Vielen Dank für dein Feedback!"
-        },
-        "error": {
-          "title": "Ein Fehler ist aufgetreten, bitte versuche es erneut."
         }
       },
       "email-input": {
@@ -670,7 +637,6 @@
       },
       "title": "{username} melden",
       "description": "Melde den Benutzernamen oder eine Nachricht von {username}, wenn sie unangemessen erscheint.",
-      "report-username": "Melde den Benutzernamen",
       "select-message": "Wähle die zu meldende Nachricht aus",
       "select-message-placeholder": "Wähle eine Nachricht aus",
       "report-message": "Eine Nachricht melden"

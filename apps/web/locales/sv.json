@@ -25,9 +25,6 @@
           "content": "Ja, du behöver bara ta bort actionkorten. Om du spelar onlineversionen väljer du den klassiska versionen för att spela Skyjo."
         }
       },
-      "banner": {
-        "title": "Jag behöver <gform>din feedback</gform> för att forma Skymos framtid!"
-      },
       "explanation": {
         "title": "Vad är Skyjo?",
         "content": "Skyjo är ett spännande kortspel och ett utmärkt brädspel som uppskattas av spelfantaster över hela världen. Detta kortspel för flera spelare är utformat för 2 till 8 spelare, där varje spelare får 12 kort, initialt dolda. Huvudmålet med spelet är att få så få poäng som möjligt. Spelet avslutas så snart en spelare når 100 poäng. Spelreglerna är enkla och lätta att förstå, vilket gör det till ett idealiskt val för spelkvällar med familj eller vänner. Spelentusiaster kommer att bli glada över att få veta att det nu är möjligt att spela Skyjo online gratis!",
@@ -284,7 +281,27 @@
     "LanguageCombobox": {
       "select-language": "Välj språk",
       "search-language": "Sök språk",
-      "no-language-found": "Inget språk hittades"
+      "no-language-found": "Inget språk hittades",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "RulesDialog": {
       "title": "Spelregler",
@@ -356,54 +373,7 @@
       }
     },
     "SettingsDialog": {
-      "general": {
-        "language-warn": "Kan endast ändras på startsidan",
-        "title": "Allmänt",
-        "language": "Språk",
-        "appearance": "Utseende"
-      },
       "title": "Inställningar",
-      "display": {
-        "title": "Visa",
-        "mobile": {
-          "title": "Mobil",
-          "switch-to-player-who-is-playing": "Växla automatiskt till spelaren som spelar",
-          "show-preview-opponents-cards": "Visa en förhandsgranskning av motståndares kort i motståndarlistan"
-        },
-        "chat": {
-          "title": "Chatt",
-          "chat-visibility": "Chattvisning",
-          "chat-notification-size": {
-            "label": "Storlek på chattavisering",
-            "values": {
-              "small": "Liten",
-              "normal": "Normal",
-              "big": "Stor"
-            }
-          }
-        },
-        "gameplay": {
-          "title": "Spelupplägg",
-          "gameboard-size": {
-            "label": "Storleken på ditt spelbräde",
-            "big-warning": "Kan skada skärmen på mobilen",
-            "values": {
-              "normal": "Normal",
-              "big": "Stor"
-            }
-          },
-          "enlarge-active-player-board": "Förstora spelplanen för den spelare vars tur det är",
-          "timer": {
-            "label": "Visningsläge för timer",
-            "description": "Smart läge visar timern vid halvtid och de sista 15 sekunderna.",
-            "modes": {
-              "never": "Aldrig",
-              "smart": "Smart",
-              "always": "Alltid"
-            }
-          }
-        }
-      },
       "audio": {
         "title": "Ljud",
         "toggle": {
@@ -457,9 +427,6 @@
         "success": {
           "title": "Tack för din feedback!",
           "description": "Dina insikter har hjälpt oss att förbättra vår spelwebbplats, och vi är verkligen tacksamma."
-        },
-        "error": {
-          "title": "Ett fel uppstod, försök igen."
         }
       },
       "email-input": {
@@ -619,7 +586,6 @@
     "ReportDialog": {
       "title": "Rapportera {username}",
       "description": "Rapportera användarnamnet eller ett meddelande från {username} om det verkar olämpligt.",
-      "report-username": "Rapportera användarnamnet",
       "report-message": "Rapportera ett meddelande",
       "select-message": "Välj meddelandet att rapportera",
       "select-message-placeholder": "Välj ett meddelande",
