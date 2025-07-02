@@ -287,6 +287,12 @@
         "keywords": "Skymo,Skyjo,règles de Skyjo,comment jouer à Skyjo,jeu Skyjo,règles du jeu de cartes,jeu de cartes en ligne,instructions du jeu,guide du gameplay"
       },
       "title": "Règles du jeu"
+    },
+    "Signup": {
+      "head": {
+        "title": "Inscription | Skymo - Jeu de Cartes Skyjo en Ligne",
+        "description": "Inscrivez-vous sur Skymo pour jouer à Skyjo en ligne. Créez un compte gratuit en quelques secondes et jouez immédiatement avec vos amis ou d'autres joueurs."
+      }
     }
   },
   "components": {
