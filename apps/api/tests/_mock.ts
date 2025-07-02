@@ -1,5 +1,5 @@
-import type { BaseService } from "@/socketio/services/base.service.js"
-import type { GameSocket } from "@/socketio/types/gameSocket.js"
+import type { BaseService } from "@/realtime/base/base.service.js"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import type { Game } from "@skymo/core"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { vi } from "vitest"

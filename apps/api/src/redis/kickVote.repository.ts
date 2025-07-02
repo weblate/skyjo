@@ -1,4 +1,8 @@
-import { KickVote, type KickVoteDb, type KickVoteToJson } from "@skymo/core"
+import {
+  KickVote,
+  type KickVoteRedisDb,
+  type KickVoteToJson,
+} from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import { RedisClient } from "./client.js"
@@ -17,7 +21,7 @@ export class KickVoteRepository extends RedisClient {
     const key = this.getKickVoteKey(gameCode)
 
     try {
-      const kickVote = (await client.json.get(key)) as KickVoteDb | null
+      const kickVote = (await client.json.get(key)) as KickVoteRedisDb | null
       return kickVote ? this.deserializeKickVote(kickVote) : null
     } catch (error) {
       Logger.debug(`Kick vote for game ${gameCode} not found in Redis`, {
@@ -133,7 +137,7 @@ export class KickVoteRepository extends RedisClient {
   }
 
   //#region
-  private deserializeKickVote(kickVoteDb: KickVoteDb): KickVote {
+  private deserializeKickVote(kickVoteDb: KickVoteRedisDb): KickVote {
     return new KickVote(kickVoteDb)
   }
 

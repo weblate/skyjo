@@ -1,6 +1,6 @@
 import { beforeEach, describe, expect, it } from "vitest"
 import { Constants } from "../../constants.js"
-import type { GameDb } from "../../types/game.js"
+import type { GameRedisDb } from "../../types/game.js"
 import { Card } from "../Card.js"
 import { Player } from "../Player.js"
 import { Settings } from "../Settings.js"
@@ -18,7 +18,7 @@ describe("Player", () => {
 
   beforeEach(() => {
     player = new Player(
-      { username: "username", avatar: Constants.AVATARS.BEE },
+      { name: "name", avatar: Constants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     player.cards = [
@@ -34,7 +34,7 @@ describe("Player", () => {
 
   //#region Player class
   it("should populate the class without cards", () => {
-    const dbPlayer: GameDb["players"][number] = {
+    const dbPlayer: GameRedisDb["players"][number] = {
       id: crypto.randomUUID(),
       name: "name",
       avatar: Constants.AVATARS.BEE,
@@ -47,6 +47,7 @@ describe("Player", () => {
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
+      userId: undefined,
       cards: [],
     }
 
@@ -62,7 +63,7 @@ describe("Player", () => {
   })
 
   it("should populate the class with cards", () => {
-    const dbPlayer: GameDb["players"][number] = {
+    const dbPlayer: GameRedisDb["players"][number] = {
       id: crypto.randomUUID(),
       name: "name",
       avatar: Constants.AVATARS.BEE,
@@ -75,6 +76,7 @@ describe("Player", () => {
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
+      userId: undefined,
       cards: [
         [new Card(0), new Card(1), new Card(2)],
         [new Card(3), new Card(4), new Card(5)],
@@ -401,7 +403,7 @@ describe("Player", () => {
 
       expect(playerToJson).toStrictEqual({
         id: player.id,
-        name: "username",
+        name: "name",
         socketId: TEST_SOCKET_ID,
         avatar: Constants.AVATARS.BEE,
         cards: player.cards.map((column) =>

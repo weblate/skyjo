@@ -4,8 +4,8 @@ export const report = z.object({
   targetId: z.string(),
 })
 
-export const reportUsername = report.extend({
-  type: z.literal("username"),
+export const reportName = report.extend({
+  type: z.literal("name"),
 })
 
 export const reportMessage = report.extend({
@@ -13,7 +13,7 @@ export const reportMessage = report.extend({
   messageId: z.string().uuid(),
 })
 
-export type ReportUsername = z.infer<typeof reportUsername>
+export type ReportName = z.infer<typeof reportName>
 export type ReportMessage = z.infer<typeof reportMessage>
 
-export type Report = ReportUsername | ReportMessage
+export type Report = ReportName | ReportMessage

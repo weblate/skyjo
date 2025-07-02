@@ -16,3 +16,5 @@ export * from "./validations/play.js"
 export * from "./validations/player.js"
 
 export * from "./constants.js"
+
+export * from "./utils/settings.js"

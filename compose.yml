@@ -20,18 +20,18 @@ services:
       - NODE_OPTIONS=--max-old-space-size=8192 --max-http-header-size=16384 --expose-gc --use-largepages=silent
     restart: always
 
-  cleanup-worker:
-    image: ghcr.io/maxentr/skymo/cleanup-worker:latest
+  workers:
+    image: ghcr.io/maxentr/skymo/workers:latest
     build:
       context: .
-      dockerfile: ./apps/cleanup-worker/Dockerfile
+      dockerfile: ./apps/workers/Dockerfile
     depends_on:
       - redis
     networks:
       - internal
     env_file:
       - .env
-      - ./apps/cleanup-worker/.env
+      - ./apps/workers/.env
     environment:
       - NODE_ENV=production
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
@@ -96,6 +96,23 @@ services:
       - 3002:3001
     restart: always
 
+  postgres:
+    image: postgres:17.4-alpine3.21
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - internal
+      - external
+    env_file:
+      - .env
+
 networks:
   internal:
   external:
@@ -104,3 +121,4 @@ volumes:
   redis-data:
   seq-data:
   uptime-kuma-data:
+  postgres-data:

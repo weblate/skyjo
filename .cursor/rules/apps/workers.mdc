@@ -1,0 +1,111 @@
+---
+description: This rule file provides informations about the workers app, the jobs it handles.
+globs: apps/workers/**/*.*
+alwaysApply: false
+---
+# Workers Rules
+
+## Purpose
+Background job processors that handle asynchronous tasks like email sending, game cleanup, and data processing.
+
+## Notes
+- **Runtime**: Node.js with [TypeScript](mdc:.cursor/rules/lib/typescript.mdc).
+- **Queue System**: BullMQ with [Redis](mdc:.cursor/rules/lib/redis.mdc) for background jobs.
+- **Email**: Uses [React Email](mdc:.cursor/rules/lib/react.mdc) templates from `@/transactional` and sends via Resend.
+- **Database**: [Drizzle ORM](mdc:.cursor/rules/lib/drizzle.mdc) for [PostgreSQL](mdc:.cursor/rules/lib/postgresql.mdc) access.
+- **Scheduling**: Cron-like scheduling for periodic tasks is handled by BullMQ.
+- **Error Handling**: Features structured logging, retry policies, and a dead-letter queue.
+- **Testing**: Follows [Vitest best practices](mdc:.cursor/rules/lib/vitest.mdc).
+
+## Directory Structure (`apps/workers/src/`)
+- `game-cleanup/` - Clean up expired games and sessions
+- `game-storage/` - Process completed games for storage
+- `mailer/` - Email sending worker
+- `postgres-cleanup/` - Database cleanup tasks
+
+## Worker Types
+### Mailer Worker (`mailer/`)
+- Processes email queue jobs
+- Uses React Email templates from `@/transactional`
+- Supports multiple email types:
+  - Email verification
+  - Password reset
+  - Account deletion warnings
+  - Email change notifications
+- Handles internationalization for emails
+- Fallback to English if user locale unavailable
+
+### Game Cleanup (`game-cleanup/`)
+- Removes expired Redis game sessions
+- Cleans up disconnected player data
+- Scheduled cleanup tasks
+- Processes abandoned games
+
+### Game Storage (`game-storage/`)
+- Processes completed games from queue
+- Stores game results in PostgreSQL
+- Updates player statistics
+- Handles game replay data
+
+### Postgres Cleanup (`postgres-cleanup/`)
+- Cleans expired password reset tokens
+- Removes old email change requests
+- Purges old verification codes
+- Runs daily at 4AM
+- Processes data in batches for performance
+
+## Queue Job Patterns
+```typescript
+// Job data structure
+interface EmailJob {
+  email: string;
+  template: 'verify-email' | 'reset-password' | 'email-change-warning';
+  data: Record<string, any>;
+  locale?: string;
+}
+
+interface GameProcessingJob {
+  gameData: CompleteGameState;
+  participants: PlayerId[];
+}
+```
+
+## Worker Configuration
+- Environment-specific Redis connections
+- Concurrency limits per worker type
+- Retry policies with exponential backoff
+- Dead letter queue handling
+- Monitoring and logging
+
+## Email System
+Integration with `@/transactional` package:
+- React-based email templates
+- Responsive email design
+- Multi-language support
+- Template data validation
+- Send through Resend service
+
+## Scheduling
+- Use Bull's built-in scheduling
+- Cron expressions for periodic tasks
+- Timezone-aware scheduling
+- Graceful shutdown handling
+
+## Error Handling
+- Structured logging with `@/logger`
+- Failed job retry policies
+- Dead letter queue monitoring
+- Alerting for critical failures
+- Graceful degradation
+
+## Development
+- Hot reload in development
+- Separate queues for test/dev/prod
+- Queue dashboard for monitoring
+- Local Redis for development
+
+## Deployment
+- Docker containerization
+- Health checks for queue connectivity
+- Horizontal scaling capabilities
+- Resource monitoring and limits

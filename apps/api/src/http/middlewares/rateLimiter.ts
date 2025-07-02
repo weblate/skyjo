@@ -7,14 +7,14 @@ const createRateLimiterMiddleware = (rateLimiter: RateLimiterMemory) => {
     const ip = getConnInfo(c).remote.address
 
     if (!ip) {
-      return c.json({ error: "IP not found" }, 400)
+      return c.json({ error: "ip-not-found" }, 400)
     }
 
     try {
       await rateLimiter.consume(ip)
       await next()
     } catch {
-      return c.json({ error: "Too Many Requests" }, 429)
+      return c.json({ error: "too-many-requests" }, 429)
     }
   }
 }

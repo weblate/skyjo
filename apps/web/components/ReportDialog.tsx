@@ -41,9 +41,9 @@ const ReportDialog = ({
   const { socket } = useSocket()
   const { opponents } = useGame()
   const t = useTranslations("components.ReportDialog")
-  const [reportType, setReportType] = useState<Report["type"]>("username")
+  const [reportType, setReportType] = useState<Report["type"]>("name")
 
-  const reportUsername = useMemo(
+  const reportName = useMemo(
     () =>
       opponents.flat().find((opponent) => opponent.id === report?.playerId)
         ?.name ?? "",
@@ -53,10 +53,9 @@ const ReportDialog = ({
   const userMessages = useMemo(
     () =>
       messages.filter(
-        (message) =>
-          "username" in message && message.username === reportUsername,
+        (message) => "name" in message && message.name === reportName,
       ),
-    [messages, reportUsername],
+    [messages, reportName],
   )
 
   const [messageId, setMessageId] = useState<string>(
@@ -68,14 +67,14 @@ const ReportDialog = ({
       setReportType("message")
       setMessageId(report.messageId)
     } else {
-      setReportType("username")
+      setReportType("name")
     }
   }, [report])
 
-  const submitUsernameReport = () => {
+  const submitNameReport = () => {
     socket?.emit("report", {
       targetId: report?.playerId,
-      type: "username",
+      type: "name",
     })
   }
 
@@ -89,8 +88,8 @@ const ReportDialog = ({
   const handleSubmit = () => {
     if (!report) return
 
-    if (reportType === "username") {
-      submitUsernameReport()
+    if (reportType === "name") {
+      submitNameReport()
     } else if (reportType === "message" && messageId) {
       submitMessageReport()
     }
@@ -105,9 +104,9 @@ const ReportDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>{t("title", { username: reportUsername })}</DialogTitle>
+          <DialogTitle>{t("title", { name: reportName })}</DialogTitle>
           <DialogDescription>
-            {t("description", { username: reportUsername })}
+            {t("description", { name: reportName })}
           </DialogDescription>
         </DialogHeader>
 
@@ -118,8 +117,8 @@ const ReportDialog = ({
             className="flex flex-col gap-3"
           >
             <div className="flex items-center space-x-2">
-              <RadioGroupItem value="username" id="username" />
-              <Label htmlFor="username">{t("report-username")}</Label>
+              <RadioGroupItem value="name" id="name" />
+              <Label htmlFor="name">{t("report-name")}</Label>
             </div>
             <div className="flex items-center space-x-2">
               <RadioGroupItem value="message" id="message" />
@@ -147,7 +146,7 @@ const ReportDialog = ({
                 <SelectContent>
                   {userMessages.map(
                     (message) =>
-                      "username" in message && (
+                      "name" in message && (
                         <SelectItem key={message.id} value={message.id}>
                           {message.message}
                         </SelectItem>
@@ -160,9 +159,7 @@ const ReportDialog = ({
         </div>
 
         <DialogFooter>
-          <Button variant="outline" onClick={() => onOpenChange(false)}>
-            {t("cancel")}
-          </Button>
+          <Button onClick={() => onOpenChange(false)}>{t("cancel")}</Button>
           <Button
             onClick={handleSubmit}
             disabled={reportType === "message" && !messageId}

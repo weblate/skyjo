@@ -17,20 +17,20 @@ describe("KickVote", () => {
 
   beforeEach(() => {
     player = new Player(
-      { username: "player1", avatar: CoreConstants.AVATARS.BEE },
+      { name: "player1", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     game = new Game({ hostId: player.id, settings: new Settings() })
     game.addPlayer(player)
 
     opponent1 = new Player(
-      { username: "opponent1", avatar: CoreConstants.AVATARS.BEE },
+      { name: "opponent1", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     game.addPlayer(opponent1)
 
     opponent2 = new Player(
-      { username: "opponent2", avatar: CoreConstants.AVATARS.BEE },
+      { name: "opponent2", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
     )
     game.addPlayer(opponent2)
@@ -103,7 +103,7 @@ describe("KickVote", () => {
       })
 
       const player3 = new Player(
-        { username: "player3", avatar: CoreConstants.AVATARS.BEE },
+        { name: "player3", avatar: CoreConstants.AVATARS.BEE },
         RANDOM_SOCKET_ID(),
       )
       game.addPlayer(player3)

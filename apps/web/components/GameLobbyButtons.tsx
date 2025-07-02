@@ -1,8 +1,8 @@
 "use client"
 
 import { Button } from "@/components/ui/button"
+import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
-import { useUser } from "@/contexts/UserContext"
 import { useRouter } from "@/i18n/routing"
 import { getLastGameIfPossible } from "@/utils/reconnection"
 import { useTranslations } from "next-intl"
@@ -18,7 +18,7 @@ const GameLobbyButtons = ({
   hideReconnectButton = false,
 }: GameLobbyButtonsProps) => {
   const { reconnectGame, joinGame } = useSocket()
-  const { getUser, username, saveUserInLocalStorage } = useUser()
+  const { getPlayer, name, savePlayer } = usePlayer()
   const t = useTranslations("components.GameLobbyButtons")
   const router = useRouter()
 
@@ -40,18 +40,19 @@ const GameLobbyButtons = ({
   }
 
   const handleJoiningGame = async () => {
-    const player = getUser()
+    savePlayer()
+    const player = getPlayer()
 
     joinGame(player, gameCode!, errorCallback)
   }
 
   const handleFindingGame = async () => {
-    saveUserInLocalStorage()
+    savePlayer()
     router.replace("/search")
   }
 
   const handleGameCreation = async () => {
-    saveUserInLocalStorage()
+    savePlayer()
     router.replace("/create?private=true")
   }
 
@@ -74,9 +75,8 @@ const GameLobbyButtons = ({
       {!hideReconnectButton && lastGame && (
         <Button
           onClick={() => handleAction("reconnect-game")}
-          color="secondary"
           className="w-full mb-4"
-          disabled={!username}
+          disabled={!name}
           loading={loading}
           title={t("reconnect-game-button")}
         >
@@ -86,8 +86,7 @@ const GameLobbyButtons = ({
       {hasGameCode && !lastGame && (
         <Button
           onClick={() => handleAction("join-game")}
-          color="secondary"
-          disabled={!username}
+          disabled={!name}
           className="w-full mb-4"
           loading={loading}
           title={t("join-game-button")}
@@ -99,7 +98,7 @@ const GameLobbyButtons = ({
         onClick={() => handleAction("find-game")}
         className="w-full"
         loading={loading}
-        disabled={!username}
+        disabled={!name}
         title={t("find-game-button")}
       >
         {t("find-game-button")}
@@ -107,7 +106,7 @@ const GameLobbyButtons = ({
       <Button
         onClick={handleGameCreation}
         className="w-full"
-        disabled={!username}
+        disabled={!name}
         loading={loading}
         title={t("create-game-button", { type: "private" })}
       >

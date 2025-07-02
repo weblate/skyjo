@@ -1,4 +1,3 @@
-import { Link } from "@/i18n/routing"
 import dayjs from "dayjs"
 import { useTranslations } from "next-intl"
 
@@ -8,12 +7,9 @@ const RulesPage = () => {
   const t = useTranslations("pages.PrivacyPolicy.content")
 
   return (
-    <div className="container bg-body dark:bg-dark-body my-16 text-black dark:text-dark-font">
-      <Link href="/" className="underline">
-        {t("back")}
-      </Link>
-      <h1 className="text-3xl mt-6 mb-4">{t("title")}</h1>
-      <p className="text-justify">
+    <div className="container max-w-6xl bg-body dark:bg-dark-body mt-16 mb-40 text-black dark:text-dark-font">
+      <h1 className="text-3xl text-center mt-6">{t("title")}</h1>
+      <p className="text-justify mt-8">
         {t("last-update.text", {
           date: LAST_PAGE_UPDATED_DATE.format(t("last-update.date-format")),
         })}

@@ -50,7 +50,7 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
     <ContextMenuContent>
       <ContextMenuItem onClick={() => reportPlayer(player.id, reportMessageId)}>
         <FrownIcon className="w-4 h-4 mr-2" />
-        {t("context-menu.report", { username: player.name })}
+        {t("context-menu.report", { name: player.name })}
       </ContextMenuItem>
       <ContextMenuItem
         onClick={handleKickPlayer}
@@ -61,7 +61,7 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
         <UserRoundXIcon className="w-4 h-4 mr-2" />
         {t(
           isHostAndPrivate ? "context-menu.kick" : "context-menu.vote-to-kick",
-          { username: player.name },
+          { name: player.name },
         )}
       </ContextMenuItem>
 
@@ -71,19 +71,19 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
           className="text-red-500 hover:text-red-600 hover:bg-red-100 dark:hover:bg-red-900 dark:hover:text-red-300"
         >
           <ShieldBanIcon className="w-4 h-4 mr-2" />
-          {t("context-menu.ban", { username: player.name })}
+          {t("context-menu.ban", { name: player.name })}
         </ContextMenuItem>
       )}
 
       {mutedPlayers.includes(player.name) ? (
         <ContextMenuItem onClick={() => unmutePlayer(player.name)}>
           <MessageSquareIcon className="w-4 h-4 mr-2" />
-          {t("context-menu.unmute", { username: player.name })}
+          {t("context-menu.unmute", { name: player.name })}
         </ContextMenuItem>
       ) : (
         <ContextMenuItem onClick={() => mutePlayer(player.name)}>
           <MessageSquareOffIcon className="w-4 h-4 mr-2" />
-          {t("context-menu.mute", { username: player.name })}
+          {t("context-menu.mute", { name: player.name })}
         </ContextMenuItem>
       )}
     </ContextMenuContent>

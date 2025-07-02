@@ -9,7 +9,7 @@ pre-commit:
   commands:
     check-biome:
       glob: "*.{js,ts,cjs,mjs,d.cts,d.mts,jsx,tsx,json,jsonc}"
-      run: TURBO_UI=0 pnpm dlx @biomejs/biome check --no-errors-on-unmatched --files-ignore-unknown=true --write {staged_files}
+      run: TURBO_UI=0 pnpm biome:check -- --no-errors-on-unmatched --files-ignore-unknown=true
       stage_fixed: true
     test:
       run: pnpm test:coverage

@@ -1,0 +1,22 @@
+export const locales = [
+  "bar",
+  "br",
+  "cs",
+  "da",
+  "de",
+  "el",
+  "en",
+  "es",
+  "et",
+  "fr",
+  "frs",
+  "gsw",
+  "it",
+  "nds",
+  "nl",
+  "pl",
+  "sv",
+  "ta",
+  "uk",
+] as const
+export type Locales = (typeof locales)[number]

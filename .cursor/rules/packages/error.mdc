@@ -3,7 +3,7 @@ description:
 globs: packages/error/**
 alwaysApply: false
 ---
-# Error Package (`packages/error`)
+# Custom Error Package (`packages/error`)
 
 This package provides custom error types and error handling utilities for the Skyjo monorepo.
 

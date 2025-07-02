@@ -1,0 +1,10 @@
+{
+  "extends": "@skymo/ts-config/base-package.json",
+  "compilerOptions": {
+    "outDir": "dist",
+    "baseUrl": ".",
+    "jsx": "preserve"
+  },
+  "include": ["emails/**/*", "src/**/*"],
+  "exclude": ["node_modules", "dist"]
+}

@@ -6,9 +6,6 @@
   },
   "pages": {
     "Index": {
-      "banner": {
-        "title": "I need  <gform>your feedback</gform>  to shape the future of Skymo!"
-      },
       "name-input-placeholder": "Name",
       "explanation": {
         "title": "What is Skyjo?",
@@ -207,7 +204,7 @@
           "game-data": {
             "title": "Game Data",
             "description": "We temporarily store:",
-            "items": "Usernames and avatar choices;;Game elements and progress"
+            "items": "Names and avatar choices;;Game elements and progress"
           },
           "local-storage-data": {
             "title": "Local Storage Data",
@@ -251,16 +248,345 @@
         }
       }
     },
+    "Leaderboard": {
+      "head": {
+        "title": "Leaderboard | Skymo - Skyjo Online Card Game",
+        "description": "View the top players on Skymo! Check out the best Skyjo players and their win rates in our competitive leaderboard.",
+        "keywords": "Skymo,Skyjo,leaderboard,top players,rankings,best players,win rate,competitive,online card game"
+      },
+      "title": "Top Players",
+      "subtitle": "Discover the best Skyjo players and compete for the top spots!",
+      "lastUpdated": "Last updated: {date}",
+      "columns": {
+        "rank": "Rank",
+        "player": "Player",
+        "wins": "Wins",
+        "totalGames": "Total Games",
+        "winRate": "Win Rate"
+      },
+      "noData": "No players found in the leaderboard yet.",
+      "error": "Unable to load the leaderboard at the moment.",
+      "tryAgainLater": "Please try again later."
+    },
     "Rules": {
       "head": {
         "title": "How to play Skymo | Skyjo Card Game Online",
         "description": "Learn how to play Skyjo with our Skymo guide. Discover the rules, strategies, and tips to master this fun online card game. Play with friends now!",
         "keywords": "Skymo,Skyjo,Skyjo rules,how to play Skyjo,Skyjo game,card game rules,online card game,game instructions,gameplay guide"
       },
-      "title": "Skyjo game rules"
+      "title": "Game rules"
+    },
+    "Signup": {
+      "head": {
+        "title": "Signup | Skymo - Skyjo Online Card Game",
+        "description": "Sign up for Skymo to play Skyjo online. Create your account in just a few clicks and start playing immediately.",
+        "keywords": "Skymo,Skyjo,signup,online card game,Skyjo game,card game,online game"
+      },
+      "title": "Signup",
+      "or": "Or",
+      "form": {
+        "email": {
+          "label": "Email",
+          "button": "Continue with email"
+        }
+      },
+      "already-have-account": {
+        "description": "Already have an account?",
+        "link": "Login"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Login | Skymo - Skyjo Online Card Game",
+        "description": "Login to Skymo to play Skyjo online. Enter your email and password to access your account and start playing immediately.",
+        "keywords": "Skymo,Skyjo,login,online card game,Skyjo game,card game,online game"
+      },
+      "title": "Login",
+      "or": "Or",
+      "form": {
+        "login": {
+          "label": "Email or username"
+        },
+        "password": {
+          "label": "Password"
+        },
+        "submit": "Login"
+      },
+      "signup": {
+        "description": "Don't have an account?",
+        "link": "Sign up now!"
+      },
+      "forgot-password": "Forgot your password?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Forgot Password | Skymo - Skyjo Online Card Game",
+        "description": "Reset your Skymo password to regain access to your account and continue playing Skyjo online with friends.",
+        "keywords": "Skymo,Skyjo,forgot password,reset password,account recovery,online card game"
+      },
+      "title": "Forgot Password",
+      "description": "Enter your email address and we'll send you a link to reset your password",
+      "form": {
+        "email": {
+          "label": "Email address"
+        },
+        "submit": "Send Reset Link",
+        "sending": "Sending..."
+      },
+      "success": {
+        "title": "Check Your Email",
+        "message": "If an account with this email exists, a password reset link has been sent.",
+        "back": "Back to Login"
+      },
+      "back": "Back to Login"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Reset Password | Skymo - Skyjo Online Card Game",
+        "description": "Create a new password for your Skymo account to regain access and continue playing Skyjo online.",
+        "keywords": "Skymo,Skyjo,reset password,new password,account recovery,online card game"
+      },
+      "title": "Reset Password",
+      "description": "Enter your new password below.",
+      "form": {
+        "password": {
+          "label": "New Password"
+        },
+        "confirmPassword": {
+          "label": "Confirm New Password"
+        },
+        "submit": "Reset Password",
+        "resetting": "Resetting..."
+      },
+      "success": {
+        "title": "Password Reset Successfully",
+        "message": "Your password has been reset. You can now log in with your new password.",
+        "back": "Login"
+      },
+      "back": "Back to Login"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "Email change reverted",
+        "message": "Your email change has been successfully reverted and your account has been secured. Please check your email for password reset instructions.",
+        "close": "You can now close this page."
+      },
+      "failed": {
+        "title": "Email change revert failed"
+      },
+      "back": "Back to Login"
+    },
+    "OAuthCallbackPage": {
+      "title": "Redirecting in progress…"
+    },
+    "Onboarding": {
+      "title": "Onboarding in progress...",
+      "subtitle": "Complete your profile and dive into the Skymo adventure!",
+      "form": {
+        "name": {
+          "label": "Player name",
+          "placeholder": "Jeff",
+          "description": "Shown to other players in games"
+        },
+        "username": {
+          "label": "Name",
+          "placeholder": "jeff",
+          "description": "For login and profile"
+        },
+        "password": {
+          "label": "Create a password",
+          "placeholder": "Enter a secure password"
+        },
+        "submit": "Ready to play!"
+      }
+    },
+    "Verify": {
+      "head": {
+        "title": "Verify Email | Skymo - Skyjo Online Card Game",
+        "description": "Verify your email address to complete your Skymo account setup and start playing Skyjo online with friends.",
+        "keywords": "Skymo,Skyjo,email verification,verify account,online card game"
+      },
+      "title": "Verify Your Email",
+      "description": "We've sent a 6-digit code to your email address. Please enter it below.",
+      "resend": {
+        "countdown": "Resend code in {seconds}s",
+        "prompt": "Didn't receive the code?",
+        "button": "Request new code",
+        "sending": "Sending..."
+      },
+      "toast": {
+        "success": "Email verified successfully!",
+        "resend-success": "A new email has been sent."
+      }
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'s Profile | Skymo - Skyjo Online Card Game",
+        "description": "View {username}'s profile on Skymo. Check their game statistics, recent activity, and achievements in Skyjo online.",
+        "keywords": "Skymo,Skyjo,user profile,player stats,game statistics,recent games,achievements,online card game"
+      },
+      "not-found": {
+        "title": "User Not Found",
+        "description": "The user \"{username}\" doesn't exist or may have changed their username.",
+        "back-to-home": "Back to Homepage"
+      },
+      "error": {
+        "title": "Something Went Wrong",
+        "description": "We encountered an error while loading this profile. Please try again later.",
+        "back-to-home": "Back to Homepage"
+      },
+      "stats": {
+        "total-games": "Total Games",
+        "win-rate": "Win Rate",
+        "average-rank": "Average Rank",
+        "public": "Public",
+        "private": "Private"
+      },
+      "sections": {
+        "achievements": "Achievements",
+        "achievements-coming-soon": "Achievements system coming soon!",
+        "recent-activity": "Recent Activity"
+      },
+      "recent-activity": {
+        "no-activity": "No recent activity to show.",
+        "game-code": "Game #{code}",
+        "rank": "Rank #{rank}",
+        "winner": "Winner"
+      },
+      "search": {
+        "placeholder": "Search username"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Account Settings | Skymo - Skyjo Online Card Game",
+        "description": "Manage your account settings on Skymo. Change your display name, username, email, password, and account preferences."
+      },
+      "title": "Account Settings",
+      "description": "Manage your account and personal information.",
+      "Navigation": {
+        "profile": "Profile",
+        "account": "Account",
+        "password": "Password"
+      },
+      "buttons": {
+        "save": "Save Changes",
+        "saving": "Saving...",
+        "delete-account": "Delete Account",
+        "confirm-delete": "Yes, Delete My Account"
+      },
+      "messages": {
+        "save-success": "Settings saved successfully!",
+        "save-error": "Failed to save settings. Please try again.",
+        "delete-confirmation": "Are you sure you want to delete your account? This action cannot be undone and all your data will be permanently removed.",
+        "username-taken": "This username is already taken.",
+        "email-taken": "This email is already in use.",
+        "password-incorrect": "Current password is incorrect.",
+        "account-deletion-scheduled": "Your account deletion request has been taken into account and will be processed in 48 hours. You will receive an email to confirm the deletion.",
+        "account-deletion-failed": "An error occurred while deleting your account. Please try again."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profile",
+      "fields": {
+        "name": {
+          "label": "Display name",
+          "description": "Your name displayed to other players in games.",
+          "placeholder": "Enter your name",
+          "submit": "Save name"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Your avatar displayed on your profile.",
+          "placeholder": "Select your avatar",
+          "submit": "Save avatar"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Account",
+      "fields": {
+        "username": {
+          "label": "Username",
+          "description": "Your unique username used for your profile URL.",
+          "placeholder": "Enter your username",
+          "submit": "Save username"
+        },
+        "email": {
+          "label": "Email Address",
+          "description": "Your email address used for login and important notifications. For security, a warning email will be sent to your current address when you change it.",
+          "placeholder": "Enter your email",
+          "submit": "Save email"
+        }
+      },
+      "delete-account": {
+        "title": "Delete my account",
+        "description": "Delete your account and all associated data. This action cannot be undone and all your data will be permanently removed.",
+        "button": "Delete account",
+        "confirmation": {
+          "description": "By confirming, a 48-hour countdown begins: you will receive an email with a link to cancel the deletion if you change your mind. Your account will remain accessible during this period. After 48 hours, it will be permanently deleted and you will receive a confirmation email.",
+          "input-label": "Type DELETE to confirm",
+          "input-placeholder": "DELETE",
+          "cancel-button": "Cancel",
+          "delete-button": "Delete my account"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Change password",
+      "fields": {
+        "password": {
+          "label": "Password",
+          "description": "Change your account password.",
+          "current-password": "Current Password",
+          "new-password": "New Password",
+          "confirm-password": "Confirm New Password",
+          "current-placeholder": "Enter your current password",
+          "new-placeholder": "Enter your new password",
+          "confirm-placeholder": "Confirm your new password",
+          "submit": "Save password"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Current password is incorrect."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Invalid token",
+      "success": {
+        "title": "Account Deletion Cancelled",
+        "description": "Your account deletion has been successfully cancelled. Your account is safe and will not be deleted.",
+        "secure-message": "Your account is now secure and will remain active. You can continue using your account normally."
+      },
+      "failed": {
+        "title": "Cancellation Failed",
+        "description": "We couldn't cancel your account deletion. Please try again or contact support.",
+        "general-error": "Something went wrong while trying to cancel your account deletion. Please try again or contact support.",
+        "help-message": "Something went wrong while trying to cancel your account deletion. Please try again or contact support."
+      },
+      "expired": {
+        "title": "Cancellation Link Expired",
+        "description": "This cancellation link has expired. If you still want to keep your account, please contact support.",
+        "help-message": "The 48-hour cancellation period has expired. Please contact support if you need assistance."
+      },
+      "actions": {
+        "return-homepage": "Return to Homepage"
+      }
     }
   },
   "components": {
+    "Banner": {
+      "title": "I need  <gform>your feedback</gform>  to shape the future of Skymo!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Rules",
+        "leaderboard": "Leaderboard"
+      }
+    },
+    "LoginButton": {
+      "login": "Join the Fun!"
+    },
     "AppearanceSelect": {
       "light": "Light",
       "dark": "Dark",
@@ -310,9 +636,6 @@
         "success": {
           "title": "Thank you for your feedback!",
           "description": "Your insights have helped us enhance our game website, and we are truly grateful."
-        },
-        "error": {
-          "title": "An error occurred, please try again."
         }
       },
       "email-input": {
@@ -398,10 +721,20 @@
       "button": {
         "aria-label": "Menu"
       },
+      "guest": "Mystery Player",
+      "guest-catch-phrase": "Ready to reveal your identity?",
+      "profile": "Profile",
       "rules": "Rules",
+      "appearance": "Appearance",
+      "language": "Language",
       "feedback": "Leave a feedback",
       "discord": "Discord",
-      "settings": "Settings"
+      "settings": "Settings",
+      "game-settings": "Game settings",
+      "account-settings": "Account settings",
+      "logout": "Log out",
+      "login": "Login",
+      "signup": "Create an account"
     },
     "OpponentBoard": {
       "disconnected": "Player has left the game. A bot will play for them during the next few turns until they reconnect."
@@ -515,53 +848,6 @@
     },
     "SettingsDialog": {
       "title": "Settings",
-      "general": {
-        "title": "General",
-        "language": "Language",
-        "language-warn": "Changeable only on the home page",
-        "appearance": "Appearance"
-      },
-      "display": {
-        "title": "Display",
-        "mobile": {
-          "title": "Mobile",
-          "switch-to-player-who-is-playing": "Automatically switch to the player who is playing",
-          "show-preview-opponents-cards": "Show a preview of opponents' cards in the opponents list"
-        },
-        "chat": {
-          "title": "Chat",
-          "chat-visibility": "Chat visibility",
-          "chat-notification-size": {
-            "label": "Chat notification size",
-            "values": {
-              "small": "Small",
-              "normal": "Normal",
-              "big": "Big"
-            }
-          }
-        },
-        "gameplay": {
-          "title": "Gameplay",
-          "gameboard-size": {
-            "label": "Size of your game board",
-            "big-warning": "Can break display on mobile",
-            "values": {
-              "normal": "Normal",
-              "big": "Big"
-            }
-          },
-          "enlarge-active-player-board": "Enlarge the board of the player whose turn it is",
-          "timer": {
-            "label": "Timer display mode",
-            "description": "Smart mode displays the timer at half-time and the last 15 seconds.",
-            "modes": {
-              "never": "Never",
-              "smart": "Smart",
-              "always": "Always"
-            }
-          }
-        }
-      },
       "audio": {
         "title": "Audio",
         "toggle": {
@@ -570,16 +856,58 @@
         "volume": {
           "label": "Volume ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Chat",
+        "chat-visibility": "Chat visibility",
+        "chat-notification-size": {
+          "label": "Chat notification size",
+          "values": {
+            "small": "Small",
+            "normal": "Normal",
+            "big": "Big"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobile",
+        "switch-to-player-who-is-playing": "Automatically switch to the player who is playing",
+        "show-preview-opponents-cards": "Show a preview of opponents' cards in the opponents list"
+      },
+      "gameplay": {
+        "title": "Gameplay",
+        "gameboard": {
+          "title": "Game Board",
+          "size": {
+            "label": "Size of your game board",
+            "big-warning": "Can break display on mobile",
+            "values": {
+              "normal": "Normal",
+              "big": "Big"
+            }
+          },
+          "enlarge-active-player-board": "Enlarge the board of the player whose turn it is"
+        },
+        "timer": {
+          "title": "Timer",
+          "label": "Timer display mode",
+          "description": "Smart mode displays the timer at half-time and the last 15 seconds.",
+          "modes": {
+            "never": "Never",
+            "smart": "Smart",
+            "always": "Always"
+          }
+        }
       }
     },
     "Avatar": {
       "context-menu": {
-        "report": "Report {username}",
-        "kick": "Kick {username}",
-        "vote-to-kick": "Vote to kick {username}",
-        "ban": "Ban {username}",
-        "mute": "Mute {username}",
-        "unmute": "Unmute {username}"
+        "report": "Report {name}",
+        "kick": "Kick {name}",
+        "vote-to-kick": "Vote to kick {name}",
+        "ban": "Ban {name}",
+        "mute": "Mute {name}",
+        "unmute": "Unmute {name}"
       }
     },
     "KickVote": {
@@ -643,9 +971,9 @@
       }
     },
     "ReportDialog": {
-      "title": "Report {username}",
-      "description": "Report the username or a message from {username} if it seems inappropriate.",
-      "report-username": "Report the username",
+      "title": "Report {name}",
+      "description": "Report the name or a message from {name} if it seems inappropriate.",
+      "report-name": "Report the name",
       "report-message": "Report a message",
       "select-message": "Select the message to report",
       "select-message-placeholder": "Select a message",
@@ -657,6 +985,24 @@
           "title": "Report submitted",
           "description": "Thank you for your report, you have contributed to improving the quality of the game."
         }
+      }
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Continue with Google"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Passwords match",
+      "minimum-characters": "At least 10 characters",
+      "lowercase-letter": "At least one lowercase letter",
+      "capital-letter": "At least one uppercase letter",
+      "number": "At least one number",
+      "special-character": "At least one special character"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Checking...",
+        "available": "Username available",
+        "taken": "Already taken!"
       }
     }
   },
@@ -678,17 +1024,17 @@
       "game-ended": "Game over!"
     },
     "chat": {
-      "player-joined": "{username} joined the game",
-      "player-left": "{username} left the game",
-      "player-reconnect": "{username} reconnected to the game",
+      "player-joined": "{name} joined the game",
+      "player-left": "{name} left the game",
+      "player-reconnect": "{name} reconnected to the game",
       "argument-required": "One or more arguments are required for command: {command}",
-      "player-already-muted": "{username} is already muted",
-      "player-muted": "{username} is now muted",
-      "player-not-muted": "{username} is not muted",
-      "player-unmuted": "{username} is no longer muted",
-      "wizz-sent": "You have sent a wizz to {targetUsername}!",
-      "wizz-self": "You have been wizz by {initiatorUsername}!",
-      "wizz-other": "{initiatorUsername} has wizz {targetUsername} !"
+      "player-already-muted": "{name} is already muted",
+      "player-muted": "{name} is now muted",
+      "player-not-muted": "{name} is not muted",
+      "player-unmuted": "{name} is no longer muted",
+      "wizz-sent": "You have sent a wizz to {targetName}!",
+      "wizz-self": "You have been wizz by {initiatorName}!",
+      "wizz-other": "{initiatorName} has wizz {targetName} !"
     },
     "avatar": {
       "bee": "bee",
@@ -774,8 +1120,72 @@
       },
       "report-against-you": {
         "title": "You have been kicked due to a report",
-        "description": "Your username or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
+        "description": "Your name or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
       }
     }
+  },
+  "errors": {
+    "invalid-credentials": "The email or password you entered is incorrect. Please try again.",
+    "logout-failed": "We couldn't log you out. Please close your browser to end the session.",
+    "session-not-found": "Your session has expired or is invalid. Please log in again.",
+    "session-invalid": "Your session is invalid. Please log in again to continue.",
+    "session-expired": "Your session has expired. Please log in again to continue.",
+    "session-token-missing": "Your session token is missing. Please log in to get a new one.",
+    "username-taken": "This username is already taken. Please choose another one.",
+    "onboarding-error": "There was a problem completing your profile. Please try again.",
+    "reset-token-invalid": "The reset token you provided is invalid. Please request a new one.",
+    "reset-token-expired": "Your password reset token has expired. Please request a new one.",
+    "password-reset-failed": "We couldn't reset your password. Please try again.",
+    "forgot-password-error": "There was an issue processing your password reset request. Please try again later.",
+    "reset-password-error": "We were unable to reset your password. Please try again.",
+    "oauth-restart-process": "Something went wrong during authentication. Please try logging in again.",
+    "oauth-id-token-missing": "We didn't receive an ID token from the authentication provider. Please try again.",
+    "oauth-account-creation-failed": "We couldn't create an account with your provider's information. Please try again.",
+    "oauth-login-initiation-failed": "We couldn't start the login process. Please try again in a few moments.",
+    "verify-session-error": "We couldn't verify your session. Please log out and log back in.",
+    "signup-error": "We couldn't create your account at this time. Please try again later.",
+    "login-error": "There was a problem logging you in. Please try again.",
+    "login-invalid-credentials": "The email or password you entered is incorrect. Please try again.",
+    "logout-error": "An unexpected error occurred while logging you out.",
+    "check-username-error": "We couldn't check if the username is available. Please try again.",
+    "unknown-auth-error": "An unknown authentication error occurred. Please try again.",
+    "creation-failed": "We couldn't create the user at this time. Please try again.",
+    "get-user-error": "We couldn't retrieve the user profile. Please try again later.",
+    "get-user-games-error": "We couldn't load the user's games. Please refresh the page.",
+    "get-user-stats-error": "We couldn't load the user's stats. Please refresh the page.",
+    "user-not-found": "The user you're looking for could not be found.",
+    "username-same-as-current": "This is already your username.",
+    "email-taken": "This email address is already in use. Please use a different one.",
+    "email-same-as-current": "This is already your email address.",
+    "invalid-current-password": "The current password you entered is incorrect.",
+    "update-name-error": "We couldn't update your name. Please try again.",
+    "update-username-error": "We couldn't update your username. Please try again.",
+    "update-email-error": "We couldn't update your email address. Please try again.",
+    "revert-email-error": "We couldn't revert your email change. Please contact support.",
+    "update-password-error": "We couldn't update your password. Please try again.",
+    "update-avatar-error": "We couldn't update your avatar. Please try again.",
+    "delete-account-error": "We couldn't process your account deletion request. Please try again.",
+    "cancel-delete-account-error": "We couldn't cancel your account deletion. Please contact support.",
+    "unexpected-error": "An unexpected error occurred. Please try again.",
+    "internal-server-error": "Our server encountered an issue. Please try again later.",
+    "unauthorized": "You are not authorized to perform this action.",
+    "forbidden": "You do not have permission to access this resource.",
+    "not-found": "The resource you're looking for could not be found.",
+    "too-many-requests": "You've sent too many requests. Please wait a moment and try again.",
+    "ip-not-found": "We could not identify your IP address. Please check your connection.",
+    "invalid-request": "Your request was invalid. Please check the data and try again.",
+    "send-feedback-error": "We couldn't send your feedback. Please try again.",
+    "send-pin-error": "We couldn't send a verification PIN to your email. Please try again.",
+    "verify-pin-error": "We couldn't verify your PIN. Please try again.",
+    "invalid-pin": "The PIN you entered is incorrect. Please try again.",
+    "expired-pin": "The PIN you entered has expired. We've sent you a new one.",
+    "feedback-error": "We couldn't send your feedback. Please try again.",
+    "get-public-games-error": "We couldn't load the public games. Please try again.",
+    "invalid-cancellation-token": "The cancellation token is invalid. Please try again.",
+    "expired-cancellation-token": "The cancellation token has expired. Please try again.",
+    "cancel-account-deletion-error": "We couldn't cancel your account deletion. Please try again",
+    "oauth-unknown-error": "An unknown error occurred during login. Please try again.",
+    "invalid-reversion-token": "The reversion token is invalid. Please try again.",
+    "expired-reversion-token": "The reversion token has expired. Please try again."
   }
 }

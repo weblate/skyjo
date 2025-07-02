@@ -4,7 +4,7 @@ export type CardToJson = {
   isVisible: boolean
 }
 
-export interface CardDb {
+export type CardRedisDb = {
   id: string
   value: number
   isVisible: boolean

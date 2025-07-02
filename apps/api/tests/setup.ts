@@ -49,11 +49,11 @@ vi.mock("@/redis/client.ts", () => {
 
   return {
     RedisClient: class {
-      static instance = null
-      static connectionPromise = null
-      static connectionAttempts = 0
-      static MAX_CONNECTION_ATTEMPTS = 5
-      static isConnecting = false
+      static readonly instance = null
+      static readonly connectionPromise = null
+      static readonly connectionAttempts = 0
+      static readonly MAX_CONNECTION_ATTEMPTS = 5
+      static readonly isConnecting = false
 
       static async getClient() {
         return mockClient
@@ -97,4 +97,9 @@ vi.spyOn(process, "env", "get").mockReturnValue({
   npm_package_version: "-99",
   SIGHTENGINE_API_USER: "test-api-user",
   SIGHTENGINE_API_SECRET: "test-api-secret",
+  POSTGRES_URL: "postgresql://mock-postgres-url",
+  GOOGLE_CLIENT_ID: "test-google-client-id",
+  GOOGLE_CLIENT_SECRET: "test-google-client-secret",
+  GOOGLE_REDIRECT_URI: "test-google-redirect-uri",
+  WEBSITE_URL: "http://test:3000",
 })

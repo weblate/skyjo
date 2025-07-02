@@ -21,11 +21,6 @@ import { useTranslations } from "next-intl"
 import { useEffect, useRef, useState } from "react"
 import { useLocalStorage } from "react-use"
 
-// const SOUNDS = {
-//   countdown: new Howl({ src: ["/sounds/countdown.ogg"] }),
-//   gameStarting: new Howl({ src: ["/sounds/game-starting.ogg"] }),
-// }
-
 interface LobbyCountdownProps {
   gameCode: string
   className?: string
@@ -70,7 +65,6 @@ export const LobbyCountdown = ({
       const initialTime = calculateTimeLeft()
       setCountdown(initialTime)
       countdownValueRef.current = initialTime
-      // SOUNDS.countdown.play()
 
       clearCountdownInterval()
 
@@ -79,8 +73,6 @@ export const LobbyCountdown = ({
 
         setCountdown(timeLeft)
         countdownValueRef.current = timeLeft
-
-        // if (timeLeft > 0 && timeLeft) SOUNDS.countdown.play()
 
         if (timeLeft <= 0) {
           clearCountdownInterval()
@@ -116,7 +108,6 @@ export const LobbyCountdown = ({
   useEffect(() => {
     if (!gameStatus.isLobby) {
       clearCountdownInterval()
-      // SOUNDS.gameStarting.play()
       router.replace(`/game/${gameCode}`)
     }
   }, [gameStatus.isLobby, gameCode, router])

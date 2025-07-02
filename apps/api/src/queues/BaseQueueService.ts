@@ -174,7 +174,6 @@ export abstract class BaseQueueService<T> {
       await this.worker.close(true)
       Logger.info(`Worker closed for queue: ${this.queueName}`)
 
-      await this.queue.drain()
       await this.queue.close()
       Logger.info(`Queue closed: ${this.queueName}`)
     } catch (error) {

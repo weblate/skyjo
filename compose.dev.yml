@@ -21,10 +21,10 @@ services:
       - NODE_OPTIONS=--max-old-space-size=8192 --max-http-header-size=16384 --expose-gc --use-largepages=silent
     restart: always
 
-  dev-cleanup-worker:
+  dev-workers:
     build:
       context: .
-      dockerfile: ./apps/cleanup-worker/Dockerfile
+      dockerfile: ./apps/workers/Dockerfile
       args:
         - NODE_ENV=development
     depends_on:
@@ -33,7 +33,7 @@ services:
       - dev-internal
     env_file:
       - .env
-      - ./apps/cleanup-worker/.env
+      - ./apps/workers/.env
     environment:
       - NODE_ENV=development
       - REDIS_URL=redis://:${REDIS_PASSWORD}@dev-redis:${REDIS_PORT}
@@ -74,9 +74,27 @@ services:
       - REDIS_PASSWORD=${REDIS_PASSWORD}
     restart: always
 
+  dev-postgres:
+    image: postgres:17.4-alpine3.21
+    restart: always
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    ports:
+      - "5433:5432"
+    volumes:
+      - dev-postgres-data:/var/lib/postgresql/data
+    networks:
+      - dev-internal
+      - dev-external
+    env_file:
+      - .env
+
 networks:
   dev-internal:
   dev-external:
 
 volumes:
   dev-redis-data:
+  dev-postgres-data:

@@ -1,0 +1,60 @@
+name: Deploy Development
+
+on:
+  push:
+    branches:
+      - trunk
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Install Node"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.14.0
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10.12.4
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test
+        run: pnpm test -- --run
+
+  deploy-to-vps:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - name: Deploy to VPS
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.VPS_HOST }}
+          username: ${{ secrets.VPS_USERNAME }}
+          key: ${{ secrets.VPS_SSH_KEY }}
+          script: |
+            # Use a separate directory for development
+            if [ ! -d "dev/skymo" ]; then
+              git clone https://github.com/maxentr/skymo.git dev/skymo
+            fi
+
+            cd dev/skymo
+            git pull
+            
+            docker compose -f compose.dev.yml build dev-api
+            docker compose -f compose.dev.yml build dev-workers
+
+            pnpm i
+            pnpm db:migrate
+
+            docker compose -f compose.dev.yml up -d dev-api
+            docker compose -f compose.dev.yml up -d dev-workers

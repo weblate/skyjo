@@ -53,14 +53,14 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
   const inputRef = useRef<HTMLInputElement>(null)
 
   const commands: AutoCompleteChoice[] = [
-    { name: "/mute [username]", value: "/mute", description: "Mute a player" },
+    { name: "/mute [name]", value: "/mute", description: "Mute a player" },
     {
-      name: "/unmute [username]",
+      name: "/unmute [name]",
       value: "/unmute",
       description: "Unmute a player",
     },
     {
-      name: "/wizz [username]",
+      name: "/wizz [name]",
       value: "/wizz",
       description:
         "Shake the screen and play a sound to get a player's attention",

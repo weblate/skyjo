@@ -5,7 +5,7 @@ const Rules = () => {
   const t = useTranslations("components.Rules")
 
   return (
-    <div className="flex flex-col gap-6 text-black dark:text-dark-font px-6">
+    <div className="flex flex-col gap-6 text-black dark:text-dark-font">
       <div className="bg-slate-100 dark:bg-dark-container rounded-md pt-2 pb-4">
         <h3 className="md:pl-2 text-lg">
           {t("cards-section-title", { number: 150 })}

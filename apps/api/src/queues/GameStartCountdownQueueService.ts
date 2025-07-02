@@ -1,7 +1,7 @@
+import { GameOperationManager } from "@/realtime/utils/GameOperationManager.js"
+import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
+import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
-import { GameOperationManager } from "@/socketio/utils/GameOperationManager.js"
-import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
-import { SocketManager } from "@/socketio/utils/SocketManager.js"
 import { type Game } from "@skymo/core"
 import { Logger } from "@skymo/logger"
 import type { Job } from "bullmq"
@@ -33,8 +33,7 @@ export class GameStartCountdownQueueService extends BaseQueueService<GameStartCo
   }
 
   static getInstance(): GameStartCountdownQueueService {
-    GameStartCountdownQueueService.instance =
-      GameStartCountdownQueueService.instance ??
+    GameStartCountdownQueueService.instance ??=
       new GameStartCountdownQueueService()
 
     return GameStartCountdownQueueService.instance

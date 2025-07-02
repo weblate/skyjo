@@ -1,4 +1,4 @@
-import { GameStateTracker } from "@/socketio/utils/GameStateTracker.js"
+import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { type Game, type Player } from "@skymo/core"
 import { Constants as CoreConstants } from "@skymo/core"
 import { CError } from "@skymo/error"
@@ -65,7 +65,7 @@ vi.mock("@/redis/game.repository.js", () => ({
   })),
 }))
 
-vi.mock("@/socketio/utils/SocketManager.js", () => ({
+vi.mock("@/realtime/utils/SocketManager.js", () => ({
   SocketManager: {
     getInstance: vi.fn().mockReturnValue({
       getSocket: vi.fn().mockReturnValue({
@@ -80,7 +80,7 @@ vi.mock("@/socketio/utils/SocketManager.js", () => ({
   },
 }))
 
-vi.mock("@/socketio/utils/GameOperationManager.js", () => ({
+vi.mock("@/realtime/utils/GameOperationManager.js", () => ({
   GameOperationManager: {
     getInstance: vi.fn().mockReturnValue({
       // Add basic mocked methods here
@@ -90,7 +90,7 @@ vi.mock("@/socketio/utils/GameOperationManager.js", () => ({
   },
 }))
 
-vi.mock("@/socketio/utils/GameStateTracker.js", () => ({
+vi.mock("@/realtime/utils/GameStateTracker.js", () => ({
   GameStateTracker: vi.fn().mockImplementation(() => ({
     getChanges: vi.fn().mockReturnValue({ test: "operations" }),
   })),

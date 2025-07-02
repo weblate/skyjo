@@ -1,6 +1,8 @@
 import Footer from "@/components/Footer"
-import { Locales, generateAlternatesLanguages, routing } from "@/i18n/routing"
+import Navbar from "@/components/Navbar"
+import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
+import { Locales } from "@skymo/shared/constants"
 import { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { notFound } from "next/navigation"
@@ -43,9 +45,12 @@ export async function generateMetadata(props: RulesLayoutProps) {
   return metadata
 }
 
-export default async function RulesLayout({ children }: RulesLayoutProps) {
+export default async function RulesLayout({
+  children,
+}: Readonly<RulesLayoutProps>) {
   return (
     <>
+      <Navbar />
       {children}
       <Footer />
     </>

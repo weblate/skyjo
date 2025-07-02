@@ -85,7 +85,7 @@ const UserAvatar = ({
           title={tAvatar(player.avatar)}
           className={cn(
             imageVariants({ size }),
-            "dark:opacity-75",
+            "dark:opacity-90",
             animate && "animate-small-bounce",
           )}
           priority

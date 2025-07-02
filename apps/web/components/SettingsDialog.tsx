@@ -1,7 +1,4 @@
 "use client"
-
-import { AppearanceSelect } from "@/components/AppearanceSelect"
-import { LanguageCombobox } from "@/components/LanguageCombobox"
 import {
   Dialog,
   DialogContent,
@@ -41,45 +38,38 @@ const SettingsDialog = ({ open, onOpenChange }: SettingsDialogProps) => {
           <DialogDescription></DialogDescription>
         </DialogHeader>
         <Tabs
-          defaultValue="general"
+          defaultValue="audio"
           className="flex flex-col flex-grow overflow-y-auto"
         >
-          <TabsList className="px-6 flex">
-            <TabsTrigger value="general">{t("general.title")}</TabsTrigger>
-            <TabsTrigger value="audio">{t("audio.title")}</TabsTrigger>
-            <TabsTrigger value="display">{t("display.title")}</TabsTrigger>
+          <TabsList className="px-6 grid grid-cols-4 sm:grid-cols-3 w-full">
+            <TabsTrigger value="audio" className="h-10">
+              {t("audio.title")}
+            </TabsTrigger>
+            <TabsTrigger value="gameplay" className="h-10">
+              {t("gameplay.title")}
+            </TabsTrigger>
+            <TabsTrigger value="chat" className="h-10">
+              {t("chat.title")}
+            </TabsTrigger>
+            <TabsTrigger value="mobile" className="h-10 flex sm:hidden">
+              {t("mobile.title")}
+            </TabsTrigger>
           </TabsList>
-          <TabsContent value="general">
-            <GeneralSettings />
-          </TabsContent>
           <TabsContent value="audio">
             <AudioSettings />
           </TabsContent>
-          <TabsContent value="display">
-            <DisplaySettings />
+          <TabsContent value="gameplay">
+            <GameplaySettings />
+          </TabsContent>
+          <TabsContent value="chat">
+            <ChatSettings />
+          </TabsContent>
+          <TabsContent value="mobile" className="sm:hidden">
+            <MobileSettings />
           </TabsContent>
         </Tabs>
       </DialogContent>
     </Dialog>
-  )
-}
-
-const GeneralSettings = () => {
-  const t = useTranslations("components.SettingsDialog.general")
-
-  return (
-    <div className="flex flex-col gap-4">
-      <div className="flex flex-col gap-2">
-        <Label>
-          {t("language")} ({t("language-warn")})
-        </Label>
-        <LanguageCombobox />
-      </div>
-      <div className="flex flex-col gap-2">
-        <Label>{t("appearance")}</Label>
-        <AppearanceSelect />
-      </div>
-    </div>
   )
 }
 
@@ -88,7 +78,7 @@ const AudioSettings = () => {
   const { settings, updateSetting } = useSettings()
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="px-6 flex flex-col gap-4">
       <div className="flex flex-col gap-2">
         <Label htmlFor="sound-enabled">{t("toggle.label")}</Label>
         <Switch
@@ -112,91 +102,97 @@ const AudioSettings = () => {
   )
 }
 
-const DisplaySettings = () => {
-  const t = useTranslations("components.SettingsDialog.display")
+const ChatSettings = () => {
+  const t = useTranslations("components.SettingsDialog.chat")
   const { settings, updateSetting } = useSettings()
 
   return (
-    <div className="flex flex-col gap-8">
+    <div className="px-6 flex flex-col gap-6">
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold">{t("chat.title")}</h2>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="chat-visibility">{t("chat.chat-visibility")}</Label>
-            <Switch
-              id="chat-visibility"
-              checked={settings.chatVisibility}
-              onCheckedChange={(value) =>
-                updateSetting("chatVisibility", value)
-              }
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label>{t("chat.chat-notification-size.label")}</Label>
-            <RadioGroup
-              value={settings.chatNotificationSize}
-              onValueChange={(value) =>
-                updateSetting(
-                  "chatNotificationSize",
-                  value as ChatNotificationSize,
-                )
-              }
-              disabled={!settings.chatVisibility}
-              className="flex gap-4"
-            >
-              {Object.values(ChatNotificationSize).map((size) => (
-                <div className="flex items-center space-x-2" key={size}>
-                  <RadioGroupItem
-                    value={size}
-                    id={`chat-notification-size-${size}`}
-                  />
-                  <Label htmlFor={`chat-notification-size-${size}`}>
-                    {t(`chat.chat-notification-size.values.${size}`)}
-                  </Label>
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
-        </div>
+        <Label htmlFor="chat-visibility">{t("chat-visibility")}</Label>
+        <Switch
+          id="chat-visibility"
+          checked={settings.chatVisibility}
+          onCheckedChange={(value) => updateSetting("chatVisibility", value)}
+        />
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold">{t("mobile.title")}</h2>
-        <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="switch-to-player-who-is-playing">
-              {t("mobile.switch-to-player-who-is-playing")}
-            </Label>
-            <Switch
-              id="switch-to-player-who-is-playing"
-              checked={settings.switchToPlayerWhoIsPlaying}
-              onCheckedChange={(value) =>
-                updateSetting("switchToPlayerWhoIsPlaying", value)
-              }
-            />
-          </div>
-          <div className="flex flex-col gap-2">
-            <Label htmlFor="show-preview-opponents-cards">
-              {t("mobile.show-preview-opponents-cards")}
-            </Label>
-            <Switch
-              id="show-preview-opponents-cards"
-              checked={settings.showPreviewOpponentsCardsForMobile}
-              onCheckedChange={(value) =>
-                updateSetting("showPreviewOpponentsCardsForMobile", value)
-              }
-            />
-          </div>
-        </div>
+        <Label>{t("chat-notification-size.label")}</Label>
+        <RadioGroup
+          value={settings.chatNotificationSize}
+          onValueChange={(value) =>
+            updateSetting("chatNotificationSize", value as ChatNotificationSize)
+          }
+          disabled={!settings.chatVisibility}
+          className="flex gap-4"
+        >
+          {Object.values(ChatNotificationSize).map((size) => (
+            <div className="flex items-center space-x-2" key={size}>
+              <RadioGroupItem
+                value={size}
+                id={`chat-notification-size-${size}`}
+              />
+              <Label htmlFor={`chat-notification-size-${size}`}>
+                {t(`chat-notification-size.values.${size}`)}
+              </Label>
+            </div>
+          ))}
+        </RadioGroup>
+      </div>
+    </div>
+  )
+}
+
+const MobileSettings = () => {
+  const t = useTranslations("components.SettingsDialog.mobile")
+  const { settings, updateSetting } = useSettings()
+
+  return (
+    <div className="px-6 flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="switch-to-player-who-is-playing">
+          {t("switch-to-player-who-is-playing")}
+        </Label>
+        <Switch
+          id="switch-to-player-who-is-playing"
+          checked={settings.switchToPlayerWhoIsPlaying}
+          onCheckedChange={(value) =>
+            updateSetting("switchToPlayerWhoIsPlaying", value)
+          }
+        />
       </div>
       <div className="flex flex-col gap-2">
-        <h2 className="text-lg font-semibold">{t("gameplay.title")}</h2>
+        <Label htmlFor="show-preview-opponents-cards">
+          {t("show-preview-opponents-cards")}
+        </Label>
+        <Switch
+          id="show-preview-opponents-cards"
+          checked={settings.showPreviewOpponentsCardsForMobile}
+          onCheckedChange={(value) =>
+            updateSetting("showPreviewOpponentsCardsForMobile", value)
+          }
+        />
+      </div>
+    </div>
+  )
+}
+
+const GameplaySettings = () => {
+  const t = useTranslations("components.SettingsDialog.gameplay")
+  const { settings, updateSetting } = useSettings()
+
+  return (
+    <div className="px-6 flex flex-col gap-8">
+      {/* Gameboard Section */}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-semibold">{t("gameboard.title")}</h2>
         <div className="flex flex-col gap-6">
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col gap-1">
             <div>
-              <Label>{t("gameplay.gameboard-size.label")}</Label>
+              <Label>{t("gameboard.size.label")}</Label>
               {settings.gameBoardSize === GameBoardSize.BIG && (
                 <p className="text-xs text-orange-600">
-                  {t("gameplay.gameboard-size.big-warning")}
+                  {t("gameboard.size.big-warning")}
                 </p>
               )}
             </div>
@@ -208,10 +204,10 @@ const DisplaySettings = () => {
               className="flex gap-4"
             >
               {Object.values(GameBoardSize).map((size) => (
-                <div className="flex items-center space-x-2" key={size}>
+                <div className="flex items-center space-x-1" key={size}>
                   <RadioGroupItem value={size} id={`gameboard-size-${size}`} />
                   <Label htmlFor={`gameboard-size-${size}`}>
-                    {t(`gameplay.gameboard-size.values.${size}`)}
+                    {t(`gameboard.size.values.${size}`)}
                   </Label>
                 </div>
               ))}
@@ -219,7 +215,7 @@ const DisplaySettings = () => {
           </div>
           <div className="flex flex-col gap-2">
             <Label htmlFor="enlarge-active-player-board">
-              {t("gameplay.enlarge-active-player-board")}
+              {t("gameboard.enlarge-active-player-board")}
             </Label>
             <Switch
               id="enlarge-active-player-board"
@@ -229,28 +225,31 @@ const DisplaySettings = () => {
               }
             />
           </div>
-          <div className="flex flex-col">
-            <Label>{t("gameplay.timer.label")}</Label>
-            <p className="text-sm text-gray-700 dark:text-dark-font/80 mt-1 mb-2">
-              {t("gameplay.timer.description")}
-            </p>
-            <RadioGroup
-              value={settings.timerDisplayMode}
-              onValueChange={(value) =>
-                updateSetting("timerDisplayMode", value as TimerDisplayMode)
-              }
-              className="flex gap-4"
-            >
-              {Object.values(TimerDisplayMode).map((mode) => (
-                <div className="flex items-center space-x-2" key={mode}>
-                  <RadioGroupItem value={mode} id={mode} />
-                  <Label htmlFor={mode}>
-                    {t(`gameplay.timer.modes.${mode}`)}
-                  </Label>
-                </div>
-              ))}
-            </RadioGroup>
-          </div>
+        </div>
+      </div>
+
+      {/* Timer Section */}
+      <div className="flex flex-col gap-2">
+        <h2 className="text-lg font-semibold">{t("timer.title")}</h2>
+        <div className="flex flex-col gap-1">
+          <Label>{t("timer.label")}</Label>
+          <p className="text-sm text-gray-700 dark:text-dark-font/80 mt-1 mb-2">
+            {t("timer.description")}
+          </p>
+          <RadioGroup
+            value={settings.timerDisplayMode}
+            onValueChange={(value) =>
+              updateSetting("timerDisplayMode", value as TimerDisplayMode)
+            }
+            className="flex gap-4"
+          >
+            {Object.values(TimerDisplayMode).map((mode) => (
+              <div className="flex items-center space-x-1" key={mode}>
+                <RadioGroupItem value={mode} id={mode} />
+                <Label htmlFor={mode}>{t(`timer.modes.${mode}`)}</Label>
+              </div>
+            ))}
+          </RadioGroup>
         </div>
       </div>
     </div>

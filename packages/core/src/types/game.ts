@@ -1,14 +1,11 @@
 import type {
-  Avatar,
-  ConnectionStatus,
-  FirstPlayerPenaltyType,
   GameStatus,
   LastTurnStatus,
   RoundPhase,
   TurnStatus,
 } from "@/constants.js"
-import type { PlayerScores, PlayerToJson } from "./player.js"
-import type { SettingsToJson } from "./settings.js"
+import type { PlayerRedisDb, PlayerToJson } from "./player.js"
+import type { SettingsRedisDb, SettingsToJson } from "./settings.js"
 
 export interface GameToJson {
   code: string
@@ -26,51 +23,17 @@ export interface GameToJson {
   updatedAt: Date
 }
 
-export interface GameDb {
+export interface GameRedisDb {
   id: string
   code: string
   hostId: string
   isFull: boolean
   status: GameStatus
-  players: {
-    id: string
-    name: string
-    socketId: string
-    avatar: Avatar
-    score: number
-    wantsReplay: boolean
-    connectionStatus: ConnectionStatus
-    scores: PlayerScores
-    hasPlayedLastTurn: boolean
-    afkCount: number
-    consecutiveAfkCount: number
-    turnStartTime: number | null
-    cards: Array<
-      Array<{
-        id: string
-        value: number
-        isVisible: boolean
-      }>
-    >
-  }[]
+  players: PlayerRedisDb[]
   turn: number
   discardPile: number[]
   drawPile: number[]
-  settings: {
-    isConfirmed: boolean
-    private: boolean
-    maxPlayers: number
-    removeIdenticalColumn: boolean
-    removeIdenticalRow: boolean
-    initialTurnedCount: number
-    cardPerRow: number
-    cardPerColumn: number
-    scoreToEndGame: number
-    firstPlayerMultiplierPenalty: number
-    firstPlayerPenaltyType: FirstPlayerPenaltyType
-    firstPlayerFlatPenalty: number
-    showCurrentScore: boolean
-  }
+  settings: SettingsRedisDb
   selectedCardValue: number | null
   roundNumber: number
   roundPhase: RoundPhase
@@ -78,7 +41,7 @@ export interface GameDb {
   lastTurnStatus: LastTurnStatus
   firstToFinishPlayerId: string | null
   bannedPlayerIds: string[]
-  bannedUsernames: string[]
+  bannedNames: string[]
   stateVersion: number
   createdAt: Date
   updatedAt: Date

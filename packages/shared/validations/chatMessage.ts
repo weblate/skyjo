@@ -1,12 +1,12 @@
 import z from "zod"
 
 export const sendChatMessage = z.object({
-  username: z.string(),
+  name: z.string(),
   message: z.string().max(200),
 })
 
 export type SendChatMessage = z.infer<typeof sendChatMessage>
 
-export const wizzPlayerUsername = z.string()
+export const wizzPlayerName = z.string()
 
-export type WizzPlayerUsername = z.infer<typeof wizzPlayerUsername>
+export type WizzPlayerName = z.infer<typeof wizzPlayerName>

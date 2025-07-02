@@ -24,7 +24,7 @@ export const useKickToasts = () => {
     })
   }
   //#endregion vote kick
-  
+
   //#region host kicks
   const showYouKickPlayer = async (playerToKickName: string) => {
     await dismissAllKickVoteToasts()
@@ -40,7 +40,6 @@ export const useKickToasts = () => {
     toast(t("host-kick-you.title"))
   }
   //#endregion host kicks
-
 
   const dismissAllKickVoteToasts = async () => {
     toast.dismiss()

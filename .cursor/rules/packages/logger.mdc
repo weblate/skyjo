@@ -3,7 +3,7 @@ description:
 globs: packages/logger/**
 alwaysApply: false
 ---
-# Logger Package (`packages/logger`)
+# Shared Logger Package (`packages/logger`)
 
 This package provides a reusable logging utility for the Skyjo monorepo, with support for environment-based configuration.
 

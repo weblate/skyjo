@@ -6,7 +6,7 @@ import type {
 
 export interface UserChatMessage {
   id: string
-  username: string
+  name: string
   message: string
   type: UserMessageType
 }
@@ -19,7 +19,7 @@ export interface SystemChatMessage {
 
 export interface ServerChatMessage {
   id: string
-  username: string
+  name: string
   message: ServerMessageType
   type: ServerMessageType
 }

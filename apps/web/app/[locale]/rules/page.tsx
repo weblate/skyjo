@@ -5,12 +5,10 @@ import Link from "next/link"
 
 const RulesPage = () => {
   const t = useTranslations("pages.Rules")
+
   return (
-    <div className="container bg-body dark:bg-dark-body my-40 text-black dark:text-dark-font">
-      <Link href="/" className="flex justify-center my-6">
-        <h1 className="select-none font-shantell text-4xl">Skymo</h1>
-      </Link>
-      <h2 className="text-3xl mt-6 mb-4">{t("title")}</h2>
+    <div className="container max-w-4xl mt-32 mb-56 bg-body dark:bg-dark-body text-black dark:text-dark-font">
+      <h1 className="text-3xl text-center mb-12">{t("title")}</h1>
       <Rules />
       <div className="flex flex-col items-center">
         <Button className="mt-8">

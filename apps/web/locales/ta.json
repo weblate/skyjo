@@ -457,12 +457,6 @@
       "total": "மொத்தம்"
     },
     "SettingsDialog": {
-      "general": {
-        "language-warn": "முகப்பு பக்கத்தில் மட்டுமே மாற்றக்கூடியது",
-        "title": "பொது",
-        "language": "மொழி",
-        "appearance": "தோற்றம்"
-      },
       "display": {
         "mobile": {
           "show-preview-opponents-cards": "எதிரிகளின் பட்டியலில் எதிரிகளின் அட்டைகளின் முன்னோட்டத்தைக் காட்டு",
@@ -662,11 +656,11 @@
       }
     },
     "chat": {
-      "player-joined": "{username} விளையாட்டில் சேர்ந்தார்",
-      "player-reconnect": "{username} விளையாட்டுடன் மீண்டும் இணைக்கப்பட்டது",
-      "player-left": "{username} விளையாட்டை விட்டு வெளியேறினார்",
+      "player-joined": "{name} விளையாட்டில் சேர்ந்தார்",
+      "player-reconnect": "{name} விளையாட்டுடன் மீண்டும் இணைக்கப்பட்டது",
+      "player-left": "{name} விளையாட்டை விட்டு வெளியேறினார்",
       "argument-required": "கட்டளைக்கு ஒன்று அல்லது அதற்கு மேற்பட்ட வாதங்கள் தேவை: {command}",
-      "player-not-muted": "{username} முடக்கப்படவில்லை",
+      "player-not-muted": "{name} முடக்கப்படவில்லை",
       "wizz-self": "{Initiatorusername fy ஆல் நீங்கள் விச்சாக இருந்தீர்கள்!",
       "wizz-other": "{initiatorUsername} wizz {targetUsername} உள்ளது!",
       "player-already-muted": "{username} ஏற்கனவே முடக்கப்பட்டுள்ளது",

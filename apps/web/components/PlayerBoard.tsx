@@ -57,7 +57,7 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
           alt={ta(player.avatar)}
           title={ta(player.avatar)}
           className={cn(
-            "mt-3 select-none dark:opacity-75 size-6 smh:size-8",
+            "mt-3 select-none dark:opacity-90 size-6 smh:size-8",
             isPlayerTurn && "animate-bounce",
           )}
           priority
