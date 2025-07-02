@@ -88,7 +88,27 @@
     "LanguageCombobox": {
       "select-language": "Spraak utsöken",
       "search-language": "Söökspraak",
-      "no-language-found": "Keen Spraak funnen"
+      "no-language-found": "Keen Spraak funnen",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "RulesDialog": {
       "title": "Speelregeln",
@@ -100,54 +120,7 @@
       "button-title": "Wies de Punktetafel"
     },
     "SettingsDialog": {
-      "display": {
-        "chat": {
-          "title": "Snack",
-          "chat-visibility": "Snack-Sichtborkeit",
-          "chat-notification-size": {
-            "label": "Grött vun de Chat-Mellen",
-            "values": {
-              "small": "Lütt",
-              "normal": "Normal",
-              "big": "Groot"
-            }
-          }
-        },
-        "title": "Anwiesen",
-        "mobile": {
-          "title": "Mobil",
-          "switch-to-player-who-is-playing": "Wessel automaatsch to den Speler, de jüst speelt",
-          "show-preview-opponents-cards": "Wies en Vörschau vun de Koorten vun de Gegners in de Gegnerlist"
-        },
-        "gameplay": {
-          "title": "Speelwies",
-          "gameboard-size": {
-            "label": "Grött vun dien Speelbrett",
-            "big-warning": "Kann Display op Mobil kaputt maken",
-            "values": {
-              "normal": "Normal",
-              "big": "Groot"
-            }
-          },
-          "enlarge-active-player-board": "Vergrötter dat Brett vun den Speler, de an de Reeg is",
-          "timer": {
-            "label": "Tietanzeigmodus",
-            "description": "De kloge Modus wiest den Timer bi Halftiet un de letzten 15 Sekunnen.",
-            "modes": {
-              "never": "Nienich",
-              "smart": "Kloog",
-              "always": "Jümmer"
-            }
-          }
-        }
-      },
       "title": "Instellungen",
-      "general": {
-        "title": "Generaal",
-        "language": "Spraak",
-        "language-warn": "Bloots op de Startsiet to ännern",
-        "appearance": "Utsehn"
-      },
       "audio": {
         "title": "Audio",
         "toggle": {
@@ -221,7 +194,6 @@
     "ReportDialog": {
       "no-messages": "Keen Narichten vun dissen Bruker funnen",
       "title": "Mell {username}",
-      "report-username": "Mell den Brukernaam",
       "description": "Meld den Brukernaam oder en Naricht vun {username}, wenn dat unpassend utsütt.",
       "report-message": "Mell en Naricht",
       "select-message": "Söök de Naricht ut, de mellt warrn schall",
@@ -281,9 +253,6 @@
         "success": {
           "title": "Dank di för dien Torüchmellen!",
           "description": "Dien Insichten hebbt uns hulpen, uns Speelwebsteed to verbetern, un wi sünd di wohrhaftig dankboor."
-        },
-        "error": {
-          "title": "Dor is en Fehler passeert, versöök dat noch mal."
         }
       },
       "email-input": {
@@ -582,9 +551,6 @@
       }
     },
     "Index": {
-      "banner": {
-        "title": "Ik bruuk <gform>dien Feedback</gform>, üm de Tokunft vun Skymo to gestalten!"
-      },
       "name-input-placeholder": "Naam",
       "explanation": {
         "title": "Wat is Skyjo?",
