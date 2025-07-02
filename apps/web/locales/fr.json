@@ -34,6 +34,9 @@
           "title": "Peut-on jouer au Skyjo classique avec le Skyjo action ?",
           "content": "Oui, il vous suffit d'enlever les cartes actions. Si vous êtes sur la version en ligne, séléctionnez la version classique pour jouer au Skyjo."
         }
+      },
+      "banner": {
+        "title": "J'ai besoin de votre avis pour façonner le futur de Skymo!"
       }
     },
     "Search": {
@@ -275,7 +278,9 @@
         "keywords": "Skymo,Skyjo,règles de Skyjo,comment jouer à Skyjo,jeu Skyjo,règles du jeu de cartes,jeu de cartes en ligne,instructions du jeu,guide du gameplay"
       },
       "title": "Règles du jeu"
-    },
+    }
+  },
+  "components": {
     "Signup": {
       "head": {
         "title": "Inscription | Skymo - Jeu de Cartes Skyjo",
@@ -587,8 +592,6 @@
         "submit": "Prêt à jouer !"
       }
     }
-  },
-  "components": {
     "Banner": {
       "title": "J'ai besoin de <gform>votre avis</gform> pour construire l'avenir de Skymo !"
     },
@@ -706,47 +709,16 @@
     "LanguageCombobox": {
       "select-language": "Sélectionner la langue",
       "search-language": "Rechercher une langue",
-      "no-language-found": "Aucune langue trouvée",
-      "locale": {
-        "en": "English",
-        "it": "Italiano",
-        "de": "Deutsch",
-        "es": "Español",
-        "fr": "Français",
-        "br": "Brezhoneg",
-        "ta": "தமிழ்",
-        "bar": "Bavarian",
-        "cs": "Čeština",
-        "da": "Dansk",
-        "el": "Ελληνικά",
-        "et": "Eesti",
-        "frs": "Eastern Frisian",
-        "gsw": "Alemannisch",
-        "nds": "Plattdeutsch",
-        "nl": "Nederlands",
-        "pl": "Polski",
-        "sv": "Svenska",
-        "uk": "Українська"
-      }
+      "no-language-found": "Aucune langue trouvée"
     },
     "MenuDropdown": {
       "button": {
         "aria-label": "Menu"
       },
-      "guest": "Joueur Mystère",
-      "guest-catch-phrase": "Prêt à révéler votre identité ?",
-      "profile": "Mon profil",
       "rules": "Règles",
-      "appearance": "Apparence",
-      "language": "Langue",
       "feedback": "Laisser un commentaire",
       "discord": "Discord",
-      "settings": "Paramètres",
-      "game-settings": "Paramètres du jeu",
-      "account-settings": "Paramètres du compte",
-      "logout": "Se déconnecter",
-      "login": "Se connecter",
-      "signup": "Créer un compte"
+      "settings": "Paramètres"
     },
     "OpponentBoard": {
       "disconnected": "Le joueur a quitté la partie. Un bot jouera pour lui pendant les prochains tours jusqu'à sa reconnexion."
@@ -868,48 +840,6 @@
         "volume": {
           "label": "Volume ({volume}%)"
         }
-      },
-      "chat": {
-        "title": "Chat",
-        "chat-visibility": "Visibilité du chat",
-        "chat-notification-size": {
-          "label": "Taille des notifications du chat",
-          "values": {
-            "small": "Petite",
-            "normal": "Normale",
-            "big": "Grande"
-          }
-        }
-      },
-      "mobile": {
-        "title": "Mobile",
-        "switch-to-player-who-is-playing": "Automatiquement basculer sur le joueur qui joue",
-        "show-preview-opponents-cards": "Afficher l'aperçu des cartes des adversaires dans la liste des adversaires"
-      },
-      "gameplay": {
-        "title": "Jeu",
-        "gameboard": {
-          "title": "Plateau de jeu",
-          "size": {
-            "label": "Taille de votre plateau de jeu",
-            "big-warning": "Peut casser l'affichage sur mobile",
-            "values": {
-              "normal": "Normal",
-              "big": "Grand"
-            }
-          },
-          "enlarge-active-player-board": "Agrandir le plateau du joueur dont c'est le tour"
-        },
-        "timer": {
-          "title": "Chronomètre",
-          "label": "Mode d'affichage du chronomètre",
-          "description": "Le mode intelligent affiche le chronomètre à mi-temps et les 15 dernières secondes.",
-          "modes": {
-            "never": "Jamais",
-            "smart": "Intelligent",
-            "always": "Toujours"
-          }
-        }
       }
     },
     "Avatar": {
@@ -990,7 +920,6 @@
     "ReportDialog": {
       "title": "Signaler {name}",
       "description": "Signaler le pseudonyme ou un message de {name} s'il vous semble inapproprié.",
-      "report-name": "Signaler le nom d'utilisateur",
       "report-message": "Signaler un message",
       "select-message": "Sélectionner le message à signaler",
       "select-message-placeholder": "Sélectionner un message",
@@ -1002,28 +931,6 @@
           "title": "Signalement envoyé",
           "description": "Merci pour votre signalement, vous avez contribué à améliorer la qualité du jeu."
         }
-      }
-    },
-    "GoogleOAuthButton": {
-      "button-title": "Continuer avec Google",
-      "error": "Échec de la connexion avec Google, veuillez réessayer plus tard."
-    },
-    "PasswordRequirements": {
-      "passwords-match": "Les mots de passe correspondent",
-      "minimum-characters": "Au moins 10 caractères",
-      "lowercase-letter": "Au moins une lettre minuscule",
-      "capital-letter": "Au moins une lettre majuscule",
-      "number": "Au moins un chiffre",
-      "special-character": "Au moins un caractère spécial"
-    },
-    "UsernameInput": {
-      "availability": {
-        "checking": "Vérification...",
-        "available": "Nom d'utilisateur disponible",
-        "taken": "Déjà pris !"
-      },
-      "error": {
-        "username-availability-error": "Impossible de vérifier la disponibilité du nom d'utilisateur"
       }
     }
   },

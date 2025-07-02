@@ -612,27 +612,6 @@
       "create-game-button": "Loo {type, select, private {privaatne} public {avalik} other {tundmatu}} mäng"
     },
     "LanguageCombobox": {
-      "locale": {
-        "en": "English",
-        "it": "Italiano",
-        "de": "Deutsch",
-        "es": "Español",
-        "fr": "Français",
-        "br": "Brezhoneg",
-        "ta": "தமிழ்",
-        "bar": "Bavarian",
-        "cs": "Čeština",
-        "da": "Dansk",
-        "el": "Ελληνικά",
-        "et": "Eesti",
-        "frs": "Eastern Frisian",
-        "gsw": "Alemannisch",
-        "nds": "Plattdeutsch",
-        "nl": "Nederlands",
-        "pl": "Polski",
-        "sv": "Svenska",
-        "uk": "Українська"
-      },
       "select-language": "Vali keel",
       "search-language": "Otsingukeel",
       "no-language-found": "Keelevalikut ei leitud"

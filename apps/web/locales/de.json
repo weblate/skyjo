@@ -34,6 +34,9 @@
           "title": "Kann man klassisches Skyjo mit Skyjo Action spielen?",
           "content": "Ja, du musst nur die Aktionskarten entfernen. Wenn du die Online-Version spielst, wähle die klassische Version aus, um Skyjo zu spielen."
         }
+      },
+      "banner": {
+        "title": "Ich brauche <gform>Dein Feedback</gform>, um die Zukunft von Skymo zu gestalten!"
       }
     },
     "Search": {
@@ -321,27 +324,6 @@
       "first-player-flat-penalty": "Feste Strafe: {value}"
     },
     "LanguageCombobox": {
-      "locale": {
-        "en": "English",
-        "it": "Italiano",
-        "de": "Deutsch",
-        "es": "Español",
-        "fr": "Français",
-        "br": "Brezhoneg",
-        "ta": "தமிழ்",
-        "bar": "Bavarian",
-        "cs": "Čeština",
-        "da": "Dansk",
-        "el": "Ελληνικά",
-        "et": "Eesti",
-        "frs": "Eastern Frisian",
-        "gsw": "Alemannisch",
-        "nds": "Plattdeutsch",
-        "nl": "Nederlands",
-        "pl": "Polski",
-        "sv": "Svenska",
-        "uk": "Українська"
-      },
       "no-language-found": "Keine Sprache gefunden",
       "select-language": "Sprache auswählen",
       "search-language": "Sprache suchen"
@@ -411,7 +393,8 @@
               "big": "Groß"
             }
           },
-          "title": "Spielablauf"
+          "title": "Spielablauf",
+          "enlarge-active-player-board": "Das Brett des Spielers, der am Zug ist, vergrößern"
         }
       },
       "title": "Einstellungen",

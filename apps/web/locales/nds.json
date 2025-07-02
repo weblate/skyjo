@@ -86,27 +86,6 @@
       "first-player-flat-penalty": "Faste Straaf: {value}"
     },
     "LanguageCombobox": {
-      "locale": {
-        "en": "English",
-        "it": "Italiano",
-        "de": "Deutsch",
-        "es": "Español",
-        "fr": "Français",
-        "br": "Brezhoneg",
-        "ta": "தமிழ்",
-        "bar": "Bavarian",
-        "cs": "Čeština",
-        "da": "Dansk",
-        "el": "Ελληνικά",
-        "et": "Eesti",
-        "frs": "Eastern Frisian",
-        "gsw": "Alemannisch",
-        "nds": "Plattdeutsch",
-        "nl": "Nederlands",
-        "pl": "Polski",
-        "sv": "Svenska",
-        "uk": "Українська"
-      },
       "select-language": "Spraak utsöken",
       "search-language": "Söökspraak",
       "no-language-found": "Keen Spraak funnen"

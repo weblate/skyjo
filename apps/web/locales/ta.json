@@ -351,27 +351,6 @@
       "FirefoxAndroid": "பட்டியல் ஐகானைத் தட்டவும், பின்னர் நிறுவ 'முகப்புத் திரையில் சேர்'"
     },
     "LanguageCombobox": {
-      "locale": {
-        "en": "English",
-        "it": "Italiano",
-        "de": "Deutsch",
-        "es": "Español",
-        "fr": "Français",
-        "br": "Brezhoneg",
-        "ta": "தமிழ்",
-        "bar": "Bavarian",
-        "cs": "Čeština",
-        "da": "Dansk",
-        "el": "Ελληνικά",
-        "et": "Eesti",
-        "frs": "Eastern Frisian",
-        "gsw": "Alemannisch",
-        "nds": "Plattdeutsch",
-        "nl": "Nederlands",
-        "pl": "Polski",
-        "sv": "Svenska",
-        "uk": "Українська"
-      },
       "select-language": "மொழியைத் தேர்ந்தெடுக்கவும்",
       "search-language": "தேடல் மொழி",
       "no-language-found": "எந்த மொழியும் கிடைக்கவில்லை"
