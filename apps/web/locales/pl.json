@@ -110,9 +110,6 @@
         "success": {
           "title": "Dziękujemy za opinię!",
           "description": "Twoje spostrzeżenia pomogły nam ulepszyć naszą stronę z grami i jesteśmy za to naprawdę wdzięczni."
-        },
-        "error": {
-          "title": "Wystąpił błąd, spróbuj ponownie."
         }
       },
       "title": "Zostaw opinię",
@@ -247,53 +244,6 @@
     },
     "SettingsDialog": {
       "title": "Ustawienia",
-      "general": {
-        "title": "Ogólne",
-        "language": "Język",
-        "language-warn": "Możliwość zmiany tylko na stronie głównej",
-        "appearance": "Wygląd"
-      },
-      "display": {
-        "title": "Wyświetl",
-        "mobile": {
-          "title": "Mobilne",
-          "show-preview-opponents-cards": "Pokaż podgląd kart przeciwników na liście przeciwników",
-          "switch-to-player-who-is-playing": "Automatycznie przełącz na gracza, który wykonuje ruch"
-        },
-        "chat": {
-          "title": "Czat",
-          "chat-visibility": "Widoczność czatu",
-          "chat-notification-size": {
-            "label": "Rozmiar powiadomień czatu",
-            "values": {
-              "small": "Mały",
-              "normal": "Normalny",
-              "big": "Duży"
-            }
-          }
-        },
-        "gameplay": {
-          "title": "Rozgrywka",
-          "gameboard-size": {
-            "label": "Rozmiar twojej planszy do gry",
-            "big-warning": "Może psuć wyświetlanie na urządzeniach mobilnych",
-            "values": {
-              "normal": "Normalny",
-              "big": "Duży"
-            }
-          },
-          "enlarge-active-player-board": "Powiększ planszę gracza, którego jest kolej",
-          "timer": {
-            "label": "Tryb wyświetlania timera",
-            "description": "Tryb inteligentny wyświetla timer w połowie czasu i w ostatnich 15 sekundach.",
-            "modes": {
-              "never": "Nigdy",
-              "smart": "Inteligentny",
-              "always": "Zawsze"
-            }
-          }
-        }
-      },
       "audio": {
         "title": "Dźwięk",
         "toggle": {
@@ -363,7 +313,6 @@
     "ReportDialog": {
       "title": "Zgłoś {username}",
       "description": "Zgłoś nazwę użytkownika lub wiadomość od {username}, jeśli wydaje się nieodpowiednia.",
-      "report-username": "Zgłoś nazwę użytkownika",
       "report-message": "Zgłoś wiadomość",
       "select-message": "Wybierz wiadomość do zgłoszenia",
       "select-message-placeholder": "Wybierz wiadomość",
@@ -502,9 +451,6 @@
         "title": "Czym jest Skyjo?",
         "content": "Skyjo to ekscytująca gra karciana i doskonała gra planszowa, która cieszy się popularnością wśród fanów gier na całym świecie. Ta wieloosobowa gra karciana jest przeznaczona dla 2-8 graczy, gdzie każdy gracz otrzymuje 12 kart, początkowo zakrytych. Głównym celem gry jest zdobycie jak najmniejszej liczby punktów. Gra kończy się, gdy jeden z graczy osiągnie 100 punktów. Zasady gry są proste i łatwe do zrozumienia, co czyni ją idealnym wyborem na wieczory z grami w gronie rodziny lub przyjaciół. Entuzjaści gier będą zachwyceni informacją, że teraz można grać w Skyjo online za darmo!",
         "button": "Zobacz zasady"
-      },
-      "banner": {
-        "title": "Potrzebuję <gform>Twojej opinii</gform>, aby kształtować przyszłość Skymo!"
       },
       "faq": {
         "title": "Często zadawane pytania (FAQ)",

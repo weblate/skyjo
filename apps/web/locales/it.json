@@ -215,9 +215,6 @@
           "content": "Sì, devi solo rimuovere le carte azione. Se stai giocando alla versione online, seleziona la versione classica per giocare a Skyjo."
         }
       },
-      "banner": {
-        "title": "Ho bisogno del <gform>tuo feedback</gform> per plasmare il futuro di Skymo!"
-      },
       "name-input-placeholder": "Nome"
     },
     "Maintenance": {
@@ -334,9 +331,6 @@
         "success": {
           "title": "Grazie per il tuo feedback!",
           "description": "Le vostre intuizioni ci hanno aiutato a migliorare il sito web del nostro gioco e ve ne siamo davvero grati."
-        },
-        "error": {
-          "title": "Si è verificato un errore, riprova."
         }
       },
       "message-input": {
@@ -466,53 +460,6 @@
       "join-game-button": "Unisciti al gioco"
     },
     "SettingsDialog": {
-      "display": {
-        "gameplay": {
-          "title": "Gameplay",
-          "gameboard-size": {
-            "values": {
-              "normal": "Normale",
-              "big": "Grande"
-            },
-            "label": "Dimensioni della tua scacchiera",
-            "big-warning": "Può rompere il display sul cellulare"
-          },
-          "enlarge-active-player-board": "Ingrandisci la plancia del giocatore di turno",
-          "timer": {
-            "label": "Modalità di visualizzazione del timer",
-            "description": "La modalità Smart visualizza il timer a metà tempo e negli ultimi 15 secondi.",
-            "modes": {
-              "never": "Mai",
-              "smart": "Intelligente",
-              "always": "Sempre"
-            }
-          }
-        },
-        "mobile": {
-          "title": "Mobile",
-          "show-preview-opponents-cards": "Mostra un'anteprima delle carte degli avversari nell'elenco degli avversari",
-          "switch-to-player-who-is-playing": "Passa automaticamente al giocatore che sta giocando"
-        },
-        "chat": {
-          "chat-notification-size": {
-            "label": "Dimensioni notifica chat",
-            "values": {
-              "small": "Piccolo",
-              "normal": "Normale",
-              "big": "Grande"
-            }
-          },
-          "chat-visibility": "Visibilità chat",
-          "title": "Chat"
-        },
-        "title": "Display"
-      },
-      "general": {
-        "appearance": "Aspetto",
-        "language": "Lingua",
-        "language-warn": "Modificabile solo sulla home page",
-        "title": "Generale"
-      },
       "audio": {
         "toggle": {
           "label": "Abilita audio"
@@ -616,7 +563,6 @@
         }
       },
       "title": "Report {username}",
-      "report-username": "Segnalare il nome utente",
       "report-message": "Segnala un messaggio",
       "select-message": "Seleziona il messaggio da segnalare",
       "select-message-placeholder": "Seleziona un messaggio",

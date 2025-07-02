@@ -34,9 +34,6 @@
           "content": "Ano, stačí odstranit akční karty. Pokud hrajete online verzi, vyberte klasickou verzi pro hraní Skyjo."
         }
       },
-      "banner": {
-        "title": "Potřebuji <gform>vaši zpětnou vazbu</gform> pro formování budoucnosti Skymo!"
-      },
       "name-input-placeholder": "Jméno"
     },
     "Search": {
@@ -395,54 +392,7 @@
       "description": "{name} vyhrál s {score} body!"
     },
     "SettingsDialog": {
-      "display": {
-        "chat": {
-          "title": "Chat",
-          "chat-visibility": "Viditelnost chatu",
-          "chat-notification-size": {
-            "label": "Velikost oznámení chatu",
-            "values": {
-              "small": "Malý",
-              "normal": "Normální",
-              "big": "Velký"
-            }
-          }
-        },
-        "title": "Zobrazit",
-        "mobile": {
-          "title": "Mobilní",
-          "switch-to-player-who-is-playing": "Automaticky přepnout na hráče, který právě hraje",
-          "show-preview-opponents-cards": "Zobrazit náhled karet protivníků v seznamu protivníků"
-        },
-        "gameplay": {
-          "title": "Hratelnost",
-          "gameboard-size": {
-            "label": "Velikost vaší herní desky",
-            "big-warning": "Může narušit zobrazení na mobilních zařízeních",
-            "values": {
-              "normal": "Normální",
-              "big": "Velký"
-            }
-          },
-          "enlarge-active-player-board": "Zvětšit hrací plochu hráče, který je na tahu",
-          "timer": {
-            "label": "Režim zobrazení časovače",
-            "description": "Chytrý režim zobrazuje časovač v poločase a posledních 15 sekund.",
-            "modes": {
-              "never": "Nikdy",
-              "smart": "Chytrý",
-              "always": "Vždy"
-            }
-          }
-        }
-      },
       "title": "Nastavení",
-      "general": {
-        "title": "Obecné",
-        "language": "Jazyk",
-        "language-warn": "Lze změnit pouze na domovské stránce",
-        "appearance": "Vzhled"
-      },
       "audio": {
         "title": "Zvuk",
         "toggle": {
@@ -548,9 +498,6 @@
         "success": {
           "title": "Děkujeme za vaši zpětnou vazbu!",
           "description": "Vaše postřehy nám pomohly vylepšit naše herní stránky a jsme za to opravdu vděční."
-        },
-        "error": {
-          "title": "Došlo k chybě, zkuste to prosím znovu."
         }
       },
       "email-input": {
@@ -624,7 +571,6 @@
     "ReportDialog": {
       "title": "Nahlásit {username}",
       "description": "Nahlaste uživatelské jméno nebo zprávu od {username}, pokud se vám zdá nevhodná.",
-      "report-username": "Nahlásit uživatelské jméno",
       "report-message": "Nahlásit zprávu",
       "select-message": "Vyberte zprávu k nahlášení",
       "select-message-placeholder": "Vyberte zprávu",

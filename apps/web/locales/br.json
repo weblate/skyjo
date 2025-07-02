@@ -34,9 +34,6 @@
           "title": "Posupl eo c'hoari Skyjo klasel gant ar Skyjo ober?",
           "content": "Ya, trawalc'h eo deoc'h tennañ ar c'hartoù ober. M'emaoc'h war ar stumm enlinenn, diuzit ar stumm klasel da c'hoari Skyjo."
         }
-      },
-      "banner": {
-        "title": "Ezhomm am eus <gform>ho soñj</gform> evit stummañ dazont Skymo!"
       }
     },
     "Search": {
@@ -325,47 +322,6 @@
       }
     },
     "SettingsDialog": {
-      "display": {
-        "chat": {
-          "chat-notification-size": {
-            "values": {
-              "normal": "Ordinal",
-              "big": "Bras",
-              "small": "Bihan"
-            },
-            "label": "Ment rebuzadurioù ar flapva"
-          },
-          "title": "Flapva",
-          "chat-visibility": "Hewelusted ar flapva"
-        },
-        "title": "Skrammañ",
-        "mobile": {
-          "title": "Hezoug",
-          "switch-to-player-who-is-playing": "Mont d'ar c'hoari⋅ez o c'hoari ent emgefreek",
-          "show-preview-opponents-cards": "Diskouez alberz kartennoù an enebourien e roll an enebourien"
-        },
-        "gameplay": {
-          "timer": {
-            "modes": {
-              "always": "Atav",
-              "never": "Biken",
-              "smart": "Furf"
-            },
-            "description": "Eus ar mod 'Smart' e vez diskwelet an amzerier en hanter-amzer hag an 15 segondenn diwezhañ.",
-            "label": "Mod diskouez amzerier"
-          },
-          "enlarge-active-player-board": "Brasaat taol ar c'hoarier a zo e dro",
-          "title": "C'hoarierezh",
-          "gameboard-size": {
-            "label": "Ment ho taolenn c'hoari",
-            "values": {
-              "big": "Bras",
-              "normal": "Boaz"
-            },
-            "big-warning": "Gallout a ra terriñ ar skramm war ar pellgomzer hezoug"
-          }
-        }
-      },
       "title": "Arventennoù",
       "audio": {
         "title": "Son",
@@ -588,9 +544,6 @@
         "success": {
           "title": "Trugarez evit ho kemenn!",
           "description": "Ho soñjoù o deus hon sikouret da wellaat lec'hienn hon c'hoari, ha doujus-kenañ omp."
-        },
-        "error": {
-          "title": "Ur fazi zo c'hoarvezet, klaskit en-dro."
         }
       },
       "email-input": {
@@ -602,7 +555,6 @@
       "select-message-placeholder": "Dibab ur gemennadenn",
       "select-message": "Diuzit ar c'hemennad da rentañ-kont",
       "description": "Danevellit an anv-implijer pe ur gemennadenn digant {username} ma seblant direizh.",
-      "report-username": "Danevelliñ an anv-implijer",
       "toast": {
         "report-submitted": {
           "title": "Danevell a zo bet kaset",

@@ -6,9 +6,6 @@
   },
   "pages": {
     "Index": {
-      "banner": {
-        "title": "Vajan <gform>teie tagasisidet</gform>, et kujundada Skymo tulevikku!"
-      },
       "explanation": {
         "title": "Mis on Skyjo?",
         "content": "Skyjo on põnev kaardimäng ja suurepärane lauamäng, mida naudivad mänguhuvilised üle kogu maailma. See mitme mängijaga kaardimäng on mõeldud 2 kuni 8 mängijale, kus iga mängija saab 12 algselt peidetud kaarti. Mängu peamine eesmärk on koguda võimalikult vähe punkte. Mäng lõpeb niipea, kui üks mängija jõuab 100 punktini. Mängureeglid on lihtsad ja kergesti arusaadavad, mistõttu on see ideaalne valik mänguõhtuteks pere või sõpradega. Mänguhuvilistel on hea meel teada saada, et nüüd on võimalik Skyjot tasuta veebis mängida!",
@@ -269,9 +266,6 @@
         "success": {
           "title": "Aitäh tagasiside eest!",
           "description": "Teie teadmised on aidanud meil oma mängude veebisaiti täiustada ja oleme tõeliselt tänulikud."
-        },
-        "error": {
-          "title": "Ilmnes viga, proovige uuesti."
         }
       },
       "email-input": {
@@ -418,47 +412,6 @@
       "description": "{name} on võitnud {score} punktiga!"
     },
     "SettingsDialog": {
-      "display": {
-        "mobile": {
-          "show-preview-opponents-cards": "Kuva vastaste kaartide eelvaade vastaste loendis",
-          "title": "Mobiilne",
-          "switch-to-player-who-is-playing": "Lülitu automaatselt mängivale mängijale"
-        },
-        "chat": {
-          "title": "Vestlus",
-          "chat-visibility": "Vestluse nähtavus",
-          "chat-notification-size": {
-            "label": "Vestlusteatise suurus",
-            "values": {
-              "small": "Väike",
-              "normal": "Tavaline",
-              "big": "Suur"
-            }
-          }
-        },
-        "gameplay": {
-          "timer": {
-            "modes": {
-              "smart": "Arukas",
-              "always": "Alati",
-              "never": "Mitte kunagi"
-            },
-            "label": "Taimeri kuvamisrežiim",
-            "description": "Nutikas režiim kuvab taimeri poolel ajal ja viimasel 15 sekundil."
-          },
-          "title": "Mänguviis",
-          "gameboard-size": {
-            "big-warning": "Võib mobiiliekraanil kuva rikkuda",
-            "values": {
-              "normal": "Tavaline",
-              "big": "Suur"
-            },
-            "label": "Mängulaua suurus"
-          },
-          "enlarge-active-player-board": "Suurenda selle mängija lauda, kelle kord on"
-        },
-        "title": "Kuva"
-      },
       "audio": {
         "title": "Heli",
         "toggle": {
@@ -468,13 +421,7 @@
           "label": "Helitugevus ({volume}%)"
         }
       },
-      "title": "Seaded",
-      "general": {
-        "title": "Üldine",
-        "language": "Keel",
-        "language-warn": "Muudetav ainult avalehel",
-        "appearance": "Välimus"
-      }
+      "title": "Seaded"
     },
     "Avatar": {
       "context-menu": {
@@ -548,7 +495,6 @@
     },
     "ReportDialog": {
       "description": "Teatage kasutajanimest või sõnumist kasutajalt {username}, kui see tundub sobimatu.",
-      "report-username": "Teavita kasutajanime",
       "title": "Teata kasutajast {username}",
       "report-message": "Teata sõnumist",
       "select-message": "Valige teade, millest teatada",
