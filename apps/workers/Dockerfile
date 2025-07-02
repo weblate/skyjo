@@ -26,7 +26,7 @@ FROM base AS runner
 ARG PROJECT
 WORKDIR /app
 COPY --from=builder /app .
-WORKDIR /app/apps/cleanup-worker
+WORKDIR /app/apps/workers
 ENV NODE_ENV=production
 ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 
