@@ -304,7 +304,27 @@
     "LanguageCombobox": {
       "select-language": "Vyberte jazyk",
       "search-language": "Jazyk vyhledávání",
-      "no-language-found": "Nebyl nalezen žádný jazyk"
+      "no-language-found": "Nebyl nalezen žádný jazyk",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "PWABanner": {
       "Chrome": "Klikněte na tlačítko 'Instalovat' pro instalaci",
