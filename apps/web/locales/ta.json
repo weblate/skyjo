@@ -350,7 +350,27 @@
     "LanguageCombobox": {
       "select-language": "மொழியைத் தேர்ந்தெடுக்கவும்",
       "search-language": "தேடல் மொழி",
-      "no-language-found": "எந்த மொழியும் கிடைக்கவில்லை"
+      "no-language-found": "எந்த மொழியும் கிடைக்கவில்லை",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "MenuDropdown": {
       "button": {
