@@ -120,7 +120,7 @@
           "label": "Afficher le score en temps réel"
         },
         "score-to-end-game": {
-          "label": "Nombre de points pour finir la partie",
+          "label": "Score pour terminer la partie",
           "title": "{number} points seront nécessaires pour finir la partie"
         },
         "first-player-penalty-type": {
@@ -130,13 +130,13 @@
           "item": {
             "multiplier-only": "Multiplicateur seulement",
             "flat-only": "Pénalité plate seulement",
-            "flat-then-multiplier": "Pénalité plate puis multiplicateur",
-            "multiplier-then-flat": "Multiplicateur puis pénalité plate"
+            "flat-then-multiplier": "Pénalité fixe puis multiplicateur",
+            "multiplier-then-flat": "Multiplicateur puis pénalité fixe"
           }
         },
         "first-player-flat-penalty": {
-          "label": "Pénalité plate pour le premier joueur",
-          "title": "Le score du premier joueur sera ajouté par {number} si il n'est pas strictement inférieur aux autres scores de la partie"
+          "label": "Pénalité fixe pour le premier joueur",
+          "title": "{nombre} points supplémentaires sera ajouté au score du premier joueur"
         },
         "first-player-multiplier-penalty": {
           "label": "Multiplicateur de pénalité pour le score du premier joueur",
@@ -223,7 +223,7 @@
         },
         "data-storage-and-retention": {
           "title": "Stockage et conservation des données",
-          "items": "Les données d'utilisation anonymes sont stockées sur des serveurs au sein de l'Union européenne et conservées pendant un maximum d'un an;;Les données de jeu sont stockées dans notre base de données situées à Francfort, Allemagne. Ces données sont conservées pendant la durée des parties actives. Une fois que tous les joueurs quittent une partie, les données associées sont supprimées;;Les informations stockées dans le stockage local de votre navigateur y restent jusqu'à ce que vous effaciez les données de votre navigateur"
+          "items": "Les données d'utilisation anonymes sont stockées sur des serveurs au sein de l'Union européenne et conservées pendant un maximum d'un an;;Les données de jeu sont stockées dans notre base de données situées à Francfort, Allemagne. Ces données sont conservées pendant la durée des parties actives. Une fois que tous les joueurs quittent une partie, les données associées sont supprimées;;Les informations stockées dans le stockage local de votre navigateur y restent jusqu'à ce que vous effaciez les données de votre navigateur;;Les formulaires de retour d'information ne sont conservés que dans le but de répondre et d'examiner les suggestions de développement."
         },
         "data-sharing": {
           "title": "Partage des données",
