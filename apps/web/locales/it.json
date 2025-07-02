@@ -432,7 +432,27 @@
     "LanguageCombobox": {
       "no-language-found": "Nessuna lingua trovata",
       "select-language": "Seleziona la lingua",
-      "search-language": "Lingua di ricerca"
+      "search-language": "Lingua di ricerca",
+      "locale": {
+        "de": "Deutsch",
+        "pl": "Polski",
+        "ta": "தமிழ்",
+        "es": "Español",
+        "frs": "Eastern Frisian",
+        "en": "English",
+        "fr": "Français",
+        "bar": "Bavarian",
+        "da": "Dansk",
+        "nl": "Nederlands",
+        "nds": "Plattdeutsch",
+        "it": "Italiano",
+        "el": "Ελληνικά",
+        "gsw": "Alemannisch",
+        "sv": "Svenska",
+        "cs": "Čeština",
+        "br": "Brezhoneg",
+        "et": "Eesti"
+      }
     },
     "GameRules": {
       "score-to-end-game": "Numero di punti per terminare la partita: {value}",
