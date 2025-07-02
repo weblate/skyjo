@@ -102,8 +102,8 @@
           "label": "Nombre maximum de joueurs",
           "title": "Nombre maximum de joueurs: {number}"
         },
-        "remove-identical-column": "Supprimer la colonne si cartes identiques",
-        "remove-identical-row": "Supprimer la ligne si cartes identiques",
+        "remove-identical-column": "Supprimer les colonnes identiques",
+        "remove-identical-row": "Supprimer les lignes identiques",
         "nb-columns": {
           "label": "Nombre de colonnes",
           "title": "$number colonnes"
@@ -113,11 +113,11 @@
           "title": "$number lignes"
         },
         "initial-turned-count": {
-          "label": "Nombre de cartes retournées au début de la partie",
-          "title": "{number} cartes seront retournées au début de la partie"
+          "label": "Nombre de cartes initialement révélées",
+          "title": "Au début du jeu, {nombre} de vos cartes seront dévoilées"
         },
         "show-current-score": {
-          "label": "Afficher le score des joueurs pendant la partie"
+          "label": "Afficher le score en temps réel"
         },
         "score-to-end-game": {
           "label": "Nombre de points pour finir la partie",
