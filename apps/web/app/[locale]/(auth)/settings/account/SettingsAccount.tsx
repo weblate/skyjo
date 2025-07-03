@@ -1,6 +1,6 @@
 "use client"
 
-import { useSettingsApi } from "@/app/[locale]/(auth)/(guard)/settings/useSettingsApi"
+import { useSettingsApi } from "@/app/[locale]/(auth)/settings/useSettingsApi"
 import { Button } from "@/components/ui/button"
 import {
   Form,

@@ -1,6 +1,7 @@
 import MaintenancePage from "@/app/[locale]/MaintenancePage"
 import Providers from "@/app/[locale]/providers"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
+import { verifySession } from "@/lib/dal"
 import { PostHogServerClient } from "@/lib/posthog-server"
 import { getCurrentUrl } from "@/lib/utils"
 import { Locales } from "@skymo/shared/constants"
@@ -8,7 +9,8 @@ import { Metadata, Viewport } from "next"
 import { NextIntlClientProvider } from "next-intl"
 import { getTranslations } from "next-intl/server"
 import { Fredoka } from "next/font/google"
-import { notFound } from "next/navigation"
+import { headers } from "next/headers"
+import { notFound, redirect } from "next/navigation"
 
 const fredoka = Fredoka({
   subsets: ["latin"],
@@ -146,6 +148,24 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
     "maintenance",
     "web-server",
   )
+
+  const headersList = await headers()
+  const pathname = headersList.get("x-pathname") || "/"
+  const session = await verifySession()
+
+  if (session) {
+    if (!session.emailVerified && !pathname.includes("/verify")) {
+      redirect("/verify")
+    }
+
+    if (
+      session.emailVerified &&
+      !session.onboardingCompleted &&
+      !pathname.includes("/onboard")
+    ) {
+      redirect("/onboard")
+    }
+  }
 
   return (
     <html lang={locale} suppressHydrationWarning style={fredoka.style}>

@@ -7,7 +7,12 @@ const nextIntlMiddleware = createNextIntlMiddleware(routing)
 export default async function middleware(request: NextRequest) {
   // Only handle internationalization
   // Authentication is now handled by the DAL in layouts and pages
-  return nextIntlMiddleware(request)
+  const response = nextIntlMiddleware(request)
+
+  // Add the pathname to the headers so it can be accessed in server components
+  response.headers.set("x-pathname", request.nextUrl.pathname)
+
+  return response
 }
 
 export const config = {

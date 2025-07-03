@@ -9,7 +9,7 @@ import {
   createSessionId,
   generateSessionToken,
 } from "@/http/session/session.service.js"
-import { createUser } from "@/http/user/user.service.js"
+import { createUser, createUsername } from "@/http/user/user.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 import { ENV } from "@env"
@@ -115,7 +115,7 @@ export async function loginGoogle(
       .set({ googleId })
       .where(eq(userTable.id, user.id))
   } else if (!user) {
-    const username = name?.split(" ")[0] ?? "unnamed"
+    const username = await createUsername(name?.split(" ")[0] ?? "unnamed")
     const newUser = await createUser({
       email,
       username,
