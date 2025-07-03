@@ -20,7 +20,7 @@ const Footer = () => {
           </Link>
           <FooterRulesLink text={t("rules")} />
           <Link
-            href="https://status.skyjo.online"
+            href={process.env.NEXT_PUBLIC_STATUS_URL ?? ""}
             target="_blank"
             className="text-black dark:text-dark-font underline"
           >
@@ -32,7 +32,7 @@ const Footer = () => {
             {t("home")}
           </Link>
           <Link
-            href="https://github.com/Maxentr/skymo/releases"
+            href={process.env.NEXT_PUBLIC_RELEASE_NOTES_URL ?? ""}
             target="_blank"
             className="text-black dark:text-dark-font underline"
           >
@@ -47,6 +47,13 @@ const Footer = () => {
         </div>
         <div className="flex flex-col justify-center items-center md:items-end gap-3 md:gap-4">
           <Link
+            href={process.env.NEXT_PUBLIC_WEBLATE_URL ?? ""}
+            target="_blank"
+            className="text-black dark:text-dark-font underline"
+          >
+            {t("translations")}
+          </Link>
+          <Link
             href="https://magilano.com/en"
             target="_blank"
             className="text-black dark:text-dark-font underline"
@@ -54,7 +61,10 @@ const Footer = () => {
             {t("buy-game")}
           </Link>
           <div className="flex flex-row items-center gap-4">
-            <Link href="https://discord.gg/qKsaXebPyx" target="_blank">
+            <Link
+              href={process.env.NEXT_PUBLIC_DISCORD_URL ?? ""}
+              target="_blank"
+            >
               <Image
                 src="/svg/discord.svg"
                 width={24}
@@ -63,7 +73,10 @@ const Footer = () => {
                 className="dark:invert"
               />
             </Link>
-            <Link href="https://github.com/Maxentr" target="_blank">
+            <Link
+              href={process.env.NEXT_PUBLIC_GITHUB_URL ?? ""}
+              target="_blank"
+            >
               <Image
                 src="/svg/github.svg"
                 width={24}

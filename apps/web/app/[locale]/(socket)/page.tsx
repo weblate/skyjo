@@ -47,7 +47,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
           </div>
           <div className="flex flex-row w-full z-10 items-center justify-between">
             <Link
-              href="https://discord.gg/qKsaXebPyx"
+              href={process.env.NEXT_PUBLIC_DISCORD_URL ?? ""}
               target="_blank"
               className="w-20"
             >
