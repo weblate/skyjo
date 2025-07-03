@@ -146,63 +146,6 @@
         "last-update": {
           "text": "Última actualización: {date}",
           "date-format": "DD/MM/YYYY - HH:mm"
-        },
-        "information-we-collect": {
-          "anonymous-usage-data": {
-            "title": "Datos de uso anónimos",
-            "description": "Utilizamos PostHog, una herramienta de análisis, para recopilar datos anónimos sobre su uso de nuestra página web. Esto incluye:",
-            "items": "Visitas a la página;;Web vitals (métricas de rendimiento);;Respuestas a las encuestas (si decide participar)"
-          },
-          "title": "Información que recopilamos",
-          "game-data": {
-            "title": "Datos del juego",
-            "description": "Almacenamos temporalmente:",
-            "items": "Nombres de usuario y opciones del avatar;;Elementos del juego y progreso"
-          },
-          "user-provided-information": {
-            "title": "Información proporcionada por el usuario",
-            "description": "Recopilamos:",
-            "items": "Envío de formularios de comentarios (incluyendo direcciones de correo electrónico opcionales)"
-          },
-          "local-storage-data": {
-            "title": "Datos de almacenamiento local",
-            "description": "Almacenamos en el almacenamiento local de su navegador:",
-            "items": "Preferencias de idioma;;Preferencias de configuración del juego"
-          },
-          "cookies": {
-            "title": "Cookies",
-            "description": "Utilizamos cookies esenciales para permitir la funcionalidad básica de nuestro sitio web:",
-            "items": "Cookies de sesión: Utilizamos una cookie de sesión (skymo-io) para mantener su conexión a nuestros servidores de juego. Esta cookie es esencial para el funcionamiento del juego y caduca después de 24 horas;;Estas cookies no le rastrean a través de sitios web y solo se utilizan para proporcionar el servicio que ha solicitado"
-          }
-        },
-        "how-we-use-your-information": {
-          "title": "Cómo utilizamos su información",
-          "items": "Mejorar nuestra página web y la experiencia del usuario;;Analizar los patrones de uso y el rendimiento;;Responder a las solicitudes de retroalimentación y apoyo;;Facilitar el juego"
-        },
-        "contact-us": {
-          "title": "Contacta con nosotros",
-          "description": "Si tiene alguna pregunta sobre esta Política de privacidad, por favor contáctenos a través de comentarios en la página web, servidor Discord o GitHub."
-        },
-        "changes-to-this-policy": {
-          "description": "Podemos actualizar esta política de vez en cuando. Le notificaremos de cualquier cambio publicando la nueva política en esta página.",
-          "title": "Cambios en esta política"
-        },
-        "childrens-privacy": {
-          "description": "Skymo no tiene restricciones de edad. No recopilamos conscientemente información personal de niños.",
-          "title": "Privacidad para niños"
-        },
-        "data-storage-and-retention": {
-          "title": "Almacenamiento y tratamiento de los datos",
-          "items": "Los datos de uso anónimos se almacenan en servidores dentro de la Unión Europea y se conservan hasta 1 año;;Los datos de las partidas se almacenan en nuestra base de datos ubicada en Fráncfort, Alemania. Estos datos se conservan mientras duren las partidas activas. Una vez que todos los jugadores abandonan una partida, los datos asociados se eliminan;;La información almacenada en la memoria local de su navegador permanece allí hasta que usted borra los datos de su navegador;;Los formularios de opinión se conservan únicamente con el fin de responder y considerar sugerencias para el desarrollo"
-        },
-        "data-sharing": {
-          "title": "Uso compartido de datos",
-          "description": "No compartimos tu información personal con terceros. Los datos de uso anónimos son procesados por PostHog, nuestro proveedor de análisis."
-        },
-        "your-rights-and-choices": {
-          "title": "Derechos y opciones",
-          "description": "Dado que recopilamos principalmente datos anónimos, no podemos identificar ni acceder a información personal específica de ningún usuario individual. Sin embargo, usted tiene los siguientes derechos y opciones:",
-          "items": "Almacenamiento local: Puede borrar el almacenamiento local de su navegador en cualquier momento para eliminar las preferencias guardadas;;Comentarios: Si ha enviado comentarios con una dirección de correo electrónico, puede ponerse en contacto con nosotros para solicitar su eliminación;;Puede excluirse de la recopilación de datos analíticos activando la opción \"No rastrear\" de su navegador o utilizando navegadores de privacidad que bloqueen las secuencias de comandos analíticas;;Los datos relacionados con el juego se eliminan automáticamente cuando todos los jugadores abandonan la partida"
         }
       },
       "head": {

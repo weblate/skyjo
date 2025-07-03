@@ -62,68 +62,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "information-we-collect": {
-          "user-provided-information": {
-            "items": "Indsendelser af feedbackformularer (inklusive valgfri e-mailadresser)",
-            "title": "Brugerleverede oplysninger",
-            "description": "Vi indsamler:"
-          },
-          "title": "Oplysninger vi indsamler",
-          "anonymous-usage-data": {
-            "title": "Anonyme brugsdata",
-            "description": "Vi bruger PostHog, et analyseværktøj, til at indsamle anonyme data om, hvordan du bruger vores hjemmeside. Dette omfatter:",
-            "items": "Sidevisninger;;Web vitals (præstationsmålinger);;Svar på undersøgelser (hvis du vælger at deltage)"
-          },
-          "game-data": {
-            "title": "Spildata",
-            "description": "Vi gemmer midlertidigt:",
-            "items": "Brugernavne og valg af avatarer;;Spilelementer og fremskridt"
-          },
-          "local-storage-data": {
-            "title": "Lokal lagringsdata",
-            "description": "Vi gemmer i din browsers lokale lager:",
-            "items": "Sprogindstillinger;;Spilindstillinger"
-          },
-          "cookies": {
-            "title": "Cookies",
-            "description": "Vi bruger essentielle cookies for at aktivere kernen i vores hjemmeside:",
-            "items": "Sessionscookies: Vi bruger en sessionscookie (skymo-io) til at opretholde din forbindelse til vores spilservere. Denne cookie er afgørende for spillets funktionalitet og udløber efter 24 timer. Disse cookies sporer dig ikke på tværs af websteder og bruges kun til at levere den tjeneste, du har anmodet om"
-          }
-        },
-        "how-we-use-your-information": {
-          "title": "Sådan bruger vi dine oplysninger",
-          "items": "Forbedr vores hjemmeside og brugeroplevelse;;Analyser brugsmønstre og ydeevne;;Besvar feedback og supportanmodninger;;Faciliter gameplay"
-        },
-        "data-sharing": {
-          "title": "Datadeling",
-          "description": "Vi deler ikke dine personlige oplysninger med tredjeparter. Anonyme brugsdata behandles af PostHog, vores analyseudbyder."
-        },
-        "your-rights-and-choices": {
-          "title": "Dine rettigheder og valg",
-          "description": "Da vi primært indsamler anonyme data, kan vi ikke identificere eller tilgå personlige oplysninger, der er specifikke for individuelle brugere. Du har dog følgende rettigheder og valgmuligheder:",
-          "items": "Lokal lagring: Du kan til enhver tid rydde din browsers lokale lagring for at fjerne gemte præferencer;;Feedback: Hvis du har indsendt feedback med en e-mailadresse, kan du kontakte os for at anmode om sletning heraf;;Fravalg af analyse: Du kan fravælge indsamling af analysedata ved at aktivere din browsers \"Do Not Track\"-indstilling eller bruge privatlivsfokuserede browsere, der blokerer analysescripts;;Spildata: Spilrelaterede data slettes automatisk, når alle spillere forlader et spil"
-        },
         "back": "Tilbage til startsiden",
         "title": "Fortrolighedspolitik",
         "last-update": {
           "date-format": "ÅÅÅÅ-MM-DD - tt:mmA",
           "text": "Sidst opdateret: {date}"
-        },
-        "data-storage-and-retention": {
-          "title": "Datalagring og -opbevaring",
-          "items": "Anonyme brugsdata gemmes på servere inden for Den Europæiske Union og opbevares i op til 1 år;;Spildata gemmes i vores database i Frankfurt, Tyskland. Disse data opbevares, så længe spil er aktive. Når alle spillere forlader et spil, slettes de tilknyttede data;;Oplysninger, der er gemt i din browsers lokale lager, forbliver der, indtil du rydder dine browserdata;;Indsendelser via feedbackformular opbevares kun med det formål at svare og overveje forslag til udvikling"
-        },
-        "childrens-privacy": {
-          "title": "Børns privatliv",
-          "description": "Skymo har ingen aldersbegrænsninger. Vi indsamler ikke bevidst personlige oplysninger fra børn."
-        },
-        "changes-to-this-policy": {
-          "title": "Ændringer til denne politik",
-          "description": "Vi opdaterer muligvis denne politik fra tid til anden. Vi giver dig besked om eventuelle ændringer ved at offentliggøre den nye politik på denne side."
-        },
-        "contact-us": {
-          "title": "Kontakt os",
-          "description": "Hvis du har spørgsmål til denne fortrolighedspolitik, bedes du kontakte os via vores feedbackformular på hjemmesiden, Discord-server eller GitHub."
         }
       },
       "head": {

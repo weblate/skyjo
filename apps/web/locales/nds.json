@@ -472,68 +472,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "information-we-collect": {
-          "local-storage-data": {
-            "items": "Spraakinstellen;;Speelinstellen",
-            "title": "Lokaal Spieker-Daten",
-            "description": "Wi spiekert in dien Nettkieker sien lokaal Spieker:"
-          },
-          "title": "Informatschonen, de wi sammelt",
-          "anonymous-usage-data": {
-            "title": "Anonyme Bruukdaten",
-            "description": "Wi bruukt PostHog, en Analyse-Warktüüch, üm anonyme Daten doröver to sammeln, woans du uns Websteed bruukst. Dorto höört:",
-            "items": "Siedenansichten;;Web-Vitals (Performance-Metriken);;Ümfragenantwoorten (wenn du deelnehmen wullt)"
-          },
-          "user-provided-information": {
-            "title": "Vun Brukers ingeven Informatschoon",
-            "description": "Wi sammelt:",
-            "items": "Trüggmellen-Formular-Insennen (insluutend fakultative E-Mail-Adressen)"
-          },
-          "game-data": {
-            "title": "Speeldaten",
-            "description": "Wi spiekert vörlöpig:",
-            "items": "Brukernamens un Avatar-Utwahl;;Speelelementen un Vörankamen"
-          },
-          "cookies": {
-            "title": "Cookies",
-            "description": "Wi bruukt nödige Cookies, üm de Karnfunkschoon vun uns Websteed to mööglich to maken:",
-            "items": "Sitzungs-Cookies: Wi bruukt en Sitzungs-Cookie (skymo-io), üm Dien Verbinnen to uns Speelservers to hollen. Dit Cookie is nödich för de Funkschoon vun dat Speel un löppt na 24 Stünnen af;;Disse Cookies verfolgt Di nich över Websteden henweg un warrt blots bruukt, üm den Deenst to levern, den Du anfraagt hest"
-          }
-        },
         "back": "Trüch na de Startsiet",
         "title": "Datenschuulverkloren",
         "last-update": {
           "text": "Toletzt aktualiseert: {date}",
           "date-format": "JJJJ-MM-DD - hh:mmA"
-        },
-        "how-we-use-your-information": {
-          "title": "Wo wi Dien Informatschonen bruukt",
-          "items": "Verbetert uns Websteed un Brukerbeleven;;Analyseer Bruuksmuster un Performance;;Antwoort op Feedback un Supportanfragen;;Maakt dat Speel mööglich"
-        },
-        "data-storage-and-retention": {
-          "title": "Datenspeicherung un -beholden",
-          "items": "Anonyme Bruukdaten warrt op Servers binnen de Europääsche Union spiekert un bet to 1 Johr fasthollen;;Speeldaten warrt in uns Datenbank in Frankfort an'n Main, Düütschland, spiekert. Disse Daten warrt för de Duur vun aktive Spelen behollen. Wenn all Spelers en Speel verlaten hebbt, warrt de tohören Daten löscht;;Informatschonen, de in'n lokalen Spieker vun Dien Browser spiekert sünd, blievt dor, bet Du Dien Browserdaten löschen deihst;;Inschicken vun Feedback-Formularen warrt blots behollen, üm to antwoorten un Vörslääg för de Entwickeln to bedenken"
-        },
-        "data-sharing": {
-          "title": "Daten-Deelen",
-          "description": "Wi deelt Dien persöönlich Informatschoon nich mit drütte Parteien. Anonyme Bruukdaten warrt vun PostHog, unsen Analyse-Anbeder, verarbeidt."
-        },
-        "your-rights-and-choices": {
-          "title": "Dien Rechten un Wahlmööglichkeiten",
-          "description": "Wiel wi vör allen anonyme Daten sammelt, köönt wi kien persönliche Informatschonen to enkelte Brukers faststellen oder dorop togriepen. Man, du hest de nafolgen Rechten un Mööglichkeiten:",
-          "items": "Lokaal Spieker: Du kannst dien Browser sien lokaal Spieker jümmers leddig maken, üm spiekert Instellungen wegtonehmen;;Feedback: Wenn du Feedback mit en E-Mail-Adress afgeven hest, kannst du uns kontakten, üm dat Löschen to beandragen;;Analys-Opt-Out: Du kannst di vun de Sammeln vun Analys-Daten utmellen, indem du dien Browser sien \"Do Not Track\"-Instellen anstellst oder privacy-fokuseerte Browser bruukst, de Analys-Skripten blockeert;;Speel-Daten: Speel-relevante Daten warrt automaatsch löscht, wenn all Spelers en Speel verlaten doot"
-        },
-        "childrens-privacy": {
-          "title": "Kinner ehr Privatsphäär",
-          "description": "Skymo hett keen Öllersbeschränkungen. Wi sammelt nich wissentlich persönliche Informatschonen vun Kinner."
-        },
-        "changes-to-this-policy": {
-          "title": "Ännern an disse Politik",
-          "description": "Wi köönt disse Politik vun Tiet to Tiet aktualiseern. Wi warrt Di över all Ännern Bescheed geven, indem wi de ne’e Politik op disse Siet instellen doot."
-        },
-        "contact-us": {
-          "title": "Kuntakt opnehmen",
-          "description": "Wenn du Fragen to disse Datenschuulpolitik hest, nimm geern Kuntakt mit uns op över uns Feedback-Formular op de Websteed, unsen Discord-Server oder GitHub."
         }
       },
       "head": {

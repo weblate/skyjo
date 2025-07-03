@@ -155,68 +155,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "information-we-collect": {
-          "local-storage-data": {
-            "description": "Do místního úložiště vašeho prohlížeče ukládáme:",
-            "title": "Místní úložiště dat",
-            "items": "Jazykové předvolby;;Předvolby nastavení hry"
-          },
-          "title": "Informace, které shromažďujeme",
-          "anonymous-usage-data": {
-            "title": "Anonymní údaje o používání",
-            "description": "Používáme PostHog, analytický nástroj, ke sběru anonymních dat o tom, jak používáte naše webové stránky. To zahrnuje:",
-            "items": "Zobrazení stránek;;Web vitals (metriky výkonu);;Odpovědi z průzkumu (pokud se rozhodnete zúčastnit)"
-          },
-          "user-provided-information": {
-            "title": "Informace poskytnuté uživatelem",
-            "description": "Shromažďujeme:",
-            "items": "Odeslané formuláře zpětné vazby (včetně volitelných e-mailových adres)"
-          },
-          "game-data": {
-            "title": "Herní data",
-            "description": "Dočasně ukládáme:",
-            "items": "Uživatelská jména a výběr avatarů;;Herní prvky a postup"
-          },
-          "cookies": {
-            "title": "Soubory cookie",
-            "description": "Používáme nezbytné cookies pro zajištění základních funkcí našich webových stránek:",
-            "items": "Relační cookies: Používáme relační cookie (skymo-io) k udržení vašeho připojení k našim herním serverům. Tato cookie je nezbytná pro funkčnost hry a vyprší po 24 hodinách;;Tyto cookies vás nesledují napříč webovými stránkami a jsou používány pouze k poskytování vámi požadované služby"
-          }
-        },
-        "how-we-use-your-information": {
-          "items": "Vylepšit naše webové stránky a uživatelský zážitek;;Analyzovat vzorce používání a výkon;;Reagovat na zpětnou vazbu a požadavky na podporu;;Usnadnit hraní",
-          "title": "Jak využíváme vaše údaje"
-        },
-        "your-rights-and-choices": {
-          "title": "Vaše práva a možnosti",
-          "description": "Vzhledem k tomu, že shromažďujeme především anonymní údaje, nemůžeme identifikovat ani přistupovat k osobním údajům konkrétního uživatele. Máte však následující práva a možnosti:",
-          "items": "Místní úložiště: Uložené preference můžete kdykoli vymazat vyčištěním místního úložiště prohlížeče;;Zpětná vazba: Pokud jste odeslali zpětnou vazbu s e-mailovou adresou, můžete nás kontaktovat a požádat o její smazání;;Odmítnutí analytiky: Sběr analytických dat můžete odmítnout povolením nastavení \"Do Not Track\" ve vašem prohlížeči nebo použitím prohlížečů zaměřených na soukromí, které blokují analytické skripty;;Herní data: Herní data jsou automaticky smazána, když všichni hráči opustí hru"
-        },
-        "childrens-privacy": {
-          "title": "Ochrana soukromí dětí",
-          "description": "Skymo nemá žádná věková omezení. Vědomě neshromažďujeme osobní údaje od dětí."
-        },
-        "changes-to-this-policy": {
-          "title": "Změny těchto zásad",
-          "description": "Tuto zásadu můžeme čas od času aktualizovat. O jakýchkoli změnách vás budeme informovat zveřejněním nových zásad na této stránce."
-        },
         "back": "Zpět na úvodní stránku",
         "title": "Zásady ochrany osobních údajů",
         "last-update": {
           "text": "Naposledy aktualizováno: {date}",
           "date-format": "RRRR-MM-DD - hh:mmA"
-        },
-        "data-storage-and-retention": {
-          "title": "Ukládání a uchovávání dat",
-          "items": "Anonymní údaje o používání jsou uchovávány na serverech v Evropské unii po dobu až 1 roku;;Herní data jsou uložena v naší databázi ve Frankfurtu v Německu. Tato data jsou uchovávána po dobu aktivních her. Jakmile všichni hráči opustí hru, související data jsou smazána;;Informace uložené v lokálním úložišti vašeho prohlížeče tam zůstávají, dokud nevymažete data prohlížeče;;Odeslané formuláře zpětné vazby jsou uchovávány pouze za účelem odpovědi a zvážení návrhů pro vývoj"
-        },
-        "data-sharing": {
-          "title": "Sdílení dat",
-          "description": "Vaše osobní údaje nesdílíme s žádnými třetími stranami. Anonymní údaje o používání zpracovává PostHog, náš poskytovatel analytických služeb."
-        },
-        "contact-us": {
-          "title": "Kontaktujte nás",
-          "description": "Pokud máte jakékoliv dotazy ohledně těchto Zásad ochrany osobních údajů, kontaktujte nás prosím prostřednictvím formuláře zpětné vazby na webových stránkách, Discord serveru nebo GitHubu."
         }
       },
       "head": {

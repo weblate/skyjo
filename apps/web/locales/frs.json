@@ -160,68 +160,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "information-we-collect": {
-          "anonymous-usage-data": {
-            "description": "Wi bruuke PostHog, n Analyse-Reewe, uum anonyme Doaten tou sammeljen, wo du uus Websiede bruukst. Dät is:",
-            "items": "Siedenweergaven;;Web Vitals (Leistungskennzahlen);;Enkätantworten (wan du mitmaken wolt)",
-            "title": "Anonyme Gebruuksinformatie"
-          },
-          "cookies": {
-            "title": "Cookies",
-            "description": "Wi bruuke nödige Cookies, uum de Käärupgååwe fon uus Websiede tou ärreeken:",
-            "items": "Sitzungs-Cookies: Wi bruuke n Sitzungs-Cookie (skymo-io), uum ju Ferbiendenge tou uus Spil-Servere aptouheeltoan. Düt Cookie is essentiell foar ju Funktionalität fon dät Spil un lapt ätter 24 Uuren ou. Disse Cookies foulgje die nit uur Websieden un wäide bloot bruukt, uum dän Tjoonst tou leewern, dän du anfräiged hääst"
-          },
-          "title": "Information, ju der sammelje",
-          "user-provided-information": {
-            "title": "Fom Bruker anroosene Informatschoon",
-            "description": "Wi sammelje:",
-            "items": "Ienstuurd Feedback (inkl. E-Mail-Adres, wenn angegeven)"
-          },
-          "game-data": {
-            "title": "Spöldaten",
-            "description": "Wi spiekere tydelk:",
-            "items": "Noome un Bielden; Spul-Elemente un Foutskeed"
-          },
-          "local-storage-data": {
-            "title": "Lokale Spiekerdoaten",
-            "description": "Wi spiekern in dien Browser sin {localStorage}:",
-            "items": "Spraak-Instellenge;;Spul-Instellenge"
-          }
-        },
-        "data-storage-and-retention": {
-          "title": "Spiekerenge un Beheelden fon Doaten",
-          "items": "Anonyme Gebruuksdoaten wäide ap Servere binne ju Europäiske Union spiekerd un foar bit tou 1 Jier behoolde;;Spieldoaten wäide in uus Doatenboank in Frankfurt, Düütsklound spiekerd. Disse Doaten wäide foar ju Duur fon aktive Spiele behoolde. So gau as aal Spielere n Spiel ferlääse, wäide do deeran ferbuundene Doaten läsked;;Informatione, do in dän lokoale Spieker fon dien Browser spiekerd wäide, blieuwe deer, bit du dien Browserdoaten läskest;;Ienseendengen fon Feedback-Formulare wäide bloot behoolde, uum tou äntwoudjen un Foarsleeke foar ju Äntwikkelenge tou berücksichtigjen"
-        },
-        "data-sharing": {
-          "description": "Wi deele dien persöönelke Doaten nich mit Drüdde. Anonyme Benutsengsdoaten wäide ferärbeided fon PostHog, uus Analyse-Anbieder.",
-          "title": "Doaten-Deelen"
-        },
         "back": "Trüch tou ju Startsiede",
         "title": "Privacy Policy",
         "last-update": {
           "text": "Lääst aktualisiert: {date}",
           "date-format": "JJJJ-MM-DD - hh:mmA"
-        },
-        "how-we-use-your-information": {
-          "title": "Wo Wie Jo Information Bruuke",
-          "items": "Ferbeeterje uus Website un Bruukerbeleewnis;;Bruukmuuster un Leistung analyseerje;;Antwoorde ap Feedback un Unnerstüttengs-Anfroagen;;Spilferloop eenfacher moakje"
-        },
-        "your-rights-and-choices": {
-          "title": "Dien Gjuch un dien Köär",
-          "description": "Wi sammelje foaral anonyme Doaten, deeruum konne wi kien persöönelke Informatione, do tou n bestimden Benutser heere, identifizierje of deeran kuume. Man Se hääbe do foulgjende Gjuchte un Woalmöjligkeede:",
-          "items": "Local Storage: Du koanst dien Browser sien Lokale Spieker to jeeder Tied loosmoakje, uum spiekerde Ienstaalengen wächtouhoaljen;;Feedback: Wan du Feedback mäd ne E-Mail-Adrässe ienseended hääst, koanst du uus kontaktierje, uum dät wächtouhoaljen;;Analytics Opt-Out: Du koanst die fon dät Sammeljen fon Analysedaten outmäldje, truch dät Aktivierjen fon dien Browser sien \"Do Not Track\"-Ienstaalenge of truch dät Benutsjen fon privacy-fokussierde Browser, do Analyse-Skripte blokkierje;;Game Data: Spil-relateerde Doaten wäide automatisk wächtich moaked, wan aal Spielere n Spil ferlääse"
-        },
-        "childrens-privacy": {
-          "title": "Kinnerprivatsphäre",
-          "description": "Skymo häd nääi Ooldersbegränsengen. Wie sammelje nääi wissentelk persöönelke Doaten fon Bäidene."
-        },
-        "changes-to-this-policy": {
-          "title": "Ännerengen an disse Politik",
-          "description": "Wi konnen disse Politik fon Tied tou Tied ap dät näie staale. Wi wäide Jou fon aal Annerengen in Kenntnis sätte, indem wi ju näie Politik ap disse Siede poste."
-        },
-        "contact-us": {
-          "title": "Kontaktoarje Uns",
-          "description": "Wan Du Froagen tou disse Privatsphärenpolitik hääst, kontaktier uus dan uur uus Feedback-Formular ap ju Websiede, Discord-Server of GitHub."
         }
       },
       "head": {

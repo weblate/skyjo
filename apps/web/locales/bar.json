@@ -82,68 +82,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "information-we-collect": {
-          "cookies": {
-            "items": "Sitzungs-Cookies: Mia nutzn a Sitzungs-Cookie (skymo-io), um de Vabindung zu unsane Spui-Server aufrechtzhoitn. Des Cookie is entscheidend fia de Funktionalität vom Spui und lafft nach 24 Stundn ob. Dea Cookie spürt di ned auf andane Webseitn nach und wiad nur vawendt, um den vo dir gfrogt'n Dienst bereitzstella",
-            "title": "Cookies",
-            "description": "Mia vawendn notwendige Cookies, um de Grundfunktiona vo unsana Netzseitn z'ermöglichn:"
-          },
-          "title": "Informationa, de mia sammln",
-          "anonymous-usage-data": {
-            "title": "Anonyme Nutzungsdatn",
-            "description": "Mia nutzn PostHog, a Analyse-Werkzeig, um anonyme Datn z'sammeln, wia Du unsre Webseitn nutzst. Des beinhaltet:",
-            "items": "Seitenaufrufe;;Web-Vitals (Leistungsmetriken);;Umfrageantworten (wenn Sie teilnehmen möchten)"
-          },
-          "user-provided-information": {
-            "title": "Nutzer-Eingob",
-            "description": "Mia sammln:",
-            "items": "Eingaben vom Rückmeldungsformular (inklusive optionale E-Mail-Adressen)"
-          },
-          "game-data": {
-            "title": "Spuiedatn",
-            "description": "Mir speichan vorübergehend:",
-            "items": "Benutzernama und Avatar-Auswahl;;Spielelemente und Fortschritt"
-          },
-          "local-storage-data": {
-            "title": "Lokale Speicherdaten",
-            "description": "Mia speichan in da Lokalspeicherung vo Eicham Browser:",
-            "items": "Språcheinstellungen;;Spuieinstellungen"
-          }
-        },
-        "how-we-use-your-information": {
-          "title": "Wia mia Ihre Datn nutzn",
-          "items": "D'Webseitn und d'Nutzaerfoahrung vabessern;;D'Nutzungsmuster und d'Leistung analysiern;;Auf's Feedback und d'Support-Ofrogn reagiern;;'s Spuin erleichtern"
-        },
-        "data-sharing": {
-          "title": "Datnteiln",
-          "description": "Mir gebm Ihre persönli'n Datn ned an Dritte weida. Anonyme Nutzungsdatn wern vo PostHog, unserm Analyse-Dienstleister, verarbeitet."
-        },
-        "your-rights-and-choices": {
-          "description": "Do mia hauptsächlich anonyme Datn sammln, kenna mia koane persönlichn Informationa, de wo a bstimmta Nutza zuagordnet wern kenna, identifiziern oda drauf zugreifa. Trotzdem ham S' de foigendn Rechta und Wahlmöglichkeitn:",
-          "title": "Ihre Rechte und Möglichkeiten",
-          "items": "Lokal-Speicher: Du kannst den Lokal-Speicher vo deim Browser jederzeit leern, um gspeicherte Eistellunga z'entferna;;Feedback: Wennst uns a Feedback mit ana E-Mail-Adress gschickt host, kannst uns kontaktiern, um de Löschung z'beantragn;;Analyse-Opt-Out: Du kannst de Datensammlung fia Analysezwecke oblehna, indem du de \"Do Not Track\"-Einstellung in deim Browser aktivierst oder datenschutzfreundliche Browser verwendst, de Analyse-Skripte blockiern;;Spieldaten: Spuibezogene Daten wern automatisch glöscht, wenn olle Spuila a Spui verlassn"
-        },
-        "childrens-privacy": {
-          "title": "Kinderschutz",
-          "description": "Skymo hot koane Oitasbeschränkunga. Mia sammln ned bewusst persönliche Datn vo Kinda."
-        },
-        "changes-to-this-policy": {
-          "title": "Änderungen an deara Richtlinie",
-          "description": "Mia kenna de Politik vo Zeit zu Zeit aktualisiern. Mia wern Eich iba Ändarunga bscheidgebn, indem mia de neie Politik auf deara Seitn vaöffentlichtn."
-        },
-        "contact-us": {
-          "title": "Kontaktiert uns",
-          "description": "Wenn Sie Fragen zu dieser Datenschutzrichtlinie haben, kontaktieren Sie uns bitte über unser Feedback-Formular auf der Webseite, den Discord-Server oder GitHub."
-        },
         "back": "Zruck zur Startseitn",
         "title": "Datenschutzrichtlinie",
         "last-update": {
           "text": "Letzte Aktualisierung: {date}",
           "date-format": "JJJJ-MM-TT - hh:mmA"
-        },
-        "data-storage-and-retention": {
-          "title": "Datnspeicherung und -aufbewahrung",
-          "items": "Anonyme Nutzungsdatn wern auf Servern innerhoib vo da Eiropäischn Union gspeichert und bis zu am Joar aufgnumma;;Spieldatn wern in unsana Datenbank in Frankfurt, Deitschland, gspeichert. De Datn wern fia de Dauer vo aktive Spui aufgnumma. Soboid olle Spuila a Spui valassn, wern de zuaghearign Datn glöscht;;Informationa, de in da lokaln Speicherung vo Ihram Browser gspeichert san, bleim do, bis Sie Ihre Browserdatn löschen;;Eingaben vom Feedback-Formular wern nur zum Zweck vo da Beantwortung und Berücksichtigung vo Vorschläg fia de Entwicklung aufgnumma"
         }
       },
       "head": {

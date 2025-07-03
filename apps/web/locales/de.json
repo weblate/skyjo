@@ -165,68 +165,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "information-we-collect": {
-          "anonymous-usage-data": {
-            "description": "Wir verwenden PostHog, ein Analysetool, um anonyme Daten darüber zu sammeln, wie du unsere Website nutzt. Dies umfasst:",
-            "title": "Anonyme Nutzungsdaten",
-            "items": "Seitenaufrufe;;Web Vitals (Leistungsmetriken);;Umfrageantworten (falls du dich zur Teilnahme entscheidest)"
-          },
-          "game-data": {
-            "items": "Benutzernamen und Avatar-Auswahl;;Spielelemente und Fortschritt",
-            "title": "Spieldaten",
-            "description": "Wir speichern temporär:"
-          },
-          "cookies": {
-            "description": "Wir verwenden essenzielle Cookies, um die Kernfunktionalität unserer Website zu ermöglichen:",
-            "title": "Cookies",
-            "items": "Session-Cookies: Wir verwenden einen Session-Cookie (skymo-io), um deine Verbindung zu unseren Spielservern aufrechtzuerhalten. Dieser Cookie ist für die Funktionalität des Spiels unerlässlich und läuft nach 24 Stunden ab. Diese Cookies verfolgen dich nicht über Websites hinweg und werden nur verwendet, um den von dir angeforderten Dienst bereitzustellen"
-          },
-          "user-provided-information": {
-            "title": "Benutzerbereitgestellte Informationen",
-            "description": "Wir sammeln:",
-            "items": "Feedback-Formular-Übermittlungen (einschließlich optionaler E-Mail-Adressen)"
-          },
-          "title": "Informationen, die wir sammeln",
-          "local-storage-data": {
-            "description": "Wir speichern im lokalen Speicher deines Browsers:",
-            "items": "Spracheinstellungen;;Spieleinstellungsvorlieben",
-            "title": "Local Storage Daten"
-          }
-        },
-        "data-sharing": {
-          "title": "Datenweitergabe",
-          "description": "Wir geben Ihre persönlichen Daten nicht an Dritte weiter. Anonymisierte Nutzungsdaten werden von PostHog, unserem Analyseanbieter, verarbeitet."
-        },
         "back": "Zurück zur Startseite",
         "title": "Datenschutzrichtlinie",
         "last-update": {
           "text": "Zuletzt aktualisiert: {date}",
           "date-format": "DD.MM.YYYY - hh:mmA"
-        },
-        "your-rights-and-choices": {
-          "title": "Ihre Rechte und Wahlmöglichkeiten",
-          "description": "Da wir hauptsächlich anonyme Daten erfassen, können wir keine personenbezogenen Informationen einzelner Nutzer identifizieren oder darauf zugreifen. Sie haben jedoch die folgenden Rechte und Wahlmöglichkeiten:",
-          "items": "Lokaler Speicher: Sie können den lokalen Speicher Ihres Browsers jederzeit löschen, um gespeicherte Einstellungen zu entfernen;;Feedback: Wenn Sie Feedback mit einer E-Mail-Adresse übermittelt haben, können Sie uns kontaktieren, um dessen Löschung zu beantragen;;Analytics Opt-Out: Sie können die Erfassung von Analysedaten deaktivieren, indem Sie die \"Do Not Track\"-Einstellung Ihres Browsers aktivieren oder datenschutzorientierte Browser verwenden, die Analytics-Skripte blockieren;;Spieldaten: Spielbezogene Daten werden automatisch gelöscht, wenn alle Spieler ein Spiel verlassen"
-        },
-        "childrens-privacy": {
-          "title": "Datenschutz für Kinder",
-          "description": "Skymo unterliegt keinen Altersbeschränkungen. Wir erfassen wissentlich keine personenbezogenen Daten von Kindern."
-        },
-        "changes-to-this-policy": {
-          "title": "Änderungen an dieser Richtlinie",
-          "description": "Wir können diese Richtlinie von Zeit zu Zeit aktualisieren. Wir werden dich über Änderungen informieren, indem wir die neue Richtlinie auf dieser Seite veröffentlichen."
-        },
-        "contact-us": {
-          "title": "Kontaktiere uns",
-          "description": "Wenn du Fragen zu dieser Datenschutzrichtlinie hast, kontaktiere uns bitte über unser Feedback-Formular auf der Website, den Discord-Server oder GitHub."
-        },
-        "how-we-use-your-information": {
-          "title": "Wie wir deine Informationen nutzen",
-          "items": "Unsere Website und Benutzererfahrung verbessern;;Nutzungsmuster und Leistung analysieren;;Auf Feedback und Support-Anfragen antworten;;Gameplay ermöglichen"
-        },
-        "data-storage-and-retention": {
-          "items": "Anonyme Nutzungsdaten werden auf Servern innerhalb der Europäischen Union gespeichert und bis zu 1 Jahr aufbewahrt;;Spieldaten werden in unserer Datenbank in Frankfurt, Deutschland gespeichert. Diese Daten werden für die Dauer aktiver Spiele aufbewahrt. Sobald alle Spieler ein Spiel verlassen, werden die zugehörigen Daten gelöscht;;Im lokalen Speicher Ihres Browsers gespeicherte Informationen verbleiben dort, bis Sie Ihre Browserdaten löschen;;Feedback-Formular-Einsendungen werden nur zum Zweck der Beantwortung und Berücksichtigung von Entwicklungsvorschlägen aufbewahrt",
-          "title": "Datenspeicherung und -aufbewahrung"
         }
       },
       "head": {

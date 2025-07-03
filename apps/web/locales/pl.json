@@ -379,68 +379,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "how-we-use-your-information": {
-          "title": "Jak wykorzystujemy Twoje informacje",
-          "items": "Ulepszanie naszej strony i wrażeń użytkownika;;Analizowanie wzorców użytkowania i wydajności;;Odpowiadanie na opinie i prośby o wsparcie;;Ułatwianie rozgrywki"
-        },
-        "data-sharing": {
-          "title": "Udostępnianie danych",
-          "description": "Nie udostępniamy Twoich danych osobowych żadnym stronom trzecim. Anonimowe dane o użytkowaniu są przetwarzane przez PostHog, naszego dostawcę analityki."
-        },
-        "your-rights-and-choices": {
-          "title": "Twoje prawa i możliwości",
-          "description": "Biorąc pod uwagę, że zbieramy głównie dane anonimowe, nie możemy zidentyfikować ani uzyskać dostępu do danych osobowych konkretnego użytkownika. Niemniej jednak przysługują Ci następujące prawa i możliwości:",
-          "items": "Pamięć lokalna: Możesz w każdej chwili wyczyścić pamięć lokalną przeglądarki, aby usunąć zapisane preferencje;;Opinie: Jeśli przesłałeś opinię z adresem e-mail, możesz skontaktować się z nami, aby poprosić o jej usunięcie;;Rezygnacja z analityki: Możesz zrezygnować ze zbierania danych analitycznych, włączając w przeglądarce ustawienie \"Do Not Track\" lub korzystając z przeglądarek zorientowanych na prywatność, które blokują skrypty analityczne;;Dane gry: Dane związane z grą są automatycznie usuwane, gdy wszyscy gracze opuszczą grę"
-        },
         "back": "Powrót do strony głównej",
         "title": "Polityka prywatności",
         "last-update": {
           "text": "Ostatnia aktualizacja: {date}",
           "date-format": "RRRR-MM-DD - gg:mmA"
-        },
-        "information-we-collect": {
-          "title": "Zbierane przez nas informacje",
-          "anonymous-usage-data": {
-            "items": "Wyświetlenia strony;;Wskaźniki Web Vitals (metryki wydajności);;Odpowiedzi z ankiet (jeśli zdecydujesz się wziąć udział)",
-            "title": "Anonimowe dane o użytkowaniu",
-            "description": "Używamy PostHog, narzędzia analitycznego, do zbierania anonimowych danych o tym, jak korzystasz z naszej strony. Obejmuje to:"
-          },
-          "user-provided-information": {
-            "title": "Informacje podane przez użytkownika",
-            "description": "Gromadzimy:",
-            "items": "Przesłane formularze opinii (wraz z opcjonalnymi adresami e-mail)"
-          },
-          "game-data": {
-            "title": "Dane gry",
-            "description": "Tymczasowo przechowujemy:",
-            "items": "Nazwy użytkowników i wybór awatarów;;Elementy gry i postęp"
-          },
-          "local-storage-data": {
-            "items": "Preferencje językowe;;Preferencje ustawień gry",
-            "title": "Dane pamięci lokalnej",
-            "description": "Przechowujemy w pamięci lokalnej Twojej przeglądarki:"
-          },
-          "cookies": {
-            "title": "Pliki cookie",
-            "description": "Używamy niezbędnych plików cookie, aby umożliwić podstawowe funkcjonowanie naszej strony:",
-            "items": "Pliki cookie sesji: Używamy pliku cookie sesji (skymo-io) do utrzymania połączenia z naszymi serwerami gry. Ten plik cookie jest niezbędny do funkcjonowania gry i wygasa po 24 godzinach;;Te pliki cookie nie śledzą Cię między stronami internetowymi i są używane wyłącznie do świadczenia zamówionej usługi"
-          }
-        },
-        "contact-us": {
-          "title": "Kontakt",
-          "description": "Jeśli masz jakiekolwiek pytania dotyczące tej Polityki Prywatności, skontaktuj się z nami poprzez formularz kontaktowy na stronie internetowej, serwer Discord lub GitHub."
-        },
-        "data-storage-and-retention": {
-          "title": "Przechowywanie i retencja danych",
-          "items": "Anonimowe dane o użytkowaniu są przechowywane na serwerach w Unii Europejskiej i zatrzymywane przez okres do 1 roku;;Dane gry są przechowywane w naszej bazie danych zlokalizowanej we Frankfurcie w Niemczech. Dane te są przechowywane przez czas trwania aktywnych gier. Gdy wszyscy gracze opuszczą grę, powiązane dane są usuwane;;Informacje przechowywane w pamięci lokalnej przeglądarki pozostają tam do momentu wyczyszczenia danych przeglądarki;;Przesłane formularze opinii są przechowywane wyłącznie w celu udzielenia odpowiedzi i rozważenia sugestii dotyczących rozwoju"
-        },
-        "childrens-privacy": {
-          "title": "Prywatność dzieci",
-          "description": "Skymo nie ma żadnych ograniczeń wiekowych. Nie zbieramy świadomie danych osobowych od dzieci."
-        },
-        "changes-to-this-policy": {
-          "title": "Zmiany w Polityce",
-          "description": "Możemy od czasu do czasu aktualizować tę politykę. O wszelkich zmianach poinformujemy Cię poprzez zamieszczenie nowej polityki na tej stronie."
         }
       },
       "head": {
