@@ -13,12 +13,12 @@ const GameTag = ({ tag, onClick, showXIconOnHover = false }: GameTagProps) => {
   const t = useTranslations("pages.Search.tags.tag")
 
   return (
-    <m.span
+    <m.button
       key={tag}
       initial={{ opacity: 0 }}
       animate={{ opacity: 1, transition: { duration: 0.2 } }}
       exit={{ opacity: 0, transition: { duration: 0.2 } }}
-      className={tagVariants({ tag })}
+      className={tagVariants({ tag, clickable: !!onClick })}
       onClick={() => onClick?.(tag)}
     >
       {t(`${tag}`)}
@@ -26,7 +26,7 @@ const GameTag = ({ tag, onClick, showXIconOnHover = false }: GameTagProps) => {
       {showXIconOnHover && (
         <XIcon className="size-3 group-hover:block hidden relative left-1" />
       )}
-    </m.span>
+    </m.button>
   )
 }
 

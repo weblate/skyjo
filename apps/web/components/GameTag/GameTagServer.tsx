@@ -14,7 +14,7 @@ const GameTagServer = async ({ tag, locale }: GameTagProps) => {
   })
 
   return (
-    <span key={tag} className={tagVariants({ tag })}>
+    <span key={tag} className={tagVariants({ tag, clickable: false })}>
       {t(`${tag}`)}
     </span>
   )
