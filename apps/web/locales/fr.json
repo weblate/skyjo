@@ -184,67 +184,79 @@
       },
       "content": {
         "back": "Retour à l'accueil",
-        "title": "Politique de Confidentialité",
+        "title": "Politique de confidentialité",
         "last-update": {
           "text": "Dernière mise à jour : {date}",
-          "date-format": "DD/MM/YYYY - HH:mm"
+          "date-format": "D MMMM YYYY"
         },
-        "information-we-collect": {
-          "title": "Informations que nous collectons",
-          "anonymous-usage-data": {
-            "title": "Données d'utilisation anonymes",
-            "description": "Nous utilisons PostHog, un outil d'analyse, pour collecter des données anonymes sur votre utilisation de notre site web. Cela inclut :",
-            "items": "Vues de pages;;Vitales web (métriques de performance);;Réponses aux sondages (si vous choisissez d'y participer)"
+        "tldr": {
+          "title": "Ce qu'il faut retenir",
+          "minimal-data": "Nous stockons un minimum de données pour vous permettre de jouer, que vous soyez connecté ou invité.",
+          "guest-data": "Les données des invités (nom, avatar, score, chats) ne sont stockées que si un joueur connecté est dans la partie.",
+          "personal-data": "Votre email, nom d'utilisateur et autres informations personnelles ne sont stockées que si vous créez un compte.",
+          "chat-storage": "Les chats sont stockés temporairement et sauvegardés seulement s'ils sont signalés.",
+          "privacy-compliance": "Nous respectons votre vie privée et sommes conformes au RGPD, stockant tout de manière sécurisée dans l'UE.",
+          "data-rights": "Vous pouvez demander l'accès, la correction, l'export ou la suppression de vos données à tout moment.",
+          "contact": "Pour toute question : <email></email>"
+        },
+        "operator": {
+          "title": "1. Qui est responsable de ce site ?",
+          "operator-info": "Ce site est exploité par un particulier :",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Ce n'est pas une entreprise."
+        },
+        "data-collection": {
+          "title": "2. Quelles données sont collectées ?",
+          "description": "Nous collectons des données pour les joueurs connectés et invités, mais seulement si un joueur connecté participe à la partie.",
+          "guest-players": {
+            "title": "Pour les joueurs invités :",
+            "items": "Pseudo (choisi à l'entrée du jeu);;Avatar sélectionné;;Score, rang et statut gagnant;;Messages de chat (stockés temporairement sauf signalement)",
+            "note": "Ces données sont conservées uniquement si un joueur connecté est présent dans la partie."
           },
-          "game-data": {
-            "title": "Données de jeu",
-            "description": "Nous stockons temporairement :",
-            "items": "Noms d'utilisateur et choix d'avatar;;Éléments et progression du jeu"
+          "logged-users": {
+            "title": "Pour les joueurs connectés (en plus des données ci-dessus) :",
+            "items": "Adresse e-mail;;Nom d'utilisateur ou pseudo;;Avatar (liste prédéfinie);;Mot de passe haché ou identifiant OAuth (Google, Facebook);;Langue préférée;;Statut de vérification de l'e-mail"
           },
-          "user-provided-information": {
-            "title": "Informations fournies par l'utilisateur",
-            "description": "Nous collectons :",
-            "items": "Soumissions du formulaire de commentaire (y compris les adresses e-mail optionnelles)"
-          },
-          "local-storage-data": {
-            "title": "Données de stockage local",
-            "description": "Nous stockons dans le stockage local de votre navigateur :",
-            "items": "Préférences de langue;;Préférences des paramètres de jeu"
-          },
-          "cookies": {
-            "title": "Cookies",
-            "description": "Nous utilisons des cookies essentiels pour permettre les fonctionnalités de base de notre site web :",
-            "items": "Cookies de session : Nous utilisons un cookie de session (skymo-io) pour maintenir votre connexion à nos serveurs de jeu. Ce cookie est essentiel pour le fonctionnement du jeu et expire après 24 heures;;Ces cookies ne vous suivent pas à travers les sites web et sont uniquement utilisés pour fournir le service que vous avez demandé"
+          "general": {
+            "title": "Données générales (pour tous) :",
+            "items": "Données de session de jeu (codes, paramètres);;Cookie de session (expire après 24h);;Adresse IP (transitoire, non conservée durablement);;Statistiques anonymes (PostHog, hébergé dans l'UE)"
           }
         },
-        "how-we-use-your-information": {
-          "title": "Comment nous utilisons vos informations",
-          "items": "Améliorer notre site web et l'expérience utilisateur;;Analyser les modèles d'utilisation et les performances;;Répondre aux commentaires et aux demandes de support;;Faciliter le déroulement du jeu"
+        "data-usage": {
+          "title": "3. Pourquoi vos données sont-elles utilisées ?",
+          "items": "Pour permettre à tous les joueurs (invités ou connectés) de jouer;;Pour afficher les avatars, noms, scores et classements;;Pour permettre la modération en cas d'abus;;Pour traiter les retours et la récupération de compte (utilisateurs connectés);;Pour améliorer le site via des statistiques anonymes"
         },
-        "data-storage-and-retention": {
-          "title": "Stockage et conservation des données",
-          "items": "Les données d'utilisation anonymes sont stockées sur des serveurs au sein de l'Union européenne et conservées pendant un maximum d'un an;;Les données de jeu sont stockées dans notre base de données situées à Francfort, Allemagne. Ces données sont conservées pendant la durée des parties actives. Une fois que tous les joueurs quittent une partie, les données associées sont supprimées;;Les informations stockées dans le stockage local de votre navigateur y restent jusqu'à ce que vous effaciez les données de votre navigateur;;Les formulaires de retour d'information ne sont conservés que dans le but de répondre et d'examiner les suggestions de développement."
+        "data-retention": {
+          "title": "4. Combien de temps vos données sont-elles conservées ?",
+          "retention-table": {
+            "headers": "Type de données;;Durée",
+            "rows": "Cookies de session;;24 heures|||Données de compte (connecté);;Jusqu'à la demande de suppression|||Données joueur invité;;Uniquement si un joueur connecté est présent|||Données de jeu et scores;;Conservé indéfiniment|||Messages de chat;;Temporairement ; sauvegardés si signalés|||Commentaires;;Conservé indéfiniment|||Tokens de vérification/réinitialisation;;Jusqu'à expiration ou utilisation|||Demandes de suppression de compte;;Supprimé après 48h de délai de rétractation|||Statistiques (PostHog);;Conservé indéfiniment, hébergé dans l'UE"
+          }
         },
-        "data-sharing": {
-          "title": "Partage des données",
-          "description": "Nous ne partageons pas vos informations personnelles avec des tiers. Les données d'utilisation anonymes sont traitées par PostHog, notre fournisseur d'analyses."
+        "legal-basis": {
+          "title": "5. Base légale (RGPD)",
+          "description": "Le traitement repose sur :",
+          "items": "Consentement (cookies, statistiques);;Contrat (offrir le jeu);;Intérêt légitime (modération);;Obligation légale (réponses aux demandes)"
         },
-        "your-rights-and-choices": {
-          "title": "Vos droits et choix",
-          "description": "Étant donné que nous collectons principalement des données anonymes, nous ne pouvons pas identifier ou accéder à des informations personnelles spécifiques à un utilisateur individuel. Cependant, vous disposez des droits et choix suivants :",
-          "items": "Local storage : Vous pouvez effacer le stockage local de votre navigateur à tout moment pour supprimer les préférences enregistrée;;Commentaire : Si vous avez soumis un commentaire avec une adresse e-mail, vous pouvez nous contacter pour demander sa suppression;;Désactivation des analyses : Vous pouvez désactiver la collecte de données d'analyse en activant le paramètre \"Ne pas suivre\" de votre navigateur ou en utilisant des navigateurs axés sur la confidentialité qui bloquent les scripts d'analyse;;Données de jeu : Les données relatives au jeu sont automatiquement supprimées lorsque tous les joueurs quittent une partie"
+        "data-access": {
+          "title": "6. Qui a accès à vos données ?",
+          "items": "Les autres joueurs voient votre nom, avatar et historique de jeu;;Le développeur (Maxent Rouault) peut accéder aux données pour modération;;Aucune revente ni usage publicitaire des données"
         },
-        "childrens-privacy": {
-          "title": "Confidentialité des enfants",
-          "description": "Skymo n'a pas de restrictions d'âge. Nous ne collectons pas sciemment d'informations personnelles auprès des enfants."
+        "your-rights": {
+          "title": "7. Vos droits",
+          "items": "Accéder, corriger ou supprimer vos données;;Supprimer votre compte (ou sur demande);;Exporter vos données (sur demande);;Faire appel à appeal@skymo.online"
         },
-        "changes-to-this-policy": {
-          "title": "Modifications de cette politique",
-          "description": "Nous pouvons mettre à jour cette politique de temps en temps. Nous vous informerons de tout changement en publiant la nouvelle politique sur cette page."
+        "security": {
+          "title": "8. Sécurité",
+          "items": "Mots de passe chiffrés;;Connexion HTTPS obligatoire;;Modération et détection d'abus;;Hébergement dans l'UE (Paris, France)"
         },
-        "contact-us": {
-          "title": "Nous contacter",
-          "description": "Si vous avez des questions concernant cette politique de confidentialité, veuillez nous contacter via le formulaire de commentaire sur le site web, le serveur Discord du jeu ou via GitHub."
+        "cookies-analytics": {
+          "title": "9. Cookies & statistiques",
+          "items": "Cookies essentiels uniquement (connexion, session);;Statistiques via PostHog (UE), sans suivi intersites"
+        },
+        "contact": {
+          "title": "10. Contact",
+          "description": "Demandes générales : <email></email>"
         }
       }
     },

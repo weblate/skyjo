@@ -187,64 +187,76 @@
         "title": "Privacy Policy",
         "last-update": {
           "text": "Last updated: {date}",
-          "date-format": "YYYY-MM-DD - hh:mmA"
+          "date-format": "MMMM D, YYYY"
         },
-        "information-we-collect": {
-          "title": "Information We Collect",
-          "anonymous-usage-data": {
-            "title": "Anonymous Usage Data",
-            "description": "We use PostHog, an analytics tool, to collect anonymous data about how you use our website. This includes:",
-            "items": "Page views;;Web vitals (performance metrics);;Survey responses (if you choose to participate)"
+        "tldr": {
+          "title": "TL;DR — What you need to know",
+          "minimal-data": "We store minimal data to let you play games, whether you're logged in or a guest.",
+          "guest-data": "Guest data (name, avatar, score, chats) is stored only if a logged-in player is in the game.",
+          "personal-data": "Your email, username, and other personal info are stored only if you create an account.",
+          "chat-storage": "Chats are stored temporarily and saved only if reported.",
+          "privacy-compliance": "We respect your privacy and comply with GDPR, storing everything securely in the EU.",
+          "data-rights": "You can request data access, corrections, export, or deletion anytime.",
+          "contact": "For questions: <email></email>"
+        },
+        "operator": {
+          "title": "1. Who operates this website?",
+          "operator-info": "This website is operated by a private individual:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Not a company."
+        },
+        "data-collection": {
+          "title": "2. What data do we collect?",
+          "description": "We collect data for both registered and guest players, only when a connected (logged-in) user is part of the game.",
+          "guest-players": {
+            "title": "For Guest Players:",
+            "items": "Display name (chosen at game entry);;Selected avatar;;Game score, rank, and winner status;;Chat messages (stored temporarily unless flagged)",
+            "note": "This data is stored only if at least one player in the game is logged in."
           },
-          "user-provided-information": {
-            "title": "User-Provided Information",
-            "description": "We collect:",
-            "items": "Feedback form submissions (including optional email addresses)"
+          "logged-users": {
+            "title": "For Logged-in Users (in addition to above):",
+            "items": "Email address;;Username / display name;;Avatar (from predefined list);;Hashed password or OAuth ID (Google, Facebook);;Language preference;;Email verification status"
           },
-          "game-data": {
-            "title": "Game Data",
-            "description": "We temporarily store:",
-            "items": "Names and avatar choices;;Game elements and progress"
-          },
-          "local-storage-data": {
-            "title": "Local Storage Data",
-            "description": "We store in your browser's local storage:",
-            "items": "Language preferences;;Game settings preferences"
-          },
-          "cookies": {
-            "title": "Cookies",
-            "description": "We use essential cookies to enable core functionality of our website:",
-            "items": "Session cookies: We use a session cookie (skymo-io) to maintain your connection to our game servers. This cookie is essential for the functionality of the game and expires after 24 hours;;These cookies do not track you across websites and are only used to provide the service you have requested"
+          "general": {
+            "title": "General (for all users):",
+            "items": "Game session data (codes, settings);;Session cookie (expires after 24h);;IP address (transient, not stored long-term);;Anonymous usage analytics (via PostHog, EU-hosted)"
           }
         },
-        "how-we-use-your-information": {
-          "title": "How We Use Your Information",
-          "items": "Improve our website and user experience;;Analyze usage patterns and performance;;Respond to feedback and support requests;;Facilitate gameplay"
+        "data-usage": {
+          "title": "3. Why is your data used?",
+          "items": "To let players (guests or registered) join and play games;;To display avatars, names, scores and rankings;;To allow moderation in case of abuse;;To process feedback and account recovery (for logged-in users);;To improve the site using anonymous analytics"
         },
-        "data-storage-and-retention": {
-          "title": "Data Storage and Retention",
-          "items": "Anonymous usage data is stored on servers within the European Union and retained for up to 1 year;;Game data is stored in our database located in Frankfurt, Germany. This data is kept for the duration of active games. Once all players leave a game, the associated data is deleted;;Information stored in your browser's local storage remains there until you clear your browser data;;Feedback form submissions are retained only for the purpose of responding and considering suggestions for development"
+        "data-retention": {
+          "title": "4. How long is your data kept?",
+          "retention-table": {
+            "headers": "Type of Data;;Retention",
+            "rows": "Session cookies;;24 hours|||Account data (logged-in);;Until deletion request|||Guest player data;;Only if connected player is present in game|||Game data & scores;;Stored permanently|||Chat messages;;Temp in Redis; saved if reported|||Feedback;;Permanently|||Verification/reset tokens;;Until used or expired|||Account deletion requests;;Deleted after 48h grace period|||Analytics (PostHog);;Permanently, EU-hosted"
+          }
         },
-        "data-sharing": {
-          "title": "Data Sharing",
-          "description": "We do not share your personal information with any third parties. Anonymous usage data is processed by PostHog, our analytics provider."
+        "legal-basis": {
+          "title": "5. Legal basis (GDPR)",
+          "description": "Processing is based on:",
+          "items": "Consent (cookies, stats);;Contract (provide the game);;Legitimate interest (moderation);;Legal obligation (responding to requests)"
         },
-        "your-rights-and-choices": {
-          "title": "Your Rights and Choices",
-          "description": "Given that we collect primarily anonymous data, we cannot identify or access personal information specific to any individual user. However, you have the following rights and choices:",
-          "items": "Local Storage: You can clear your browser's local storage at any time to remove saved preferences;;Feedback: If you've submitted feedback with an email address, you can contact us to request its deletion;;Analytics Opt-Out: You can opt-out of analytics data collection by enabling your browser's \"Do Not Track\" setting or using privacy-focused browsers that block analytics scripts;;Game Data: Game-related data is automatically deleted when all players leave a game"
+        "data-access": {
+          "title": "6. Who can see your data?",
+          "items": "Other players see your public name, avatar and game history;;The developer (Maxent Rouault) may access data for moderation;;No sale or advertising use of your data"
         },
-        "childrens-privacy": {
-          "title": "Children's Privacy",
-          "description": "Skymo does not have any age restrictions. We do not knowingly collect personal information from children."
+        "your-rights": {
+          "title": "7. Your rights",
+          "items": "Access, rectify or delete your data;;Delete your account (or request it);;Export your data (upon request);;Appeal bans at appeal@skymo.online"
         },
-        "changes-to-this-policy": {
-          "title": "Changes to This Policy",
-          "description": "We may update this policy from time to time. We will notify you of any changes by posting the new policy on this page."
+        "security": {
+          "title": "8. Security",
+          "items": "Encrypted passwords;;HTTPS-only connections;;Moderation and abuse detection;;EU-based hosting (Paris, France)"
         },
-        "contact-us": {
-          "title": "Contact Us",
-          "description": "If you have any questions about this Privacy Policy, please contact us through our feedback form on the website, Discord server or GitHub."
+        "cookies-analytics": {
+          "title": "9. Cookies & Analytics",
+          "items": "Essential cookies only (session, login);;Analytics via PostHog, EU-hosted, no cross-site tracking"
+        },
+        "contact": {
+          "title": "10. Contact",
+          "description": "General inquiries: <email></email>"
         }
       }
     },
