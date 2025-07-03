@@ -49,11 +49,11 @@ export const googleRouter = new Hono()
 
       return c.redirect(`${ENV.WEBSITE_URL}/auth/callback`)
     } catch (error) {
+      Logger.error("Google login callback error:", { error })
       if (error instanceof Error) {
         return c.json({ error: error.message }, 400)
       }
 
-      Logger.error("Google login callback error:", { error })
       return c.json({ error: "oauth-unknown-error" }, 500)
     }
   })
