@@ -1,9 +1,12 @@
+import { db } from "@/db/index.js"
+import { DiscordQueueService } from "@/queues/DiscordQueueService.js"
 import { BaseService } from "@/realtime/base/base.service.js"
 import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import type { SightEngineMessage } from "@/realtime/types/sightengine.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { ENV } from "@env"
-import { Constants as CoreConstants } from "@skymo/core"
+import { Constants as CoreConstants, Game, Player } from "@skymo/core"
+import { penaltyTable } from "@skymo/database/schema"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type { Report } from "@skymo/shared/validations"
 
@@ -18,6 +21,8 @@ const sightEngineCategories = [
 ] as const
 
 export class ReportService extends BaseService {
+  private readonly discordQueue = DiscordQueueService.getInstance()
+
   async onReport(socket: GameSocket, report: Report) {
     const game = await this.getGame(socket.data.gameCode)
 
@@ -66,13 +71,13 @@ export class ReportService extends BaseService {
       text = target.name
     }
 
-    const { safe, error } = await this.checkTextSafety(text)
+    const safetyResult = await this.checkTextSafety(text)
 
-    if (error) {
+    if (safetyResult.error) {
       throw new CError(`Unsuccessful request to SightEngine`, {
         code: ErrorConstants.ERROR.UNEXPECTED_ERROR,
         meta: {
-          error,
+          error: safetyResult.error,
           text,
           game: game.serialize(),
           socketId: socket.id,
@@ -81,24 +86,45 @@ export class ReportService extends BaseService {
       })
     }
 
-    if (!safe) {
-      const stateManager = new GameStateTracker(game)
-
-      game.banPlayer(target)
-
-      this.socketManager.sendToRoom({
-        room: game.code,
-        event: "kick:report",
-        data: [target.id, target.name],
+    const [{ id: penaltyId }] = await db
+      .insert(penaltyTable)
+      .values({
+        userId: target.userId,
+        reportData: {
+          reporterName: player.name,
+          reportedPlayerName: target.name,
+          reportedContent: text,
+          reportType: report.type,
+          gameCode: game.code,
+          reportedAt: new Date().toISOString(),
+        },
+        reasonReported: "User reported content",
+        aiValidation: {
+          safe: safetyResult.safe ?? false,
+          reason: safetyResult.reason,
+        },
+        humanValidation: null,
+        reasonByMod: null,
       })
+      .returning({ id: penaltyTable.id })
 
-      const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
-      await this.sendServerMessage(game.code, target.name, messageType)
-
-      await game.disconnectPlayer(target)
-
-      await this.updateAndSendGame(game, stateManager)
+    if (!safetyResult.safe) {
+      // AI detected unsafe content - immediately kick player
+      await this.kickPlayer(game, target)
     }
+
+    await this.sendToDiscord({
+      reportId: penaltyId,
+      reporterName: player.name,
+      reportedPlayerName: target.name,
+      reportedContent: text,
+      reportType: report.type,
+      gameCode: game.code,
+      reasonReported: "User reported content",
+      reportedAt: new Date().toISOString(),
+      aiValidation: { safe: true },
+      targetUserId: target.userId,
+    })
   }
 
   private async checkTextSafety(text: string) {
@@ -141,6 +167,45 @@ export class ReportService extends BaseService {
       }
     } catch (error) {
       return { error }
+    }
+  }
+
+  private async kickPlayer(game: Game, target: Player) {
+    const stateManager = new GameStateTracker(game)
+
+    game.banPlayer(target)
+
+    this.socketManager.sendToRoom({
+      room: game.code,
+      event: "kick:report",
+      data: [target.id, target.name],
+    })
+
+    const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
+    await this.sendServerMessage(game.code, target.name, messageType)
+
+    await game.disconnectPlayer(target)
+
+    await this.updateAndSendGame(game, stateManager)
+  }
+
+  private async sendToDiscord(reportData: {
+    reportId: number
+    reporterName: string
+    reportedPlayerName: string
+    reportedContent: string
+    reportType: "name" | "message"
+    gameCode: string
+    reasonReported: string
+    reportedAt: string
+    aiValidation?: { safe: boolean; reason?: string }
+    targetUserId?: number
+  }) {
+    try {
+      await this.discordQueue.sendReportNotification(reportData)
+    } catch (error) {
+      console.error("Failed to send Discord notification:", error)
+      // Don't throw - this shouldn't break the report flow
     }
   }
 }

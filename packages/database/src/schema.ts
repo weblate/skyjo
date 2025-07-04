@@ -190,6 +190,34 @@ export const scoreTable = pgTable("scores", {
 })
 export type ScoreDb = InferSelectModel<typeof scoreTable>
 
+export const penaltyTable = pgTable("penalties", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => userTable.id),
+  reportData: json("report_data")
+    .$type<{
+      reporterName: string
+      reportedPlayerName: string
+      reportedContent: string
+      reportType: "name" | "message"
+      gameCode: string
+      reportedAt: string
+    }>()
+    .notNull(),
+  reasonReported: varchar("reason_reported", { length: 255 }).notNull(),
+  aiValidation: json("ai_validation").$type<{
+    safe: boolean
+    reason?: string
+    error?: string
+  }>(),
+  humanValidation: boolean("human_validation"),
+  reasonByMod: varchar("reason_by_mod", { length: 500 }),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  deletedAt: timestamp("deleted_at", { withTimezone: true }),
+})
+export type PenaltyDb = InferSelectModel<typeof penaltyTable>
+
 export const leaderboardView = pgView("leaderboard_view").as((qb) => {
   return qb
     .select({

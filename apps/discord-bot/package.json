@@ -1,0 +1,30 @@
+{
+  "name": "@skymo/discord-bot",
+  "version": "1.0.0",
+  "description": "Discord bot service for Skymo game platform",
+  "main": "dist/index.js",
+  "type": "module",
+  "scripts": {
+    "build": "tsc && pnpx tsc-alias",
+    "dev": "tsx watch --env-file=.env src/index.ts",
+    "start": "node dist/index.js",
+    "biome:check": "biome check .",
+    "biome:check:apply": "biome check . --write"
+  },
+  "dependencies": {
+    "@skymo/database": "workspace:*",
+    "@skymo/logger": "workspace:*",
+    "@skymo/ts-config": "workspace:*",
+    "bullmq": "^5.48.1",
+    "dayjs": "^1.11.13",
+    "discord.js": "^14.21.0",
+    "drizzle-orm": "^0.43.1",
+    "redis": "^4.7.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/node": "^22.14.1",
+    "tsx": "^4.19.3",
+    "typescript": "^5.8.3"
+  }
+}
