@@ -37,11 +37,11 @@
         "remove-identical-row": "Gleicha Zeiln entfern",
         "nb-columns": {
           "label": "Ozoi vu Spoitn",
-          "title": "$number Spalten"
+          "title": "{number} Spalten"
         },
         "nb-rows": {
           "label": "Ozoi vu Zeiln",
-          "title": "$number Zeiln"
+          "title": "{number} Zeiln"
         },
         "show-current-score": {
           "label": "Zoag an aktuellen Punktestand während am Spui"

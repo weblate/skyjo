@@ -534,11 +534,11 @@
         "remove-identical-row": "Usuń identyczne wiersze",
         "nb-columns": {
           "label": "Liczba kolumn",
-          "title": "$number kolumn"
+          "title": "{number} kolumn"
         },
         "nb-rows": {
           "label": "Liczba wierszy",
-          "title": "$number wierszy"
+          "title": "{number} wierszy"
         },
         "initial-turned-count": {
           "label": "Liczba początkowo odkrytych kart",

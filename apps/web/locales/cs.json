@@ -103,11 +103,11 @@
         "remove-identical-row": "Odstranit duplicitní řádky",
         "nb-columns": {
           "label": "Počet sloupců",
-          "title": "$number sloupců"
+          "title": "{number} sloupců"
         },
         "nb-rows": {
           "label": "Počet řádků",
-          "title": "$number řádků"
+          "title": "{number} řádků"
         },
         "initial-turned-count": {
           "label": "Počet karet odhalených na začátku",

@@ -34,7 +34,7 @@
     "Lobby": {
       "settings": {
         "nb-rows": {
-          "title": "$number rader",
+          "title": "{number} rader",
           "label": "Antal rader"
         },
         "private": {
@@ -54,7 +54,7 @@
         "remove-identical-row": "Ta bort identiska rader",
         "nb-columns": {
           "label": "Antal kolumner",
-          "title": "$number kolumner"
+          "title": "{number} kolumner"
         },
         "initial-turned-count": {
           "label": "Antal kort som visas initialt",

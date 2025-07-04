@@ -39,7 +39,7 @@
         },
         "nb-rows": {
           "label": "Numero di righe",
-          "title": "$number righe"
+          "title": "{number} righe"
         },
         "initial-turned-count": {
           "label": "Numero di carte girate all'inizio di un giro",
@@ -82,7 +82,7 @@
         "reset-settings": "Reimposta impostazioni",
         "nb-columns": {
           "label": "Numero di colonne",
-          "title": "$number colonne"
+          "title": "{number} colonne"
         }
       },
       "player-section": {

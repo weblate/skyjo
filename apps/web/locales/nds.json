@@ -381,7 +381,7 @@
       "settings": {
         "nb-columns": {
           "label": "Tall vun Spalten",
-          "title": "$number Spalten"
+          "title": "{number} Spalten"
         },
         "initial-turned-count": {
           "label": "Tall vun Koorten, de toeerst opdeckt warrt",
@@ -419,7 +419,7 @@
         },
         "nb-rows": {
           "label": "Tall vun Regen",
-          "title": "$number Regen"
+          "title": "{number} Regen"
         },
         "show-current-score": {
           "label": "Wies den aktuellen Punktestand wiel dat Speel"

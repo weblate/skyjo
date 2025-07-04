@@ -102,11 +102,11 @@
         },
         "nb-columns": {
           "label": "Niver a vannoù",
-          "title": "$number a vannoù"
+          "title": "{number} a vannoù"
         },
         "nb-rows": {
           "label": "Niver a renkoù",
-          "title": "$number renk"
+          "title": "{number} renk"
         },
         "initial-turned-count": {
           "label": "Niver a gartoù troet e deroù ur c'hoariadenn",

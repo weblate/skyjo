@@ -3,7 +3,7 @@
     "Lobby": {
       "settings": {
         "nb-rows": {
-          "title": "$number Zeile",
+          "title": "{number} Zeile",
           "label": "Aazahl Zeile"
         },
         "first-player-multiplier-penalty": {
@@ -27,7 +27,7 @@
         "remove-identical-row": "Gliichä Zeilä löschä",
         "nb-columns": {
           "label": "Aazahl Spalte",
-          "title": "$number Spalte"
+          "title": "{number} Spalte"
         },
         "initial-turned-count": {
           "label": "Aazahl Charte, wo am Afang offe sind",

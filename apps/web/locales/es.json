@@ -59,11 +59,11 @@
         "remove-identical-row": "Eliminar filas idénticas",
         "nb-columns": {
           "label": "Número de columnas",
-          "title": "$number de columnas"
+          "title": "{number} de columnas"
         },
         "nb-rows": {
           "label": "Número de filas",
-          "title": "$number de filas"
+          "title": "{number} de filas"
         },
         "initial-turned-count": {
           "label": "Número de cartas inicialmente reveladas",

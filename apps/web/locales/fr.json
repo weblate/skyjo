@@ -106,11 +106,11 @@
         "remove-identical-row": "Supprimer les lignes identiques",
         "nb-columns": {
           "label": "Nombre de colonnes",
-          "title": "$number colonnes"
+          "title": "{number} colonnes"
         },
         "nb-rows": {
           "label": "Nombre de lignes",
-          "title": "$number lignes"
+          "title": "{number} lignes"
         },
         "initial-turned-count": {
           "label": "Nombre de cartes initialement révélées",

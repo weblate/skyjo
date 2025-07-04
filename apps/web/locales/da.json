@@ -173,11 +173,11 @@
         "remove-identical-row": "Fjern identiske rækker",
         "nb-columns": {
           "label": "Antal kolonner",
-          "title": "$number kolonner"
+          "title": "{number} kolonner"
         },
         "nb-rows": {
           "label": "Antal rækker",
-          "title": "$number rækker"
+          "title": "{number} rækker"
         },
         "initial-turned-count": {
           "label": "Antal kort, der oprindeligt er afsløret",

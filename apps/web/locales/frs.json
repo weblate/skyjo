@@ -69,12 +69,12 @@
       "settings": {
         "validation-warning": "Spul-Instellengen konnen nit annerd wäide, wan se eenmol goudkäänd wuuden sunt",
         "nb-columns": {
-          "title": "$number Spalten",
+          "title": "{number} Spalten",
           "label": "Antall Spalten"
         },
         "nb-rows": {
           "label": "Antaal Riege",
-          "title": "$number Riegen"
+          "title": "{number} Riegen"
         },
         "private": {
           "tooltip": {

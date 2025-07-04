@@ -106,11 +106,11 @@
         "remove-identical-row": "Dubbele rijen verwijderen",
         "nb-columns": {
           "label": "Aantal kolommen",
-          "title": "$number kolommen"
+          "title": "{number} kolommen"
         },
         "nb-rows": {
           "label": "Aantal rijen",
-          "title": "$number rijen"
+          "title": "{number} rijen"
         },
         "initial-turned-count": {
           "label": "Aantal kaarten dat in eerste instantie is onthuld",

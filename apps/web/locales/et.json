@@ -116,11 +116,11 @@
         "remove-identical-row": "Eemalda identsed read",
         "nb-columns": {
           "label": "Veergude arv",
-          "title": "$number veergu"
+          "title": "{number} veergu"
         },
         "nb-rows": {
           "label": "Ridade arv",
-          "title": "$number rida"
+          "title": "{number} rida"
         },
         "initial-turned-count": {
           "label": "Algselt avatud kaartide arv",

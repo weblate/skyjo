@@ -70,7 +70,7 @@
         "remove-identical-row": "Видалити ідентичні рядки",
         "nb-columns": {
           "label": "Кількість стовпців",
-          "title": "$number стовпців"
+          "title": "{number} стовпців"
         },
         "private": {
           "tooltip": {
@@ -87,7 +87,7 @@
         },
         "nb-rows": {
           "label": "Кількість рядків",
-          "title": "$number рядків"
+          "title": "{number} рядків"
         },
         "remove-identical-column": "Видалити ідентичні стовпці",
         "initial-turned-count": {

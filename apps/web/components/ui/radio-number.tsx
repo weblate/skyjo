@@ -45,7 +45,7 @@ const RadioNumber = ({
             selected: selected === index,
             disabled: disabled || disabledRadioNumber.includes(index),
           })}
-          title={title?.replace("$number", index.toString())}
+          title={title?.replace("{number}", index.toString())}
           key={index}
         >
           {index}
