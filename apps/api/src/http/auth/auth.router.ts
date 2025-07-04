@@ -116,6 +116,7 @@ const authRouter = new Hono<AuthContextVariables>()
         const { session, user } = await validateSessionToken(sessionToken)
 
         if (!session || !user) {
+          await logout(c)
           return c.json({ error: "session-invalid" }, 401)
         }
 
