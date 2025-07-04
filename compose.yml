@@ -1,6 +1,5 @@
 services:
   api:
-    image: ghcr.io/maxentr/skymo/api:latest
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
@@ -21,7 +20,6 @@ services:
     restart: always
 
   workers:
-    image: ghcr.io/maxentr/skymo/workers:latest
     build:
       context: .
       dockerfile: ./apps/workers/Dockerfile
@@ -36,6 +34,25 @@ services:
       - NODE_ENV=production
       - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
       - NODE_OPTIONS=--max-old-space-size=2048 --expose-gc 
+    restart: always
+
+  discord-bot:
+    build:
+      context: .
+      dockerfile: ./apps/discord-bot/Dockerfile
+    depends_on:
+      - redis
+      - postgres
+    networks:
+      - internal
+      - external
+    env_file:
+      - .env
+      - ./apps/discord-bot/.env
+    environment:
+      - NODE_ENV=production
+      - REDIS_URL=redis://:${REDIS_PASSWORD}@redis:6379
+      - NODE_OPTIONS=--max-old-space-size=1024 --expose-gc
     restart: always
 
   redis:
