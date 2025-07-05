@@ -52,7 +52,7 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
   const tErrors = useTranslations("errors")
   const [preferredName, setPreferredName] = useLocalStorage<string>(
     USERNAME_KEY,
-    "Ano",
+    "",
     { raw: true },
   )
   const [preferredAvatarIndex, setPreferredAvatarIndex] =
@@ -189,7 +189,8 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
   }
 
   const getPlayer = () => {
-    return { name: name ?? "Ano", avatar: getAvatar() }
+    // I use || instead of ?? because empty string is not a valid name
+    return { name: name || "Ano", avatar: getAvatar() }
   }
 
   const value = useMemo(
