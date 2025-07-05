@@ -111,68 +111,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "information-we-collect": {
-          "anonymous-usage-data": {
-            "title": "Dati di utilizzo anonimi",
-            "description": "Utilizziamo PostHog, uno strumento di analisi, per raccogliere dati anonimi su come utilizzi il nostro sito web. Questo include:",
-            "items": "Visualizzazioni di pagina;;Web vitals (metriche di performance);;Risposte al sondaggio (se si sceglie di partecipare)"
-          },
-          "game-data": {
-            "description": "Memorizziamo temporaneamente:",
-            "title": "Dati di gioco",
-            "items": "Nomi utente e scelte avatar;;Elementi di gioco e progressi"
-          },
-          "user-provided-information": {
-            "title": "Informazioni Fornite dall'Utente",
-            "description": "Raccogliamo:",
-            "items": "Invii di moduli di feedback (inclusi indirizzi email opzionali)"
-          },
-          "local-storage-data": {
-            "title": "Dati di archiviazione locale",
-            "description": "Memorizziamo nella memoria locale del tuo browser:",
-            "items": "'Preferenze lingua;;Preferenze impostazioni di gioco'"
-          },
-          "title": "Informazioni che raccogliamo",
-          "cookies": {
-            "title": "Cookie",
-            "description": "Utilizziamo i cookie essenziali per abilitare le funzionalità principali del nostro sito web:",
-            "items": "Cookie di sessione: Utilizziamo un cookie di sessione (skymo-io) per mantenere la tua connessione ai nostri server di gioco. Questo cookie è essenziale per la funzionalità del gioco e scade dopo 24 ore;;Questi cookie non tracciano la tua navigazione tra i siti web e vengono utilizzati solo per fornire il servizio che hai richiesto"
-          }
-        },
-        "childrens-privacy": {
-          "title": "Privacy dei bambini",
-          "description": "Skymo non ha alcuna restrizione d'età. Non raccogliamo consapevolmente informazioni personali da bambini."
-        },
         "back": "Torna alla pagina iniziale",
         "title": "Informativa sulla privacy",
         "last-update": {
           "text": "Ultimo aggiornamento: {date}",
           "date-format": "AAAA-MM-GG - hh:mmA"
-        },
-        "how-we-use-your-information": {
-          "items": "Migliorare il nostro sito web e l'esperienza utente;;Analizzare i modelli di utilizzo e le prestazioni;;Rispondere ai feedback e alle richieste di supporto;;Facilitare il gioco",
-          "title": "Come Usiamo le Tue Informazioni"
-        },
-        "data-storage-and-retention": {
-          "title": "Archiviazione e Conservazione dei Dati",
-          "items": "I dati di utilizzo anonimi sono archiviati su server all'interno dell'Unione Europea e conservati per un massimo di 1 anno;;I dati di gioco sono archiviati nel nostro database situato a Francoforte, in Germania. Questi dati vengono conservati per la durata delle partite attive. Una volta che tutti i giocatori lasciano una partita, i dati associati vengono eliminati;;Le informazioni archiviate nella memoria locale del browser rimangono lì finché non si cancellano i dati del browser;;I moduli di feedback inviati vengono conservati solo allo scopo di rispondere e considerare i suggerimenti per lo sviluppo"
-        },
-        "your-rights-and-choices": {
-          "description": "Dato che raccogliamo principalmente dati anonimi, non possiamo identificare o accedere a informazioni personali specifiche di alcun singolo utente. Tuttavia, l'utente ha i seguenti diritti e scelte:",
-          "items": "Memoria locale: Puoi cancellare la memoria locale del tuo browser in qualsiasi momento per rimuovere le preferenze salvate;;Feedback: Se hai inviato un feedback con un indirizzo email, puoi contattarci per richiederne la cancellazione;;Disattivazione Analytics: Puoi disattivare la raccolta di dati analitici abilitando l'impostazione \"Do Not Track\" del tuo browser o utilizzando browser incentrati sulla privacy che bloccano gli script di analisi;;Dati di gioco: I dati relativi al gioco vengono automaticamente cancellati quando tutti i giocatori lasciano una partita",
-          "title": "I tuoi diritti e le tue scelte"
-        },
-        "changes-to-this-policy": {
-          "title": "Modifiche a questa Informativa",
-          "description": "Potremmo aggiornare questa informativa di volta in volta. Ti informeremo di qualsiasi modifica pubblicando la nuova informativa su questa pagina."
-        },
-        "contact-us": {
-          "description": "Per qualsiasi domanda sulla presente Informativa sulla privacy, si prega di contattarci tramite il modulo di feedback sul sito web, il server Discord o GitHub.",
-          "title": "Contattaci"
-        },
-        "data-sharing": {
-          "title": "Condivisione dei dati",
-          "description": "Non condividiamo le tue informazioni personali con terze parti. I dati di utilizzo anonimi sono elaborati da PostHog, il nostro fornitore di analisi."
         }
       },
       "head": {

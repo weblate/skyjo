@@ -188,63 +188,6 @@
         "last-update": {
           "text": "Laatst bijgewerkt: {date}",
           "date-format": "JJJJ-MM-DD - uu:mmA"
-        },
-        "information-we-collect": {
-          "title": "Informatie die we verzamelen",
-          "anonymous-usage-data": {
-            "title": "Anonieme gebruiksgegevens",
-            "description": "We gebruiken PostHog, een analysetool, om anonieme gegevens te verzamelen over hoe u onze website gebruikt. Dit omvat:",
-            "items": "Paginaweergaven;;Web Vitals (prestatiestatistieken);;Enquêteantwoorden (als u ervoor kiest deel te nemen)"
-          },
-          "user-provided-information": {
-            "title": "Door de gebruiker verstrekte informatie",
-            "description": "Wij verzamelen:",
-            "items": "Inzendingen feedbackformulieren (inclusief optionele e-mailadressen)"
-          },
-          "game-data": {
-            "title": "Spelgegevens",
-            "description": "We slaan tijdelijk op:",
-            "items": "Gebruikersnamen en avatar-keuzes;;Spelonderdelen en voortgang"
-          },
-          "local-storage-data": {
-            "title": "Lokale opslaggegevens",
-            "description": "We slaan op in de lokale opslag van uw browser:",
-            "items": "Taalvoorkeuren;;Spelinstellingenvoorkeuren"
-          },
-          "cookies": {
-            "description": "Wij gebruiken essentiële cookies om de basisfuncties van onze website mogelijk te maken:",
-            "items": "Sessiecookies: Wij gebruiken een sessiecookie (skymo-io) om uw verbinding met onze gameservers te onderhouden. Deze cookie is essentieel voor de functionaliteit van het spel en verloopt na 24 uur;;Deze cookies volgen u niet op verschillende websites en worden alleen gebruikt om de door u gevraagde dienst te leveren",
-            "title": "Cookies"
-          }
-        },
-        "data-storage-and-retention": {
-          "items": "Anonieme gebruiksgegevens worden opgeslagen op servers binnen de Europese Unie en maximaal 1 jaar bewaard;;Spelgegevens worden opgeslagen in onze database in Frankfurt, Duitsland. Deze gegevens worden bewaard zolang de spellen actief zijn. Zodra alle spelers een spel verlaten, worden de bijbehorende gegevens verwijderd;;Informatie die is opgeslagen in de lokale opslag van uw browser blijft daar totdat u uw browsergegevens wist;;Inzendingen van feedbackformulieren worden alleen bewaard om te kunnen reageren en suggesties voor ontwikkeling in overweging te nemen",
-          "title": "Gegevensopslag en -bewaring"
-        },
-        "your-rights-and-choices": {
-          "title": "Uw Rechten en Keuzes",
-          "description": "Aangezien we voornamelijk anonieme gegevens verzamelen, kunnen we geen persoonlijke informatie identificeren of openen die specifiek is voor een individuele gebruiker. U hebt echter de volgende rechten en keuzes:",
-          "items": "Lokale opslag: U kunt de lokale opslag van uw browser op elk moment wissen om opgeslagen voorkeuren te verwijderen;;Feedback: Als u feedback heeft ingediend met een e-mailadres, kunt u contact met ons opnemen om de verwijdering ervan aan te vragen;;Afmelden voor analyses: U kunt zich afmelden voor het verzamelen van analysegegevens door de \"Do Not Track\"-instelling van uw browser in te schakelen of door privacygerichte browsers te gebruiken die analysescripts blokkeren;;Spelgegevens: Spelgerelateerde gegevens worden automatisch verwijderd wanneer alle spelers een spel verlaten"
-        },
-        "childrens-privacy": {
-          "title": "Privacy van kinderen",
-          "description": "Skymo heeft geen leeftijdsbeperkingen. We verzamelen niet bewust persoonlijke informatie van kinderen."
-        },
-        "changes-to-this-policy": {
-          "title": "Wijzigingen in dit beleid",
-          "description": "We kunnen dit beleid van tijd tot tijd bijwerken. We zullen u op de hoogte stellen van eventuele wijzigingen door het nieuwe beleid op deze pagina te plaatsen."
-        },
-        "how-we-use-your-information": {
-          "title": "Hoe we uw informatie gebruiken",
-          "items": "Onze website en gebruikerservaring verbeteren;;Gebruikspatronen en prestaties analyseren;;Reageren op feedback en ondersteuningsverzoeken;;Gameplay faciliteren"
-        },
-        "data-sharing": {
-          "title": "Gegevens delen",
-          "description": "We delen uw persoonlijke gegevens niet met derden. Anonieme gebruiksgegevens worden verwerkt door PostHog, onze analyseprovider."
-        },
-        "contact-us": {
-          "title": "Neem contact met ons op",
-          "description": "Als u vragen heeft over dit privacybeleid, neem dan contact met ons op via ons feedbackformulier op de website, onze Discord-server of GitHub."
         }
       }
     },

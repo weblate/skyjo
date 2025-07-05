@@ -113,68 +113,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "data-sharing": {
-          "title": "Datadelning",
-          "description": "Vi delar inte dina personuppgifter med tredje part. Anonym användningsdata behandlas av PostHog, vår analysleverantör."
-        },
-        "contact-us": {
-          "title": "Kontakta oss",
-          "description": "Om du har några frågor om denna integritetspolicy, vänligen kontakta oss via vårt feedbackformulär på webbplatsen, Discord-servern eller GitHub."
-        },
         "back": "Tillbaka till startsidan",
         "title": "Integritetspolicy",
         "last-update": {
           "text": "Senast uppdaterad: {date}",
           "date-format": "YYYY-MM-DD - hh:mmA"
-        },
-        "information-we-collect": {
-          "title": "Information vi samlar in",
-          "anonymous-usage-data": {
-            "title": "Anonym användningsdata",
-            "description": "Vi använder PostHog, ett analysverktyg, för att samla in anonym data om hur du använder vår webbplats. Detta inkluderar:",
-            "items": "Sidvisningar;;Webbstatistik (prestandamått);;Enkätssvar (om du väljer att delta)"
-          },
-          "user-provided-information": {
-            "title": "Användarangiven information",
-            "description": "Vi samlar in:",
-            "items": "Inskickade feedbackformulär (inklusive valfria e-postadresser)"
-          },
-          "game-data": {
-            "title": "Speldata",
-            "description": "Vi lagrar tillfälligt:",
-            "items": "Användarnamn och avatarval;;Spelmoment och framsteg"
-          },
-          "local-storage-data": {
-            "title": "Lokal lagringsdata",
-            "description": "Vi lagrar i din webbläsares lokala lagring:",
-            "items": "Språkinställningar;;Spelinställningar"
-          },
-          "cookies": {
-            "title": "Cookies",
-            "description": "Vi använder nödvändiga cookies för att aktivera kärnfunktioner på vår webbplats:",
-            "items": "Sessionscookies: Vi använder en sessionscookie (skymo-io) för att upprätthålla din anslutning till våra spelserverar. Denna cookie är nödvändig för spelets funktionalitet och upphör att gälla efter 24 timmar;;Dessa cookies spårar dig inte över webbplatser och används endast för att tillhandahålla den tjänst du har begärt"
-          }
-        },
-        "how-we-use-your-information": {
-          "title": "Hur vi använder din information",
-          "items": "Förbättra vår webbplats och användarupplevelse;;Analysera användningsmönster och prestanda;;Svara på feedback och supportförfrågningar;;Underlätta spelupplevelsen"
-        },
-        "data-storage-and-retention": {
-          "title": "Datalagring och -bevarande",
-          "items": "Anonym användningsdata lagras på servrar inom Europeiska unionen och behålls i upp till 1 år;;Speldata lagras i vår databas som finns i Frankfurt, Tyskland. Denna data behålls under aktiva spels varaktighet. När alla spelare lämnar ett spel raderas tillhörande data;;Information som lagras i din webbläsares lokala lagring finns kvar tills du rensar din webbläsardata;;Inskickade feedbackformulär behålls endast i syfte att svara och överväga förslag för utveckling"
-        },
-        "your-rights-and-choices": {
-          "title": "Dina rättigheter och val",
-          "description": "Eftersom vi huvudsakligen samlar in anonym data kan vi inte identifiera eller komma åt personlig information som är specifik för någon enskild användare. Du har dock följande rättigheter och valmöjligheter:",
-          "items": "Lokal lagring: Du kan när som helst rensa din webbläsares lokala lagring för att ta bort sparade inställningar;;Feedback: Om du har skickat feedback med en e-postadress kan du kontakta oss för att begära att den raderas;;Analysavregistrering: Du kan välja bort insamling av analysdata genom att aktivera din webbläsares \"Do Not Track\"-inställning eller använda integritetsfokuserade webbläsare som blockerar analysskript;;Speldata: Spelrelaterad data raderas automatiskt när alla spelare lämnar ett spel"
-        },
-        "childrens-privacy": {
-          "title": "Barns integritet",
-          "description": "Skymo har inga åldersbegränsningar. Vi samlar inte medvetet in personuppgifter från barn."
-        },
-        "changes-to-this-policy": {
-          "title": "Ändringar i denna policy",
-          "description": "Vi kan komma att uppdatera denna policy från tid till annan. Vi kommer att meddela dig om eventuella ändringar genom att publicera den nya policyn på denna sida."
         }
       },
       "head": {

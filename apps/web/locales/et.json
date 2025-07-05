@@ -179,67 +179,10 @@
       },
       "content": {
         "back": "Tagasi avalehele",
-        "information-we-collect": {
-          "user-provided-information": {
-            "title": "Kasutaja esitatud teave",
-            "items": "Tagasisidevormi esitamised (sh valikulised e-posti aadressid)",
-            "description": "Kogume:"
-          },
-          "game-data": {
-            "title": "Mänguandmed",
-            "description": "Salvestame ajutiselt:",
-            "items": "Kasutajanimed ja avatari valikud;;Mänguelemendid ja edenemine"
-          },
-          "cookies": {
-            "title": "Küpsised",
-            "description": "Me kasutame olulisi küpsiseid, et võimaldada meie veebisaidi põhifunktsioone:",
-            "items": "Seansiküpsised: Kasutame seansiküpsist (skymo-io), et hoida teie ühendust meie mänguserveritega. See küpsis on mängu funktsionaalsuse jaoks hädavajalik ja aegub 24 tunni pärast. Need küpsised ei jälgi teid veebisaitidel ja neid kasutatakse ainult teie soovitud teenuse pakkumiseks"
-          },
-          "title": "Kogutav teave",
-          "anonymous-usage-data": {
-            "title": "Anonüümsed kasutusandmed",
-            "description": "Me kasutame analüüsitööriista PostHog, et koguda anonüümseid andmeid selle kohta, kuidas te meie veebisaiti kasutate. See hõlmab järgmist:",
-            "items": "Lehevaatamised;;Veebi elutähtsad näitajad (jõudlusmõõdikud);;Küsitluse vastused (kui otsustate osaleda)"
-          },
-          "local-storage-data": {
-            "title": "Kohaliku salvestusruumi andmed",
-            "description": "Salvestame teie brauseri kohalikku salvestusruumi:",
-            "items": "Keeleeelistused;;Mänguseadete eelistused"
-          }
-        },
-        "childrens-privacy": {
-          "title": "Laste privaatsus",
-          "description": "Skymol ei ole vanusepiiranguid. Me ei kogu teadlikult laste isikuandmeid."
-        },
-        "contact-us": {
-          "title": "Võta meiega ühendust",
-          "description": "Kui teil on selle privaatsuspoliitika kohta küsimusi, võtke meiega ühendust meie veebisaidi tagasisidevormi, Discordi serveri või GitHubi kaudu."
-        },
         "title": "Privaatsuspoliitika",
         "last-update": {
           "text": "Viimati värskendatud: {date}",
           "date-format": "AAAA-KK-PP - hh:mmA"
-        },
-        "how-we-use-your-information": {
-          "title": "Kuidas me teie teavet kasutame",
-          "items": "Täiustada meie veebisaiti ja kasutajakogemust;;Analüüsida kasutusmustreid ja jõudlust;;Vastata tagasisidele ja tugipäringutele;;Hõlbustada mängimist"
-        },
-        "data-storage-and-retention": {
-          "title": "Andmete salvestamine ja säilitamine",
-          "items": "Anonüümsed kasutusandmed salvestatakse serverites Euroopa Liidus ja säilitatakse kuni 1 aasta;;Mänguandmed salvestatakse meie andmebaasi, mis asub Frankfurdis, Saksamaal. Neid andmeid hoitakse aktiivsete mängude kestuse aja. Kui kõik mängijad mängust lahkuvad, kustutatakse seotud andmed;;Teie brauseri kohalikku salvestusruumi salvestatud teave jääb sinna, kuni te oma brauseri andmed kustutate;;Tagasisidevormi esitused säilitatakse ainult vastamise ja arendusettepanekute kaalumise eesmärgil"
-        },
-        "data-sharing": {
-          "title": "Andmete jagamine",
-          "description": "Me ei jaga teie isikuandmeid ühegi kolmanda osapoolega. Anonüümseid kasutusandmeid töötleb meie analüütikateenuse pakkuja PostHog."
-        },
-        "your-rights-and-choices": {
-          "title": "Teie õigused ja valikud",
-          "description": "Kuna kogume peamiselt anonüümseid andmeid, ei saa me tuvastada ega pääseda ligi ühegi üksiku kasutaja isiklikule teabele. Siiski on teil järgmised õigused ja valikud:",
-          "items": "Kohalik salvestusruum: saate salvestatud eelistuste eemaldamiseks igal ajal oma brauseri kohaliku salvestusruumi tühjendada;;Tagasiside: kui olete esitanud tagasisidet koos e-posti aadressiga, võite meiega ühendust võtta, et taotleda selle kustutamist;;Analüütikast loobumine: saate analüütikaandmete kogumisest loobuda, lubades oma brauseri „Ära jälgi” seade või kasutades privaatsusele keskendunud brausereid, mis blokeerivad analüütikaskripte;;Mänguandmed: mänguga seotud andmed kustutatakse automaatselt, kui kõik mängijad mängust lahkuvad"
-        },
-        "changes-to-this-policy": {
-          "title": "Muudatused selles poliitikas",
-          "description": "Võime seda poliitikat aeg-ajalt uuendada. Teavitame teid muudatustest, postitades uue poliitika sellele lehele."
         }
       }
     },

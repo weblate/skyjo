@@ -188,63 +188,6 @@
         "last-update": {
           "text": "Hizivaet da ziwezhañ: {date}",
           "date-format": "DD/MM/YYYY - HH:mm"
-        },
-        "information-we-collect": {
-          "anonymous-usage-data": {
-            "title": "Roadennoù implij dizanv",
-            "description": "Implij a reomp PostHog, un ostilh dielfennañ ar roadennoù dizanv diwar-benn implij hol lec'hienn web. Enkorfañ a ra:",
-            "items": "Gweloù ar bajenn;;buhez web (mentadoù digonusted);;Respont d'ar sontadegoù (ma tibabit kemer perzh)"
-          },
-          "title": "An titouroù a vez dastumet ganeomp",
-          "game-data": {
-            "title": "Roadennoù ar c'hoari",
-            "description": "Kadaviñ a reomp ent padennek:",
-            "items": "Anvioù arveriad ha dibab an avatar;;Elfennoù hag araokadenn ar c'hoari"
-          },
-          "local-storage-data": {
-            "title": "Roadennoù kadaviñ lec'hel",
-            "description": "Lakaat a reomp e kadaviñ lec'hel ar merdeer:",
-            "items": "Gwellvezioù yezh;;Gwellvezioù arventennoù ar c'hoari"
-          },
-          "cookies": {
-            "title": "Toupinelloù",
-            "description": "Implijout a reomp toupinoù ret evit aesaat arc'hwelerezh diazez hon lec'hienn:",
-            "items": "Touchennoù-kizhier kendalc'h: Implijout a reomp un douchenn-gizh kendalc'h (skymo-io) evit derc'hel ho kevreadenn ouzh hon servijerien c'hoarioù. Pouezus eo an douchenn-gizh-mañ evit mont en-dro ar c'hoari hag a ya d'e dermen goude 24 eurvezh;;Ne heuilh ket an touchennoù-kizhier-mañ ac'hanoc'h dre al lec'hiennoù web hag implijet e vezont evit reiñ ar servij hoc'h eus goulennet hepken"
-          },
-          "user-provided-information": {
-            "title": "Titouroù Roet gant an Implijer",
-            "description": "Dastum a reomp:",
-            "items": "Degasadennoù furmskrid an evezhiadenn (en o zouez ar chomlec'hioù postel diret)"
-          }
-        },
-        "how-we-use-your-information": {
-          "title": "Penaos e implijomp ho titouroù",
-          "items": "Gwellaat hol lec'hienn hag an arnod arveriad;;Dielfennañ patromoù arver ha digonusted;;Aesaat ar gameplay"
-        },
-        "data-storage-and-retention": {
-          "title": "Kadaviñ ha mirout ar roadennoù",
-          "items": "Ar roadennoù arver dizanv a zo kadavet war dafariadoù e Unvaniezh Europa ha miret e-pad ur bloaz d'ar muiañ;;Ar roadennoù c'hoari a zo kadavet en hon stlennvon e Frankfurt, Alamagn. Ar roadennoù-se a zo miret keit ha ma pad ur c'hoariadenn. Ur wech eo bet kuitaet ar c'hoariadenn gant an holl c'hoarierien eo dilamet ar roadennoù liammet;;An titouroù lakaet e kadaviñ lec'hel ho merdeer a chomo eno betek ma vo dilamet roadennoù ho merdeer"
-        },
-        "data-sharing": {
-          "title": "Rannañ ar roadennoù",
-          "description": "Ne rannomp ket ho roadennoù personel gant tredeoù. Ar roadennoù arver dizanv a zo keweriet gant PostHog, hor pourchaser dielfennadurioù."
-        },
-        "your-rights-and-choices": {
-          "title": "Ho kwirioù ha dibaboù",
-          "description": "Dre ma tastumomp roadennoù dizanv dreist-holl n'hallomp ket anavezout pe haeziñ titouroù personel resis un arveriad hiniennel. Ar gwirioù a-zeu a zo ganeoc'h avat:",
-          "items": "Kadaviñ lec'hel: gallout a rit dilemel kadaviñ lec'hel ho merdeer pa fell deoc'h evit dilemel ar gwellvezioù enrollet;;Diweredekaat an dielfennadurioù: gallout a rit diweredekaat dastum ar roadennoù dielfennañ en ur weredekaat an arventenn \"Na heuliañ\" en ho merdeer pe en ur arverañ merdeerioù buket war doujañ ar vuhez prevez hag a stank ar skriptoù dielfennañ;;Roadennoù ar c'hoari: roadennoù ar c'hoari a zo dilamet ent emgefreek pa vez kuitaet ur c'hoariadenn gant an holl c'hoarierien"
-        },
-        "childrens-privacy": {
-          "title": "Buhez prevez ar vugale",
-          "description": "N'eus bevenn oad ebet e Skyjo Online. Ne zastumomp ket roadennoù personel bugale dre ouiziegezh."
-        },
-        "changes-to-this-policy": {
-          "title": "Kemmoù er politikerezh-mañ",
-          "description": "Gallout a reomp hizivaat ar politikerezh-mañ a vare da vare. Ho kelaouiñ a raimp pa cheñcho en ur embann ar politikerezh nevez war ar bajenn-mañ."
-        },
-        "contact-us": {
-          "description": "M'ho peus goulennoù diwar-benn ar politikerezh a-fet buhez prevez, deuit e darempred ganeomp dre dafariad Discord ar c'hoari pe dre GitHub.",
-          "title": "Mont e darempred ganeomp"
         }
       }
     },

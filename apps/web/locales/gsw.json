@@ -155,68 +155,11 @@
     },
     "PrivacyPolicy": {
       "content": {
-        "information-we-collect": {
-          "anonymous-usage-data": {
-            "items": "Siiteufruäf;;Web Vitals (Leischtigskennzaahle);;Umfrägteile (falls Sie teilnähme)",
-            "title": "Anonymi Nutzigsdate",
-            "description": "Mir bruuched PostHog, es Analyse-Tool, zum anonymi Date drüber z'sammle, wie du üsi Website bruuchsch. Das beinhaltet:"
-          },
-          "title": "Informatione wo mir sammle",
-          "user-provided-information": {
-            "title": "Vom Benutzer agäbni Date",
-            "description": "Mir sammled:",
-            "items": "Iigabene vom Rückmäldigsformular (inkl. optionaler E-Mail-Adrässe)"
-          },
-          "game-data": {
-            "title": "Gamedate",
-            "description": "Mir spichere temporär:",
-            "items": "Benutzername und Avatar-Usfüehlig;;Spielelemänt und Fortschritt"
-          },
-          "local-storage-data": {
-            "title": "Local Storage Date",
-            "description": "Mir spichere im lokale Speicher vo dim Browser:",
-            "items": "Sproochuswahl;;Istellige vom Spiel"
-          },
-          "cookies": {
-            "title": "Cookies",
-            "description": "Mir bruuched essenzielli Cookies, zum d'Hauptfunktione vo üsere Website z'aktiviere:",
-            "items": "Session-Cookies: Mir bruuched es Session-Cookie (skymo-io), zum dini Verbindig zu eusne Game-Server z'ghalte. Das Cookie isch essenziell für d'Funktionalität vom Spiel und lauft nach 24 Stund ab. Die Cookies verfolged dich nöd über Websiite und werded nur bruucht, zum de Service z'erbiete, wo du aagfrogt hesch"
-          }
-        },
-        "data-sharing": {
-          "title": "Date-Teile",
-          "description": "Mir teiled dini persönliche Date nöd mit Dritte. Anonymi Nutzigsdate werded vo PostHog, eusem Analyse-Aabieter, verarbeitet."
-        },
-        "your-rights-and-choices": {
-          "description": "Will mir hauptsächlich anonymi Date sammle, chönne mir ke persönlechi Date, wo sich uf en individuelle Nutzniesser beziehe, identifiziere oder druf zuegriffe. Gliichwohl hesch di folgend Rächt und Uswahlmöglichkeite:",
-          "title": "Dini Rächt und Wahlmöglichkeite",
-          "items": "Local Storage: Du chasch de Local Storage vo dim Browser jederzeit läär mache, zum gspeicherete Istellige z'entfäärne;;Feedback: Falls du üs Feedback mit ere E-Mail-Adrässe gschickt hesch, chasch üs kontaktiere, zum d'Löschig aazfoordere;;Analytics Opt-Out: Du chasch dich vo de Sammlig vo Analyse-Date abmelde, indem du d'Istellige \"Do Not Track\" i dim Browser aktiviersch oder privacy-fründlichi Browser bruchsch, wo Analyse-Skript blockiere;;Game Data: Spielbezogeni Date werde automatisch glöscht, wenn alli Spieler es Spiel verlahnd"
-        },
-        "contact-us": {
-          "title": "Kontakt",
-          "description": "Wenn Sie Frooge zu dere Dateschutzrichtlinie händ, chönd Sie üüs über üüses Feedback-Formular uf de Website, de Discord-Server oder GitHub kontaktiere."
-        },
         "back": "Zrugg uf d'Startsiite",
         "title": "Däteschutz",
         "last-update": {
           "text": "Zuletzt aktualisiert: {date}",
           "date-format": "JJJJ-MM-TT - hh:mmA"
-        },
-        "how-we-use-your-information": {
-          "title": "Wie mir dini Date bruuche",
-          "items": "Üsi Website und d'Benutzererläbnis verbessere;;Nutzigsmuster und Performance analysiere;;Uf Feedback und Support-Ahfrage reagiere;;D'Spiil erliichtere"
-        },
-        "data-storage-and-retention": {
-          "title": "Datäspicherig und -behaltig",
-          "items": "Anonymi Nutzigsdate werde uf Server innerhalb vo de Europäische Union gspeicheret und bis zu 1 Johr ufbehalte;;Spieldate werde in userer Datebank z Frankfurt, Dütschland, gspeicheret. Die Date werde für d Duer vom aktive Spiel ufbehalte. Sobald alli Spieler es Spiel verlah händ, werde die dezueghörige Date glöscht;;Informazione, wo im lokale Speicher vo dim Browser gspeicheret sind, blibed döt, bis du dini Browserdate löschisch;;Iireichige vom Feedback-Formular werde nume zum Zweck vo de Beantwörtig und de Berücksichtigung vo Vorschläg für d Entwicklig ufbehalte"
-        },
-        "childrens-privacy": {
-          "title": "Chinder-Dateschutz",
-          "description": "Skymo het keini Altersbeschränkige. Mir sammled nöd wüssentlich persönliechi Date vo Chind."
-        },
-        "changes-to-this-policy": {
-          "title": "Änderige a dere Regle",
-          "description": "Mir chönd die Regle vo Ziit zu Ziit aktualisiere. Mir informiered dich über Änderige, indem mir die nöii Regle uf dere Site veröffentliched."
         }
       },
       "head": {
