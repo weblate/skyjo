@@ -5,8 +5,9 @@ import { LogoutError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
+import { useEffect } from "react"
 import { toast } from "sonner"
-import { useRouter } from "@/i18n/routing"
+import { usePathname, useRouter } from "@/i18n/routing"
 
 interface AuthenticatedUser {
   emailVerified: boolean
@@ -21,6 +22,7 @@ interface AuthenticatedUser {
 export const useAuth = () => {
   const queryClient = useQueryClient()
   const router = useRouter()
+  const pathname = usePathname()
   const tErrors = useTranslations("errors")
 
   const logoutMutation = useMutation({
@@ -92,6 +94,25 @@ export const useAuth = () => {
     staleTime: 30 * 60 * 1000, // 30 minutes
     gcTime: 30 * 60 * 1000, // 30 minutes
   })
+
+  useEffect(() => {
+    console.log("pathname", pathname)
+    console.log("user", user)
+
+    if (!user) return
+
+    if (pathname !== "/verify" && !user?.emailVerified) {
+      router.replace("/verify")
+    }
+
+    if (
+      pathname !== "/onboard" &&
+      user?.emailVerified &&
+      !user.onboardingCompleted
+    ) {
+      router.replace("/onboard")
+    }
+  }, [user, pathname, router])
 
   return {
     user,
