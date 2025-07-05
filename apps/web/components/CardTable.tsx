@@ -1,12 +1,12 @@
+import { CardToJson } from "@skymo/core"
+import { cva } from "class-variance-authority"
+import { AnimatePresence, m } from "motion/react"
+import { useEffect, useState } from "react"
 import { GameCard } from "@/components/Card/GameCard"
 import { useGame } from "@/contexts/GameContext"
 import { GameBoardSize } from "@/contexts/SettingsContext"
 import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { CardToJson } from "@skymo/core"
-import { cva } from "class-variance-authority"
-import { AnimatePresence, m } from "motion/react"
-import { useEffect, useState } from "react"
 
 const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
   variants: {

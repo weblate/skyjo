@@ -1,6 +1,4 @@
-import { db } from "@/db/index.js"
-import { GameRepository } from "@/redis/game.repository.js"
-import { type Game, type Player, constructTagArray } from "@skymo/core"
+import { constructTagArray, type Game, type Player } from "@skymo/core"
 import { leaderboardView } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import type {
@@ -8,6 +6,8 @@ import type {
   LeaderboardResponse,
   PublicGame,
 } from "@skymo/shared/types"
+import { db } from "@/db/index.js"
+import { GameRepository } from "@/redis/game.repository.js"
 
 const gameRepository = new GameRepository()
 

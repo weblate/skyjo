@@ -1,17 +1,17 @@
-import { useGame } from "@/contexts/GameContext"
-import { useSocket } from "@/contexts/SocketContext"
-import { useKickToasts } from "@/hooks/useKickToasts"
-import { useRouter } from "@/i18n/routing"
-import { isHost } from "@/lib/game"
 import { KickVoteToJson, PlayerToJson } from "@skymo/core"
 import {
-  PropsWithChildren,
   createContext,
+  PropsWithChildren,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react"
+import { useGame } from "@/contexts/GameContext"
+import { useSocket } from "@/contexts/SocketContext"
+import { useKickToasts } from "@/hooks/useKickToasts"
+import { useRouter } from "@/i18n/routing"
+import { isHost } from "@/lib/game"
 
 interface KickContext {
   actions: {

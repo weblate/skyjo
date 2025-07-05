@@ -1,3 +1,12 @@
+import { PlayerToJson } from "@skymo/core"
+import {
+  FrownIcon,
+  MessageSquareIcon,
+  MessageSquareOffIcon,
+  ShieldBanIcon,
+  UserRoundXIcon,
+} from "lucide-react"
+import { useTranslations } from "next-intl"
 import {
   ContextMenuContent,
   ContextMenuItem,
@@ -8,15 +17,6 @@ import { useGame } from "@/contexts/GameContext"
 import { useKick } from "@/contexts/KickContext"
 import { useReport } from "@/contexts/ReportContext"
 import { isHost } from "@/lib/game"
-import { PlayerToJson } from "@skymo/core"
-import {
-  FrownIcon,
-  MessageSquareIcon,
-  MessageSquareOffIcon,
-  ShieldBanIcon,
-  UserRoundXIcon,
-} from "lucide-react"
-import { useTranslations } from "next-intl"
 
 interface UserContextMenuProps {
   player: PlayerToJson

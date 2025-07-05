@@ -1,7 +1,7 @@
-import ScoreTable from "@/components/ScoreTable"
 import { PlayerToJson } from "@skymo/core"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
+import ScoreTable from "@/components/ScoreTable"
 
 interface ScoreSheetProps {
   players: PlayerToJson[]

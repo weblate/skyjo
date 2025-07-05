@@ -1,5 +1,5 @@
-import type { GameRedisDb, GameToJson } from "@/types/game.js"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { GameRedisDb, GameToJson } from "@/types/game.js"
 import {
   Constants,
   type GameStatus,
@@ -8,8 +8,10 @@ import {
   type TurnStatus,
 } from "../constants.js"
 import { Card } from "./Card.js"
-import { type GameOperationManagerInterface } from "./GameOperationManager.js"
-import { DefaultGameOperationManager } from "./GameOperationManager.js"
+import {
+  DefaultGameOperationManager,
+  type GameOperationManagerInterface,
+} from "./GameOperationManager.js"
 import { Player } from "./Player.js"
 import { Settings } from "./Settings.js"
 
@@ -304,7 +306,12 @@ export class Game implements GameInterface {
     column,
     row,
     wasAfk = false,
-  }: { player: Player; column: number; row: number; wasAfk?: boolean }) {
+  }: {
+    player: Player
+    column: number
+    row: number
+    wasAfk?: boolean
+  }) {
     if (
       !this.isPlaying() ||
       !this.isRoundRevealCards() ||

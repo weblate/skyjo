@@ -1,6 +1,6 @@
+import { useTranslations } from "next-intl"
 import ChatMessage from "@/components/ChatMessage"
 import { useChat } from "@/contexts/ChatContext"
-import { useTranslations } from "next-intl"
 
 function ChatMessageList() {
   const { chat, unreadMessages } = useChat()

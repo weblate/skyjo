@@ -1,5 +1,5 @@
-import { routing } from "@/i18n/routing"
 import { MetadataRoute } from "next"
+import { routing } from "@/i18n/routing"
 
 const disallowRoutes = ["game", "auth/callback"]
 

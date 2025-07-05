@@ -1,3 +1,14 @@
+import { zValidator } from "@hono/zod-validator"
+import { Logger } from "@skymo/logger"
+import {
+  updateAvatarSchema,
+  updateEmailSchema,
+  updateNameSchema,
+  updatePasswordSchema,
+  updateUsernameSchema,
+} from "@skymo/shared/validations"
+import { Hono } from "hono"
+import { RateLimiterMemory } from "rate-limiter-flexible"
 import {
   type AuthContextVariables,
   authMiddleware,
@@ -16,17 +27,6 @@ import {
   updatePassword,
   updateUsername,
 } from "@/http/user/user.service.js"
-import { zValidator } from "@hono/zod-validator"
-import { Logger } from "@skymo/logger"
-import {
-  updateAvatarSchema,
-  updateEmailSchema,
-  updateNameSchema,
-  updatePasswordSchema,
-  updateUsernameSchema,
-} from "@skymo/shared/validations"
-import { Hono } from "hono"
-import { RateLimiterMemory } from "rate-limiter-flexible"
 
 const userGamesRateLimiter = new RateLimiterMemory({
   keyPrefix: "get-user",

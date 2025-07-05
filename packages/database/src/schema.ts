@@ -1,6 +1,6 @@
 import type { SettingsRedisDb } from "@skymo/core"
 import { locales } from "@skymo/shared/constants"
-import { type InferSelectModel, eq, relations, sql } from "drizzle-orm"
+import { eq, type InferSelectModel, relations, sql } from "drizzle-orm"
 import {
   boolean,
   integer,

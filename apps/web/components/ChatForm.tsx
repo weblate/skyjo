@@ -1,12 +1,5 @@
 "use client"
 
-import { AutoCompleteChoice, Autocomplete } from "@/components/ui/autocomplete"
-import { Button } from "@/components/ui/button"
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { useChat } from "@/contexts/ChatContext"
-import { useGame } from "@/contexts/GameContext"
-import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { SendIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
@@ -14,6 +7,13 @@ import { useEffect, useRef, useState } from "react"
 import { FieldErrors, useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { z } from "zod"
+import { AutoCompleteChoice, Autocomplete } from "@/components/ui/autocomplete"
+import { Button } from "@/components/ui/button"
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { useChat } from "@/contexts/ChatContext"
+import { useGame } from "@/contexts/GameContext"
+import { cn } from "@/lib/utils"
 
 const chatFormSchema = z.object({
   message: z.string().max(200),

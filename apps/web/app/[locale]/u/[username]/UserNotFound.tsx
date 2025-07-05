@@ -1,6 +1,6 @@
+import { getTranslations } from "next-intl/server"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
-import { getTranslations } from "next-intl/server"
 
 interface UserNotFoundProps {
   error: "not-found" | "unknown"

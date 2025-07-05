@@ -1,12 +1,12 @@
 "use client"
 
+import { ClassValue } from "clsx"
+import { useEffect, useState } from "react"
 import { ChatDesktopView } from "@/components/ChatDesktopView"
 import { ChatMobileView } from "@/components/ChatMobileView"
 import { useChat } from "@/contexts/ChatContext"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
-import { ClassValue } from "clsx"
-import { useEffect, useState } from "react"
 
 interface ChatProps {
   className?: ClassValue

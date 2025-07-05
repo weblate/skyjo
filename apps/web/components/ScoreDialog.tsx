@@ -1,5 +1,7 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
 import ScoreTable from "@/components/ScoreTable"
 import {
   Dialog,
@@ -8,8 +10,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { useGame } from "@/contexts/GameContext"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
 
 interface ScoreDialogProps {
   open: boolean

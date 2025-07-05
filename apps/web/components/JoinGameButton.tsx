@@ -1,12 +1,12 @@
 "use client"
 
+import { ClassValue } from "clsx"
+import { useTranslations } from "next-intl"
+import { Dispatch, ReactNode, SetStateAction } from "react"
 import { Button } from "@/components/ui/button"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { cn } from "@/lib/utils"
-import { ClassValue } from "clsx"
-import { useTranslations } from "next-intl"
-import { Dispatch, ReactNode, SetStateAction } from "react"
 
 interface JoinGameButtonProps {
   gameCode: string

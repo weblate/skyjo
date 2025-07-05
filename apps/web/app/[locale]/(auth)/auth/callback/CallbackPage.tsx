@@ -1,9 +1,9 @@
 "use client"
 
-import { useAuth } from "@/hooks/useAuth"
-import { useRouter } from "@/i18n/routing"
 import { useQueryClient } from "@tanstack/react-query"
 import { useEffect } from "react"
+import { useAuth } from "@/hooks/useAuth"
+import { useRouter } from "@/i18n/routing"
 
 export default function CallbackLogic() {
   const router = useRouter()

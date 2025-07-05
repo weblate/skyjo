@@ -1,5 +1,3 @@
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
-import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { Constants as CoreConstants, Game, Player, Settings } from "@skymo/core"
 import { Constants as ErrorConstants } from "@skymo/error"
 import {
@@ -11,6 +9,8 @@ import {
 } from "@tests/_mock.js"
 import { RANDOM_SOCKET_ID, TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { BanService } from "../ban.service.js"
 import "@skymo/error/test/expect-extend"
 

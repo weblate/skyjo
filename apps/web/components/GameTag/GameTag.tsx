@@ -1,8 +1,8 @@
-import { tagVariants } from "@/components/GameTag/variants"
 import { PublicGameTag } from "@skymo/core"
 import { XIcon } from "lucide-react"
 import { m } from "motion/react"
 import { useTranslations } from "next-intl"
+import { tagVariants } from "@/components/GameTag/variants"
 
 interface GameTagProps {
   tag: PublicGameTag

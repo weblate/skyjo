@@ -1,4 +1,3 @@
-import { DiscordClient } from "@/discord.js"
 import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
 import dayjs from "dayjs"
@@ -9,6 +8,7 @@ import {
   EmbedBuilder,
   TextChannel,
 } from "discord.js"
+import { DiscordClient } from "@/discord.js"
 import type { ReportJobData } from "../types/jobs.js"
 
 export async function sendReportMessage(

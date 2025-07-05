@@ -1,10 +1,10 @@
-import { GameOperationManager } from "@/realtime/utils/GameOperationManager.js"
-import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import type { Game } from "@skymo/core"
 import { Constants as CoreConstants } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import type { Job } from "bullmq"
+import { GameOperationManager } from "@/realtime/utils/GameOperationManager.js"
+import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { BaseAfkQueueService } from "./BaseAfkQueueService.js"
 
 export interface PlayerAfkJobData {

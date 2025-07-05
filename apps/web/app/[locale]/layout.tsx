@@ -1,16 +1,16 @@
+import { Locales } from "@skymo/shared/constants"
+import { Metadata, Viewport } from "next"
+import { Fredoka } from "next/font/google"
+import { headers } from "next/headers"
+import { notFound, redirect } from "next/navigation"
+import { NextIntlClientProvider } from "next-intl"
+import { getTranslations } from "next-intl/server"
 import MaintenancePage from "@/app/[locale]/MaintenancePage"
 import Providers from "@/app/[locale]/providers"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { verifySession } from "@/lib/dal"
 import { PostHogServerClient } from "@/lib/posthog-server"
 import { getCurrentUrl } from "@/lib/utils"
-import { Locales } from "@skymo/shared/constants"
-import { Metadata, Viewport } from "next"
-import { NextIntlClientProvider } from "next-intl"
-import { getTranslations } from "next-intl/server"
-import { Fredoka } from "next/font/google"
-import { headers } from "next/headers"
-import { notFound, redirect } from "next/navigation"
 
 const fredoka = Fredoka({
   subsets: ["latin"],

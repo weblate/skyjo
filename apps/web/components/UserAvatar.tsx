@@ -1,11 +1,11 @@
+import { PlayerToJson } from "@skymo/core"
+import { cva, VariantProps } from "class-variance-authority"
+import Image from "next/image"
+import { useTranslations } from "next-intl"
 import { UserContextMenu } from "@/components/UserContextMenu"
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { PlayerToJson } from "@skymo/core"
-import { VariantProps, cva } from "class-variance-authority"
-import { useTranslations } from "next-intl"
-import Image from "next/image"
 
 const containerVariants = cva("flex flex-col items-center", {
   variants: {

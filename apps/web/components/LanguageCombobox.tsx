@@ -1,5 +1,10 @@
 "use client"
 
+import { Locales } from "@skymo/shared/constants"
+import { CheckIcon, ChevronsUpDown } from "lucide-react"
+import { useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
+import { useMemo, useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -24,11 +29,6 @@ import {
 import { useSettings } from "@/contexts/SettingsContext"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { routing, usePathname, useRouter } from "@/i18n/routing"
-import { Locales } from "@skymo/shared/constants"
-import { CheckIcon, ChevronsUpDown } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { useSearchParams } from "next/navigation"
-import { useMemo, useState } from "react"
 
 interface LocalListProps {
   currentLocale: Locales

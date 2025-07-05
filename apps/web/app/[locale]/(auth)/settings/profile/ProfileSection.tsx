@@ -1,5 +1,9 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { type UpdateName, updateNameSchema } from "@skymo/shared/validations"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
 import { Button } from "@/components/ui/button"
 import {
   Form,
@@ -11,10 +15,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Separator } from "@/components/ui/separator"
 import { useAuth } from "@/hooks/useAuth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { type UpdateName, updateNameSchema } from "@skymo/shared/validations"
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
 import { useSettingsApi } from "../useSettingsApi"
 import { AvatarSelector } from "./AvatarSelector"
 

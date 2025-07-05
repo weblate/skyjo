@@ -1,7 +1,7 @@
-import { cn } from "@/lib/utils"
-import { VariantProps, cva } from "class-variance-authority"
+import { cva, VariantProps } from "class-variance-authority"
 import { ClassValue } from "clsx"
 import { Trash2Icon } from "lucide-react"
+import { cn } from "@/lib/utils"
 
 export const cardVariants = cva(
   "text-black border-black flex justify-center items-center select-none focus-visible:outline-black focus-visible:-outline-offset-4 transition-all",

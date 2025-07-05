@@ -1,5 +1,9 @@
 "use client"
 
+import { Constants as CoreConstants } from "@skymo/core"
+import { BookOpenIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -9,10 +13,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { useGame } from "@/contexts/GameContext"
-import { Constants as CoreConstants } from "@skymo/core"
-import { BookOpenIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
 
 const GameRules = () => {
   const { game } = useGame()

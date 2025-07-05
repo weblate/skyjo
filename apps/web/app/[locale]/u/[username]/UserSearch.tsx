@@ -1,11 +1,11 @@
 "use client"
 
+import { SearchIcon } from "lucide-react"
+import { useRouter } from "next/navigation"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import { SearchIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { useRouter } from "next/navigation"
-import { useState } from "react"
 
 interface UserSearchProps {
   className?: string

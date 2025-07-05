@@ -1,10 +1,10 @@
+import { Locales } from "@skymo/shared/constants"
+import { type Metadata } from "next"
+import { notFound } from "next/navigation.js"
+import { getTranslations } from "next-intl/server"
 import ResetPasswordFormPage from "@/app/[locale]/reset-password/ResetPasswordFormPage"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
-import { Locales } from "@skymo/shared/constants"
-import { type Metadata } from "next"
-import { getTranslations } from "next-intl/server"
-import { notFound } from "next/navigation.js"
 
 interface ResetPasswordPageParams {
   locale: Locales

@@ -1,11 +1,5 @@
 "use client"
 
-import { usePlayer } from "@/contexts/PlayerContext"
-import { useRouter } from "@/i18n/routing"
-import {
-  addReconnectionDateToLastGame,
-  clearLastGame,
-} from "@/utils/reconnection"
 import {
   Constants as CoreConstants,
   CreatePlayer,
@@ -25,16 +19,22 @@ import utc from "dayjs/plugin/utc"
 import { WifiIcon, WifiOffIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import {
-  PropsWithChildren,
   createContext,
+  PropsWithChildren,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react"
-import { Socket, io } from "socket.io-client"
+import { io, Socket } from "socket.io-client"
 import customParser from "socket.io-msgpack-parser"
 import { toast } from "sonner"
+import { usePlayer } from "@/contexts/PlayerContext"
+import { useRouter } from "@/i18n/routing"
+import {
+  addReconnectionDateToLastGame,
+  clearLastGame,
+} from "@/utils/reconnection"
 
 dayjs.extend(utc)
 

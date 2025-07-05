@@ -1,5 +1,8 @@
 "use client"
 
+import type { UserGameStats } from "@skymo/shared/types"
+import { useTranslations } from "next-intl"
+import { useMemo } from "react"
 import {
   Tooltip,
   TooltipContent,
@@ -7,9 +10,6 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { cn, formatCompactNumber } from "@/lib/utils"
-import type { UserGameStats } from "@skymo/shared/types"
-import { useTranslations } from "next-intl"
-import { useMemo } from "react"
 
 interface UserStatsProps {
   stats: UserGameStats | null

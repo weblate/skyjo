@@ -1,5 +1,3 @@
-import { PlayerService } from "@/realtime/player/player.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import {
   Card,
   type ConnectionStatus,
@@ -22,6 +20,8 @@ import {
   TEST_UNKNOWN_GAME_ID,
 } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { PlayerService } from "@/realtime/player/player.service.js"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 
 describe("PlayerService", () => {
   let service: PlayerService

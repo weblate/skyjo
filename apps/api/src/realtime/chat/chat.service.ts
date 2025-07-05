@@ -1,8 +1,8 @@
-import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { Constants as CoreConstants } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type { UserChatMessage } from "@skymo/shared/types"
+import { BaseService } from "@/realtime/base/base.service.js"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 
 export class ChatService extends BaseService {
   async onMessage(

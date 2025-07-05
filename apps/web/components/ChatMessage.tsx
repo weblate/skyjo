@@ -1,10 +1,10 @@
-import { UserContextMenu } from "@/components/UserContextMenu"
-import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
-import { useGame } from "@/contexts/GameContext"
 import type { ChatMessage } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
 import { m } from "motion/react"
 import { useTranslations } from "next-intl"
+import { UserContextMenu } from "@/components/UserContextMenu"
+import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
+import { useGame } from "@/contexts/GameContext"
 
 const chatMessageClasses = cva("text-sm text-wrap break-words md:break-all", {
   variants: {

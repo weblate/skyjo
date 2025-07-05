@@ -1,3 +1,6 @@
+import { ClassValue } from "clsx"
+import { MessageCircle } from "lucide-react"
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
@@ -10,9 +13,6 @@ import {
 } from "@/components/ui/drawer"
 import { useChat } from "@/contexts/ChatContext"
 import { cn } from "@/lib/utils"
-import { ClassValue } from "clsx"
-import { MessageCircle } from "lucide-react"
-import { useTranslations } from "next-intl"
 import ChatForm from "./ChatForm"
 import { ChatMessageList } from "./ChatMessageList"
 

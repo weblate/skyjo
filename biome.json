@@ -1,14 +1,15 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
   "files": {
-    "ignore": [
-      "**/node_modules",
-      "**/dist",
-      "**/.next",
-      "**/.turbo",
-      "**/.vscode",
-      "**/*.d.ts",
-      "**/public"
+    "includes": [
+      "**",
+      "!**/node_modules",
+      "!**/dist",
+      "!**/.next",
+      "!**/.turbo",
+      "!**/.vscode",
+      "!**/*.d.ts",
+      "!**/public"
     ]
   },
   "formatter": {
@@ -20,14 +21,9 @@
     "lineWidth": 80,
     "attributePosition": "auto"
   },
-  "organizeImports": {
-    "enabled": true
-  },
+  "assist": { "actions": { "source": { "organizeImports": "on" } } },
   "linter": {
-    "ignore": [
-      "**/*.test.ts",
-      "**/.env"
-    ],
+    "includes": ["**", "!**/*.test.ts", "!**/.env"],
     "enabled": true,
     "rules": {
       "recommended": false,
@@ -79,28 +75,20 @@
   },
   "overrides": [
     {
-      "include": [
-        "*.ts",
-        "*.tsx",
-        "*.mts",
-        "*.cts",
-        "*.mjs"
-      ],
+      "includes": ["**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts", "**/*.mjs"],
       "linter": {
         "rules": {
           "correctness": {
             "noConstAssign": "off",
             "noGlobalObjectCalls": "off",
             "noInvalidConstructorSuper": "off",
-            "noInvalidNewBuiltin": "off",
             "noSetterReturn": "off",
             "noUndeclaredVariables": "off",
             "noUnreachable": "off",
-            "noUnreachableSuper": "off"
+            "noUnreachableSuper": "off",
+            "noInvalidBuiltinInstantiation": "off"
           },
           "style": {
-            "noArguments": "error",
-            "noVar": "error",
             "useConst": "error"
           },
           "suspicious": {
@@ -111,7 +99,11 @@
             "noImportAssign": "off",
             "noRedeclare": "off",
             "noUnsafeNegation": "off",
-            "useGetterReturn": "off"
+            "useGetterReturn": "off",
+            "noVar": "error"
+          },
+          "complexity": {
+            "noArguments": "error"
           }
         }
       }

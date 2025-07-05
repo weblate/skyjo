@@ -1,5 +1,10 @@
 "use client"
 
+import { ChatMessage } from "@skymo/shared/types"
+import { Report } from "@skymo/shared/validations"
+import { useTranslations } from "next-intl"
+import { useEffect, useMemo, useState } from "react"
+import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -20,11 +25,6 @@ import {
 } from "@/components/ui/select"
 import { useGame } from "@/contexts/GameContext"
 import { useSocket } from "@/contexts/SocketContext"
-import { ChatMessage } from "@skymo/shared/types"
-import { Report } from "@skymo/shared/validations"
-import { useTranslations } from "next-intl"
-import { useEffect, useMemo, useState } from "react"
-import { toast } from "sonner"
 
 interface ReportDialogProps {
   open: boolean

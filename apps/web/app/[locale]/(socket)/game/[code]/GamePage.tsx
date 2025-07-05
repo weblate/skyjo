@@ -1,5 +1,7 @@
 "use client"
 
+import { useEffect } from "react"
+import { useLocalStorage } from "react-use"
 import DiscardPile from "@/components/DiscardPile"
 import DrawPile from "@/components/DrawPile"
 import EndRoundDialog from "@/components/EndRoundDialog"
@@ -15,8 +17,6 @@ import { useRules } from "@/contexts/RulesContext"
 import { useRouter } from "@/i18n/routing"
 import { isCurrentUserTurn } from "@/lib/game"
 import { getRedirectionUrl } from "@/lib/utils"
-import { useEffect } from "react"
-import { useLocalStorage } from "react-use"
 
 const GamePage = () => {
   const { game, player, opponents, roundPhase } = useGame()

@@ -1,9 +1,9 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { useAuth } from "@/hooks/useAuth"
 import { Link } from "@/i18n/routing"
-import { useTranslations } from "next-intl"
 
 export default function CallToActionSection() {
   const { isAuthenticated, isLoading } = useAuth()

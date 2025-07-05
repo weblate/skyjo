@@ -1,5 +1,5 @@
-import { isDeepStrictEqual } from "util"
 import type { GameToJson, PlayerToJson, SettingsToJson } from "@skymo/core"
+import { isDeepStrictEqual } from "util"
 import {
   type GameOperation,
   type GameUpdate,

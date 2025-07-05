@@ -1,6 +1,6 @@
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 
 const consumeSocketRateLimiter = (rateLimiter: RateLimiterMemory) => {
   return async (socket: GameSocket) => {

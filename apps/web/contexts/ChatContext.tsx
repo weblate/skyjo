@@ -1,9 +1,5 @@
 "use client"
 
-import { usePlayer } from "@/contexts/PlayerContext"
-import { useSettings } from "@/contexts/SettingsContext"
-import { useSocket } from "@/contexts/SocketContext"
-import { usePathname } from "@/i18n/routing"
 import { Constants as CoreConstants, SystemMessageType } from "@skymo/core"
 import {
   ChatMessage,
@@ -14,13 +10,17 @@ import {
 import { Howl } from "howler"
 import { useTranslations } from "next-intl"
 import {
-  PropsWithChildren,
   createContext,
+  PropsWithChildren,
   useContext,
   useEffect,
   useMemo,
   useState,
 } from "react"
+import { usePlayer } from "@/contexts/PlayerContext"
+import { useSettings } from "@/contexts/SettingsContext"
+import { useSocket } from "@/contexts/SocketContext"
+import { usePathname } from "@/i18n/routing"
 
 const messageSound = new Howl({
   src: ["/sounds/message.ogg"],

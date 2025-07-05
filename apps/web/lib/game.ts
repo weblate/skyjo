@@ -1,5 +1,3 @@
-import { cn } from "@/lib/utils"
-import { Opponents } from "@/types/opponents"
 import {
   Constants as CoreConstants,
   GameStatus,
@@ -10,6 +8,8 @@ import {
   TurnStatus,
 } from "@skymo/core"
 import { ClassValue } from "clsx"
+import { cn } from "@/lib/utils"
+import { Opponents } from "@/types/opponents"
 
 export const getCurrentUser = (
   players: GameToJson["players"] | undefined,

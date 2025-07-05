@@ -1,9 +1,7 @@
-import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
-import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import {
   type CreatePlayer,
-  type JoinGame,
   createPlayer,
+  type JoinGame,
   joinGame,
 } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
@@ -15,6 +13,8 @@ import {
   updateMaxPlayersSchema,
 } from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
+import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
 import { LobbyService } from "./lobby.service.js"
 

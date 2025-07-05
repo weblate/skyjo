@@ -1,16 +1,16 @@
-import { useGame } from "@/contexts/GameContext"
-import { useSocket } from "@/contexts/SocketContext"
-import { useRouter } from "@/i18n/routing"
 import { BanError } from "@skymo/error"
 import { useTranslations } from "next-intl"
 import {
-  PropsWithChildren,
   createContext,
+  PropsWithChildren,
   useContext,
   useEffect,
   useMemo,
 } from "react"
 import { toast } from "sonner"
+import { useGame } from "@/contexts/GameContext"
+import { useSocket } from "@/contexts/SocketContext"
+import { useRouter } from "@/i18n/routing"
 
 interface BanContext {
   banPlayer: (targetId: string) => void

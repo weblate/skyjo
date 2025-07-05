@@ -1,7 +1,7 @@
 import type { Game, GameToJson } from "@skymo/core"
 import {
-  type GameOperation,
   createStateOperations,
+  type GameOperation,
 } from "@skymo/state-operations"
 
 export class GameStateTracker {

@@ -1,7 +1,7 @@
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import { type BanPlayer, banPlayerSchema } from "@skymo/shared/validations"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { BanService } from "./ban.service.js"
 
 export const banRouter = (socket: GameSocket) => {

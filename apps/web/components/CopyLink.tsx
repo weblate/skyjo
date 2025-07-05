@@ -1,10 +1,10 @@
 "use client"
 
+import { CheckIcon, ClipboardCopyIcon } from "lucide-react"
+import { MouseEvent, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { getGameInviteLink } from "@/lib/utils"
-import { CheckIcon, ClipboardCopyIcon } from "lucide-react"
-import { MouseEvent, useState } from "react"
 
 interface CopyLinkProps {
   gameCode: string

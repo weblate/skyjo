@@ -1,7 +1,7 @@
-import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
-import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import { type Report } from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
+import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
 import { ReportService } from "./report.service.js"
 

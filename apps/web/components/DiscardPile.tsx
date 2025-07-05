@@ -1,10 +1,10 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { Card } from "@/components/Card/Card"
 import SelectedCard from "@/components/SelectedCard"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { useTranslations } from "next-intl"
 
 interface DiscardPileProps {
   isPlayerTurn: boolean

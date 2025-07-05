@@ -1,10 +1,10 @@
 "use client"
 
+import { useTranslations } from "next-intl"
 import { Button } from "@/components/ui/button"
 import { useGame } from "@/contexts/GameContext"
 import { isHost } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { useTranslations } from "next-intl"
 import { LobbyCountdown } from "./LobbyCountdown"
 
 interface LobbyActionsProps {

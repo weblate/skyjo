@@ -1,10 +1,9 @@
-import LoginButton from "@/components/LoginButton"
-import MenuDropdown from "@/components/MenuDropdown"
-
-import { Link } from "@/i18n/routing"
-import { cn } from "@/lib/utils"
 import { ClassValue } from "clsx"
 import { useTranslations } from "next-intl"
+import LoginButton from "@/components/LoginButton"
+import MenuDropdown from "@/components/MenuDropdown"
+import { Link } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
 
 interface NavbarProps {
   className?: ClassValue

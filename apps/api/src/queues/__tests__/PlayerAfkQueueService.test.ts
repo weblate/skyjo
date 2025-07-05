@@ -1,5 +1,4 @@
-import { Constants as CoreConstants } from "@skymo/core"
-import { type Game, type Player } from "@skymo/core"
+import { Constants as CoreConstants, type Game, type Player } from "@skymo/core"
 import { Job } from "bullmq"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { PlayerAfkQueueService } from "../PlayerAfkQueueService.js"

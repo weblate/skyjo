@@ -1,6 +1,6 @@
+import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import { validateSessionToken } from "@/http/session/session.service.js"
 import type { GameSocket } from "@/realtime/types/gameSocket.js"
-import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 
 /**
  * Socket.IO middleware that attaches user/session to socket.data if a valid session token is present.

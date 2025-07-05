@@ -1,12 +1,12 @@
-import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
-import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import {
   type SendChatMessage,
-  type WizzPlayerName,
   sendChatMessage,
+  type WizzPlayerName,
   wizzPlayerName,
 } from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
+import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
 import { ChatService } from "./chat.service.js"
 

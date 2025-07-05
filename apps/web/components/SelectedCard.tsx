@@ -1,7 +1,7 @@
+import { AnimatePresence, m } from "motion/react"
 import { Card } from "@/components/Card/Card"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
-import { AnimatePresence, m } from "motion/react"
 
 interface SelectedCardProps {
   show: boolean

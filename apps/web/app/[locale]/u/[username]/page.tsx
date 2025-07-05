@@ -1,9 +1,9 @@
+import { Locales } from "@skymo/shared/constants"
+import { getTranslations } from "next-intl/server"
+import { fetchUserProfile } from "@/app/[locale]/u/[username]/query"
 import { RecentActivityList } from "@/app/[locale]/u/[username]/RecentActivity"
 import { UserNotFound } from "@/app/[locale]/u/[username]/UserNotFound"
 import { UserProfile } from "@/app/[locale]/u/[username]/UserProfile"
-import { fetchUserProfile } from "@/app/[locale]/u/[username]/query"
-import { Locales } from "@skymo/shared/constants"
-import { getTranslations } from "next-intl/server"
 
 interface UserPageProps {
   params: Promise<{ locale: Locales; username: string }>

@@ -1,8 +1,8 @@
 "use client"
 
-import { Link } from "@/i18n/routing"
 import { ArrowDown } from "lucide-react"
 import { m } from "motion/react"
+import { Link } from "@/i18n/routing"
 
 interface MovingArrowProps {
   href: string

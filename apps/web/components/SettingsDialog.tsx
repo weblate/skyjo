@@ -1,4 +1,6 @@
 "use client"
+import { useTranslations } from "next-intl"
+import { Dispatch, SetStateAction } from "react"
 import {
   Dialog,
   DialogContent,
@@ -17,8 +19,6 @@ import {
   TimerDisplayMode,
   useSettings,
 } from "@/contexts/SettingsContext"
-import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
 
 interface SettingsDialogProps {
   open: boolean

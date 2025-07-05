@@ -1,5 +1,12 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import {
+  type UpdatePassword,
+  updatePasswordSchema,
+} from "@skymo/shared/validations"
+import { useTranslations } from "next-intl"
+import { useForm } from "react-hook-form"
 import PasswordRequirements from "@/components/PasswordRequirements"
 import { Button } from "@/components/ui/button"
 import {
@@ -12,13 +19,6 @@ import {
 } from "@/components/ui/form"
 import { PasswordInput } from "@/components/ui/password-input"
 import { useAuth } from "@/hooks/useAuth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  type UpdatePassword,
-  updatePasswordSchema,
-} from "@skymo/shared/validations"
-import { useTranslations } from "next-intl"
-import { useForm } from "react-hook-form"
 import { useSettingsApi } from "../useSettingsApi"
 
 export function SettingsPassword() {

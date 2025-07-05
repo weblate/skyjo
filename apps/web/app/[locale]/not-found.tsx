@@ -1,8 +1,8 @@
+import { useTranslations } from "next-intl"
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
-import { useTranslations } from "next-intl"
 
 const NotFoundServerPage = () => {
   const t = useTranslations("pages.NotFound")

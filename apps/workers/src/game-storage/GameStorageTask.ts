@@ -1,8 +1,8 @@
-import { db } from "@/postgres.js"
 import { gameTable, playerTable, scoreTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import type { GameStorageJobData } from "@skymo/worker-types"
 import { eq } from "drizzle-orm"
+import { db } from "@/postgres.js"
 
 type PlayerRedisDb = GameStorageJobData["game"]["players"][0]
 type PlayerWithRank = PlayerRedisDb & { rank: number }

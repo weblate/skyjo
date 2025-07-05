@@ -1,5 +1,5 @@
-import { Card } from "@/components/Card/Card"
 import { useTranslations } from "next-intl"
+import { Card } from "@/components/Card/Card"
 
 const Rules = () => {
   const t = useTranslations("components.Rules")

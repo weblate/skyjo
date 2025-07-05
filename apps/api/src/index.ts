@@ -1,3 +1,7 @@
+import { ENV } from "@env"
+import { serve } from "@hono/node-server"
+import { Logger } from "@skymo/logger"
+import { Hono } from "hono"
 import { httpApp } from "@/http/index.js"
 import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
@@ -6,10 +10,6 @@ import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.
 import { initializeSocketServer } from "@/realtime/index.js"
 import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { RedisClient } from "@/redis/client.js"
-import { ENV } from "@env"
-import { serve } from "@hono/node-server"
-import { Logger } from "@skymo/logger"
-import { Hono } from "hono"
 
 const app = new Hono()
 const port = ENV.PORT

@@ -1,7 +1,7 @@
-import { routing } from "@/i18n/routing"
 import { Constants as CoreConstants, GameStatus } from "@skymo/core"
 import { type ClassValue, clsx } from "clsx"
 import { twMerge } from "tailwind-merge"
+import { routing } from "@/i18n/routing"
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))

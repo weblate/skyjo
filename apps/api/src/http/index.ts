@@ -1,12 +1,12 @@
+import { ENV } from "@env"
+import { Hono } from "hono"
+import { cors } from "hono/cors"
 import { authRouter } from "@/http/auth/auth.router.js"
 import { googleRouter } from "@/http/auth/google.router.js"
 import { feedbackRouter } from "@/http/feedback/feedback.router.js"
 import { gameRouter } from "@/http/game/game.router.js"
 import { userRouter } from "@/http/user/user.router.js"
 import { userVerificationRouter } from "@/http/userVerification/userVerification.router.js"
-import { ENV } from "@env"
-import { Hono } from "hono"
-import { cors } from "hono/cors"
 
 const httpApp = new Hono()
   .use(

@@ -1,19 +1,12 @@
-import { db } from "@/db/index.js"
-import { requestPasswordReset } from "@/http/auth/auth.service.js"
-import { hashPassword, verifyPassword } from "@/http/auth/lib/password.js"
-import { invalidateUserSessions } from "@/http/session/session.service.js"
-import { accountDeletionQueue } from "@/utils/accountDeletion.js"
-import { mailerQueue } from "@/utils/mailer.js"
-import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 import { ENV } from "@env"
 import type { Avatar } from "@skymo/core"
 import {
-  type UserDb,
   accountDeletionTable,
   emailChangeTable,
   gameTable,
   passwordResetTable,
   playerTable,
+  type UserDb,
   userTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
@@ -28,6 +21,13 @@ import type {
 } from "@skymo/shared/validations"
 import dayjs from "dayjs"
 import { and, avg, count, eq, ne, sql, sum } from "drizzle-orm"
+import { db } from "@/db/index.js"
+import { requestPasswordReset } from "@/http/auth/auth.service.js"
+import { hashPassword, verifyPassword } from "@/http/auth/lib/password.js"
+import { invalidateUserSessions } from "@/http/session/session.service.js"
+import { accountDeletionQueue } from "@/utils/accountDeletion.js"
+import { mailerQueue } from "@/utils/mailer.js"
+import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 
 interface CreateUserParams {
   email: string

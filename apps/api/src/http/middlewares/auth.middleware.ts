@@ -1,9 +1,9 @@
-import { validateSessionToken } from "@/http/session/session.service.js"
 import type { SessionDb, UserDb } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import type { Context, Next } from "hono"
 import { getCookie } from "hono/cookie"
+import { validateSessionToken } from "@/http/session/session.service.js"
 
 export interface AuthContextVariables {
   Variables: { user: UserDb; session: SessionDb }

@@ -1,3 +1,6 @@
+import Image from "next/image"
+import { useTranslations } from "next-intl"
+import { use } from "react"
 import { RulesButton } from "@/app/[locale]/(socket)/RulesButton"
 import Banner from "@/components/Banner"
 import Footer from "@/components/Footer"
@@ -11,9 +14,6 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import { Link } from "@/i18n/routing"
-import { useTranslations } from "next-intl"
-import Image from "next/image"
-import { use } from "react"
 import IndexPage from "./IndexPage"
 
 const RulesLink = (chunks: React.ReactNode) => (

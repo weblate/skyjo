@@ -1,5 +1,10 @@
 "use client"
 
+import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
+import { CheckCircle2Icon, XCircleIcon } from "lucide-react"
+import { AnimatePresence, m } from "motion/react"
+import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
 import { UserAvatar } from "@/components/UserAvatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,11 +19,6 @@ import {
 import { useGame } from "@/contexts/GameContext"
 import { useRouter } from "@/i18n/routing"
 import { cn, getRedirectionUrl } from "@/lib/utils"
-import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
-import { CheckCircle2Icon, XCircleIcon } from "lucide-react"
-import { AnimatePresence, m } from "motion/react"
-import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
 
 const ResultsPage = () => {
   const { player, game, actions } = useGame()

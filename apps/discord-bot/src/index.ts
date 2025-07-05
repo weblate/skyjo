@@ -1,5 +1,5 @@
-import { DiscordClient } from "@/discord.js"
 import { Logger } from "@skymo/logger"
+import { DiscordClient } from "@/discord.js"
 import { ReportMessageWorker } from "./report/reportWorker.js"
 
 try {

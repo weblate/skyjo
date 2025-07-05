@@ -1,13 +1,13 @@
 "use client"
 
-import RulesDialog from "@/components/RulesDialog"
 import {
-  PropsWithChildren,
   createContext,
+  PropsWithChildren,
   useContext,
   useMemo,
   useState,
 } from "react"
+import RulesDialog from "@/components/RulesDialog"
 
 interface RulesContext {
   openRules: () => void

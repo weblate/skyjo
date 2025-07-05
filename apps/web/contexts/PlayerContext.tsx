@@ -1,6 +1,5 @@
 "use client"
 
-import { useAuth } from "@/hooks/useAuth"
 import {
   Avatar,
   Constants as CoreConstants,
@@ -11,10 +10,10 @@ import type { UpdateAvatarError, UpdateNameError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useTranslations } from "next-intl"
 import {
+  createContext,
   Dispatch,
   PropsWithChildren,
   SetStateAction,
-  createContext,
   useContext,
   useEffect,
   useMemo,
@@ -22,6 +21,7 @@ import {
 } from "react"
 import { useLocalStorage } from "react-use"
 import { toast } from "sonner"
+import { useAuth } from "@/hooks/useAuth"
 
 const USERNAME_KEY = "username"
 const AVATAR_KEY = "Avatar-index"

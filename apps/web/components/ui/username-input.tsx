@@ -1,9 +1,5 @@
 "use client"
 
-import { FormDescription, FormItem } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { cn } from "@/lib/utils"
 import type { CheckUsernameError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useQuery } from "@tanstack/react-query"
@@ -18,6 +14,10 @@ import { useTranslations } from "next-intl"
 import { useCallback, useEffect, useState } from "react"
 import { ControllerRenderProps, FieldPath, FieldValues } from "react-hook-form"
 import { toast } from "sonner"
+import { FormDescription, FormItem } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { cn } from "@/lib/utils"
 
 interface UsernameInputProps<
   TFieldValues extends FieldValues = FieldValues,

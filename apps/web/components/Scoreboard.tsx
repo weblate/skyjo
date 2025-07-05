@@ -1,12 +1,12 @@
 "use client"
 
-import ScoreDialog from "@/components/ScoreDialog"
-import { Button } from "@/components/ui/button"
-import { useGame } from "@/contexts/GameContext"
 import { Constants as CoreConstants } from "@skymo/core"
 import { TrophyIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
+import ScoreDialog from "@/components/ScoreDialog"
+import { Button } from "@/components/ui/button"
+import { useGame } from "@/contexts/GameContext"
 
 const Scoreboard = () => {
   const { game } = useGame()

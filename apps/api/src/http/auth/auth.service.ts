@@ -1,3 +1,22 @@
+import { ENV } from "@env"
+import {
+  passwordResetTable,
+  sessionTable,
+  userTable,
+} from "@skymo/database/schema"
+import { Logger } from "@skymo/logger"
+import { locales, SESSION_COOKIE_NAME } from "@skymo/shared/constants"
+import type {
+  ForgotPassword,
+  LoginUser,
+  Onboarding,
+  ResetPassword,
+  Signup,
+} from "@skymo/shared/validations"
+import { decodeIdToken } from "arctic"
+import { and, eq, ne, or } from "drizzle-orm"
+import type { Context } from "hono"
+import { deleteCookie, getCookie } from "hono/cookie"
 import { db } from "@/db/index.js"
 import { setSessionTokenCookie } from "@/http/auth/lib/cookie.js"
 import {
@@ -12,25 +31,6 @@ import {
 import { createUser, createUsername } from "@/http/user/user.service.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
-import { ENV } from "@env"
-import {
-  passwordResetTable,
-  sessionTable,
-  userTable,
-} from "@skymo/database/schema"
-import { Logger } from "@skymo/logger"
-import { SESSION_COOKIE_NAME, locales } from "@skymo/shared/constants"
-import type {
-  ForgotPassword,
-  LoginUser,
-  Onboarding,
-  ResetPassword,
-  Signup,
-} from "@skymo/shared/validations"
-import { decodeIdToken } from "arctic"
-import { and, eq, ne, or } from "drizzle-orm"
-import type { Context } from "hono"
-import { deleteCookie, getCookie } from "hono/cookie"
 import { hashPassword, verifyPassword } from "./lib/password.js"
 
 export async function signup(c: Context, data: Signup) {

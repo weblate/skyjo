@@ -1,3 +1,6 @@
+import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
+import { useTranslations } from "next-intl"
+import { useEffect } from "react"
 import {
   Table,
   TableBody,
@@ -6,9 +9,6 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
-import { useTranslations } from "next-intl"
-import { useEffect } from "react"
 
 interface ScoreTableProps {
   players: PlayerToJson[]

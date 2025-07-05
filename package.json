@@ -14,7 +14,7 @@
     "db:migrate": "turbo run db:migrate"
   },
   "devDependencies": {
-    "@biomejs/biome": "1.9.4",
+    "@biomejs/biome": "2.0.6",
     "lefthook": "^1.11.16",
     "syncpack": "^13.0.4",
     "turbo": "^2.5.4"

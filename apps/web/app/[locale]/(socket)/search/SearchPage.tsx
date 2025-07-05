@@ -1,18 +1,18 @@
 "use client"
 
-import { GamesList } from "@/app/[locale]/(socket)/search/GamesList"
-import { TagsFilter } from "@/app/[locale]/(socket)/search/TagsFilter"
-import { useRouter } from "@/i18n/routing"
-import { cn } from "@/lib/utils"
 import { PublicGameTag } from "@skymo/core"
 import type { GetPublicGamesError, PublicGame } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useQuery } from "@tanstack/react-query"
 import { HomeIcon, PlusIcon, RefreshCwIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
 import dynamic from "next/dynamic"
+import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
+import { GamesList } from "@/app/[locale]/(socket)/search/GamesList"
+import { TagsFilter } from "@/app/[locale]/(socket)/search/TagsFilter"
+import { useRouter } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
 
 const MAX_GAMES_PER_PAGE = 20
 

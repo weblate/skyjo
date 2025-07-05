@@ -1,5 +1,3 @@
-import { LobbyService } from "@/realtime/lobby/lobby.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import {
   Constants as CoreConstants,
   type CreatePlayer,
@@ -16,6 +14,8 @@ import {
 } from "@tests/_mock.js"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import { LobbyService } from "@/realtime/lobby/lobby.service.js"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 
 describe("LobbyService", () => {
   let service: LobbyService

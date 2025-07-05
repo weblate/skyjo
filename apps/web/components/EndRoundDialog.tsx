@@ -1,3 +1,6 @@
+import { DialogDescription } from "@radix-ui/react-dialog"
+import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
 import ScoreTable from "@/components/ScoreTable"
 import {
   Dialog,
@@ -6,9 +9,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { useGame } from "@/contexts/GameContext"
-import { DialogDescription } from "@radix-ui/react-dialog"
-import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
 
 const EndRoundDialog = () => {
   const { game, roundPhase, gameStatus } = useGame()

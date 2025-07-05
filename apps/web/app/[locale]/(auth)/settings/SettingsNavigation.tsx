@@ -1,9 +1,9 @@
 "use client"
 
-import { Link, usePathname } from "@/i18n/routing"
-import { cn } from "@/lib/utils"
 import { KeyRoundIcon, SettingsIcon, UserIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
+import { Link, usePathname } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
 
 export function SettingsNavigation() {
   const t = useTranslations("pages.Settings.Navigation")

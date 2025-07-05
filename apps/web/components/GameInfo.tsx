@@ -1,9 +1,9 @@
 "use client"
 
-import { useGame } from "@/contexts/GameContext"
-import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
+import { useGame } from "@/contexts/GameContext"
+import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
 
 const GameInfo = () => {
   const { game, player, opponents, roundPhase, gameStatus, turnStatus } =

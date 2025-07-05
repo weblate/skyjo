@@ -1,9 +1,9 @@
-import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
-import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { type Game, KickVote } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
+import { BaseService } from "@/realtime/base/base.service.js"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 
 export class KickService extends BaseService {
   async onInitiateKickVote(socket: GameSocket, targetId: string) {

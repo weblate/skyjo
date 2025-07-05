@@ -1,9 +1,9 @@
-import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import type { ErrorReconnectMessage } from "@skymo/shared/types"
 import { type LastGame, reconnect } from "@skymo/shared/validations"
 import type { DisconnectReason } from "socket.io"
+import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
 import { PlayerService } from "./player.service.js"
 

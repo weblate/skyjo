@@ -1,5 +1,6 @@
 "use client"
 
+import { use } from "react"
 import { Chat } from "@/components/Chat"
 import { KickVote } from "@/components/KickVote"
 import withAuth from "@/components/withAuth"
@@ -8,7 +9,6 @@ import ChatProvider from "@/contexts/ChatContext"
 import GameProvider from "@/contexts/GameContext"
 import { KickProvider } from "@/contexts/KickContext"
 import { ReportProvider } from "@/contexts/ReportContext"
-import { use } from "react"
 
 interface GameLayoutParams {
   code: string

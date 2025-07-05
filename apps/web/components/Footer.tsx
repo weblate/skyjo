@@ -1,8 +1,8 @@
+import Image from "next/image"
+import { useTranslations } from "next-intl"
 import { FooterFeedbackLink } from "@/components/FooterFeedbackLink"
 import { FooterRulesLink } from "@/components/FooterRulesLink"
 import { Link } from "@/i18n/routing"
-import { useTranslations } from "next-intl"
-import Image from "next/image"
 
 const Footer = () => {
   const t = useTranslations("components.Footer")

@@ -1,10 +1,10 @@
-import { Server as HttpServer } from "http"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { Logger } from "@skymo/logger"
 import { createAdapter } from "@socket.io/redis-adapter"
+import { Server as HttpServer } from "http"
 import { createClient } from "redis"
 import { Server } from "socket.io"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { SocketManager } from "../SocketManager.js"
 
 // Mock dependencies

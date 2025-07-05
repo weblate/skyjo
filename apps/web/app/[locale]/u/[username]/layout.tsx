@@ -1,12 +1,12 @@
+import { Locales } from "@skymo/shared/constants"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import { getTranslations } from "next-intl/server"
 import { UserSearch } from "@/app/[locale]/u/[username]/UserSearch"
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { getCurrentUrl } from "@/lib/utils"
-import { Locales } from "@skymo/shared/constants"
-import { Metadata } from "next"
-import { getTranslations } from "next-intl/server"
-import { notFound } from "next/navigation"
 
 interface UserLayoutParams {
   locale: Locales

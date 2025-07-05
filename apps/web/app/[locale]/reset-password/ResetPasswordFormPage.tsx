@@ -1,10 +1,5 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { Link } from "@/i18n/routing"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { ForgotPasswordError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -13,6 +8,11 @@ import { useMutation } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
+import { Button } from "@/components/ui/button"
+import { Form, FormField, FormItem, FormMessage } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { Link } from "@/i18n/routing"
 
 const ResetPasswordFormPage = () => {
   const t = useTranslations("pages.ForgotPassword")

@@ -1,6 +1,6 @@
+import type { ChatMessage } from "@skymo/shared/types"
 import { RedisClient } from "@/redis/client.js"
 import { GameRepository } from "@/redis/game.repository.js"
-import type { ChatMessage } from "@skymo/shared/types"
 
 export class MessageRepository extends RedisClient {
   async storeMessage(gameCode: string, message: ChatMessage) {

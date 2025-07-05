@@ -1,10 +1,10 @@
-import { Button } from "@/components/ui/button"
 import type { OauthLoginError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
-import { useTranslations } from "next-intl"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
 import { useTransition } from "react"
 import { toast } from "sonner"
+import { Button } from "@/components/ui/button"
 
 const GoogleOAuthButton = () => {
   const t = useTranslations("components.GoogleOAuthButton")

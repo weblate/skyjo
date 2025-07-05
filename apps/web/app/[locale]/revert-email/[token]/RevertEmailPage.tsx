@@ -1,9 +1,9 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { Link } from "@/i18n/routing"
 import { RevertEmailError } from "@skymo/shared/types"
 import { useTranslations } from "next-intl"
+import { Button } from "@/components/ui/button"
+import { Link } from "@/i18n/routing"
 
 interface RevertEmailPageProps {
   result: {

@@ -1,9 +1,8 @@
-import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
-import { type Game, type Player } from "@skymo/core"
-import { Constants as CoreConstants } from "@skymo/core"
+import { Constants as CoreConstants, type Game, type Player } from "@skymo/core"
 import { CError } from "@skymo/error"
 import { Job } from "bullmq"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { type AfkJobData, BaseAfkQueueService } from "../BaseAfkQueueService.js"
 
 // Mock other queue services to prevent initialization

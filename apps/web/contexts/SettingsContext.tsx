@@ -1,11 +1,11 @@
 "use client"
 
-import SettingsDialog from "@/components/SettingsDialog"
 import { Locales } from "@skymo/shared/constants"
 import { Howler } from "howler"
 import { ThemeProvider } from "next-themes"
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { useLocalStorage } from "react-use"
+import SettingsDialog from "@/components/SettingsDialog"
 
 const VOLUME_DIVISOR = 100
 

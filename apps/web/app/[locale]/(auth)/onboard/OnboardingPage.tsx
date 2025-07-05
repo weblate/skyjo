@@ -1,5 +1,18 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import { OnboardingError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
+import {
+  onboardingSchema,
+  onboardingWithPasswordSchema,
+  passwordSchema,
+} from "@skymo/shared/validations"
+import { useMutation } from "@tanstack/react-query"
+import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
+import { useForm } from "react-hook-form"
+import { z } from "zod"
 import { PasswordRequirements } from "@/components/PasswordRequirements"
 import SelectAvatar from "@/components/SelectAvatar"
 import { Button } from "@/components/ui/button"
@@ -20,19 +33,6 @@ import {
 import { AVATARS_ARRAY, usePlayer } from "@/contexts/PlayerContext"
 import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "@/i18n/routing"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { OnboardingError } from "@skymo/shared/types"
-import { jsonError } from "@skymo/shared/utils"
-import {
-  onboardingSchema,
-  onboardingWithPasswordSchema,
-  passwordSchema,
-} from "@skymo/shared/validations"
-import { useMutation } from "@tanstack/react-query"
-import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
 
 const OnboardingPage = () => {
   const router = useRouter()

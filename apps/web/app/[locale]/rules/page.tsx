@@ -1,7 +1,7 @@
+import Link from "next/link"
+import { useTranslations } from "next-intl"
 import Rules from "@/components/Rules"
 import { Button } from "@/components/ui/button"
-import { useTranslations } from "next-intl"
-import Link from "next/link"
 
 const RulesPage = () => {
   const t = useTranslations("pages.Rules")

@@ -1,12 +1,12 @@
 "use client"
 
-import { useRouter } from "@/i18n/routing"
 import { Avatar } from "@skymo/core"
 import { LogoutError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { toast } from "sonner"
+import { useRouter } from "@/i18n/routing"
 
 interface AuthenticatedUser {
   emailVerified: boolean

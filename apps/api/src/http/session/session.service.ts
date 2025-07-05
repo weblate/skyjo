@@ -1,15 +1,15 @@
-import { db } from "@/db/index.js"
-import { hashToken } from "@/utils/randomString.js"
 import { encodeBase32LowerCaseNoPadding } from "@oslojs/encoding"
 import {
   type SessionDb,
-  type UserDb,
   sessionTable,
+  type UserDb,
   userTable,
 } from "@skymo/database/schema"
 import { and, eq } from "drizzle-orm"
 import type { Context } from "hono"
 import { getCookie } from "hono/cookie"
+import { db } from "@/db/index.js"
+import { hashToken } from "@/utils/randomString.js"
 
 type SessionValidationResult =
   | { session: SessionDb; user: UserDb }

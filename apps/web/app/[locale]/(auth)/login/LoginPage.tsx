@@ -1,12 +1,5 @@
 "use client"
 
-import GoogleOAuthButton from "@/components/GoogleOAuthButton"
-import { Button } from "@/components/ui/button"
-import { Form, FormField, FormItem } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Label } from "@/components/ui/label"
-import { PasswordInput } from "@/components/ui/password-input"
-import { Link, useRouter } from "@/i18n/routing"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { LoginError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -16,6 +9,13 @@ import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import GoogleOAuthButton from "@/components/GoogleOAuthButton"
+import { Button } from "@/components/ui/button"
+import { Form, FormField, FormItem } from "@/components/ui/form"
+import { Input } from "@/components/ui/input"
+import { Label } from "@/components/ui/label"
+import { PasswordInput } from "@/components/ui/password-input"
+import { Link, useRouter } from "@/i18n/routing"
 
 const LoginPage = () => {
   const router = useRouter()

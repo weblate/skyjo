@@ -1,12 +1,12 @@
+import { PublicGameTag } from "@skymo/core"
+import { PlusCircleIcon } from "lucide-react"
+import { AnimatePresence } from "motion/react"
+import { useTranslations } from "next-intl"
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
-import { PublicGameTag } from "@skymo/core"
-import { PlusCircleIcon } from "lucide-react"
-import { AnimatePresence } from "motion/react"
-import { useTranslations } from "next-intl"
 import { GameTag } from "../../../../components/GameTag/GameTag"
 
 const allTags: PublicGameTag[] = [

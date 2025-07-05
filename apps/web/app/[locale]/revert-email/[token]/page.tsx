@@ -1,8 +1,8 @@
-import Footer from "@/components/Footer"
-import Navbar from "@/components/Navbar"
 import { Locales } from "@skymo/shared/constants"
 import type { RevertEmailError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
 import RevertEmailPage from "./RevertEmailPage"
 
 interface RevertEmailPageParams {

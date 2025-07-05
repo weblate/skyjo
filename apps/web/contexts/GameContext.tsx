@@ -1,5 +1,29 @@
 "use client"
 
+import {
+  Constants as CoreConstants,
+  GameToJson,
+  PlayerToJson,
+  PlayPickCard,
+} from "@skymo/core"
+import { UpdateGameSettings, UpdateMaxPlayers } from "@skymo/shared/validations"
+import {
+  applyStateOperations,
+  type GameOperation,
+} from "@skymo/state-operations"
+import dayjs from "dayjs"
+import utc from "dayjs/plugin/utc"
+import {
+  createContext,
+  PropsWithChildren,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from "react"
+import { Socket } from "socket.io-client"
+import { toast } from "sonner"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useAfkKickToasts } from "@/hooks/useAfkKickToasts"
@@ -31,30 +55,6 @@ import {
   addReconnectionDateToLastGame,
   clearLastGame,
 } from "@/utils/reconnection"
-import {
-  Constants as CoreConstants,
-  GameToJson,
-  PlayPickCard,
-  PlayerToJson,
-} from "@skymo/core"
-import { UpdateGameSettings, UpdateMaxPlayers } from "@skymo/shared/validations"
-import {
-  type GameOperation,
-  applyStateOperations,
-} from "@skymo/state-operations"
-import dayjs from "dayjs"
-import utc from "dayjs/plugin/utc"
-import {
-  PropsWithChildren,
-  createContext,
-  useContext,
-  useEffect,
-  useMemo,
-  useRef,
-  useState,
-} from "react"
-import { Socket } from "socket.io-client"
-import { toast } from "sonner"
 
 dayjs.extend(utc)
 

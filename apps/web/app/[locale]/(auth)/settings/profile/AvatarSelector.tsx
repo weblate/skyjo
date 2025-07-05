@@ -1,20 +1,20 @@
 "use client"
 
+import { Avatar, Constants as CoreConstants } from "@skymo/core"
+import { UpdateAvatarError } from "@skymo/shared/types"
+import { jsonError } from "@skymo/shared/utils"
+import { CheckIcon } from "lucide-react"
+import { AnimatePresence, m } from "motion/react"
+import Image from "next/image"
+import { useTranslations } from "next-intl"
+import { useState } from "react"
+import { toast } from "sonner"
 import {
   avatarVariants,
   backgroundVariants,
 } from "@/app/[locale]/u/[username]/UserProfile"
 import { Button } from "@/components/ui/button"
 import { cn } from "@/lib/utils"
-import { Avatar, Constants as CoreConstants } from "@skymo/core"
-import { UpdateAvatarError } from "@skymo/shared/types"
-import { jsonError } from "@skymo/shared/utils"
-import { CheckIcon } from "lucide-react"
-import { AnimatePresence, m } from "motion/react"
-import { useTranslations } from "next-intl"
-import Image from "next/image"
-import { useState } from "react"
-import { toast } from "sonner"
 
 interface AvatarSelectorProps {
   currentAvatar?: Avatar

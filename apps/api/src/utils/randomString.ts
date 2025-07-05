@@ -1,4 +1,4 @@
-import { type RandomReader, generateRandomString } from "@oslojs/crypto/random"
+import { generateRandomString, type RandomReader } from "@oslojs/crypto/random"
 import { sha3_256 } from "@oslojs/crypto/sha3"
 import { encodeHexLowerCase } from "@oslojs/encoding"
 

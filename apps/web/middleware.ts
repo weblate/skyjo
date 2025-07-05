@@ -1,6 +1,6 @@
-import { routing } from "@/i18n/routing"
-import createNextIntlMiddleware from "next-intl/middleware"
 import { NextRequest } from "next/server"
+import createNextIntlMiddleware from "next-intl/middleware"
+import { routing } from "@/i18n/routing"
 
 const nextIntlMiddleware = createNextIntlMiddleware(routing)
 

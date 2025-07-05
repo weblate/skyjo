@@ -1,4 +1,3 @@
-import { db } from "@/postgres.js"
 import { ENV } from "@env"
 import {
   accountDeletionTable,
@@ -9,6 +8,7 @@ import { Logger } from "@skymo/logger"
 import type { AccountDeletionJobData } from "@skymo/worker-types"
 import { Queue } from "bullmq"
 import { and, eq } from "drizzle-orm"
+import { db } from "@/postgres.js"
 
 const mailerQueue = new Queue("mailer", {
   connection: {

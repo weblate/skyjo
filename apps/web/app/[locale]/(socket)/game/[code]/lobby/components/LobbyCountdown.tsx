@@ -1,5 +1,10 @@
 "use client"
 
+import { UpdateGameSettings } from "@skymo/shared/validations"
+import { TimerIcon, TriangleAlertIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useEffect, useRef, useState } from "react"
+import { useLocalStorage } from "react-use"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,11 +20,6 @@ import { useSocket } from "@/contexts/SocketContext"
 import { useRouter } from "@/i18n/routing"
 import { isHost } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { UpdateGameSettings } from "@skymo/shared/validations"
-import { TimerIcon, TriangleAlertIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { useEffect, useRef, useState } from "react"
-import { useLocalStorage } from "react-use"
 
 interface LobbyCountdownProps {
   gameCode: string

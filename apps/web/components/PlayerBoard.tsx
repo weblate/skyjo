@@ -1,12 +1,12 @@
+import { PlayerToJson } from "@skymo/core"
+import Image from "next/image"
+import { useTranslations } from "next-intl"
 import { CardTable } from "@/components/CardTable"
 import { TurnTimer } from "@/components/TurnTimer"
 import { useGame } from "@/contexts/GameContext"
 import { useSettings } from "@/contexts/SettingsContext"
 import { getBoardScaleClass, getCurrentScore } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { PlayerToJson } from "@skymo/core"
-import { useTranslations } from "next-intl"
-import Image from "next/image"
 
 interface PlayerBoardProps {
   player: PlayerToJson

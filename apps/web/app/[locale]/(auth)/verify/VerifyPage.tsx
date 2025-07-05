@@ -1,13 +1,5 @@
 "use client"
 
-import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
-import {
-  InputOTP,
-  InputOTPGroup,
-  InputOTPSlot,
-} from "@/components/ui/input-otp"
-import { useRouter } from "@/i18n/routing"
-import { cn } from "@/lib/utils"
 import { zodResolver } from "@hookform/resolvers/zod"
 import type { SendPinError, VerifyPinError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -17,6 +9,14 @@ import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
+import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
+import {
+  InputOTP,
+  InputOTPGroup,
+  InputOTPSlot,
+} from "@/components/ui/input-otp"
+import { useRouter } from "@/i18n/routing"
+import { cn } from "@/lib/utils"
 
 const COOLDOWN_SECONDS = 30
 

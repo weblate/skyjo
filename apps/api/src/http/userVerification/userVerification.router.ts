@@ -1,3 +1,8 @@
+import { zValidator } from "@hono/zod-validator"
+import { Logger } from "@skymo/logger"
+import { verifyPinSchema } from "@skymo/shared/validations"
+import { Hono } from "hono"
+import { RateLimiterMemory } from "rate-limiter-flexible"
 import {
   type AuthContextVariables,
   authMiddleware,
@@ -7,11 +12,6 @@ import {
   sendVerifyPin,
   verifyPin,
 } from "@/http/userVerification/userVerification.service.js"
-import { zValidator } from "@hono/zod-validator"
-import { Logger } from "@skymo/logger"
-import { verifyPinSchema } from "@skymo/shared/validations"
-import { Hono } from "hono"
-import { RateLimiterMemory } from "rate-limiter-flexible"
 
 const sendVerifyRateLimiter = new RateLimiterMemory({
   keyPrefix: "send-verify",

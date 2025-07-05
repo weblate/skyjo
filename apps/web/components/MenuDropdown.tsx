@@ -1,5 +1,26 @@
 "use client"
 
+import { Locales } from "@skymo/shared/constants"
+import {
+  BookOpenIcon,
+  CheckIcon,
+  EllipsisVerticalIcon,
+  GlobeIcon,
+  LogOutIcon,
+  MessageSquareWarningIcon,
+  MonitorIcon,
+  MoonIcon,
+  PaletteIcon,
+  SettingsIcon,
+  SunIcon,
+  UserCog2Icon,
+} from "lucide-react"
+import dynamic from "next/dynamic"
+import Image from "next/image"
+import { useSearchParams } from "next/navigation"
+import { useTranslations } from "next-intl"
+import { useTheme } from "next-themes"
+import { Suspense } from "react"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -17,27 +38,6 @@ import { useRules } from "@/contexts/RulesContext"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useAuth } from "@/hooks/useAuth"
 import { Link, routing, usePathname, useRouter } from "@/i18n/routing"
-import { Locales } from "@skymo/shared/constants"
-import {
-  BookOpenIcon,
-  CheckIcon,
-  EllipsisVerticalIcon,
-  GlobeIcon,
-  LogOutIcon,
-  MessageSquareWarningIcon,
-  MonitorIcon,
-  MoonIcon,
-  PaletteIcon,
-  SettingsIcon,
-  SunIcon,
-  UserCog2Icon,
-} from "lucide-react"
-import { useTranslations } from "next-intl"
-import { useTheme } from "next-themes"
-import dynamic from "next/dynamic"
-import Image from "next/image"
-import { useSearchParams } from "next/navigation"
-import { Suspense } from "react"
 
 interface MenuDropdownProps {
   variant: "account" | "game"

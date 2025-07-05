@@ -1,15 +1,15 @@
 "use client"
 
-import ChatForm from "@/components/ChatForm"
-import { ChatMessageList } from "@/components/ChatMessageList"
-import { useChat } from "@/contexts/ChatContext"
-import { useSettings } from "@/contexts/SettingsContext"
-import { cn } from "@/lib/utils"
 import { cva } from "class-variance-authority"
 import { ClassValue } from "clsx"
 import { MessageCircleIcon } from "lucide-react"
 import { m } from "motion/react"
 import { useTranslations } from "next-intl"
+import ChatForm from "@/components/ChatForm"
+import { ChatMessageList } from "@/components/ChatMessageList"
+import { useChat } from "@/contexts/ChatContext"
+import { useSettings } from "@/contexts/SettingsContext"
+import { cn } from "@/lib/utils"
 
 const ChatNotificationVariant = cva(
   "absolute rounded-full bg-red-400 dark:bg-red-600",

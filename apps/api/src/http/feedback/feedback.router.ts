@@ -1,10 +1,10 @@
-import { sendFeedback } from "@/http/feedback/feedback.service.js"
-import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 import { zValidator } from "@hono/zod-validator"
 import { Logger } from "@skymo/logger"
 import { feedbackSchema } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import { sendFeedback } from "@/http/feedback/feedback.service.js"
+import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 
 const feedbackRateLimiter = new RateLimiterMemory({
   keyPrefix: "feedback",

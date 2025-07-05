@@ -1,10 +1,10 @@
 "use client"
 
+import { useParams } from "next/navigation"
+import React, { ComponentType, useEffect, useState } from "react"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useRouter } from "@/i18n/routing"
-import { useParams } from "next/navigation"
-import React, { ComponentType, useEffect, useState } from "react"
 
 const withAuth = <P extends object>(
   WrappedComponent: ComponentType<P>,

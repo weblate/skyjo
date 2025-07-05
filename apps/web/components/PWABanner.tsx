@@ -1,14 +1,14 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { UserAgent, useUserAgent } from "@/hooks/useUserAgent"
-import { BeforeInstallPromptEvent } from "@/types/beforeInstallPrompt"
 import { XIcon } from "lucide-react"
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import { useFeatureFlagEnabled } from "posthog-js/react"
 import { useEffect, useState } from "react"
 import { useLocalStorage } from "react-use"
+import { Button } from "@/components/ui/button"
+import { UserAgent, useUserAgent } from "@/hooks/useUserAgent"
+import { BeforeInstallPromptEvent } from "@/types/beforeInstallPrompt"
 
 const PWABanner = () => {
   const flagPwaBannerEnabled = useFeatureFlagEnabled("pwa-banner")

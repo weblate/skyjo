@@ -1,10 +1,10 @@
-import { loginGoogle } from "@/http/auth/auth.service.js"
-import { createGoogleAuthorizationURL } from "@/http/auth/lib/google.js"
 import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
 import { Hono } from "hono"
 import { deleteCookie, getCookie, setCookie } from "hono/cookie"
 import type { CookieOptions } from "hono/utils/cookie"
+import { loginGoogle } from "@/http/auth/auth.service.js"
+import { createGoogleAuthorizationURL } from "@/http/auth/lib/google.js"
 
 export const googleRouter = new Hono()
   .get("/login/google", async (c) => {

@@ -2,6 +2,7 @@ import { beforeEach, describe, expect, it } from "vitest"
 import { Constants } from "../../constants.js"
 import type { GameRedisDb } from "../../types/game.js"
 import { Settings } from "../Settings.js"
+
 let settings: Settings
 
 describe("Settings", () => {

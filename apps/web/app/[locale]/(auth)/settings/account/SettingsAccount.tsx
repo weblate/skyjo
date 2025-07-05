@@ -1,5 +1,15 @@
 "use client"
 
+import { zodResolver } from "@hookform/resolvers/zod"
+import {
+  type UpdateEmail,
+  type UpdateUsername,
+  updateEmailSchema,
+  updateUsernameSchema,
+} from "@skymo/shared/validations"
+import { useTranslations } from "next-intl"
+import { useEffect } from "react"
+import { useForm } from "react-hook-form"
 import { useSettingsApi } from "@/app/[locale]/(auth)/settings/useSettingsApi"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,16 +25,6 @@ import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { UsernameInput } from "@/components/ui/username-input"
 import { useAuth } from "@/hooks/useAuth"
-import { zodResolver } from "@hookform/resolvers/zod"
-import {
-  type UpdateEmail,
-  type UpdateUsername,
-  updateEmailSchema,
-  updateUsernameSchema,
-} from "@skymo/shared/validations"
-import { useTranslations } from "next-intl"
-import { useEffect } from "react"
-import { useForm } from "react-hook-form"
 import { DeleteAccount } from "./DeleteAccount"
 
 export function SettingsAccount() {

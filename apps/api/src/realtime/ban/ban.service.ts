@@ -1,7 +1,7 @@
+import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { BaseService } from "@/realtime/base/base.service.js"
 import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
-import { CError, Constants as ErrorConstants } from "@skymo/error"
 
 export class BanService extends BaseService {
   async onBanPlayer(socket: GameSocket, targetId: string) {

@@ -1,12 +1,12 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useRouter } from "@/i18n/routing"
 import { getLastGameIfPossible } from "@/utils/reconnection"
-import { useTranslations } from "next-intl"
-import { useState } from "react"
 
 interface GameLobbyButtonsProps {
   gameCode?: string

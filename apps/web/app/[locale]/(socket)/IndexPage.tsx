@@ -1,11 +1,11 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+import { ChangeEvent } from "react"
 import GameLobbyButtons from "@/components/GameLobbyButtons"
 import SelectAvatar from "@/components/SelectAvatar"
 import { Input } from "@/components/ui/input"
 import { usePlayer } from "@/contexts/PlayerContext"
-import { useTranslations } from "next-intl"
-import { ChangeEvent } from "react"
 
 interface Props {
   searchParams: {

@@ -1,12 +1,12 @@
-import { GameTagServer } from "@/components/GameTag/GameTagServer"
 import { constructTagArray } from "@skymo/core"
 import { Locales } from "@skymo/shared/constants"
 import { UserRecentActivity } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
 import dayjs from "dayjs"
 import { CalendarIcon, ClockIcon, CrownIcon, HashIcon } from "lucide-react"
-import { getTranslations } from "next-intl/server"
 import Image from "next/image"
+import { getTranslations } from "next-intl/server"
+import { GameTagServer } from "@/components/GameTag/GameTagServer"
 
 const rankVariants = cva("px-3 py-1 rounded-full text-sm font-medium", {
   variants: {

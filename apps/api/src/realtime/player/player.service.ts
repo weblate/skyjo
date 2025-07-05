@@ -1,10 +1,10 @@
+import { Constants as CoreConstants } from "@skymo/core"
+import { CError, Constants as ErrorConstants } from "@skymo/error"
+import type { LastGame } from "@skymo/shared/validations"
 import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { BaseService } from "@/realtime/base/base.service.js"
 import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
-import { Constants as CoreConstants } from "@skymo/core"
-import { CError, Constants as ErrorConstants } from "@skymo/error"
-import type { LastGame } from "@skymo/shared/validations"
 
 export class PlayerService extends BaseService {
   private readonly countdownQueue = GameStartCountdownQueueService.getInstance()

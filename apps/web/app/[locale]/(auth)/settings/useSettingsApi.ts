@@ -1,4 +1,3 @@
-import { useAuth } from "@/hooks/useAuth"
 import type {
   DeleteAccountError,
   UpdateEmailError,
@@ -16,6 +15,7 @@ import type {
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
+import { useAuth } from "@/hooks/useAuth"
 
 export function useSettingsApi() {
   const t = useTranslations("pages.Settings")

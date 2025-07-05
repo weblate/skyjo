@@ -1,3 +1,10 @@
+import {
+  Constants as CoreConstants,
+  type Game,
+  type Player,
+  type ServerMessageType,
+} from "@skymo/core"
+import type { ServerChatMessage } from "@skymo/shared/types"
 import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
 import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
@@ -7,13 +14,6 @@ import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { KickVoteRepository } from "@/redis/kickVote.repository.js"
 import { MessageRepository } from "@/redis/message.repository.js"
-import {
-  Constants as CoreConstants,
-  type Game,
-  type Player,
-  type ServerMessageType,
-} from "@skymo/core"
-import type { ServerChatMessage } from "@skymo/shared/types"
 import type { GameSocket } from "../types/gameSocket.js"
 
 export abstract class BaseService {

@@ -1,11 +1,11 @@
+import { Locales } from "@skymo/shared/constants"
+import { Metadata } from "next"
+import { notFound, redirect } from "next/navigation"
+import { getTranslations } from "next-intl/server"
 import Footer from "@/components/Footer"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
 import { verifySession } from "@/lib/dal"
 import { getCurrentUrl } from "@/lib/utils"
-import { Locales } from "@skymo/shared/constants"
-import { Metadata } from "next"
-import { getTranslations } from "next-intl/server"
-import { notFound, redirect } from "next/navigation"
 
 interface VerifyParams {
   locale: Locales

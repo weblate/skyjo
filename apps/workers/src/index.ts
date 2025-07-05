@@ -1,7 +1,7 @@
+import { Logger } from "@skymo/logger"
 import { createAccountDeletionWorker } from "@/account-deletion/accountDeletionQueue.js"
 import { createGameCleanupWorker } from "@/game-cleanup/gameCleanupQueue.js"
 import { createPostgresCleanupWorker } from "@/postgres-cleanup/postgresCleanupQueue.js"
-import { Logger } from "@skymo/logger"
 import "@env"
 import { createGameStorageWorker } from "@/game-storage/gameStorageQueue.js"
 import { createMailerWorker } from "@/mailer/mailerQueue.js"

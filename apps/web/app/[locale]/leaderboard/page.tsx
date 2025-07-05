@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button"
-import { Link } from "@/i18n/routing"
 import { Locales } from "@skymo/shared/constants"
 import dayjs from "dayjs"
 import { Home, RefreshCw, Trophy } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import { Button } from "@/components/ui/button"
+import { Link } from "@/i18n/routing"
 import CallToActionSection from "./CallToActionSection"
 
 interface LeaderboardEntry {

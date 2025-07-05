@@ -2,12 +2,12 @@
 
 import "./GameCard.css"
 
-import { Card, CardProps, cardVariants } from "@/components/Card/Card"
-import { cn } from "@/lib/utils"
 import { CardToJson } from "@skymo/core"
 import { ClassValue } from "clsx"
-import { TargetAndTransition, m } from "motion/react"
+import { m, TargetAndTransition } from "motion/react"
 import { useEffect, useRef, useState } from "react"
+import { Card, CardProps, cardVariants } from "@/components/Card/Card"
+import { cn } from "@/lib/utils"
 
 const cardPositionClass: ClassValue =
   "absolute w-full h-full card-backface-hidden"

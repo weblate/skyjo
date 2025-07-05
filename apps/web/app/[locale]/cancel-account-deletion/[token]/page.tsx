@@ -1,11 +1,11 @@
-import Footer from "@/components/Footer"
-import Navbar from "@/components/Navbar"
-import { Button } from "@/components/ui/button"
-import { Link } from "@/i18n/routing"
 import { CancelAccountDeletionError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { CheckCircle, XCircle } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import Footer from "@/components/Footer"
+import Navbar from "@/components/Navbar"
+import { Button } from "@/components/ui/button"
+import { Link } from "@/i18n/routing"
 
 type CancelAccountDeletionResult = {
   success: boolean

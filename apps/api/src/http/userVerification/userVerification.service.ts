@@ -1,14 +1,14 @@
-import { randomInt } from "crypto"
-import { db } from "@/db/index.js"
-import { mailerQueue } from "@/utils/mailer.js"
 import {
   type UserDb,
   userTable,
   userVerificationTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
+import { randomInt } from "crypto"
 import dayjs from "dayjs"
 import { and, eq } from "drizzle-orm"
+import { db } from "@/db/index.js"
+import { mailerQueue } from "@/utils/mailer.js"
 
 export async function sendVerifyPin(email: string) {
   const userResult = await db

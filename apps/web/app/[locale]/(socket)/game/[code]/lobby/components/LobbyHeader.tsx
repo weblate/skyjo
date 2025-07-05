@@ -1,5 +1,8 @@
 "use client"
 
+import { ClassValue } from "clsx"
+import { ArrowLeftIcon, LockIcon, UnlockIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
 import {
   Tooltip,
   TooltipContent,
@@ -8,9 +11,6 @@ import {
 } from "@/components/ui/tooltip"
 import { useGame } from "@/contexts/GameContext"
 import { getHost, isHost } from "@/lib/game"
-import { ClassValue } from "clsx"
-import { ArrowLeftIcon, LockIcon, UnlockIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
 
 interface LobbyHeaderProps {
   className?: ClassValue

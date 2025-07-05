@@ -1,3 +1,6 @@
+import { PlayerToJson } from "@skymo/core"
+import { AnimatePresence, m } from "motion/react"
+import { useEffect, useState } from "react"
 import { Card } from "@/components/Card/Card"
 import OpponentBoard from "@/components/OpponentBoard"
 import { UserAvatar } from "@/components/UserAvatar"
@@ -10,9 +13,6 @@ import {
   isCurrentUserTurn,
 } from "@/lib/game"
 import { cn } from "@/lib/utils"
-import { PlayerToJson } from "@skymo/core"
-import { AnimatePresence, m } from "motion/react"
-import { useEffect, useState } from "react"
 
 const OpponentsMobileView = () => {
   const { opponents, game, player, gameStatus } = useGame()

@@ -1,10 +1,10 @@
-import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import {
   type InitiateKickVote,
-  type VoteToKick,
   initiateKickVote,
+  type VoteToKick,
   voteToKick,
 } from "@skymo/shared/validations"
+import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
 import { KickService } from "./kick.service.js"
 

@@ -1,16 +1,16 @@
 "use client"
 
-import FeedbackProvider from "@/contexts/FeedbackContext"
-import PlayerProvider from "@/contexts/PlayerContext"
-import RulesProvider from "@/contexts/RulesContext"
-import SettingsProvider from "@/contexts/SettingsContext"
 import { Locales } from "@skymo/shared/constants"
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
-import { LazyMotion, domAnimation } from "motion/react"
+import { domAnimation, LazyMotion } from "motion/react"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
 import { useEffect } from "react"
 import { Toaster } from "sonner"
+import FeedbackProvider from "@/contexts/FeedbackContext"
+import PlayerProvider from "@/contexts/PlayerContext"
+import RulesProvider from "@/contexts/RulesContext"
+import SettingsProvider from "@/contexts/SettingsContext"
 import PostHogPageView from "./PostHogPageView"
 
 const queryClient = new QueryClient()

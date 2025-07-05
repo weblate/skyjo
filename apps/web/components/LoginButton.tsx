@@ -1,11 +1,11 @@
 "use client"
 
+import { useTranslations } from "next-intl"
+import { useEffect, useState } from "react"
 import { buttonVariants } from "@/components/ui/button"
 import { useAuth } from "@/hooks/useAuth"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
-import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
 
 const LoginButton = () => {
   const t = useTranslations("components.LoginButton")

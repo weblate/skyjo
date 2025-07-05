@@ -1,5 +1,12 @@
 "use client"
 
+import {
+  Constants as CoreConstants,
+  type FirstPlayerPenaltyType,
+} from "@skymo/core"
+import { TriangleAlertIcon } from "lucide-react"
+import { useTranslations } from "next-intl"
+import { useEffect } from "react"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import RadioNumber from "@/components/ui/radio-number"
@@ -14,13 +21,6 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { useGame } from "@/contexts/GameContext"
 import { isHost } from "@/lib/game"
-import {
-  Constants as CoreConstants,
-  type FirstPlayerPenaltyType,
-} from "@skymo/core"
-import { TriangleAlertIcon } from "lucide-react"
-import { useTranslations } from "next-intl"
-import { useEffect } from "react"
 
 interface GameSettingsProps {
   className?: string

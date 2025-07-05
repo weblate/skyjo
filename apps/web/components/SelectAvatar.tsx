@@ -1,12 +1,12 @@
 "use client"
 
-import { AVATARS_ARRAY } from "@/contexts/PlayerContext"
-import { cn } from "@/lib/utils"
 import { ClassValue } from "clsx"
 import { ChevronLeftIcon, ChevronRightIcon } from "lucide-react"
 import { AnimatePresence, m } from "motion/react"
-import { useTranslations } from "next-intl"
 import Image from "next/image"
+import { useTranslations } from "next-intl"
+import { AVATARS_ARRAY } from "@/contexts/PlayerContext"
+import { cn } from "@/lib/utils"
 
 interface SelectAvatarProps {
   containerClassName?: ClassValue

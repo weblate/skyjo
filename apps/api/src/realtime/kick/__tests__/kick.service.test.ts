@@ -1,4 +1,3 @@
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import {
   Constants as CoreConstants,
   Game,
@@ -17,6 +16,7 @@ import {
 } from "@tests/_mock.js"
 import { RANDOM_SOCKET_ID, TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { KickService } from "../../../realtime/kick/kick.service.js"
 
 describe("KickService", () => {

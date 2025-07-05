@@ -1,4 +1,3 @@
-import { cn } from "@/lib/utils"
 import { Constants as CoreConstants } from "@skymo/core"
 import { Locales } from "@skymo/shared/constants"
 import type {
@@ -7,8 +6,9 @@ import type {
 } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
 import { ClassValue } from "clsx"
-import { getTranslations } from "next-intl/server"
 import Image from "next/image"
+import { getTranslations } from "next-intl/server"
+import { cn } from "@/lib/utils"
 import { UserStats } from "./UserStats"
 
 export const backgroundVariants = cva(

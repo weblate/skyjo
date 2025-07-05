@@ -1,6 +1,6 @@
-import { verifySession } from "@/lib/dal"
 import { Locales } from "@skymo/shared/constants"
 import { redirect } from "next/navigation"
+import { verifySession } from "@/lib/dal"
 
 interface OnboardingParams {
   locale: Locales

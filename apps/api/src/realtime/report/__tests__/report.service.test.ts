@@ -1,14 +1,14 @@
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { Constants as CoreConstants, Game, Player, Settings } from "@skymo/core"
 import { Constants as ErrorConstants } from "@skymo/error"
 import { mockSocket } from "@tests/_mock.js"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
+import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import "@skymo/error/test/expect-extend"
-import { ReportService } from "@/realtime/report/report.service.js"
-import type { SightEngineMessage } from "@/realtime/types/sightengine.js"
 import type { UserChatMessage } from "@skymo/shared/types"
 import type { Report } from "@skymo/shared/validations"
+import { ReportService } from "@/realtime/report/report.service.js"
+import type { SightEngineMessage } from "@/realtime/types/sightengine.js"
 
 describe("ReportService", () => {
   let service: ReportService

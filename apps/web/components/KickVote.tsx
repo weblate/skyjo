@@ -1,12 +1,12 @@
 "use client"
 
-import { Button } from "@/components/ui/button"
-import { useKick } from "@/contexts/KickContext"
-import { cn } from "@/lib/utils"
 import { UserRoundXIcon } from "lucide-react"
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import { useMemo } from "react"
+import { Button } from "@/components/ui/button"
+import { useKick } from "@/contexts/KickContext"
+import { cn } from "@/lib/utils"
 
 const KickVote = () => {
   const {
