@@ -42,6 +42,16 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.7,
       changefreq: "monthly",
     },
+    {
+      name: "terms-of-service",
+      priority: 0.7,
+      changefreq: "monthly",
+    },
+    {
+      name: "leaderboard",
+      priority: 0.8,
+      changefreq: "daily",
+    },
   ]
 
   const sitemap = pages.map((page) => {
