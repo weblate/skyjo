@@ -11,18 +11,19 @@ export default defineConfig({
       reportOnFailure: true,
       provider: "istanbul",
       reportsDirectory: "tests/coverage",
-      include: ["src/socketio/**/**"],
+      include: ["src/realtime/*.ts"],
       exclude: [
         // global
         "src/**/routers/*.ts",
         "src/**/index.ts",
-        "src/**/**/__tests__/constants-test.ts",
-        "src/**/**/__tests__/_mock.ts",
-        "tests/*.ts",
+        "src/**/**/__tests__/**",
+        "src/**/**/*.test.ts",
+        "src/**/**/*.spec.ts",
+        "tests/**",
 
-        // socketio
-        "src/socketio/utils/socketErrorWrapper.ts",
-        "src/socketio/utils/rateLimiter.ts",
+        // realtime
+        "src/realtime/utils/socketErrorWrapper.ts",
+        "src/realtime/utils/rateLimiter.ts",
 
         // default
         ...coverageConfigDefaults.exclude,

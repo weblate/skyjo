@@ -1,6 +1,34 @@
 import { vi } from "vitest"
 import "@skymo/error/test/expect-extend"
 
+// Mock the database connection
+vi.mock("@/db/index.ts", () => {
+  const mockDatabase = {
+    insert: vi.fn(() => ({
+      values: vi.fn(() => ({
+        returning: vi.fn(() => Promise.resolve([{ id: 1 }])),
+      })),
+    })),
+    select: vi.fn(() => ({
+      from: vi.fn(() => ({
+        where: vi.fn(() => Promise.resolve([])),
+      })),
+    })),
+    update: vi.fn(() => ({
+      set: vi.fn(() => ({
+        where: vi.fn(() => Promise.resolve([])),
+      })),
+    })),
+    delete: vi.fn(() => ({
+      where: vi.fn(() => Promise.resolve([])),
+    })),
+  }
+
+  return {
+    db: mockDatabase,
+  }
+})
+
 // Mock BullMQ to prevent actual Redis connections
 vi.mock("bullmq", () => {
   return {
