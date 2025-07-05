@@ -94,7 +94,9 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
             onChange={(value) =>
               actions.updateSingleSettings("cardPerColumn", value)
             }
-            title={t("settings.nb-columns.title")}
+            title={t("settings.nb-columns.title", {
+              number: game.settings.cardPerColumn,
+            })}
             disabled={disableInput}
             disabledRadioNumber={game.settings.cardPerRow === 1 ? [1] : []}
           />
@@ -108,7 +110,9 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
             onChange={(value) =>
               actions.updateSingleSettings("cardPerRow", value)
             }
-            title={t("settings.nb-rows.title")}
+            title={t("settings.nb-rows.title", {
+              number: game.settings.cardPerRow,
+            })}
             disabled={disableInput}
           />
         </div>

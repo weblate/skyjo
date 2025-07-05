@@ -114,7 +114,7 @@
         },
         "initial-turned-count": {
           "label": "Nombre de cartes initialement révélées",
-          "title": "Au début du jeu, {nombre} de vos cartes seront dévoilées"
+          "title": "Au début du jeu, {number} de vos cartes seront dévoilées"
         },
         "show-current-score": {
           "label": "Afficher le score en temps réel"
@@ -136,7 +136,7 @@
         },
         "first-player-flat-penalty": {
           "label": "Pénalité fixe pour le premier joueur",
-          "title": "{nombre} points supplémentaires sera ajouté au score du premier joueur"
+          "title": "{number} points supplémentaires sera ajouté au score du premier joueur"
         },
         "first-player-multiplier-penalty": {
           "label": "Multiplicateur de pénalité pour le score du premier joueur",
