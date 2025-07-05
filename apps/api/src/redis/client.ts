@@ -103,19 +103,12 @@ export abstract class RedisClient {
   ): Promise<void> {
     try {
       if (client.isOpen) {
-        await client.quit().catch((err) => {
-          Logger.warn("Error during Redis client quit", { error: err })
-        })
+        client.destroy()
       }
     } catch (error) {
-      Logger.warn("Error during Redis client cleanup", { error })
-      try {
-        await client.disconnect()
-      } catch (disconnectError) {
-        Logger.error("Failed to disconnect Redis client", {
-          error: disconnectError,
-        })
-      }
+      Logger.error("Failed to disconnect Redis client", {
+        error,
+      })
     }
   }
 

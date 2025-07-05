@@ -21,7 +21,7 @@
   },
   "devDependencies": {
     "@skymo/ts-config": "workspace:*",
-    "@types/node": "^22.14.1",
+    "@types/node": "^24.0.10",
     "typescript": "^5.8.3"
   }
 }

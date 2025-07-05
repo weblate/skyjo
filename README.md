@@ -58,7 +58,7 @@ This project is set up as a monorepo using [Turborepo](https://turbo.build/repo)
 
 ### Prerequisites
 
-- [Node.js](https://nodejs.org/en/) (v22.14.0)
+- [Node.js](https://nodejs.org/en/) (v24.3.0)
 - [pnpm](https://pnpm.io/) (v10.12.4)
 - [Docker](https://www.docker.com/) (v27.X.X)
 

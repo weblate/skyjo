@@ -15,9 +15,9 @@
   },
   "devDependencies": {
     "@biomejs/biome": "1.9.4",
-    "lefthook": "^1.11.9",
-    "syncpack": "^13.0.3",
-    "turbo": "^2.5.2"
+    "lefthook": "^1.11.16",
+    "syncpack": "^13.0.4",
+    "turbo": "^2.5.4"
   },
   "packageManager": "pnpm@10.12.4"
 }
