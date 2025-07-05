@@ -114,7 +114,23 @@ const SignupPage = () => {
             </Button>
           </form>
         </Form>
-        <div className="text-sm text-center mt-8 flex flex-col sm:flex-row sm:items-center justify-center gap-1">
+        <div className="mt-3 text-xs text-center text-gray-600 dark:text-gray-400">
+          {t("terms-acceptance.text")}{" "}
+          <Link
+            href="/terms-of-service"
+            className="text-blue-600 dark:text-blue-400 underline underline-offset-1"
+          >
+            {t("terms-acceptance.terms-link")}
+          </Link>{" "}
+          {t("terms-acceptance.and")}{" "}
+          <Link
+            href="/privacy-policy"
+            className="text-blue-600 dark:text-blue-400 underline underline-offset-1"
+          >
+            {t("terms-acceptance.privacy-link")}
+          </Link>
+        </div>
+        <div className="text-sm text-center mt-6 flex flex-col sm:flex-row sm:items-center justify-center gap-1">
           <p className="text-black dark:text-dark-font">
             {t("already-have-account.description")}
           </p>

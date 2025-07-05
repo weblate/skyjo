@@ -309,6 +309,12 @@
       "head": {
         "title": "Inscription | Skymo - Jeu de Cartes Skyjo en Ligne",
         "description": "Inscrivez-vous sur Skymo pour jouer à Skyjo en ligne. Créez un compte gratuit en quelques secondes et jouez immédiatement avec vos amis ou d'autres joueurs."
+      },
+      "terms-acceptance": {
+        "text": "En créant un compte, vous acceptez nos",
+        "terms-link": "Conditions d'utilisation",
+        "and": "et notre",
+        "privacy-link": "Politique de confidentialité"
       }
     }
   },

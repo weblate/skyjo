@@ -322,6 +322,12 @@
       "already-have-account": {
         "description": "Already have an account?",
         "link": "Login"
+      },
+      "terms-acceptance": {
+        "text": "By creating an account, you agree to our",
+        "terms-link": "Terms of Service",
+        "and": "and",
+        "privacy-link": "Privacy Policy"
       }
     },
     "Login": {
