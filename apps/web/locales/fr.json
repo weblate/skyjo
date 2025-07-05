@@ -260,6 +260,115 @@
         }
       }
     },
+    "TermsOfService": {
+      "head": {
+        "title": "Conditions d'utilisation | Skymo - Jeu de Cartes Skyjo en Ligne",
+        "description": "Lisez les Conditions d'utilisation de Skymo, la plateforme de jeu de cartes Skyjo en ligne. Découvrez les obligations des utilisateurs, l'utilisation du service et les politiques de la plateforme.",
+        "keywords": "Conditions d'utilisation,Skymo,Skyjo,jeu de cartes en ligne,accord utilisateur,règles de la plateforme"
+      },
+      "content": {
+        "title": "Conditions d'utilisation",
+        "last-update": {
+          "text": "Dernière mise à jour : {date}",
+          "date-format": "D MMMM YYYY à HH:mm"
+        },
+        "welcome": "Bienvenue sur <b>skymo.online</b>, un jeu de cartes multijoueur en ligne exploité par Maxent Rouault. En accédant ou en utilisant ce site web, vous acceptez ces Conditions d'utilisation. Si vous n'êtes pas d'accord, vous ne pouvez pas utiliser la plateforme.",
+        "operator": {
+          "title": "1. Exploitant",
+          "content": "Ce site web est exploité par :",
+          "name": "Maxent Rouault",
+          "contact": "Contact : <email></email>",
+          "location": "France (particulier non commercial)"
+        },
+        "eligibility": {
+          "title": "2. Admissibilité",
+          "content": "Vous pouvez utiliser le service en tant qu'invité ou en créant un compte. En utilisant ce site web, vous confirmez que :",
+          "items": {
+            "1": "Vous avez au moins 13 ans (ou l'âge minimum requis dans votre pays).",
+            "2": "Si vous avez moins de 18 ans, vous avez l'autorisation d'un tuteur légal."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Compte et utilisation invité",
+          "items": {
+            "1": "Les joueurs invités peuvent jouer sans inscription, mais certaines fonctionnalités peuvent être limitées.",
+            "2": "Les utilisateurs inscrits doivent fournir un email et un nom d'utilisateur valides.",
+            "3": "Vous êtes responsable de votre compte et de votre activité. Vous ne devez pas partager vos identifiants.",
+            "4": "Vous pouvez supprimer votre compte à tout moment. Après 48 heures, vos données personnelles seront anonymisées ou supprimées définitivement."
+          }
+        },
+        "data-storage": {
+          "title": "4. Stockage des données",
+          "content": "Nous stockons les données suivantes selon votre utilisation :",
+          "all-players": {
+            "title": "Pour tous les joueurs :",
+            "items": {
+              "1": "Nom d'affichage en jeu, avatar, score et messages de chat <b>si au moins un joueur est connecté</b>.",
+              "2": "Les adresses IP peuvent être stockées temporairement pour la sécurité et la modération."
+            }
+          },
+          "registered-players": {
+            "title": "Pour les joueurs inscrits :",
+            "items": {
+              "1": "Email, nom d'utilisateur, avatar, statistiques de jeu, et comptes liés optionnels (ex. Google).",
+              "2": "Les données d'analyse comme le comportement de jeu, la fréquence des sessions, ou l'utilisation des fonctionnalités <b>peuvent être collectées pour améliorer le jeu</b>."
+            }
+          },
+          "storage-location": "Toutes les données sont stockées dans l'<b>Union européenne</b> et traitées conformément à la <link>Politique de confidentialité</link>."
+        },
+        "analytics-tracking": {
+          "title": "5. Analyse et suivi",
+          "content": "Pour améliorer le service et personnaliser l'expérience utilisateur, nous pouvons :",
+          "items": {
+            "1": "Utiliser des <b>outils d'analyse</b> (ex. PostHog ou similaires) pour suivre l'utilisation et les modèles de jeu.",
+            "2": "Analyser le comportement des utilisateurs pour détecter les bugs, améliorer le matchmaking, ou concevoir des fonctionnalités.",
+            "3": "À l'avenir, nous pourrions utiliser ces données pour <b>fournir du contenu ou des publicités personnalisées</b>, tout en respectant vos droits de confidentialité sous le RGPD."
+          },
+          "data-rights": "Vous pouvez vous opposer au suivi ou demander la suppression de vos données personnelles en nous contactant."
+        },
+        "ads-monetization": {
+          "title": "6. Publicités et monétisation",
+          "content": "La plateforme peut afficher des publicités, y compris des publicités tierces ou contextuelles. À l'avenir, des <b>publicités personnalisées</b> peuvent être affichées aux utilisateurs connectés basées sur les données d'utilisation.",
+          "consent": "Nous fournirons des mécanismes de notification et de consentement clairs si et quand des publicités comportementales ou personnalisées seront introduites."
+        },
+        "user-conduct": {
+          "title": "7. Conduite des utilisateurs",
+          "content": "Vous acceptez de :",
+          "items": {
+            "1": "Être respectueux et suivre les règles de fair-play.",
+            "2": "Ne pas tricher, harceler, usurper l'identité d'autrui, ou utiliser des noms d'utilisateur ou avatars offensants.",
+            "3": "Ne pas spammer ou abuser du chat ou de toute fonctionnalité de communication."
+          },
+          "enforcement": "Nous nous réservons le droit de bannir ou de restreindre les utilisateurs qui violent ces règles."
+        },
+        "moderation-reporting": {
+          "title": "8. Modération et signalement",
+          "items": {
+            "1": "Les messages de chat sont stockés temporairement et peuvent être sauvegardés en entier pour les jeux impliquant des joueurs inscrits.",
+            "2": "Nous pouvons conserver les messages quand un joueur soumet un signalement ou si la modération est requise.",
+            "3": "Vous pouvez signaler un abus par email (voir la section contact).",
+            "4": "Les actions de modération et les signalements peuvent être enregistrés pour assurer la transparence et l'équité."
+          }
+        },
+        "availability": {
+          "title": "9. Disponibilité",
+          "content": "Le service est fourni \"tel quel\". Nous pouvons modifier, suspendre, ou arrêter le site web ou les fonctionnalités à tout moment sans préavis."
+        },
+        "intellectual-property": {
+          "title": "10. Propriété intellectuelle",
+          "content": "Tout le contenu original, les œuvres d'art, et le code appartiennent à Maxent Rouault sauf indication contraire. Vous ne pouvez pas réutiliser ou redistribuer toute partie du site web sans permission."
+        },
+        "legal": {
+          "title": "11. Légal",
+          "jurisdiction": "Ce site est régi par le droit français et conforme au Règlement général sur la protection des données (RGPD).",
+          "disputes": "Les litiges juridiques seront traités par les tribunaux français."
+        },
+        "contact": {
+          "title": "12. Contact",
+          "general": "Demandes générales : <email></email>"
+        }
+      }
+    },
     "Leaderboard": {
       "head": {
         "title": "Classement | Skymo - Jeu de Cartes Skyjo en Ligne",

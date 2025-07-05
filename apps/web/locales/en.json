@@ -260,6 +260,115 @@
         }
       }
     },
+    "TermsOfService": {
+      "head": {
+        "title": "Terms of Service | Skymo - Skyjo Online Card Game",
+        "description": "Read the Terms of Service for Skymo, the online Skyjo card game platform. Learn about user obligations, service usage, and platform policies.",
+        "keywords": "Terms of Service,Skymo,Skyjo,online card game,user agreement,platform rules"
+      },
+      "content": {
+        "title": "Terms of Service",
+        "last-update": {
+          "text": "Last updated: {date}",
+          "date-format": "MMMM D, YYYY at HH:mm"
+        },
+        "welcome": "Welcome to <b>skymo.online</b>, an online multiplayer card game operated by Maxent Rouault. By accessing or using this website, you agree to these Terms of Service. If you do not agree, you may not use the platform.",
+        "operator": {
+          "title": "1. Operator",
+          "content": "This website is operated by:",
+          "name": "Maxent Rouault",
+          "contact": "Contact: {email}",
+          "location": "France (non-commercial individual operator)"
+        },
+        "eligibility": {
+          "title": "2. Eligibility",
+          "content": "You may use the service as a guest or by registering an account. By using this website, you confirm that:",
+          "items": {
+            "1": "You are at least 13 years old (or the minimum age required in your country).",
+            "2": "If you are under 18, you have permission from a legal guardian."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Account & Guest Use",
+          "items": {
+            "1": "Guest players can play without registration, but some features may be limited.",
+            "2": "Registered users must provide a valid email and username.",
+            "3": "You are responsible for your account and activity. You must not share your login.",
+            "4": "You may delete your account at any time. After 48 hours, your personal data will be anonymized or permanently deleted."
+          }
+        },
+        "data-storage": {
+          "title": "4. Data Storage",
+          "content": "We store the following data depending on your use:",
+          "all-players": {
+            "title": "For All Players:",
+            "items": {
+              "1": "In-game display name, avatar, score, and chat messages <b>if at least one player is logged in</b>.",
+              "2": "IP addresses may be temporarily stored for security and moderation."
+            }
+          },
+          "registered-players": {
+            "title": "For Registered Players:",
+            "items": {
+              "1": "Email, username, avatar, game stats, and optionally linked accounts (e.g., Google).",
+              "2": "Analytics data such as gameplay behavior, session frequency, or feature usage <b>may be collected to improve the game</b>."
+            }
+          },
+          "storage-location": "All data is stored in the <b>European Union</b> and handled in accordance with the <link>Privacy Policy</link>."
+        },
+        "analytics-tracking": {
+          "title": "5. Analytics & Tracking",
+          "content": "To improve the service and personalize the user experience, we may:",
+          "items": {
+            "1": "Use <b>analytics tools</b> (e.g., PostHog or similar) to track usage and gameplay patterns.",
+            "2": "Analyze user behavior to detect bugs, improve matchmaking, or design features.",
+            "3": "In the future, we may use this data to <b>deliver personalized content or ads</b>, while respecting your privacy rights under GDPR."
+          },
+          "data-rights": "You can object to tracking or request deletion of personal data by contacting us."
+        },
+        "ads-monetization": {
+          "title": "6. Ads & Monetization",
+          "content": "The platform may display ads, including third-party or contextual ads. In the future, <b>personalized ads</b> may be shown to logged-in users based on usage data.",
+          "consent": "We will provide clear notice and consent mechanisms if and when behavioral or personalized ads are introduced."
+        },
+        "user-conduct": {
+          "title": "7. User Conduct",
+          "content": "You agree to:",
+          "items": {
+            "1": "Be respectful and follow fair play rules.",
+            "2": "Not cheat, harass, impersonate others, or use offensive usernames or avatars.",
+            "3": "Not spam or abuse the chat or any communication features."
+          },
+          "enforcement": "We reserve the right to ban or restrict users who violate these rules."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderation & Reporting",
+          "items": {
+            "1": "Chat messages are stored temporarily and may be saved in full for games involving registered players.",
+            "2": "We may retain messages when a player submits a report or if moderation is required.",
+            "3": "You may report abuse by email (see contact section).",
+            "4": "Moderation actions and reports may be logged to ensure transparency and fairness."
+          }
+        },
+        "availability": {
+          "title": "9. Availability",
+          "content": "The service is provided \"as is.\" We may modify, suspend, or discontinue the website or features at any time without notice."
+        },
+        "intellectual-property": {
+          "title": "10. Intellectual Property",
+          "content": "All original content, artwork, and code belong to Maxent Rouault unless otherwise stated. You may not reuse or redistribute any part of the website without permission."
+        },
+        "legal": {
+          "title": "11. Legal",
+          "jurisdiction": "This site is governed by French law and complies with the General Data Protection Regulation (GDPR).",
+          "disputes": "Legal disputes will be handled in French courts."
+        },
+        "contact": {
+          "title": "12. Contact",
+          "general": "General inquiries: <email></email>"
+        }
+      }
+    },
     "Leaderboard": {
       "head": {
         "title": "Leaderboard | Skymo - Skyjo Online Card Game",
