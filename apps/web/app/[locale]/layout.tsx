@@ -150,7 +150,7 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
   )
 
   const headersList = await headers()
-  const pathname = headersList.get("x-pathname") || "/"
+  const pathname = headersList.get("referer") || "/"
   const session = await verifySession()
 
   if (session) {
