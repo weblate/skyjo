@@ -99,7 +99,6 @@ async function handleReportValidModal(
       return
     }
 
-
     if (penalty.userId === null) {
       await db
         .delete(penaltyTable)

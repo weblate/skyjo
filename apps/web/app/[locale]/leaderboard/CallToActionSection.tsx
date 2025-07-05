@@ -27,16 +27,22 @@ export default function CallToActionSection() {
   return (
     <div className="mt-20 text-center bg-gradient-to-r from-blue-50 to-purple-50 dark:from-blue-900/20 dark:to-purple-900/20 border-2 border-black dark:border-dark-border rounded-lg p-8">
       <h3 className="text-xl font-semibold text-black dark:text-dark-font mb-2">
-        {isAuthenticated ? t("callToAction.authenticated.title") : t("callToAction.guest.title")}
+        {isAuthenticated
+          ? t("callToAction.authenticated.title")
+          : t("callToAction.guest.title")}
       </h3>
       <p className="text-muted-foreground mb-4">
-        {isAuthenticated ? t("callToAction.authenticated.description") : t("callToAction.guest.description")}
+        {isAuthenticated
+          ? t("callToAction.authenticated.description")
+          : t("callToAction.guest.description")}
       </p>
       <div className="flex flex-col sm:flex-row gap-4 justify-center">
         {isAuthenticated ? (
           <>
             <Link href="/create">
-              <Button className="min-w-[140px]">{t("callToAction.authenticated.createGame")}</Button>
+              <Button className="min-w-[140px]">
+                {t("callToAction.authenticated.createGame")}
+              </Button>
             </Link>
             <Link href="/search">
               <Button className="min-w-[140px] border-2 border-black dark:border-dark-border">
@@ -46,10 +52,12 @@ export default function CallToActionSection() {
           </>
         ) : (
           <Link href="/signup">
-            <Button className="min-w-[140px]">{t("callToAction.guest.signup")}</Button>
+            <Button className="min-w-[140px]">
+              {t("callToAction.guest.signup")}
+            </Button>
           </Link>
         )}
       </div>
     </div>
   )
-} 
+}

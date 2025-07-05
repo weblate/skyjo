@@ -81,9 +81,7 @@ const SignupForm = () => {
 
       <div className="flex items-center gap-4 my-6">
         <hr className="flex-1 border-gray-300 dark:border-gray-600" />
-        <p className="text-gray-500 dark:text-gray-400 text-sm">
-          {t("or")}
-        </p>
+        <p className="text-gray-500 dark:text-gray-400 text-sm">{t("or")}</p>
         <hr className="flex-1 border-gray-300 dark:border-gray-600" />
       </div>
 
@@ -109,9 +107,7 @@ const SignupForm = () => {
             )}
           />
           {apiError && (
-            <div className="text-red-600 text-sm">
-              {tErrors(apiError)}
-            </div>
+            <div className="text-red-600 text-sm">{tErrors(apiError)}</div>
           )}
           <Button type="submit" className="w-full" disabled={isPending}>
             <MailIcon className="w-4 h-4 mr-2" />
@@ -152,4 +148,4 @@ const SignupForm = () => {
   )
 }
 
-export default SignupForm 
+export default SignupForm

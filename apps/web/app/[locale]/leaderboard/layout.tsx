@@ -89,4 +89,4 @@ export default async function LeaderboardLayout({
       <Footer />
     </div>
   )
-} 
+}

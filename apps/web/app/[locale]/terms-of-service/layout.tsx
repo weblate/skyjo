@@ -22,20 +22,30 @@ export async function generateMetadata(props: TermsOfServiceLayoutProps) {
 
   const metadata: Metadata = {
     title: "Terms of Service | Skymo - Skyjo Online Card Game",
-    description: "Read the Terms of Service for Skymo, the online Skyjo card game platform. Learn about user obligations, service usage, and platform policies.",
-    keywords: ["Terms of Service", "Skymo", "Skyjo", "online card game", "user agreement", "platform rules"],
+    description:
+      "Read the Terms of Service for Skymo, the online Skyjo card game platform. Learn about user obligations, service usage, and platform policies.",
+    keywords: [
+      "Terms of Service",
+      "Skymo",
+      "Skyjo",
+      "online card game",
+      "user agreement",
+      "platform rules",
+    ],
     alternates: {
       canonical: currentUrl,
       languages: generateAlternatesLanguages("terms-of-service"),
     },
     openGraph: {
       title: "Terms of Service | Skymo - Skyjo Online Card Game",
-      description: "Read the Terms of Service for Skymo, the online Skyjo card game platform. Learn about user obligations, service usage, and platform policies.",
+      description:
+        "Read the Terms of Service for Skymo, the online Skyjo card game platform. Learn about user obligations, service usage, and platform policies.",
       url: currentUrl,
     },
     twitter: {
       title: "Terms of Service | Skymo - Skyjo Online Card Game",
-      description: "Read the Terms of Service for Skymo, the online Skyjo card game platform. Learn about user obligations, service usage, and platform policies.",
+      description:
+        "Read the Terms of Service for Skymo, the online Skyjo card game platform. Learn about user obligations, service usage, and platform policies.",
     },
   }
 
@@ -52,4 +62,4 @@ export default async function TermsOfServiceLayout({
       <Footer />
     </>
   )
-} 
+}

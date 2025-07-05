@@ -16,4 +16,4 @@ export interface DiscordJobData {
   data: ReportJobData
 }
 
-export type JobType = "discord:report" 
+export type JobType = "discord:report"
