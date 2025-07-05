@@ -263,11 +263,11 @@
     "Leaderboard": {
       "head": {
         "title": "Leaderboard | Skymo - Skyjo Online Card Game",
-        "description": "View the top players on Skymo! Check out the best Skyjo players and their win rates in our competitive leaderboard.",
+        "description": "View the top players on Skymo! Check out the best Skymo players and their win rates in our competitive leaderboard.",
         "keywords": "Skymo,Skyjo,leaderboard,top players,rankings,best players,win rate,competitive,online card game"
       },
-      "title": "Top Players",
-      "subtitle": "Discover the best Skyjo players and compete for the top spots!",
+      "title": "Leaderboard",
+      "subtitle": "Discover the best Skymo players and compete for the top spots!",
       "lastUpdated": "Last updated: {date}",
       "columns": {
         "rank": "Rank",
@@ -278,7 +278,24 @@
       },
       "noData": "No players found in the leaderboard yet.",
       "error": "Unable to load the leaderboard at the moment.",
-      "tryAgainLater": "Please try again later."
+      "tryAgainLater": "Please try again later.",
+      "callToAction": {
+        "guest": {
+          "title": "Ready to compete?",
+          "description": "Sign up to track your progress and compete with players worldwide!",
+          "signup": "Sign Up Now"
+        },
+        "authenticated": {
+          "title": "Ready to compete?",
+          "description": "Jump into a game and climb the leaderboard!",
+          "createGame": "Create Game",
+          "joinGame": "Join Game"
+        }
+      },
+      "errorActions": {
+        "refresh": "Refresh",
+        "backHome": "Back Home"
+      }
     },
     "Rules": {
       "head": {

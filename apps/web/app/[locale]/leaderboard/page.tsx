@@ -1,10 +1,13 @@
+import { Button } from "@/components/ui/button"
+import { Link } from "@/i18n/routing"
 import { Locales } from "@skymo/shared/constants"
 import dayjs from "dayjs"
-import { Award, Medal, Trophy } from "lucide-react"
+import { Home, RefreshCw, Trophy } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import CallToActionSection from "./CallToActionSection"
 
 interface LeaderboardEntry {
-  rank: number
+  rank: string
   userId: string
   username: string
   avatar: string
@@ -29,37 +32,16 @@ async function getLeaderboard(): Promise<LeaderboardData> {
   return res.json()
 }
 
-function getRankIcon(rank: number) {
-  switch (rank) {
-    case 1:
-      return <Trophy className="h-6 w-6 text-yellow-500" />
-    case 2:
-      return <Medal className="h-6 w-6 text-gray-400" />
-    case 3:
-      return <Award className="h-6 w-6 text-amber-600" />
-    default:
-      return <span className="font-bold text-lg">{rank}</span>
-  }
+function getWinRateBadgeColor(winRate: number) {
+  if (winRate >= 80) return "bg-green-500/20 text-green-800 dark:text-green-300"
+  if (winRate >= 60) return "bg-blue-500/20 text-blue-800 dark:text-blue-300"
+  if (winRate >= 40)
+    return "bg-yellow-500/20 text-yellow-800 dark:text-yellow-300"
+  return "bg-red-500/20 text-red-800 dark:text-red-300"
 }
 
 interface LeaderboardPageProps {
   params: Promise<{ locale: Locales }>
-}
-
-export async function generateMetadata({
-  params,
-}: Readonly<LeaderboardPageProps>) {
-  const { locale } = await params
-  const t = await getTranslations({
-    locale,
-    namespace: "pages.Leaderboard.head",
-  })
-
-  return {
-    title: t("title"),
-    description: t("description"),
-    keywords: t("keywords"),
-  }
 }
 
 export default async function LeaderboardPage({
@@ -72,103 +54,131 @@ export default async function LeaderboardPage({
     const leaderboardData = await getLeaderboard()
 
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-center mb-2">{t("title")}</h1>
-          <p className="text-center text-muted-foreground">{t("subtitle")}</p>
-        </div>
-
-        <div className="max-w-4xl mx-auto">
-          <div className="space-y-4">
-            <div className="flex justify-between items-center">
-              <p className="text-sm text-muted-foreground">
-                {t("lastUpdated", {
-                  date: dayjs(leaderboardData.lastUpdated).format(
-                    "DD/MM/YYYY HH:mm",
-                  ),
-                })}
-              </p>
-            </div>
-
-            {leaderboardData.leaderboard.length === 0 ? (
-              <div className="text-center py-12">
-                <p className="text-muted-foreground">{t("noData")}</p>
-              </div>
-            ) : (
-              <div className="rounded-lg border-2 border-black overflow-hidden">
-                <div className="overflow-x-auto">
-                  <table className="w-full bg-container">
-                    <thead className="bg-muted/50">
-                      <tr>
-                        <th className="px-4 py-3 text-left font-medium">
-                          {t("columns.rank")}
-                        </th>
-                        <th className="px-4 py-3 text-left font-medium">
-                          {t("columns.player")}
-                        </th>
-                        <th className="px-4 py-3 text-center font-medium">
-                          {t("columns.wins")}
-                        </th>
-                        <th className="px-4 py-3 text-center font-medium">
-                          {t("columns.totalGames")}
-                        </th>
-                        <th className="px-4 py-3 text-center font-medium">
-                          {t("columns.winRate")}
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y">
-                      {leaderboardData.leaderboard.map((player) => (
-                        <tr
-                          key={player.userId}
-                          className="hover:bg-muted/50 transition-colors"
-                        >
-                          <td className="px-4 py-4">
-                            <div className="flex items-center justify-center w-8">
-                              {getRankIcon(player.rank)}
-                            </div>
-                          </td>
-                          <td className="px-4 py-4">
-                            <div className="flex items-center gap-3">
-                              <img
-                                src={`/avatars/${player.avatar}.svg`}
-                                alt={`${player.username} avatar`}
-                                className="h-8 w-8 rounded-full"
-                              />
-                              <span className="font-medium">
-                                {player.username}
-                              </span>
-                            </div>
-                          </td>
-                          <td className="px-4 py-4 text-center font-medium">
-                            {player.wins}
-                          </td>
-                          <td className="px-4 py-4 text-center">
-                            {player.totalGames}
-                          </td>
-                          <td className="px-4 py-4 text-center">
-                            <span className="inline-flex items-center px-2 py-1 rounded-full text-sm font-medium bg-green-100 text-green-800">
-                              {player.winRate.toFixed(1)}%
-                            </span>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            )}
+      <div className="my-8">
+        {/* Header Section */}
+        <div className="text-center space-y-4">
+          <div className="space-y-2">
+            <h1 className="text-4xl md:text-5xl font-bold text-black dark:text-dark-font">
+              {t("title")}
+            </h1>
+            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+              {t("subtitle")}
+            </p>
           </div>
         </div>
+
+        <div className="mt-8 flex flex-col gap-2">
+          <div className="bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border rounded-lg overflow-hidden">
+            {/* Table */}
+            <div className="overflow-x-auto">
+              <table className="w-full">
+                <thead className="bg-muted/50 border-b-2 border-black dark:border-dark-border">
+                  <tr>
+                    <th className="px-4 py-3 text-left font-semibold text-black dark:text-dark-font">
+                      {t("columns.rank")}
+                    </th>
+                    <th className="px-4 py-3 text-left font-semibold text-black dark:text-dark-font">
+                      {t("columns.player")}
+                    </th>
+                    <th className="px-4 py-3 text-center font-semibold text-black dark:text-dark-font">
+                      {t("columns.wins")}
+                    </th>
+                    <th className="px-4 py-3 text-center font-semibold text-black dark:text-dark-font">
+                      {t("columns.totalGames")}
+                    </th>
+                    <th className="px-4 py-3 text-center font-semibold text-black dark:text-dark-font">
+                      {t("columns.winRate")}
+                    </th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-black/10 dark:divide-white/10">
+                  {leaderboardData.leaderboard.map((player) => (
+                    <tr
+                      key={player.userId}
+                      className="hover:bg-muted/30 transition-colors duration-200 group"
+                    >
+                      <td className="px-4 py-4">
+                        <div className="flex items-center justify-center w-8">
+                          {player.rank}
+                        </div>
+                      </td>
+                      <td className="px-4 py-4">
+                        <Link
+                          href={`/u/${player.username}`}
+                          className="flex items-center gap-3 transition-all text-black underline-offset-0 hover:underline hover:underline-offset-4"
+                        >
+                          <img
+                            src={`/avatars/${player.avatar}.svg`}
+                            alt={`${player.username} avatar`}
+                            className="size-9"
+                          />
+                          <span className="font-medium text-black dark:text-dark-font">
+                            {player.username}
+                          </span>
+                        </Link>
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <span className="text-black dark:text-dark-font">
+                          {player.wins}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <span className="text-black dark:text-dark-font">
+                          {player.totalGames}
+                        </span>
+                      </td>
+                      <td className="px-4 py-4 text-center">
+                        <span
+                          className={`inline-flex items-center px-2 py-1 rounded-full text-sm font-medium ${getWinRateBadgeColor(player.winRate)}`}
+                        >
+                          {player.winRate.toFixed(1)}%
+                        </span>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <p className="text-sm text-right text-black/80 dark:text-dark-font">
+            {t("lastUpdated", {
+              date: dayjs(leaderboardData.lastUpdated).format(
+                "DD/MM/YYYY HH:mm",
+              ),
+            })}
+          </p>
+        </div>
+
+        {/* Call to Action */}
+        <CallToActionSection />
       </div>
     )
   } catch {
     return (
-      <div className="container mx-auto px-4 py-8">
-        <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">{t("title")}</h1>
-          <p className="text-muted-foreground mb-4">{t("error")}</p>
-          <p className="text-sm text-muted-foreground">{t("tryAgainLater")}</p>
+      <div className="text-center py-16">
+        <div className="space-y-4">
+          <Trophy className="h-16 w-16 text-muted-foreground mx-auto" />
+          <div className="space-y-2">
+            <h1 className="text-4xl font-bold text-black dark:text-dark-font">
+              {t("title")}
+            </h1>
+            <p className="text-lg text-muted-foreground">{t("error")}</p>
+            <p className="text-sm text-muted-foreground">
+              {t("tryAgainLater")}
+            </p>
+          </div>
+          <div className="flex gap-4 justify-center">
+            <Button onClick={() => window.location.reload()}>
+              <RefreshCw className="h-4 w-4 mr-2" />
+              {t("errorActions.refresh")}
+            </Button>
+            <Link href="/">
+              <Button variant="small">
+                <Home className="h-4 w-4 mr-2" />
+                {t("errorActions.backHome")}
+              </Button>
+            </Link>
+          </div>
         </div>
       </div>
     )

@@ -263,11 +263,11 @@
     "Leaderboard": {
       "head": {
         "title": "Classement | Skymo - Jeu de Cartes Skyjo en Ligne",
-        "description": "Consultez les meilleurs joueurs sur Skymo ! Découvrez les champions de Skyjo et leurs taux de victoire dans notre classement compétitif.",
+        "description": "Consultez les meilleurs joueurs sur Skymo ! Découvrez les champions de Skymo et leurs taux de victoire dans notre classement compétitif.",
         "keywords": "Skymo,Skyjo,classement,meilleurs joueurs,rankings,classement,taux de victoire,compétitif,jeu de cartes en ligne"
       },
-      "title": "Meilleurs Joueurs",
-      "subtitle": "Découvrez les meilleurs joueurs de Skyjo et rivalisez pour les premières places !",
+      "title": "Classement",
+      "subtitle": "Découvrez les meilleurs joueurs de Skymo et rivalisez pour les premières places !",
       "lastUpdated": "Dernière mise à jour : {date}",
       "columns": {
         "rank": "Rang",
@@ -278,7 +278,24 @@
       },
       "noData": "Aucun joueur trouvé dans le classement pour le moment.",
       "error": "Impossible de charger le classement pour le moment.",
-      "tryAgainLater": "Veuillez réessayer plus tard."
+      "tryAgainLater": "Veuillez réessayer plus tard.",
+      "callToAction": {
+        "guest": {
+          "title": "Prêt pour la compétition ?",
+          "description": "Inscrivez-vous pour suivre vos progrès et rivaliser avec des joueurs du monde entier !",
+          "signup": "S'inscrire Maintenant"
+        },
+        "authenticated": {
+          "title": "Prêt pour la compétition ?",
+          "description": "Lancez-vous dans une partie et grimpez dans le classement !",
+          "createGame": "Créer une Partie",
+          "joinGame": "Rejoindre une Partie"
+        }
+      },
+      "errorActions": {
+        "refresh": "Actualiser",
+        "backHome": "Retour à l'Accueil"
+      }
     },
     "Rules": {
       "head": {
