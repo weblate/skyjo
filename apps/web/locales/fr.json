@@ -307,11 +307,46 @@
     },
     "Signup": {
       "head": {
-        "title": "Inscription | Skymo - Jeu de Cartes Skyjo en Ligne",
-        "description": "Inscrivez-vous sur Skymo pour jouer à Skyjo en ligne. Créez un compte gratuit en quelques secondes et jouez immédiatement avec vos amis ou d'autres joueurs."
+        "title": "Inscrivez-vous | Skymo - Jouez à Skyjo en Ligne Gratuitement",
+        "description": "Jouez à Skyjo en ligne avec vos amis ! Créez un compte gratuit sur Skymo pour suivre vos progrès, débloquer du contenu exclusif et rejoindre la communauté.",
+        "keywords": "skymo,skyjo en ligne,jouer à skyjo,jouer à skyjo sur skymo,skymo skyjo,plateforme skyjo,skyjo multijoueur,skyjo avec amis,skyjo gratuit,jeu de cartes en ligne,créer un compte skymo,jouer skyjo navigateur"
+      },
+      "title": "Inscription",
+      "or": "Ou",
+      "advantages": {
+        "title": "Rejoignez l'aventure",
+        "subtitle": "Créez un compte pour débloquer un monde de possibilités et améliorer votre expérience.",
+        "features": {
+          "track-progress": {
+            "title": "Suivez vos progrès",
+            "description": "Voyez comment vous vous classez par rapport aux autres et surveillez votre amélioration au fil du temps."
+          },
+          "personalized-experience": {
+            "title": "Expérience personnalisée",
+            "description": "Obtenez des recommandations et du contenu adaptés juste pour vous."
+          },
+          "join-community": {
+            "title": "Rejoignez la communauté",
+            "description": "Connectez-vous avec d'autres aventuriers, partagez des conseils et nouez de nouvelles amitiés."
+          },
+          "exclusive-content": {
+            "title": "Contenu exclusif",
+            "description": "Accédez à des défis spéciaux, des récompenses et des mises à jour anticipées."
+          }
+        }
+      },
+      "form": {
+        "email": {
+          "label": "Email",
+          "button": "Continuer avec l'email"
+        }
+      },
+      "already-have-account": {
+        "description": "Vous avez déjà un compte ?",
+        "link": "Se connecter"
       },
       "terms-acceptance": {
-        "text": "En créant un compte, vous acceptez nos",
+        "text": "En continuant, vous acceptez nos",
         "terms-link": "Conditions d'utilisation",
         "and": "et notre",
         "privacy-link": "Politique de confidentialité"

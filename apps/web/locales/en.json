@@ -307,12 +307,34 @@
     },
     "Signup": {
       "head": {
-        "title": "Signup | Skymo - Skyjo Online Card Game",
-        "description": "Sign up for Skymo to play Skyjo online. Create your free account in seconds and start playing instantly with friends or players from around the world.",
-        "keywords": "Skymo,Skyjo,signup,online card game,Skyjo game,card game,online game"
+        "title": "Join Skymo | Play Skyjo Online for Free",
+        "description": "Play Skyjo online with friends! Create a free Skymo account to track your progress, unlock exclusive content, and join a vibrant community.",
+        "keywords": "skymo,play skyjo online,skyjo online game,sign up skyjo,create skymo account,join skymo,skymo skyjo,online card game,multiplayer skyjo,free skyjo game,play skyjo with friends,skyjo progress tracking, skyjo community,exclusive skyjo content"
       },
       "title": "Signup",
       "or": "Or",
+      "advantages": {
+        "title": "Join the Adventure",
+        "subtitle": "Create an account to unlock a world of possibilities and enhance your experience.",
+        "features": {
+          "track-progress": {
+            "title": "Track Your Progress",
+            "description": "See how you rank against others and monitor your improvement over time."
+          },
+          "personalized-experience": {
+            "title": "Personalized Experience",
+            "description": "Get recommendations and content tailored just for you."
+          },
+          "join-community": {
+            "title": "Join the Community",
+            "description": "Connect with fellow adventurers, share tips, and make new friends."
+          },
+          "exclusive-content": {
+            "title": "Exclusive Content",
+            "description": "Gain access to special challenges, rewards, and early updates."
+          }
+        }
+      },
       "form": {
         "email": {
           "label": "Email",
@@ -324,7 +346,7 @@
         "link": "Login"
       },
       "terms-acceptance": {
-        "text": "By creating an account, you agree to our",
+        "text": "By continuing, you agree to our",
         "terms-link": "Terms of Service",
         "and": "and",
         "privacy-link": "Privacy Policy"
