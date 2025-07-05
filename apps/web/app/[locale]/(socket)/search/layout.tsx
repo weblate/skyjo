@@ -55,7 +55,7 @@ export default async function SearchLayout({
     <>
       <Navbar />
       <div className="relative min-h-svh w-full z-20 flex flex-col">
-        <div className="w-full max-w-xl flex flex-grow self-center flex-col justify-center py-8 p-4">
+        <div className="w-full max-w-xl flex grow self-center flex-col justify-center py-8 p-4">
           <div className="-translate-y-12 bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border rounded-2xl w-full flex flex-col gap-2 p-4 sm:p-8">
             {children}
           </div>

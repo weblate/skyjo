@@ -20,7 +20,7 @@ export default function LeaderboardLoading() {
                 key={`leaderboard-loading-${i}`}
                 className="p-4 flex items-center gap-4"
               >
-                <Skeleton className="h-8 w-8 rounded bg-gray-300 dark:bg-gray-500" />
+                <Skeleton className="h-8 w-8 rounded-sm bg-gray-300 dark:bg-gray-500" />
                 <Skeleton className="h-8 w-8 rounded-full bg-gray-300 dark:bg-gray-500" />
                 <Skeleton className="h-6 w-32 bg-gray-300 dark:bg-gray-500" />
                 <div className="ml-auto flex gap-4">

@@ -72,7 +72,7 @@ const PWABanner = () => {
           initial={{ opacity: 0, y: 100 }}
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 100 }}
-          className="z-[100] fixed bottom-4 left-4 right-4"
+          className="z-100 fixed bottom-4 left-4 right-4"
         >
           <div className="bg-white dark:bg-dark-input mx-auto px-4 pt-2 pb-2 rounded-xl border-2 border-black dark:border-dark-border flex flex-col gap-1 max-w-2xl">
             <div className="flex flex-row items-end justify-between gap-2">

@@ -26,7 +26,7 @@ const imageVariants = cva("select-none", {
     size: {
       tiny: "size-6",
       small: " size-8 sm:size-10",
-      normal: " size-12 smh:sm:size-16 mdh:md:size-[6.25rem]",
+      normal: " size-12 smh:sm:size-16 mdh:md:size-25",
     },
   },
   defaultVariants: {
@@ -41,7 +41,7 @@ const textVariants = cva(
       size: {
         tiny: "text-xs w-20",
         small: "text-sm w-20",
-        normal: "text-lg w-[6.25rem]",
+        normal: "text-lg w-25",
       },
     },
     defaultVariants: {

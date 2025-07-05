@@ -1,6 +1,227 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@plugin 'tailwind-scrollbar';
+
+@utility container {
+  margin-inline: auto;
+  padding-inline: 2rem;
+}
+
+@theme {
+  --font-shantell: "Shantell Sans", sans-serif;
+
+  --breakpoint-2xl: 1400px;
+
+  --breakpoint-smh: 300px;
+  --breakpoint-mdh: 690px;
+  --breakpoint-lgh: 760px;
+  --breakpoint-xlh: 860px;
+
+  --color-card-discard: #dc2626;
+  --color-card-not-visible: #fefdf7;
+  --color-card-negative: #5992e7;
+  --color-card-neutral: #a0c4ff;
+  --color-card-low: #7ace7a;
+  --color-card-medium: #f3e948;
+  --color-card-high: #f56e6e;
+
+  --color-body: #f8f7eb;
+  --color-button: #f6e9c9;
+  --color-container: #fefdf7;
+
+  --color-dark-card-empty: #c5c5c2;
+  --color-dark-card-discard: #bc2323;
+  --color-dark-card-not-visible: #5a5a58;
+  --color-dark-card-negative: #517fc3;
+  --color-dark-card-neutral: #8aa7d6;
+  --color-dark-card-low: #6cae6c;
+  --color-dark-card-medium: #ccc444;
+  --color-dark-card-high: #ce6262;
+
+  --color-dark-body: #1c1c1c;
+  --color-dark-container: #242424;
+  --color-dark-input: #222222;
+  --color-dark-button: #1a1a1a;
+  --color-dark-font: #d2d2d2;
+  --color-dark-border: #898989;
+  --color-dark-focus: #404040;
+
+  --animate-accordion-down: accordion-down 0.2s ease-out;
+  --animate-accordion-up: accordion-up 0.2s ease-out;
+  --animate-scale: scale 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-small-scale: small-scale 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-small-bounce: small-bounce 1s infinite;
+  --animate-wizz: wizz 1s;
+  --animate-loading-card: loading-card 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  --animate-fade-in-scale: fade-in-scale 0.3s ease-out;
+
+  @keyframes fade-in-scale {
+    0% {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes accordion-down {
+    from {
+      height: 0;
+    }
+    to {
+      height: var(--radix-accordion-content-height);
+    }
+  }
+
+  @keyframes accordion-up {
+    from {
+      height: var(--radix-accordion-content-height);
+    }
+    to {
+      height: 0;
+    }
+  }
+
+  @keyframes scale {
+    0% {
+      scale: 1;
+    }
+    50% {
+      scale: 1.1;
+    }
+    100% {
+      scale: 1;
+    }
+  }
+
+  @keyframes small-scale {
+    0% {
+      scale: 1;
+    }
+    50% {
+      scale: 1.05;
+    }
+    100% {
+      scale: 1;
+    }
+  }
+
+  @keyframes loading-card {
+    0% {
+      scale: 1;
+      opacity: 1;
+    }
+    50% {
+      scale: 1.1;
+      opacity: 0.5;
+    }
+    100% {
+      scale: 1;
+      opacity: 1;
+    }
+  }
+
+  @keyframes small-bounce {
+    0% {
+      transform: translateY(-10%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+    50% {
+      transform: none;
+      animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
+    }
+    100% {
+      transform: translateY(-10%);
+      animation-timing-function: cubic-bezier(0.8, 0, 1, 1);
+    }
+  }
+
+  @keyframes wizz {
+    5% {
+      transform: translate(7px, 7px);
+    }
+    10% {
+      transform: translateY(-7px);
+    }
+    15% {
+      transform: translate(-1px, 5px);
+    }
+    20% {
+      transform: translate(-6px, 8px);
+    }
+    25% {
+      transform: translate(-5px, -7px);
+    }
+    30% {
+      transform: translate(6px, 7px);
+    }
+    35% {
+      transform: translate(9px, -6px);
+    }
+    40% {
+      transform: translate(-3px, 9px);
+    }
+    45% {
+      transform: translate(-3px, 4px);
+    }
+    50% {
+      transform: translate(-3px, 1px);
+    }
+    55% {
+      transform: translate(-8px, 3px);
+    }
+    60% {
+      transform: translate(7px, 3px);
+    }
+    65% {
+      transform: translate(-1px);
+    }
+    70% {
+      transform: translate(7px, -4px);
+    }
+    75% {
+      transform: translate(-2px, -8px);
+    }
+    80% {
+      transform: translateY(-9px);
+    }
+    85% {
+      transform: translate(-6px, 7px);
+    }
+    90% {
+      transform: translate(9px, 1px);
+    }
+    95% {
+      transform: translate(-9px, 7px);
+    }
+    100% {
+      transform: translateY(7px);
+    }
+  }
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
 
 @layer base {
   @font-face {

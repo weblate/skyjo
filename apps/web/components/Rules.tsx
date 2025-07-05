@@ -20,7 +20,7 @@ const Rules = () => {
             <Card value={0} size="tiny" className="w-8" disabled />
           </div>
           <div className="flex flex-row gap-2 items-center">
-            <p className="w-8 text-end flex-shrink-0">10x</p>
+            <p className="w-8 text-end shrink-0">10x</p>
             <div className="flex flex-row items-center flex-wrap gap-1">
               {[-1, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((value) => (
                 <Card

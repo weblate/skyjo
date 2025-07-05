@@ -1,7 +1,8 @@
 import { Locales } from "@skymo/shared/constants"
 import dayjs from "dayjs"
-import { Home, RefreshCw, Trophy } from "lucide-react"
+import { Home, Trophy } from "lucide-react"
 import { getTranslations } from "next-intl/server"
+import RefreshButton from "@/components/RefreshButton"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
 import CallToActionSection from "./CallToActionSection"
@@ -168,10 +169,7 @@ export default async function LeaderboardPage({
             </p>
           </div>
           <div className="flex gap-4 justify-center">
-            <Button onClick={() => window.location.reload()}>
-              <RefreshCw className="h-4 w-4 mr-2" />
-              {t("errorActions.refresh")}
-            </Button>
+            <RefreshButton>{t("errorActions.refresh")}</RefreshButton>
             <Link href="/">
               <Button variant="small">
                 <Home className="h-4 w-4 mr-2" />

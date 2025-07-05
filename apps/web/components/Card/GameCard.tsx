@@ -64,7 +64,7 @@ export const GameCard = ({
           type: "hidden",
           nbPlayers: playerCount as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8,
         }),
-        "group/card card-perspective-1000 focus-visible:outline-none",
+        "group/card card-perspective-1000 focus-visible:outline-hidden",
         className,
       )}
       onClick={handleClick}

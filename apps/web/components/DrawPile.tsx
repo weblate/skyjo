@@ -30,7 +30,7 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
         onClick={onClick}
         title={t("title")}
         className={cn(
-          "!shadow-[3px_3px_0px_0px_rgba(0,0,0)] !mdh:md:shadow-[4px_4px_0px_0px_rgba(0,0,0)]",
+          "shadow-[3px_3px_0px_0px_rgba(0,0,0)]! !mdh:md:shadow-[4px_4px_0px_0px_rgba(0,0,0)]",
           shouldAnimate ? "animate-scale" : "",
         )}
         disabled={!isPlayerTurn || !turnStatus.isChooseAPile}

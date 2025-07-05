@@ -8,21 +8,21 @@ export const cardVariants = cva(
   {
     variants: {
       size: {
-        preview: " h-3 w-2 border rounded-sm text-transparent",
-        tiny: " h-12 w-8 border-[1.5px] rounded text-base",
-        small: "h-12 w-8 border-[1.5px] rounded text-base",
+        preview: " h-3 w-2 border rounded-xs text-transparent",
+        tiny: " h-12 w-8 border-[1.5px] rounded-sm text-base",
+        small: "h-12 w-8 border-[1.5px] rounded-sm text-base",
         normal: [
-          "w-8 h-[43px] border-2 rounded text-lg",
+          "w-8 h-[43px] border-2 rounded-sm text-lg",
           "mdh:w-10 mdh:h-[53px] mdh:rounded-md mdh:text-xl",
         ],
-        big: "h-12 w-8 smh:h-16 smh:w-12 xlh:h-20 xlh:w-14 border-2 rounded mdh:rounded-md text-base mdh:text-2xl",
+        big: "h-12 w-8 smh:h-16 smh:w-12 xlh:h-20 xlh:w-14 border-2 rounded-sm mdh:rounded-md text-base mdh:text-2xl",
       },
       type: {
         hidden: "border-none bg-transparent",
         discard:
-          "bg-transparent border-dashed border-card-discard dark:border-dark-card-discard !shadow-none focus-visible:outline-card-discard",
+          "bg-transparent border-dashed border-card-discard dark:border-dark-card-discard shadow-none! focus-visible:outline-card-discard",
         "no-card":
-          "bg-transparent border-dashed border-black dark:border-dark-card-empty !shadow-none",
+          "bg-transparent border-dashed border-black dark:border-dark-card-empty shadow-none!",
         "not-visible":
           "bg-card-not-visible text-card-not-visible dark:bg-dark-card-not-visible dark:text-dark-card-not-visible",
         negative: "bg-card-negative dark:bg-dark-card-negative",
@@ -99,7 +99,7 @@ export const cardVariants = cva(
         nbPlayers: [4, 5, 6, 7, 8],
         className: [
           "md:w-[26px] md:h-[35px] md:text-sm md:border-[1.5px]",
-          "lg:mdh:w-8 lg:mdh:h-[43px] lg:mdh:border-2 lg:mdh:rounded lg:mdh:text-lg",
+          "lg:mdh:w-8 lg:mdh:h-[43px] lg:mdh:border-2 lg:mdh:rounded-sm lg:mdh:text-lg",
           "lgh:w-10 lgh:h-[53px] lgh:border-2 lgh:rounded-md lgh:text-xl",
         ],
       },

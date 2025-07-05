@@ -146,7 +146,7 @@ export const UserStats = ({ stats, locale }: UserStatsProps) => {
 
   return (
     <TooltipProvider delayDuration={100}>
-      <div className="flex flex-row justify-evenly test:justify-end test:gap-8 items-end w-full max-w-screen-sm mx-auto test:mx-0">
+      <div className="flex flex-row justify-evenly test:justify-end test:gap-8 items-end w-full max-w-(--breakpoint-sm) mx-auto test:mx-0">
         {statItems.map((item) => (
           <StatItemComponent key={item.key} item={item} />
         ))}

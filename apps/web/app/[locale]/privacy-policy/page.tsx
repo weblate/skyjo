@@ -163,7 +163,7 @@ const RenderSection = ({ section }: RenderSectionProps) => {
       {tr.has("retention-table.headers") && (
         <div className="mb-6">
           <div className="overflow-x-auto">
-            <table className="w-full border-collapse border-2 border-black dark:border-dark-border rounded">
+            <table className="w-full border-collapse border-2 border-black dark:border-dark-border rounded-sm">
               <thead>
                 <tr className="bg-button dark:bg-dark-container">
                   {tr("retention-table.headers")

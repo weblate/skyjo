@@ -46,7 +46,7 @@ const SignupAdvantages = () => {
               key={feature.id}
               className="flex items-start gap-3 lg:gap-4 text-left"
             >
-              <div className="flex-shrink-0 size-5 lg:size-6 bg-green-200 dark:bg-green-900 rounded-full flex items-center justify-center">
+              <div className="shrink-0 size-5 lg:size-6 bg-green-200 dark:bg-green-900 rounded-full flex items-center justify-center">
                 <CheckIcon className="size-3 lg:size-4 text-green-700 dark:text-green-400" />
               </div>
               <div className="flex-1">

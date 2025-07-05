@@ -7,28 +7,35 @@ import * as React from "react"
 
 import { cn } from "@/lib/utils"
 
-const InputOTP = React.forwardRef<
-  React.ElementRef<typeof OTPInput>,
-  React.ComponentPropsWithoutRef<typeof OTPInput>
->(({ className, containerClassName, ...props }, ref) => (
+const InputOTP = ({
+  ref,
+  className,
+  containerClassName,
+  ...props
+}: React.ComponentPropsWithoutRef<typeof OTPInput> & {
+  ref?: React.RefObject<React.ComponentRef<typeof OTPInput>>
+}) => (
   <OTPInput
     ref={ref}
     containerClassName={cn(
-      "flex items-center gap-2 has-[:disabled]:opacity-50",
+      "flex items-center gap-2 has-disabled:opacity-50",
       containerClassName,
     )}
     className={cn("disabled:cursor-not-allowed", className)}
     {...props}
   />
-))
+)
 InputOTP.displayName = "InputOTP"
 
-const InputOTPGroup = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->(({ className, ...props }, ref) => (
+const InputOTPGroup = ({
+  ref,
+  className,
+  ...props
+}: React.ComponentPropsWithoutRef<"div"> & {
+  ref?: React.RefObject<React.ComponentRef<"div">>
+}) => (
   <div ref={ref} className={cn("flex items-center", className)} {...props} />
-))
+)
 InputOTPGroup.displayName = "InputOTPGroup"
 
 const slotVariants = cva(
@@ -45,7 +52,7 @@ const slotVariants = cva(
         error: "border-red-500 dark:border-red-600",
       },
       isActive: {
-        true: "z-10 outline outline-2 outline-offset-[-6px]",
+        true: "z-10 outline-2 outline-offset-[-6px]",
       },
     },
     compoundVariants: [
@@ -77,10 +84,15 @@ interface InputOTPSlotProps
   index: number
 }
 
-const InputOTPSlot = React.forwardRef<
-  React.ElementRef<"div">,
-  InputOTPSlotProps
->(({ index, className, variant, ...props }, ref) => {
+const InputOTPSlot = ({
+  ref,
+  index,
+  className,
+  variant,
+  ...props
+}: InputOTPSlotProps & {
+  ref?: React.RefObject<React.ComponentRef<"div">>
+}) => {
   const inputOTPContext = React.useContext(OTPInputContext)
   const { char, hasFakeCaret, isActive } = inputOTPContext.slots[index]
 
@@ -98,17 +110,19 @@ const InputOTPSlot = React.forwardRef<
       )}
     </div>
   )
-})
+}
 InputOTPSlot.displayName = "InputOTPSlot"
 
-const InputOTPSeparator = React.forwardRef<
-  React.ElementRef<"div">,
-  React.ComponentPropsWithoutRef<"div">
->(({ ...props }, ref) => (
+const InputOTPSeparator = ({
+  ref,
+  ...props
+}: React.ComponentPropsWithoutRef<"div"> & {
+  ref?: React.RefObject<React.ComponentRef<"div">>
+}) => (
   <div ref={ref} role="separator" {...props}>
     <Dot />
   </div>
-))
+)
 InputOTPSeparator.displayName = "InputOTPSeparator"
 
 export { InputOTP, InputOTPGroup, InputOTPSlot, InputOTPSeparator }

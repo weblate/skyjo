@@ -152,7 +152,7 @@ export const LoadingPublicGames = () => {
       >
         <div className="flex flex-col gap-2">
           <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
-            <div className="h-4 py-2 w-32 animate-pulse bg-gray-200 dark:bg-gray-600 rounded" />
+            <div className="h-4 py-2 w-32 animate-pulse bg-gray-200 dark:bg-gray-600 rounded-sm" />
             <div className="flex flex-row items-center gap-1">
               {Array.from({ length: 3 }).map((_, tagIndex) => (
                 <div

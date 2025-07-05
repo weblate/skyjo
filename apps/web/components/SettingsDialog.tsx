@@ -39,7 +39,7 @@ const SettingsDialog = ({ open, onOpenChange }: SettingsDialogProps) => {
         </DialogHeader>
         <Tabs
           defaultValue="audio"
-          className="flex flex-col flex-grow overflow-y-auto"
+          className="flex flex-col grow overflow-y-auto"
         >
           <TabsList className="px-6 grid grid-cols-4 sm:grid-cols-3 w-full">
             <TabsTrigger value="audio" className="h-10">

@@ -74,7 +74,7 @@ const ChatDesktopView = ({
           <MessageCircleIcon className="size-5" />
         </button>
       </div>
-      <div className="flex w-full h-svh px-2 pb-2 bg-container dark:bg-dark-container shadow border-l-2 border-black dark:border-dark-border z-10">
+      <div className="flex w-full h-svh px-2 pb-2 bg-container dark:bg-dark-container shadow-sm border-l-2 border-black dark:border-dark-border z-10">
         <m.div
           animate={open ? "open" : "closed"}
           variants={{
@@ -84,7 +84,7 @@ const ChatDesktopView = ({
             },
           }}
           transition={{ duration: 0.2 }}
-          className="min-w-52 xl:min-w-72 flex flex-grow flex-col items-center"
+          className="min-w-52 xl:min-w-72 flex grow flex-col items-center"
         >
           <p className="w-full text-center text-black dark:text-dark-font text-xl pt-2 pb-1 border-b-2 border-black dark:border-dark-border">
             {t("title")}

@@ -56,14 +56,14 @@ const Providers = ({ children, locale }: ProvidersProps) => {
               closeButton: true,
               classNames: {
                 closeButton:
-                  "!bg-none !border-none !text-black dark:!text-dark-font !absolute !left-auto !top-2 !right-[-5px] dark:!bg-dark-body",
+                  "bg-none! border-none! text-black! dark:text-dark-font! absolute! left-auto! top-2! right-[-5px]! dark:bg-dark-body!",
                 toast:
-                  "!border-2 !border-black dark:!border-dark-border !bg-white dark:!bg-dark-body",
+                  "border-2! border-black! dark:border-dark-border! bg-white! dark:bg-dark-body!",
                 title:
-                  "!text-sm !font-semibold !text-black dark:!text-dark-font",
+                  "text-sm! font-semibold! text-black! dark:text-dark-font!",
                 description:
-                  "!text-sm !opacity-90 !text-black dark:!text-dark-font",
-                icon: "!text-black dark:!text-dark-font",
+                  "text-sm! opacity-90! text-black! dark:text-dark-font!",
+                icon: "text-black! dark:text-dark-font!",
               },
             }}
             icons={{
