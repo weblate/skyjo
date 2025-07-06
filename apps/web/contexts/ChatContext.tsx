@@ -43,7 +43,7 @@ interface ChatContext {
   addUnreadMessage: (message: ChatMessage) => void
   clearUnreadMessages: () => void
   setChat: (chat: ChatMessage[]) => void
-  sendMessage: (message: string, name: string) => void
+  sendMessage: (message: string) => void
   addSystemMessage: (message: string) => void
   mutedPlayers: string[]
   mutePlayer: (name: string) => void
@@ -99,9 +99,8 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
     }
   }, [pathname])
 
-  const sendMessage = (name: string, message: string) => {
+  const sendMessage = (message: string) => {
     socket!.send({
-      name,
       message,
     })
   }

@@ -5,13 +5,11 @@ import { BaseService } from "@/realtime/base/base.service.js"
 import type { GameSocket } from "@/realtime/types/gameSocket.js"
 
 export class ChatService extends BaseService {
-  async onMessage(
-    socket: GameSocket,
-    { name, message }: Omit<UserChatMessage, "id" | "type">,
-  ) {
+  async onMessage(socket: GameSocket, { message }: { message: string }) {
     const game = await this.getGame(socket.data.gameCode)
 
-    if (!game.getPlayerById(socket.data.playerId)) {
+    const player = game.getPlayerById(socket.data.playerId)
+    if (!player) {
       throw new CError(`Player try to send a message but is not found.`, {
         code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
         meta: {
@@ -27,7 +25,7 @@ export class ChatService extends BaseService {
 
     const newMessage: UserChatMessage = {
       id: crypto.randomUUID(),
-      name,
+      name: player.name,
       message,
       type: CoreConstants.USER_MESSAGE_TYPE,
     }

@@ -1,7 +1,6 @@
 import z from "zod"
 
 export const sendChatMessage = z.object({
-  name: z.string(),
   message: z.string().max(200),
 })
 

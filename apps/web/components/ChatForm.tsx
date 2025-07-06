@@ -23,7 +23,7 @@ interface ChatFormProps {
   chatOpen: boolean
 }
 const ChatForm = ({ chatOpen }: ChatFormProps) => {
-  const { player, opponents } = useGame()
+  const { opponents } = useGame()
   const {
     sendMessage,
     clearUnreadMessages,
@@ -195,7 +195,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
     if (command.startsWith("/")) {
       handleCommand(command, args.join(" "))
     } else {
-      sendMessage(player.name, values.message)
+      sendMessage(values.message)
       clearUnreadMessages()
     }
 
