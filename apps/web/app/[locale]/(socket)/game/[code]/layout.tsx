@@ -27,7 +27,7 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
         <ReportProvider>
           <KickProvider>
             <BanProvider>
-              <div className="w-svh h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
+              <div className="h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
                 {children}
                 <KickVote />
                 <Chat className="z-40" />
