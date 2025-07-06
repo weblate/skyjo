@@ -4,7 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import type { SendPinError, VerifyPinError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { VerifyPin, verifyPinSchema } from "@skymo/shared/validations"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
@@ -25,7 +25,8 @@ type OtpStatus = "success" | "error" | undefined
 
 const VerifyPage = () => {
   const router = useRouter()
-  const { user } = useAuth()
+  const { user, refetch } = useAuth()
+  const queryClient = useQueryClient()
   const t = useTranslations("pages.Verify")
   const tErrors = useTranslations("errors")
 
@@ -64,15 +65,14 @@ const VerifyPage = () => {
         toast.error(tErrors(error))
       }
 
-      return res.json()
-    },
-    onSuccess: () => {
       setOtpStatus("success")
       toast.success(t("toast.success"))
 
-      setTimeout(() => {
-        router.push("/onboard")
-      }, 3000)
+      // Refetch will redirect to onboarding page
+      setTimeout(async () => {
+        queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
+        await refetch()
+      }, 1500)
     },
     onError: (error: Error) => {
       console.log(error)

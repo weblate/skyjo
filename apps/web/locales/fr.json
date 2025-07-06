@@ -570,7 +570,8 @@
           "placeholder": "Saisissez un mot de passe sécurisé"
         },
         "submit": "Prêt à jouer !"
-      }
+      },
+      "success": "Configuration terminée avec succès ! Redirection vers l'accueil..."
     },
     "Verify": {
       "head": {

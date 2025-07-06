@@ -16,6 +16,7 @@ import { Form, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { usePlayer } from "@/contexts/PlayerContext"
+import { useAuth } from "@/hooks/useAuth"
 import { Link, useRouter } from "@/i18n/routing"
 
 type SignupParams = {
@@ -24,10 +25,11 @@ type SignupParams = {
 
 const SignupForm = () => {
   const { locale } = useParams<SignupParams>()
-  const router = useRouter()
+  const _router = useRouter()
   const t = useTranslations("pages.Signup")
   const tErrors = useTranslations("errors")
   const { getPlayer } = usePlayer()
+  const { refetch } = useAuth()
 
   const form = useForm({
     resolver: zodResolver(
@@ -67,8 +69,9 @@ const SignupForm = () => {
         const error = await jsonError<SignupError>(res)
         setApiError(error)
       }
+
+      await refetch()
     },
-    onSuccess: () => router.replace("/verify"),
     onError: (error) => {
       console.error(error)
       setApiError("signup-error")

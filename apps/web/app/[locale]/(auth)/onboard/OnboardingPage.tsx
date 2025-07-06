@@ -8,10 +8,11 @@ import {
   onboardingWithPasswordSchema,
   passwordSchema,
 } from "@skymo/shared/validations"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { toast } from "sonner"
 import { z } from "zod"
 import { PasswordRequirements } from "@/components/PasswordRequirements"
 import SelectAvatar from "@/components/SelectAvatar"
@@ -49,6 +50,7 @@ const OnboardingPage = () => {
   const tErrors = useTranslations("errors")
   const { getAvatar, avatarIndex } = usePlayer()
   const { user, refetch } = useAuth()
+  const queryClient = useQueryClient()
   const form = useForm({
     resolver: zodResolver(
       user?.hasOAuth ? onboardingSchema : onboardingWithPasswordSchema,
@@ -126,11 +128,10 @@ const OnboardingPage = () => {
         return
       }
 
-      return res.json()
-    },
-    onSuccess: () => {
-      refetch()
-      router.replace("/")
+      toast.success(t("success"))
+      // Refetch will redirect to home page
+      queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
+      await refetch()
     },
     onError: (error) => {
       console.error(error)

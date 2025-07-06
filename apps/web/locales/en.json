@@ -570,7 +570,8 @@
           "placeholder": "Enter a secure password"
         },
         "submit": "Ready to play!"
-      }
+      },
+      "success": "Onboarding completed successfully! Redirecting to home page..."
     },
     "Verify": {
       "head": {
