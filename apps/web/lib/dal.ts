@@ -22,20 +22,10 @@ export const verifySession = async (): Promise<SessionData | null> => {
   const cookieStore = await cookies()
   const sessionCookie = cookieStore.get(SESSION_COOKIE_NAME)
 
-  // Enhanced debugging for cookie handling
-  if (!sessionCookie?.value) {
-    console.log("verifySession: No session cookie found", {
-      cookieExists: !!sessionCookie,
-      cookieValue: sessionCookie?.value ? "[PRESENT]" : "[MISSING]",
-      cookieName: SESSION_COOKIE_NAME,
-      allCookies: Object.keys(cookieStore.getAll()).join(", "),
-    })
-    return null
-  }
+  if (!sessionCookie?.value) return null
 
   try {
     const url = `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`
-    console.log("verifySession: Making request to", url)
 
     const response = await fetch(url, {
       method: "POST",
@@ -45,12 +35,6 @@ export const verifySession = async (): Promise<SessionData | null> => {
       },
       cache: "no-store",
     })
-
-    console.log(
-      "verifySession: Response status",
-      response.status,
-      response.statusText,
-    )
 
     if (!response.ok) {
       const error = await jsonError<VerifyError>(response)
@@ -64,30 +48,11 @@ export const verifySession = async (): Promise<SessionData | null> => {
     }
 
     const data = await response.json()
-    console.log("verifySession: Response data structure", {
-      hasUser: !!data.user,
-      userKeys: data.user ? Object.keys(data.user) : [],
-      rawDataKeys: Object.keys(data),
-    })
 
-    // Validate response structure
-    if (!data?.user) {
-      console.error("verifySession: Invalid response structure", {
-        hasData: !!data,
-        hasUser: !!data?.user,
-        responseKeys: data ? Object.keys(data) : [],
-      })
-      return null
-    }
+    if (!data?.user) return null
 
     return data.user
-  } catch (error) {
-    console.error("verifySession: Session verification failed with exception", {
-      error: error instanceof Error ? error.message : error,
-      stack: error instanceof Error ? error.stack : undefined,
-      apiUrl: process.env.NEXT_PUBLIC_API_URL,
-      cookiePresent: !!sessionCookie?.value,
-    })
+  } catch {
     return null
   }
 }

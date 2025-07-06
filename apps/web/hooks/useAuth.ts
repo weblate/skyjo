@@ -96,9 +96,6 @@ export const useAuth = () => {
   })
 
   useEffect(() => {
-    console.log("pathname", pathname)
-    console.log("user", user)
-
     if (!user) return
 
     // Skip client-side redirects for auth flow pages to prevent infinite loops
