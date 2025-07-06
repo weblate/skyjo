@@ -310,6 +310,17 @@ describe("Game", () => {
       game.changeHost()
       expect(game.hostId).toBe(opponent.id)
     })
+
+    it("should not change host if there is only one player connected (solo player)", () => {
+      // Disconnect the opponent so only one player remains
+      opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      const originalHostId = game.hostId
+
+      game.changeHost()
+
+      // Host should not change when there's only one player
+      expect(game.hostId).toBe(originalHostId)
+    })
   })
 
   describe("isFull", () => {
@@ -1695,14 +1706,14 @@ describe("Game", () => {
       expect(game.status).toBe(Constants.GAME_STATUS.STOPPED)
     })
 
-    it("should remove game if no more players and game is not playing", async () => {
+    it("should not remove game if no more players and game is not playing (disabled for mobile stability)", async () => {
       game.players = [player]
 
       const removeGameSpy = vi.spyOn(game["operationManager"], "removeGame")
 
       await game.disconnectPlayer(player)
 
-      expect(removeGameSpy).toHaveBeenCalledWith(game.code)
+      expect(removeGameSpy).not.toHaveBeenCalled()
 
       removeGameSpy.mockClear()
     })
@@ -1720,7 +1731,7 @@ describe("Game", () => {
       removeGameSpy.mockClear()
     })
 
-    it("should remove the game if no players are left", async () => {
+    it("should not remove the game if no players are left (disabled for mobile stability)", async () => {
       game.status = Constants.GAME_STATUS.LOBBY // Ensure we're not in playing mode
 
       const mockOperationManager = {
@@ -1746,10 +1757,8 @@ describe("Game", () => {
       // Disconnect the only player
       await testGame.disconnectPlayer(player)
 
-      // Verify removeGame was called with the game code
-      expect(mockOperationManager.removeGame).toHaveBeenCalledWith(
-        testGame.code,
-      )
+      // Verify removeGame was NOT called (behavior disabled for mobile stability)
+      expect(mockOperationManager.removeGame).not.toHaveBeenCalled()
     })
 
     it("should set game status to STOPPED if minimum players are not connected while playing", async () => {

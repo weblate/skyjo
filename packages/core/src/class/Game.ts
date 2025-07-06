@@ -192,9 +192,11 @@ export class Game implements GameInterface {
       this.status = Constants.GAME_STATUS.STOPPED
     }
 
-    if (this.players.length === 0) {
-      await this.operationManager.removeGame(this.code)
-    }
+    // Commented out to prevent automatic removal of empty games when all players disconnect
+    // This helps resolve mobile disconnection issues
+    // if (this.players.length === 0) {
+    //   await this.operationManager.removeGame(this.code)
+    // }
   }
 
   isHost(playerId: string) {
@@ -226,6 +228,11 @@ export class Game implements GameInterface {
   changeHost() {
     const players = this.getConnectedPlayers([this.hostId])
     if (players.length === 0) return
+
+    // Don't change host if there's only one player connected (solo player)
+    // This helps resolve mobile disconnection issues
+    const allConnectedPlayers = this.getConnectedPlayers()
+    if (allConnectedPlayers.length === 1) return
 
     this.hostId = players[0].id
   }
