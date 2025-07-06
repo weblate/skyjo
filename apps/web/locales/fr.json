@@ -551,6 +551,7 @@
         "description": "Complétez votre profil et plongez dans l'aventure Skymo !",
         "keywords": "Skymo,Skyjo,configuration,profil,joueur,aventure,jeu de cartes en ligne"
       },
+      "loading": "Chargement de votre profil...",
       "title": "Configuration en cours...",
       "subtitle": "Complétez votre profil et plongez dans l'aventure Skymo !",
       "form": {
@@ -577,6 +578,7 @@
         "description": "Vérifiez votre adresse email pour terminer la configuration de votre compte Skymo et commencer à jouer à Skyjo en ligne avec vos amis.",
         "keywords": "Skymo,Skyjo,vérification email,vérifier compte,jeu de cartes en ligne"
       },
+      "loading": "Chargement de votre profil...",
       "title": "Vérifiez votre email",
       "description": "Nous avons envoyé un code à 6 chiffres à votre adresse email. Veuillez le saisir ci-dessous.",
       "resend": {

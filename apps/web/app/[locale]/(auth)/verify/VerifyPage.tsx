@@ -15,6 +15,7 @@ import {
   InputOTPGroup,
   InputOTPSlot,
 } from "@/components/ui/input-otp"
+import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
@@ -24,6 +25,7 @@ type OtpStatus = "success" | "error" | undefined
 
 const VerifyPage = () => {
   const router = useRouter()
+  const { user } = useAuth()
   const t = useTranslations("pages.Verify")
   const tErrors = useTranslations("errors")
 
@@ -36,6 +38,7 @@ const VerifyPage = () => {
 
   const [resendCooldown, setResendCooldown] = useState(0)
   const [otpStatus, setOtpStatus] = useState<OtpStatus>(undefined)
+  const [isLoading, setIsLoading] = useState(true)
 
   const {
     mutate: verifyPin,
@@ -108,7 +111,22 @@ const VerifyPage = () => {
     },
   })
 
-  useEffect(() => sendPin(), [])
+  useEffect(() => {
+    if (!user) return
+
+    if (user?.emailVerified && !user.onboardingCompleted) {
+      router.replace("/onboard")
+      return
+    } else if (user?.emailVerified && user.onboardingCompleted) {
+      router.replace("/")
+      return
+    }
+
+    // if no redirect, send pin
+    sendPin()
+
+    setIsLoading(false)
+  }, [user, router])
 
   useEffect(() => {
     if (resendCooldown > 0) {
@@ -140,6 +158,17 @@ const VerifyPage = () => {
         }
       }
     })
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4 p-4">
+        <div className="text-center">
+          <div className="inline-block size-6 animate-spin rounded-full border-[3px] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          <p className="mt-2 text-lg font-medium">{t("loading")}</p>
+        </div>
+      </div>
+    )
   }
 
   return (

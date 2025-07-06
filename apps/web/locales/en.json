@@ -551,6 +551,7 @@
         "description": "Complete your profile and dive into the Skymo adventure!",
         "keywords": "Skymo,Skyjo,onboarding,profile,adventure,online card game"
       },
+      "loading": "Loading your profile...",
       "title": "Onboarding in progress...",
       "subtitle": "Complete your profile and dive into the Skymo adventure!",
       "form": {
@@ -577,6 +578,7 @@
         "description": "Verify your email address to complete your Skymo account setup and start playing Skyjo online with friends.",
         "keywords": "Skymo,Skyjo,email verification,verify account,online card game"
       },
+      "loading": "Loading your profile...",
       "title": "Verify Your Email",
       "description": "We've sent a 6-digit code to your email address. Please enter it below.",
       "resend": {

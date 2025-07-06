@@ -34,6 +34,15 @@ import { AVATARS_ARRAY, usePlayer } from "@/contexts/PlayerContext"
 import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "@/i18n/routing"
 
+// Helper functions to convert between avatar name and index
+const getAvatarIndexFromName = (avatarName: string) => {
+  return AVATARS_ARRAY.findIndex((avatar) => avatar === avatarName)
+}
+
+const getAvatarNameFromIndex = (index: number) => {
+  return AVATARS_ARRAY[index]
+}
+
 const OnboardingPage = () => {
   const router = useRouter()
   const t = useTranslations("pages.Onboarding")
@@ -54,6 +63,7 @@ const OnboardingPage = () => {
 
   const [apiError, setApiError] = useState<OnboardingError | null>(null)
   const [showPassword, setShowPassword] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
 
   const watchedUsername = form.watch("username")
   const watchedPassword = form.watch("password")
@@ -61,6 +71,14 @@ const OnboardingPage = () => {
   const { usernameAvailability } = useUsernameValidation(watchedUsername)
 
   useEffect(() => {
+    if (!user?.emailVerified) {
+      router.replace("/verify")
+      return
+    } else if (user?.emailVerified && user.onboardingCompleted) {
+      router.replace("/")
+      return
+    }
+
     if (!user || user?.hasOAuth) {
       setShowPassword(false)
     } else {
@@ -72,6 +90,7 @@ const OnboardingPage = () => {
       form.setValue("username", user.username ?? "")
       form.setValue("avatar", user.avatar ?? "bee")
     }
+    setIsLoading(false)
   }, [user, form])
 
   useEffect(() => {
@@ -137,17 +156,19 @@ const OnboardingPage = () => {
     return isNameValid && isUsernameValid && isAvatarValid && isPasswordValid
   }
 
-  // Helper functions to convert between avatar name and index
-  const getAvatarIndexFromName = (avatarName: string) => {
-    return AVATARS_ARRAY.findIndex((avatar) => avatar === avatarName)
-  }
-
-  const getAvatarNameFromIndex = (index: number) => {
-    return AVATARS_ARRAY[index]
-  }
-
   const onSubmit = (data: z.infer<typeof onboardingSchema>) => {
     mutate(data)
+  }
+
+  if (isLoading) {
+    return (
+      <div className="min-h-svh w-full flex items-center justify-center">
+        <div className="text-center">
+          <div className="inline-block size-6 animate-spin rounded-full border-[3px] border-solid border-current border-r-transparent align-[-0.125em] motion-reduce:animate-[spin_1.5s_linear_infinite]"></div>
+          <p className="mt-2 text-lg font-medium">{t("loading")}</p>
+        </div>
+      </div>
+    )
   }
 
   return (
