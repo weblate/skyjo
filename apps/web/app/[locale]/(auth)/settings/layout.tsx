@@ -69,8 +69,8 @@ export default async function SettingsLayout({
             </p>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-8">
-            <div className="lg:w-64 shrink-0">
+          <div className="flex flex-col md:flex-row gap-8">
+            <div className="md:w-56 lg:w-64 shrink-0">
               <div className="sticky top-8 bg-container dark:bg-dark-container border-2 border-black dark:border-white rounded-md p-2">
                 <SettingsNavigation />
               </div>
