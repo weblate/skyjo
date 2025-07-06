@@ -101,15 +101,16 @@ export const useAuth = () => {
 
     if (!user) return
 
-    if (pathname !== "/verify" && !user?.emailVerified) {
+    // Skip client-side redirects for auth flow pages to prevent infinite loops
+    // These redirects are handled by server-side layouts
+    const isAuthFlowPage = pathname === "/verify" || pathname === "/onboard"
+    if (isAuthFlowPage) return
+
+    if (!user?.emailVerified) {
       router.replace("/verify")
     }
 
-    if (
-      pathname !== "/onboard" &&
-      user?.emailVerified &&
-      !user.onboardingCompleted
-    ) {
+    if (user?.emailVerified && !user.onboardingCompleted) {
       router.replace("/onboard")
     }
   }, [user, pathname, router])
