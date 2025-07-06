@@ -1,32 +1,54 @@
 import { Locales } from "@skymo/shared/constants"
-import { redirect } from "next/navigation"
-import { verifySession } from "@/lib/dal"
+import { Metadata } from "next"
+import { notFound } from "next/navigation"
+import { getTranslations } from "next-intl/server"
+import { generateAlternatesLanguages, routing } from "@/i18n/routing"
+import { getCurrentUrl } from "@/lib/utils"
 
-interface OnboardingParams {
+interface OnboardParams {
   locale: Locales
 }
-
-export interface OnboardingProps {
+export interface OnboardProps {
   children: React.ReactNode
-  params: Promise<OnboardingParams>
+  params: Promise<OnboardParams>
 }
-export default async function OnboardingLayout({
+
+export async function generateMetadata(props: OnboardProps) {
+  const { locale } = await props.params
+  if (!routing.locales.includes(locale)) notFound()
+
+  const t = await getTranslations({
+    locale,
+    namespace: "pages.Onboarding.head",
+  })
+
+  const currentUrl = getCurrentUrl("onboard", locale)
+
+  const metadata: Metadata = {
+    title: t("title"),
+    description: t("description"),
+    keywords: t("keywords").split(","),
+    alternates: {
+      canonical: currentUrl,
+      languages: generateAlternatesLanguages("onboard"),
+    },
+    openGraph: {
+      title: t("title"),
+      description: t("description"),
+      url: currentUrl,
+    },
+    twitter: {
+      title: t("title"),
+      description: t("description"),
+    },
+  }
+
+  return metadata
+}
+
+export default async function OnboardLayout({
   children,
   params: _params,
-}: Readonly<OnboardingProps>) {
-  const session = await verifySession()
-
-  if (!session) {
-    redirect("/login")
-  }
-
-  if (!session.emailVerified) {
-    redirect("/verify")
-  }
-
-  if (session.onboardingCompleted) {
-    redirect("/")
-  }
-
-  return <>{children}</>
+}: Readonly<OnboardProps>) {
+  return children
 }

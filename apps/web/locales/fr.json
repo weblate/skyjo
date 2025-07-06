@@ -546,6 +546,11 @@
       "title": "Redirection en cours…"
     },
     "Onboarding": {
+      "head": {
+        "title": "Onboarding | Skymo - Jeu de Cartes Skyjo en Ligne",
+        "description": "Complétez votre profil et plongez dans l'aventure Skymo !",
+        "keywords": "Skymo,Skyjo,configuration,profil,joueur,aventure,jeu de cartes en ligne"
+      },
       "title": "Configuration en cours...",
       "subtitle": "Complétez votre profil et plongez dans l'aventure Skymo !",
       "form": {

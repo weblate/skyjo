@@ -1,10 +1,8 @@
 import { Locales } from "@skymo/shared/constants"
 import { Metadata } from "next"
-import { notFound, redirect } from "next/navigation"
+import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
-import Footer from "@/components/Footer"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
-import { verifySession } from "@/lib/dal"
 import { getCurrentUrl } from "@/lib/utils"
 
 interface VerifyParams {
@@ -49,24 +47,5 @@ export default async function VerifyLayout({
   children,
   params: _params,
 }: Readonly<VerifyProps>) {
-  const session = await verifySession()
-
-  if (!session) {
-    redirect("/login")
-  }
-
-  if (session.emailVerified) {
-    if (session.onboardingCompleted) {
-      redirect("/")
-    } else {
-      redirect("/onboard")
-    }
-  }
-
-  return (
-    <>
-      {children}
-      <Footer />
-    </>
-  )
+  return children
 }

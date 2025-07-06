@@ -546,6 +546,11 @@
       "title": "Redirecting in progress…"
     },
     "Onboarding": {
+      "head": {
+        "title": "Onboarding | Skymo - Skyjo Online Card Game",
+        "description": "Complete your profile and dive into the Skymo adventure!",
+        "keywords": "Skymo,Skyjo,onboarding,profile,adventure,online card game"
+      },
       "title": "Onboarding in progress...",
       "subtitle": "Complete your profile and dive into the Skymo adventure!",
       "form": {
