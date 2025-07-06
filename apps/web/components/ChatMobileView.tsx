@@ -45,12 +45,12 @@ const ChatMobileView = ({
           )}
         </Button>
       </DrawerTrigger>
-      <DrawerContent>
+      <DrawerContent className="h-[50svh]">
         <DrawerHeader className="p-3 pb-0">
           <DrawerTitle className="text-center">{t("title")}</DrawerTitle>
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
-        <div className="px-4 my-2 h-[50svh] flex flex-col-reverse overflow-y-auto">
+        <div className="px-4 my-2 flex flex-col-reverse overflow-y-auto">
           <ChatMessageList />
         </div>
         <DrawerFooter className="p-4 pt-0">
