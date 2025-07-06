@@ -272,6 +272,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
           type="submit"
           title={t("button-title")}
           tabIndex={tabIndex}
+          className="cursor-pointer"
         >
           <SendIcon width={16} height={16} />
         </Button>

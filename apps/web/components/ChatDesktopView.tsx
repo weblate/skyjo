@@ -52,7 +52,7 @@ const ChatDesktopView = ({
     >
       <div className="relative">
         <button
-          className="absolute bottom-16 right-full w-10 h-24 flex items-center justify-center bg-button dark:bg-dark-button text-center text-black dark:text-dark-font border-2 border-r-0 rounded-s-lg border-black dark:border-dark-border transition-all duration-200 focus-visible:outline-black focus-visible:-outline-offset-4 shadow-[3px_3px_0px_0px_rgba(0,0,0)]"
+          className="absolute bottom-16 right-full w-10 h-24 flex items-center justify-center bg-button dark:bg-dark-button text-center text-black dark:text-dark-font border-2 border-r-0 rounded-s-lg border-black dark:border-dark-border transition-all duration-200 focus-visible:outline-black focus-visible:-outline-offset-4 shadow-[3px_3px_0px_0px_rgba(0,0,0)] cursor-pointer"
           onClick={toggleOpening}
           disabled={disabled}
         >

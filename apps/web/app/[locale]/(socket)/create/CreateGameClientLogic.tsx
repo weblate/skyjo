@@ -61,7 +61,7 @@ const CreateGameClientLogic = () => {
   }, [createGame, getPlayer, isPrivate, loading])
 
   return (
-    <div className="h-svh w-full flex flex-col gap-2 items-center justify-center">
+    <div className="h-svh w-full flex flex-col gap-2 items-center justify-center -translate-y-12">
       <GameCard key={card.id} card={card} size="normal" disabled={true} />
 
       <p>{t("loading-text")}</p>

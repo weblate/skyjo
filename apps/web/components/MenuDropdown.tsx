@@ -84,7 +84,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
       {variant === "account" && (
         <DropdownMenuTrigger aria-label={t("button.aria-label")} asChild>
           {user ? (
-            <button className="w-fit flex flex-row items-center gap-2 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-[6px] rounded-md transition-all duration-100 ease-in-out">
+            <button className="w-fit flex flex-row items-center gap-2 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-[6px] rounded-md transition-all duration-100 ease-in-out cursor-pointer">
               <p>{user.name}</p>
               <Image
                 src={`/avatars/${user.avatar}.svg`}
@@ -97,7 +97,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
               />
             </button>
           ) : (
-            <button className="size-8 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-1 rounded-md transition-all duration-100 ease-in-out flex items-center justify-center">
+            <button className="size-8 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-1 rounded-md transition-all duration-100 ease-in-out flex items-center justify-center cursor-pointer">
               <EllipsisVerticalIcon className="size-6" />
             </button>
           )}
@@ -105,7 +105,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
       )}
       {variant === "game" && (
         <DropdownMenuTrigger aria-label={t("button.aria-label")} asChild>
-          <Button variant="icon">
+          <Button variant="icon" className="cursor-pointer">
             <EllipsisVerticalIcon className="size-6" />
           </Button>
         </DropdownMenuTrigger>

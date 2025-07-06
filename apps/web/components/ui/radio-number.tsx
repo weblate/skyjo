@@ -1,7 +1,7 @@
 import { cva } from "class-variance-authority"
 
 const classValue = cva(
-  "h-8 w-8 flex items-center justify-center rounded-md border-2 border-black dark:border-dark-border text-black cursor-pointer transition-all duration-200 -outline-offset-2 focus-visible:outline focus-visible:outline-black focus-visible:outline-2 focus-visible:outline-offset-[-6px]",
+  "h-8 w-8 flex items-center justify-center rounded-md border-2 border-black dark:border-dark-border text-black transition-all duration-200 -outline-offset-2 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-[-6px]",
   {
     variants: {
       selected: {
@@ -10,8 +10,8 @@ const classValue = cva(
           "bg-white dark:bg-dark-input dark:text-dark-font dark:focus-visible:outline-dark-border",
       },
       disabled: {
-        true: "cursor-not-allowed opacity-50",
-        false: "",
+        true: "cursor-auto opacity-50",
+        false: "cursor-pointer",
       },
     },
   },

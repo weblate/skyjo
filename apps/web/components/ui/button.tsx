@@ -24,6 +24,10 @@ const buttonVariants = cva(
         true: "shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:shadow-[2px_2px_0px_0px_rgba(137,137,137)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0)] dark:active:shadow-[0px_0px_0px_0px_rgba(137,137,137)]",
         false: "",
       },
+      clickable: {
+        true: "cursor-pointer",
+        false: "",
+      },
     },
     defaultVariants: {
       variant: "default",
@@ -65,6 +69,7 @@ const Button = ({
   children,
   color,
   disabled,
+  onClick,
   ...props
 }: ButtonProps & {
   ref?: React.RefObject<HTMLButtonElement>
@@ -72,10 +77,19 @@ const Button = ({
   const Comp = asChild ? Slot : "button"
   return (
     <Comp
-      className={cn(buttonVariants({ variant, color, shadow, className }))}
+      className={cn(
+        buttonVariants({
+          variant,
+          color,
+          shadow,
+          className,
+          clickable: onClick !== undefined && !disabled,
+        }),
+      )}
       ref={ref}
       disabled={loading || disabled}
       data-loading={loading}
+      onClick={onClick}
       {...props}
     >
       {loading && (

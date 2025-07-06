@@ -14,7 +14,7 @@ const Switch = ({
 }) => (
   <SwitchPrimitives.Root
     className={cn(
-      "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-[1.5px] border-black dark:border-dark-border transition-all duration-200 -outline-offset-2 focus-visible:outline focus-visible:outline-black focus-visible:outline-2 focus-visible:outline-offset-[-6px] dark:focus-visible:data-[state=checked]:outline-dark-input dark:focus-visible:data-[state=unchecked]:outline-dark-border disabled:cursor-not-allowed disabled:opacity-50 data-[state=checked]:bg-button dark:data-[state=checked]:bg-dark-border data-[state=unchecked]:bg-slate-200 dark:data-[state=unchecked]:bg-dark-input  ",
+      "peer inline-flex h-6 w-11 shrink-0 cursor-pointer items-center rounded-full border-[1.5px] border-black dark:border-dark-border transition-all duration-200 -outline-offset-2 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-[-6px] dark:focus-visible:data-[state=checked]:outline-dark-input dark:focus-visible:data-[state=unchecked]:outline-dark-border disabled:cursor-auto disabled:opacity-50 data-[state=checked]:bg-button dark:data-[state=checked]:bg-dark-border data-[state=unchecked]:bg-slate-200 dark:data-[state=unchecked]:bg-dark-input",
       className,
     )}
     {...props}
