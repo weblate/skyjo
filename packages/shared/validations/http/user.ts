@@ -4,7 +4,7 @@ import { z } from "zod"
 export const passwordLowercaseRegex = /[a-z]/
 export const passwordUppercaseRegex = /[A-Z]/
 export const passwordNumberRegex = /\d/
-export const passwordSpecialCharRegex = /[!"#$%&'()*+,-./:;<=>?@[]^_`{|}~]/
+export const passwordSpecialCharRegex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/
 
 export const onboardingSchema = z.object({
   name: z
