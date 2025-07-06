@@ -15,6 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Form, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { usePlayer } from "@/contexts/PlayerContext"
 import { Link, useRouter } from "@/i18n/routing"
 
 type SignupParams = {
@@ -26,6 +27,7 @@ const SignupForm = () => {
   const router = useRouter()
   const t = useTranslations("pages.Signup")
   const tErrors = useTranslations("errors")
+  const { getPlayer } = usePlayer()
 
   const form = useForm({
     resolver: zodResolver(
@@ -41,10 +43,14 @@ const SignupForm = () => {
   const { mutate, isPending } = useMutation({
     mutationFn: async (data: { email: string }) => {
       setApiError(null)
+
+      const playerData = getPlayer()
       const payload = {
         email: data.email,
         locale,
+        ...playerData,
       }
+
       const res = await fetch(
         `${process.env.NEXT_PUBLIC_API_URL}/auth/signup`,
         {

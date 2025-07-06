@@ -1,3 +1,4 @@
+import { Constants } from "@skymo/core"
 import { z } from "zod"
 import { locales } from "../../constants/locales.js"
 import { passwordSchema } from "./user.js"
@@ -5,6 +6,12 @@ import { passwordSchema } from "./user.js"
 export const signupSchema = z.object({
   email: z.string().email("Invalid email address"),
   locale: z.enum(locales).default("en"),
+  name: z
+    .string()
+    .min(1)
+    .transform((val) => val.slice(0, 20).replace(/ /g, "_"))
+    .optional(),
+  avatar: z.nativeEnum(Constants.AVATARS).optional(),
 })
 export type Signup = z.infer<typeof signupSchema>
 
