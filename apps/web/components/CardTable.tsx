@@ -1,11 +1,15 @@
 import { CardToJson } from "@skymo/core"
 import { cva } from "class-variance-authority"
 import { AnimatePresence, m } from "motion/react"
-import { useEffect, useState } from "react"
+import { useCallback, useEffect, useState } from "react"
 import { GameCard } from "@/components/Card/GameCard"
 import { useGame } from "@/contexts/GameContext"
 import { GameBoardSize } from "@/contexts/SettingsContext"
-import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
+import {
+  hasRevealedCardCount,
+  isCurrentUserTurn,
+  isRoundRevealCards,
+} from "@/lib/game"
 import { cn } from "@/lib/utils"
 
 const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
@@ -73,10 +77,14 @@ const CardTable = ({
       actions.turnCard(column, row)
   }
 
-  // wait 2 seconds to set the number of rows (it's the time it takes for the animation to finish)
-  useEffect(() => {
-    setTimeout(() => setStyle(getGridTemplate(cards)), 2000)
+  // Update grid immediately during reveal phase, or wait for exit animations to complete
+  const handleAnimationComplete = useCallback(() => {
+    setStyle(getGridTemplate(cards))
   }, [cards])
+
+  useEffect(() => {
+    if (isRoundRevealCards(game.roundPhase)) handleAnimationComplete()
+  }, [game.roundPhase, cards, handleAnimationComplete])
 
   return (
     <m.div
@@ -87,7 +95,7 @@ const CardTable = ({
       className={cn(cardTableVariants({ size }))}
       style={style}
     >
-      <AnimatePresence>
+      <AnimatePresence onExitComplete={handleAnimationComplete}>
         {cards.map((column, columnIndex) => {
           return column.map((card, rowIndex) => {
             const canBeSelected =
