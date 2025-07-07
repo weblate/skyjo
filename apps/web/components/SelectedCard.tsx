@@ -1,6 +1,6 @@
-import { AnimatePresence, HTMLMotionProps, m } from "motion/react"
-import { memo, useMemo } from "react"
-import { Card } from "@/components/Card/Card"
+import { AnimatePresence, m } from "motion/react"
+import { memo, useEffect, useMemo, useState } from "react"
+import { GameCard } from "@/components/Card/GameCard"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 
@@ -9,6 +9,7 @@ interface SelectedCardProps {
 }
 const SelectedCard = memo(({ show }: SelectedCardProps) => {
   const { game, lastTurnStatus } = useGame()
+  const [isCardVisible, setIsCardVisible] = useState(false)
 
   const cardData = useMemo(() => {
     const selectedCardValue = game.selectedCardValue
@@ -21,73 +22,57 @@ const SelectedCard = memo(({ show }: SelectedCardProps) => {
     }
   }, [game.selectedCardValue, lastTurnStatus.isPickFromDrawPile, show])
 
-  const animationConfig = useMemo<HTMLMotionProps<"div">>(() => {
-    const { isPickFromDrawPile } = cardData
+  useEffect(() => {
+    if (cardData.shouldShow) {
+      // Start with card face-down
+      setIsCardVisible(false)
+      // Then flip to face-up after a brief delay
+      const timer = setTimeout(
+        () => {
+          setIsCardVisible(true)
+        },
+        cardData.isPickFromDrawPile ? 50 : 0,
+      )
 
-    return {
-      className: cn(
-        "absolute top-0 z-10",
-        isPickFromDrawPile ? "left-0" : "right-0",
-      ),
-      initial: {
-        scale: 1,
-      },
-      animate: {
-        rotateY: 0,
-        scale: 1.2,
-        rotate: isPickFromDrawPile ? -10 : 10,
-      },
-      transition: {
-        duration: isPickFromDrawPile ? 0.175 : 0.1,
-        ease: "easeOut",
-      },
+      return () => clearTimeout(timer)
+    } else {
+      setIsCardVisible(false)
     }
-  }, [cardData.isPickFromDrawPile])
-
-  const cardRevealAnimation = useMemo<HTMLMotionProps<"div">>(() => {
-    const { isPickFromDrawPile } = cardData
-
-    return {
-      initial: { opacity: 0 },
-      animate: { opacity: 1 },
-      transition: {
-        duration: isPickFromDrawPile ? 0.175 : 0,
-        delay: isPickFromDrawPile ? 0.075 : 0,
-        ease: "easeOut",
-      },
-    }
-  }, [cardData.isPickFromDrawPile])
+  }, [cardData.shouldShow, cardData.isPickFromDrawPile])
 
   if (!cardData.shouldShow) return null
 
   return (
     <AnimatePresence>
       <m.div
-        className={animationConfig.className}
-        initial={animationConfig.initial}
-        animate={animationConfig.animate}
-        transition={animationConfig.transition}
-        style={{
-          transformStyle: "preserve-3d",
-          willChange: "transform",
+        className={cn(
+          "absolute top-0 z-10",
+          cardData.isPickFromDrawPile ? "left-0" : "right-0",
+        )}
+        initial={{
+          scale: 1,
+        }}
+        animate={{
+          scale: 1.2,
+          rotate: cardData.isPickFromDrawPile ? -10 : 10,
+        }}
+        transition={{
+          duration: cardData.isPickFromDrawPile ? 0.175 : 0.1,
+          ease: "easeOut",
         }}
       >
-        <Card value="back" size="normal" disabled />
-        <m.div
-          initial={cardRevealAnimation.initial}
-          animate={cardRevealAnimation.animate}
-          transition={cardRevealAnimation.transition}
-          className="absolute top-0 left-0 w-full h-full"
-          style={{
-            willChange: "opacity",
+        <GameCard
+          card={{
+            id: "selected-card",
+            value: cardData.selectedCardValue!,
+            isVisible: isCardVisible,
           }}
-        >
-          <Card
-            value={cardData.selectedCardValue ?? undefined}
-            size="normal"
-            disabled
-          />
-        </m.div>
+          size="normal"
+          disabled
+          showInitialAnimation={false}
+          showFlipAnimation={cardData.isPickFromDrawPile}
+          showExitAnimation={false}
+        />
       </m.div>
     </AnimatePresence>
   )
