@@ -24,6 +24,7 @@ const exitAnimation: TargetAndTransition = {
 interface GameCardProps extends Omit<CardProps, "value"> {
   card: CardToJson
   onClick?: () => void
+  showInitialAnimation?: boolean
   showFlipAnimation?: boolean
   showExitAnimation?: boolean
   playerCount?: number
@@ -34,6 +35,7 @@ export const GameCard = ({
   size = "normal",
   disabled = false,
   loading = false,
+  showInitialAnimation = true,
   showFlipAnimation = true,
   showExitAnimation = false,
   playerCount = 2,
@@ -69,10 +71,14 @@ export const GameCard = ({
       )}
       onClick={handleClick}
       disabled={disabled || loading}
-      initial={{
-        scale: 0.3,
-        opacity: 0,
-      }}
+      initial={
+        showInitialAnimation
+          ? {
+              scale: 0.3,
+              opacity: 0,
+            }
+          : undefined
+      }
       animate={{
         opacity: 1,
         scale: 1,
@@ -86,15 +92,18 @@ export const GameCard = ({
       <div
         className={cn(
           "relative w-full h-full card-preserve-3d",
-          showFlipAnimation && "transition-all duration-500",
+          showFlipAnimation && "transition-transform duration-500 ease-out",
           card.isVisible ? "card-rotate-y-180" : "card-rotate-y-0",
         )}
+        style={{
+          willChange: showFlipAnimation ? "transform" : "auto",
+        }}
       >
         <Card
           className={cn(
             cardPositionClass,
             "bg-white",
-            "group-focus-visible/card:outline group-focus-visible/card:outline-2 group-focus-visible/card:outline-black group-focus-visible/card:-outline-offset-[6px]",
+            "group-focus-visible/card:outline-2 group-focus-visible/card:outline-black group-focus-visible/card:-outline-offset-[6px]",
           )}
           size={size}
           playerCount={playerCount}
@@ -105,7 +114,7 @@ export const GameCard = ({
           className={cn(
             cardPositionClass,
             "card-rotate-y-180",
-            "group-focus-visible/card:outline group-focus-visible/card:outline-2 group-focus-visible/card:outline-black group-focus-visible/card:-outline-offset-[6px]",
+            "group-focus-visible/card:outline-2 group-focus-visible/card:outline-black group-focus-visible/card:-outline-offset-[6px]",
           )}
           size={size}
           playerCount={playerCount}
