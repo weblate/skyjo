@@ -66,7 +66,7 @@ const LoginPage = () => {
 
   return (
     <div className="min-h-svh w-full z-20 flex flex-col justify-center items-center gap-4">
-      <div className="max-w-sm flex flex-col w-full -translate-y-12">
+      <div className="max-w-md flex flex-col w-full -translate-y-12 px-4">
         <h1 className="text-2xl font-medium mb-6 text-center">{t("title")}</h1>
 
         {apiError && (
@@ -132,7 +132,7 @@ const LoginPage = () => {
           </form>
         </Form>
 
-        <div className="mt-6 text-center text-sm">
+        <div className="mt-6 text-center text-sm break-words">
           <span className="text-gray-600">{t("signup.description")} </span>
           <Link href="/signup" className="text-blue-600 hover:text-blue-800">
             {t("signup.link")}

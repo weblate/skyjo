@@ -142,7 +142,7 @@ const SignupForm = () => {
         </Link>
       </div>
 
-      <div className="text-center mt-6">
+      <div className="text-center break-words mt-6">
         <p className="text-gray-600 dark:text-gray-400 text-sm">
           {t("already-have-account.description")}{" "}
           <Link
