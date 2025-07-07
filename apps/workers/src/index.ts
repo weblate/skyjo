@@ -1,6 +1,5 @@
 import { Logger } from "@skymo/logger"
 import { createAccountDeletionWorker } from "@/account-deletion/accountDeletionQueue.js"
-import { createGameCleanupWorker } from "@/game-cleanup/gameCleanupQueue.js"
 import { createPostgresCleanupWorker } from "@/postgres-cleanup/postgresCleanupQueue.js"
 import "@env"
 import { createGameStorageWorker } from "@/game-storage/gameStorageQueue.js"
@@ -11,7 +10,6 @@ import {
 } from "@/postgres-cleanup/postgresCleanup.js"
 
 const accountDeletionWorker = createAccountDeletionWorker()
-const gameCleanupWorker = createGameCleanupWorker()
 const postgresCleanupWorker = createPostgresCleanupWorker()
 const mailerWorker = createMailerWorker()
 const gameStorageWorker = createGameStorageWorker()
@@ -35,7 +33,6 @@ async function gracefulShutdown() {
   Logger.info("Shutdown signal received")
 
   await accountDeletionWorker.close()
-  await gameCleanupWorker.close()
   await postgresCleanupWorker.close()
   await mailerWorker.close()
   await gameStorageWorker.close()

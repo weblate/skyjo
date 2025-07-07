@@ -1,20 +1,21 @@
----
-description: This rule file provides informations about the worker-types package, the types it contains.
-globs: packages/worker-types/**/*.*
-alwaysApply: false
----
 # Worker Types Package (`packages/worker-types`)
 
-This package contains shared TypeScript types for jobs processed by background workers. It ensures type safety between the applications that queue jobs (like the `api`) and the `workers` that process them.
+This package provides shared TypeScript types for worker queues and jobs used across the Skymo platform.
 
 ## Key Files & Directories:
-- **[`types/`](mdc:packages/worker-types/types)**: Main directory for type definitions.
-  - **[`index.ts`](mdc:packages/worker-types/types/index.ts)**: Exports all types from this package.
-  - **[`gameCleanup.ts`](mdc:packages/worker-types/types/gameCleanup.ts)**: Defines `GameCleanupJobData` for cleaning up completed games.
-  - **[`gameStorage.ts`](mdc:packages/worker-types/types/gameStorage.ts)**: Defines `GameStorageJobData` for persisting game state.
-  - **[`mailer.ts`](mdc:packages/worker-types/types/mailer.ts)**: Defines `MailerJobData` and related types for sending transactional emails.
-- **[`package.json`](mdc:packages/worker-types/package.json)**: Dependencies and package configuration.
+- **[`types/`](mdc:packages/worker-types/types)**: TypeScript type definitions for different worker jobs.
+  - **[`account-deletion.ts`](mdc:packages/worker-types/types/account-deletion.ts)**: Defines `AccountDeletionJobData` for user account deletion tasks.
+  - **[`gameStorage.ts`](mdc:packages/worker-types/types/gameStorage.ts)**: Defines `GameStorageJobData` for storing completed games in the database.
+  - **[`mailer.ts`](mdc:packages/worker-types/types/mailer.ts)**: Defines `MailerJobData` for email sending tasks.
+  - **[`postgres-cleanup.ts`](mdc:packages/worker-types/types/postgres-cleanup.ts)**: Defines types for PostgreSQL cleanup tasks.
+- **[`package.json`](mdc:packages/worker-types/package.json)**: Dependencies and scripts.
 - **[`tsconfig.json`](mdc:packages/worker-types/tsconfig.json)**: TypeScript configuration.
+
+## Notes
+- All types follow the [TypeScript best practices](mdc:.cursor/rules/lib/typescript.mdc).
+- Types are used by both the API (job producers) and workers (job processors).
+- Job data interfaces ensure type safety across the queue system.
+
 
 ## Notes
 - This package should only contain type definitions and simple, shared validation schemas, following [TypeScript best practices](mdc:.cursor/rules/lib/typescript.mdc).

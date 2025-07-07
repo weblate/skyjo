@@ -1,4 +1,3 @@
-import { ENV } from "@env"
 import {
   Constants as CoreConstants,
   Game,
@@ -8,7 +7,6 @@ import {
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import { type GameOperation } from "@skymo/state-operations"
-import { Queue } from "bullmq"
 import { RedisClient } from "./client.js"
 
 export class GameRepository extends RedisClient {
@@ -20,21 +18,6 @@ export class GameRepository extends RedisClient {
   static readonly GAME_TTL = 600 // 10 minutes
   private static readonly PUBLIC_GAME_IN_LOBBY_TTL = 360 // 6 minutes
   private static readonly PUBLIC_GAMES_SORTED_SET = "public_games"
-
-  private static readonly CLEANUP_QUEUE = new Queue("game-cleanup", {
-    connection: {
-      url: ENV.REDIS_URL,
-      enableOfflineQueue: true,
-    },
-    defaultJobOptions: {
-      removeOnComplete: true,
-      attempts: 3,
-      backoff: {
-        type: "exponential",
-        delay: 1000,
-      },
-    },
-  })
 
   async createGame(game: Game) {
     const existingGame = await this.getGameSafe(game.code)
@@ -66,8 +49,10 @@ export class GameRepository extends RedisClient {
     const games = await Promise.all(
       gameCodes.map(async (code) => {
         const game = await this.getGameSafe(code)
-        if (!game) await this.removeFromPublicGames(code)
-        else if (game.players.length === 0) await this.removeGame(code)
+        if (!game || game.players.length === 0) {
+          await this.removeFromPublicGames(code)
+          return null
+        }
 
         return game
       }),
@@ -153,7 +138,7 @@ export class GameRepository extends RedisClient {
 
   async removeGame(code: string): Promise<void> {
     await this.removeFromPublicGames(code)
-    await this.deleteGame(code)
+    // Game cleanup is now handled by Redis TTL - no explicit deletion needed
   }
 
   //#region state
@@ -247,26 +232,5 @@ export class GameRepository extends RedisClient {
     await client.json.set(key, "$", operation)
     await client.expire(key, GameRepository.GAME_STATE_TTL)
   }
-
-  private async deleteGame(gameCode: string) {
-    try {
-      await GameRepository.CLEANUP_QUEUE.add(
-        "cleanup",
-        { gameCode },
-        {
-          jobId: `cleanup-${gameCode}-${Date.now()}`,
-          removeOnComplete: true,
-        },
-      )
-
-      Logger.info(`Game ${gameCode} queued for cleanup`, { gameCode })
-    } catch (error) {
-      Logger.error(`Error queuing cleanup for game ${gameCode}`, {
-        gameCode,
-        error,
-      })
-    }
-  }
-
   //#endregion
 }

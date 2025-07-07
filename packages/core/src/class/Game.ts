@@ -170,13 +170,18 @@ export class Game implements GameInterface {
       await this.operationManager.kickSocket(socket)
     }
 
-    if (this.isHost(player.id)) this.changeHost()
+    // Skip host change if this is the last player in lobby - let Redis TTL handle cleanup
+    const isLastPlayerInLobby = this.isInLobby() && this.players.length === 1
+    if (this.isHost(player.id) && !isLastPlayerInLobby) {
+      this.changeHost()
+    }
 
     if (this.isPlaying() && this.getCurrentPlayer()?.id === player.id) {
       await this.finishTurn({ wasAfk: false })
     }
 
-    if (!this.isPlaying()) {
+    // Skip player removal if this is the last player in lobby - let Redis TTL handle cleanup
+    if (!this.isPlaying() && !isLastPlayerInLobby) {
       this.players = this.players.filter((p) => p.id !== player.id)
     }
 
@@ -228,11 +233,6 @@ export class Game implements GameInterface {
   changeHost() {
     const players = this.getConnectedPlayers([this.hostId])
     if (players.length === 0) return
-
-    // Don't change host if there's only one player connected (solo player)
-    // This helps resolve mobile disconnection issues
-    const allConnectedPlayers = this.getConnectedPlayers()
-    if (allConnectedPlayers.length === 1) return
 
     this.hostId = players[0].id
   }
