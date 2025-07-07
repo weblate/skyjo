@@ -18,12 +18,20 @@ const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
   },
 })
 
+const getGridTemplate = (cards: CardToJson[][]): React.CSSProperties => {
+  return {
+    gridTemplateColumns: `repeat(${cards.length}, 1fr)`,
+    gridTemplateRows: `repeat(${cards[0].length}, 1fr)`,
+  }
+}
+
 interface CardTableProps {
   cards: CardToJson[][]
   cardDisabled?: boolean
   showSelectionAnimation?: boolean
   size?: GameBoardSize
 }
+
 const CardTable = ({
   cards,
   cardDisabled = false,
@@ -40,9 +48,9 @@ const CardTable = ({
     turnStatus,
     lastTurnStatus,
   } = useGame()
-  const numberOfRows = cards?.[0]?.length
-  const [numberOfRowsForClass, setNumberOfRowsForClass] = useState<number>(
-    game.settings.cardPerRow,
+
+  const [style, setStyle] = useState<React.CSSProperties>(
+    getGridTemplate(cards),
   )
 
   const canRevealCards =
@@ -67,26 +75,17 @@ const CardTable = ({
 
   // wait 2 seconds to set the number of rows (it's the time it takes for the animation to finish)
   useEffect(() => {
-    if (numberOfRows === game.settings.cardPerRow)
-      setNumberOfRowsForClass(game.settings.cardPerRow)
-    setTimeout(() => {
-      setNumberOfRowsForClass(numberOfRows)
-    }, 1900)
-  }, [numberOfRows, game.settings.cardPerRow])
+    setTimeout(() => setStyle(getGridTemplate(cards)), 2000)
+  }, [cards])
 
   return (
     <m.div
-      key={numberOfRowsForClass}
       initial={{ opacity: 0.9 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0.9 }}
-      transition={{ duration: 0.3 }}
-      className={cn(
-        cardTableVariants({ size }),
-        numberOfRowsForClass
-          ? `grid-rows-${numberOfRowsForClass}`
-          : "grid-rows-3",
-      )}
+      transition={{ duration: 0 }}
+      className={cn(cardTableVariants({ size }))}
+      style={style}
     >
       <AnimatePresence>
         {cards.map((column, columnIndex) => {
