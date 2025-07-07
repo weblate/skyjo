@@ -114,10 +114,10 @@ export const UserStats = ({ stats, locale }: UserStatsProps) => {
           t("stats.win-rate"),
           t("stats.public"),
           t("stats.private"),
-          stats.winRate.public > 0
+          stats.totalGames.public > 0
             ? `${stats.winRate.public.toFixed(1)}%`
             : "-",
-          stats.winRate.private > 0
+          stats.totalGames.private > 0
             ? `${stats.winRate.private.toFixed(1)}%`
             : "-",
         ),
