@@ -177,7 +177,7 @@ export async function getCurrentUser(c: Context) {
       name: userTable.name,
       username: userTable.username,
       avatar: userTable.avatar,
-      locale: userTable.locale,
+      settings: userTable.settings,
       emailVerified: userTable.emailVerified,
       googleId: userTable.googleId,
       facebookId: userTable.facebookId,
@@ -224,7 +224,7 @@ export async function completeOnboarding(userId: number, data: Onboarding) {
       username: userTable.username,
       avatar: userTable.avatar,
       name: userTable.name,
-      locale: userTable.locale,
+      settings: userTable.settings,
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
@@ -253,7 +253,11 @@ export async function requestPasswordReset(data: ForgotPassword) {
   const { email } = data
 
   const user = await db
-    .select()
+    .select({
+      id: userTable.id,
+      email: userTable.email,
+      settings: userTable.settings,
+    })
     .from(userTable)
     .where(eq(userTable.email, email))
     .limit(1)
@@ -287,7 +291,7 @@ export async function requestPasswordReset(data: ForgotPassword) {
   await mailerQueue.add("reset-password", {
     to: email,
     template: "reset-password",
-    locale: userRecord.locale,
+    locale: userRecord.settings?.locale ?? "en",
     content: {
       resetUrl,
     },

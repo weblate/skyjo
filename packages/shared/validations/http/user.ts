@@ -1,5 +1,6 @@
 import { Constants } from "@skymo/core"
 import { z } from "zod"
+import { locales } from "../../constants/locales.js"
 
 export const passwordLowercaseRegex = /[a-z]/
 export const passwordUppercaseRegex = /[A-Z]/
@@ -99,3 +100,23 @@ export const unlinkOAuthSchema = z.object({
   provider: z.enum(["google", "facebook"]),
 })
 export type UnlinkOAuth = z.infer<typeof unlinkOAuthSchema>
+
+// User settings schemas
+export const userSettingsSchema = z.object({
+  locale: z.enum(locales),
+  audio: z.boolean(),
+  volume: z.number().min(0).max(100),
+  chatVisibility: z.boolean(),
+  chatNotificationSize: z.enum(["small", "normal", "big"]),
+  switchToPlayerWhoIsPlaying: z.boolean(),
+  showPreviewOpponentsCardsForMobile: z.boolean(),
+  gameBoardSize: z.enum(["normal", "big"]),
+  enlargeActivePlayerBoard: z.boolean(),
+  timerDisplayMode: z.enum(["never", "smart", "always"]),
+})
+export type UserSettings = z.infer<typeof userSettingsSchema>
+
+export const updateUserSettingsSchema = z.object({
+  settings: userSettingsSchema.partial(),
+})
+export type UpdateUserSettings = z.infer<typeof updateUserSettingsSchema>

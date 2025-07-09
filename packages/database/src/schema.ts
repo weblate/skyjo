@@ -1,5 +1,5 @@
 import type { SettingsRedisDb } from "@skymo/core"
-import { locales } from "@skymo/shared/constants"
+import type { UserSettings } from "@skymo/shared/validations"
 import { eq, type InferSelectModel, relations, sql } from "drizzle-orm"
 import {
   boolean,
@@ -46,9 +46,7 @@ export const userTable = pgTable(
     password: varchar("password", { length: 255 }),
     googleId: varchar("google_id", { length: 255 }).unique(),
     facebookId: varchar("facebook_id", { length: 255 }).unique(),
-    locale: varchar("locale", { length: 10, enum: locales })
-      .notNull()
-      .default("en"),
+    settings: json("settings").$type<UserSettings>(),
     emailVerified: boolean("email_verified").notNull().default(false),
     onboardingCompleted: boolean("onboarding_completed")
       .notNull()

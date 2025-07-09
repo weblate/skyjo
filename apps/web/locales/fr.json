@@ -691,6 +691,21 @@
           "description": "Votre adresse email utilisée pour la connexion et les notifications importantes. Pour la sécurité, un email d'avertissement sera envoyé à votre adresse actuelle lorsque vous la changez.",
           "placeholder": "Saisissez votre email",
           "submit": "Enregistrer l'email"
+        },
+        "settings-sync": {
+          "label": "Synchronisation des paramètres",
+          "description": "Synchronisez vos paramètres sur tous vos appareils lorsque vous êtes connecté.",
+          "enable-sync": "Activer la synchronisation",
+          "disable-sync": "Désactiver la synchronisation",
+          "status": {
+            "enabled": "Activée",
+            "disabled": "Désactivée",
+            "syncing": "Synchronisation...",
+            "offline": "Hors ligne",
+            "error": "Échec de la synchronisation"
+          },
+          "last-sync": "Dernière synchronisation : {date}",
+          "sync-now": "Synchroniser maintenant"
         }
       },
       "delete-account": {
@@ -1067,6 +1082,19 @@
             "smart": "Intelligent",
             "always": "Toujours"
           }
+        }
+      },
+      "account": {
+        "title": "Compte",
+        "sync": {
+          "label": "Paramètres du compte",
+          "description": "Synchronisez vos paramètres sur tous vos appareils lorsque vous êtes connecté.",
+          "enabled": "Activé",
+          "disabled": "Désactivé",
+          "syncing": "Synchronisation en cours...",
+          "offline": "Déconnecté",
+          "error": "Erreur de synchronisation",
+          "lastSync": "Dernière synchronisation : {date}"
         }
       }
     },

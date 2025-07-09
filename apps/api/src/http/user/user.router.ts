@@ -6,6 +6,7 @@ import {
   updateNameSchema,
   updatePasswordSchema,
   updateUsernameSchema,
+  updateUserSettingsSchema,
 } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
@@ -18,6 +19,7 @@ import {
   cancelAccountDeletion,
   getUserByUsername,
   getUserGames,
+  getUserSettings,
   getUserStats,
   revertEmail,
   scheduleAccountDeletion,
@@ -26,6 +28,7 @@ import {
   updateName,
   updatePassword,
   updateUsername,
+  updateUserSettings,
 } from "@/http/user/user.service.js"
 
 const userGamesRateLimiter = new RateLimiterMemory({
@@ -68,6 +71,16 @@ const cancelAccountDeletionRateLimiter = new RateLimiterMemory({
   points: 5,
   duration: 60,
 })
+const getUserSettingsRateLimiter = new RateLimiterMemory({
+  keyPrefix: "get-user-settings",
+  points: 30,
+  duration: 60,
+})
+const updateUserSettingsRateLimiter = new RateLimiterMemory({
+  keyPrefix: "update-user-settings",
+  points: 20,
+  duration: 60,
+})
 
 export const userRouter = new Hono<AuthContextVariables>()
   .get(
@@ -102,6 +115,44 @@ export const userRouter = new Hono<AuthContextVariables>()
       } catch (error) {
         Logger.error("Error getting user games:", { error })
         return c.json({ error: "get-user-error" }, 500)
+      }
+    },
+  )
+  .get(
+    "/me/settings",
+    authMiddleware,
+    createRateLimiterMiddleware(getUserSettingsRateLimiter),
+    async (c) => {
+      const user = c.get("user")
+
+      try {
+        const settings = await getUserSettings(user.id)
+        return c.json({ settings }, 200)
+      } catch (error) {
+        Logger.error("Error getting user settings:", { error })
+        return c.json({ error: "get-user-settings-error" }, 500)
+      }
+    },
+  )
+  .put(
+    "/me/settings",
+    authMiddleware,
+    zValidator("json", updateUserSettingsSchema),
+    createRateLimiterMiddleware(updateUserSettingsRateLimiter),
+    async (c) => {
+      const data = c.req.valid("json")
+      const user = c.get("user")
+
+      try {
+        const settings = await updateUserSettings(user.id, data)
+        return c.json({ settings }, 200)
+      } catch (error) {
+        if (error instanceof Error) {
+          return c.json({ error: error.message }, 400)
+        }
+
+        Logger.error("Error updating user settings:", { error })
+        return c.json({ error: "update-user-settings-error" }, 500)
       }
     },
   )

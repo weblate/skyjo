@@ -6,6 +6,7 @@ import { ThemeProvider } from "next-themes"
 import { createContext, useContext, useEffect, useMemo, useState } from "react"
 import { useLocalStorage } from "react-use"
 import SettingsDialog from "@/components/SettingsDialog"
+import { useSettingsSync } from "@/hooks/useSettingsSync"
 
 const VOLUME_DIVISOR = 100
 
@@ -85,6 +86,7 @@ const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
     locale,
   })
 
+  const { syncToServer } = useSettingsSync()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
@@ -117,7 +119,15 @@ const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
     key: K,
     value: Settings[K],
   ) => {
-    if (settings) setSettings({ ...settings, [key]: value })
+    if (settings) {
+      const newSettings = { ...settings, [key]: value }
+      setSettings(newSettings)
+
+      // Sync to server if sync is enabled
+      syncToServer(newSettings as any).catch((error) => {
+        console.error("Failed to sync settings to server:", error)
+      })
+    }
   }
 
   const contextValue = useMemo(
@@ -126,7 +136,7 @@ const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
       openSettings,
       updateSetting,
     }),
-    [settings, openSettings, updateSetting],
+    [settings, openSettings, updateSetting, syncToServer],
   )
 
   return (

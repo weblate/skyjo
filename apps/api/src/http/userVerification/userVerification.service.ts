@@ -26,7 +26,7 @@ export async function sendVerifyPin(email: string) {
     return
   }
 
-  const locale = user.locale
+  const locale = user.settings?.locale ?? "en"
 
   const pin = await generateVerifyPin(user)
 
