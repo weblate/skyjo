@@ -19,7 +19,7 @@ interface UseSettingsSyncReturn {
   enableSettingsSync: () => void
   disableSettingsSync: () => void
   syncSettingsToServer: (settings: UserSettings) => Promise<void>
-  syncSettingsFromServer: () => Promise<Locales | undefined>
+  syncSettingsFromServer: (force?: boolean) => Promise<Locales | undefined>
   isOnline: boolean
 }
 
@@ -142,67 +142,68 @@ export const useSettingsSync = (): UseSettingsSyncReturn => {
     [canSync, updateSyncState, handleSyncError],
   )
 
-  const syncSettingsFromServer = useCallback(async (): Promise<
-    Locales | undefined
-  > => {
-    if (!canSync) return undefined
-
-    updateSyncState({
-      isLoading: true,
-      error: null,
-    })
-
-    try {
-      const response = await fetch(`${API_BASE_URL}/users/me/settings`, {
-        method: "GET",
-        credentials: "include",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-
-      if (!response.ok) {
-        if (response.status === 404) {
-          updateSyncState({
-            isLoading: false,
-            error: null,
-          })
-          return
-        }
-        throw new Error(
-          `Failed to fetch settings from server: ${response.status}`,
-        )
-      }
-
-      const data = await response.json()
-
-      if (data.settings && setUserSettings) {
-        setUserSettings(data.settings)
-
-        window.dispatchEvent(
-          new StorageEvent("storage", {
-            key: "userSettings",
-            newValue: JSON.stringify(data.settings),
-            oldValue: localStorage.getItem("userSettings"),
-            url: window.location.href,
-            storageArea: localStorage,
-          }),
-        )
-      }
-
-      setTheme(data.settings.theme)
+  const syncSettingsFromServer = useCallback(
+    async (force?: boolean): Promise<Locales | undefined> => {
+      if (!canSync && !force) return undefined
 
       updateSyncState({
-        isLoading: false,
-        lastSyncTime: Date.now(),
+        isLoading: true,
         error: null,
       })
 
-      return data.settings.locale
-    } catch (error) {
-      handleSyncError(error, "sync and apply settings from server")
-    }
-  }, [canSync, updateSyncState, handleSyncError, setUserSettings])
+      try {
+        const response = await fetch(`${API_BASE_URL}/users/me/settings`, {
+          method: "GET",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        })
+
+        if (!response.ok) {
+          if (response.status === 404) {
+            updateSyncState({
+              isLoading: false,
+              error: null,
+            })
+            return
+          }
+          throw new Error(
+            `Failed to fetch settings from server: ${response.status}`,
+          )
+        }
+
+        const data = await response.json()
+
+        if (data.settings && setUserSettings) {
+          setUserSettings(data.settings)
+
+          window.dispatchEvent(
+            new StorageEvent("storage", {
+              key: "userSettings",
+              newValue: JSON.stringify(data.settings),
+              oldValue: localStorage.getItem("userSettings"),
+              url: window.location.href,
+              storageArea: localStorage,
+            }),
+          )
+        }
+
+        setTheme(data.settings.theme)
+
+        updateSyncState({
+          isLoading: false,
+          lastSyncTime: Date.now(),
+          error: null,
+        })
+
+        return data.settings.locale
+      } catch (error) {
+        handleSyncError(error, "sync and apply settings from server")
+      }
+    },
+    [canSync, updateSyncState, handleSyncError, setUserSettings],
+  )
 
   return {
     settingsSyncState: syncState || {

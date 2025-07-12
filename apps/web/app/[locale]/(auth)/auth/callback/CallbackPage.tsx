@@ -37,7 +37,7 @@ export default function CallbackLogic({ locale }: CallbackLogicProps) {
       // Sync settings from server if enabled + get the new locale
       let newLocale = locale
       if (settingsSyncState?.isEnabled) {
-        const syncLocale = await syncSettingsFromServer()
+        const syncLocale = await syncSettingsFromServer(true)
         if (syncLocale) newLocale = syncLocale
       }
 

@@ -59,7 +59,7 @@ const LoginPage = ({ locale }: LoginPageProps) => {
 
       let newLocale = locale
       if (settingsSyncState?.isEnabled) {
-        const syncLocale = await syncSettingsFromServer()
+        const syncLocale = await syncSettingsFromServer(true)
         if (syncLocale) newLocale = syncLocale
       }
 
