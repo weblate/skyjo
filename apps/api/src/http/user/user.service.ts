@@ -10,7 +10,7 @@ import {
   userTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
-import { type Locales } from "@skymo/shared/constants"
+import { DEFAULT_GAME_SETTINGS, type Locales } from "@skymo/shared/constants"
 import type {
   GameHistoryQuery,
   UpdateAvatar,
@@ -18,6 +18,8 @@ import type {
   UpdateName,
   UpdatePassword,
   UpdateUsername,
+  UpdateUserSettings,
+  UserSettings,
 } from "@skymo/shared/validations"
 import dayjs from "dayjs"
 import { and, avg, count, eq, ne, sql, sum } from "drizzle-orm"
@@ -38,6 +40,7 @@ interface CreateUserParams {
   avatar?: Avatar
   emailVerified?: boolean
   password?: string
+  settings?: UserSettings
 }
 export async function createUser({
   googleId,
@@ -48,9 +51,16 @@ export async function createUser({
   avatar,
   emailVerified,
   password,
+  settings,
 }: CreateUserParams): Promise<UserDb> {
   const createdName = name ?? null
   const createdUsername = username ?? (name ? await createUsername(name) : null)
+
+  const finalSettings: UserSettings = {
+    ...DEFAULT_GAME_SETTINGS,
+    ...settings, // User-provided settings
+    locale: settings?.locale ?? locale ?? DEFAULT_GAME_SETTINGS.locale,
+  }
 
   const row = await db
     .insert(userTable)
@@ -60,7 +70,7 @@ export async function createUser({
       username: createdUsername,
       password: password ? await hashPassword(password) : null,
       googleId: googleId ?? null,
-      locale,
+      settings: finalSettings,
       avatar,
       emailVerified,
     })
@@ -71,7 +81,7 @@ export async function createUser({
       email: userTable.email,
       googleId: userTable.googleId,
       facebookId: userTable.facebookId,
-      locale: userTable.locale,
+      settings: userTable.settings,
       avatar: userTable.avatar,
       emailVerified: userTable.emailVerified,
       onboardingCompleted: userTable.onboardingCompleted,
@@ -303,7 +313,7 @@ export async function updateName(userId: number, data: UpdateName) {
       username: userTable.username,
       avatar: userTable.avatar,
       name: userTable.name,
-      locale: userTable.locale,
+      settings: userTable.settings,
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
@@ -334,7 +344,7 @@ export async function updateUsername(userId: number, data: UpdateUsername) {
       username: userTable.username,
       avatar: userTable.avatar,
       name: userTable.name,
-      locale: userTable.locale,
+      settings: userTable.settings,
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
@@ -374,7 +384,7 @@ export async function updateEmail(user: UserDb, data: UpdateEmail) {
   await mailerQueue.add("email-change-warning", {
     to: oldEmail,
     template: "email-change-warning",
-    locale: user.locale,
+    locale: user.settings?.locale ?? "en",
     content: {
       newEmail,
       reversionUrl,
@@ -392,7 +402,7 @@ export async function updateEmail(user: UserDb, data: UpdateEmail) {
     username: user.username,
     avatar: user.avatar,
     name: user.name,
-    locale: user.locale,
+    settings: user.settings,
     onboardingCompleted: user.onboardingCompleted,
   }
 }
@@ -425,7 +435,7 @@ export async function revertEmail(token: string) {
 
   const [userData] = await db
     .select({
-      locale: userTable.locale,
+      settings: userTable.settings,
     })
     .from(userTable)
     .where(eq(userTable.id, emailChange.userId))
@@ -492,7 +502,7 @@ export async function updatePassword(userId: number, data: UpdatePassword) {
       username: userTable.username,
       avatar: userTable.avatar,
       name: userTable.name,
-      locale: userTable.locale,
+      settings: userTable.settings,
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
@@ -513,7 +523,7 @@ export async function updateAvatar(userId: number, { avatar }: UpdateAvatar) {
       username: userTable.username,
       avatar: userTable.avatar,
       name: userTable.name,
-      locale: userTable.locale,
+      settings: userTable.settings,
       onboardingCompleted: userTable.onboardingCompleted,
     })
 
@@ -526,7 +536,7 @@ export async function scheduleAccountDeletion(userId: number) {
       id: userTable.id,
       email: userTable.email,
       name: userTable.name,
-      locale: userTable.locale,
+      settings: userTable.settings,
     })
     .from(userTable)
     .where(eq(userTable.id, userId))
@@ -577,7 +587,7 @@ export async function scheduleAccountDeletion(userId: number) {
   await mailerQueue.add("account-deletion-scheduled", {
     to: userData.email,
     template: "account-deletion-scheduled",
-    locale: userData.locale,
+    locale: userData.settings?.locale ?? "en",
     content: {
       cancellationUrl,
     },
@@ -635,4 +645,43 @@ export async function cancelAccountDeletion(token: string) {
     userId: deletionRequest.userId,
     jobId: deletionRequest.jobId,
   })
+}
+
+// Settings related functions
+export async function getUserSettings(
+  userId: number,
+): Promise<UserSettings | null> {
+  const [user] = await db
+    .select({
+      settings: userTable.settings,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, userId))
+    .limit(1)
+
+  if (!user?.settings) return null
+
+  return user.settings
+}
+
+export async function updateUserSettings(
+  userId: number,
+  data: UpdateUserSettings,
+): Promise<UserSettings | null> {
+  const [updatedUser] = await db
+    .update(userTable)
+    .set({
+      settings: sql`COALESCE(settings, '{}'::jsonb) || ${JSON.stringify(
+        data.settings,
+      )}::jsonb`,
+      updatedAt: new Date(),
+    })
+    .where(eq(userTable.id, userId))
+    .returning({
+      settings: userTable.settings,
+    })
+
+  if (!updatedUser) throw new Error("user-not-found")
+
+  return (updatedUser?.settings as UserSettings) ?? null
 }

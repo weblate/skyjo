@@ -691,6 +691,21 @@
           "description": "Your email address used for login and important notifications. For security, a warning email will be sent to your current address when you change it.",
           "placeholder": "Enter your email",
           "submit": "Save email"
+        },
+        "settings-sync": {
+          "label": "Settings Sync",
+          "description": "Synchronize your settings across all your devices when you're logged in.",
+          "enable-sync": "Enable settings sync",
+          "disable-sync": "Disable settings sync",
+          "status": {
+            "enabled": "Enabled",
+            "disabled": "Disabled",
+            "syncing": "Syncing...",
+            "offline": "Offline",
+            "error": "Sync failed"
+          },
+          "last-sync": "Last sync: {date}",
+          "sync-now": "Sync now"
         }
       },
       "delete-account": {
@@ -1072,6 +1087,19 @@
             "smart": "Smart",
             "always": "Always"
           }
+        }
+      },
+      "account": {
+        "title": "Account",
+        "sync": {
+          "label": "Account settings",
+          "description": "Synchronize your settings across all your devices when you're logged in.",
+          "enabled": "Enabled",
+          "disabled": "Disabled",
+          "syncing": "Syncing...",
+          "offline": "Offline",
+          "error": "Sync failed",
+          "lastSync": "Last sync: {date}"
         }
       }
     },

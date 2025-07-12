@@ -1,4 +1,10 @@
 "use client"
+import {
+  ChatNotificationSize,
+  GameBoardSize,
+  TimerDisplayMode,
+} from "@skymo/shared/constants"
+import dayjs from "dayjs"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
 import {
@@ -13,12 +19,8 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  ChatNotificationSize,
-  GameBoardSize,
-  TimerDisplayMode,
-  useSettings,
-} from "@/contexts/SettingsContext"
+import { useSettings } from "@/contexts/SettingsContext"
+import { useSettingsSync } from "@/hooks/useSettingsSync"
 
 interface SettingsDialogProps {
   open: boolean
@@ -41,7 +43,7 @@ const SettingsDialog = ({ open, onOpenChange }: SettingsDialogProps) => {
           defaultValue="audio"
           className="flex flex-col grow overflow-y-auto"
         >
-          <TabsList className="px-6 grid grid-cols-4 sm:grid-cols-3 w-full">
+          <TabsList className="px-6 grid grid-cols-5 sm:grid-cols-4 w-full">
             <TabsTrigger value="audio" className="h-10">
               {t("audio.title")}
             </TabsTrigger>
@@ -50,6 +52,9 @@ const SettingsDialog = ({ open, onOpenChange }: SettingsDialogProps) => {
             </TabsTrigger>
             <TabsTrigger value="chat" className="h-10">
               {t("chat.title")}
+            </TabsTrigger>
+            <TabsTrigger value="account" className="h-10">
+              {t("account.title")}
             </TabsTrigger>
             <TabsTrigger value="mobile" className="h-10 flex sm:hidden">
               {t("mobile.title")}
@@ -63,6 +68,9 @@ const SettingsDialog = ({ open, onOpenChange }: SettingsDialogProps) => {
           </TabsContent>
           <TabsContent value="chat">
             <ChatSettings />
+          </TabsContent>
+          <TabsContent value="account">
+            <AccountSettings />
           </TabsContent>
           <TabsContent value="mobile" className="sm:hidden">
             <MobileSettings />
@@ -251,6 +259,65 @@ const GameplaySettings = () => {
             ))}
           </RadioGroup>
         </div>
+      </div>
+    </div>
+  )
+}
+
+const AccountSettings = () => {
+  const t = useTranslations("components.SettingsDialog.account")
+  const {
+    settingsSyncState,
+    enableSettingsSync,
+    disableSettingsSync,
+    isOnline,
+  } = useSettingsSync()
+
+  return (
+    <div className="px-6 flex flex-col gap-6">
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="settings-sync">{t("sync.label")}</Label>
+        <p className="text-sm text-gray-700 dark:text-dark-font/80">
+          {t("sync.description")}
+        </p>
+        <div className="flex items-center gap-2">
+          <Switch
+            id="settings-sync"
+            checked={settingsSyncState.isEnabled}
+            onCheckedChange={(checked) =>
+              checked ? enableSettingsSync() : disableSettingsSync()
+            }
+          />
+          <div className="flex items-center gap-2">
+            <span className="text-sm">
+              {settingsSyncState.isEnabled
+                ? t("sync.enabled")
+                : t("sync.disabled")}
+            </span>
+            {settingsSyncState.isLoading && (
+              <span className="text-xs text-gray-500">{t("sync.syncing")}</span>
+            )}
+            {!isOnline && (
+              <span className="text-xs text-orange-600">
+                {t("sync.offline")}
+              </span>
+            )}
+          </div>
+        </div>
+        {settingsSyncState.error && (
+          <p className="text-sm text-red-600">
+            {t("sync.error")}: {settingsSyncState.error}
+          </p>
+        )}
+        {settingsSyncState.lastSyncTime && (
+          <p className="text-xs text-gray-500">
+            {t("sync.lastSync", {
+              date: dayjs(settingsSyncState.lastSyncTime).format(
+                "DD/MM/YYYY HH:mm",
+              ),
+            })}
+          </p>
+        )}
       </div>
     </div>
   )

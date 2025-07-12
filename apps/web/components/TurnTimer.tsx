@@ -1,12 +1,13 @@
 "use client"
 
 import { Constants as CoreConstants } from "@skymo/core"
+import { TimerDisplayMode } from "@skymo/shared/constants"
 import { cva } from "class-variance-authority"
 import dayjs from "dayjs"
 import { AnimatePresence, m } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { useGame } from "@/contexts/GameContext"
-import { TimerDisplayMode, useSettings } from "@/contexts/SettingsContext"
+import { useSettings } from "@/contexts/SettingsContext"
 import { cn } from "@/lib/utils"
 
 const turnTimerTextVariants = cva("text-sm", {

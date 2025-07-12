@@ -1,98 +1,66 @@
 "use client"
 
-import { Locales } from "@skymo/shared/constants"
+import { DEFAULT_GAME_SETTINGS, Locales } from "@skymo/shared/constants"
+import { UserSettings } from "@skymo/shared/validations"
 import { Howler } from "howler"
-import { ThemeProvider } from "next-themes"
-import { createContext, useContext, useEffect, useMemo, useState } from "react"
+import { ThemeProvider, useTheme } from "next-themes"
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 import { useLocalStorage } from "react-use"
 import SettingsDialog from "@/components/SettingsDialog"
+import { useSettingsSync } from "@/hooks/useSettingsSync"
 
 const VOLUME_DIVISOR = 100
 
-export const TimerDisplayMode = {
-  NEVER: "never",
-  SMART: "smart",
-  ALWAYS: "always",
-} as const
-export type TimerDisplayMode =
-  (typeof TimerDisplayMode)[keyof typeof TimerDisplayMode]
-
-export const ChatNotificationSize = {
-  SMALL: "small",
-  NORMAL: "normal",
-  BIG: "big",
-} as const
-export type ChatNotificationSize =
-  (typeof ChatNotificationSize)[keyof typeof ChatNotificationSize]
-
-export const Appearance = {
-  LIGHT: "light",
-  DARK: "dark",
-  SYSTEM: "system",
-} as const
-export type Appearance = (typeof Appearance)[keyof typeof Appearance]
-
-export const GameBoardSize = {
-  NORMAL: "normal",
-  BIG: "big",
-} as const
-export type GameBoardSize = (typeof GameBoardSize)[keyof typeof GameBoardSize]
-
-interface Settings {
-  // general
-  locale: Locales
-  // audio
-  audio: boolean
-  volume: number
-  // display
-  chatVisibility: boolean
-  chatNotificationSize: ChatNotificationSize
-  switchToPlayerWhoIsPlaying: boolean
-  showPreviewOpponentsCardsForMobile: boolean
-  gameBoardSize: GameBoardSize
-  enlargeActivePlayerBoard: boolean
-  timerDisplayMode: TimerDisplayMode
-}
-type SettingsKeys = keyof Settings
-
-const DEFAULT_GAME_SETTINGS: Settings = {
-  locale: "en",
-  audio: true,
-  volume: 50,
-  chatVisibility: true,
-  chatNotificationSize: ChatNotificationSize.NORMAL,
-  switchToPlayerWhoIsPlaying: true,
-  showPreviewOpponentsCardsForMobile: true,
-  gameBoardSize: GameBoardSize.NORMAL,
-  enlargeActivePlayerBoard: false,
-  timerDisplayMode: TimerDisplayMode.SMART,
-}
-
 interface SettingsContext {
-  settings: Settings
+  settings: UserSettings
   openSettings: () => void
-  updateSetting: <K extends keyof Settings>(key: K, value: Settings[K]) => void
+  updateSetting: <K extends keyof UserSettings>(
+    key: K,
+    value: UserSettings[K],
+  ) => void
 }
 const SettingsContext = createContext<SettingsContext | undefined>(undefined)
+
+// ThemeSync component that must be used inside ThemeProvider but outside SettingsProvider
+const ThemeSync = ({ theme }: { theme: string }) => {
+  const { setTheme } = useTheme()
+
+  // Only sync from settings to next-themes (one-way sync)
+  useEffect(() => {
+    if (theme) setTheme(theme)
+  }, [theme, setTheme])
+
+  return null
+}
 
 interface SettingsProviderProps {
   children: React.ReactNode
   locale: Locales
 }
 const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
-  const [settings, setSettings] = useLocalStorage<Settings>("userSettings", {
-    ...DEFAULT_GAME_SETTINGS,
-    locale,
-  })
+  const [settings, setSettings] = useLocalStorage<UserSettings>(
+    "userSettings",
+    {
+      ...DEFAULT_GAME_SETTINGS,
+      locale,
+    },
+  )
 
+  const { syncSettingsToServer } = useSettingsSync()
   const [open, setOpen] = useState(false)
 
   useEffect(() => {
-    // check all settings keys, if not present in settings, add them
     if (!settings) return
 
     Object.keys(DEFAULT_GAME_SETTINGS).forEach((defaultKey) => {
-      const k = defaultKey as SettingsKeys
+      const k = defaultKey as keyof UserSettings
 
       if (settings[k] === undefined)
         setSettings({ ...settings, [k]: DEFAULT_GAME_SETTINGS[k] })
@@ -113,12 +81,20 @@ const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
 
   const openSettings = () => setOpen(true)
 
-  const updateSetting = <K extends keyof Settings>(
-    key: K,
-    value: Settings[K],
-  ) => {
-    if (settings) setSettings({ ...settings, [key]: value })
-  }
+  const updateSetting = useCallback(
+    <K extends keyof UserSettings>(key: K, value: UserSettings[K]) => {
+      if (settings) {
+        const newSettings = { ...settings, [key]: value }
+
+        setSettings(newSettings)
+
+        syncSettingsToServer(newSettings).catch((error) => {
+          console.error("Failed to sync settings to server:", error)
+        })
+      }
+    },
+    [settings, setSettings, syncSettingsToServer],
+  )
 
   const contextValue = useMemo(
     () => ({
@@ -126,12 +102,15 @@ const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
       openSettings,
       updateSetting,
     }),
-    [settings, openSettings, updateSetting],
+    [settings, updateSetting],
   )
+
+  if (!settings) return null
 
   return (
     <SettingsContext.Provider value={contextValue}>
       <ThemeProvider attribute="class" enableSystem>
+        <ThemeSync theme={settings.theme} />
         {children}
         <SettingsDialog open={open} onOpenChange={setOpen} />
       </ThemeProvider>

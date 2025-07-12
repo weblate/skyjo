@@ -24,7 +24,6 @@ export const useAuth = () => {
   const router = useRouter()
   const pathname = usePathname()
   const tErrors = useTranslations("errors")
-
   const logoutMutation = useMutation({
     mutationFn: async () => {
       try {
@@ -79,6 +78,7 @@ export const useAuth = () => {
         }
 
         const result = await response.json()
+
         return {
           ...result.user,
           name: result.user.name ?? undefined,

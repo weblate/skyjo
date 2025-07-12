@@ -1,10 +1,11 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Locales } from "@skymo/shared/constants"
 import type { LoginError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { LoginUser, loginSchema } from "@skymo/shared/validations"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -15,12 +16,18 @@ import { Form, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-input"
+import { useSettingsSync } from "@/hooks/useSettingsSync"
 import { Link, useRouter } from "@/i18n/routing"
 
-const LoginPage = () => {
+interface LoginPageProps {
+  locale: Locales
+}
+const LoginPage = ({ locale }: LoginPageProps) => {
   const router = useRouter()
   const t = useTranslations("pages.Login")
   const tErrors = useTranslations("errors")
+  const { syncSettingsFromServer, settingsSyncState } = useSettingsSync()
+  const queryClient = useQueryClient()
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -50,10 +57,15 @@ const LoginPage = () => {
         return
       }
 
-      const result = await res.json()
-      return result
+      let newLocale = locale
+      if (settingsSyncState?.isEnabled) {
+        const syncLocale = await syncSettingsFromServer()
+        if (syncLocale) newLocale = syncLocale
+      }
+
+      queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
+      router.push("/", { locale: newLocale })
     },
-    onSuccess: () => router.push("/"),
     onError: (error) => {
       console.error(error)
       toast.error(tErrors("login-error"))

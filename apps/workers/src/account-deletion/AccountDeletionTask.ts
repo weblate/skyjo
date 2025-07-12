@@ -124,7 +124,7 @@ export class AccountDeletionTask {
       await mailerQueue.add("account-deleted", {
         to: user.email,
         template: "account-deleted",
-        locale: user.locale,
+        locale: user.settings?.locale ?? "en",
         content: undefined,
       })
 
