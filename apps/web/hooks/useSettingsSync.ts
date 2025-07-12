@@ -1,8 +1,11 @@
 "use client"
 
+import { Locales } from "@skymo/shared/constants"
 import { UserSettings } from "@skymo/shared/validations"
-import { useCallback, useEffect, useState } from "react"
+import { useTheme } from "next-themes"
+import { useCallback, useEffect, useMemo, useState } from "react"
 import { useLocalStorage } from "react-use"
+import { useAuth } from "@/hooks/useAuth"
 
 interface SettingsSyncState {
   isEnabled: boolean
@@ -12,19 +15,18 @@ interface SettingsSyncState {
 }
 
 interface UseSettingsSyncReturn {
-  syncState: SettingsSyncState
-  enableSync: () => void
-  disableSync: () => void
-  syncToServer: (settings: UserSettings) => Promise<void>
-  syncFromServer: () => Promise<UserSettings | null>
-  syncFromServerAndApply: () => Promise<void>
+  settingsSyncState: SettingsSyncState
+  enableSettingsSync: () => void
+  disableSettingsSync: () => void
+  syncSettingsToServer: (settings: UserSettings) => Promise<void>
+  syncSettingsFromServer: () => Promise<Locales>
   isOnline: boolean
 }
 
-export const useSettingsSync = (): UseSettingsSyncReturn => {
-  const [isOnline, setIsOnline] = useState(navigator.onLine)
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL
 
-  // Local storage for sync state
+export const useSettingsSync = (): UseSettingsSyncReturn => {
+  const [, setUserSettings] = useLocalStorage<UserSettings>("userSettings")
   const [syncState, setSyncState] = useLocalStorage<SettingsSyncState>(
     "settingsSyncState",
     {
@@ -35,10 +37,11 @@ export const useSettingsSync = (): UseSettingsSyncReturn => {
     },
   )
 
-  // Local storage for user settings
-  const [, setUserSettings] = useLocalStorage<UserSettings>("userSettings")
+  const { isAuthenticated } = useAuth()
+  const { setTheme } = useTheme()
 
-  // Monitor online/offline status
+  const [isOnline, setIsOnline] = useState(navigator.onLine)
+
   useEffect(() => {
     const handleOnline = () => setIsOnline(true)
     const handleOffline = () => setIsOnline(false)
@@ -52,41 +55,81 @@ export const useSettingsSync = (): UseSettingsSyncReturn => {
     }
   }, [])
 
-  const enableSync = useCallback(() => {
-    if (!syncState) return
+  const checkAuthentication = useCallback(async (): Promise<boolean> => {
+    try {
+      const response = await fetch(`${API_BASE_URL}/auth/verify`, {
+        method: "POST",
+        credentials: "include",
+      })
+      return response.ok
+    } catch {
+      return false
+    }
+  }, [])
 
-    setSyncState({
-      ...syncState,
-      isEnabled: true,
-      error: null,
-    })
-  }, [syncState, setSyncState])
+  const canSync = useMemo((): boolean => {
+    const conditions = {
+      enabled: syncState?.isEnabled ?? false,
+      online: isOnline,
+      authenticated: isAuthenticated ?? false,
+    }
 
-  const disableSync = useCallback(() => {
-    if (!syncState) return
+    return conditions.enabled && conditions.online && conditions.authenticated
+  }, [syncState?.isEnabled, isOnline, isAuthenticated])
 
-    setSyncState({
-      ...syncState,
-      isEnabled: false,
-      error: null,
-    })
-  }, [syncState, setSyncState])
-
-  const syncToServer = useCallback(
-    async (settings: UserSettings) => {
-      if (!syncState?.isEnabled || !isOnline) {
-        return
-      }
+  const updateSyncState = useCallback(
+    (updates: Partial<SettingsSyncState>) => {
+      if (!syncState) return
 
       setSyncState({
         ...syncState,
+        ...updates,
+      })
+    },
+    [syncState, setSyncState],
+  )
+
+  const handleSyncError = useCallback(
+    (error: unknown, operation: string) => {
+      const errorMessage =
+        error instanceof Error ? error.message : "Sync failed"
+      console.error(`Failed to ${operation}:`, error)
+
+      updateSyncState({
+        isLoading: false,
+        error: errorMessage,
+      })
+    },
+    [updateSyncState],
+  )
+
+  const enableSettingsSync = useCallback(() => {
+    updateSyncState({
+      isEnabled: true,
+      error: null,
+    })
+  }, [updateSyncState])
+
+  const disableSettingsSync = useCallback(() => {
+    updateSyncState({
+      isEnabled: false,
+      error: null,
+    })
+  }, [updateSyncState])
+
+  const syncSettingsToServer = useCallback(
+    async (settings: UserSettings) => {
+      if (!canSync) return
+
+      updateSyncState({
         isLoading: true,
         error: null,
       })
 
       try {
-        const response = await fetch("/api/users/me/settings", {
+        const response = await fetch(`${API_BASE_URL}/users/me/settings`, {
           method: "PUT",
+          credentials: "include",
           headers: {
             "Content-Type": "application/json",
           },
@@ -94,136 +137,98 @@ export const useSettingsSync = (): UseSettingsSyncReturn => {
         })
 
         if (!response.ok) {
-          throw new Error("Failed to sync settings to server")
+          throw new Error(
+            `Failed to sync settings to server: ${response.status}`,
+          )
         }
 
-        setSyncState({
-          ...syncState,
+        updateSyncState({
           isLoading: false,
           lastSyncTime: Date.now(),
           error: null,
         })
       } catch (error) {
-        const errorMessage =
-          error instanceof Error ? error.message : "Sync failed"
-
-        setSyncState({
-          ...syncState,
-          isLoading: false,
-          error: errorMessage,
-        })
+        handleSyncError(error, "sync settings to server")
       }
     },
-    [syncState, setSyncState, isOnline],
+    [checkAuthentication, canSync, updateSyncState, handleSyncError],
   )
 
-  const syncFromServer = useCallback(async (): Promise<UserSettings | null> => {
-    if (!syncState?.isEnabled || !isOnline) {
-      return null
-    }
-
-    setSyncState({
-      ...syncState,
+  const syncSettingsFromServer = useCallback(async () => {
+    updateSyncState({
       isLoading: true,
       error: null,
     })
 
     try {
-      const response = await fetch("/api/users/me/settings", {
+      const response = await fetch(`${API_BASE_URL}/users/me/settings`, {
         method: "GET",
+        credentials: "include",
         headers: {
           "Content-Type": "application/json",
         },
       })
 
       if (!response.ok) {
-        throw new Error("Failed to fetch settings from server")
+        if (response.status === 404) {
+          updateSyncState({
+            isLoading: false,
+            error: null,
+          })
+          return
+        }
+        throw new Error(
+          `Failed to fetch settings from server: ${response.status}`,
+        )
       }
 
       const data = await response.json()
 
-      setSyncState({
-        ...syncState,
-        isLoading: false,
-        lastSyncTime: Date.now(),
-        error: null,
-      })
-
-      return data.settings
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Sync failed"
-
-      setSyncState({
-        ...syncState,
-        isLoading: false,
-        error: errorMessage,
-      })
-
-      return null
-    }
-  }, [syncState, setSyncState, isOnline])
-
-  const syncFromServerAndApply = useCallback(async () => {
-    if (!syncState?.isEnabled || !isOnline) {
-      return
-    }
-
-    setSyncState({
-      ...syncState,
-      isLoading: true,
-      error: null,
-    })
-
-    try {
-      const response = await fetch("/api/users/me/settings", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      })
-
-      if (!response.ok) {
-        throw new Error("Failed to fetch settings from server")
-      }
-
-      const data = await response.json()
-
-      // Apply server settings to localStorage
       if (data.settings && setUserSettings) {
         setUserSettings(data.settings)
+
+        window.dispatchEvent(
+          new StorageEvent("storage", {
+            key: "userSettings",
+            newValue: JSON.stringify(data.settings),
+            oldValue: localStorage.getItem("userSettings"),
+            url: window.location.href,
+            storageArea: localStorage,
+          }),
+        )
       }
 
-      setSyncState({
-        ...syncState,
+      setTheme(data.settings.theme)
+
+      updateSyncState({
         isLoading: false,
         lastSyncTime: Date.now(),
         error: null,
       })
-    } catch (error) {
-      const errorMessage =
-        error instanceof Error ? error.message : "Sync failed"
 
-      setSyncState({
-        ...syncState,
-        isLoading: false,
-        error: errorMessage,
-      })
+      return data.settings.locale
+    } catch (error) {
+      handleSyncError(error, "sync and apply settings from server")
     }
-  }, [syncState, setSyncState, isOnline, setUserSettings])
+  }, [
+    checkAuthentication,
+    canSync,
+    updateSyncState,
+    handleSyncError,
+    setUserSettings,
+  ])
 
   return {
-    syncState: syncState || {
+    settingsSyncState: syncState || {
       isEnabled: false,
       isLoading: false,
       lastSyncTime: null,
       error: null,
     },
-    enableSync,
-    disableSync,
-    syncToServer,
-    syncFromServer,
-    syncFromServerAndApply,
+    enableSettingsSync,
+    disableSettingsSync,
+    syncSettingsToServer,
+    syncSettingsFromServer,
     isOnline,
   }
 }

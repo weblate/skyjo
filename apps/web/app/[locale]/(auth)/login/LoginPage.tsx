@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Locales } from "@skymo/shared/constants"
 import type { LoginError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { LoginUser, loginSchema } from "@skymo/shared/validations"
@@ -15,12 +16,17 @@ import { Form, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { PasswordInput } from "@/components/ui/password-input"
+import { useSettingsSync } from "@/hooks/useSettingsSync"
 import { Link, useRouter } from "@/i18n/routing"
 
-const LoginPage = () => {
+interface LoginPageProps {
+  locale: Locales
+}
+const LoginPage = ({ locale }: LoginPageProps) => {
   const router = useRouter()
   const t = useTranslations("pages.Login")
   const tErrors = useTranslations("errors")
+  const { syncSettingsFromServer, settingsSyncState } = useSettingsSync()
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -53,7 +59,14 @@ const LoginPage = () => {
       const result = await res.json()
       return result
     },
-    onSuccess: () => router.push("/"),
+    onSuccess: async () => {
+      let newLocale = locale
+      if (settingsSyncState?.isEnabled) {
+        newLocale = await syncSettingsFromServer()
+      }
+
+      router.push("/", { locale: newLocale })
+    },
     onError: (error) => {
       console.error(error)
       toast.error(tErrors("login-error"))

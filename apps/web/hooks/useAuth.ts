@@ -7,7 +7,6 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useEffect } from "react"
 import { toast } from "sonner"
-import { useSettingsSync } from "@/hooks/useSettingsSync"
 import { usePathname, useRouter } from "@/i18n/routing"
 
 interface AuthenticatedUser {
@@ -25,8 +24,6 @@ export const useAuth = () => {
   const router = useRouter()
   const pathname = usePathname()
   const tErrors = useTranslations("errors")
-  const { syncFromServerAndApply, syncState } = useSettingsSync()
-
   const logoutMutation = useMutation({
     mutationFn: async () => {
       try {
@@ -81,15 +78,6 @@ export const useAuth = () => {
         }
 
         const result = await response.json()
-
-        // Sync settings from server if sync is enabled
-        if (syncState?.isEnabled) {
-          try {
-            await syncFromServerAndApply()
-          } catch (error) {
-            console.error("Settings sync failed:", error)
-          }
-        }
 
         return {
           ...result.user,

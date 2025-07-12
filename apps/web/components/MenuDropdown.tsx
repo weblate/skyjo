@@ -52,7 +52,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
   const tLanguage = useTranslations("components.LanguageCombobox")
   const { user, logout } = useAuth()
   const tAvatar = useTranslations("utils.avatar")
-  const { theme, setTheme } = useTheme()
+  const { theme } = useTheme()
   const { updateSetting, settings } = useSettings()
   const router = useRouter()
   const pathname = usePathname()
@@ -72,7 +72,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
     { value: "system", label: tAppearance("system"), icon: MonitorIcon },
     { value: "light", label: tAppearance("light"), icon: SunIcon },
     { value: "dark", label: tAppearance("dark"), icon: MoonIcon },
-  ]
+  ] as const
 
   const languageOptions = routing.locales.map((locale) => ({
     value: locale,
@@ -154,7 +154,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
                 return (
                   <DropdownMenuItem
                     key={option.value}
-                    onClick={() => setTheme(option.value)}
+                    onClick={() => updateSetting("theme", option.value)}
                     className="flex items-center justify-between"
                   >
                     <div className="flex items-center">

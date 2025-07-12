@@ -113,6 +113,7 @@ export const userSettingsSchema = z.object({
   gameBoardSize: z.enum(["normal", "big"]),
   enlargeActivePlayerBoard: z.boolean(),
   timerDisplayMode: z.enum(["never", "smart", "always"]),
+  theme: z.enum(["light", "dark", "system"]),
 })
 export type UserSettings = z.infer<typeof userSettingsSchema>
 

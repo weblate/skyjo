@@ -266,7 +266,12 @@ const GameplaySettings = () => {
 
 const AccountSettings = () => {
   const t = useTranslations("components.SettingsDialog.account")
-  const { syncState, enableSync, disableSync, isOnline } = useSettingsSync()
+  const {
+    settingsSyncState,
+    enableSettingsSync,
+    disableSettingsSync,
+    isOnline,
+  } = useSettingsSync()
 
   return (
     <div className="px-6 flex flex-col gap-6">
@@ -278,16 +283,18 @@ const AccountSettings = () => {
         <div className="flex items-center gap-2">
           <Switch
             id="settings-sync"
-            checked={syncState.isEnabled}
+            checked={settingsSyncState.isEnabled}
             onCheckedChange={(checked) =>
-              checked ? enableSync() : disableSync()
+              checked ? enableSettingsSync() : disableSettingsSync()
             }
           />
           <div className="flex items-center gap-2">
             <span className="text-sm">
-              {syncState.isEnabled ? t("sync.enabled") : t("sync.disabled")}
+              {settingsSyncState.isEnabled
+                ? t("sync.enabled")
+                : t("sync.disabled")}
             </span>
-            {syncState.isLoading && (
+            {settingsSyncState.isLoading && (
               <span className="text-xs text-gray-500">{t("sync.syncing")}</span>
             )}
             {!isOnline && (
@@ -297,15 +304,17 @@ const AccountSettings = () => {
             )}
           </div>
         </div>
-        {syncState.error && (
+        {settingsSyncState.error && (
           <p className="text-sm text-red-600">
-            {t("sync.error")}: {syncState.error}
+            {t("sync.error")}: {settingsSyncState.error}
           </p>
         )}
-        {syncState.lastSyncTime && (
+        {settingsSyncState.lastSyncTime && (
           <p className="text-xs text-gray-500">
             {t("sync.lastSync", {
-              date: dayjs(syncState.lastSyncTime).format("DD/MM/YYYY HH:mm"),
+              date: dayjs(settingsSyncState.lastSyncTime).format(
+                "DD/MM/YYYY HH:mm",
+              ),
             })}
           </p>
         )}

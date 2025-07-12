@@ -34,7 +34,7 @@ import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 import { hashPassword, verifyPassword } from "./lib/password.js"
 
 export async function signup(c: Context, data: Signup) {
-  const { email, locale, name, avatar } = data
+  const { email, locale, name, avatar, settings } = data
 
   const existingUser = await db
     .select({ id: userTable.id, email: userTable.email })
@@ -55,6 +55,7 @@ export async function signup(c: Context, data: Signup) {
     locale,
     name,
     avatar,
+    settings,
   })
 
   const token = generateSessionToken()

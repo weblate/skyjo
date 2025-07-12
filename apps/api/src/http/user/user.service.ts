@@ -40,6 +40,7 @@ interface CreateUserParams {
   avatar?: Avatar
   emailVerified?: boolean
   password?: string
+  settings?: UserSettings
 }
 export async function createUser({
   googleId,
@@ -50,22 +51,17 @@ export async function createUser({
   avatar,
   emailVerified,
   password,
+  settings,
 }: CreateUserParams): Promise<UserDb> {
   const createdName = name ?? null
   const createdUsername = username ?? (name ? await createUsername(name) : null)
 
-  const defaultSettings = {
-    locale: locale ?? "en",
-    audio: true,
-    volume: 50,
-    chatVisibility: true,
-    chatNotificationSize: "normal" as const,
-    switchToPlayerWhoIsPlaying: true,
-    showPreviewOpponentsCardsForMobile: true,
-    gameBoardSize: "normal" as const,
-    enlargeActivePlayerBoard: false,
-    timerDisplayMode: "smart" as const,
-  }
+  const userSettings = settings
+    ? {
+        ...settings,
+        locale: locale ?? settings.locale,
+      }
+    : null
 
   const row = await db
     .insert(userTable)
@@ -75,7 +71,7 @@ export async function createUser({
       username: createdUsername,
       password: password ? await hashPassword(password) : null,
       googleId: googleId ?? null,
-      settings: defaultSettings,
+      settings: userSettings,
       avatar,
       emailVerified,
     })
@@ -666,7 +662,7 @@ export async function getUserSettings(
 
   if (!user?.settings) return null
 
-  return user.settings as UserSettings
+  return user.settings
 }
 
 export async function updateUserSettings(
