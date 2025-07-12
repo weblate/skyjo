@@ -669,29 +669,20 @@ export async function updateUserSettings(
   userId: number,
   data: UpdateUserSettings,
 ): Promise<UserSettings | null> {
-  const [user] = await db
-    .select({
-      settings: userTable.settings,
-    })
-    .from(userTable)
-    .where(eq(userTable.id, userId))
-    .limit(1)
-
-  if (!user) throw new Error("user-not-found")
-
-  const currentSettings = (user.settings as UserSettings) || {}
-  const newSettings = { ...currentSettings, ...data.settings }
-
   const [updatedUser] = await db
     .update(userTable)
     .set({
-      settings: newSettings,
+      settings: sql`COALESCE(settings, '{}'::jsonb) || ${JSON.stringify(
+        data.settings,
+      )}::jsonb`,
       updatedAt: new Date(),
     })
     .where(eq(userTable.id, userId))
     .returning({
       settings: userTable.settings,
     })
+
+  if (!updatedUser) throw new Error("user-not-found")
 
   return (updatedUser?.settings as UserSettings) ?? null
 }

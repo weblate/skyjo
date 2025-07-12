@@ -37,7 +37,8 @@ export default function CallbackLogic({ locale }: CallbackLogicProps) {
       // Sync settings from server if enabled + get the new locale
       let newLocale = locale
       if (settingsSyncState?.isEnabled) {
-        newLocale = await syncSettingsFromServer()
+        const syncLocale = await syncSettingsFromServer()
+        if (syncLocale) newLocale = syncLocale
       }
 
       // Check if user needs to complete onboarding
@@ -51,7 +52,14 @@ export default function CallbackLogic({ locale }: CallbackLogicProps) {
     }
 
     CallbackLogic()
-  }, [user, isLoading, router])
+  }, [
+    user,
+    isLoading,
+    router,
+    locale,
+    settingsSyncState,
+    syncSettingsFromServer,
+  ])
 
   return null
 }

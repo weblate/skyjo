@@ -62,7 +62,8 @@ const LoginPage = ({ locale }: LoginPageProps) => {
     onSuccess: async () => {
       let newLocale = locale
       if (settingsSyncState?.isEnabled) {
-        newLocale = await syncSettingsFromServer()
+        const syncLocale = await syncSettingsFromServer()
+        if (syncLocale) newLocale = syncLocale
       }
 
       router.push("/", { locale: newLocale })

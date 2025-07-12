@@ -70,11 +70,7 @@ const ThemeSync = ({ theme }: { theme: string }) => {
 
   // Only sync from settings to next-themes (one-way sync)
   useEffect(() => {
-    console.log("ThemeSync: Received theme prop:", theme)
-    if (theme) {
-      console.log("ThemeSync: Setting theme to:", theme)
-      setTheme(theme)
-    }
+    if (theme) setTheme(theme)
   }, [theme, setTheme])
 
   return null
@@ -125,7 +121,7 @@ const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
     <K extends keyof UserSettings>(key: K, value: UserSettings[K]) => {
       if (settings) {
         const newSettings = { ...settings, [key]: value }
-        console.log("New settings:", newSettings)
+
         setSettings(newSettings)
 
         syncSettingsToServer(newSettings).catch((error) => {

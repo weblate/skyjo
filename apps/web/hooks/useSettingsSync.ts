@@ -55,18 +55,6 @@ export const useSettingsSync = (): UseSettingsSyncReturn => {
     }
   }, [])
 
-  const checkAuthentication = useCallback(async (): Promise<boolean> => {
-    try {
-      const response = await fetch(`${API_BASE_URL}/auth/verify`, {
-        method: "POST",
-        credentials: "include",
-      })
-      return response.ok
-    } catch {
-      return false
-    }
-  }, [])
-
   const canSync = useMemo((): boolean => {
     const conditions = {
       enabled: syncState?.isEnabled ?? false,
@@ -151,7 +139,7 @@ export const useSettingsSync = (): UseSettingsSyncReturn => {
         handleSyncError(error, "sync settings to server")
       }
     },
-    [checkAuthentication, canSync, updateSyncState, handleSyncError],
+    [canSync, updateSyncState, handleSyncError],
   )
 
   const syncSettingsFromServer = useCallback(async () => {
@@ -210,13 +198,7 @@ export const useSettingsSync = (): UseSettingsSyncReturn => {
     } catch (error) {
       handleSyncError(error, "sync and apply settings from server")
     }
-  }, [
-    checkAuthentication,
-    canSync,
-    updateSyncState,
-    handleSyncError,
-    setUserSettings,
-  ])
+  }, [canSync, updateSyncState, handleSyncError, setUserSettings])
 
   return {
     settingsSyncState: syncState || {
