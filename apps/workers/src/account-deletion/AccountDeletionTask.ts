@@ -1,8 +1,12 @@
 import { ENV } from "@env"
 import {
   accountDeletionTable,
+  emailChangeTable,
+  passwordResetTable,
   playerTable,
+  sessionTable,
   userTable,
+  userVerificationTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import type { AccountDeletionJobData } from "@skymo/worker-types"
@@ -93,6 +97,7 @@ export class AccountDeletionTask {
       }
 
       await db.transaction(async (tx) => {
+        // anonymize user
         await tx
           .update(userTable)
           .set({
@@ -116,9 +121,22 @@ export class AccountDeletionTask {
           })
           .where(eq(playerTable.userId, userId))
 
+        // Invalidate all sessions
+        await tx.delete(sessionTable).where(eq(sessionTable.userId, userId))
+
+        // Clean up all possible references to the user
         await tx
           .delete(accountDeletionTable)
           .where(eq(accountDeletionTable.userId, userId))
+        await tx
+          .delete(emailChangeTable)
+          .where(eq(emailChangeTable.userId, userId))
+        await tx
+          .delete(passwordResetTable)
+          .where(eq(passwordResetTable.userId, userId))
+        await tx
+          .delete(userVerificationTable)
+          .where(eq(userVerificationTable.userId, userId))
       })
 
       await mailerQueue.add("account-deleted", {
