@@ -72,6 +72,8 @@ const GamePage = () => {
               opponent={opponent}
               key={opponent.id}
               isPlayerTurn={isCurrentUserTurn(game, opponent)}
+              layout="horizontal"
+              side="left"
             />
           ))}
         </div>
@@ -92,6 +94,8 @@ const GamePage = () => {
               opponent={opponent}
               key={opponent.id}
               isPlayerTurn={isCurrentUserTurn(game, opponent)}
+              layout="horizontal"
+              side="right"
             />
           ))}
         </div>
