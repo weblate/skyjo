@@ -253,8 +253,7 @@
     "GameLobbyButtons": {
       "reconnect-game-button": "விளையாட்டுடன் மீண்டும் இணைக்கவும்",
       "join-game-button": "விளையாட்டில் சேரவும்",
-      "find-game-button": "ஒரு விளையாட்டைக் கண்டுபிடி",
-      "create-game-button": "ஒரு {வகை, தேர்ந்தெடுக்கப்பட்ட, தனியார் {private} பொது {public} பிற {unknown}} விளையாட்டை உருவாக்கவும்"
+      "find-game-button": "ஒரு விளையாட்டைக் கண்டுபிடி"
     },
     "GameRules": {
       "title": "விளையாட்டு விதிகள்",
