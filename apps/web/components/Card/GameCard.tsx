@@ -92,7 +92,7 @@ export const GameCard = ({
       <div
         className={cn(
           "relative w-full h-full card-preserve-3d",
-          showFlipAnimation && "transition-transform duration-500 ease-out",
+          showFlipAnimation && "transition-transform duration-[320ms] ease-out",
           card.isVisible ? "card-rotate-y-180" : "card-rotate-y-0",
         )}
         style={{
