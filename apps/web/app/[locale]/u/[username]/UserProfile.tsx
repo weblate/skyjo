@@ -78,8 +78,8 @@ export const UserProfile = async ({
 
   return (
     <div className={cn("space-y-6 flex flex-col", className)}>
-      <div className="flex flex-col test:flex-row items-start test:items-center gap-6 test:justify-between">
-        <div className="flex flex-col test:flex-row gap-2 test:gap-6 mx-auto test:mx-0 test:items-center">
+      <div className="flex flex-col items-start gap-6">
+        <div className="flex flex-col gap-2 mx-auto items-center">
           <div className={backgroundVariants({ avatar })}>
             <Image
               src={`/avatars/${avatar}.svg`}
@@ -91,10 +91,10 @@ export const UserProfile = async ({
             />
           </div>
           <div className="flex flex-col">
-            <h2 className="text-center test:text-left text-xl font-semibold text-black dark:text-dark-font">
+            <h2 className="text-center text-xl font-semibold text-black dark:text-dark-font">
               {user.name}
             </h2>
-            <h3 className="text-center test:text-left text-black/60 dark:text-dark-font/60">
+            <h3 className="text-center text-black/60 dark:text-dark-font/60">
               {user.username}
             </h3>
           </div>
