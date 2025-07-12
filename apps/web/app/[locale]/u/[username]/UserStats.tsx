@@ -53,7 +53,7 @@ const StatItemComponent = ({ item }: { item: StatItem }) => (
         <p className="text-sm text-black/60 dark:text-dark-font/60">
           {item.label}
         </p>
-        <p className="text-lg font-medium text-black dark:text-dark-font text-center test:text-left">
+        <p className="text-lg font-medium text-black dark:text-dark-font text-center">
           {item.value}
         </p>
       </div>
@@ -146,7 +146,7 @@ export const UserStats = ({ stats, locale }: UserStatsProps) => {
 
   return (
     <TooltipProvider delayDuration={100}>
-      <div className="flex flex-row justify-evenly test:justify-end test:gap-8 items-end w-full max-w-(--breakpoint-sm) mx-auto test:mx-0">
+      <div className="flex flex-row justify-evenly items-end w-full max-w-(--breakpoint-sm) mx-auto">
         {statItems.map((item) => (
           <StatItemComponent key={item.key} item={item} />
         ))}
