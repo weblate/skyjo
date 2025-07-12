@@ -10,7 +10,7 @@ import {
   userTable,
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
-import { type Locales } from "@skymo/shared/constants"
+import { DEFAULT_GAME_SETTINGS, type Locales } from "@skymo/shared/constants"
 import type {
   GameHistoryQuery,
   UpdateAvatar,
@@ -56,12 +56,11 @@ export async function createUser({
   const createdName = name ?? null
   const createdUsername = username ?? (name ? await createUsername(name) : null)
 
-  const userSettings = settings
-    ? {
-        ...settings,
-        locale: locale ?? settings.locale,
-      }
-    : null
+  const finalSettings: UserSettings = {
+    ...DEFAULT_GAME_SETTINGS,
+    ...settings, // User-provided settings
+    locale: settings?.locale ?? locale ?? DEFAULT_GAME_SETTINGS.locale,
+  }
 
   const row = await db
     .insert(userTable)
@@ -71,7 +70,7 @@ export async function createUser({
       username: createdUsername,
       password: password ? await hashPassword(password) : null,
       googleId: googleId ?? null,
-      settings: userSettings,
+      settings: finalSettings,
       avatar,
       emailVerified,
     })

@@ -25,9 +25,9 @@ export default function CallbackLogic({ locale }: CallbackLogicProps) {
   }, [queryClient, refetch])
 
   useEffect(() => {
-    const CallbackLogic = async () => {
-      if (isLoading) return
+    if (isLoading) return
 
+    const handleCallback = async () => {
       if (!user) {
         // If no user, redirect to login
         router.replace("/login")
@@ -51,15 +51,8 @@ export default function CallbackLogic({ locale }: CallbackLogicProps) {
       router.replace("/", { locale: newLocale })
     }
 
-    CallbackLogic()
-  }, [
-    user,
-    isLoading,
-    router,
-    locale,
-    settingsSyncState,
-    syncSettingsFromServer,
-  ])
+    handleCallback()
+  }, [user, isLoading, router])
 
   return null
 }

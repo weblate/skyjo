@@ -1,10 +1,10 @@
 import { CardToJson } from "@skymo/core"
+import { GameBoardSize } from "@skymo/shared/constants"
 import { cva } from "class-variance-authority"
 import { AnimatePresence, m } from "motion/react"
 import { useCallback, useEffect, useState } from "react"
 import { GameCard } from "@/components/Card/GameCard"
 import { useGame } from "@/contexts/GameContext"
-import { GameBoardSize } from "@/contexts/SettingsContext"
 import {
   hasRevealedCardCount,
   isCurrentUserTurn,

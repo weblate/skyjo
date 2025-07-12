@@ -1,4 +1,9 @@
 "use client"
+import {
+  ChatNotificationSize,
+  GameBoardSize,
+  TimerDisplayMode,
+} from "@skymo/shared/constants"
 import dayjs from "dayjs"
 import { useTranslations } from "next-intl"
 import { Dispatch, SetStateAction } from "react"
@@ -14,12 +19,7 @@ import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import {
-  ChatNotificationSize,
-  GameBoardSize,
-  TimerDisplayMode,
-  useSettings,
-} from "@/contexts/SettingsContext"
+import { useSettings } from "@/contexts/SettingsContext"
 import { useSettingsSync } from "@/hooks/useSettingsSync"
 
 interface SettingsDialogProps {

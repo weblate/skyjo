@@ -5,7 +5,7 @@ import { Locales } from "@skymo/shared/constants"
 import type { LoginError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { LoginUser, loginSchema } from "@skymo/shared/validations"
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { useForm } from "react-hook-form"
@@ -27,6 +27,7 @@ const LoginPage = ({ locale }: LoginPageProps) => {
   const t = useTranslations("pages.Login")
   const tErrors = useTranslations("errors")
   const { syncSettingsFromServer, settingsSyncState } = useSettingsSync()
+  const queryClient = useQueryClient()
 
   const form = useForm({
     resolver: zodResolver(loginSchema),
@@ -56,16 +57,13 @@ const LoginPage = ({ locale }: LoginPageProps) => {
         return
       }
 
-      const result = await res.json()
-      return result
-    },
-    onSuccess: async () => {
       let newLocale = locale
       if (settingsSyncState?.isEnabled) {
         const syncLocale = await syncSettingsFromServer()
         if (syncLocale) newLocale = syncLocale
       }
 
+      queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
       router.push("/", { locale: newLocale })
     },
     onError: (error) => {

@@ -1,6 +1,6 @@
 "use client"
 
-import { Locales } from "@skymo/shared/constants"
+import { DEFAULT_GAME_SETTINGS, Locales } from "@skymo/shared/constants"
 import { UserSettings } from "@skymo/shared/validations"
 import { Howler } from "howler"
 import { ThemeProvider, useTheme } from "next-themes"
@@ -17,42 +17,6 @@ import SettingsDialog from "@/components/SettingsDialog"
 import { useSettingsSync } from "@/hooks/useSettingsSync"
 
 const VOLUME_DIVISOR = 100
-
-export const TimerDisplayMode = {
-  NEVER: "never",
-  SMART: "smart",
-  ALWAYS: "always",
-} as const
-export type TimerDisplayMode =
-  (typeof TimerDisplayMode)[keyof typeof TimerDisplayMode]
-
-export const ChatNotificationSize = {
-  SMALL: "small",
-  NORMAL: "normal",
-  BIG: "big",
-} as const
-export type ChatNotificationSize =
-  (typeof ChatNotificationSize)[keyof typeof ChatNotificationSize]
-
-export const GameBoardSize = {
-  NORMAL: "normal",
-  BIG: "big",
-} as const
-export type GameBoardSize = (typeof GameBoardSize)[keyof typeof GameBoardSize]
-
-const DEFAULT_GAME_SETTINGS: UserSettings = {
-  locale: "en",
-  theme: "system",
-  audio: true,
-  volume: 50,
-  chatVisibility: true,
-  chatNotificationSize: ChatNotificationSize.NORMAL,
-  switchToPlayerWhoIsPlaying: true,
-  showPreviewOpponentsCardsForMobile: true,
-  gameBoardSize: GameBoardSize.NORMAL,
-  enlargeActivePlayerBoard: false,
-  timerDisplayMode: TimerDisplayMode.SMART,
-}
 
 interface SettingsContext {
   settings: UserSettings

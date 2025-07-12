@@ -19,7 +19,7 @@ interface UseSettingsSyncReturn {
   enableSettingsSync: () => void
   disableSettingsSync: () => void
   syncSettingsToServer: (settings: UserSettings) => Promise<void>
-  syncSettingsFromServer: () => Promise<Locales>
+  syncSettingsFromServer: () => Promise<Locales | undefined>
   isOnline: boolean
 }
 
@@ -142,7 +142,11 @@ export const useSettingsSync = (): UseSettingsSyncReturn => {
     [canSync, updateSyncState, handleSyncError],
   )
 
-  const syncSettingsFromServer = useCallback(async () => {
+  const syncSettingsFromServer = useCallback(async (): Promise<
+    Locales | undefined
+  > => {
+    if (!canSync) return undefined
+
     updateSyncState({
       isLoading: true,
       error: null,
