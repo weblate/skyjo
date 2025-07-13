@@ -14,15 +14,15 @@
   }
 }
 
+@custom-variant smh (@media (width >= 300px));
+@custom-variant mdh (@media (width >= 690px));
+@custom-variant lgh (@media (height >= 760px));
+@custom-variant xlh (@media (width >= 860px));
+
 @theme {
   --font-shantell: "Shantell Sans", sans-serif;
 
   --breakpoint-2xl: 1400px;
-
-  --breakpoint-smh: 300px;
-  --breakpoint-mdh: 690px;
-  --breakpoint-lgh: 760px;
-  --breakpoint-xlh: 860px;
 
   --color-card-discard: #dc2626;
   --color-card-not-visible: #fefdf7;
