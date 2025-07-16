@@ -15,8 +15,8 @@ import {
 
 const sendVerifyRateLimiter = new RateLimiterMemory({
   keyPrefix: "send-verify",
-  points: 1,
-  duration: 30,
+  points: 5,
+  duration: 10,
 })
 
 const verifyRateLimiter = new RateLimiterMemory({
@@ -37,6 +37,10 @@ export const userVerificationRouter = new Hono<AuthContextVariables>()
 
         return c.json({}, 200)
       } catch (error) {
+        if (error instanceof Error) {
+          return c.json({ error: error.message }, 400)
+        }
+
         Logger.error(`Error when sending a verify email to ${user?.email}`, {
           error,
         })
@@ -55,6 +59,7 @@ export const userVerificationRouter = new Hono<AuthContextVariables>()
 
       try {
         await verifyPin(user.email, pin)
+
         return c.json({}, 200)
       } catch (error) {
         if (error instanceof Error) {

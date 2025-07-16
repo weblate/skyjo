@@ -26,6 +26,21 @@ export async function sendVerifyPin(email: string) {
     return
   }
 
+  // Check if email was already sent in the last 5 minutes
+  const [existingVerification] = await db
+    .select()
+    .from(userVerificationTable)
+    .where(eq(userVerificationTable.userId, user.id))
+    .limit(1)
+
+  const fiveMinutesAgo = dayjs().subtract(5, "minutes").toDate()
+  const isRecent =
+    existingVerification?.createdAt &&
+    existingVerification.createdAt > fiveMinutesAgo
+  if (existingVerification && isRecent) {
+    throw new Error("email-already-sent")
+  }
+
   const locale = user.settings?.locale ?? "en"
 
   const pin = await generateVerifyPin(user)
@@ -55,7 +70,7 @@ export async function generateVerifyPin(user: UserDb) {
   if (existingPin) {
     await db
       .update(userVerificationTable)
-      .set({ pin, expiresAt })
+      .set({ pin, createdAt: new Date(), expiresAt })
       .where(eq(userVerificationTable.id, existingPin.id))
   } else {
     await db.insert(userVerificationTable).values({

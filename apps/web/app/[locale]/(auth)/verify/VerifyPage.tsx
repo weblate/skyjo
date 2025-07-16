@@ -6,7 +6,7 @@ import { jsonError } from "@skymo/shared/utils"
 import { VerifyPin, verifyPinSchema } from "@skymo/shared/validations"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
+import { useEffect, useRef, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
 import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
@@ -40,6 +40,7 @@ const VerifyPage = () => {
   const [resendCooldown, setResendCooldown] = useState(0)
   const [otpStatus, setOtpStatus] = useState<OtpStatus>(undefined)
   const [isLoading, setIsLoading] = useState(true)
+  const hasInitialPinBeenSent = useRef(false)
 
   const {
     mutate: verifyPin,
@@ -96,12 +97,16 @@ const VerifyPage = () => {
 
       if (!res.ok) {
         const error = await jsonError<SendPinError>(res)
+
+        if (error === "email-already-sent") {
+          toast.info(t("toast.email-already-sent"))
+          return
+        }
+
         toast.error(tErrors(error))
+        return
       }
 
-      return res.json()
-    },
-    onSuccess: () => {
       toast.success(t("toast.resend-success"))
       setResendCooldown(COOLDOWN_SECONDS)
     },
@@ -122,8 +127,11 @@ const VerifyPage = () => {
       return
     }
 
-    // if no redirect, send pin
-    sendPin()
+    // Only send pin if we haven't sent it already
+    if (!hasInitialPinBeenSent.current) {
+      hasInitialPinBeenSent.current = true
+      sendPin()
+    }
 
     setIsLoading(false)
   }, [user, router])

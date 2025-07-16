@@ -7,6 +7,7 @@ export type SendPinError =
   | AuthMiddlewareError
   | RateLimitMiddlewareError
   | "send-pin-error"
+  | "email-already-sent"
 
 export type VerifyPinError =
   | AuthMiddlewareError

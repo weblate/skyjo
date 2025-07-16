@@ -590,7 +590,8 @@
       },
       "toast": {
         "success": "Email vérifié avec succès !",
-        "resend-success": "Un nouvel email a été envoyé."
+        "resend-success": "Un nouvel email a été envoyé",
+        "email-already-sent": "Un email a déjà été envoyé dans les 5 dernières minutes. Vérifiez votre boîte de réception ou cliquez sur \"Demander un nouveau code\" pour en recevoir un nouveau"
       }
     },
     "UserProfile": {
