@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl"
 import { Card } from "@/components/Card/Card"
 import SelectedCard from "@/components/SelectedCard"
 import { useGame } from "@/contexts/GameContext"
+import { useSettings } from "@/contexts/SettingsContext"
 import { cn } from "@/lib/utils"
 
 interface DrawPileProps {
@@ -11,6 +12,7 @@ interface DrawPileProps {
 }
 const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
   const { actions, turnStatus } = useGame()
+  const { settings } = useSettings()
   const t = useTranslations("components.DrawPile")
 
   const onClick = () => {
@@ -29,6 +31,7 @@ const DrawPile = ({ isPlayerTurn }: DrawPileProps) => {
         value="back"
         onClick={onClick}
         title={t("title")}
+        size={settings.gameBoardSize}
         className={cn(
           "shadow-[3px_3px_0px_0px_rgba(0,0,0)]! !mdh:md:shadow-[4px_4px_0px_0px_rgba(0,0,0)]",
           shouldAnimate ? "animate-scale" : "",

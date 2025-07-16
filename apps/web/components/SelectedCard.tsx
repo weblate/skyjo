@@ -2,6 +2,7 @@ import { AnimatePresence, m } from "motion/react"
 import { memo, useEffect, useMemo, useState } from "react"
 import { GameCard } from "@/components/Card/GameCard"
 import { useGame } from "@/contexts/GameContext"
+import { useSettings } from "@/contexts/SettingsContext"
 import { cn } from "@/lib/utils"
 
 interface SelectedCardProps {
@@ -9,6 +10,7 @@ interface SelectedCardProps {
 }
 const SelectedCard = memo(({ show }: SelectedCardProps) => {
   const { game, lastTurnStatus } = useGame()
+  const { settings } = useSettings()
   const [isCardVisible, setIsCardVisible] = useState(false)
 
   const cardData = useMemo(() => {
@@ -67,7 +69,7 @@ const SelectedCard = memo(({ show }: SelectedCardProps) => {
             value: cardData.selectedCardValue!,
             isVisible: isCardVisible,
           }}
-          size="normal"
+          size={settings.gameBoardSize}
           disabled
           showInitialAnimation={false}
           showFlipAnimation={cardData.isPickFromDrawPile}

@@ -4,6 +4,7 @@ import { useTranslations } from "next-intl"
 import { Card } from "@/components/Card/Card"
 import SelectedCard from "@/components/SelectedCard"
 import { useGame } from "@/contexts/GameContext"
+import { useSettings } from "@/contexts/SettingsContext"
 import { cn } from "@/lib/utils"
 
 interface DiscardPileProps {
@@ -11,6 +12,7 @@ interface DiscardPileProps {
 }
 const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
   const { game, actions, turnStatus } = useGame()
+  const { settings } = useSettings()
   const t = useTranslations("components.DiscardPile")
 
   const onClick = () => {
@@ -34,6 +36,7 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
         onClick={onDiscard}
         title={t("throw")}
         className={cn("translate-y-1 animate-scale")}
+        size={settings.gameBoardSize}
         disabled={false}
       />
     )
@@ -58,6 +61,7 @@ const DiscardPile = ({ isPlayerTurn }: DiscardPileProps) => {
           card.value === -99 ? "translate-y-1" : "translate-y-[2.5px]",
           canDiscard && "animate-scale",
         )}
+        size={settings.gameBoardSize}
         disabled={!canDiscard}
       />
     </div>
