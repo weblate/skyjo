@@ -6,6 +6,7 @@ import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
+import { useGameStatus } from "@/hooks/useGameStatus"
 import { useRouter } from "@/i18n/routing"
 
 interface GameLobbyButtonsProps {
@@ -17,6 +18,7 @@ const GameLobbyButtons = ({ gameCode }: GameLobbyButtonsProps) => {
   const { getPlayer, name, savePlayer } = usePlayer()
   const t = useTranslations("components.GameLobbyButtons")
   const router = useRouter()
+  const { gameExists } = useGameStatus(gameCode)
 
   const [loading, setLoading] = useState<boolean>(false)
 
@@ -56,7 +58,7 @@ const GameLobbyButtons = ({ gameCode }: GameLobbyButtonsProps) => {
 
   return (
     <div className="flex flex-col gap-2 mt-6">
-      {hasGameCode && (
+      {hasGameCode && gameExists && (
         <Button
           onClick={() => handleAction("join-game")}
           disabled={!name}

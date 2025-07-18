@@ -1,6 +1,5 @@
 "use client"
 
-import { useQuery } from "@tanstack/react-query"
 import { Howler } from "howler"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
@@ -14,7 +13,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { useSocket } from "@/contexts/SocketContext"
-import { getGameStatus } from "@/utils/gameStatus"
+import { useGameStatus } from "@/hooks/useGameStatus"
 import { clearLastGame, getLastGame } from "@/utils/reconnection"
 
 const ReconnectionModal = () => {
@@ -26,24 +25,22 @@ const ReconnectionModal = () => {
     useState<boolean>(false)
 
   const lastGame = getLastGame()
-
-  const { data: game, isFetched } = useQuery({
-    queryKey: ["gameStatus", lastGame?.gameCode],
-    queryFn: () => getGameStatus(lastGame!.gameCode),
-    enabled: !!lastGame,
-    retry: false,
-  })
+  const { gameStatus, gameExists, gameFetching } = useGameStatus(
+    lastGame?.gameCode,
+  )
 
   useEffect(() => {
-    if (!isFetched) return
+    if (gameFetching) return
 
-    if (!game) {
+    if (gameExists === false) {
       clearLastGame()
       return
     }
 
-    setShowReconnectionModal(game.connectedPlayersCount > 0)
-  }, [isFetched, game])
+    if (gameStatus) {
+      setShowReconnectionModal(gameStatus.connectedPlayersCount > 0)
+    }
+  }, [gameFetching, gameExists, gameStatus])
 
   const errorCallback = () => setLoading(false)
 
