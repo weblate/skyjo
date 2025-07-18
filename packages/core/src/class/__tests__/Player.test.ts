@@ -47,7 +47,8 @@ describe("Player", () => {
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
-      userId: undefined,
+      userId: null,
+      sessionId: crypto.randomUUID(),
       cards: [],
     }
 
@@ -76,7 +77,8 @@ describe("Player", () => {
       score: 10,
       scores: [5, 5],
       wantsReplay: true,
-      userId: undefined,
+      userId: null,
+      sessionId: crypto.randomUUID(),
       cards: [
         [new Card(0), new Card(1), new Card(2)],
         [new Card(3), new Card(4), new Card(5)],

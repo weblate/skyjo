@@ -746,42 +746,68 @@ export class Game implements GameInterface {
     )
     if (!firstToFinishPlayer) return
 
-    const firstToFinishPlayerScore = firstToFinishPlayer.scores[lastScoreIndex]
+    const firstToFinishPlayerPlayerScore =
+      firstToFinishPlayer.scores[lastScoreIndex]
 
-    if (typeof firstToFinishPlayerScore === "string") return
+    if (typeof firstToFinishPlayerPlayerScore === "string") return
+
+    let originalScore: number
+    // score cannot be an object at this point but we keep the check for type safety
+    if (typeof firstToFinishPlayerPlayerScore === "object") {
+      originalScore = firstToFinishPlayerPlayerScore.score
+    } else {
+      originalScore = firstToFinishPlayerPlayerScore
+    }
 
     const otherPlayersHaveLowerScore = this.getConnectedPlayers().some(
       (player) => {
         if (player.id === this.firstToFinishPlayerId) return false
-        return (
-          player.scores[lastScoreIndex] !== "-" &&
-          player.scores[lastScoreIndex] <= firstToFinishPlayerScore
-        )
+
+        const playerScore = player.scores[lastScoreIndex]
+        if (playerScore === "-") return false
+
+        let playerScoreValue: number
+        if (typeof playerScore === "object") {
+          playerScoreValue = playerScore.score
+        } else {
+          playerScoreValue = playerScore
+        }
+
+        return playerScoreValue <= originalScore
       },
     )
 
     if (!otherPlayersHaveLowerScore) return
 
-    let finalScore = firstToFinishPlayerScore
+    let finalScore = originalScore
+    let penaltyAmount = 0
 
     switch (this.settings.firstPlayerPenaltyType) {
       case Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY:
         finalScore = this.multiplierPenalty(finalScore)
+        penaltyAmount = finalScore - originalScore
         break
       case Constants.FIRST_PLAYER_PENALTY_TYPE.FLAT_ONLY:
         finalScore = this.flatPenalty(finalScore)
+        penaltyAmount = finalScore - originalScore
         break
       case Constants.FIRST_PLAYER_PENALTY_TYPE.FLAT_THEN_MULTIPLIER:
         finalScore = this.flatPenalty(finalScore)
         finalScore = this.multiplierPenalty(finalScore)
+        penaltyAmount = finalScore - originalScore
         break
       case Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_THEN_FLAT:
         finalScore = this.multiplierPenalty(finalScore)
         finalScore = this.flatPenalty(finalScore)
+        penaltyAmount = finalScore - originalScore
         break
     }
 
-    firstToFinishPlayer.scores[lastScoreIndex] = finalScore
+    firstToFinishPlayer.scores[lastScoreIndex] = {
+      score: finalScore,
+      penalty: penaltyAmount,
+      originalScore: originalScore,
+    }
     firstToFinishPlayer.recalculateScore()
   }
 

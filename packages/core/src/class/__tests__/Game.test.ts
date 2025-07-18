@@ -1168,7 +1168,11 @@ describe("Game", () => {
 
       game["checkFirstPlayerPenalty"]()
 
-      expect(player.scores[0]).toBe(20)
+      expect(player.scores[0]).toMatchObject({
+        score: 20,
+        penalty: 10,
+        originalScore: 10,
+      })
     })
 
     it("should apply flat penalty when penalty type is FLAT_ONLY", () => {
@@ -1178,7 +1182,11 @@ describe("Game", () => {
 
       game["checkFirstPlayerPenalty"]()
 
-      expect(player.scores[0]).toBe(15)
+      expect(player.scores[0]).toMatchObject({
+        score: 15,
+        penalty: 5,
+        originalScore: 10,
+      })
     })
 
     it("should apply flat then multiplier penalty when penalty type is FLAT_THEN_MULTIPLIER", () => {
@@ -1189,7 +1197,11 @@ describe("Game", () => {
 
       game["checkFirstPlayerPenalty"]()
 
-      expect(player.scores[0]).toBe(30) // (10 + 5) * 2
+      expect(player.scores[0]).toMatchObject({
+        score: 30,
+        penalty: 20, // 5 flat and then 2 multiplier
+        originalScore: 10,
+      })
     })
 
     it("should apply multiplier then flat penalty when penalty type is MULTIPLIER_THEN_FLAT", () => {
@@ -1200,7 +1212,11 @@ describe("Game", () => {
 
       game["checkFirstPlayerPenalty"]()
 
-      expect(player.scores[0]).toBe(25) // (10 * 2) + 5
+      expect(player.scores[0]).toMatchObject({
+        score: 25,
+        penalty: 15, // 2 multiplier and then 5 flat
+        originalScore: 10,
+      })
     })
   })
 

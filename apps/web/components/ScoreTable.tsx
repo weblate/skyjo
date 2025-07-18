@@ -9,6 +9,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { formatScoreDisplay, getScoreValue } from "@/lib/penalty-utils"
 
 interface ScoreTableProps {
   players: PlayerToJson[]
@@ -55,7 +56,7 @@ const ScoreTable = ({
   ]
 
   return (
-    <Table id="end-round-table">
+    <Table id="end-round-table" className="bg-container">
       <TableHeader>
         <TableRow>
           <TableHead className="sticky left-0 w-full z-10">
@@ -82,13 +83,11 @@ const ScoreTable = ({
                 key={player.id + scoreIndex}
                 className="text-center w-fit"
               >
-                {score}
+                {formatScoreDisplay(score)}
               </TableCell>
             ))}
             <TableCell className="sticky right-0 z-10">
-              {player.scores
-                .filter((score) => Number.isInteger(score))
-                .reduce((a, b) => +a + +b, 0)}
+              {player.scores.reduce((a: number, b) => a + getScoreValue(b), 0)}
             </TableCell>
           </TableRow>
         ))}

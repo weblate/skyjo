@@ -1,6 +1,6 @@
 import type {
   PlayerRedisDb,
-  PlayerScores,
+  PlayerScore,
   PlayerToJson,
 } from "@/types/player.js"
 import type { CreatePlayer } from "@/validations/player.js"
@@ -10,7 +10,7 @@ import { Settings } from "./Settings.js"
 
 interface PlayerInterface {
   cards: Card[][]
-  scores: PlayerScores
+  scores: PlayerScore[]
   readonly name: string
   readonly socketId: string
   readonly avatar: Avatar
@@ -48,7 +48,7 @@ export class Player implements PlayerInterface {
   consecutiveAfkCount: number = 0 // Consecutive timeouts
   cards: Card[][] = []
   score: number = 0
-  scores: PlayerScores = []
+  scores: PlayerScore[] = []
   hasPlayedLastTurn = false
   wantsReplay: boolean = false
   turnStartTime: number | null = null
@@ -210,9 +210,10 @@ export class Player implements PlayerInterface {
   }
 
   recalculateScore() {
-    this.score = (
-      this.scores.filter((score) => Number.isInteger(score)) as number[]
-    ).reduce((a, b) => +a + +b, 0)
+    this.score = this.scores
+      .filter((score) => score !== "-")
+      .map((score) => (typeof score === "object" ? score.score : score))
+      .reduce((a, b) => +a + +b, 0)
   }
 
   finalRoundScore() {

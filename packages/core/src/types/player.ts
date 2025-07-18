@@ -1,7 +1,13 @@
 import type { Avatar, ConnectionStatus } from "../constants.js"
 import type { CardRedisDb, CardToJson } from "./card.js"
 
-export type PlayerScores = (number | "-")[]
+export type PenaltyScore = {
+  score: number
+  penalty?: number
+  originalScore?: number
+}
+
+export type PlayerScore = "-" | number | PenaltyScore
 
 export type PlayerToJson = {
   id: string
@@ -11,7 +17,7 @@ export type PlayerToJson = {
   score: number
   wantsReplay: boolean
   connectionStatus: ConnectionStatus
-  scores: PlayerScores
+  scores: PlayerScore[]
   turnStartTime: number | null
   cards: CardToJson[][]
 }
@@ -23,7 +29,7 @@ export type PlayerRedisDb = {
   socketId: string
   connectionStatus: ConnectionStatus
   score: number
-  scores: PlayerScores
+  scores: PlayerScore[]
   wantsReplay: boolean
   hasPlayedLastTurn: boolean
   afkCount: number
