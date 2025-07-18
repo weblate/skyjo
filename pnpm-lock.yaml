@@ -342,6 +342,9 @@ importers:
 
   apps/workers:
     dependencies:
+      '@skymo/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@skymo/database':
         specifier: workspace:*
         version: link:../../packages/database

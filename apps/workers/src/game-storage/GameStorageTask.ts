@@ -1,3 +1,4 @@
+import type { PlayerScore } from "@skymo/core"
 import { gameTable, playerTable, scoreTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import type { GameStorageJobData } from "@skymo/worker-types"
@@ -17,7 +18,7 @@ type PlayerRecord = {
 type ScoreInsert = {
   gameId: number
   playerId: number
-  score: string
+  score: PlayerScore
   round: number
 }
 
@@ -170,7 +171,7 @@ export class GameStorageTask {
             scoreInserts.push({
               gameId: gameDbId,
               playerId: playerRecord.id,
-              score: roundScore.toString(),
+              score: roundScore,
               round: round + 1,
             })
           }

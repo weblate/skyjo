@@ -1,4 +1,4 @@
-import type { SettingsRedisDb } from "@skymo/core"
+import type { PlayerScore, SettingsRedisDb } from "@skymo/core"
 import type { UserSettings } from "@skymo/shared/validations"
 import { eq, type InferSelectModel, relations, sql } from "drizzle-orm"
 import {
@@ -183,7 +183,7 @@ export const scoreTable = pgTable("scores", {
   playerId: integer("player_id")
     .notNull()
     .references(() => playerTable.id),
-  score: varchar("score", { length: 255 }).notNull(),
+  score: json("score").$type<PlayerScore>().notNull(),
   round: integer("round").notNull(),
 })
 export type ScoreDb = InferSelectModel<typeof scoreTable>

@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@skymo/database": "workspace:*",
+    "@skymo/core": "workspace:*",
     "@skymo/error": "workspace:*",
     "@skymo/logger": "workspace:*",
     "@skymo/transactional": "workspace:*",
