@@ -1234,10 +1234,11 @@
       "game-ended": "Partie terminée !"
     },
     "chat": {
+      "welcome": "Soyez gentil et respectueux sur le chat. Si besoin, vous pouvez rendre muet ou signaler un joueur en {isMobile, select, true {faisant un appui long} other {faisant un clic droit}} sur leur message ou sur lui.",
       "player-joined": "{name} a rejoint la partie",
       "player-left": "{name} a quitté la partie",
       "player-reconnect": "{name} s'est reconnecté",
-      "argument-required": "Un ou des arguments sont requis pour la commande : {command}",
+      "argument-required": "Un ou des arguments sont requis pour la commande : {command}",
       "player-already-muted": "{name} est déjà muet",
       "player-muted": "{name} est maintenant muet",
       "player-not-muted": "{name} n'est pas muet",

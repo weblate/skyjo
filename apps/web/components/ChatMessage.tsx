@@ -1,12 +1,14 @@
 import type { ChatMessage } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
+import { ClassValue } from "clsx"
 import { m } from "motion/react"
-import { useTranslations } from "next-intl"
+import { useLocale, useTranslations } from "next-intl"
 import { UserContextMenu } from "@/components/UserContextMenu"
 import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { useGame } from "@/contexts/GameContext"
+import { cn } from "@/lib/utils"
 
-const chatMessageClasses = cva("text-sm text-wrap break-words md:break-all", {
+const chatMessageClasses = cva("text-sm text-wrap break-words hyphens-auto", {
   variants: {
     type: {
       message: "text-black dark:text-dark-font",
@@ -23,11 +25,19 @@ const chatMessageClasses = cva("text-sm text-wrap break-words md:break-all", {
 })
 type ChatMessageProps = Readonly<ChatMessage> & {
   name?: string
+  className?: ClassValue
 }
 
-const ChatMessage = ({ name, message, type, id }: ChatMessageProps) => {
+const ChatMessage = ({
+  name,
+  message,
+  type,
+  id,
+  className,
+}: ChatMessageProps) => {
   const { game, opponents } = useGame()
   const t = useTranslations("components.ChatMessage")
+  const locale = useLocale()
   const players = game?.players.map((p) => p.name) ?? []
 
   const getOpponentByName = (name?: string) => {
@@ -41,7 +51,7 @@ const ChatMessage = ({ name, message, type, id }: ChatMessageProps) => {
     return parts.map((part) => {
       if (part.startsWith("@") && players.includes(part.slice(1))) {
         return (
-          <span key={part} className="font-semibold text-blue-500 ">
+          <span key={part} className="font-semibold text-blue-500">
             {part}
           </span>
         )
@@ -65,7 +75,8 @@ const ChatMessage = ({ name, message, type, id }: ChatMessageProps) => {
               opacity: 1,
               translateY: 0,
             }}
-            className={chatMessageClasses({ type })}
+            className={cn(chatMessageClasses({ type }), className)}
+            lang={locale}
           >
             <span className="font-semibold">
               {name}
@@ -89,7 +100,8 @@ const ChatMessage = ({ name, message, type, id }: ChatMessageProps) => {
         opacity: 1,
         translateY: 0,
       }}
-      className={chatMessageClasses({ type })}
+      className={cn(chatMessageClasses({ type }), className)}
+      lang={locale}
     >
       {name && (
         <span className="font-semibold">

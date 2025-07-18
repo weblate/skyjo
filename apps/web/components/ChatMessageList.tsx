@@ -1,10 +1,13 @@
 import { useTranslations } from "next-intl"
 import ChatMessage from "@/components/ChatMessage"
 import { useChat } from "@/contexts/ChatContext"
+import { useMediaQuery } from "@/hooks/useMediaQuery"
 
 function ChatMessageList() {
   const { chat, unreadMessages } = useChat()
   const t = useTranslations("components.ChatMessageList")
+  const tChat = useTranslations("utils.chat")
+  const isMobile = useMediaQuery("(max-width: 768px)")
 
   return (
     <div
@@ -28,6 +31,11 @@ function ChatMessageList() {
         .map((message) => (
           <ChatMessage key={message.id} {...message} />
         ))}
+      <ChatMessage
+        id={crypto.randomUUID()}
+        message={tChat("welcome", { isMobile: isMobile.toString() })}
+        type="system-message"
+      />
     </div>
   )
 }
