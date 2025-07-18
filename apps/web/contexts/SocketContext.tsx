@@ -31,10 +31,7 @@ import customParser from "socket.io-msgpack-parser"
 import { toast } from "sonner"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useRouter } from "@/i18n/routing"
-import {
-  addReconnectionDateToLastGame,
-  clearLastGame,
-} from "@/utils/reconnection"
+import { clearLastGame } from "@/utils/reconnection"
 
 dayjs.extend(utc)
 
@@ -131,9 +128,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     } else console.log("Socket connected")
   }
 
-  const onConnectionLost = (reason: Socket.DisconnectReason) => {
-    if (reason === "ping timeout") addReconnectionDateToLastGame()
-
+  const onConnectionLost = () => {
     if (socket?.active) {
       toast.warning(t("connection-lost"), {
         duration: 3000,
@@ -220,23 +215,25 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   }
 
   const onJoinGameSuccess = (
-    code: string,
+    gameCode: string,
     status: GameStatus,
     playerId: string,
+    sessionId: string,
   ) => {
     localStorage.setItem(
       "lastGame",
       JSON.stringify({
-        gameCode: code,
+        gameCode,
         playerId,
+        sessionId,
       }),
     )
 
     setPlayerId(playerId)
 
     if (status === CoreConstants.GAME_STATUS.LOBBY)
-      router.replace(`/game/${code}/lobby`)
-    else router.replace(`/game/${code}`)
+      router.replace(`/game/${gameCode}/lobby`)
+    else router.replace(`/game/${gameCode}`)
   }
 
   const onJoinGameError = (message: ErrorJoinMessage) => {
@@ -254,8 +251,6 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   ) => {
     const socket = getSocket()
 
-    delete lastGame?.maxDateToReconnect
-
     socket.once("error:reconnect", onReconnectError)
     socket.once("error:join", onJoinGameError)
     socket.once("game:join", onJoinGameSuccess)
@@ -271,6 +266,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   }
 
   const onReconnectError = (message: ErrorReconnectMessage) => {
+    // TODO check if relevant
     clearLastGame()
 
     toast.error(reconnectErrorDescription[message], {

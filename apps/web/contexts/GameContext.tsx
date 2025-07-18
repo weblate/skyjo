@@ -51,10 +51,7 @@ import {
   isTurnTurnACard,
 } from "@/lib/game"
 import { Opponents } from "@/types/opponents"
-import {
-  addReconnectionDateToLastGame,
-  clearLastGame,
-} from "@/utils/reconnection"
+import { clearLastGame } from "@/utils/reconnection"
 
 dayjs.extend(utc)
 
@@ -174,12 +171,8 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       if (!game?.status) return
 
       const inGame = game?.status === CoreConstants.GAME_STATUS.PLAYING
-      if (inGame) {
-        addReconnectionDateToLastGame()
-        event.preventDefault()
-      } else {
-        clearLastGame()
-      }
+      if (inGame) event.preventDefault()
+      else clearLastGame()
     }
 
     window.addEventListener("beforeunload", onUnload)

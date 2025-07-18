@@ -863,6 +863,12 @@
       "find-game-button": "Find a game",
       "create-game-button": "Create a {type, select, private {private} public {public} other {unknown}} game"
     },
+    "ReconnectionModal": {
+      "title": "Reconnect to Game",
+      "description": "You were in a game that is in progress. Do you want to reconnect?",
+      "reconnect-button": "Yes, reconnect",
+      "dismiss-button": "No, dismiss"
+    },
     "GameRules": {
       "button-title": "Show game rules",
       "title": "Game rules",

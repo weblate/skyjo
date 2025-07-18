@@ -156,6 +156,7 @@ describe("Game", () => {
               [new Card(6), new Card(7), new Card(8)],
             ],
             hasPlayedLastTurn: false,
+            sessionId: crypto.randomUUID(),
           },
         ],
 
@@ -958,6 +959,7 @@ describe("Game", () => {
             scores: player.scores,
             socketId: player.socketId,
             wantsReplay: player.wantsReplay,
+            sessionId: player.getSessionId(),
           },
           {
             id: opponent.id,
@@ -980,6 +982,7 @@ describe("Game", () => {
             scores: opponent.scores,
             socketId: opponent.socketId,
             wantsReplay: opponent.wantsReplay,
+            sessionId: opponent.getSessionId(),
           },
         ],
         settings: {

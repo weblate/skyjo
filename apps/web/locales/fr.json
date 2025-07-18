@@ -1208,6 +1208,12 @@
         "available": "Nom d'utilisateur disponible",
         "taken": "Déjà pris !"
       }
+    },
+    "ReconnectionModal": {
+      "title": "Se reconnecter à la partie",
+      "description": "Il semble que vous étiez dans une partie. Voulez-vous vous reconnecter ?",
+      "dismiss-button": "Ignorer",
+      "reconnect-button": "Se reconnecter"
     }
   },
   "utils": {

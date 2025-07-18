@@ -35,6 +35,8 @@ interface PlayerInterface {
   recalculateScore(): void
   finalRoundScore(): void
   toJson(): PlayerToJson
+  getSessionId(): string
+  rotateSession(): string
 }
 export class Player implements PlayerInterface {
   id: string = crypto.randomUUID()
@@ -51,6 +53,7 @@ export class Player implements PlayerInterface {
   wantsReplay: boolean = false
   turnStartTime: number | null = null
   userId?: number
+  private sessionId: string = crypto.randomUUID()
 
   constructor(
     playerToCreate: CreatePlayer = {
@@ -80,6 +83,7 @@ export class Player implements PlayerInterface {
     this.consecutiveAfkCount = player.consecutiveAfkCount
     this.turnStartTime = player.turnStartTime
     this.userId = player?.userId ?? undefined
+    this.sessionId = player.sessionId
 
     if (player.cards.length > 0) {
       this.cards = player.cards.map((column) =>
@@ -88,6 +92,15 @@ export class Player implements PlayerInterface {
     }
 
     return this
+  }
+
+  getSessionId(): string {
+    return this.sessionId
+  }
+
+  rotateSession(): string {
+    this.sessionId = crypto.randomUUID()
+    return this.sessionId
   }
 
   toggleReplay() {
@@ -269,6 +282,5 @@ export class Player implements PlayerInterface {
   currentScore() {
     return this.currentScoreArray().reduce((a, b) => a + b, 0)
   }
-
   //#endregion
 }

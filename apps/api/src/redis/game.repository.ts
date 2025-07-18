@@ -94,13 +94,17 @@ export class GameRepository extends RedisClient {
     return this.deserializeGame(game)
   }
 
-  async canReconnectPlayer(gameCode: string, playerId: string) {
+  async canReconnectPlayer(
+    gameCode: string,
+    playerId: string,
+    sessionId: string,
+  ) {
     const client = await RedisClient.getClient()
 
     const key = this.getGameLatestStateKey(gameCode)
+
     const player = await client.json.get(key, {
-      // and connectionStatus is not DISCONNECTED
-      path: `$.players[?(@.id == '${playerId}' && @.connectionStatus != '${CoreConstants.CONNECTION_STATUS.DISCONNECTED}')]`,
+      path: `$.players[?(@.id == '${playerId}' && @.connectionStatus != '${CoreConstants.CONNECTION_STATUS.DISCONNECTED}' && @.sessionId == '${sessionId}')]`,
     })
 
     return player !== null

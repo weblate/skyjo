@@ -1,43 +1,28 @@
 "use client"
 
+import { Howler } from "howler"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useSocket } from "@/contexts/SocketContext"
 import { useRouter } from "@/i18n/routing"
-import { getLastGameIfPossible } from "@/utils/reconnection"
 
 interface GameLobbyButtonsProps {
   gameCode?: string
-  hideReconnectButton?: boolean
 }
 
-const GameLobbyButtons = ({
-  gameCode,
-  hideReconnectButton = false,
-}: GameLobbyButtonsProps) => {
-  const { reconnectGame, joinGame } = useSocket()
+const GameLobbyButtons = ({ gameCode }: GameLobbyButtonsProps) => {
+  const { joinGame } = useSocket()
   const { getPlayer, name, savePlayer } = usePlayer()
   const t = useTranslations("components.GameLobbyButtons")
   const router = useRouter()
 
-  const hasGameCode = !!gameCode
-
   const [loading, setLoading] = useState<boolean>(false)
 
-  const lastGame = getLastGameIfPossible()
+  const hasGameCode = !!gameCode
 
   const errorCallback = () => setLoading(false)
-
-  const handleReconnection = async () => {
-    if (!lastGame) {
-      setLoading(false)
-      return
-    }
-
-    reconnectGame(lastGame, errorCallback)
-  }
 
   const handleJoiningGame = async () => {
     savePlayer()
@@ -57,7 +42,6 @@ const GameLobbyButtons = ({
   }
 
   const actions = {
-    "reconnect-game": handleReconnection,
     "join-game": handleJoiningGame,
     "find-game": handleFindingGame,
     "create-game": handleGameCreation,
@@ -72,18 +56,7 @@ const GameLobbyButtons = ({
 
   return (
     <div className="flex flex-col gap-2 mt-6">
-      {!hideReconnectButton && lastGame && (
-        <Button
-          onClick={() => handleAction("reconnect-game")}
-          className="w-full mb-4"
-          disabled={!name}
-          loading={loading}
-          title={t("reconnect-game-button")}
-        >
-          {t("reconnect-game-button")}
-        </Button>
-      )}
-      {hasGameCode && !lastGame && (
+      {hasGameCode && (
         <Button
           onClick={() => handleAction("join-game")}
           disabled={!name}

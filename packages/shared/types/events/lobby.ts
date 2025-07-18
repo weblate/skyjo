@@ -16,7 +16,12 @@ export type ErrorJoinMessage = Extract<
 
 export interface ServerToClientLobbyEvents {
   "error:join": (message: ErrorJoinMessage) => void
-  "game:join": (code: string, status: GameStatus, playerId: string) => void
+  "game:join": (
+    gameCode: string,
+    status: GameStatus,
+    playerId: string,
+    sessionId: string,
+  ) => void
   "game:countdown-started": (endTimestamp: number) => void
   "game:countdown-canceled": () => void
 }

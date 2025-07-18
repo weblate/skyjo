@@ -85,7 +85,7 @@ export abstract class BaseService {
 
     this.socketManager.sendToSocket(socket, {
       event: "game:join",
-      data: [game.code, game.status, player.id],
+      data: [game.code, game.status, player.id, player.getSessionId()],
     })
 
     const messageType = reconnection

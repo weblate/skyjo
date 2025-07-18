@@ -2,6 +2,7 @@ import { constructTagArray, type Game, type Player } from "@skymo/core"
 import { leaderboardView } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import type {
+  GameStatusResponse,
   LeaderboardEntry,
   LeaderboardResponse,
   PublicGame,
@@ -44,6 +45,29 @@ export async function getLeaderboard(
     return response
   } catch (error) {
     Logger.error("Error getting leaderboard:", { error })
+    throw error
+  }
+}
+
+export async function getGameStatus(
+  gameCode: string,
+): Promise<GameStatusResponse | null> {
+  try {
+    const game = await gameRepository.getGameSafe(gameCode)
+
+    if (!game) {
+      return null
+    }
+
+    const response: GameStatusResponse = {
+      gameCode: game.code,
+      status: game.status,
+      connectedPlayersCount: game.getConnectedPlayers().length,
+    }
+
+    return response
+  } catch (error) {
+    Logger.error("Error getting game status:", { error, gameCode })
     throw error
   }
 }

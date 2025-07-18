@@ -98,6 +98,7 @@ export class PlayerService extends BaseService {
     const canReconnect = await this.redis.canReconnectPlayer(
       reconnectData.gameCode,
       reconnectData.playerId,
+      reconnectData.sessionId,
     )
     if (!canReconnect) {
       throw new CError(
@@ -109,6 +110,7 @@ export class PlayerService extends BaseService {
             socketId: socket.id,
             gameCode: reconnectData.gameCode,
             playerId: reconnectData.playerId,
+            sessionId: reconnectData.sessionId,
           },
         },
       )
@@ -128,6 +130,8 @@ export class PlayerService extends BaseService {
 
     player.socketId = socket.id
     player.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
+
+    player.rotateSession()
 
     await this.updateAndSendGame(game, stateManager)
 

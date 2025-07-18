@@ -76,6 +76,7 @@ describe("LobbyService", () => {
             socket.data.gameCode,
             CoreConstants.GAME_STATUS.LOBBY,
             socket.data.playerId,
+            expect.any(String),
           ],
         },
       )
@@ -123,6 +124,7 @@ describe("LobbyService", () => {
             socket.data.gameCode,
             CoreConstants.GAME_STATUS.LOBBY,
             socket.data.playerId,
+            expect.any(String),
           ],
         },
       )
@@ -282,6 +284,7 @@ describe("LobbyService", () => {
             socket.data.gameCode,
             CoreConstants.GAME_STATUS.LOBBY,
             socket.data.playerId,
+            expect.any(String),
           ],
         },
       )

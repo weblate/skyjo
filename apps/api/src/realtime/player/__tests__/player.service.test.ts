@@ -465,6 +465,7 @@ describe("PlayerService", () => {
 
       await service.onLeave(socket)
       const lastGame: LastGame = {
+        sessionId: player.getSessionId(),
         gameCode: game.code,
         playerId: player.id,
       }
@@ -511,6 +512,7 @@ describe("PlayerService", () => {
       )
 
       const lastGame: LastGame = {
+        sessionId: player.getSessionId(),
         gameCode: game.code,
         playerId: player.id,
       }
@@ -549,6 +551,7 @@ describe("PlayerService", () => {
         playerId: player.id,
       }
       const lastGame: LastGame = {
+        sessionId: player.getSessionId(),
         gameCode: game.code,
         playerId: player.id,
       }

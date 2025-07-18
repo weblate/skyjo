@@ -488,6 +488,7 @@ export class Game implements GameInterface {
         consecutiveAfkCount: player.consecutiveAfkCount,
         turnStartTime: player.turnStartTime,
         userId: player.userId ?? null,
+        sessionId: player.getSessionId(),
         cards: player.cards.map((column) =>
           column.map((card) => ({
             id: card.id,

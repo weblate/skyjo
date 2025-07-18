@@ -1,10 +1,16 @@
-import type { Game, PlayerToJson, PublicGameTag } from "@skymo/core"
+import type { Game, GameStatus, PlayerToJson, PublicGameTag } from "@skymo/core"
 
 export interface PublicGame extends Pick<Game, "code"> {
   hostName: string
   maxPlayers: number
   players: Pick<PlayerToJson, "name" | "avatar" | "id">[]
   tags: PublicGameTag[]
+}
+
+export interface GameStatusResponse {
+  gameCode: string
+  status: GameStatus
+  connectedPlayersCount: number
 }
 
 export interface LeaderboardEntry {

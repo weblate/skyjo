@@ -1,12 +1,14 @@
 import { zValidator } from "@hono/zod-validator"
 import { Logger } from "@skymo/logger"
 import {
+  getGameStatusParamsSchema,
   getLeaderboardQuerySchema,
   getPublicGamesQuerySchema,
 } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 import {
+  getGameStatus,
   getLeaderboard,
   getRedisPublicGames,
 } from "@/http/game/game.service.js"
@@ -21,6 +23,12 @@ const publicGamesRateLimiter = new RateLimiterMemory({
 const leaderboardRateLimiter = new RateLimiterMemory({
   keyPrefix: "leaderboard",
   points: 10,
+  duration: 60,
+})
+
+const gameStatusRateLimiter = new RateLimiterMemory({
+  keyPrefix: "game-status",
+  points: 30,
   duration: 60,
 })
 
@@ -55,6 +63,30 @@ export const gameRouter = new Hono()
       } catch (error) {
         Logger.error("Error getting leaderboard:", { error })
         return c.json({ error: "get-leaderboard-error" }, 500)
+      }
+    },
+  )
+  .get(
+    "/:code/status",
+    createRateLimiterMiddleware(gameStatusRateLimiter),
+    zValidator("param", getGameStatusParamsSchema),
+    async (c) => {
+      const params = c.req.valid("param")
+
+      try {
+        const gameStatus = await getGameStatus(params.code)
+
+        if (!gameStatus) {
+          return c.json({ error: "game-not-found" }, 404)
+        }
+
+        return c.json(gameStatus, 200)
+      } catch (error) {
+        Logger.error("Error getting game status:", {
+          error,
+          gameCode: params.code,
+        })
+        return c.json({ error: "get-game-status-error" }, 500)
       }
     },
   )
