@@ -80,7 +80,7 @@ const ReconnectionModal = () => {
           <Button onClick={handleModalDismiss} color="white" loading={loading}>
             {t("dismiss-button")}
           </Button>
-          <Button onClick={handleModalReconnect} loading={loading}>
+          <Button onClick={handleModalReconnect} loading={loading} autoFocus>
             {t("reconnect-button")}
           </Button>
         </DialogFooter>
