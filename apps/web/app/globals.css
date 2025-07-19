@@ -14,10 +14,10 @@
   }
 }
 
-@custom-variant smh (@media (width >= 300px));
-@custom-variant mdh (@media (width >= 690px));
+@custom-variant smh (@media (height >= 300px));
+@custom-variant mdh (@media (height >= 690px));
 @custom-variant lgh (@media (height >= 760px));
-@custom-variant xlh (@media (width >= 860px));
+@custom-variant xlh (@media (height >= 860px));
 
 @theme {
   --font-shantell: "Shantell Sans", sans-serif;
