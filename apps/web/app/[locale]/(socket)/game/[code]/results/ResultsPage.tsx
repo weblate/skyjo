@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/table"
 import { useGame } from "@/contexts/GameContext"
 import { useRouter } from "@/i18n/routing"
+import { formatScoreDisplay } from "@/lib/penalty-utils"
 import { cn, getRedirectionUrl } from "@/lib/utils"
 
 const ResultsPage = () => {
@@ -65,6 +66,8 @@ const ResultsPage = () => {
     router.replace(getRedirectionUrl(game.code, game.status))
   }, [game.status])
 
+  const nbRounds = game.players[0].scores.length
+
   return (
     <AnimatePresence>
       <div className="ph-no-capture h-dvh w-dvw overflow-y-auto container py-10 flex lgh:items-center lgh:justify-center">
@@ -86,7 +89,14 @@ const ResultsPage = () => {
                 <TableRow>
                   <TableHead className="py-2 w-fit">{t("rank")}</TableHead>
                   <TableHead className="py-2 w-52">{t("player")}</TableHead>
-                  <TableHead className="py-2">{t("score-per-round")}</TableHead>
+                  {Array.from({ length: nbRounds }).map((_, index) => (
+                    <TableHead
+                      key={`round-${index}`}
+                      className="text-left w-fit text-nowrap"
+                    >
+                      {t("round", { number: index + 1 })}
+                    </TableHead>
+                  ))}
                   <TableHead className="py-2 text-right">
                     {t("total")}
                   </TableHead>
@@ -127,9 +137,14 @@ const ResultsPage = () => {
                       {player.name}
                     </p>
                   </TableCell>
-                  <TableCell className="py-2">
-                    {player.scores.join(" ; ")}
-                  </TableCell>
+                  {player.scores.map((score, scoreIndex) => (
+                    <TableCell
+                      key={`${player.id}-round-${scoreIndex + 1}`}
+                      className="py-2"
+                    >
+                      {formatScoreDisplay(score)}
+                    </TableCell>
+                  ))}
                   <TableCell className="py-2 text-right">
                     {player.score}
                   </TableCell>

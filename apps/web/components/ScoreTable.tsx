@@ -63,7 +63,10 @@ const ScoreTable = ({
             {t("name")}
           </TableHead>
           {Array.from({ length: nbRounds }).map((_, index) => (
-            <TableHead key={index} className="text-center w-fit text-nowrap">
+            <TableHead
+              key={`round-${index}`}
+              className="text-center w-fit text-nowrap"
+            >
               {t("round")} {index + 1}
             </TableHead>
           ))}
@@ -80,7 +83,7 @@ const ScoreTable = ({
             </TableCell>
             {player.scores.map((score, scoreIndex) => (
               <TableCell
-                key={player.id + scoreIndex}
+                key={`${player.id}-round-${scoreIndex + 1}`}
                 className="text-center w-fit"
               >
                 {formatScoreDisplay(score)}

@@ -167,7 +167,7 @@
       "title": "Game results",
       "rank": "Rank",
       "player": "Player",
-      "score-per-round": "Score per round",
+      "round": "Round {number}",
       "total": "Total",
       "player-want-to-replay": "Players who want to replay:",
       "replay-button": {

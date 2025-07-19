@@ -5,12 +5,7 @@ import React from "react"
  * Checks if a score entry has a penalty applied
  */
 export const isPenalizedScore = (score: PlayerScore): score is PenaltyScore => {
-  if (score === "-") return false
-  return (
-    typeof score === "object" &&
-    score.penalty !== undefined &&
-    score.penalty > 0
-  )
+  return typeof score === "object"
 }
 
 /**

@@ -167,7 +167,7 @@
       "title": "Résultat de la partie",
       "rank": "Rang",
       "player": "Joueur",
-      "score-per-round": "Score par manche",
+      "round": "Manche {number}",
       "total": "Total",
       "player-want-to-replay": "Joueurs qui veulent rejouer :",
       "replay-button": {
