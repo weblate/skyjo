@@ -131,8 +131,7 @@
       }
     },
     "CopyLink": {
-      "message": "Link skopiowany!",
-      "button-title": "Kopiuj link"
+      "message": "Link skopiowany!"
     },
     "DiscardPile": {
       "title": "Stos kart odrzuconych",

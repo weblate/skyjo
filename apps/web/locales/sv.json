@@ -349,8 +349,7 @@
       "unread-messages": "{count} {count, plural, =1{oläst meddelande} other {olästa meddelanden}}"
     },
     "CopyLink": {
-      "message": "Länk kopierad!",
-      "button-title": "Kopiera länk"
+      "message": "Länk kopierad!"
     },
     "DiscardPile": {
       "title": "Kastad hög",

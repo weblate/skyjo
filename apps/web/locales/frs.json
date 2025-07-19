@@ -391,8 +391,7 @@
       "unread-messages": "{count} unläsen Naricht{count, plural, =1 {} s}"
     },
     "CopyLink": {
-      "message": "Ferbunnung kopierd!",
-      "button-title": "Kopier Link"
+      "message": "Ferbunnung kopierd!"
     },
     "EndRoundDialog": {
       "description": "De naiste Runde fangt in {seconds} Sekunnen an…",

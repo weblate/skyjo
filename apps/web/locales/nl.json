@@ -229,8 +229,7 @@
       "unread-messages": "{count} ongelezen bericht{count, plural, =1 {} other {en}}"
     },
     "CopyLink": {
-      "message": "Link gekopieerd!",
-      "button-title": "Link kopiëren"
+      "message": "Link gekopieerd!"
     },
     "DiscardPile": {
       "title": "Aflegstapel",

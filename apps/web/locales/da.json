@@ -358,8 +358,7 @@
       }
     },
     "CopyLink": {
-      "message": "Link kopieret!",
-      "button-title": "Kopier link"
+      "message": "Link kopieret!"
     },
     "ChatMessageList": {
       "unread-messages": "{count} ulæst meddelelse{count, plural, =1 {} other {r}}"

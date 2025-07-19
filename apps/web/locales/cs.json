@@ -440,8 +440,7 @@
       "unread-messages": "{count} nepřečtená zpráva{count, plural, =1 {} other {y}}"
     },
     "CopyLink": {
-      "message": "Odkaz zkopírován!",
-      "button-title": "Kopírovat odkaz"
+      "message": "Odkaz zkopírován!"
     },
     "DiscardPile": {
       "title": "Odkládací balíček",

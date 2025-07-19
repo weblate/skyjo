@@ -290,8 +290,7 @@
       "unread-messages": "{count} mensaje{count, plural, one {} other {s}} no leído{count, plural, =1 {mensaje sin leer} other {s}}"
     },
     "CopyLink": {
-      "message": "¡Enlace copiado!",
-      "button-title": "Copiar enlace"
+      "message": "¡Enlace copiado!"
     },
     "DiscardPile": {
       "title": "Montón de descartes",

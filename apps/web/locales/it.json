@@ -505,8 +505,7 @@
       }
     },
     "CopyLink": {
-      "message": "Link copiato!",
-      "button-title": "Copia link"
+      "message": "Link copiato!"
     },
     "MenuDropdown": {
       "settings": "Impostazioni",
