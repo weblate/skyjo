@@ -4,6 +4,7 @@ import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import { useGame } from "@/contexts/GameContext"
 import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
+import { cn } from "@/lib/utils"
 
 const GameInfo = () => {
   const { game, player, opponents, roundPhase, gameStatus, turnStatus } =
@@ -39,7 +40,14 @@ const GameInfo = () => {
 
   const showGameInfo = gameInProgress && isPlayerTurn
   return (
-    <div className="absolute -top-8 mdh:-top-11 text-center animate-scale flex flex-col items-center">
+    <div
+      className={cn(
+        "absolute text-center animate-scale flex flex-col items-center",
+        roundPhase.isLastLap && isPlayerTurn
+          ? "-top-12 mdh:-top-14"
+          : "-top-8 mdh:-top-11",
+      )}
+    >
       <AnimatePresence>
         {roundPhase.isLastLap && (
           <m.p
@@ -61,7 +69,7 @@ const GameInfo = () => {
                 ease: "easeInOut",
               },
             }}
-            className="text-sm text-black dark:text-dark-font"
+            className="text-xs mdh:text-sm text-black dark:text-dark-font"
           >
             {t("last-turn")}
           </m.p>
@@ -69,7 +77,7 @@ const GameInfo = () => {
         {showGameInfo && (
           <m.p
             key="game-info-text"
-            className="text-nowrap text-sm text-black dark:text-dark-font"
+            className="text-nowrap text-xs mdh:text-sm text-black dark:text-dark-font"
             initial={{
               scale: 0,
             }}
