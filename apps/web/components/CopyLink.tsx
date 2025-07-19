@@ -65,7 +65,7 @@ const CopyLink = ({ gameCode }: CopyLinkProps) => {
     <div className="flex flex-row items-center gap-2 w-full sm:w-fit">
       <Popover open={copied} onOpenChange={setCopied}>
         <PopoverTrigger asChild>
-          <div className="flex flex-row items-center gap-2">
+          <div className="flex flex-row items-center gap-2 w-full">
             <Input
               type="text"
               value={inviteLink}
