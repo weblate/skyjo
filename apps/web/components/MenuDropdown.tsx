@@ -94,6 +94,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
                 className="select-none dark:opacity-90"
                 title={user.name ?? t("guest")}
                 priority
+                unoptimized
               />
             </button>
           ) : (
@@ -221,6 +222,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
                 height={16}
                 alt="Discord server invite icon"
                 className="dark:invert mr-2"
+                unoptimized
               />
               <span>{t("discord")}</span>
             </a>

@@ -61,6 +61,7 @@ const PlayerBoard = ({ player, isPlayerTurn }: PlayerBoardProps) => {
             isPlayerTurn && "animate-bounce",
           )}
           priority
+          unoptimized
         />
       </div>
       <p

@@ -91,6 +91,7 @@ export const RecentActivityList = async ({
                           alt={tAvatar(player.avatar)}
                           className="select-none dark:opacity-90"
                           title={player.name}
+                          unoptimized
                           priority
                         />
                       </div>

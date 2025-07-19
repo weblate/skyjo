@@ -109,6 +109,7 @@ const PublicGameRow = ({
             >
               <Image
                 src={`/avatars/${player.avatar}.svg`}
+                unoptimized
                 width={20}
                 height={20}
                 alt={tAvatar(player.avatar)}

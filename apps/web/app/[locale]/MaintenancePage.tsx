@@ -26,6 +26,7 @@ const MaintenancePage = () => {
           height={24}
           alt={t("github-alt")}
           className="dark:invert"
+          unoptimized
         />
       </Link>
     </div>

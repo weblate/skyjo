@@ -71,6 +71,7 @@ const Footer = () => {
                 height={24}
                 alt="Discord server invite icon"
                 className="dark:invert"
+                unoptimized
               />
             </Link>
             <Link
@@ -83,6 +84,7 @@ const Footer = () => {
                 height={24}
                 alt="github.com/Maxentr"
                 className="dark:invert"
+                unoptimized
               />
             </Link>
           </div>

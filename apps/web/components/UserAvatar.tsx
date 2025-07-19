@@ -89,6 +89,7 @@ const UserAvatar = ({
             animate && "animate-small-bounce",
           )}
           priority
+          unoptimized
         />
         {player.name && showName && (
           <p className={textVariants({ size })}>{player.name}</p>

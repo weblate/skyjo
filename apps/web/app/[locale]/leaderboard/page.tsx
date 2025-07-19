@@ -1,6 +1,7 @@
 import { Locales } from "@skymo/shared/constants"
 import dayjs from "dayjs"
 import { Home, Trophy } from "lucide-react"
+import Image from "next/image"
 import { getTranslations } from "next-intl/server"
 import RefreshButton from "@/components/RefreshButton"
 import { Button } from "@/components/ui/button"
@@ -108,8 +109,9 @@ export default async function LeaderboardPage({
                           href={`/u/${player.username}`}
                           className="flex items-center gap-3 transition-all text-black underline-offset-0 hover:underline hover:underline-offset-4"
                         >
-                          <img
+                          <Image
                             src={`/avatars/${player.avatar}.svg`}
+                            unoptimized
                             alt={`${player.username} avatar`}
                             className="size-9"
                           />

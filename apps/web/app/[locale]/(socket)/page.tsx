@@ -53,6 +53,7 @@ const IndexServerPage = (props: IndexServerPageProps) => {
             >
               <Image
                 src="/svg/discord.svg"
+                unoptimized
                 width={24}
                 height={24}
                 alt="Discord server invite icon"

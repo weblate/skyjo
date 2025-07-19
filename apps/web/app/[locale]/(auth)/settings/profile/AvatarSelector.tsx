@@ -90,6 +90,7 @@ export function AvatarSelector({
               >
                 <Image
                   src={`/avatars/${avatar}.svg`}
+                  unoptimized
                   width={32}
                   height={32}
                   alt={tAvatar(avatar)}

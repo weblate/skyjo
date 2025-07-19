@@ -66,6 +66,7 @@ const SelectAvatar = ({
                 className,
               )}
               priority
+              unoptimized
             />
           ) : (
             <div className="flex items-center justify-center size-16 sm:size-20">

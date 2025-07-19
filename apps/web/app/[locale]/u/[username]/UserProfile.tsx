@@ -87,6 +87,7 @@ export const UserProfile = async ({
               height={48}
               alt={tAvatar(user.avatar)}
               className={avatarVariants({ avatar })}
+              unoptimized
               priority
             />
           </div>
