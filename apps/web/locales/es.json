@@ -129,7 +129,6 @@
     "ResultsPage": {
       "title": "Resultados del juego",
       "rank": "Clasificación",
-      "score-per-round": "Puntuación por ronda",
       "player": "Jugador",
       "total": "Total",
       "player-want-to-replay": "Jugadores que quieren repetir:",
