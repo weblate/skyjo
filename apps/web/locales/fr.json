@@ -801,7 +801,16 @@
     },
     "CopyLink": {
       "message": "Lien copié !",
-      "button-title": "Copier le lien"
+      "copy": {
+        "button-title": "Copier le lien",
+        "popover": "Lien copié !"
+      },
+      "share": {
+        "title": "Rejoins ma partie de Skyjo !",
+        "text": "Viens jouer à Skyjo avec moi en ligne ! Clique sur le lien pour rejoindre la partie.",
+        "button-title": "Partager la partie",
+        "tooltip": "Cliquez ici pour partager cette partie !"
+      }
     },
     "DiscardPile": {
       "title": "Paquet de défausse",

@@ -806,7 +806,16 @@
     },
     "CopyLink": {
       "message": "Link copied!",
-      "button-title": "Copy link"
+      "copy": {
+        "button-title": "Copy link",
+        "popover": "Link copied!"
+      },
+      "share": {
+        "title": "Join my Skyjo game!",
+        "text": "Come play Skyjo with me online! Click the link to join the game.",
+        "button-title": "Share game",
+        "tooltip": "Click here to share this game!"
+      }
     },
     "DiscardPile": {
       "title": "Discard pile",
