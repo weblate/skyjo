@@ -1294,6 +1294,9 @@
         "player-banned": {
           "description": "Vous avez été banni de cette partie"
         },
+        "player-already-connected": {
+          "description": "Vous êtes déjà connecté à cette partie depuis une autre session"
+        },
         "rate-limit": {
           "title": "Vous envoyez trop de requêtes",
           "description": "Merci d'attendre quelques secondes avant de réessayer"

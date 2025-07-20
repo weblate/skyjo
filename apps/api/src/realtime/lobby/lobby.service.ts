@@ -47,6 +47,23 @@ export class LobbyService extends BaseService {
       })
     }
 
+    if (game.hasUserAlreadyJoined(socket.user?.id)) {
+      throw new CError(
+        `User tried to join but is already connected to the game.`,
+        {
+          code: ErrorConstants.ERROR.PLAYER_ALREADY_CONNECTED,
+          level: "info",
+          meta: {
+            game: game.serialize(),
+            socketId: socket.id,
+            gameCode: game.code,
+            playerId: player.id,
+            userId: socket.user?.id,
+          },
+        },
+      )
+    }
+
     await this.addPlayerToGame(socket, game, player)
     await this.joinGame(socket, game, player)
   }

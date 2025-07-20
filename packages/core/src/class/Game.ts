@@ -138,6 +138,17 @@ export class Game implements GameInterface {
     })
   }
 
+  getPlayerByUserId(userId: number) {
+    return this.players.find((player) => {
+      return player.userId === userId
+    })
+  }
+
+  hasUserAlreadyJoined(userId?: number) {
+    if (!userId) return false
+    return this.getPlayerByUserId(userId) !== undefined
+  }
+
   addPlayer(player: Player) {
     if (this.isFull()) {
       throw new CError("Cannot add player, game is full", {

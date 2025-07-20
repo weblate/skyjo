@@ -289,6 +289,106 @@ describe("LobbyService", () => {
         },
       )
     })
+
+    it("should throw if authenticated user is already connected", async () => {
+      const userId = 123
+
+      const existingPlayer = new Player(
+        { name: "ExistingPlayer", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+        userId, // userId
+      )
+
+      const game = new Game({
+        hostId: existingPlayer.id,
+        settings: new Settings(false),
+      })
+
+      game.addPlayer(existingPlayer)
+
+      // Debug: verify the game has the player with the right userId
+      expect(game.hasUserAlreadyJoined(userId)).toBe(true)
+      expect(game.getPlayerByUserId(userId)).toBeDefined()
+
+      const player: CreatePlayer = {
+        name: "NewPlayer", // Different name to avoid ban confusion
+        avatar: CoreConstants.AVATARS.BEE,
+      }
+
+      // Mock socket with the same userId as existing player
+      const socketWithExistingUserId = mockSocket()
+      socketWithExistingUserId.user = { id: userId } as any // Type assertion to avoid TS error
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(
+        service.onJoin(socketWithExistingUserId, game.code, player),
+      ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_ALREADY_CONNECTED)
+    })
+
+    it("should allow guest users to join even if not unique", async () => {
+      const existingPlayer = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+        // No userId - guest user
+      )
+
+      const game = new Game({
+        hostId: existingPlayer.id,
+        settings: new Settings(false),
+      })
+
+      game.addPlayer(existingPlayer)
+
+      const player: CreatePlayer = {
+        name: "player2",
+        avatar: CoreConstants.AVATARS.BEE,
+      }
+
+      // Mock socket without userId (guest user)
+      const guestSocket = mockSocket()
+      guestSocket.user = undefined
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      // Should not throw for guest users
+      await service.onJoin(guestSocket, game.code, player)
+
+      expect(game.players.length).toBe(2)
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
+    })
+
+    it("should allow different authenticated users to join", async () => {
+      const existingPlayer = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+        123, // userId
+      )
+
+      const game = new Game({
+        hostId: existingPlayer.id,
+        settings: new Settings(false),
+      })
+
+      game.addPlayer(existingPlayer)
+
+      const player: CreatePlayer = {
+        name: "player2",
+        avatar: CoreConstants.AVATARS.BEE,
+      }
+
+      // Mock socket with different userId
+      const socketWithDifferentUserId = mockSocket()
+      socketWithDifferentUserId.user = { id: 456 } as any
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      // Should not throw for different user
+      await service.onJoin(socketWithDifferentUserId, game.code, player)
+
+      expect(game.players.length).toBe(2)
+      expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
+    })
   })
 
   describe("onResetSettings", () => {

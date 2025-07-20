@@ -71,6 +71,9 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     [ErrorConstants.ERROR.PLAYER_BANNED]: tSocketError(
       "player-banned.description",
     ),
+    [ErrorConstants.ERROR.PLAYER_ALREADY_CONNECTED]: tSocketError(
+      "player-already-connected.description",
+    ),
   }
 
   const reconnectErrorDescription: Record<ErrorReconnectMessage, string> = {

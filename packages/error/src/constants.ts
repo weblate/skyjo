@@ -19,6 +19,7 @@ export class Constants {
     STATE_VERSION_NULL: "state-version-null",
     TOO_MANY_REQUESTS: "too-many-requests",
     GAME_ALREADY_PROCESSING_AFK: "game-already-processing-afk",
+    PLAYER_ALREADY_CONNECTED: "player-already-connected",
     UNEXPECTED_ERROR: "unexpected-error",
     MESSAGE_NOT_FOUND: "message-not-found",
   } as const

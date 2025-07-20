@@ -59,7 +59,8 @@ const lobbyRouter = (socket: GameSocket) => {
           (error.code === ErrorConstants.ERROR.GAME_NOT_FOUND ||
             error.code === ErrorConstants.ERROR.GAME_ALREADY_STARTED ||
             error.code === ErrorConstants.ERROR.GAME_IS_FULL ||
-            error.code === ErrorConstants.ERROR.PLAYER_BANNED)
+            error.code === ErrorConstants.ERROR.PLAYER_BANNED ||
+            error.code === ErrorConstants.ERROR.PLAYER_ALREADY_CONNECTED)
         ) {
           socket.emit("error:join", error.code satisfies ErrorJoinMessage)
         } else {

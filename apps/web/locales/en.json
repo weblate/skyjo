@@ -1294,6 +1294,9 @@
         "player-banned": {
           "description": "You have been banned from this game"
         },
+        "player-already-connected": {
+          "description": "You are already connected to this game from another session"
+        },
         "rate-limit": {
           "title": "You are sending too many requests",
           "description": "Please wait a few seconds before trying again"
