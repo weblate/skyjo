@@ -175,7 +175,6 @@
       },
       "rank": "Classifica",
       "player": "Giocatore",
-      "score-per-round": "Punteggio per round",
       "title": "Risultati della partita"
     },
     "Create": {
@@ -505,8 +504,7 @@
       }
     },
     "CopyLink": {
-      "message": "Link copiato!",
-      "button-title": "Copia link"
+      "message": "Link copiato!"
     },
     "AccountDropdownMenu": {
       "button": {

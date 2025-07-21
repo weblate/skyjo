@@ -182,7 +182,6 @@
       "title": "Výsledky hry",
       "rank": "Pořadí",
       "player": "Hráč",
-      "score-per-round": "Body za kolo",
       "total": "Celkem",
       "player-want-to-replay": "Hráči, kteří chtějí hrát znovu:",
       "replay-button": {
@@ -440,8 +439,7 @@
       "unread-messages": "{count} nepřečtená zpráva{count, plural, =1 {} other {y}}"
     },
     "CopyLink": {
-      "message": "Odkaz zkopírován!",
-      "button-title": "Kopírovat odkaz"
+      "message": "Odkaz zkopírován!"
     },
     "DiscardPile": {
       "title": "Odkládací balíček",

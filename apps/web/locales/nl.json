@@ -173,8 +173,7 @@
         "replay": "Opnieuw afspelen"
       },
       "leave-button": "Verlaat het spel",
-      "player": "Speler",
-      "score-per-round": "Score per ronde"
+      "player": "Speler"
     },
     "PrivacyPolicy": {
       "head": {
@@ -229,8 +228,7 @@
       "unread-messages": "{count} ongelezen bericht{count, plural, =1 {} other {en}}"
     },
     "CopyLink": {
-      "message": "Link gekopieerd!",
-      "button-title": "Link kopiëren"
+      "message": "Link gekopieerd!"
     },
     "DiscardPile": {
       "title": "Aflegstapel",

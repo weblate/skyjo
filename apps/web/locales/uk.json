@@ -147,7 +147,6 @@
     },
     "ResultsPage": {
       "player": "Гравець",
-      "score-per-round": "Очки за раунд",
       "total": "Усього",
       "player-want-to-replay": "Гравці, які хочуть переграти:",
       "leave-button": "Вийти з гри",
@@ -476,8 +475,7 @@
       "unread-messages": "{count} непрочитане повідомлення{count, plural, =1 {} other {}}"
     },
     "CopyLink": {
-      "message": "Посилання скопійовано!",
-      "button-title": "Копіювати посилання"
+      "message": "Посилання скопійовано!"
     },
     "DrawPile": {
       "title": "Колода добору"

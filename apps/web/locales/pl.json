@@ -131,8 +131,7 @@
       }
     },
     "CopyLink": {
-      "message": "Link skopiowany!",
-      "button-title": "Kopiuj link"
+      "message": "Link skopiowany!"
     },
     "DiscardPile": {
       "title": "Stos kart odrzuconych",
@@ -418,7 +417,6 @@
       "title": "Wyniki gry",
       "rank": "Ranga",
       "player": "Gracz",
-      "score-per-round": "Punkty za rundę",
       "total": "Suma",
       "replay-button": {
         "cancel": "Nie powtarzaj",

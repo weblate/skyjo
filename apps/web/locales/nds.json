@@ -235,8 +235,7 @@
       "unread-messages": "{count} unlesene Naricht{count, plural, =1 {} other {en}}"
     },
     "CopyLink": {
-      "message": "Koppel kopeert!",
-      "button-title": "Kopieer Lenk"
+      "message": "Koppel kopeert!"
     },
     "DiscardPile": {
       "title": "Aflaggstapel",
@@ -482,7 +481,6 @@
       "rank": "Rang",
       "title": "Speelergevnisse",
       "player": "Speler",
-      "score-per-round": "Punkten per Runn",
       "total": "Alltohoop",
       "player-want-to-replay": "Spelers, de noch mal spelen wüllt:",
       "replay-button": {

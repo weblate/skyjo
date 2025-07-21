@@ -153,7 +153,6 @@
         "cancel": "Nich nochmoals speelen"
       },
       "rank": "Rang",
-      "score-per-round": "Punkte pro Runde",
       "total": "Totaal",
       "player-want-to-replay": "Spölers, do wier spöle wälle:",
       "leave-button": "t Spul ferlätje"
@@ -391,8 +390,7 @@
       "unread-messages": "{count} unläsen Naricht{count, plural, =1 {} s}"
     },
     "CopyLink": {
-      "message": "Ferbunnung kopierd!",
-      "button-title": "Kopier Link"
+      "message": "Ferbunnung kopierd!"
     },
     "EndRoundDialog": {
       "description": "De naiste Runde fangt in {seconds} Sekunnen an…",

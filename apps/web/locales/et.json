@@ -167,7 +167,6 @@
       "title": "Mängu tulemused",
       "rank": "Järjestus",
       "player": "Mängija",
-      "score-per-round": "Skoor vooru kohta",
       "total": "Kokku",
       "player-want-to-replay": "Mängijad, kes soovivad uuesti mängida:"
     },
@@ -501,8 +500,7 @@
       "unread-messages": "{count} lugemata sõnum{count, plural, =1 {} other {it}}"
     },
     "CopyLink": {
-      "message": "Link kopeeritud!",
-      "button-title": "Kopeeri link"
+      "message": "Link kopeeritud!"
     },
     "DiscardPile": {
       "title": "Viskamispakk",

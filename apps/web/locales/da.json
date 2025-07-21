@@ -178,7 +178,6 @@
       "rank": "Rang",
       "player": "Spiller",
       "leave-button": "Forlad spillet",
-      "score-per-round": "Score pr. runde",
       "total": "Total",
       "player-want-to-replay": "Spillere, der vil spille igen:",
       "replay-button": {
@@ -358,8 +357,7 @@
       }
     },
     "CopyLink": {
-      "message": "Link kopieret!",
-      "button-title": "Kopier link"
+      "message": "Link kopieret!"
     },
     "ChatMessageList": {
       "unread-messages": "{count} ulæst meddelelse{count, plural, =1 {} other {r}}"
