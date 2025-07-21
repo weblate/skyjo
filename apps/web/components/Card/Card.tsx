@@ -15,7 +15,7 @@ export const cardVariants = cva(
           "w-8 h-[43px] border-2 rounded-sm text-lg",
           "mdh:w-10 mdh:h-[53px] mdh:rounded-md mdh:text-xl",
         ],
-        big: "h-12 w-8 smh:h-16 smh:w-12 xlh:h-20 xlh:w-14 border-2 rounded-sm mdh:rounded-md text-base mdh:text-2xl",
+        big: "h-12 w-8 smh:h-16 smh:w-12 xlh:h-20 xlh:w-14 border-2 rounded-sm mdh:rounded-md text-xl smh:text-xl mdh:text-2xl xlh:text-3xl",
       },
       type: {
         hidden: "border-none bg-transparent",
