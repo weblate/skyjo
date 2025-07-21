@@ -1,6 +1,10 @@
 import { reportTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
-import { EmbedBuilder, type ModalSubmitInteraction } from "discord.js"
+import {
+  EmbedBuilder,
+  MessageFlags,
+  type ModalSubmitInteraction,
+} from "discord.js"
 import { eq } from "drizzle-orm"
 import { ApiClient } from "../api.js"
 import { db } from "../database.js"
@@ -26,7 +30,7 @@ async function handleReportDismissModal(
   const reason = interaction.fields.getTextInputValue("reason")
 
   try {
-    await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({ flags: MessageFlags.Ephemeral })
 
     const [report] = await db
       .select()
@@ -178,6 +182,7 @@ async function updateOriginalMessage(
 
     await originalMessage.edit({
       embeds: [updatedEmbed],
+      components: [],
     })
   } catch (error) {
     Logger.error("Error updating original message:", { error, reportId })
