@@ -6,6 +6,7 @@ import { userMiddleware } from "@/realtime/utils/userMiddleware.js"
 import { banRouter } from "./ban/ban.router.js"
 import { chatRouter } from "./chat/chat.router.js"
 import { gameRouter } from "./game/game.router.js"
+import { hostTransferRouter } from "./hostTransfer/hostTransfer.router.js"
 import { kickRouter } from "./kick/kick.router.js"
 import { lobbyRouter } from "./lobby/lobby.router.js"
 import { playerRouter } from "./player/player.router.js"
@@ -37,6 +38,7 @@ export const initializeSocketServer = async (server: ServerType) => {
       chatRouter(socket)
       kickRouter(socket)
       banRouter(socket)
+      hostTransferRouter(socket)
       reportRouter(socket)
     })
 

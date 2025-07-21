@@ -1,5 +1,6 @@
 import { PlayerToJson } from "@skymo/core"
 import {
+  CrownIcon,
   FrownIcon,
   MessageSquareIcon,
   MessageSquareOffIcon,
@@ -14,6 +15,7 @@ import {
 import { useBan } from "@/contexts/BanContext"
 import { useChat } from "@/contexts/ChatContext"
 import { useGame } from "@/contexts/GameContext"
+import { useHostTransfer } from "@/contexts/HostTransferContext"
 import { useKick } from "@/contexts/KickContext"
 import { useReport } from "@/contexts/ReportContext"
 import { isHost } from "@/lib/game"
@@ -28,6 +30,7 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
   const { actions, kickVoteInProgress } = useKick()
   const { game, player: currentPlayer } = useGame()
   const { banPlayer } = useBan()
+  const { transferHost } = useHostTransfer()
   const t = useTranslations("components.Avatar")
 
   const handleKickPlayer = () => {
@@ -41,6 +44,10 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
     banPlayer(player.id)
   }
 
+  const handleTransferHost = () => {
+    transferHost(player.id)
+  }
+
   const hasLessThanThreePlayers = game.players.length <= 2
   const isCurrentUserHost = isHost(game, currentPlayer.id)
 
@@ -52,6 +59,14 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
         <FrownIcon className="w-4 h-4 mr-2" />
         {t("context-menu.report", { name: player.name })}
       </ContextMenuItem>
+
+      {isCurrentUserHost && player.id !== currentPlayer.id && (
+        <ContextMenuItem onClick={handleTransferHost}>
+          <CrownIcon className="w-4 h-4 mr-2" />
+          {t("context-menu.transfer-host", { name: player.name })}
+        </ContextMenuItem>
+      )}
+
       <ContextMenuItem
         onClick={handleKickPlayer}
         disabled={

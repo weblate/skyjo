@@ -119,7 +119,7 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       message.type === CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_RECONNECT
     ) {
       playerJoinedSound.play()
-    } else {
+    } else if (message.type === CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT) {
       playerLeftSound.play()
     }
 

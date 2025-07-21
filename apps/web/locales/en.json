@@ -1126,7 +1126,8 @@
         "vote-to-kick": "Vote to kick {name}",
         "ban": "Ban {name}",
         "mute": "Mute {name}",
-        "unmute": "Unmute {name}"
+        "unmute": "Unmute {name}",
+        "transfer-host": "{name} is now the host"
       }
     },
     "KickVote": {
@@ -1247,6 +1248,7 @@
       "player-joined": "{name} joined the game",
       "player-left": "{name} left the game",
       "player-reconnect": "{name} reconnected to the game",
+      "host-transferred": "{name} is now the host",
       "argument-required": "One or more arguments are required for command: {command}",
       "player-already-muted": "{name} is already muted",
       "player-muted": "{name} is now muted",
@@ -1344,6 +1346,32 @@
       "report-against-you": {
         "title": "You have been kicked due to a report",
         "description": "Your name or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
+      }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "You don't have permission to transfer host",
+        "description": "Only the current host can transfer the host role to another player"
+      },
+      "player-not-found": {
+        "title": "The player does not exist",
+        "description": "The player you're trying to transfer host to does not exist in the game"
+      },
+      "player-not-connected": {
+        "title": "The player is not connected",
+        "description": "The player you're trying to transfer host to is not currently connected to the game"
+      },
+      "host-transferred": {
+        "title": "Host transferred successfully",
+        "description": "{newHostName} is now the host of the game"
+      },
+      "you-are-now-host": {
+        "title": "You are now the host",
+        "description": "{previousHostName} has transferred the host role to you"
+      },
+      "unexpected-error": {
+        "title": "An unexpected error occurred",
+        "description": "An unexpected error occurred while transferring host"
       }
     }
   },

@@ -7,6 +7,7 @@ import withAuth from "@/components/withAuth"
 import { BanProvider } from "@/contexts/BanContext"
 import ChatProvider from "@/contexts/ChatContext"
 import GameProvider from "@/contexts/GameContext"
+import { HostTransferProvider } from "@/contexts/HostTransferContext"
 import { KickProvider } from "@/contexts/KickContext"
 import { ReportProvider } from "@/contexts/ReportContext"
 
@@ -27,11 +28,13 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
         <ReportProvider>
           <KickProvider>
             <BanProvider>
-              <div className="h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
-                {children}
-                <KickVote />
-                <Chat className="z-40" />
-              </div>
+              <HostTransferProvider>
+                <div className="h-svh bg-[url('/svg/background.svg')] dark:bg-[url('/svg/background-dark.svg')] flex flex-row overflow-hidden">
+                  {children}
+                  <KickVote />
+                  <Chat className="z-40" />
+                </div>
+              </HostTransferProvider>
             </BanProvider>
           </KickProvider>
         </ReportProvider>
@@ -39,4 +42,5 @@ const GameLayout = ({ children, params: paramsPromise }: GameLayoutProps) => {
     </GameProvider>
   )
 }
+
 export default withAuth(GameLayout)

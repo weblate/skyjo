@@ -93,6 +93,7 @@ export class Constants {
     PLAYER_JOINED: "player-joined",
     PLAYER_RECONNECT: "player-reconnect",
     PLAYER_LEFT: "player-left",
+    HOST_TRANSFERRED: "host-transferred",
   } as const
 
   static readonly SERVER_MESSAGE_TYPE_ARRAY = Object.values(

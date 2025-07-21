@@ -69,6 +69,7 @@ const OpponentBoard = ({
               isPlayerTurn && "animate-bounce",
             )}
             priority
+            unoptimized
           />
         </div>
         <div

@@ -1115,7 +1115,8 @@
         "vote-to-kick": "Voter pour expulser {name}",
         "ban": "Bannir {name}",
         "mute": "Rendre muet {name}",
-        "unmute": "Rendre non muet {name}"
+        "unmute": "Rendre non muet {name}",
+        "transfer-host": "{name} est maintenant l'hôte"
       }
     },
     "KickVote": {

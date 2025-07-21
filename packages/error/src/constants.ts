@@ -4,6 +4,7 @@ export class Constants {
     GAME_ALREADY_EXISTS: "game-already-exists",
     PLAYER_NOT_FOUND: "player-not-found",
     PLAYER_BANNED: "player-banned",
+    PLAYER_NOT_CONNECTED: "player-not-connected",
     NOT_ALLOWED: "not-allowed",
     INVALID_TURN_STATE: "invalid-turn-state",
     TOO_FEW_PLAYERS: "too-few-players",
