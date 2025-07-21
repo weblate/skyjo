@@ -27,9 +27,9 @@ jobs:
             cd skymo
             git pull
 
-            docker compose build api --no-cache --parallel
-            docker compose build workers --no-cache --parallel
-            docker compose build discord-bot --no-cache --parallel
+            docker compose build api
+            docker compose build workers
+            docker compose build discord-bot
 
             pnpm i
             pnpm db:migrate
