@@ -42,6 +42,23 @@ const nextConfig = {
       },
     ]
   },
+  async rewrites() {
+    return [
+      {
+        source: "/relay-913U/static/:path*",
+        destination: "https://eu-assets.i.posthog.com/static/:path*",
+      },
+      {
+        source: "/relay-913U/:path*",
+        destination: "https://eu.i.posthog.com/:path*",
+      },
+      {
+        source: "/relay-913U/flags",
+        destination: "https://eu.i.posthog.com/flags",
+      },
+    ]
+  },
+  skipTrailingSlashRedirect: true,
   reactStrictMode: false,
   turbopack: {},
   compiler: {

@@ -1,7 +1,7 @@
 import dayjs from "dayjs"
 import { useTranslations } from "next-intl"
 
-const LAST_PAGE_UPDATED_DATE = dayjs("2025-07-03 13:31:00")
+const LAST_PAGE_UPDATED_DATE = dayjs("2025-07-21 12:00:00")
 
 const RichEmail = () => (
   <a

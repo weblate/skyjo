@@ -4,7 +4,7 @@ import type { Metadata } from "next"
 import { getTranslations } from "next-intl/server"
 import { Link } from "@/i18n/routing"
 
-const LAST_PAGE_UPDATED_DATE = dayjs("2025-07-05 12:00:00")
+const LAST_PAGE_UPDATED_DATE = dayjs("2025-07-21 12:00:00")
 
 const RichEmail = ({ email }: { email: string }) => (
   <a
