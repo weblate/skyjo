@@ -128,7 +128,7 @@ const GameDropdownMenuComponent = () => {
         </DropdownMenuGroup>
         <DropdownMenuGroup>
           <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => actions.leave()}>
+          <DropdownMenuItem onClick={() => actions.leave(true)}>
             <DoorOpenIcon className="mr-2 size-4" />
             <span>{t("leave-game")}</span>
           </DropdownMenuItem>

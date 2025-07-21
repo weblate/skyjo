@@ -32,7 +32,7 @@ export const LobbyHeader = ({ className }: LobbyHeaderProps) => {
         title={t(
           game.settings.private ? "leave-to-home" : "leave-to-public-game-list",
         )}
-        onClick={actions.leave}
+        onClick={() => actions.leave()}
         className="top-4 left-4 size-6 cursor-pointer text-black dark:text-dark-font"
       >
         <DoorOpenIcon className="size-6" />

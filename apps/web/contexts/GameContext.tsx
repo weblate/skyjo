@@ -76,7 +76,7 @@ interface GameContext {
     discardSelectedCard: () => void
     turnCard: (column: number, row: number) => void
     replay: () => void
-    leave: () => void
+    leave: (canReconnect?: boolean) => void
   }
   roundPhase: {
     isRevealCards: boolean
@@ -405,8 +405,11 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     socket!.emit("replay", stateVersion)
   }
 
-  const leave = () => {
+  const leave = (canReconnect = false) => {
     toast.dismiss()
+
+    if (!canReconnect) localStorage.removeItem("lastGame")
+
     socket!.emit("leave")
   }
 

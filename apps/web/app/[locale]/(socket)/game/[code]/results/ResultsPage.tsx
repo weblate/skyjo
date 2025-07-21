@@ -196,7 +196,7 @@ const ResultsPage = () => {
                   : t("replay-button.replay")}
               </Button>
               <Button
-                onClick={actions.leave}
+                onClick={() => actions.leave()}
                 className={cn(
                   "w-full",
                   hasMoreThanOneConnectedPlayer ? "mt-6" : "mt-2",
