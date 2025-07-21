@@ -23,9 +23,12 @@ const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
 })
 
 const getGridTemplate = (cards: CardToJson[][]): React.CSSProperties => {
+  const cols = cards?.length ?? 0
+  const rows = cards?.[0]?.length ?? 0
+
   return {
-    gridTemplateColumns: `repeat(${cards.length}, 1fr)`,
-    gridTemplateRows: `repeat(${cards[0].length}, 1fr)`,
+    gridTemplateColumns: `repeat(${cols}, 1fr)`,
+    gridTemplateRows: `repeat(${rows}, 1fr)`,
   }
 }
 
