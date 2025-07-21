@@ -508,14 +508,35 @@
       "message": "Link copiato!",
       "button-title": "Copia link"
     },
-    "MenuDropdown": {
-      "settings": "Impostazioni",
-      "feedback": "Lascia un feedback",
-      "discord": "Discord",
+    "AccountDropdownMenu": {
       "button": {
         "aria-label": "Menu"
       },
-      "rules": "Regole"
+      "guest": "Giocatore Misterioso",
+      "guest-catch-phrase": "Pronto a rivelare la tua identità?",
+      "profile": "Profilo",
+      "rules": "Regole",
+      "appearance": "Aspetto",
+      "language": "Lingua",
+      "feedback": "Lascia un feedback",
+      "discord": "Discord",
+      "settings": "Impostazioni",
+      "game-settings": "Impostazioni di gioco",
+      "account-settings": "Impostazioni account",
+      "logout": "Esci",
+      "login": "Accedi",
+      "signup": "Crea account"
+    },
+    "GameDropdownMenu": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "rules": "Regole",
+      "appearance": "Aspetto",
+      "feedback": "Lascia un feedback",
+      "discord": "Discord",
+      "settings": "Impostazioni",
+      "leave-game": "Abbandona partita"
     },
     "ReportDialog": {
       "description": "Segnala il nome utente o un messaggio di {username} se sembra inappropriato.",

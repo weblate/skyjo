@@ -257,14 +257,35 @@
       "first-player-multiplier-penalty": "Korrutaja karistus: {value}",
       "first-player-flat-penalty": "Fikseeritud karistus: {value}"
     },
-    "MenuDropdown": {
-      "discord": "Discord",
-      "settings": "Sätted",
-      "rules": "Reeglid",
-      "feedback": "Anna tagasisidet",
+    "AccountDropdownMenu": {
       "button": {
         "aria-label": "Menüü"
-      }
+      },
+      "guest": "Salapärane mängija",
+      "guest-catch-phrase": "Valmis oma identiteeti paljastama?",
+      "profile": "Profiil",
+      "rules": "Reeglid",
+      "appearance": "Välimus",
+      "language": "Keel",
+      "feedback": "Anna tagasisidet",
+      "discord": "Discord",
+      "settings": "Sätted",
+      "game-settings": "Mängu sätted",
+      "account-settings": "Konto sätted",
+      "logout": "Logi välja",
+      "login": "Logi sisse",
+      "signup": "Loo konto"
+    },
+    "GameDropdownMenu": {
+      "button": {
+        "aria-label": "Menüü"
+      },
+      "rules": "Reeglid",
+      "appearance": "Välimus",
+      "feedback": "Anna tagasisidet",
+      "discord": "Discord",
+      "settings": "Sätted",
+      "leave-game": "Lahku mängust"
     },
     "PlayerBoard": {
       "you": "Teie"

@@ -289,14 +289,35 @@
       "find-game-button": "Söök en Speel",
       "create-game-button": "Maak en {type, select, private {privaat} public {apen} other {unbekannt} } Speel"
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Spieskoort"
+      },
+      "guest": "Geheemsinniger Speler",
+      "guest-catch-phrase": "Redo um dien Identität to wiesen?",
+      "profile": "Profil",
+      "rules": "Regeln",
+      "appearance": "Utsehn",
+      "language": "Spraak",
+      "feedback": "Giff en Feedback",
+      "discord": "Discord",
+      "settings": "Instellungen",
+      "game-settings": "Speel-Instellungen",
+      "account-settings": "Konto-Instellungen",
+      "logout": "Afmellen",
+      "login": "Inmellen",
+      "signup": "Konto maken"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Spieskoort"
       },
       "rules": "Regeln",
+      "appearance": "Utsehn",
       "feedback": "Giff en Feedback",
       "discord": "Discord",
-      "settings": "Instellungen"
+      "settings": "Instellungen",
+      "leave-game": "Speel verlaten"
     },
     "OpponentBoard": {
       "disconnected": "De Speler hett dat Speel verlaten. En Bot warrt för em spelen in de nächsten poor Törns, bet he sik wedder verbinnen deit."

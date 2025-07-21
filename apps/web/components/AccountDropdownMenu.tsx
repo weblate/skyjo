@@ -21,7 +21,6 @@ import { useSearchParams } from "next/navigation"
 import { useTranslations } from "next-intl"
 import { useTheme } from "next-themes"
 import { Suspense } from "react"
-import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -39,15 +38,11 @@ import { useSettings } from "@/contexts/SettingsContext"
 import { useAuth } from "@/hooks/useAuth"
 import { Link, routing, usePathname, useRouter } from "@/i18n/routing"
 
-interface MenuDropdownProps {
-  variant: "account" | "game"
-}
-
-const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
+const AccountDropdownMenuComponent = () => {
   const { openFeedback } = useFeedback()
   const { openRules } = useRules()
   const { openSettings } = useSettings()
-  const t = useTranslations("components.MenuDropdown")
+  const t = useTranslations("components.AccountDropdownMenu")
   const tAppearance = useTranslations("components.AppearanceSelect")
   const tLanguage = useTranslations("components.LanguageCombobox")
   const { user, logout } = useAuth()
@@ -81,36 +76,27 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
 
   return (
     <DropdownMenu>
-      {variant === "account" && (
-        <DropdownMenuTrigger aria-label={t("button.aria-label")} asChild>
-          {user ? (
-            <button className="w-fit flex flex-row items-center gap-2 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-[6px] rounded-md transition-all duration-100 ease-in-out cursor-pointer">
-              <p>{user.name}</p>
-              <Image
-                src={`/avatars/${user.avatar}.svg`}
-                width={36}
-                height={36}
-                alt={user.avatar ? tAvatar(user.avatar) : t("guest")}
-                className="select-none dark:opacity-90"
-                title={user.name ?? t("guest")}
-                priority
-                unoptimized
-              />
-            </button>
-          ) : (
-            <button className="size-8 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-1 rounded-md transition-all duration-100 ease-in-out flex items-center justify-center cursor-pointer">
-              <EllipsisVerticalIcon className="size-6" />
-            </button>
-          )}
-        </DropdownMenuTrigger>
-      )}
-      {variant === "game" && (
-        <DropdownMenuTrigger aria-label={t("button.aria-label")} asChild>
-          <Button variant="icon" className="cursor-pointer">
+      <DropdownMenuTrigger aria-label={t("button.aria-label")} asChild>
+        {user ? (
+          <button className="w-fit flex flex-row items-center gap-2 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-[6px] rounded-md transition-all duration-100 ease-in-out cursor-pointer">
+            <p>{user.name}</p>
+            <Image
+              src={`/avatars/${user.avatar}.svg`}
+              width={36}
+              height={36}
+              alt={user.avatar ? tAvatar(user.avatar) : t("guest")}
+              className="select-none dark:opacity-90"
+              title={user.name ?? t("guest")}
+              priority
+              unoptimized
+            />
+          </button>
+        ) : (
+          <button className="size-8 focus-visible:outline-2 focus-visible:outline-black focus-visible:outline-offset-1 rounded-md transition-all duration-100 ease-in-out flex items-center justify-center cursor-pointer">
             <EllipsisVerticalIcon className="size-6" />
-          </Button>
-        </DropdownMenuTrigger>
-      )}
+          </button>
+        )}
+      </DropdownMenuTrigger>
       <DropdownMenuContent
         className="w-52"
         side="top"
@@ -119,7 +105,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
         onCloseAutoFocus={(e) => e.preventDefault()}
       >
         <DropdownMenuGroup>
-          {variant === "account" && user && (
+          {user && (
             <>
               <DropdownMenuItem>
                 <Link
@@ -170,7 +156,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
           </DropdownMenuSub>
 
           <DropdownMenuSub>
-            <DropdownMenuSubTrigger disabled={variant === "game"}>
+            <DropdownMenuSubTrigger>
               <GlobeIcon className="mr-2 size-4" />
               <span>{t("language")}</span>
             </DropdownMenuSubTrigger>
@@ -196,7 +182,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
             <SettingsIcon className="mr-2 size-4" />
             <span>{user ? t("game-settings") : t("settings")}</span>
           </DropdownMenuItem>
-          {user && variant === "account" && (
+          {user && (
             <DropdownMenuItem>
               <Link
                 href="/settings/profile"
@@ -232,7 +218,7 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
             <span>{t("feedback")}</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        {variant === "account" && user && (
+        {user && (
           <DropdownMenuGroup>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => logout()}>
@@ -246,24 +232,27 @@ const MenuDropdownComponent = ({ variant = "account" }: MenuDropdownProps) => {
   )
 }
 
-const MenuDropdownSkeleton = () => (
+const AccountDropdownMenuSkeleton = () => (
   <button className="w-fit flex flex-row items-center gap-2">
     <div className="bg-zinc-200 rounded-lg animate-pulse w-16 h-5" />
     <div className="bg-zinc-200 rounded-full animate-pulse size-9" />
   </button>
 )
 
-const MenuDropdown = dynamic(() => Promise.resolve(MenuDropdownComponent), {
-  ssr: false,
-  loading: () => <MenuDropdownSkeleton />,
-})
+const AccountDropdownMenu = dynamic(
+  () => Promise.resolve(AccountDropdownMenuComponent),
+  {
+    ssr: false,
+    loading: () => <AccountDropdownMenuSkeleton />,
+  },
+)
 
-const MenuDropdownWrapper = (props: MenuDropdownProps) => {
+const AccountDropdownMenuWrapper = () => {
   return (
-    <Suspense fallback={<MenuDropdownSkeleton />}>
-      <MenuDropdown {...props} />
+    <Suspense fallback={<AccountDropdownMenuSkeleton />}>
+      <AccountDropdownMenu />
     </Suspense>
   )
 }
 
-export default MenuDropdownWrapper
+export default AccountDropdownMenuWrapper

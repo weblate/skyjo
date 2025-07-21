@@ -923,7 +923,7 @@
         "uk": ""
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
       "button": {
         "aria-label": "Menu"
       },
@@ -941,6 +941,17 @@
       "logout": "Log out",
       "login": "Login",
       "signup": "Create an account"
+    },
+    "GameDropdownMenu": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "rules": "Rules",
+      "appearance": "Appearance",
+      "feedback": "Leave a feedback",
+      "discord": "Discord",
+      "settings": "Settings",
+      "leave-game": "Leave game"
     },
     "OpponentBoard": {
       "disconnected": "Player has left the game. A bot will play for them during the next few turns until they reconnect."

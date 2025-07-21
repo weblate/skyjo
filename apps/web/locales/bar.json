@@ -368,14 +368,35 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Speisekartn"
+      },
+      "guest": "Geheimnisvoller Spuier",
+      "guest-catch-phrase": "Bereit, deine Identität z'enthülln?",
+      "profile": "Profil",
+      "rules": "Regeln",
+      "appearance": "Aussehng",
+      "language": "Sproch",
+      "feedback": "Gib a Rückmeldung",
+      "discord": "Discord",
+      "settings": "Eistellunga",
+      "game-settings": "Spuieistellunga",
+      "account-settings": "Konto-Eistellunga",
+      "logout": "Abmeld'n",
+      "login": "Omeld'n",
+      "signup": "A Konto erstell'n"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Speisekartn"
       },
       "rules": "Regeln",
-      "discord": "Discord",
+      "appearance": "Aussehng",
       "feedback": "Gib a Rückmeldung",
-      "settings": "Eistellunga"
+      "discord": "Discord",
+      "settings": "Eistellunga",
+      "leave-game": "S Spui valassn"
     },
     "OpponentBoard": {
       "disconnected": "Da Spieler hods Spui valossn. A Bot spuit fia eam de nächstn Rundn, bis a wieda do is."

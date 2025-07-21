@@ -280,14 +280,35 @@
       "first-player-multiplier-penalty": "Штраф множника: {value}",
       "first-player-flat-penalty": "Фіксований штраф: {value}"
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Меню"
+      },
+      "guest": "Таємничий гравець",
+      "guest-catch-phrase": "Готовий розкрити свою особистість?",
+      "profile": "Профіль",
+      "rules": "Правила",
+      "appearance": "Зовнішній вигляд",
+      "language": "Мова",
+      "feedback": "Залишити відгук",
+      "discord": "Discord",
       "settings": "Налаштування",
+      "game-settings": "Налаштування гри",
+      "account-settings": "Налаштування акаунта",
+      "logout": "Вихід",
+      "login": "Увійти",
+      "signup": "Створити акаунт"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Меню"
       },
       "rules": "Правила",
+      "appearance": "Зовнішній вигляд",
       "feedback": "Залишити відгук",
-      "discord": "Discord"
+      "discord": "Discord",
+      "settings": "Налаштування",
+      "leave-game": "Покинути гру"
     },
     "OpponentBoard": {
       "disconnected": "Гравець покинув гру. Бот гратиме замість нього протягом наступних кількох ходів, доки він не перепідключиться."

@@ -226,14 +226,35 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Menú"
+      },
+      "guest": "Jugador Misterioso",
+      "guest-catch-phrase": "¿Estás listo para revelar tu identidad?",
+      "profile": "Perfil",
+      "rules": "Reglas",
+      "appearance": "Apariencia",
+      "language": "Idioma",
+      "feedback": "Dejar un comentario",
+      "discord": "Discord",
+      "settings": "Ajustes",
+      "game-settings": "Configuración del juego",
+      "account-settings": "Configuración de la cuenta",
+      "logout": "Cerrar sesión",
+      "login": "Iniciar sesión",
+      "signup": "Crear cuenta"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Menú"
       },
       "rules": "Reglas",
+      "appearance": "Apariencia",
       "feedback": "Dejar un comentario",
       "discord": "Discord",
-      "settings": "Ajustes"
+      "settings": "Ajustes",
+      "leave-game": "Abandonar juego"
     },
     "Feedback": {
       "title": "Dejar un comentario",

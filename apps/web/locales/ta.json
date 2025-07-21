@@ -314,14 +314,35 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "பட்டியல்"
+      },
+      "guest": "மர்ம விளையாட்டு வீரர்",
+      "guest-catch-phrase": "உங்கள் அடையாளத்தை வெளிப்படுத்த தயாரா?",
+      "profile": "சுயவிவரம்",
+      "rules": "விதிகள்",
+      "appearance": "தோற்றம்",
+      "language": "மொழி",
+      "feedback": "ஒரு கருத்தை விடுங்கள்",
+      "discord": "முரண்பாடு",
+      "settings": "அமைப்புகள்",
+      "game-settings": "விளையாட்டு அமைப்புகள்",
+      "account-settings": "கணக்கு அமைப்புகள்",
+      "logout": "வெளியேறு",
+      "login": "உள்நுழை",
+      "signup": "கணக்கு உருவாக்கு"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "பட்டியல்"
       },
       "rules": "விதிகள்",
+      "appearance": "தோற்றம்",
+      "feedback": "ஒரு கருத்தை விடுங்கள்",
       "discord": "முரண்பாடு",
       "settings": "அமைப்புகள்",
-      "feedback": "ஒரு கருத்தை விடுங்கள்"
+      "leave-game": "விளையாட்டை விட்டு வெளியேறு"
     },
     "OpponentBoard": {
       "disconnected": "வீரர் விளையாட்டை விட்டு வெளியேறினார். அடுத்த சில திருப்பங்களில் அவை மீண்டும் இணைக்கும் வரை ஒரு போட் அவர்களுக்காக விளையாடும்."

@@ -1,7 +1,7 @@
 import { ClassValue } from "clsx"
 import { useTranslations } from "next-intl"
+import AccountDropdownMenu from "@/components/AccountDropdownMenu"
 import LoginButton from "@/components/LoginButton"
-import MenuDropdown from "@/components/MenuDropdown"
 import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
@@ -41,7 +41,7 @@ const Navbar = ({ className }: NavbarProps) => {
 
       <div className="flex flex-row items-center gap-4">
         <LoginButton />
-        <MenuDropdown variant="account" />
+        <AccountDropdownMenu />
       </div>
     </nav>
   )
