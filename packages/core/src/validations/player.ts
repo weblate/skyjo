@@ -5,7 +5,7 @@ export const createPlayer = z.object({
   name: z
     .string()
     .min(1)
-    .transform((val) => val.slice(0, 20).replace(/ /g, "_")),
+    .transform((val) => val.slice(0, 20).trim()),
   avatar: z.nativeEnum(Constants.AVATARS),
 })
 

@@ -19,10 +19,7 @@ const IndexPage = ({ searchParams }: Props) => {
   const { name, setName, avatarIndex, setAvatarIndex } = usePlayer()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value
-    const newValue = value.replace(/ /g, "_")
-
-    setName(newValue)
+    setName(e.target.value)
   }
 
   return (
