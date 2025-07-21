@@ -224,6 +224,7 @@ export const leaderboardView = pgView("leaderboard_view").as((qb) => {
         "rank",
       ),
       userId: userTable.id,
+      name: userTable.name,
       username: userTable.username,
       avatar: userTable.avatar,
       wins: sql<number>`count(case when ${playerTable.winner} = true then 1 end)`.as(
@@ -240,7 +241,7 @@ export const leaderboardView = pgView("leaderboard_view").as((qb) => {
     .where(
       sql`${userTable.deletedAt} is null and ${playerTable.userId} is not null`,
     )
-    .groupBy(userTable.id, userTable.username, userTable.avatar)
+    .groupBy(userTable.id, userTable.name, userTable.username, userTable.avatar)
     .having(sql`count(*) > 0`)
     .orderBy(
       sql`count(case when ${playerTable.winner} = true then 1 end) desc`,

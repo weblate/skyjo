@@ -16,6 +16,7 @@ export interface GameStatusResponse {
 export interface LeaderboardEntry {
   rank: number
   userId: string
+  name: string
   username: string
   avatar: string
   wins: number

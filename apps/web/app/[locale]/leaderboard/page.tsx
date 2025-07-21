@@ -1,4 +1,5 @@
 import { Locales } from "@skymo/shared/constants"
+import { LeaderboardEntry } from "@skymo/shared/types"
 import dayjs from "dayjs"
 import { Home, Trophy } from "lucide-react"
 import Image from "next/image"
@@ -7,16 +8,6 @@ import RefreshButton from "@/components/RefreshButton"
 import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
 import CallToActionSection from "./CallToActionSection"
-
-interface LeaderboardEntry {
-  rank: string
-  userId: string
-  username: string
-  avatar: string
-  wins: number
-  totalGames: number
-  winRate: number
-}
 
 interface LeaderboardData {
   leaderboard: LeaderboardEntry[]
@@ -112,11 +103,13 @@ export default async function LeaderboardPage({
                           <Image
                             src={`/avatars/${player.avatar}.svg`}
                             unoptimized
-                            alt={`${player.username} avatar`}
+                            width={36}
+                            height={36}
+                            alt={player.name}
                             className="size-9"
                           />
                           <span className="font-medium text-black dark:text-dark-font">
-                            {player.username}
+                            {player.name}
                           </span>
                         </Link>
                       </td>

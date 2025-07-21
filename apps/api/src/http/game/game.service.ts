@@ -30,6 +30,7 @@ export async function getLeaderboard(
     const leaderboard: LeaderboardEntry[] = results.map((row) => ({
       rank: row.rank,
       userId: row.userId.toString(),
+      name: row.name ?? "",
       username: row.username ?? "",
       avatar: row.avatar,
       wins: Number(row.wins),
