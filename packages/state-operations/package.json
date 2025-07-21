@@ -1,7 +1,7 @@
 {
   "name": "@skymo/state-operations",
   "description": "A package to handle game state operations",
-  "version": "1.58.0",
+  "version": "1.59.3",
   "type": "module",
   "exports": {
     ".": "./dist/src/index.js",
