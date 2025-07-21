@@ -471,14 +471,35 @@
       },
       "button-title": "Odeslat"
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "guest": "Tajemný hráč",
+      "guest-catch-phrase": "Jste připraveni odhalit svou identitu?",
+      "profile": "Profil",
+      "rules": "Pravidla",
+      "appearance": "Vzhled",
+      "language": "Jazyk",
+      "feedback": "Zanechte zpětnou vazbu",
+      "discord": "Discord",
+      "settings": "Nastavení",
+      "game-settings": "Nastavení hry",
+      "account-settings": "Nastavení účtu",
+      "logout": "Odhlásit se",
+      "login": "Přihlásit se",
+      "signup": "Vytvořit účet"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Menu"
       },
       "rules": "Pravidla",
+      "appearance": "Vzhled",
       "feedback": "Zanechte zpětnou vazbu",
       "discord": "Discord",
-      "settings": "Nastavení"
+      "settings": "Nastavení",
+      "leave-game": "Opustit hru"
     },
     "OpponentBoard": {
       "disconnected": "Hráč opustil hru. Po následující tahy za něj bude hrát bot, dokud se znovu nepřipojí."

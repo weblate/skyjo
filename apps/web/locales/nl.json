@@ -328,14 +328,35 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "guest": "Mysterieuze Speler",
+      "guest-catch-phrase": "Klaar om je identiteit te onthullen?",
+      "profile": "Profiel",
+      "rules": "Regels",
+      "appearance": "Uiterlijk",
+      "language": "Taal",
+      "feedback": "Geef feedback",
+      "discord": "Discord",
+      "settings": "Instellingen",
+      "game-settings": "Spelinstellingen",
+      "account-settings": "Accountinstellingen",
+      "logout": "Uitloggen",
+      "login": "Inloggen",
+      "signup": "Account aanmaken"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Menu"
       },
       "rules": "Regels",
+      "appearance": "Uiterlijk",
       "feedback": "Geef feedback",
       "discord": "Discord",
-      "settings": "Instellingen"
+      "settings": "Instellingen",
+      "leave-game": "Spel verlaten"
     },
     "OpponentsMobileView": {
       "opponents-list": {

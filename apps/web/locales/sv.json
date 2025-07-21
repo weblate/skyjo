@@ -404,14 +404,35 @@
       "find-game-button": "Hitta ett spel",
       "create-game-button": "Skapa ett {type, select, private {privat} public {publikt} other {okänt}} spel"
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Meny"
+      },
+      "guest": "Mystisk Spelare",
+      "guest-catch-phrase": "Redo att avslöja din identitet?",
+      "profile": "Profil",
+      "rules": "Regler",
+      "appearance": "Utseende",
+      "language": "Språk",
+      "feedback": "Lämna feedback",
+      "discord": "Discord",
+      "settings": "Inställningar",
+      "game-settings": "Spelinställningar",
+      "account-settings": "Kontoinställningar",
+      "logout": "Logga ut",
+      "login": "Logga in",
+      "signup": "Skapa konto"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Meny"
       },
       "rules": "Regler",
+      "appearance": "Utseende",
       "feedback": "Lämna feedback",
       "discord": "Discord",
-      "settings": "Inställningar"
+      "settings": "Inställningar",
+      "leave-game": "Lämna spelet"
     },
     "OpponentBoard": {
       "disconnected": "Spelaren har lämnat spelet. En bot kommer att spela för dem under de närmaste omgångarna tills de återansluter."

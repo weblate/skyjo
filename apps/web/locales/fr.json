@@ -911,7 +911,7 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
       "button": {
         "aria-label": "Menu"
       },
@@ -929,6 +929,17 @@
       "logout": "Se déconnecter",
       "login": "Se connecter",
       "signup": "Créer un compte"
+    },
+    "GameDropdownMenu": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "rules": "Règles",
+      "appearance": "Apparence",
+      "feedback": "Laisser un commentaire",
+      "discord": "Discord",
+      "settings": "Paramètres",
+      "leave-game": "Quitter la partie"
     },
     "OpponentBoard": {
       "disconnected": "Le joueur a quitté la partie. Un bot jouera pour lui pendant les prochains tours jusqu'à sa reconnexion."

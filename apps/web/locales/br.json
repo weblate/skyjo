@@ -425,14 +425,35 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Lañser"
+      },
+      "guest": "C'hoarier kuzh",
+      "guest-catch-phrase": "Prest da zisplegañ ho pivelezh?",
+      "profile": "Profil",
+      "rules": "Reolennoù",
+      "appearance": "Neuz",
+      "language": "Yezh",
+      "feedback": "Roit un distro-komz",
+      "discord": "Discord",
+      "settings": "Arventennoù",
+      "game-settings": "Arventennoù ar c'hoari",
+      "account-settings": "Arventennoù ar gont",
+      "logout": "Digevreañ",
+      "login": "Kevreañ",
+      "signup": "Krouiñ ur gont"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Lañser"
       },
       "rules": "Reolennoù",
+      "appearance": "Neuz",
+      "feedback": "Roit un distro-komz",
       "discord": "Discord",
       "settings": "Arventennoù",
-      "feedback": "Roit un distro-komz"
+      "leave-game": "Kuitaat ar c'hoari"
     },
     "OpponentsMobileView": {
       "opponents-list": {

@@ -416,14 +416,35 @@
       "find-game-button": "Find et spil",
       "create-game-button": "Opret et {type, select, private {privat} public {offentligt} other {ukendt}} spil"
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "guest": "Mystisk spiller",
+      "guest-catch-phrase": "Klar til at afsløre din identitet?",
+      "profile": "Profil",
+      "rules": "Regler",
+      "appearance": "Udseende",
+      "language": "Sprog",
+      "feedback": "Giv feedback",
+      "discord": "Discord",
+      "settings": "Indstillinger",
+      "game-settings": "Spilindstillinger",
+      "account-settings": "Kontoindstillinger",
+      "logout": "Log ud",
+      "login": "Log ind",
+      "signup": "Opret konto"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Menu"
       },
       "rules": "Regler",
+      "appearance": "Udseende",
       "feedback": "Giv feedback",
       "discord": "Discord",
-      "settings": "Indstillinger"
+      "settings": "Indstillinger",
+      "leave-game": "Forlad spillet"
     },
     "OpponentBoard": {
       "disconnected": "Spilleren har forladt spillet. En bot vil spille for dem i de næste par omgange, indtil de genopretter forbindelsen."

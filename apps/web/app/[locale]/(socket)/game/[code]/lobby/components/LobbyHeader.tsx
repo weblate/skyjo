@@ -1,7 +1,7 @@
 "use client"
 
 import { ClassValue } from "clsx"
-import { ArrowLeftIcon, LockIcon, UnlockIcon } from "lucide-react"
+import { DoorOpenIcon, LockIcon, UnlockIcon } from "lucide-react"
 import { useTranslations } from "next-intl"
 import {
   Tooltip,
@@ -35,7 +35,7 @@ export const LobbyHeader = ({ className }: LobbyHeaderProps) => {
         onClick={actions.leave}
         className="top-4 left-4 size-6 cursor-pointer text-black dark:text-dark-font"
       >
-        <ArrowLeftIcon className="size-6" />
+        <DoorOpenIcon className="size-6" />
       </button>
       <h2 className="text-black dark:text-dark-font text-center text-2xl">
         {t("title", {

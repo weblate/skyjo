@@ -311,14 +311,35 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
-      "discord": "Discord",
-      "settings": "Istellige",
-      "rules": "Regle",
-      "feedback": "Gib es Feedback",
+    "AccountDropdownMenu": {
       "button": {
         "aria-label": "Menü"
-      }
+      },
+      "guest": "Gheime Spieler",
+      "guest-catch-phrase": "Bisch bereit, dini Identität z'zeige?",
+      "profile": "Profil",
+      "rules": "Regle",
+      "appearance": "Uussehe",
+      "language": "Sproch",
+      "feedback": "Gib es Feedback",
+      "discord": "Discord",
+      "settings": "Istellige",
+      "game-settings": "Spiel-Istellige",
+      "account-settings": "Konto-Istellige",
+      "logout": "Abmälde",
+      "login": "Amälde",
+      "signup": "Konto erstelle"
+    },
+    "GameDropdownMenu": {
+      "button": {
+        "aria-label": "Menü"
+      },
+      "rules": "Regle",
+      "appearance": "Uussehe",
+      "feedback": "Gib es Feedback",
+      "discord": "Discord",
+      "settings": "Istellige",
+      "leave-game": "Spiel verloh"
     },
     "OpponentBoard": {
       "disconnected": "De Spiiler het s Spiel verlah. E Bot wird für ihn spiele i de nöchste Runde, bis er wieder verbunde isch."

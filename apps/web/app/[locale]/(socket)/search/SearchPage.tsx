@@ -11,6 +11,7 @@ import { useState } from "react"
 import { toast } from "sonner"
 import { GamesList } from "@/app/[locale]/(socket)/search/GamesList"
 import { TagsFilter } from "@/app/[locale]/(socket)/search/TagsFilter"
+import ReconnectionModal from "@/components/ReconnectionModal"
 import { useRouter } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
@@ -112,6 +113,7 @@ const SearchPageComponent = () => {
         onTagClick={onTagClick}
         onJoinGameError={onJoinGameError}
       />
+      <ReconnectionModal />
     </>
   )
 }

@@ -212,14 +212,35 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Menu"
+      },
+      "guest": "Tajemniczy Gracz",
+      "guest-catch-phrase": "Gotowy ujawnić swoją tożsamość?",
+      "profile": "Profil",
+      "rules": "Zasady",
+      "appearance": "Wygląd",
+      "language": "Język",
+      "feedback": "Zostaw opinię",
+      "discord": "Discord",
+      "settings": "Ustawienia",
+      "game-settings": "Ustawienia gry",
+      "account-settings": "Ustawienia konta",
+      "logout": "Wyloguj",
+      "login": "Zaloguj",
+      "signup": "Utwórz konto"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Menu"
       },
       "rules": "Zasady",
+      "appearance": "Wygląd",
       "feedback": "Zostaw opinię",
       "discord": "Discord",
-      "settings": "Ustawienia"
+      "settings": "Ustawienia",
+      "leave-game": "Opuść grę"
     },
     "OpponentBoard": {
       "disconnected": "Gracz opuścił grę. Bot będzie grał w jego zastępstwie przez kilka następnych tur, dopóki gracz nie połączy się ponownie."

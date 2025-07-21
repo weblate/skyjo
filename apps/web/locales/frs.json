@@ -465,14 +465,35 @@
         "et": "Eesti"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Menü"
+      },
+      "guest": "Geheimnisvoller Spieler",
+      "guest-catch-phrase": "Kloar üm dien Identität to enthüllen?",
+      "profile": "Profil",
+      "rules": "Regeln",
+      "appearance": "Utsehn",
+      "language": "Sproake",
+      "feedback": "Lät en Feedback tourüch",
+      "discord": "Discord",
+      "settings": "Instellengen",
+      "game-settings": "Speel-Instellengen",
+      "account-settings": "Konto-Instellengen",
+      "logout": "Utmelden",
+      "login": "Inmelden",
+      "signup": "Konto moaken"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Menü"
       },
       "rules": "Regeln",
+      "appearance": "Utsehn",
       "feedback": "Lät en Feedback tourüch",
       "discord": "Discord",
-      "settings": "Instellengen"
+      "settings": "Instellengen",
+      "leave-game": "Speel verlaten"
     },
     "OpponentsMobileView": {
       "opponents-list": {

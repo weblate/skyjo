@@ -465,14 +465,35 @@
         "title": "Gegner:"
       }
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Menü"
+      },
+      "guest": "Mysteriöser Spieler",
+      "guest-catch-phrase": "Bereit, deine Identität zu enthüllen?",
+      "profile": "Profil",
+      "rules": "Regeln",
+      "appearance": "Aussehen",
+      "language": "Sprache",
+      "feedback": "Gib uns Feedback",
       "discord": "Discord",
       "settings": "Einstellungen",
+      "game-settings": "Spieleinstellungen",
+      "account-settings": "Kontoeinstellungen",
+      "logout": "Abmelden",
+      "login": "Anmelden",
+      "signup": "Konto erstellen"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Menü"
       },
       "rules": "Regeln",
-      "feedback": "Gib uns Feedback"
+      "appearance": "Aussehen",
+      "feedback": "Gib uns Feedback",
+      "discord": "Discord",
+      "settings": "Einstellungen",
+      "leave-game": "Spiel verlassen"
     },
     "RulesDialog": {
       "trigger": {

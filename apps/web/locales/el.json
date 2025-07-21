@@ -238,14 +238,35 @@
       "first-player-flat-penalty": "Πάγια ποινή: {value}",
       "first-player-multiplier-penalty": "Ποινή πολλαπλασιαστή: {value}"
     },
-    "MenuDropdown": {
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Μενού"
+      },
+      "guest": "Μυστηριώδης Παίκτης",
+      "guest-catch-phrase": "Είστε έτοιμοι να αποκαλύψετε την ταυτότητά σας;",
+      "profile": "Προφίλ",
+      "rules": "Κανόνες",
+      "appearance": "Εμφάνιση",
+      "language": "Γλώσσα",
+      "feedback": "Αφήστε σχόλια",
       "discord": "Discord",
+      "settings": "Ρυθμίσεις",
+      "game-settings": "Ρυθμίσεις παιχνιδιού",
+      "account-settings": "Ρυθμίσεις λογαριασμού",
+      "logout": "Αποσύνδεση",
+      "login": "Σύνδεση",
+      "signup": "Δημιουργία λογαριασμού"
+    },
+    "GameDropdownMenu": {
       "button": {
         "aria-label": "Μενού"
       },
       "rules": "Κανόνες",
+      "appearance": "Εμφάνιση",
       "feedback": "Αφήστε σχόλια",
-      "settings": "Ρυθμίσεις"
+      "discord": "Discord",
+      "settings": "Ρυθμίσεις",
+      "leave-game": "Έξοδος από το παιχνίδι"
     },
     "RulesDialog": {
       "title": "Κανόνες παιχνιδιού",
