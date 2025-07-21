@@ -42,44 +42,58 @@ export async function sendReportMessage(
 }
 
 function createReportEmbed(reportData: ReportJobData): EmbedBuilder {
+  const fields = [
+    { name: "🎮 Game", value: reportData.gameCode, inline: false },
+    { name: "🧑‍⚖️ Reporter", value: reportData.reporterName, inline: false },
+    {
+      name: "🕵️ Reported",
+      value: reportData.reportedPlayerName,
+      inline: false,
+    },
+    {
+      name: "🔒 Has account",
+      value: reportData.targetUserId ? "Yes" : "No",
+      inline: false,
+    },
+    { name: "🔍 Report type", value: reportData.reportType, inline: false },
+    {
+      name: "📄 Content",
+      value: reportData.reportedContent || "N/A",
+      inline: false,
+    },
+    { name: "🔍 Reason", value: reportData.reasonReported, inline: false },
+  ]
+
+  // Add comment field only if comment is provided and not empty
+  if (reportData.comment && reportData.comment.trim()) {
+    fields.push({
+      name: "💬 Additional Context",
+      value: reportData.comment,
+      inline: false,
+    })
+  }
+
+  fields.push(
+    {
+      name: "🤖 AI validation",
+      value:
+        reportData.aiValidation?.safe === false
+          ? `**Not Safe (${reportData.aiValidation.reason})**`
+          : "**Safe**",
+      inline: false,
+    },
+    {
+      name: "🕒 Reported at",
+      value: dayjs(reportData.reportedAt).format("DD/MM/YYYY HH:mm"),
+      inline: false,
+    },
+  )
+
   const embed = new EmbedBuilder()
     .setTitle(`Report #${reportData.reportId}`)
     .setDescription("Hey <@&1333090255603105833>, a new report just came in!")
     .setColor(0xff6b6b)
-    .addFields([
-      { name: "🎮 Game", value: reportData.gameCode, inline: false },
-      { name: "🧑‍⚖️ Reporter", value: reportData.reporterName, inline: false },
-      {
-        name: "🕵️ Reported",
-        value: reportData.reportedPlayerName,
-        inline: false,
-      },
-      {
-        name: "🔒 Has account",
-        value: reportData.targetUserId ? "Yes" : "No",
-        inline: false,
-      },
-      { name: "🔍 Report type", value: reportData.reportType, inline: false },
-      {
-        name: "📄 Content",
-        value: reportData.reportedContent || "N/A",
-        inline: false,
-      },
-      { name: "🔍 Reason", value: reportData.reasonReported, inline: false },
-      {
-        name: "🤖 AI validation",
-        value:
-          reportData.aiValidation?.safe === false
-            ? `**Not Safe (${reportData.aiValidation.reason})**`
-            : "**Safe**",
-        inline: false,
-      },
-      {
-        name: "🕒 Reported at",
-        value: dayjs(reportData.reportedAt).format("DD/MM/YYYY HH:mm"),
-        inline: false,
-      },
-    ])
+    .addFields(fields)
     .setFooter({
       text: "By accepting this report, the player will be removed from the game if it's still in progress, and a warning will be added to their record",
     })

@@ -1193,11 +1193,13 @@
     "ReportDialog": {
       "title": "Report {name}",
       "description": "Report the name or a message from {name} if it seems inappropriate.",
-      "report-name": "Report the name",
+      "report-name": "Report the player's name",
       "report-message": "Report a message",
       "select-message": "Select the message to report",
       "select-message-placeholder": "Select a message",
       "no-messages": "No messages found from this user",
+      "comment": "Additional context (optional)",
+      "comment-placeholder": "Provide additional context about this report...",
       "cancel": "Cancel",
       "submit": "Report",
       "toast": {

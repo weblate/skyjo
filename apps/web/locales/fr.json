@@ -1187,11 +1187,13 @@
     "ReportDialog": {
       "title": "Signaler {name}",
       "description": "Signaler le pseudonyme ou un message de {name} s'il vous semble inapproprié.",
-      "report-name": "Signaler le nom",
+      "report-name": "Signaler le nom du joueur",
       "report-message": "Signaler un message",
       "select-message": "Sélectionner le message à signaler",
       "select-message-placeholder": "Sélectionner un message",
       "no-messages": "Aucun message trouvé de cette utilisateur",
+      "comment": "Contexte supplémentaire (optionnel)",
+      "comment-placeholder": "Fournir un contexte supplémentaire sur ce signalement...",
       "cancel": "Annuler",
       "submit": "Signaler",
       "toast": {

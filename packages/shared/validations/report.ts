@@ -2,6 +2,7 @@ import z from "zod"
 
 export const report = z.object({
   targetId: z.string(),
+  comment: z.string().max(500).optional(),
 })
 
 export const reportName = report.extend({

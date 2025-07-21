@@ -199,6 +199,7 @@ export const penaltyTable = pgTable("penalties", {
       reportType: "name" | "message"
       gameCode: string
       reportedAt: string
+      comment?: string
     }>()
     .notNull(),
   reasonReported: varchar("reason_reported", { length: 255 }).notNull(),

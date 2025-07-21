@@ -9,6 +9,7 @@ export interface ReportJobData {
   reportedAt: string
   aiValidation?: { safe: boolean; reason?: string }
   targetUserId?: number
+  comment?: string
 }
 
 export interface DiscordJobData {

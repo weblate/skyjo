@@ -97,6 +97,7 @@ export class ReportService extends BaseService {
           reportType: report.type,
           gameCode: game.code,
           reportedAt: new Date().toISOString(),
+          comment: report.comment,
         },
         reasonReported: "User reported content",
         aiValidation: {
@@ -124,6 +125,7 @@ export class ReportService extends BaseService {
       reportedAt: new Date().toISOString(),
       aiValidation: { safe: true },
       targetUserId: target.userId,
+      comment: report.comment,
     })
   }
 
@@ -200,6 +202,7 @@ export class ReportService extends BaseService {
     reportedAt: string
     aiValidation?: { safe: boolean; reason?: string }
     targetUserId?: number
+    comment?: string
   }) {
     try {
       await this.discordQueue.sendReportNotification(reportData)

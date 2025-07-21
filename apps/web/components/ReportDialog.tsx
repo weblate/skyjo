@@ -23,6 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
+import { Textarea } from "@/components/ui/textarea"
 import { useGame } from "@/contexts/GameContext"
 import { useSocket } from "@/contexts/SocketContext"
 
@@ -61,6 +62,7 @@ const ReportDialog = ({
   const [messageId, setMessageId] = useState<string>(
     report?.messageId ?? userMessages[0]?.id ?? "",
   )
+  const [comment, setComment] = useState<string>("")
 
   useEffect(() => {
     if (report?.messageId) {
@@ -75,6 +77,7 @@ const ReportDialog = ({
     socket?.emit("report", {
       targetId: report?.playerId,
       type: "name",
+      comment: comment.trim() || undefined,
     })
   }
 
@@ -83,6 +86,7 @@ const ReportDialog = ({
       targetId: report?.playerId,
       messageId,
       type: "message",
+      comment: comment.trim() || undefined,
     })
   }
   const handleSubmit = () => {
@@ -156,6 +160,22 @@ const ReportDialog = ({
               </Select>
             </div>
           )}
+
+          <div className="flex flex-col gap-2 mt-6">
+            <Label htmlFor="comment">{t("comment")}</Label>
+            <Textarea
+              id="comment"
+              placeholder={t("comment-placeholder")}
+              value={comment}
+              onChange={(e) => setComment(e.target.value)}
+              maxLength={500}
+              className="resize-none"
+              rows={3}
+            />
+            <div className="text-xs text-muted-foreground text-right">
+              {comment.length}/500
+            </div>
+          </div>
         </div>
 
         <DialogFooter>
