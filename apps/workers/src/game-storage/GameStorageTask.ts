@@ -1,4 +1,5 @@
 import type { PlayerScore } from "@skymo/core"
+import { Constants } from "@skymo/core"
 import { gameTable, playerTable, scoreTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import type { GameStorageJobData } from "@skymo/worker-types"
@@ -51,13 +52,26 @@ export class GameStorageTask {
         const gameDbId = gameRecords[0]!.id
 
         if (game.players.length === 0) {
-          Logger.info(`No players to store for game ${game.code}`)
+          Logger.error(`No players to store for game ${game.code}`)
           return
         }
 
-        // Calculate player ranks and insert player records
         const playersWithRanks = this.calculatePlayerRanks(game.players)
-        const minScore = Math.min(...game.players.map((p) => p.score))
+
+        // Find minimum score among CONNECTED players only for winner determination
+        const connectedPlayers = game.players.filter(
+          (player) =>
+            player.connectionStatus !==
+            Constants.CONNECTION_STATUS.DISCONNECTED,
+        )
+
+        let minScore = Infinity
+        if (connectedPlayers.length > 0) {
+          minScore = Math.min(...connectedPlayers.map((p) => p.score))
+        } else {
+          // fallback if no connected players
+          minScore = Math.min(...game.players.map((p) => p.score))
+        }
 
         const playerInserts = playersWithRanks.map((player) => ({
           gameId: gameDbId,
@@ -67,7 +81,11 @@ export class GameStorageTask {
           score: player.score,
           rank: player.rank,
           connectionStatus: player.connectionStatus,
-          winner: player.score === minScore,
+          // Only connected players can be winners
+          winner:
+            player.connectionStatus !==
+              Constants.CONNECTION_STATUS.DISCONNECTED &&
+            player.score === minScore,
         }))
 
         const playerRecords = await tx
@@ -92,12 +110,16 @@ export class GameStorageTask {
           playerRecords,
         )
 
+        const connectedPlayerCount = connectedPlayers.length
+
         Logger.info(
-          `Successfully stored game ${game.code} with ${playerRecords.length} players`,
+          `Successfully stored game ${game.code} with ${playerRecords.length} players (${connectedPlayerCount} connected)`,
           {
             gameCode: game.code,
             gameDbId,
-            playerCount: playerRecords.length,
+            totalPlayerCount: game.players.length,
+            connectedPlayerCount,
+            disconnectedPlayerCount: game.players.length - connectedPlayerCount,
             scoreCount,
           },
         )
@@ -115,18 +137,54 @@ export class GameStorageTask {
   private static calculatePlayerRanks(
     players: PlayerRedisDb[],
   ): PlayerWithRank[] {
-    const sortedPlayers = [...players].sort((a, b) => a.score - b.score)
+    // Separate connected and disconnected players
+    const connectedPlayers = players.filter(
+      (player) =>
+        player.connectionStatus !== Constants.CONNECTION_STATUS.DISCONNECTED,
+    )
+    const disconnectedPlayers = players.filter(
+      (player) =>
+        player.connectionStatus === Constants.CONNECTION_STATUS.DISCONNECTED,
+    )
 
-    return sortedPlayers.map((player) => {
+    // Sort connected players by score (ascending - lower score is better)
+    const sortedConnectedPlayers = [...connectedPlayers].sort(
+      (a, b) => a.score - b.score,
+    )
+
+    // Sort disconnected players by score (ascending)
+    const sortedDisconnectedPlayers = [...disconnectedPlayers].sort(
+      (a, b) => a.score - b.score,
+    )
+
+    const playersWithRanks: PlayerWithRank[] = []
+
+    // Assign ranks to connected players first
+    sortedConnectedPlayers.forEach((player, index) => {
       let rank = 1
-      // Find rank by counting how many players have a better (lower) score
-      for (const otherPlayer of sortedPlayers) {
+      // Find rank by counting how many connected players have a better (lower) score
+      for (const otherPlayer of sortedConnectedPlayers) {
         if (otherPlayer.score < player.score) {
           rank++
         }
       }
-      return { ...player, rank }
+      playersWithRanks.push({ ...player, rank })
     })
+
+    // Assign ranks to disconnected players starting after the last connected player rank
+    const lastConnectedRank = connectedPlayers.length
+    sortedDisconnectedPlayers.forEach((player) => {
+      let rank = lastConnectedRank + 1
+      // Find rank among disconnected players
+      for (const otherPlayer of sortedDisconnectedPlayers) {
+        if (otherPlayer.score < player.score) {
+          rank++
+        }
+      }
+      playersWithRanks.push({ ...player, rank })
+    })
+
+    return playersWithRanks
   }
 
   private static async updateGameHostId(

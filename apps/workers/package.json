@@ -8,7 +8,10 @@
     "dev": "tsx --watch src/index.ts",
     "build": "tsc --build",
     "prod": "tsx dist/src/index.js",
-    "biome:check": "pnpm biome check --write ."
+    "biome:check": "pnpm biome check --write .",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui --coverage.enabled=true"
   },
   "dependencies": {
     "@skymo/database": "workspace:*",
@@ -30,6 +33,10 @@
     "@types/node": "^24.0.10",
     "@types/react": "^19.1.8",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "@vitest/coverage-istanbul": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   }
 }
