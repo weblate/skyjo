@@ -15,15 +15,15 @@ export async function handleModalInteraction(
   const { customId } = interaction
 
   if (customId.startsWith("invalid_report_modal_")) {
-    await handleReportDismissModal(interaction)
+    await handleInvalidReportSubmit(interaction)
   } else if (customId.startsWith("valid_report_modal_")) {
-    await handleReportValidModal(interaction)
+    await handleValidReportSubmit(interaction)
   } else {
     Logger.warn("Unknown modal interaction:", { customId })
   }
 }
 
-async function handleReportDismissModal(
+async function handleInvalidReportSubmit(
   interaction: ModalSubmitInteraction,
 ): Promise<void> {
   const reportId = extractReportId(interaction.customId)
@@ -77,7 +77,7 @@ async function handleReportDismissModal(
   }
 }
 
-async function handleReportValidModal(
+async function handleValidReportSubmit(
   interaction: ModalSubmitInteraction,
 ): Promise<void> {
   const reportId = extractReportId(interaction.customId)
