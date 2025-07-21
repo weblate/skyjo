@@ -16,6 +16,9 @@ jobs:
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
           script: |
+            export NVM_DIR=~/.nvm
+            source ~/.nvm/nvm.sh
+
             # check if the directory exists. If not, clone the repository
             if [ ! -d "skymo" ]; then
               git clone https://github.com/maxentr/skymo.git
