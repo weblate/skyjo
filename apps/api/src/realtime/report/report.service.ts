@@ -99,7 +99,6 @@ export class ReportService extends BaseService {
           reportedAt: new Date().toISOString(),
           comment: report.comment,
         },
-        reasonReported: "User reported content",
         aiValidation: {
           safe: safetyResult.safe ?? false,
           reason: safetyResult.reason,
@@ -121,7 +120,6 @@ export class ReportService extends BaseService {
       reportedContent: text,
       reportType: report.type,
       gameCode: game.code,
-      reasonReported: "User reported content",
       reportedAt: new Date().toISOString(),
       aiValidation: { safe: true },
       targetUserId: target.userId,
@@ -198,7 +196,6 @@ export class ReportService extends BaseService {
     reportedContent: string
     reportType: "name" | "message"
     gameCode: string
-    reasonReported: string
     reportedAt: string
     aiValidation?: { safe: boolean; reason?: string }
     targetUserId?: number

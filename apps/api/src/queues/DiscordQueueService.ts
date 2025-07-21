@@ -9,7 +9,6 @@ export interface ReportJobData {
   reportedContent: string
   reportType: "name" | "message"
   gameCode: string
-  reasonReported: string
   reportedAt: string
   aiValidation?: { safe: boolean; reason?: string }
   targetUserId?: number

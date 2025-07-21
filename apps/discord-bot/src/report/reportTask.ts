@@ -61,7 +61,6 @@ function createReportEmbed(reportData: ReportJobData): EmbedBuilder {
       value: reportData.reportedContent || "N/A",
       inline: false,
     },
-    { name: "🔍 Reason", value: reportData.reasonReported, inline: false },
   ]
 
   // Add comment field only if comment is provided and not empty

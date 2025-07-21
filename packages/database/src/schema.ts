@@ -202,7 +202,6 @@ export const reportTable = pgTable("reports", {
       comment?: string
     }>()
     .notNull(),
-  reasonReported: varchar("reason_reported", { length: 255 }).notNull(),
   aiValidation: json("ai_validation").$type<{
     safe: boolean
     reason?: string
