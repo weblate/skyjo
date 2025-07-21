@@ -105,13 +105,13 @@ function createReportButtons(
   reportId: number,
 ): ActionRowBuilder<ButtonBuilder> {
   const invalidButton = new ButtonBuilder()
-    .setCustomId(`report_dismiss_${reportId}`)
-    .setLabel("Dismiss")
+    .setCustomId(`invalid_report_${reportId}`)
+    .setLabel("Invalid report")
     .setStyle(ButtonStyle.Secondary)
 
   const validButton = new ButtonBuilder()
-    .setCustomId(`report_valid_${reportId}`)
-    .setLabel("Add penalty")
+    .setCustomId(`valid_report_${reportId}`)
+    .setLabel("Valid report")
     .setStyle(ButtonStyle.Danger)
 
   return new ActionRowBuilder<ButtonBuilder>().addComponents(

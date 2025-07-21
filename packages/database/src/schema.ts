@@ -188,7 +188,7 @@ export const scoreTable = pgTable("scores", {
 })
 export type ScoreDb = InferSelectModel<typeof scoreTable>
 
-export const penaltyTable = pgTable("penalties", {
+export const reportTable = pgTable("reports", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => userTable.id),
   reportData: json("report_data")
@@ -215,7 +215,7 @@ export const penaltyTable = pgTable("penalties", {
     .defaultNow(),
   deletedAt: timestamp("deleted_at", { withTimezone: true }),
 })
-export type PenaltyDb = InferSelectModel<typeof penaltyTable>
+export type ReportDb = InferSelectModel<typeof reportTable>
 
 export const leaderboardView = pgView("leaderboard_view").as((qb) => {
   return qb

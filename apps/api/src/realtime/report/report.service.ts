@@ -1,6 +1,6 @@
 import { ENV } from "@env"
 import { Constants as CoreConstants, Game, Player } from "@skymo/core"
-import { penaltyTable } from "@skymo/database/schema"
+import { reportTable } from "@skymo/database/schema"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type { Report } from "@skymo/shared/validations"
 import { db } from "@/db/index.js"
@@ -86,8 +86,8 @@ export class ReportService extends BaseService {
       })
     }
 
-    const [{ id: penaltyId }] = await db
-      .insert(penaltyTable)
+    const [{ id: reportId }] = await db
+      .insert(reportTable)
       .values({
         userId: target.userId,
         reportData: {
@@ -107,7 +107,7 @@ export class ReportService extends BaseService {
         humanValidation: null,
         reasonByMod: null,
       })
-      .returning({ id: penaltyTable.id })
+      .returning({ id: reportTable.id })
 
     if (!safetyResult.safe) {
       // AI detected unsafe content - immediately kick player
@@ -115,7 +115,7 @@ export class ReportService extends BaseService {
     }
 
     await this.sendToDiscord({
-      reportId: penaltyId,
+      reportId,
       reporterName: player.name,
       reportedPlayerName: target.name,
       reportedContent: text,

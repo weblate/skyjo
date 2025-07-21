@@ -1,4 +1,4 @@
-import { penaltyTable } from "@skymo/database/schema"
+import { reportTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import { EmbedBuilder, type ModalSubmitInteraction } from "discord.js"
 import { eq } from "drizzle-orm"
@@ -10,9 +10,9 @@ export async function handleModalInteraction(
 ): Promise<void> {
   const { customId } = interaction
 
-  if (customId.startsWith("report_dismiss_modal_")) {
+  if (customId.startsWith("invalid_report_modal_")) {
     await handleReportDismissModal(interaction)
-  } else if (customId.startsWith("report_valid_modal_")) {
+  } else if (customId.startsWith("valid_report_modal_")) {
     await handleReportValidModal(interaction)
   } else {
     Logger.warn("Unknown modal interaction:", { customId })
@@ -28,37 +28,33 @@ async function handleReportDismissModal(
   try {
     await interaction.deferReply({ ephemeral: true })
 
-    const penalty = await db
+    const [report] = await db
       .select()
-      .from(penaltyTable)
-      .where(eq(penaltyTable.id, parseInt(reportId)))
+      .from(reportTable)
+      .where(eq(reportTable.id, parseInt(reportId)))
       .limit(1)
 
-    if (penalty.length === 0) {
+    if (!report) {
       await interaction.editReply({
         content: "❌ Report not found.",
       })
       return
     }
 
-    const penaltyRecord = penalty[0]!
-
-    if (penaltyRecord.userId === null) {
-      await db
-        .delete(penaltyTable)
-        .where(eq(penaltyTable.id, parseInt(reportId)))
-      Logger.info(`Deleted penalty record for anonymous user`, { reportId })
+    if (report.userId === null) {
+      await db.delete(reportTable).where(eq(reportTable.id, parseInt(reportId)))
+      Logger.info(`Deleted report record for anonymous user`, { reportId })
     } else {
       await db
-        .update(penaltyTable)
+        .update(reportTable)
         .set({
           humanValidation: false,
           reasonByMod: reason,
         })
-        .where(eq(penaltyTable.id, parseInt(reportId)))
-      Logger.info(`Updated penalty record with dismissal`, {
+        .where(eq(reportTable.id, parseInt(reportId)))
+      Logger.info(`Updated report record with dismissal`, {
         reportId,
-        userId: penaltyRecord.userId,
+        userId: report.userId,
       })
     }
 
@@ -86,39 +82,37 @@ async function handleReportValidModal(
   try {
     await interaction.deferReply({ ephemeral: true })
 
-    const [penalty] = await db
+    const [report] = await db
       .select()
-      .from(penaltyTable)
-      .where(eq(penaltyTable.id, parseInt(reportId)))
+      .from(reportTable)
+      .where(eq(reportTable.id, parseInt(reportId)))
       .limit(1)
 
-    if (!penalty) {
+    if (!report) {
       await interaction.editReply({
         content: "❌ Report not found.",
       })
       return
     }
 
-    if (penalty.userId === null) {
-      await db
-        .delete(penaltyTable)
-        .where(eq(penaltyTable.id, parseInt(reportId)))
-      Logger.info(`Deleted penalty record for anonymous user`, { reportId })
+    if (report.userId === null) {
+      await db.delete(reportTable).where(eq(reportTable.id, parseInt(reportId)))
+      Logger.info(`Deleted report record for anonymous user`, { reportId })
     } else {
       await db
-        .update(penaltyTable)
+        .update(reportTable)
         .set({
           humanValidation: true,
           reasonByMod: reason,
         })
-        .where(eq(penaltyTable.id, parseInt(reportId)))
-      Logger.info(`Updated penalty record with validation`, {
+        .where(eq(reportTable.id, parseInt(reportId)))
+      Logger.info(`Updated report record with validation`, {
         reportId,
-        userId: penalty.userId,
+        userId: report.userId,
       })
 
-      const gameCode = penalty.reportData.gameCode
-      const reportedPlayerName = penalty.reportData.reportedPlayerName
+      const gameCode = report.reportData.gameCode
+      const reportedPlayerName = report.reportData.reportedPlayerName
 
       try {
         const apiClient = ApiClient.getInstance()
@@ -191,7 +185,7 @@ async function updateOriginalMessage(
 }
 
 function extractReportId(customId: string): string {
-  const match = new RegExp(/report_(?:dismiss|valid)_modal_(\d+)/).exec(
+  const match = new RegExp(/(?:invalid|valid)_report_modal_(\d+)/).exec(
     customId,
   )
   if (!match?.[1]) {

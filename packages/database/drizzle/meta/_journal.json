@@ -43,6 +43,13 @@
       "when": 1752867181672,
       "tag": "0005_gifted_tyrannus",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1753089106632,
+      "tag": "0006_condemned_penance",
+      "breakpoints": true
     }
   ]
 }

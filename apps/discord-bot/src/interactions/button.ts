@@ -12,9 +12,9 @@ export async function handleButtonInteraction(
 ): Promise<void> {
   const { customId } = interaction
 
-  if (customId.startsWith("report_dismiss_")) {
+  if (customId.startsWith("invalid_report_")) {
     await handleReportDismiss(interaction)
-  } else if (customId.startsWith("report_valid_")) {
+  } else if (customId.startsWith("valid_report_")) {
     await handleReportValid(interaction)
   } else {
     Logger.warn("Unknown button interaction:", { customId })
@@ -27,7 +27,7 @@ async function handleReportDismiss(
   const reportId = extractReportId(interaction.customId)
 
   const modal = new ModalBuilder()
-    .setCustomId(`report_dismiss_modal_${reportId}`)
+    .setCustomId(`invalid_report_modal_${reportId}`)
     .setTitle("Dismiss Report")
 
   const reasonInput = new TextInputBuilder()
@@ -52,7 +52,7 @@ async function handleReportValid(
   const reportId = extractReportId(interaction.customId)
 
   const modal = new ModalBuilder()
-    .setCustomId(`report_valid_modal_${reportId}`)
+    .setCustomId(`valid_report_modal_${reportId}`)
     .setTitle("Validate Report")
 
   const reasonInput = new TextInputBuilder()
@@ -72,7 +72,7 @@ async function handleReportValid(
 }
 
 function extractReportId(customId: string): string {
-  const match = new RegExp(/report_(?:dismiss|valid)_(\d+)/).exec(customId)
+  const match = new RegExp(/(?:invalid|valid)_report_(\d+)/).exec(customId)
   if (!match?.[1]) {
     throw new Error(`Invalid custom ID format: ${customId}`)
   }
