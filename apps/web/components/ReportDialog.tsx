@@ -101,7 +101,9 @@ const ReportDialog = ({
     toast.success(t("toast.report-submitted.title"), {
       description: t("toast.report-submitted.description"),
     })
+
     onOpenChange(false)
+    setComment("")
   }
 
   return (
