@@ -22,12 +22,11 @@ jobs:
             fi
 
             cd skymo
-            git fetch --tags
-            git checkout ${{ github.ref_name }}
+            git pull
 
-            docker compose build api
-            docker compose build workers
-            docker compose build discord-bot
+            docker compose build api --no-cache --parallel
+            docker compose build workers --no-cache --parallel
+            docker compose build discord-bot --no-cache --parallel
 
             pnpm i
             pnpm db:migrate
