@@ -139,7 +139,7 @@ export default async function LeaderboardPage({
           <p className="text-sm text-right text-black/80 dark:text-dark-font">
             {t("lastUpdated", {
               date: dayjs(leaderboardData.lastUpdated).format(
-                "DD/MM/YYYY HH:mm",
+                "DD/MM/YYYY HH:mm Z",
               ),
             })}
           </p>
