@@ -1,5 +1,5 @@
 import { ENV } from "@env"
-import type { Avatar } from "@skymo/core"
+import type { Avatar, SettingsRedisDb } from "@skymo/core"
 import {
   accountDeletionTable,
   emailChangeTable,
@@ -30,6 +30,19 @@ import { invalidateUserSessions } from "@/http/session/session.service.js"
 import { accountDeletionQueue } from "@/utils/accountDeletion.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
+
+interface GamePlayerResult {
+  game_id: string
+  game_code: string
+  game_settings: SettingsRedisDb
+  game_created_at: string
+  game_finished_at: string
+  player_name: string
+  player_username: string | null
+  player_avatar: Avatar
+  player_rank: number
+  host_name: string
+}
 
 interface CreateUserParams {
   email: string
@@ -148,7 +161,7 @@ export async function getUserByUsername(
 
 export async function getUserGames(
   username: string,
-  { limit = 20, offset = 0 }: GameHistoryQuery,
+  { limit = 10, offset = 0 }: GameHistoryQuery,
 ) {
   const gamePlayerResults = await db.execute(sql`
     WITH user_game_ids AS (
@@ -181,8 +194,9 @@ export async function getUserGames(
 
   // Group players by game efficiently
   const gamesMap = new Map()
+  const typedRows = gamePlayerResults.rows as unknown as GamePlayerResult[]
 
-  for (const row of gamePlayerResults.rows) {
+  for (const row of typedRows) {
     const gameId = row.game_id
 
     if (!gamesMap.has(gameId)) {
@@ -193,6 +207,7 @@ export async function getUserGames(
         createdAt: row.game_created_at,
         finishedAt: row.game_finished_at,
         hostName: row.host_name,
+        isPrivate: row.game_settings?.private || false,
         players: [],
       })
     }

@@ -3,7 +3,14 @@ import { Locales } from "@skymo/shared/constants"
 import { UserRecentActivity } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
 import dayjs from "dayjs"
-import { CalendarIcon, ClockIcon, CrownIcon, HashIcon } from "lucide-react"
+import {
+  CalendarIcon,
+  ClockIcon,
+  CrownIcon,
+  HashIcon,
+  LockIcon,
+  LockOpenIcon,
+} from "lucide-react"
 import Image from "next/image"
 import { getTranslations } from "next-intl/server"
 import { GameTagServer } from "@/components/GameTag/GameTagServer"
@@ -57,6 +64,17 @@ export const RecentActivityList = async ({
         {games.map((game) => {
           const tags = constructTagArray(game.settings)
 
+          // duration format HH:mm
+          const duration = dayjs(game.finishedAt).diff(
+            dayjs(game.createdAt),
+            "minute",
+          )
+          const hours = Math.floor(duration / 60)
+          const hoursText = hours.toString().padStart(2, "0")
+          const minutes = duration % 60
+          const minutesText = minutes.toString().padStart(2, "0")
+          const durationText = `${hoursText}:${minutesText}`
+
           return (
             <div
               key={game.id}
@@ -77,7 +95,6 @@ export const RecentActivityList = async ({
                       </div>
                     )}
                   </div>
-
                   <div className="flex flex-row items-center gap-1 sm:gap-2">
                     {game.players.map((player) => (
                       <div
@@ -105,23 +122,30 @@ export const RecentActivityList = async ({
                       />
                     ))}
                   </div>
-
-                  <div className="flex flex-col gap-1">
-                    <div className="flex items-center gap-1 text-sm text-black/60 dark:text-dark-font/60">
-                      <CalendarIcon className="size-4" />
-                      <span>
-                        {dayjs(game.finishedAt).format("DD MMMM YYYY - HH:mm")}
+                  <div className="flex flex-row items-center gap-2">
+                    <div className="flex items-center gap-1 text-sm mr-4">
+                      {game.isPrivate ? (
+                        <LockIcon className="size-4 text-black/60 dark:text-dark-font/60" />
+                      ) : (
+                        <LockOpenIcon className="size-4 text-black/60 dark:text-dark-font/60" />
+                      )}
+                      <span className="text-black/60 dark:text-dark-font/60">
+                        {game.isPrivate
+                          ? t("stats.private")
+                          : t("stats.public")}
                       </span>
                     </div>
-
-                    <div className="flex items-center gap-1 text-sm text-black/60 dark:text-dark-font/60">
-                      <ClockIcon className="size-4" />
-                      <span>
-                        {dayjs(game.finishedAt).diff(
-                          dayjs(game.createdAt),
-                          "minute",
-                        )}{" "}
-                        min
+                    <div className="flex items-center gap-1 text-sm">
+                      <ClockIcon className="size-4 text-black/60 dark:text-dark-font/60" />
+                      <span className="text-black/60 dark:text-dark-font/60">
+                        {durationText}
+                      </span>
+                    </div>
+                    ·
+                    <div className="flex items-center gap-1 text-sm">
+                      <CalendarIcon className="size-4 text-black/60 dark:text-dark-font/60" />
+                      <span className="text-black/60 dark:text-dark-font/60">
+                        {dayjs(game.finishedAt).format("DD/MM/YYYY")}
                       </span>
                     </div>
                   </div>

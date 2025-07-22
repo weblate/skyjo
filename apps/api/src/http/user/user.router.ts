@@ -96,7 +96,7 @@ export const userRouter = new Hono<AuthContextVariables>()
         }
 
         const gamesPromise = getUserGames(username, {
-          limit: 20,
+          limit: 10,
           offset: 0,
         })
 

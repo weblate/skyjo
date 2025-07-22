@@ -37,6 +37,7 @@ export interface UserRecentActivity {
   rank: number
   settings: SettingsRedisDb
   hostName: string
+  isPrivate: boolean
   players: {
     name: string
     username: string | null
