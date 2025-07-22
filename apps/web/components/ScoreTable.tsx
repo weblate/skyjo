@@ -70,7 +70,7 @@ const ScoreTable = ({
               {t("round")} {index + 1}
             </TableHead>
           ))}
-          <TableHead className="sticky right-0 w-full z-10">
+          <TableHead className="sticky right-0 w-full z-10 font-semibold">
             {t("total")}
           </TableHead>
         </TableRow>
@@ -89,7 +89,7 @@ const ScoreTable = ({
                 {formatScoreDisplay(score)}
               </TableCell>
             ))}
-            <TableCell className="sticky right-0 z-10">
+            <TableCell className="sticky right-0 z-10 font-semibold text-center">
               {player.scores.reduce((a: number, b) => a + getScoreValue(b), 0)}
             </TableCell>
           </TableRow>

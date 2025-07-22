@@ -97,7 +97,7 @@ const ResultsPage = () => {
                       {t("round", { number: index + 1 })}
                     </TableHead>
                   ))}
-                  <TableHead className="py-2 text-right">
+                  <TableHead className="py-2 text-right font-semibold">
                     {t("total")}
                   </TableHead>
                 </TableRow>
@@ -145,7 +145,7 @@ const ResultsPage = () => {
                       {formatScoreDisplay(score)}
                     </TableCell>
                   ))}
-                  <TableCell className="py-2 text-right">
+                  <TableCell className="py-2 text-right font-semibold">
                     {player.score}
                   </TableCell>
                 </MotionTableRow>
