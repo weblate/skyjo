@@ -12,7 +12,7 @@ const RulesPage = () => {
       <Rules />
       <div className="flex flex-col items-center">
         <Button className="mt-8">
-          <Link href="/">Jouer en ligne gratuitement !</Link>
+          <Link href="/">{t("play-button")}</Link>
         </Button>
       </div>
     </div>
