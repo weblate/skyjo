@@ -72,6 +72,17 @@ const OnboardingPage = () => {
 
   const { usernameAvailability } = useUsernameValidation(watchedUsername)
 
+  // Helper function to translate validation errors
+  const getTranslatedError = (error: string | undefined) => {
+    if (!error) return undefined
+    // Check if the error is a translation key
+    if (error.includes("-")) {
+      // biome-ignore lint/suspicious/noExplicitAny: tErrors take specific keys that are not typed here since it's an error
+      return tErrors(error as any)
+    }
+    return error
+  }
+
   useEffect(() => {
     if (!user?.emailVerified) {
       router.replace("/verify")
@@ -141,7 +152,7 @@ const OnboardingPage = () => {
 
   const isFormValid = () => {
     const values = form.getValues()
-    const isNameValid = values.name.trim().length >= 1
+    const isNameValid = values.name.trim().length >= 2
     const isUsernameValid =
       values.username.length >= 3 && usernameAvailability === true
     const isAvatarValid = !!values.avatar
@@ -204,7 +215,7 @@ const OnboardingPage = () => {
             <FormField
               control={form.control}
               name="name"
-              render={({ field }) => (
+              render={({ field, fieldState }) => (
                 <FormItem>
                   <Label htmlFor="name">{t("form.name.label")}</Label>
                   <FormDescription>
@@ -218,7 +229,11 @@ const OnboardingPage = () => {
                     {...field}
                     disabled={isPending}
                   />
-                  <FormMessage />
+                  {fieldState.error && (
+                    <div className="text-sm font-medium text-red-600 dark:text-red-600">
+                      {getTranslatedError(fieldState.error.message)}
+                    </div>
+                  )}
                 </FormItem>
               )}
             />

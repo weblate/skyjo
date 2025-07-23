@@ -1362,6 +1362,11 @@
     }
   },
   "errors": {
+    "name-min-characters": "Le nom d'affichage doit contenir au moins 2 caractères",
+    "name-max-characters": "Le nom d'affichage ne peut pas dépasser 20 caractères",
+    "username-min-characters": "Le nom d'utilisateur doit contenir au moins 3 caractères",
+    "username-max-characters": "Le nom d'utilisateur ne peut pas dépasser 20 caractères",
+    "username-invalid-format": "Le nom d'utilisateur ne peut contenir que des lettres, des chiffres et des underscores",
     "invalid-credentials": "L'email ou le mot de passe que vous avez saisi est incorrect. Veuillez réessayer.",
     "logout-failed": "Nous n'avons pas pu vous déconnecter. Veuillez fermer votre navigateur pour terminer la session.",
     "session-not-found": "Votre session a expiré ou n'est pas valide. Veuillez vous reconnecter.",

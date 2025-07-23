@@ -1390,6 +1390,11 @@
     }
   },
   "errors": {
+    "name-min-characters": "Display name must be at least 2 characters",
+    "name-max-characters": "Display name must be at most 20 characters",
+    "username-min-characters": "Username must be at least 3 characters",
+    "username-max-characters": "Username must be at most 20 characters",
+    "username-invalid-format": "Username can only contain letters, numbers, and underscores",
     "invalid-credentials": "The email or password you entered is incorrect. Please try again.",
     "logout-failed": "We couldn't log you out. Please close your browser to end the session.",
     "session-not-found": "Your session has expired or is invalid. Please log in again.",

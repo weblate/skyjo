@@ -10,14 +10,14 @@ export const passwordSpecialCharRegex = /[!"#$%&'()*+,-./:;<=>?@[\]^_`{|}~]/
 export const onboardingSchema = z.object({
   name: z
     .string()
-    .min(1, "Display name is required")
-    .max(20, "Display name must be at most 20 characters")
+    .min(2, "name-min-characters")
+    .max(20, "name-max-characters")
     .trim(),
   username: z
     .string()
-    .min(3, "Name must be at least 3 characters")
-    .max(20, "Name must be at most 20 characters")
-    .regex(/^\w+$/, "Name can only contain letters, numbers, and underscores"),
+    .min(3, "username-min-characters")
+    .max(20, "username-max-characters")
+    .regex(/^\w+$/, "username-invalid-format"),
   avatar: z.nativeEnum(Constants.AVATARS),
   password: z.string().optional(),
 })
@@ -48,8 +48,8 @@ export type usernameAvailability = z.infer<typeof usernameAvailabilitySchema>
 export const updateNameSchema = z.object({
   name: z
     .string()
-    .min(1, "Display name is required")
-    .max(20, "Display name must be at most 20 characters")
+    .min(2, "name-min-characters")
+    .max(20, "name-max-characters")
     .trim(),
 })
 export type UpdateName = z.infer<typeof updateNameSchema>
