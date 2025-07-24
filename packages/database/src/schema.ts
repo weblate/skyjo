@@ -219,7 +219,7 @@ export type ReportDb = InferSelectModel<typeof reportTable>
 export const leaderboardView = pgView("leaderboard_view").as((qb) => {
   return qb
     .select({
-      rank: sql<number>`row_number() over (order by count(case when ${playerTable.winner} = true then 1 end) desc, round((count(case when ${playerTable.winner} = true then 1 end) * 100.0 / count(*)), 2) desc, count(*) desc, avg(${playerTable.score}) asc)`.as(
+      rank: sql<number>`row_number() over (order by round((count(case when ${playerTable.winner} = true then 1 end) * 100.0 / count(*)), 2) desc, count(case when ${playerTable.winner} = true then 1 end) desc, count(*) desc, avg(${playerTable.score}) asc)`.as(
         "rank",
       ),
       userId: userTable.id,
@@ -241,10 +241,10 @@ export const leaderboardView = pgView("leaderboard_view").as((qb) => {
       sql`${userTable.deletedAt} is null and ${playerTable.userId} is not null`,
     )
     .groupBy(userTable.id, userTable.name, userTable.username, userTable.avatar)
-    .having(sql`count(*) > 0`)
+    .having(sql`count(*) >= 10`)
     .orderBy(
-      sql`count(case when ${playerTable.winner} = true then 1 end) desc`,
       sql`round((count(case when ${playerTable.winner} = true then 1 end) * 100.0 / count(*)), 2) desc`,
+      sql`count(case when ${playerTable.winner} = true then 1 end) desc`,
       sql`count(*) desc`,
       sql`avg(${playerTable.score}) asc`,
     )
