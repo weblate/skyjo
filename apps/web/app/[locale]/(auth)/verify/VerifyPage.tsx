@@ -64,6 +64,8 @@ const VerifyPage = () => {
       if (!res.ok) {
         const error = await jsonError<VerifyPinError>(res)
         toast.error(tErrors(error))
+        setOtpStatus("error")
+        return
       }
 
       setOtpStatus("success")
@@ -157,6 +159,9 @@ const VerifyPage = () => {
   }
 
   const handleOtpChange = (pin: string) => {
+    // Prevent changes during verification to avoid confusion
+    if (isVerifyingPin) return
+
     form.setValue("pin", pin, { shouldValidate: true })
     setOtpStatus(undefined)
     form.trigger("pin").then((isValid) => {
@@ -166,6 +171,17 @@ const VerifyPage = () => {
         }
       }
     })
+  }
+
+  const handleOtpComplete = (pinValue: string) => {
+    if (verifyPinSchema.safeParse({ pin: pinValue }).success) {
+      verifyPinMutate({ pin: pinValue })
+    } else {
+      form.trigger("pin")
+      if (otpStatus !== "error") {
+        setOtpStatus("error")
+      }
+    }
   }
 
   if (isLoading) {
@@ -202,19 +218,8 @@ const VerifyPage = () => {
                       maxLength={6}
                       value={field.value}
                       onChange={handleOtpChange}
-                      disabled={isVerifyingPin ?? otpStatus === "success"}
-                      onComplete={(pinValue) => {
-                        if (
-                          verifyPinSchema.safeParse({ pin: pinValue }).success
-                        ) {
-                          verifyPinMutate({ pin: pinValue })
-                        } else {
-                          form.trigger("pin")
-                          if (otpStatus !== "error") {
-                            setOtpStatus("error")
-                          }
-                        }
-                      }}
+                      disabled={otpStatus === "success"}
+                      onComplete={handleOtpComplete}
                     >
                       <InputOTPGroup>
                         <InputOTPSlot index={0} variant={otpStatus} />

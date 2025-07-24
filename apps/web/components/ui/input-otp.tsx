@@ -52,7 +52,7 @@ const slotVariants = cva(
         error: "border-red-500 dark:border-red-600",
       },
       isActive: {
-        true: "z-10 outline-2 outline-offset-[-6px]",
+        true: "z-10 outline-2 -outline-offset-8",
       },
     },
     compoundVariants: [
