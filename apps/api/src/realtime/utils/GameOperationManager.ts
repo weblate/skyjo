@@ -102,7 +102,7 @@ export class GameOperationManager implements GameOperationManagerInterface {
     }, ms)
   }
 
-  async endGame(game: GameRedisDb): Promise<void> {
+  async storeGameIfNeeded(game: GameRedisDb): Promise<void> {
     // Check if any player is authenticated
     const hasAuthenticatedPlayer = game.players.some(
       (player) => player.userId !== null && player.userId !== undefined,

@@ -204,9 +204,7 @@ export class Game implements GameInterface {
       await this.startRoundAfterInitialReveal()
     }
 
-    if (this.isPlaying() && !this.hasMinPlayersConnected()) {
-      this.status = Constants.GAME_STATUS.STOPPED
-    }
+    if (this.shouldStopGame()) await this.stopGame()
 
     // Commented out to prevent automatic removal of empty games when all players disconnect
     // This helps resolve mobile disconnection issues
@@ -429,7 +427,7 @@ export class Game implements GameInterface {
 
     if (!wasAfk) currentPlayer.consecutiveAfkCount = 0
 
-    this.nextTurn()
+    await this.nextTurn()
 
     if (this.shouldStartNewRound()) {
       await this.operationManager.delayNewRound(
@@ -833,17 +831,26 @@ export class Game implements GameInterface {
     return score + this.settings.firstPlayerFlatPenalty
   }
 
+  private shouldStopGame() {
+    return this.isPlaying() && !this.hasMinPlayersConnected()
+  }
+
+  private async stopGame() {
+    this.status = Constants.GAME_STATUS.STOPPED
+    await this.operationManager.storeGameIfNeeded(this.serialize())
+  }
+
   private shouldEndGame() {
     return this.getConnectedPlayers().some(
       (player) => player.score >= this.settings.scoreToEndGame,
     )
   }
 
-  private endGame() {
+  private async endGame() {
     this.roundPhase = Constants.ROUND_PHASE.OVER
     this.status = Constants.GAME_STATUS.FINISHED
 
-    this.operationManager.endGame(this.serialize())
+    await this.operationManager.storeGameIfNeeded(this.serialize())
   }
 
   private shouldEndRound() {
@@ -854,7 +861,7 @@ export class Game implements GameInterface {
     return allPlayersHavePlayedLastTurn
   }
 
-  private endRound() {
+  private async endRound() {
     this.players.forEach((player) => {
       player.turnAllCards()
       this.checkCardsToDiscard(player)
@@ -865,10 +872,10 @@ export class Game implements GameInterface {
 
     this.roundPhase = Constants.ROUND_PHASE.OVER
 
-    if (this.shouldEndGame()) this.endGame()
+    if (this.shouldEndGame()) await this.endGame()
   }
 
-  private nextTurn() {
+  private async nextTurn() {
     const currentPlayer = this.getCurrentPlayer()
 
     this.checkCardsToDiscard(currentPlayer)
@@ -882,7 +889,7 @@ export class Game implements GameInterface {
       this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
       currentPlayer.turnAllCards()
 
-      if (this.shouldEndRound()) this.endRound()
+      if (this.shouldEndRound()) await this.endRound()
     }
 
     this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE

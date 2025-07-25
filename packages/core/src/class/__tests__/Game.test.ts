@@ -45,7 +45,7 @@ describe("Game", () => {
       getSocket: vi.fn(),
       kickSocket: vi.fn(),
       delayNewRound: vi.fn(),
-      endGame: vi.fn(),
+      storeGameIfNeeded: vi.fn(),
     }
     game.setOperationManager(operationManager)
     game.addPlayer(player)
@@ -1798,6 +1798,7 @@ describe("Game", () => {
         startPlayerAfkTimer: vi.fn(),
         cancelPlayerAfkTimer: vi.fn(),
         delayNewRound: vi.fn(),
+        storeGameIfNeeded: vi.fn(),
       }
 
       // Access the private operationManager through type assertion

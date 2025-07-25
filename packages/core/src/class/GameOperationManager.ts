@@ -26,7 +26,7 @@ export interface GameOperationManagerInterface {
     ms: number,
   ): Promise<void>
 
-  endGame(game: GameRedisDb): Promise<void>
+  storeGameIfNeeded(game: GameRedisDb): Promise<void>
 }
 
 export class DefaultGameOperationManager
@@ -63,7 +63,7 @@ export class DefaultGameOperationManager
     /* Placeholder that should not be called */
   }
 
-  async endGame(): Promise<void> {
+  async storeGameIfNeeded(): Promise<void> {
     /* Placeholder that should not be called */
   }
 }

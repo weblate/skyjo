@@ -89,6 +89,7 @@ export const mockGameOperationManager = (game: Game) => {
     getSocket: vi.fn().mockReturnValue(mockSocket()),
     kickSocket: vi.fn().mockResolvedValue(undefined),
     delayNewRound: vi.fn(),
+    storeGameIfNeeded: vi.fn().mockResolvedValue(undefined),
 
     redis: {
       getGame: vi.fn(() =>
