@@ -22,8 +22,7 @@ interface ProvidersProps {
 const Providers = ({ children, locale }: ProvidersProps) => {
   useEffect(() => {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY as string, {
-      api_host: "/relay-913U",
-      ui_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+      api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
       person_profiles: "identified_only",
       persistence: "memory",
       capture_pageview: false,

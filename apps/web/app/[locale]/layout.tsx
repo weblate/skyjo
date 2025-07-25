@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server"
 import MaintenancePage from "@/app/[locale]/MaintenancePage"
 import Providers from "@/app/[locale]/providers"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"
-import { PostHogServerClient } from "@/lib/posthog-server"
+import { getCachedFeatureFlag } from "@/lib/posthog-server"
 import { getCurrentUrl } from "@/lib/utils"
 
 const fredoka = Fredoka({
@@ -141,11 +141,7 @@ export default async function LocaleLayout(props: Readonly<LocaleLayoutProps>) {
 
   const { children } = props
 
-  const posthog = PostHogServerClient()
-  const isSiteUnderMaintenance = await posthog.isFeatureEnabled(
-    "maintenance",
-    "web-server",
-  )
+  const isSiteUnderMaintenance = await getCachedFeatureFlag("maintenance")
 
   return (
     <html lang={locale} suppressHydrationWarning style={fredoka.style}>

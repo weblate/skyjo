@@ -33,7 +33,7 @@ export const verifySession = async (): Promise<SessionData | null> => {
         Cookie: `${SESSION_COOKIE_NAME}=${sessionCookie.value}`,
         "Content-Type": "application/json",
       },
-      cache: "no-store",
+      next: { revalidate: 300 }, // 5 minute cache
     })
 
     if (!response.ok) {
