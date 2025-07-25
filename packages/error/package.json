@@ -1,7 +1,7 @@
 {
   "name": "@skymo/error",
   "description": "An extension of the Node.js built-in Error class",
-  "version": "1.59.3",
+  "version": "1.59.5",
   "type": "module",
   "exports": {
     ".": "./dist/src/index.js",
