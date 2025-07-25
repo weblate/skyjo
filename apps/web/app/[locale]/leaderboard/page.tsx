@@ -9,6 +9,8 @@ import { Button } from "@/components/ui/button"
 import { Link } from "@/i18n/routing"
 import CallToActionSection from "./CallToActionSection"
 
+export const revalidate = 1800 // 30 minute cache
+
 interface LeaderboardData {
   leaderboard: LeaderboardEntry[]
   lastUpdated: string
@@ -16,6 +18,9 @@ interface LeaderboardData {
 async function getLeaderboard(): Promise<LeaderboardData> {
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/games/leaderboard`,
+    {
+      next: { revalidate: 1800 }, // 30 minute cache for leaderboard
+    },
   )
 
   if (!res.ok) {
