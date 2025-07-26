@@ -131,7 +131,17 @@
       }
     },
     "CopyLink": {
-      "message": "Link skopiowany!"
+      "message": "Link skopiowany!",
+      "copy": {
+        "button-title": "Kopiuj link",
+        "popover": "Skopiowano!"
+      },
+      "share": {
+        "title": "Dołącz do mojej gry w Skyjo!",
+        "text": "Zagraj ze mną w Skyjo online! Kliknij link, aby dołączyć do gry.",
+        "button-title": "Udostępnij grę",
+        "tooltip": "Kliknij tutaj, aby udostępnić tę grę!"
+      }
     },
     "DiscardPile": {
       "title": "Stos kart odrzuconych",
@@ -160,7 +170,8 @@
       },
       "attribution": {
         "avatars": "Awatary stworzone przez Freepik - Flaticon"
-      }
+      },
+      "translations": "Pomóż przetłumaczyć grę!"
     },
     "GameLobbyButtons": {
       "reconnect-game-button": "Połącz się ponownie z grą",
@@ -289,16 +300,72 @@
         "volume": {
           "label": "Głośność ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Czat",
+        "chat-visibility": "Widoczność czatu",
+        "chat-notification-size": {
+          "label": "Rozmiar powiadomienia czatu",
+          "values": {
+            "small": "Mały",
+            "normal": "Normalny",
+            "big": "Duże"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobilne",
+        "switch-to-player-who-is-playing": "Automatycznie przełączaj się na gracza, który aktualnie gra",
+        "show-preview-opponents-cards": "Pokaż podgląd kart przeciwników na liście przeciwników"
+      },
+      "gameplay": {
+        "title": "Rozgrywka",
+        "gameboard": {
+          "title": "Plansza gry",
+          "size": {
+            "label": "Rozmiar Twojej planszy do gry",
+            "big-warning": "Może zakłócać wyświetlanie na urządzeniach mobilnych",
+            "values": {
+              "normal": "Normalny",
+              "big": "Duży"
+            }
+          },
+          "enlarge-active-player-board": "Powiększ planszę gracza, którego kolej jest teraz"
+        },
+        "timer": {
+          "title": "Czasomierz",
+          "label": "Tryb wyświetlania timera",
+          "description": "Tryb inteligentny wyświetla czas w połowie gry i przez ostatnie 15 sekund.",
+          "modes": {
+            "never": "Nigdy",
+            "smart": "Inteligentny",
+            "always": "Zawsze"
+          }
+        }
+      },
+      "account": {
+        "title": "Konto",
+        "sync": {
+          "label": "Ustawienia konta",
+          "description": "Synchronizuj swoje ustawienia na wszystkich swoich urządzeniach, gdy jesteś zalogowany.",
+          "enabled": "Włączono",
+          "disabled": "Wyłączono",
+          "syncing": "Synchronizowanie...",
+          "offline": "Nieaktywny",
+          "error": "Synchronizacja nie powiodła się",
+          "lastSync": "Ostatnia synchronizacja: {date}"
+        }
       }
     },
     "Avatar": {
       "context-menu": {
-        "report": "Zgłoś {username}",
-        "ban": "Zablokuj {username}",
-        "mute": "Wycisz {username}",
-        "unmute": "Wyłącz wyciszenie {username}",
-        "kick": "Wyrzuć {username}",
-        "vote-to-kick": "Głosuj za wyrzuceniem {username}"
+        "report": "Zgłoś {name}",
+        "ban": "Zbanuj {name}",
+        "mute": "Wycisz {name}",
+        "unmute": "Wycisz {name}",
+        "kick": "Wyrzuć {name}",
+        "vote-to-kick": "Głosuj, aby wyrzucić {name}",
+        "transfer-host": "{name} jest teraz gospodarzem"
       }
     },
     "KickVote": {
@@ -348,8 +415,8 @@
       }
     },
     "ReportDialog": {
-      "title": "Zgłoś {username}",
-      "description": "Zgłoś nazwę użytkownika lub wiadomość od {username}, jeśli wydaje się nieodpowiednia.",
+      "title": "Zgłoś {name}",
+      "description": "Zgłoś imię lub wiadomość od {name}, jeśli wydaje się nieodpowiednia.",
       "report-message": "Zgłoś wiadomość",
       "select-message": "Wybierz wiadomość do zgłoszenia",
       "select-message-placeholder": "Wybierz wiadomość",
@@ -361,10 +428,49 @@
           "title": "Raport przesłany",
           "description": "Dziękujemy za zgłoszenie, przyczyniłeś się do poprawy jakości gry."
         }
-      }
+      },
+      "report-name": "Zgłoś imię gracza",
+      "comment": "Dodatkowy kontekst (opcjonalnie)",
+      "comment-placeholder": "Podaj dodatkowy kontekst dla tego raportu..."
     },
     "ChatMessageList": {
       "unread-messages": "{count} nieprzeczytana wiadomość{count, plural, =1 {} other {i}}"
+    },
+    "Banner": {
+      "title": "Potrzebuję Twojej opinii, aby kształtować przyszłość Skyjo!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Zasady",
+        "leaderboard": "Ranking"
+      }
+    },
+    "LoginButton": {
+      "login": "Dołącz do zabawy!"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Kontynuuj przez Google"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Hasła pasują",
+      "minimum-characters": "Co najmniej 10 znaków",
+      "lowercase-letter": "Co najmniej jedna mała litera",
+      "capital-letter": "Co najmniej jedna wielka litera",
+      "number": "Przynajmniej jedna cyfra",
+      "special-character": "Co najmniej jeden znak specjalny"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Sprawdzanie...",
+        "available": "Nazwa użytkownika dostępna",
+        "taken": "Już zajęte!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Połącz się ponownie z grą",
+      "description": "Byłeś w grze, która jest w toku. Czy chcesz się ponownie połączyć?",
+      "reconnect-button": "Tak, połącz ponownie",
+      "dismiss-button": "Nie, odrzuć"
     }
   },
   "pages": {
@@ -403,7 +509,76 @@
         "title": "Polityka prywatności",
         "last-update": {
           "text": "Ostatnia aktualizacja: {date}",
-          "date-format": "RRRR-MM-DD - gg:mmA"
+          "date-format": "DD MMMM RRRR"
+        },
+        "tldr": {
+          "title": "TL;DR — Co musisz wiedzieć",
+          "minimal-data": "Przechowujemy minimalne dane, abyś mógł grać w gry, niezależnie od tego, czy jesteś zalogowany, czy jako gość.",
+          "guest-data": "Dane gościa (imię, awatar, wynik, czaty) są przechowywane tylko wtedy, gdy w grze znajduje się zalogowany gracz.",
+          "personal-data": "Twój adres e-mail, nazwa użytkownika i inne dane osobowe są przechowywane tylko wtedy, gdy utworzysz konto.",
+          "chat-storage": "Czaty są przechowywane tymczasowo i zapisywane tylko w przypadku zgłoszenia.",
+          "privacy-compliance": "Szanujemy Twoją prywatność i przestrzegamy RODO, przechowując wszystko bezpiecznie w UE.",
+          "data-rights": "Możesz w dowolnym momencie zażądać dostępu do danych, ich poprawienia, eksportu lub usunięcia.",
+          "contact": "W przypadku pytań: <email></email>"
+        },
+        "operator": {
+          "title": "1. Kto jest operatorem tej strony internetowej?",
+          "operator-info": "Ta strona jest prowadzona przez osobę prywatną:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Nie firma."
+        },
+        "data-collection": {
+          "title": "2. Jakie dane zbieramy?",
+          "description": "Zbieramy dane zarówno zarejestrowanych, jak i niezalogowanych graczy, tylko gdy zalogowany użytkownik jest częścią gry.",
+          "guest-players": {
+            "title": "Dla graczy gościnnych:",
+            "items": "Nazwa wyświetlana (wybrana przy wejściu do gry);;Wybrany awatar;;Wynik gry, ranga i status zwycięzcy;;Wiadomości na czacie (przechowywane tymczasowo, chyba że oznaczone)",
+            "note": "Te dane są przechowywane tylko wtedy, gdy zalogowany jest co najmniej jeden gracz w grze."
+          },
+          "logged-users": {
+            "title": "Dla zalogowanych użytkowników (dodatkowo do powyższego):",
+            "items": "Adres e-mail;;Nazwa użytkownika / nazwa wyświetlana;;Awatar (z predefiniowanej listy);;Zaszyfrowane hasło lub identyfikator OAuth (Google, Facebook);;Preferowany język;;Status weryfikacji adresu e-mail"
+          },
+          "general": {
+            "title": "Ogólne (dla wszystkich użytkowników):",
+            "items": "Dane sesji gry (kody, ustawienia);;Ciasteczko sesyjne (wygasa po 24 godzinach);;Adres IP (tymczasowy, nie przechowywany długoterminowo);;Anonimowe analizy użytkowania (za pośrednictwem PostHog, hostowane w UE)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Dlaczego Twoje dane są wykorzystywane?",
+          "items": "Umożliwienie graczom (gościom lub zarejestrowanym) dołączania do gier i grania w nie;;Wyświetlanie awatarów, nazw, wyników i rankingów;;Umożliwienie moderacji w przypadku nadużyć;;Przetwarzanie opinii i odzyskiwanie konta (dla zalogowanych użytkowników);;Ulepszanie strony za pomocą anonimowych analiz"
+        },
+        "data-retention": {
+          "title": "4. Jak długo przechowywane są Twoje dane?",
+          "retention-table": {
+            "headers": "Typ danych;;Okres przechowywania",
+            "rows": "Ciasteczka sesji;;24 godziny|||Dane konta (zalogowany);;Do momentu zgłoszenia usunięcia|||Dane gracza-gościa;;Tylko jeśli zalogowany gracz jest obecny w grze|||Dane gry i wyniki;;Przechowywane na stałe|||Wiadomości na czacie;;Tymczasowo w Redis; zapisywane po zgłoszeniu|||Opinie;;Na stałe|||Tokeny weryfikacyjne/resetujące;;Do momentu użycia lub wygaśnięcia|||Żądania usunięcia konta;;Usunięte po 48-godzinnym okresie karencji|||Analityka (PostHog);;Na stałe, hostowane w UE"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Podstawa prawna (RODO)",
+          "description": "Przetwarzanie opiera się na:",
+          "items": "Zgoda (ciasteczka, statystyki);;Umowa (świadczenie gry);;Uzasadniony interes (moderacja);;Obowiązek prawny (odpowiadanie na żądania)"
+        },
+        "data-access": {
+          "title": "6. Kto może zobaczyć Twoje dane?",
+          "items": "Inni gracze widzą Twoją publiczną nazwę, awatar i historię gier;;Deweloper (Maxent Rouault) może uzyskać dostęp do danych w celu moderacji;;Brak sprzedaży lub wykorzystania Twoich danych do celów reklamowych"
+        },
+        "your-rights": {
+          "title": "7. Twoje prawa",
+          "items": "Uzyskaj dostęp do swoich danych, popraw je lub usuń;;Usuń swoje konto (lub o to poproś);;Wyeksportuj swoje dane (na żądanie);;Odwołaj się od blokad na adres appeal@skymo.online"
+        },
+        "security": {
+          "title": "8. Bezpieczeństwo",
+          "items": "Szyfrowane hasła;;Połączenia tylko przez HTTPS;;Moderacja i wykrywanie nadużyć;;Hosting w UE (Paryż, Francja)"
+        },
+        "cookies-analytics": {
+          "title": "9. Ciasteczka i analityka",
+          "items": "Niezbędne pliki cookie (sesyjne, logowania);;Analityka przez PostHog, hostowana w UE, brak śledzenia między stronami"
+        },
+        "contact": {
+          "title": "10. Kontakt",
+          "description": "Ogólne zapytania: <email></email>"
         }
       },
       "head": {
@@ -422,7 +597,8 @@
         "cancel": "Nie powtarzaj",
         "replay": "Powtórz"
       },
-      "leave-button": "Opuść grę"
+      "leave-button": "Opuść grę",
+      "round": "Runda {number}"
     },
     "Index": {
       "name-input-placeholder": "Nazwa",
@@ -507,7 +683,7 @@
           "title": "Na początku gry zostanie odkrytych {number} twoich kart"
         },
         "show-current-score": {
-          "label": "Pokazuj aktualny wynik podczas gry"
+          "label": "Wyświetlaj wynik w czasie rzeczywistym"
         },
         "score-to-end-game": {
           "label": "Wynik potrzebny do zakończenia gry",
@@ -559,7 +735,503 @@
         "description": "Naucz się grać w Skyjo dzięki naszemu przewodnikowi Skymo. Poznaj zasady, strategie i wskazówki, jak opanować tę zabawną grę karcianą online. Zagraj ze znajomymi już teraz!",
         "keywords": "Skymo,Skyjo,zasady Skyjo,jak grać w Skyjo,gra Skyjo,zasady gry w karty,gra karciana online,instrukcja gry,przewodnik po rozgrywce"
       },
-      "title": "Zasady gry Skyjo"
+      "title": "Zasady gry",
+      "play-button": "Graj online za darmo!"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Rankingi | Skymo - Gra karciana Skyjo Online",
+        "description": "Zobacz najlepszych graczy na Skymo! Sprawdź najlepszych graczy Skymo i ich wskaźniki zwycięstw w naszej rankingowej tabeli wyników.",
+        "keywords": "Skymo,Skyjo,ranking,najlepsi gracze,rankingi,najlepsi gracze,wskaźnik zwycięstw,gra rywalizacyjna,karciana gra online"
+      },
+      "title": "Ranking",
+      "subtitle": "Odkryj najlepszych graczy Skyjo i walcz o najwyższe miejsca!",
+      "lastUpdated": "Ostatnia aktualizacja: {date}",
+      "columns": {
+        "rank": "Pozycja",
+        "player": "Gracz",
+        "wins": "Wygrane",
+        "totalGames": "Całkowita liczba gier",
+        "winRate": "Współczynnik zwycięstw"
+      },
+      "noData": "Jeszcze nie znaleziono graczy w tabeli wyników.",
+      "error": "Nie można wczytać tabeli wyników w tej chwili.",
+      "tryAgainLater": "Spróbuj ponownie później.",
+      "callToAction": {
+        "guest": {
+          "title": "Gotów do rywalizacji?",
+          "description": "Zarejestruj się, aby śledzić swoje postępy i rywalizować z graczami z całego świata!",
+          "signup": "Zarejestruj się teraz"
+        },
+        "authenticated": {
+          "title": "Gotowi do rywalizacji?",
+          "description": "Zagraj i wspinaj się w rankingu!",
+          "createGame": "Utwórz grę",
+          "joinGame": "Dołącz do gry"
+        }
+      },
+      "errorActions": {
+        "refresh": "Odśwież",
+        "backHome": "Wróć do domu"
+      }
+    },
+    "Signup": {
+      "head": {
+        "title": "Dołącz do Skymo | Graj w Skyjo za darmo online",
+        "description": "Graj w Skyjo online ze znajomymi! Załóż darmowe konto Skymo, aby śledzić swoje postępy, odblokowywać ekskluzywne treści i dołączyć do tętniącej życiem społeczności.",
+        "keywords": "skymo, graj w skyjo online, skyjo online, zarejestruj się w skyjo, załóż konto skymo, dołącz do skymo, skymo skyjo, gra karciana online, skyjo multiplayer, darmowa gra skyjo, graj w skyjo ze znajomymi, śledzenie postępów w skyjo, społeczność skyjo, ekskluzywne treści skyjo"
+      },
+      "title": "Rejestracja",
+      "or": "Lub",
+      "form": {
+        "email": {
+          "label": "Email",
+          "button": "Kontynuuj przez e-mail"
+        }
+      },
+      "already-have-account": {
+        "description": "Masz już konto?",
+        "link": "Zaloguj się"
+      },
+      "advantages": {
+        "title": "Dołącz do Przygody",
+        "subtitle": "Załóż konto, aby odblokować świat możliwości i ulepszyć swoje doświadczenia.",
+        "features": {
+          "track-progress": {
+            "title": "Śledź swoje postępy",
+            "description": "Zobacz, jak wypadasz na tle innych i śledź swoje postępy w czasie."
+          },
+          "personalized-experience": {
+            "title": "Spersonalizowane doświadczenie",
+            "description": "Otrzymuj rekomendacje i treści dopasowane specjalnie dla Ciebie."
+          },
+          "join-community": {
+            "title": "Dołącz do społeczności",
+            "description": "Połącz się z innymi poszukiwaczami przygód, dziel się wskazówkami i poznawaj nowych przyjaciół."
+          },
+          "exclusive-content": {
+            "title": "Wyjątkowa zawartość",
+            "description": "Uzyskaj dostęp do specjalnych wyzwań, nagród i wczesnych aktualizacji."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "text": "Kontynuując, zgadzasz się na nasze",
+        "terms-link": "Regulamin",
+        "and": "i",
+        "privacy-link": "Polityka prywatności"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Zaloguj się | Skymo - Skyjo Online Card Game",
+        "description": "Zaloguj się do Skymo, aby zagrać w Skyjo online. Wpisz swój adres e-mail i hasło, aby uzyskać dostęp do swojego konta i od razu zacząć grać.",
+        "keywords": "Skymo,Skyjo,login,karciana gra online,gra Skyjo,gra karciana,gra online"
+      },
+      "title": "Zaloguj się",
+      "or": "Lub",
+      "form": {
+        "login": {
+          "label": "Email lub nazwa użytkownika"
+        },
+        "password": {
+          "label": "Hasło"
+        },
+        "submit": "Zaloguj"
+      },
+      "signup": {
+        "description": "Nie masz konta?",
+        "link": "Zarejestruj się teraz!"
+      },
+      "forgot-password": "Zapomniałeś hasła?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Zapomniałem hasła | Skymo - Skyjo Online Card Game",
+        "description": "Zresetuj hasło do Skyjo, aby odzyskać dostęp do swojego konta i dalej grać w Skyjo online ze znajomymi.",
+        "keywords": "Skymo,Skyjo,zapomniałem hasła,resetuj hasło,odzyskaj konto,karciana gra online"
+      },
+      "title": "Zapomniałem hasła",
+      "description": "Wpisz swój adres e-mail, a wyślemy Ci link do zresetowania hasła",
+      "form": {
+        "email": {
+          "label": "Adres e-mail"
+        },
+        "submit": "Wyślij link do resetowania",
+        "sending": "Wysyłanie..."
+      },
+      "success": {
+        "title": "Sprawdź swój e-mail",
+        "message": "Jeśli istnieje konto z tym adresem e-mail, wysłaliśmy link do resetowania hasła.",
+        "back": "Powrót do logowania"
+      },
+      "back": "Powrót do logowania"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Resetuj hasło | Skymo - Skyjo Online Card Game",
+        "description": "Utwórz nowe hasło do swojego konta Skymo, aby odzyskać dostęp i kontynuować grę w Skyjo online.",
+        "keywords": "Skymo,Skyjo,resetuj hasło,nowe hasło,odzyskaj konto,karciana gra online"
+      },
+      "title": "Resetuj hasło",
+      "description": "Wpisz poniżej swoje nowe hasło.",
+      "form": {
+        "password": {
+          "label": "Nowe hasło"
+        },
+        "confirmPassword": {
+          "label": "Potwierdź nowe hasło"
+        },
+        "submit": "Resetuj hasło",
+        "resetting": "Resetowanie..."
+      },
+      "success": {
+        "title": "Resetowanie hasła zakończone sukcesem",
+        "message": "Twoje hasło zostało zresetowane. Możesz teraz zalogować się przy użyciu nowego hasła.",
+        "back": "Zaloguj się"
+      },
+      "back": "Powrót do logowania"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "Zmiana adresu e-mail przywrócona",
+        "message": "Pomyślnie przywrócono zmianę Twojego adresu e-mail i zabezpieczono Twoje konto. Sprawdź swoją skrzynkę e-mail, aby uzyskać instrukcje dotyczące resetowania hasła.",
+        "close": "Możesz teraz zamknąć tę stronę."
+      },
+      "failed": {
+        "title": "Nie udało się cofnąć zmiany adresu e-mail"
+      },
+      "back": "Powrót do logowania"
+    },
+    "OAuthCallbackPage": {
+      "title": "Przekierowanie w toku…"
+    },
+    "Onboarding": {
+      "title": "Rozpoczynanie...",
+      "subtitle": "Uzupełnij swój profil i zanurz się w przygodzie Skymo!",
+      "form": {
+        "name": {
+          "label": "Imię gracza",
+          "placeholder": "Jeff",
+          "description": "Pokazano innym graczom w grach"
+        },
+        "username": {
+          "label": "Nazwa",
+          "placeholder": "jeff",
+          "description": "Do logowania i profilu"
+        },
+        "password": {
+          "label": "Utwórz hasło",
+          "placeholder": "Wpisz bezpieczne hasło"
+        },
+        "submit": "Gotowe do gry!"
+      },
+      "head": {
+        "title": "Onboarding | Skymo - Skyjo Online Card Game",
+        "description": "Uzupełnij swój profil i zanurz się w przygodzie Skymo!",
+        "keywords": "Skymo,Skyjo,onboarding,profil,przygoda,internetowa gra karciana"
+      },
+      "loading": "Ładowanie Twojego profilu...",
+      "success": "Pomyślnie ukończono wprowadzanie! Przekierowywanie do strony głównej..."
+    },
+    "Verify": {
+      "head": {
+        "title": "Zweryfikuj e-mail | Skymo - Skyjo Online Card Game",
+        "description": "Zweryfikuj swój adres e-mail, aby dokończyć konfigurację konta Skymo i zacząć grać w Skyjo online ze znajomymi.",
+        "keywords": "Skymo,Skyjo,weryfikacja email,weryfikacja konta,karciana gra online"
+      },
+      "title": "Zweryfikuj swój e-mail",
+      "description": "Wysłaliśmy 6-cyfrowy kod na Twój adres e-mail. Wpisz go poniżej.",
+      "resend": {
+        "countdown": "Wyślij kod ponownie za {seconds}s",
+        "prompt": "Nie otrzymałeś kodu?",
+        "button": "Poproś o nowy kod",
+        "sending": "Wysyłanie..."
+      },
+      "toast": {
+        "success": "Email pomyślnie zweryfikowany!",
+        "resend-success": "Wysłano nową wiadomość e-mail",
+        "email-already-sent": "E-mail został już wysłany w ciągu ostatnich 5 minut. Sprawdź swoją skrzynkę odbiorczą lub kliknij „Poproś o nowy kod”, aby wysłać nowy"
+      },
+      "loading": "Ładowanie Twojego profilu..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "Profil '{username}' | Skymo - Skyjo Online Card Game",
+        "description": "Zobacz profil {username} na Skymo. Sprawdź jego statystyki gry, ostatnią aktywność i osiągnięcia w Skyjo online.",
+        "keywords": "Skymo,Skyjo,profil użytkownika,statystyki gracza,statystyki gry,ostatnie gry,osiągnięcia,karciana gra online"
+      },
+      "not-found": {
+        "title": "Nie znaleziono użytkownika",
+        "description": "Użytkownik \"{username}\" nie istnieje lub mógł zmienić swoją nazwę użytkownika.",
+        "back-to-home": "Powrót do strony głównej"
+      },
+      "error": {
+        "title": "Coś poszło nie tak",
+        "description": "Wystąpił błąd podczas ładowania tego profilu. Spróbuj ponownie później.",
+        "back-to-home": "Powrót do strony głównej"
+      },
+      "stats": {
+        "total-games": "Całkowita liczba gier",
+        "win-rate": "Współczynnik zwycięstw",
+        "average-rank": "Średnia ranga",
+        "public": "Publiczne",
+        "private": "Prywatne"
+      },
+      "sections": {
+        "achievements": "Osiągnięcia",
+        "achievements-coming-soon": "System osiągnięć wkrótce!",
+        "recent-activity": "Ostatnia aktywność"
+      },
+      "recent-activity": {
+        "no-activity": "Brak ostatniej aktywności do wyświetlenia.",
+        "game-code": "Gra #{code}",
+        "rank": "Ranga #{rank}",
+        "winner": "Zwycięzca"
+      },
+      "search": {
+        "placeholder": "Szukaj nazwy użytkownika"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Ustawienia konta | Skymo - Gra karciana Skyjo Online",
+        "description": "Zarządzaj ustawieniami swojego konta na Skymo. Zmień swoją nazwę wyświetlaną, nazwę użytkownika, adres e-mail, hasło i preferencje konta."
+      },
+      "title": "Ustawienia konta",
+      "description": "Zarządzaj swoim kontem i danymi osobowymi.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Konto",
+        "password": "Hasło"
+      },
+      "buttons": {
+        "save": "Zapisz zmiany",
+        "saving": "Zapisywanie...",
+        "delete-account": "Usuń konto",
+        "confirm-delete": "Tak, usuń moje konto"
+      },
+      "messages": {
+        "save-success": "Ustawienia pomyślnie zapisane!",
+        "save-error": "Nie udało się zapisać ustawień. Spróbuj ponownie.",
+        "delete-confirmation": "Czy na pewno chcesz usunąć swoje konto? Tej akcji nie można cofnąć, a wszystkie Twoje dane zostaną trwale usunięte.",
+        "username-taken": "Ta nazwa użytkownika jest już zajęta.",
+        "email-taken": "Ten adres e-mail jest już zajęty.",
+        "password-incorrect": "Obecne hasło jest nieprawidłowe.",
+        "account-deletion-scheduled": "Twoje żądanie usunięcia konta zostało uwzględnione i zostanie przetworzone w ciągu 48 godzin. Otrzymasz e-mail z potwierdzeniem usunięcia.",
+        "account-deletion-failed": "Wystąpił błąd podczas usuwania Twojego konta. Spróbuj ponownie."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Nazwa wyświetlana",
+          "description": "Twoje imię wyświetlane innym graczom w grach.",
+          "placeholder": "Wpisz swoją nazwę",
+          "submit": "Zapisz nazwę"
+        },
+        "avatar": {
+          "label": "Awatar",
+          "description": "Twój avatar wyświetlany w Twoim profilu.",
+          "placeholder": "Wybierz swojego awatara",
+          "submit": "Zapisz awatar"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Konto",
+      "fields": {
+        "username": {
+          "label": "Nazwa użytkownika",
+          "description": "Twój unikalny login używany do adresu URL Twojego profilu.",
+          "placeholder": "Wpisz swoją nazwę użytkownika",
+          "submit": "Zapisz nazwę użytkownika"
+        },
+        "email": {
+          "label": "Adres e-mail",
+          "description": "Twój adres e-mail używany do logowania i ważnych powiadomień. Ze względów bezpieczeństwa, po zmianie adresu na nowy, na Twój obecny adres zostanie wysłany e-mail z ostrzeżeniem.",
+          "placeholder": "Wpisz swój adres e-mail",
+          "submit": "Zapisz e-mail"
+        },
+        "settings-sync": {
+          "label": "Synchronizacja ustawień",
+          "description": "Synchronizuj swoje ustawienia na wszystkich swoich urządzeniach, gdy jesteś zalogowany.",
+          "enable-sync": "Włącz synchronizację ustawień",
+          "disable-sync": "Wyłącz synchronizację ustawień",
+          "status": {
+            "enabled": "Włączono",
+            "disabled": "Wyłączone",
+            "syncing": "Synchronizowanie...",
+            "offline": "Nieaktywny",
+            "error": "Synchronizacja nie powiodła się"
+          },
+          "last-sync": "Ostatnia synchronizacja: {date}",
+          "sync-now": "Synchronizuj teraz"
+        }
+      },
+      "delete-account": {
+        "title": "Usuń moje konto",
+        "description": "Usuń swoje konto i wszystkie powiązane dane. Tej akcji nie można cofnąć, a wszystkie Twoje dane zostaną trwale usunięte.",
+        "button": "Usuń konto",
+        "confirmation": {
+          "description": "Potwierdzając, rozpocznie się 48-godzinne odliczanie: otrzymasz e-mail z linkiem do anulowania usunięcia, jeśli zmienisz zdanie. Twoje konto pozostanie dostępne w tym okresie. Po 48 godzinach zostanie ono trwale usunięte, a Ty otrzymasz e-mail z potwierdzeniem.",
+          "input-label": "Wpisz DELETE, aby potwierdzić",
+          "input-placeholder": "USUŃ",
+          "cancel-button": "Anuluj",
+          "delete-button": "Usuń moje konto"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Zmień hasło",
+      "fields": {
+        "password": {
+          "label": "Hasło",
+          "description": "Zmień hasło do swojego konta.",
+          "current-password": "Aktualne hasło",
+          "new-password": "Nowe hasło",
+          "confirm-password": "Potwierdź nowe hasło",
+          "current-placeholder": "Podaj swoje obecne hasło",
+          "new-placeholder": "Wpisz nowe hasło",
+          "confirm-placeholder": "Potwierdź nowe hasło",
+          "submit": "Zapisz hasło"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Obecne hasło jest nieprawidłowe."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Nieprawidłowy token",
+      "success": {
+        "title": "Anulowano usuwanie konta",
+        "description": "Twoje usunięcie konta zostało pomyślnie anulowane. Twoje konto jest bezpieczne i nie zostanie usunięte.",
+        "secure-message": "Twoje konto jest teraz bezpieczne i pozostanie aktywne. Możesz normalnie korzystać ze swojego konta."
+      },
+      "failed": {
+        "title": "Anulowanie nie powiodło się",
+        "description": "Nie udało się anulować usunięcia Twojego konta. Spróbuj ponownie lub skontaktuj się z pomocą techniczną.",
+        "general-error": "Coś poszło nie tak podczas próby anulowania usunięcia Twojego konta. Spróbuj ponownie lub skontaktuj się z pomocą techniczną.",
+        "help-message": "Coś poszło nie tak podczas próby anulowania usunięcia Twojego konta. Spróbuj ponownie lub skontaktuj się z pomocą techniczną."
+      },
+      "expired": {
+        "title": "Link anulowania wygasł",
+        "description": "Ten link anulujący wygasł. Jeśli nadal chcesz zachować swoje konto, skontaktuj się z pomocą techniczną.",
+        "help-message": "Okres 48-godzinnego anulowania wygasł. Skontaktuj się z pomocą techniczną, jeśli potrzebujesz pomocy."
+      },
+      "actions": {
+        "return-homepage": "Wróć do strony głównej"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Regulamin | Skymo - Skyjo Online Card Game",
+        "description": "Przeczytaj Warunki Korzystania z Usług Skymo, platformy internetowej gry karcianej Skyjo. Dowiedz się o obowiązkach użytkownika, korzystaniu z usług i zasadach platformy.",
+        "keywords": "Regulamin, Skymo, Skyjo, internetowa gra karciana, umowa użytkownika, zasady platformy"
+      },
+      "content": {
+        "title": "Regulamin",
+        "last-update": {
+          "text": "Ostatnia aktualizacja: {date}",
+          "date-format": "DD.MM.RRRR o HH:mm"
+        },
+        "welcome": "Witaj na stronie <b>skymo.online</b>, wieloosobowej grze karcianej online prowadzonej przez Maxenta Rouault. Korzystając z tej strony, zgadzasz się z niniejszymi Warunkami Świadczenia Usług. Jeśli się z nimi nie zgadzasz, nie możesz korzystać z platformy.",
+        "operator": {
+          "title": "1. Operator",
+          "content": "Ta strona jest obsługiwana przez:",
+          "name": "Maxent Rouault",
+          "contact": "Kontakt: {email}",
+          "location": "Francja (niekomercyjny operator indywidualny)"
+        },
+        "eligibility": {
+          "title": "2. Uprawnienia",
+          "content": "Możesz korzystać z usługi jako gość lub rejestrując konto. Korzystając z tej strony internetowej, potwierdzasz, że:",
+          "items": {
+            "1": "Masz co najmniej 13 lat (lub ukończyłeś/aś minimalny wiek wymagany w Twoim kraju).",
+            "2": "Jeśli masz mniej niż 18 lat, potrzebujesz zgody opiekuna prawnego."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Konto i korzystanie przez gości",
+          "items": {
+            "1": "Gracze gościnni mogą grać bez rejestracji, ale niektóre funkcje mogą być ograniczone.",
+            "2": "Zarejestrowani użytkownicy muszą podać prawidłowy adres e-mail i nazwę użytkownika.",
+            "3": "Jesteś odpowiedzialny za swoje konto i aktywność. Nie wolno Ci udostępniać swojego loginu.",
+            "4": "Możesz usunąć swoje konto w dowolnym momencie. Po 48 godzinach Twoje dane osobowe zostaną zanonimizowane lub trwale usunięte."
+          }
+        },
+        "data-storage": {
+          "title": "4. Przechowywanie danych",
+          "content": "Przechowujemy następujące dane w zależności od Twojego użytkowania:",
+          "all-players": {
+            "title": "Dla wszystkich graczy:",
+            "items": {
+              "1": "Nazwa wyświetlana w grze, awatar, wynik i wiadomości na czacie, **jeśli zalogowany jest co najmniej jeden gracz**.",
+              "2": "Adresy IP mogą być tymczasowo przechowywane w celach bezpieczeństwa i moderacji."
+            }
+          },
+          "registered-players": {
+            "title": "Dla zarejestrowanych graczy:",
+            "items": {
+              "1": "Email, nazwa użytkownika, awatar, statystyki gry i opcjonalnie połączone konta (np. Google).",
+              "2": "Dane analityczne, takie jak zachowania w grze, częstotliwość sesji czy wykorzystanie funkcji, <b>mogą być zbierane w celu ulepszenia gry</b>."
+            }
+          },
+          "storage-location": "Wszystkie dane są przechowywane w **Unii Europejskiej** i przetwarzane zgodnie z <link>Polityką Prywatności</link>."
+        },
+        "analytics-tracking": {
+          "title": "5. Analityka i śledzenie",
+          "content": "Aby ulepszyć usługę i spersonalizować doświadczenia użytkownika, możemy:",
+          "items": {
+            "1": "Używaj **narzędzi analitycznych** (np. PostHog lub podobnych), aby śledzić wzorce użytkowania i rozgrywki.",
+            "2": "Analizuj zachowanie użytkowników, aby wykrywać błędy, ulepszać dobieranie przeciwników lub projektować funkcje.",
+            "3": "W przyszłości możemy wykorzystywać te dane do **wyświetlania spersonalizowanych treści lub reklam**, z poszanowaniem Twoich praw do prywatności zgodnie z RODO."
+          },
+          "data-rights": "Możesz sprzeciwić się śledzeniu lub zażądać usunięcia danych osobowych, kontaktując się z nami."
+        },
+        "ads-monetization": {
+          "title": "6. Reklamy i monetyzacja",
+          "content": "Platforma może wyświetlać reklamy, w tym reklamy stron trzecich lub kontekstowe. W przyszłości zalogowanym użytkownikom mogą być wyświetlane **spersonalizowane reklamy** na podstawie danych o użytkowaniu.",
+          "consent": "Udostępnimy jasne mechanizmy informowania i uzyskiwania zgody, jeśli i kiedy wprowadzimy reklamy behawioralne lub spersonalizowane."
+        },
+        "user-conduct": {
+          "title": "7. Zachowanie użytkownika",
+          "content": "Zgadzasz się na:",
+          "items": {
+            "1": "Szanuj innych i przestrzegaj zasad fair play.",
+            "2": "Nie oszukuj, nie nękaj, nie podszywaj się pod innych ani nie używaj obraźliwych nazw użytkownika lub awatarów.",
+            "3": "Nie spamuj ani nie nadużywaj czatu ani żadnych funkcji komunikacyjnych."
+          },
+          "enforcement": "Zastrzegamy sobie prawo do zbanowania lub ograniczenia użytkowników, którzy naruszają te zasady."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderacja i zgłaszanie",
+          "items": {
+            "1": "Wiadomości czatu są przechowywane tymczasowo i mogą zostać w pełni zapisane w grach z udziałem zarejestrowanych graczy.",
+            "2": "Możemy zachować wiadomości, gdy gracz zgłosi raport lub gdy wymagana jest moderacja.",
+            "3": "Możesz zgłaszać nadużycia przez e-mail (patrz sekcja kontakt).",
+            "4": "Działania moderacyjne i zgłoszenia mogą być rejestrowane w celu zapewnienia przejrzystości i uczciwości."
+          }
+        },
+        "availability": {
+          "title": "9. Dostępność",
+          "content": "Usługa jest świadczona „tak jak jest”. Możemy modyfikować, zawieszać lub wyłączać stronę internetową lub jej funkcje w dowolnym momencie bez powiadomienia."
+        },
+        "intellectual-property": {
+          "title": "10. Własność intelektualna",
+          "content": "Wszelkie oryginalne treści, grafiki i kod należą do Maxenta Rouaulta, chyba że zaznaczono inaczej. Nie możesz ponownie wykorzystywać ani redystrybuować żadnej części strony internetowej bez zgody."
+        },
+        "legal": {
+          "title": "11. Prawne",
+          "jurisdiction": "Niniejsza strona podlega francuskiemu prawu i jest zgodna z Ogólnym Rozporządzeniem o Ochronie Danych (RODO).",
+          "disputes": "Spory prawne będą rozstrzygane przez francuskie sądy."
+        },
+        "contact": {
+          "title": "12. Kontakt",
+          "general": "Ogólne zapytania: <email></email>"
+        }
+      }
     }
   },
   "contexts": {
@@ -598,10 +1270,36 @@
     "ReportContext": {
       "report-against-you": {
         "title": "Zostałeś wyrzucony z powodu zgłoszenia",
-        "description": "Twoja nazwa użytkownika lub jedna z Twoich wiadomości została zgłoszona i uznana za nieodpowiednią. Prosimy nie powtarzać tego zachowania."
+        "description": "Twój nick lub jedna z Twoich wiadomości została zgłoszona i uznana za nieodpowiednią. Prosimy, nie powtarzaj tego zachowania."
       },
       "report": {
         "title": "{playerName} został wyrzucony z powodu zgłoszenia"
+      }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Nie masz uprawnień do przeniesienia roli hosta",
+        "description": "Tylko obecny gospodarz może przekazać rolę gospodarza innemu graczowi"
+      },
+      "player-not-found": {
+        "title": "Gracz nie istnieje",
+        "description": "Gracz, któremu próbujesz przekazać rolę hosta, nie istnieje w grze"
+      },
+      "player-not-connected": {
+        "title": "Gracz nie jest połączony",
+        "description": "Gracz, któremu próbujesz przekazać rolę hosta, nie jest obecnie połączony z grą"
+      },
+      "host-transferred": {
+        "title": "Pomyślnie przeniesiono hosta",
+        "description": "{newHostName} jest teraz gospodarzem gry"
+      },
+      "you-are-now-host": {
+        "title": "Jesteś teraz gospodarzem",
+        "description": "{previousHostName} przekazał Ci rolę hosta"
+      },
+      "unexpected-error": {
+        "title": "Wystąpił nieoczekiwany błąd",
+        "description": "Wystąpił nieoczekiwany błąd podczas przenoszenia hosta"
       }
     }
   },
@@ -629,16 +1327,18 @@
     },
     "chat": {
       "argument-required": "Jedno lub więcej argumentów jest wymaganych dla polecenia: {command}",
-      "wizz-sent": "Wysłałeś/aś wizz do {targetUsername}!",
-      "wizz-self": "Otrzymałeś/aś wizz od {initiatorUsername}!",
-      "player-unmuted": "{username} nie jest już wyciszony",
-      "wizz-other": "{initiatorUsername} wysłał(a) wizz do {targetUsername}!",
-      "player-joined": "{username} dołączył do gry",
-      "player-left": "{username} opuścił grę",
-      "player-reconnect": "{username} ponownie dołączył do gry",
-      "player-already-muted": "{username} jest już wyciszony",
-      "player-muted": "{username} został wyciszony",
-      "player-not-muted": "{username} nie jest wyciszony"
+      "wizz-sent": "Wysłałeś czar do {targetName}!",
+      "wizz-self": "Zostałeś wizznięty przez {initiatorName}!",
+      "player-unmuted": "{name} nie jest już wyciszony",
+      "wizz-other": "{initiatorName} zrobił Ci sztuczkę {targetName}!",
+      "player-joined": "{name} dołączył do gry",
+      "player-left": "{name} opuścił grę",
+      "player-reconnect": "{name} połączył się ponownie z grą",
+      "player-already-muted": "{name} jest już wyciszony",
+      "player-muted": "{name} został wyciszony",
+      "player-not-muted": "{name} nie jest wyciszony",
+      "welcome": "Bądź miły i okazuj szacunek. Możesz {isMobile, select, true {przytrzymać} other {kliknąć prawym przyciskiem myszy}} na wiadomościach, aby wyciszyć lub zgłosić graczy w razie potrzeby.",
+      "host-transferred": "{name} jest teraz gospodarzem"
     },
     "avatar": {
       "bee": "pszczoła",
@@ -681,8 +1381,80 @@
         "rate-limit": {
           "title": "Wysyłasz zbyt wiele zapytań",
           "description": "Proszę poczekać kilka sekund przed ponowną próbą"
+        },
+        "player-already-connected": {
+          "description": "Jesteś już połączony z tą grą z innej sesji"
         }
       }
     }
+  },
+  "errors": {
+    "invalid-credentials": "Podany adres e-mail lub hasło jest nieprawidłowe. Spróbuj ponownie.",
+    "logout-failed": "Nie udało nam się wylogować. Zamknij przeglądarkę, aby zakończyć sesję.",
+    "session-not-found": "Twoja sesja wygasła lub jest nieprawidłowa. Zaloguj się ponownie.",
+    "session-invalid": "Twoja sesja jest nieprawidłowa. Zaloguj się ponownie, aby kontynuować.",
+    "session-expired": "Twoja sesja wygasła. Zaloguj się ponownie, aby kontynuować.",
+    "session-token-missing": "Brakuje Twojego tokenu sesji. Zaloguj się, aby uzyskać nowy.",
+    "username-taken": "Ta nazwa użytkownika jest już zajęta. Wybierz inną.",
+    "onboarding-error": "Wystąpił problem z uzupełnieniem Twojego profilu. Spróbuj ponownie.",
+    "reset-token-invalid": "Podany token resetowania jest nieprawidłowy. Poproś o nowy.",
+    "reset-token-expired": "Twój token resetowania hasła wygasł. Poproś o nowy.",
+    "password-reset-failed": "Nie udało się zresetować Twojego hasła. Spróbuj ponownie.",
+    "forgot-password-error": "Wystąpił problem z przetworzeniem Twojej prośby o zresetowanie hasła. Spróbuj ponownie później.",
+    "reset-password-error": "Nie udało nam się zresetować Twojego hasła. Spróbuj ponownie.",
+    "oauth-restart-process": "Coś poszło nie tak podczas uwierzytelniania. Spróbuj zalogować się ponownie.",
+    "oauth-id-token-missing": "Nie otrzymaliśmy tokenu ID od dostawcy uwierzytelniania. Spróbuj ponownie.",
+    "oauth-account-creation-failed": "Nie udało nam się utworzyć konta przy użyciu informacji od Twojego dostawcy. Spróbuj ponownie.",
+    "oauth-login-initiation-failed": "Nie udało się rozpocząć procesu logowania. Spróbuj ponownie za kilka chwil.",
+    "verify-session-error": "Nie udało nam się zweryfikować Twojej sesji. Wyloguj się i zaloguj ponownie.",
+    "signup-error": "Nie udało nam się utworzyć Twojego konta w tym momencie. Spróbuj ponownie później.",
+    "login-error": "Wystąpił problem z zalogowaniem. Spróbuj ponownie.",
+    "login-invalid-credentials": "Podany email lub hasło są nieprawidłowe. Spróbuj ponownie.",
+    "logout-error": "Wystąpił nieoczekiwany błąd podczas wylogowywania Cię.",
+    "check-username-error": "Nie udało się sprawdzić dostępności nazwy użytkownika. Spróbuj ponownie.",
+    "unknown-auth-error": "Wystąpił nieznany błąd uwierzytelniania. Spróbuj ponownie.",
+    "creation-failed": "Nie udało się utworzyć użytkownika w tym momencie. Spróbuj ponownie.",
+    "get-user-error": "Nie udało się pobrać profilu użytkownika. Spróbuj ponownie później.",
+    "get-user-games-error": "Nie udało się załadować gier użytkownika. Odśwież stronę.",
+    "get-user-stats-error": "Nie udało się wczytać statystyk gracza. Odśwież stronę.",
+    "user-not-found": "Nie znaleziono użytkownika, którego szukasz.",
+    "username-same-as-current": "To już jest twoja nazwa użytkownika.",
+    "email-taken": "Ten adres e-mail jest już używany. Użyj innego.",
+    "email-same-as-current": "To jest już Twój adres e-mail.",
+    "invalid-current-password": "Podane przez Ciebie hasło jest nieprawidłowe.",
+    "update-name-error": "Nie udało się zaktualizować Twojego imienia. Spróbuj ponownie.",
+    "update-username-error": "Nie udało się zaktualizować Twojej nazwy użytkownika. Spróbuj ponownie.",
+    "update-email-error": "Nie udało się zaktualizować Twojego adresu e-mail. Spróbuj ponownie.",
+    "revert-email-error": "Nie udało się cofnąć zmiany Twojego adresu e-mail. Skontaktuj się z pomocą techniczną.",
+    "update-password-error": "Nie udało się zaktualizować Twojego hasła. Spróbuj ponownie.",
+    "update-avatar-error": "Nie udało się zaktualizować Twojego awatara. Spróbuj ponownie.",
+    "delete-account-error": "Nie udało się przetworzyć Twojej prośby o usunięcie konta. Spróbuj ponownie.",
+    "cancel-delete-account-error": "Nie udało się anulować usunięcia Twojego konta. Skontaktuj się z pomocą techniczną.",
+    "unexpected-error": "Wystąpił nieoczekiwany błąd. Spróbuj ponownie.",
+    "internal-server-error": "Nasz serwer napotkał problem. Spróbuj ponownie później.",
+    "unauthorized": "Nie masz uprawnień do wykonania tej akcji.",
+    "forbidden": "Nie masz uprawnień do dostępu do tego zasobu.",
+    "not-found": "Nie można znaleźć zasobu, którego szukasz.",
+    "too-many-requests": "Wysłałeś zbyt wiele żądań. Poczekaj chwilę i spróbuj ponownie.",
+    "ip-not-found": "Nie udało się zidentyfikować Twojego adresu IP. Sprawdź swoje połączenie.",
+    "invalid-request": "Twoje żądanie było nieprawidłowe. Sprawdź dane i spróbuj ponownie.",
+    "send-feedback-error": "Nie udało się wysłać Twojej opinii. Spróbuj ponownie.",
+    "send-pin-error": "Nie udało się wysłać kodu weryfikacyjnego na Twój adres e-mail. Spróbuj ponownie.",
+    "verify-pin-error": "Nie udało się zweryfikować Twojego PIN-u. Spróbuj ponownie.",
+    "invalid-pin": "Podany kod PIN jest nieprawidłowy. Spróbuj ponownie.",
+    "expired-pin": "Wprowadzony kod PIN wygasł. Wysłałeś nowy.",
+    "feedback-error": "Nie udało się wysłać Twojej opinii. Spróbuj ponownie.",
+    "get-public-games-error": "Nie udało się wczytać gier publicznych. Spróbuj ponownie.",
+    "invalid-cancellation-token": "Token anulowania jest nieprawidłowy. Spróbuj ponownie.",
+    "expired-cancellation-token": "Token anulowania wygasł. Spróbuj ponownie.",
+    "cancel-account-deletion-error": "Nie udało się anulować usunięcia Twojego konta. Spróbuj ponownie",
+    "oauth-unknown-error": "Wystąpił nieznany błąd podczas logowania. Spróbuj ponownie.",
+    "invalid-reversion-token": "Token cofnięcia jest nieprawidłowy. Spróbuj ponownie.",
+    "expired-reversion-token": "Żeton przywrócenia wygasł. Spróbuj ponownie.",
+    "name-min-characters": "Nazwa wyświetlana musi mieć co najmniej 2 znaki",
+    "name-max-characters": "Nazwa wyświetlana musi mieć maksymalnie 20 znaków",
+    "username-min-characters": "Nazwa użytkownika musi mieć co najmniej 3 znaki",
+    "username-max-characters": "Nazwa użytkownika może mieć maksymalnie 20 znaków",
+    "username-invalid-format": "Nazwa użytkownika może zawierać tylko litery, cyfry i podkreślenia"
   }
 }
