@@ -117,7 +117,7 @@
           "title": "Aan het begin van het spel worden {number} van je kaarten onthuld"
         },
         "show-current-score": {
-          "label": "Toon de huidige score tijdens het spel"
+          "label": "Score in realtime weergeven"
         },
         "score-to-end-game": {
           "label": "Score om het spel te beëindigen",
@@ -173,7 +173,8 @@
         "replay": "Opnieuw afspelen"
       },
       "leave-button": "Verlaat het spel",
-      "player": "Speler"
+      "player": "Speler",
+      "round": "Ronde {number}"
     },
     "PrivacyPolicy": {
       "head": {
@@ -186,7 +187,76 @@
         "title": "Privacybeleid",
         "last-update": {
           "text": "Laatst bijgewerkt: {date}",
-          "date-format": "JJJJ-MM-DD - uu:mmA"
+          "date-format": "DD MMMM JJJJ"
+        },
+        "tldr": {
+          "title": "TL;DR — Wat je moet weten",
+          "minimal-data": "We slaan minimale gegevens op om je spellen te laten spelen, of je nu bent ingelogd of als gast speelt.",
+          "guest-data": "Gastgegevens (naam, avatar, score, chats) worden alleen opgeslagen als er een ingelogde speler in het spel is.",
+          "personal-data": "Je e-mailadres, gebruikersnaam en andere persoonlijke gegevens worden alleen opgeslagen als je een account aanmaakt.",
+          "chat-storage": "Chats worden tijdelijk opgeslagen en alleen bewaard als ze worden gemeld.",
+          "privacy-compliance": "We respecteren je privacy en voldoen aan de AVG, waarbij alles veilig wordt opgeslagen in de EU.",
+          "data-rights": "Je kunt op elk moment gegevensinzage, correctie, export of verwijdering aanvragen.",
+          "contact": "Voor vragen: <email></email>"
+        },
+        "operator": {
+          "title": "Wie exploiteert deze website?",
+          "operator-info": "Deze website wordt beheerd door een privépersoon:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Geen bedrijf."
+        },
+        "data-collection": {
+          "title": "2. Welke gegevens verzamelen we?",
+          "description": "We verzamelen gegevens voor zowel geregistreerde als gastspelers, alleen wanneer een verbonden (ingelogde) gebruiker deel uitmaakt van het spel.",
+          "guest-players": {
+            "title": "Voor gastspelers:",
+            "items": "Weergavenaam (gekozen bij het betreden van het spel);;Geselecteerde avatar;;Spelscore, rang en winnaarstatus;;Chatberichten (tijdelijk opgeslagen tenzij gemarkeerd)",
+            "note": "Deze gegevens worden alleen opgeslagen als er minstens één speler in het spel is ingelogd."
+          },
+          "logged-users": {
+            "title": "Voor ingelogde gebruikers (naast hierboven):",
+            "items": "E-mailadres;;Gebruikersnaam / weergavenaam;;Avatar (uit vooraf gedefinieerde lijst);;Gehasht wachtwoord of OAuth-ID (Google, Facebook);;Taalvoorkeur;;E-mailverificatliestatus"
+          },
+          "general": {
+            "title": "Algemeen (voor alle gebruikers):",
+            "items": "Gamesessiegegevens (codes, instellingen);;Sessievakje (verloopt na 24 uur);;IP-adres (tijdelijk, niet langdurig opgeslagen);;Anonieme gebruiksanalyses (via PostHog, EU-gehost)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Waarom worden jouw gegevens gebruikt?",
+          "items": "Spelers (gasten of geregistreerde gebruikers) laten deelnemen aan en spelen van spellen;;Avatars, namen, scores en ranglijsten weergeven;;Moderatie toestaan bij misbruik;;Feedback en accountherstel verwerken (voor ingelogde gebruikers);;De site verbeteren met behulp van anonieme analyses"
+        },
+        "data-retention": {
+          "title": "4. Hoe lang worden je gegevens bewaard?",
+          "retention-table": {
+            "headers": "Type gegevens;;Bewaartermijn",
+            "rows": "Sessienummer cookies;;24 uur|||Accountgegevens (ingelogd);;Tot aanvraag tot verwijdering|||Gastspelergegevens;;Alleen als verbonden speler aanwezig is in het spel|||Spelgegevens & scores;;Permanent opgeslagen|||Chatberichten;;Tijdelijk in Redis; opgeslagen indien gemeld|||Feedback;;Permanent|||Verificatie-/reset-tokens;;Tot gebruik of vervaldatum|||Verwijderingsverzoeken voor accounts;;Verwijderd na 48 uur respijtperiode|||Analyses (PostHog);;Permanent, in de EU gehost"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Wettelijke grondslag (AVG)",
+          "description": "Verwerking is gebaseerd op:",
+          "items": "Toestemming (cookies, statistieken);;Contract (levering van het spel);;Gerechtvaardigd belang (moderatie);;Wettelijke verplichting (reageren op verzoeken)"
+        },
+        "data-access": {
+          "title": "Wie kan jouw gegevens zien?",
+          "items": "Andere spelers zien je openbare naam, avatar en spelgeschiedenis;;De ontwikkelaar (Maxent Rouault) heeft toegang tot gegevens voor moderatie;;Geen verkoop of reclamegebruik van je gegevens"
+        },
+        "your-rights": {
+          "title": "7. Jouw rechten",
+          "items": "Toegang tot, rectificatie of verwijdering van je gegevens;;Je account verwijderen (of dit aanvragen);;Je gegevens exporteren (op aanvraag);;Beroep aantekenen tegen bans via appeal@skymo.online"
+        },
+        "security": {
+          "title": "8. Beveiliging",
+          "items": "Versleutelde wachtwoorden;;Alleen-HTTPS-verbindingen;;Moderatie en misbruikdetectie;;Hosting in de EU (Parijs, Frankrijk)"
+        },
+        "cookies-analytics": {
+          "title": "9. Cookies & Analytics",
+          "items": "Essentiële cookies (sessie, login);;Analyse via PostHog, EU-gehost, geen cross-site tracking"
+        },
+        "contact": {
+          "title": "10. Contact",
+          "description": "Algemene vragen: <email></email>"
         }
       }
     },
@@ -196,7 +266,503 @@
         "keywords": "Skymo, Skyjo, Skyjo spelregels, hoe speel je Skyjo, Skyjo spel, kaartspelregels, online kaartspel, spelinstructies, spelgids",
         "title": "Hoe speel je Skymo | Skyjo Kaartspel Online"
       },
-      "title": "Skyjo spelregels"
+      "title": "Spelregels",
+      "play-button": "Speel gratis online!"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Leaderboard | Skymo - Skyjo Online Kaartspel",
+        "description": "Bekijk de top spelers op Skymo! Bekijk de beste Skymo spelers en hun win rates op onze competitieve ranglijst.",
+        "keywords": "Skymo,Skyjo,leaderboard,topspelers,ranglijsten,beste spelers,winstpercentage,competitief,online kaartspel"
+      },
+      "title": "Leaderboard",
+      "subtitle": "Ontdek de beste Skyjo-spelers en strijd om de topposities!",
+      "lastUpdated": "Laatst bijgewerkt: {date}",
+      "columns": {
+        "rank": "Rang",
+        "player": "Speler",
+        "wins": "Overwinningen",
+        "totalGames": "Totaal aantal spellen",
+        "winRate": "Winstpercentage"
+      },
+      "noData": "Nog geen spelers gevonden in het leaderboard.",
+      "error": "De ranglijst kan momenteel niet geladen worden.",
+      "tryAgainLater": "Probeer het later opnieuw.",
+      "callToAction": {
+        "guest": {
+          "title": "Klaar om te strijden?",
+          "description": "Meld je aan om je voortgang bij te houden en te strijden met spelers over de hele wereld!",
+          "signup": "Meld je nu aan"
+        },
+        "authenticated": {
+          "title": "Klaar om te strijden?",
+          "description": "Spring in een spel en klim op de ranglijst!",
+          "createGame": "Spel maken",
+          "joinGame": "Speel nu"
+        }
+      },
+      "errorActions": {
+        "refresh": "Vernieuwen",
+        "backHome": "Terug naar Home"
+      }
+    },
+    "Signup": {
+      "head": {
+        "title": "Word lid van Skymo | Speel Skyjo gratis online",
+        "description": "Speel Skyjo online met vrienden! Maak een gratis Skymo-account aan om je voortgang bij te houden, exclusieve content te ontgrendelen en deel te nemen aan een levendige community.",
+        "keywords": "skymo,speel skyjo online,skyjo online spel,meld je aan voor skyjo,maak een skymo account,word lid van skymo,skymo skyjo,online kaartspel,multiplayer skyjo,gratis skyjo spel,speel skyjo met vrienden,skyjo voortgang bijhouden, skyjo community,exclusieve skyjo content"
+      },
+      "title": "Aanmelden",
+      "or": "Of",
+      "form": {
+        "email": {
+          "label": "E-mail",
+          "button": "Ga verder met e-mail"
+        }
+      },
+      "already-have-account": {
+        "description": "Heb je al een account?",
+        "link": "Inloggen"
+      },
+      "advantages": {
+        "title": "Ga op avontuur",
+        "subtitle": "Maak een account aan om een wereld aan mogelijkheden te ontgrendelen en je ervaring te verbeteren.",
+        "features": {
+          "track-progress": {
+            "title": "Volg je voortgang",
+            "description": "Zie hoe je scoort ten opzichte van anderen en volg je vooruitgang in de loop van de tijd."
+          },
+          "personalized-experience": {
+            "title": "Gepersonaliseerde ervaring",
+            "description": "Ontvang aanbevelingen en content die speciaal voor jou zijn afgestemd."
+          },
+          "join-community": {
+            "title": "Word lid van de community",
+            "description": "Verbind je met mede-avonturiers, deel tips en maak nieuwe vrienden."
+          },
+          "exclusive-content": {
+            "title": "Exclusieve inhoud",
+            "description": "Krijg toegang tot speciale uitdagingen, beloningen en vroege updates."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "text": "Door verder te gaan, ga je akkoord met onze",
+        "terms-link": "Servicevoorwaarden",
+        "and": "en",
+        "privacy-link": "Privacybeleid"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Login | Skymo - Skyjo Online Kaartspel",
+        "description": "Log in op Skymo om Skyjo online te spelen. Voer je e-mailadres en wachtwoord in om toegang te krijgen tot je account en direct te beginnen met spelen.",
+        "keywords": "Skymo,Skyjo,login,online kaartspel,Skyjo spel,kaartspel,online spel"
+      },
+      "title": "Inloggen",
+      "or": "Of",
+      "form": {
+        "login": {
+          "label": "E-mailadres of gebruikersnaam"
+        },
+        "password": {
+          "label": "Wachtwoord"
+        },
+        "submit": "Inloggen"
+      },
+      "signup": {
+        "description": "Nog geen account?",
+        "link": "Meld je nu aan!"
+      },
+      "forgot-password": "Wachtwoord vergeten?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Wachtwoord Vergeten | Skymo - Skyjo Online Kaartspel",
+        "description": "Reset je Skyjo wachtwoord om weer toegang te krijgen tot je account en blijf Skyjo online spelen met vrienden.",
+        "keywords": "Skymo,Skyjo,wachtwoord vergeten,wachtwoord opnieuw instellen,account herstel,online kaartspel"
+      },
+      "title": "Wachtwoord vergeten",
+      "description": "Voer je e-mailadres in en we sturen je een link om je wachtwoord opnieuw in te stellen",
+      "form": {
+        "email": {
+          "label": "E-mailadres"
+        },
+        "submit": "Verzend resetlink",
+        "sending": "Verzenden..."
+      },
+      "success": {
+        "title": "Controleer je e-mail",
+        "message": "Als er een account met dit e-mailadres bestaat, is er een link om je wachtwoord opnieuw in te stellen verzonden.",
+        "back": "Terug naar Login"
+      },
+      "back": "Terug naar Login"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Wachtwoord opnieuw instellen | Skymo - Skyjo Online Kaartspel",
+        "description": "Maak een nieuw wachtwoord aan voor je Skyjo-account om weer toegang te krijgen en verder te spelen met Skyjo online.",
+        "keywords": "Skymo,Skyjo,wachtwoord opnieuw instellen,nieuw wachtwoord,account herstellen,online kaartspel"
+      },
+      "title": "Wachtwoord opnieuw instellen",
+      "description": "Voer hieronder je nieuwe wachtwoord in.",
+      "form": {
+        "password": {
+          "label": "Nieuw wachtwoord"
+        },
+        "confirmPassword": {
+          "label": "Bevestig nieuw wachtwoord"
+        },
+        "submit": "Wachtwoord opnieuw instellen",
+        "resetting": "Bezig met resetten..."
+      },
+      "success": {
+        "title": "Wachtwoord succesvol gereset",
+        "message": "Je wachtwoord is opnieuw ingesteld. Je kunt nu inloggen met je nieuwe wachtwoord.",
+        "back": "Login"
+      },
+      "back": "Terug naar login"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "E-mailwijziging teruggedraaid",
+        "message": "Je e-mailadres is succesvol teruggezet en je account is beveiligd. Controleer je e-mail voor instructies om je wachtwoord opnieuw in te stellen.",
+        "close": "Je kunt deze pagina nu sluiten."
+      },
+      "failed": {
+        "title": "E-mailwijziging terugdraaien mislukt"
+      },
+      "back": "Terug naar login"
+    },
+    "OAuthCallbackPage": {
+      "title": "Doorsturen bezig…"
+    },
+    "Onboarding": {
+      "title": "Onboarding bezig...",
+      "subtitle": "Voltooi je profiel en duik in het Skymo-avontuur!",
+      "form": {
+        "name": {
+          "label": "Spelersnaam",
+          "placeholder": "Jeff",
+          "description": "Getoond aan andere spelers in spellen"
+        },
+        "username": {
+          "label": "Naam",
+          "placeholder": "jeff",
+          "description": "Voor login en profiel"
+        },
+        "password": {
+          "label": "Maak een wachtwoord aan",
+          "placeholder": "Voer een veilig wachtwoord in"
+        },
+        "submit": "Klaar om te spelen!"
+      },
+      "head": {
+        "title": "Onboarding | Skymo - Skyjo Online Kaartspel",
+        "description": "Voltooi je profiel en duik in het Skymo-avontuur!",
+        "keywords": "Skymo,Skyjo,onboarding,profiel,avontuur,online kaartspel"
+      },
+      "loading": "Je profiel wordt geladen...",
+      "success": "Onboarding succesvol voltooid! Doorsturen naar de startpagina..."
+    },
+    "Verify": {
+      "head": {
+        "title": "Verifieer E-mail | Skymo - Skyjo Online Kaartspel",
+        "description": "Verifieer je e-mailadres om je Skymo account te voltooien en te beginnen met Skyjo online spelen met vrienden.",
+        "keywords": "Skymo,Skyjo,e-mailverificatie,account verifiëren,online kaartspel"
+      },
+      "title": "Verifieer je e-mailadres",
+      "description": "We hebben een 6-cijferige code naar je e-mailadres gestuurd. Voer deze hieronder in.",
+      "resend": {
+        "countdown": "Code opnieuw verzenden in {seconds}s",
+        "prompt": "Code niet ontvangen?",
+        "button": "Nieuwe code aanvragen",
+        "sending": "Versturen..."
+      },
+      "toast": {
+        "success": "E-mail succesvol geverifieerd!",
+        "resend-success": "Er is een nieuwe e-mail verzonden",
+        "email-already-sent": "Er is al een e-mail verzonden in de afgelopen 5 minuten. Controleer je inbox of klik op \"Nieuwe code aanvragen\" om een nieuwe te verzenden"
+      },
+      "loading": "Je profiel wordt geladen..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'s Profiel | Skymo - Skyjo Online Kaartspel",
+        "description": "Bekijk het profiel van {username} op Skymo. Bekijk hun spelstatistieken, recente activiteiten en prestaties in Skyjo online.",
+        "keywords": "Skymo,Skyjo,gebruikersprofiel,spelersstatistieken,spelstatistieken,recente spellen,prestaties,online kaartspel"
+      },
+      "not-found": {
+        "title": "Gebruiker niet gevonden",
+        "description": "De gebruiker \"{username}\" bestaat niet of heeft mogelijk zijn gebruikersnaam gewijzigd.",
+        "back-to-home": "Terug naar startpagina"
+      },
+      "error": {
+        "title": "Er ging iets mis",
+        "description": "Er is een fout opgetreden bij het laden van dit profiel. Probeer het later opnieuw.",
+        "back-to-home": "Terug naar startpagina"
+      },
+      "stats": {
+        "total-games": "Totaal aantal spellen",
+        "win-rate": "Winstpercentage",
+        "average-rank": "Gemiddelde Rang",
+        "public": "Publiek",
+        "private": "Privé"
+      },
+      "sections": {
+        "achievements": "Prestaties",
+        "achievements-coming-soon": "Prestatiesysteem binnenkort beschikbaar!",
+        "recent-activity": "Recente Activiteit"
+      },
+      "recent-activity": {
+        "no-activity": "Geen recente activiteit om weer te geven.",
+        "game-code": "Spel #{code}",
+        "rank": "Rang #{rank}",
+        "winner": "Winnaar"
+      },
+      "search": {
+        "placeholder": "Zoek gebruikersnaam"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Accountinstellingen | Skymo - Skyjo Online Kaartspel",
+        "description": "Beheer je accountinstellingen op Skymo. Wijzig je weergavenaam, gebruikersnaam, e-mailadres, wachtwoord en accountvoorkeuren."
+      },
+      "title": "Accountinstellingen",
+      "description": "Beheer je account en persoonlijke informatie.",
+      "Navigation": {
+        "profile": "Profiel",
+        "account": "Account",
+        "password": "Wachtwoord"
+      },
+      "buttons": {
+        "save": "Wijzigingen opslaan",
+        "saving": "Opslaan...",
+        "delete-account": "Account verwijderen",
+        "confirm-delete": "Ja, Verwijder Mijn Account"
+      },
+      "messages": {
+        "save-success": "Instellingen succesvol opgeslagen!",
+        "save-error": "Instellingen opslaan mislukt. Probeer het opnieuw.",
+        "delete-confirmation": "Weet je zeker dat je je account wilt verwijderen? Deze actie kan niet ongedaan worden gemaakt en al je gegevens worden permanent verwijderd.",
+        "username-taken": "Deze gebruikersnaam is al in gebruik.",
+        "email-taken": "Deze e-mail is al in gebruik.",
+        "password-incorrect": "Je huidige wachtwoord is onjuist.",
+        "account-deletion-scheduled": "Je verzoek tot accountverwijdering is in behandeling genomen en wordt binnen 48 uur verwerkt. Je ontvangt een e-mail ter bevestiging van de verwijdering.",
+        "account-deletion-failed": "Er is een fout opgetreden bij het verwijderen van je account. Probeer het opnieuw."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profiel",
+      "fields": {
+        "name": {
+          "label": "Weergavenaam",
+          "description": "Je naam wordt weergegeven aan andere spelers in spellen.",
+          "placeholder": "Voer je naam in",
+          "submit": "Naam opslaan"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Je avatar weergegeven op je profiel.",
+          "placeholder": "Selecteer je avatar",
+          "submit": "Avatar opslaan"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Account",
+      "fields": {
+        "username": {
+          "label": "Gebruikersnaam",
+          "description": "Je unieke gebruikersnaam die wordt gebruikt voor je profiel-URL.",
+          "placeholder": "Voer je gebruikersnaam in",
+          "submit": "Gebruikersnaam opslaan"
+        },
+        "email": {
+          "label": "E-mailadres",
+          "description": "Je e-mailadres dat wordt gebruikt voor inloggen en belangrijke meldingen. Voor de veiligheid wordt er een waarschuwingsmail naar je huidige adres gestuurd wanneer je het wijzigt.",
+          "placeholder": "Voer je e-mailadres in",
+          "submit": "E-mail opslaan"
+        },
+        "settings-sync": {
+          "label": "Instellingen synchroniseren",
+          "description": "Synchroniseer je instellingen op al je apparaten wanneer je bent ingelogd.",
+          "enable-sync": "Synchronisatie van instellingen inschakelen",
+          "disable-sync": "Synchronisatie van instellingen uitschakelen",
+          "status": {
+            "enabled": "Ingeschakeld",
+            "disabled": "Uitgeschakeld",
+            "syncing": "Synchroniseren...",
+            "offline": "Offline",
+            "error": "Synchronisatie mislukt"
+          },
+          "last-sync": "Laatste synchronisatie: {date}",
+          "sync-now": "Nu synchroniseren"
+        }
+      },
+      "delete-account": {
+        "title": "Verwijder mijn account",
+        "description": "Verwijder je account en alle bijbehorende gegevens. Deze actie kan niet ongedaan worden gemaakt en al je gegevens worden permanent verwijderd.",
+        "button": "Account verwijderen",
+        "confirmation": {
+          "description": "Door te bevestigen start een aftelling van 48 uur: je ontvangt een e-mail met een link om de verwijdering te annuleren als je van gedachten verandert. Je account blijft gedurende deze periode toegankelijk. Na 48 uur wordt deze permanent verwijderd en ontvang je een bevestigingsmail.",
+          "input-label": "Type DELETE om te bevestigen",
+          "input-placeholder": "Verwijderen",
+          "cancel-button": "Annuleren",
+          "delete-button": "Verwijder mijn account"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Wachtwoord wijzigen",
+      "fields": {
+        "password": {
+          "label": "Wachtwoord",
+          "description": "Verander je wachtwoord.",
+          "current-password": "Huidig wachtwoord",
+          "new-password": "Nieuw wachtwoord",
+          "confirm-password": "Bevestig nieuw wachtwoord",
+          "current-placeholder": "Voer je huidige wachtwoord in",
+          "new-placeholder": "Voer je nieuwe wachtwoord in",
+          "confirm-placeholder": "Bevestig je nieuwe wachtwoord",
+          "submit": "Wachtwoord opslaan"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Je huidige wachtwoord is onjuist."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Ongeldige token",
+      "success": {
+        "title": "Accountverwijdering geannuleerd",
+        "description": "Je accountverwijdering is succesvol geannuleerd. Je account is veilig en zal niet worden verwijderd.",
+        "secure-message": "Je account is nu beveiligd en blijft actief. Je kunt je account normaal blijven gebruiken."
+      },
+      "failed": {
+        "title": "Annulering mislukt",
+        "description": "We konden je accountverwijdering niet annuleren. Probeer het opnieuw of neem contact op met de support.",
+        "general-error": "Er ging iets mis bij het annuleren van de verwijdering van je account. Probeer het opnieuw of neem contact op met de support.",
+        "help-message": "Er ging iets mis bij het annuleren van de verwijdering van je account. Probeer het opnieuw of neem contact op met de support."
+      },
+      "expired": {
+        "title": "Annuleringslink verlopen",
+        "description": "Deze annuleringslink is verlopen. Als je je account wilt behouden, neem dan contact op met de support.",
+        "help-message": "De annuleringsperiode van 48 uur is verlopen. Neem contact op met de support als je hulp nodig hebt."
+      },
+      "actions": {
+        "return-homepage": "Terug naar startpagina"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Gebruiksvoorwaarden | Skymo - Skyjo Online Kaartspel",
+        "description": "Lees de Servicevoorwaarden voor Skymo, het online Skyjo kaartspelplatform. Leer meer over gebruikersverplichtingen, servicegebruik en platformbeleid.",
+        "keywords": "Gebruiksvoorwaarden,Skymo,Skyjo,online kaartspel,gebruikersovereenkomst,platformregels"
+      },
+      "content": {
+        "title": "Servicevoorwaarden",
+        "last-update": {
+          "text": "Laatst bijgewerkt: {date}",
+          "date-format": "DD MMMM JJJJ om HH:mm"
+        },
+        "welcome": "Welkom bij <b>skymo.online</b>, een online multiplayer kaartspel beheerd door Maxent Rouault. Door deze website te bezoeken of te gebruiken, ga je akkoord met deze Gebruiksvoorwaarden. Als je niet akkoord gaat, mag je het platform niet gebruiken.",
+        "operator": {
+          "title": "1. Operator",
+          "content": "Deze website wordt beheerd door:",
+          "name": "Maxent Rouault",
+          "contact": "Contact: {email}",
+          "location": "Frankrijk (niet-commerciële individuele exploitant)"
+        },
+        "eligibility": {
+          "title": "2. Geschiktheid",
+          "content": "Je kunt de dienst gebruiken als gast of door een account te registreren. Door deze website te gebruiken, bevestig je dat:",
+          "items": {
+            "1": "Je bent minstens 13 jaar oud (of de minimumleeftijd die in jouw land geldt).",
+            "2": "Als je jonger bent dan 18 jaar, heb je toestemming van een wettelijke voogd."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Account & Gastgebruik",
+          "items": {
+            "1": "Gastspelers kunnen spelen zonder registratie, maar sommige functies kunnen beperkt zijn.",
+            "2": "Geregistreerde gebruikers moeten een geldig e-mailadres en een geldige gebruikersnaam opgeven.",
+            "3": "Je bent verantwoordelijk voor je account en activiteiten. Je mag je login niet delen.",
+            "4": "Je kunt je account op elk moment verwijderen. Na 48 uur worden je persoonlijke gegevens geanonimiseerd of permanent verwijderd."
+          }
+        },
+        "data-storage": {
+          "title": "4. Gegevensopslag",
+          "content": "We slaan de volgende gegevens op, afhankelijk van jouw gebruik:",
+          "all-players": {
+            "title": "Voor alle spelers:",
+            "items": {
+              "1": "Weergavenaam, avatar, score en chatberichten in het spel, **zolang er minstens één speler is ingelogd**.",
+              "2": "IP-adressen kunnen tijdelijk worden opgeslagen voor beveiligings- en moderatiedoeleinden."
+            }
+          },
+          "registered-players": {
+            "title": "Voor geregistreerde spelers:",
+            "items": {
+              "1": "E-mail, gebruikersnaam, avatar, spelstatistieken en optioneel gekoppelde accounts (bijv. Google).",
+              "2": "Analysedata zoals gameplaygedrag, sessiefrequentie of functiegebruik <b>kunnen worden verzameld om het spel te verbeteren</b>."
+            }
+          },
+          "storage-location": "Alle gegevens worden opgeslagen in de <b>Europese Unie</b> en verwerkt in overeenstemming met het <link>Privacybeleid</link>."
+        },
+        "analytics-tracking": {
+          "title": "5. Analyse & Tracking",
+          "content": "Om de service te verbeteren en de gebruikerservaring te personaliseren, kunnen we:",
+          "items": {
+            "1": "Gebruik <b>analysetools</b> (bijv. PostHog of vergelijkbaar) om gebruiks- en gameplaypatronen te volgen.",
+            "2": "Analyseer gebruikersgedrag om bugs op te sporen, matchmaking te verbeteren of functies te ontwerpen.",
+            "3": "In de toekomst kunnen we deze gegevens gebruiken om <b>gepersonaliseerde inhoud of advertenties te leveren</b>, met inachtneming van jouw privacyrechten onder de AVG."
+          },
+          "data-rights": "Je kunt bezwaar maken tegen tracking of verwijdering van persoonlijke gegevens aanvragen door contact met ons op te nemen."
+        },
+        "ads-monetization": {
+          "title": "6. Advertenties & Monetisatie",
+          "content": "Het platform kan advertenties weergeven, waaronder advertenties van derden of contextuele advertenties. In de toekomst kunnen er **gepersonaliseerde advertenties** worden getoond aan ingelogde gebruikers op basis van gebruiksgegevens.",
+          "consent": "We zullen duidelijke kennisgeving en toestemmingsmechanismen bieden indien en wanneer gedrags- of gepersonaliseerde advertenties worden geïntroduceerd."
+        },
+        "user-conduct": {
+          "title": "7. Gebruikersgedrag",
+          "content": "Je gaat akkoord met:",
+          "items": {
+            "1": "Wees respectvol en volg de fair play-regels.",
+            "2": "Niet valsspelen, lastigvallen, anderen imiteren, of aanstootgevende gebruikersnamen of avatars gebruiken.",
+            "3": "Spam niet en misbruik de chat of andere communicatiefuncties niet."
+          },
+          "enforcement": "We behouden ons het recht voor om gebruikers die deze regels overtreden te verbannen of te beperken."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderatie & Melden",
+          "items": {
+            "1": "Chatberichten worden tijdelijk opgeslagen en kunnen volledig worden bewaard voor spellen met geregistreerde spelers.",
+            "2": "We kunnen berichten bewaren wanneer een speler een melding indient of als moderatie vereist is.",
+            "3": "Je kunt misbruik melden via e-mail (zie contactsectie).",
+            "4": "Moderatieacties en meldingen kunnen worden gelogd om transparantie en eerlijkheid te garanderen."
+          }
+        },
+        "availability": {
+          "title": "9. Beschikbaarheid",
+          "content": "De dienst wordt geleverd \"zoals hij is\". We kunnen de website of functies op elk moment zonder voorafgaande kennisgeving wijzigen, opschorten of stopzetten."
+        },
+        "intellectual-property": {
+          "title": "10. Intellectueel Eigendom",
+          "content": "Alle originele content, artwork en code behoren toe aan Maxent Rouault, tenzij anders vermeld. Je mag geen enkel deel van de website hergebruiken of herverspreiden zonder toestemming."
+        },
+        "legal": {
+          "title": "11. Juridisch",
+          "jurisdiction": "Deze site wordt beheerst door het Franse recht en voldoet aan de Algemene Verordening Gegevensbescherming (AVG).",
+          "disputes": "Juridische geschillen zullen worden behandeld door Franse rechtbanken."
+        },
+        "contact": {
+          "title": "12. Contact",
+          "general": "Algemene vragen: <email></email>"
+        }
+      }
     }
   },
   "components": {
@@ -228,7 +794,17 @@
       "unread-messages": "{count} ongelezen bericht{count, plural, =1 {} other {en}}"
     },
     "CopyLink": {
-      "message": "Link gekopieerd!"
+      "message": "Link gekopieerd!",
+      "copy": {
+        "button-title": "Kopieer link",
+        "popover": "Link gekopieerd!"
+      },
+      "share": {
+        "title": "Doe mee met mijn Skyjo-spel!",
+        "text": "Speel Skyjo online met me! Klik op de link om deel te nemen aan het spel.",
+        "button-title": "Deel spel",
+        "tooltip": "Klik hier om dit spel te delen!"
+      }
     },
     "DiscardPile": {
       "title": "Aflegstapel",
@@ -276,7 +852,8 @@
       },
       "attribution": {
         "avatars": "Avatars gemaakt door Freepik - Flaticon"
-      }
+      },
+      "translations": "Help mee het spel te vertalen!"
     },
     "GameLobbyButtons": {
       "join-game-button": "Doe mee met het spel",
@@ -478,16 +1055,72 @@
         "volume": {
           "label": "Volume ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Chat",
+        "chat-visibility": "Chatzichtbaarheid",
+        "chat-notification-size": {
+          "label": "Chatmeldinggrootte",
+          "values": {
+            "small": "Klein",
+            "normal": "Normaal",
+            "big": "Groot"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobiel",
+        "switch-to-player-who-is-playing": "Automatisch wisselen naar de speler die aan de beurt is",
+        "show-preview-opponents-cards": "Toon een voorbeeld van de kaarten van tegenstanders in de lijst met tegenstanders"
+      },
+      "gameplay": {
+        "title": "Gameplay",
+        "gameboard": {
+          "title": "Spelbord",
+          "size": {
+            "label": "Grootte van je spelbord",
+            "big-warning": "Kan het scherm op mobiel verbreken",
+            "values": {
+              "normal": "Normaal",
+              "big": "Groot"
+            }
+          },
+          "enlarge-active-player-board": "Vergroot het speelbord van de speler wiens beurt het is"
+        },
+        "timer": {
+          "title": "Timer",
+          "label": "Timerweergavemodus",
+          "description": "Slimme modus toont de timer halverwege en de laatste 15 seconden.",
+          "modes": {
+            "never": "Nooit",
+            "smart": "Slim",
+            "always": "Altijd"
+          }
+        }
+      },
+      "account": {
+        "title": "Account",
+        "sync": {
+          "label": "Accountinstellingen",
+          "description": "Synchroniseer je instellingen op al je apparaten wanneer je bent ingelogd.",
+          "enabled": "Ingeschakeld",
+          "disabled": "Uitgeschakeld",
+          "syncing": "Synchroniseren...",
+          "offline": "Offline",
+          "error": "Synchronisatie mislukt",
+          "lastSync": "Laatste synchronisatie: {date}"
+        }
       }
     },
     "Avatar": {
       "context-menu": {
-        "report": "Rapporteer {username}",
-        "kick": "Kick {username}",
-        "vote-to-kick": "Stem om {username} te verwijderen",
-        "ban": "Ban {username}",
-        "mute": "Dempen {username}",
-        "unmute": "Dempen opheffen voor {username}"
+        "report": "Meld {name}",
+        "kick": "Kick {name}",
+        "vote-to-kick": "Stem om {name} te verwijderen",
+        "ban": "Ban {name}",
+        "mute": "Mute {name}",
+        "unmute": "Demute {name}",
+        "transfer-host": "{name} is nu de host"
       }
     },
     "KickVote": {
@@ -551,8 +1184,8 @@
       }
     },
     "ReportDialog": {
-      "title": "Rapporteer {username}",
-      "description": "Meld de gebruikersnaam of een bericht van {username} als het ongepast lijkt.",
+      "title": "Meld {name}",
+      "description": "Meld de naam of een bericht van {name} als dit ongepast lijkt.",
       "report-message": "Een bericht rapporteren",
       "select-message": "Selecteer het bericht om te rapporteren",
       "select-message-placeholder": "Selecteer een bericht",
@@ -564,7 +1197,46 @@
           "title": "Rapport ingediend",
           "description": "Bedankt voor je melding, je hebt bijgedragen aan het verbeteren van de kwaliteit van het spel."
         }
+      },
+      "report-name": "Meld de naam van de speler",
+      "comment": "Extra context (optioneel)",
+      "comment-placeholder": "Geef extra context over dit rapport..."
+    },
+    "Banner": {
+      "title": "Ik heb <gform>jouw feedback</gform> nodig om de toekomst van Skyjo vorm te geven!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Regels",
+        "leaderboard": "Leaderboard"
       }
+    },
+    "LoginButton": {
+      "login": "Doe mee met het plezier!"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Doorgaan met Google"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Wachtwoorden komen overeen",
+      "minimum-characters": "Minstens 10 tekens",
+      "lowercase-letter": "Minstens één kleine letter",
+      "capital-letter": "Minstens één hoofdletter",
+      "number": "Minstens één cijfer",
+      "special-character": "Minstens één speciaal teken"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Controleren...",
+        "available": "Gebruikersnaam beschikbaar",
+        "taken": "Al bezet!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Opnieuw verbinden met spel",
+      "description": "Je zat in een spel dat bezig is. Wil je opnieuw verbinden?",
+      "reconnect-button": "Ja, opnieuw verbinden",
+      "dismiss-button": "Nee, sluiten"
     }
   },
   "utils": {
@@ -585,17 +1257,19 @@
       "game-ended": "Game over!"
     },
     "chat": {
-      "player-joined": "{username} heeft zich bij het spel gevoegd",
-      "player-left": "{username} heeft het spel verlaten",
-      "player-reconnect": "{username} is opnieuw verbonden met het spel",
+      "player-joined": "{name} is het spel komen spelen",
+      "player-left": "{name} heeft het spel verlaten",
+      "player-reconnect": "{name} is opnieuw verbonden met het spel",
       "argument-required": "Eén of meer argumenten zijn vereist voor commando: {command}",
-      "player-already-muted": "{username} heeft al een mute",
-      "player-muted": "{username} heeft nu een mute gekregen",
-      "player-not-muted": "{username} is niet gedempt",
-      "player-unmuted": "{username} is niet langer gedempt",
-      "wizz-sent": "Je hebt een wizz gestuurd naar {targetUsername}!",
-      "wizz-self": "Je bent gewizzd door {initiatorUsername}!",
-      "wizz-other": "{initiatorUsername} heeft {targetUsername} gewizzd!"
+      "player-already-muted": "{name} is al gedempt",
+      "player-muted": "{name} is nu gedempt",
+      "player-not-muted": "{name} is niet gedempt",
+      "player-unmuted": "{name} is niet langer gedempt",
+      "wizz-sent": "Je hebt een wizz gestuurd naar {targetName}!",
+      "wizz-self": "Je bent gewizzed door {initiatorName}!",
+      "wizz-other": "{initiatorName} heeft {targetName} gewizzed!",
+      "welcome": "Wees alsjeblieft aardig en respectvol. Je kunt {isMobile, select, true {lang indrukken} other {met de rechtermuisknop klikken}} op berichten om spelers indien nodig het zwijgen op te leggen of te rapporteren.",
+      "host-transferred": "{name} is nu de host"
     },
     "avatar": {
       "bee": "bij",
@@ -638,6 +1312,9 @@
         },
         "game-not-found": {
           "description": "Het spel dat je zoekt bestaat niet"
+        },
+        "player-already-connected": {
+          "description": "Je bent al verbonden met dit spel vanuit een andere sessie"
         }
       }
     }
@@ -681,8 +1358,103 @@
       },
       "report-against-you": {
         "title": "Je bent gekickt vanwege een melding",
-        "description": "Uw gebruikersnaam of een van uw berichten is gerapporteerd en ongepast bevonden. Gelieve dit gedrag niet te herhalen."
+        "description": "Je naam of een van je berichten is gemeld en als ongepast beoordeeld. Gelieve dit gedrag niet te herhalen."
+      }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Je hebt geen toestemming om de host over te dragen",
+        "description": "Alleen de huidige host kan de hostrol overdragen aan een andere speler"
+      },
+      "player-not-found": {
+        "title": "De speler bestaat niet",
+        "description": "De speler naar wie je de host probeert over te zetten, bestaat niet in het spel"
+      },
+      "player-not-connected": {
+        "title": "De speler is niet verbonden",
+        "description": "De speler naar wie je de host probeert over te zetten, is momenteel niet verbonden met het spel"
+      },
+      "host-transferred": {
+        "title": "Host succesvol overgedragen",
+        "description": "{newHostName} is nu de host van het spel"
+      },
+      "you-are-now-host": {
+        "title": "Je bent nu de host",
+        "description": "{previousHostName} heeft de rol van host aan jou overgedragen"
+      },
+      "unexpected-error": {
+        "title": "Er is een onverwachte fout opgetreden",
+        "description": "Er is een onverwachte fout opgetreden tijdens het overdragen van de host"
       }
     }
+  },
+  "errors": {
+    "invalid-credentials": "De e-mail of het wachtwoord dat je hebt ingevoerd is onjuist. Probeer het opnieuw.",
+    "logout-failed": "We konden je niet uitloggen. Sluit je browser om de sessie te beëindigen.",
+    "session-not-found": "Je sessie is verlopen of ongeldig. Log opnieuw in.",
+    "session-invalid": "Je sessie is ongeldig. Log opnieuw in om verder te gaan.",
+    "session-expired": "Je sessie is verlopen. Log opnieuw in om verder te gaan.",
+    "session-token-missing": "Je sessietoken ontbreekt. Log in om een nieuwe te krijgen.",
+    "username-taken": "Deze gebruikersnaam is al in gebruik. Kies een andere.",
+    "onboarding-error": "Er was een probleem met het voltooien van je profiel. Probeer het opnieuw.",
+    "reset-token-invalid": "Het reset-token dat je hebt opgegeven is ongeldig. Vraag een nieuwe aan.",
+    "reset-token-expired": "Je wachtwoordhersteltoken is verlopen. Vraag een nieuwe aan.",
+    "password-reset-failed": "We konden je wachtwoord niet opnieuw instellen. Probeer het opnieuw.",
+    "forgot-password-error": "Er was een probleem bij het verwerken van je wachtwoordherstelverzoek. Probeer het later opnieuw.",
+    "reset-password-error": "We konden je wachtwoord niet opnieuw instellen. Probeer het opnieuw.",
+    "oauth-restart-process": "Er ging iets mis tijdens de authenticatie. Probeer opnieuw in te loggen.",
+    "oauth-id-token-missing": "We hebben geen ID-token ontvangen van de authenticatieprovider. Probeer het opnieuw.",
+    "oauth-account-creation-failed": "We konden geen account aanmaken met de informatie van je provider. Probeer het opnieuw.",
+    "oauth-login-initiation-failed": "We konden het inlogproces niet starten. Probeer het over een paar ogenblikken opnieuw.",
+    "verify-session-error": "We konden je sessie niet verifiëren. Log alsjeblieft uit en weer in.",
+    "signup-error": "We konden je account op dit moment niet aanmaken. Probeer het later opnieuw.",
+    "login-error": "Er was een probleem bij het inloggen. Probeer het opnieuw.",
+    "login-invalid-credentials": "De e-mail of het wachtwoord dat je hebt ingevoerd is onjuist. Probeer het opnieuw.",
+    "logout-error": "Er is een onverwachte fout opgetreden tijdens het uitloggen.",
+    "check-username-error": "We konden niet controleren of de gebruikersnaam beschikbaar is. Probeer het opnieuw.",
+    "unknown-auth-error": "Er is een onbekende authenticatiefout opgetreden. Probeer het opnieuw.",
+    "creation-failed": "We konden de gebruiker op dit moment niet aanmaken. Probeer het opnieuw.",
+    "get-user-error": "We konden het gebruikersprofiel niet ophalen. Probeer het later opnieuw.",
+    "get-user-games-error": "We konden de spellen van de gebruiker niet laden. Vernieuw de pagina.",
+    "get-user-stats-error": "We konden de statistieken van de gebruiker niet laden. Vernieuw de pagina.",
+    "user-not-found": "De gebruiker die je zoekt kon niet gevonden worden.",
+    "username-same-as-current": "Dit is al je gebruikersnaam.",
+    "email-taken": "Dit e-mailadres is al in gebruik. Gebruik alstublieft een ander adres.",
+    "email-same-as-current": "Dit is al jouw e-mailadres.",
+    "invalid-current-password": "Het huidige wachtwoord dat je hebt ingevoerd is onjuist.",
+    "update-name-error": "We konden je naam niet bijwerken. Probeer het opnieuw.",
+    "update-username-error": "We konden je gebruikersnaam niet bijwerken. Probeer het opnieuw.",
+    "update-email-error": "We konden je e-mailadres niet bijwerken. Probeer het opnieuw.",
+    "revert-email-error": "We konden je e-mailadreswijziging niet terugdraaien. Neem contact op met de support.",
+    "update-password-error": "We konden je wachtwoord niet bijwerken. Probeer het opnieuw.",
+    "update-avatar-error": "We konden je avatar niet bijwerken. Probeer het opnieuw.",
+    "delete-account-error": "We konden je verzoek om je account te verwijderen niet verwerken. Probeer het opnieuw.",
+    "cancel-delete-account-error": "We konden je accountverwijdering niet annuleren. Neem contact op met de support.",
+    "unexpected-error": "Er is een onverwachte fout opgetreden. Probeer het opnieuw.",
+    "internal-server-error": "Onze server ondervond een probleem. Probeer het later opnieuw.",
+    "unauthorized": "Je bent niet gemachtigd om deze actie uit te voeren.",
+    "forbidden": "Je hebt geen toestemming om deze bron te benaderen.",
+    "not-found": "De bron die je zoekt kon niet gevonden worden.",
+    "too-many-requests": "Je hebt te veel verzoeken verzonden. Wacht even en probeer het opnieuw.",
+    "ip-not-found": "We konden je IP-adres niet identificeren. Controleer je verbinding.",
+    "invalid-request": "Je verzoek was ongeldig. Controleer de gegevens en probeer het opnieuw.",
+    "send-feedback-error": "We konden je feedback niet versturen. Probeer het opnieuw.",
+    "send-pin-error": "We konden geen verificatie-PIN naar je e-mail sturen. Probeer het opnieuw.",
+    "verify-pin-error": "We konden je pincode niet verifiëren. Probeer het opnieuw.",
+    "invalid-pin": "De pincode die je hebt ingevoerd is onjuist. Probeer het opnieuw.",
+    "expired-pin": "De pincode die je hebt ingevoerd is verlopen. We hebben je een nieuwe gestuurd.",
+    "feedback-error": "We konden je feedback niet versturen. Probeer het opnieuw.",
+    "get-public-games-error": "We konden de openbare spellen niet laden. Probeer het opnieuw.",
+    "invalid-cancellation-token": "Het annuleringstoken is ongeldig. Probeer het opnieuw.",
+    "expired-cancellation-token": "Het annuleringstoken is verlopen. Probeer het opnieuw.",
+    "cancel-account-deletion-error": "We konden je accountverwijdering niet annuleren. Probeer het opnieuw",
+    "oauth-unknown-error": "Er is een onbekende fout opgetreden tijdens het inloggen. Probeer het opnieuw.",
+    "invalid-reversion-token": "Het terugdraaitoken is ongeldig. Probeer het opnieuw.",
+    "expired-reversion-token": "De reversion token is verlopen. Probeer het opnieuw.",
+    "name-min-characters": "Weergavenaam moet minimaal 2 tekens lang zijn",
+    "name-max-characters": "Weergavenaam mag maximaal 20 tekens lang zijn",
+    "username-min-characters": "Gebruikersnaam moet minimaal 3 tekens lang zijn",
+    "username-max-characters": "Gebruikersnaam mag maximaal 20 tekens bevatten",
+    "username-invalid-format": "Gebruikersnaam mag alleen letters, cijfers en underscores bevatten"
   }
 }
