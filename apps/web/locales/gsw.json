@@ -34,7 +34,7 @@
           "title": "Am Afang vom Spiel werded {number} vo dine Charte offe gleit"
         },
         "show-current-score": {
-          "label": "Zeig de aktuelli Spielstand wärend em Spiel"
+          "label": "Zeig d Punktzahl live a"
         },
         "score-to-end-game": {
           "label": "Punkte zum Spiil-Ändi",
@@ -158,7 +158,7 @@
         "title": "Däteschutz",
         "last-update": {
           "text": "Zuletzt aktualisiert: {date}",
-          "date-format": "JJJJ-MM-TT - hh:mmA"
+          "date-format": "MM.JJJJ"
         }
       },
       "head": {
@@ -191,7 +191,213 @@
         "keywords": "Skymo, Skyjo, Skyjo Regle, wie me Skyjo spielt, Skyjo Spiel, Chartegame Regle, Online-Chartegame, Spielaaletige, Gameplay Guide",
         "title": "Wie me Skymo spiilt | Skyjo Chartegame Online"
       },
-      "title": "Skyjo Spielregle"
+      "title": "Spielregle"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Leaderboard | Skymo - Skyjo Online Chärtäspiel",
+        "description": "Lueg der di beschte Spieler uf Skymo a! Entdecke di beschte Skymo-Spieler und ihri Gwinnrate uf eusere Ranglist.",
+        "keywords": "Skymo,Skyjo,Rangliste,Top-Spieler,Rangliste,beschti Spieler,Gwinrate,kompetitiv,Online-Chärtäspiel"
+      },
+      "title": "Rangliste",
+      "subtitle": "Entdecke die beschte Skyjo-Spieler und kämpf um die Top-Plätze!",
+      "lastUpdated": "Zuletzt aktualisiert: {date}",
+      "columns": {
+        "rank": "Rang",
+        "player": "Spieler",
+        "wins": "G'winne",
+        "totalGames": "Total Spiel",
+        "winRate": "Gwinnrate"
+      },
+      "noData": "Noch kei Spieler i de Ranglisti gfunde.",
+      "error": "D Leaderboard chan im Moment nöd glade werde.",
+      "tryAgainLater": "Versuech's spöter no mal."
+    },
+    "Signup": {
+      "head": {
+        "title": "Skymo beitrete | Spiel Skyjo gratis online",
+        "description": "Zock Skyjo online mit Fründä! Erstellsch der es gratis Skymo-Konto, zum din Fortschritt z'verfolge, exklusivi Inhaltsstoffe freizschalte und Teil vo ere lebendige Community z'werde.",
+        "keywords": "skymo, skyjo online spiele, skyjo online Spiel, skyjo registriere dich, skymo Account erstelle, skymo beitrete, skymo skyjo, online Kartenspiel, skyjo Multiplayer, skyjo gratis Spiel, skyjo mit Fründe spiele, skyjo Fortschritt verfolge, skyjo Community, exklusivi skyjo Inhalts"
+      },
+      "title": "Umschriibe",
+      "or": "Oder",
+      "form": {
+        "email": {
+          "label": "E-Mail",
+          "button": "Wiiter mit E-Mail"
+        }
+      },
+      "already-have-account": {
+        "description": "Hesch scho en Account?",
+        "link": "Login"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Login | Skymo - Skyjo Online Chärtenspiel",
+        "description": "Logg di bi Skymo i zum Skyjo online z'spiele. Gib din E-Mail und s Passwörter ii zum uf dini Account z'zugriife und glich z'anoate.",
+        "keywords": "Skymo,Skyjo,Login,Online-Chärtenspiel,Skyjo-Spiel,Chärtenspiel,Online-Spiel"
+      },
+      "title": "Login",
+      "or": "Oder",
+      "form": {
+        "login": {
+          "label": "E-Mail oder Benutzername"
+        },
+        "password": {
+          "label": "Passwort"
+        },
+        "submit": "Login"
+      },
+      "signup": {
+        "description": "Hesch no kei Konto?",
+        "link": "Meld Dich jetzt a!"
+      },
+      "forgot-password": "Passwort vergässe?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Passwort vergässe | Skymo - Skyjo Online Charte-Spiel",
+        "description": "Setz din Skymo-Passwort zrugg, zum wieder Uffgriff uf din Account z'ha und wiiter Skyjo online mit Fründä z'spielä.",
+        "keywords": "Skymo,Skyjo,Passwort vergässe,Passwort zueschdelle,Kontowiederherstellig,Online Charte-Spiel"
+      },
+      "title": "Passwort vergässe",
+      "description": "Gib din E-Mail-Adress ii, mir schicked der denn en Link zum Passwörter z'ändere",
+      "form": {
+        "email": {
+          "label": "E-Mail Adrässe"
+        },
+        "submit": "Reset-Link schicke",
+        "sending": "Sändet..."
+      },
+      "success": {
+        "title": "Check dini E-Mail",
+        "message": "Falls es es Konto mit dere E-Mail-Adress gäbt, isch en Link zum Passwörter z'änder schickt worde.",
+        "back": "Zrugg zum Login"
+      },
+      "back": "Zrugg zum Login"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Passwort z'rücksetze | Skymo - Skyjo Online Charte-Spiel",
+        "description": "Erstell es neu's Passwort für din Skymo Account, damit du wieder druf chasch und Skyjo online witerzocke chasch.",
+        "keywords": "Skymo,Skyjo,Passwort zueschdelle,Neus Passwort,Kontowiederherstellig,Online Charte-Spiel"
+      },
+      "title": "Passwort z'rücksetze",
+      "description": "Gib dini neu Passwörter untere i.",
+      "form": {
+        "password": {
+          "label": "Neues Passwort"
+        },
+        "confirmPassword": {
+          "label": "Passwort bestätige"
+        },
+        "submit": "Passwort zruggsetze",
+        "resetting": "Zurücksetze..."
+      },
+      "success": {
+        "title": "Passwort erfolgreich zrugggsetzt",
+        "message": "Dini Passwörter isch zrugggsetzt worde. Du chasch dich jetzt mit dim neue Passwort aamelde.",
+        "back": "Login"
+      },
+      "back": "Zurück zum Login"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "E-Mail-Änderig zrugg gsetzt",
+        "message": "Dini E-Mail-Änderig isch erfolgreich zrugg gsetzt worde und din Account isch gichert. Bitte lueg i dim E-Mail nach de Anleitung zum Passwort z'änderä.",
+        "close": "Du chasch die Seit jetzt schliesse."
+      },
+      "failed": {
+        "title": "E-Mail-Änderig zruggsetze fehlgschlage"
+      },
+      "back": "Zrugg zum Login"
+    },
+    "OAuthCallbackPage": {
+      "title": "Umlaitig am laufe…"
+    },
+    "Onboarding": {
+      "title": "Onboarding lauft...",
+      "subtitle": "Füll din Profil us und tauch is Skymo-Abentüür ii!",
+      "form": {
+        "name": {
+          "label": "Spielername",
+          "placeholder": "Jeff",
+          "description": "Andere Spieler im Spiel gezeigt"
+        },
+        "username": {
+          "label": "Name",
+          "placeholder": "Jeff",
+          "description": "Zum Login und Profil"
+        },
+        "password": {
+          "label": "Passwort erstelle",
+          "placeholder": "Gib es sicheres Passwort ii"
+        },
+        "submit": "Bereit zum Spiele!"
+      }
+    },
+    "Verify": {
+      "head": {
+        "title": "E-Mail bestätige | Skymo - Skyjo Online Charte-Spiel",
+        "description": "Bestätige dini E-Mail-Adress, zum din Skymo-Account abzschliesse und mit Fründä Skyjo online z'spiele.",
+        "keywords": "Skymo,Skyjo,E-Mail-Verifizierung,Konto verifiziere,Online-Chärtenspil"
+      },
+      "title": "E-Mail verifiziere",
+      "description": "Mir hend der en 6-stellige Code a dini E-Mail-Adress gschickt. Bitte gib en do ini.",
+      "resend": {
+        "countdown": "Code nochmal schicke i de {seconds}s",
+        "prompt": "Code nöd erhale?",
+        "button": "Neues Code afrage",
+        "sending": "Sende..."
+      },
+      "toast": {
+        "success": "E-Mail erfolgreich verifiziert!",
+        "resend-success": "E-Mail isch verschickt worde"
+      }
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'s Profil | Skymo - Skyjo Online Chärtenspil",
+        "description": "Zeig {username}s Profil uf Skymo. Lueg ihre Spielstatistik, jüngschti Aktivität und Errungeschafte i Skyjo online a.",
+        "keywords": "Skymo,Skyjo,User-Profil,Spieler-Statistike,Spiel-Statistike,letschti Spiel,Errungeschafte,Online-Chärtenspiel"
+      },
+      "not-found": {
+        "title": "User nöd gfunde",
+        "description": "Dä Benutzer \"{username}\" existiert nöd oder het villicht sini Benutzername gänderet.",
+        "back-to-home": "Zrugg zum Start"
+      },
+      "error": {
+        "title": "Es isch öppis schief gange",
+        "description": "Mir händ en Fehler gha, wo mir das Profil glade händ. Bitte probiersch es spöter no mal.",
+        "back-to-home": "Zrugg zum Start"
+      },
+      "stats": {
+        "total-games": "Total Spiel",
+        "win-rate": "Gwinnrate",
+        "average-rank": "Durchschnittsrang",
+        "public": "Öffentli",
+        "private": "Privat"
+      },
+      "sections": {
+        "achievements": "Erfolg",
+        "achievements-coming-soon": "Achievements System bald da!",
+        "recent-activity": "Schiinbari Aktivitäte"
+      },
+      "recent-activity": {
+        "no-activity": "Keini letschti Aktivität zum zeige.",
+        "game-code": "Spiel-Code #{code}",
+        "rank": "Rang #{rank}",
+        "winner": "Gwinner"
+      },
+      "search": {
+        "placeholder": "Benutzername sueche"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Kontoi-Stellige | Skymo - Skyjo Online Charte-Spiel"
+      }
     }
   },
   "components": {
@@ -421,12 +627,12 @@
     },
     "Avatar": {
       "context-menu": {
-        "ban": "De {username} spärre",
-        "report": "Rapport {username}",
-        "kick": "De {username} usehaue",
-        "vote-to-kick": "Stimm ab zum {username} usezschmeisse",
-        "mute": "Stumm schalte {username}",
-        "unmute": "Lüüt {username} wider ii"
+        "ban": "Banne {name}",
+        "report": "Meld {name}",
+        "kick": "Kick {name}",
+        "vote-to-kick": "Abstimmig zum Usewärfe vo {name}",
+        "mute": "Mute {name}",
+        "unmute": "Unmute {name}"
       }
     },
     "AppearanceSelect": {
@@ -548,8 +754,8 @@
     "ReportDialog": {
       "report-message": "Meld e Nachricht",
       "select-message": "Wähl d'Nachricht us, wo du wotsch mälde",
-      "title": "Rapport {username}",
-      "description": "Mäld de Benutzername oder e Nachricht vom {username}, wenn's unpassend isch.",
+      "title": "Meldä {name}",
+      "description": "Melde de Name oder e Nachricht vo {name}, wänn's unpassend isch.",
       "select-message-placeholder": "Wähle e Nachricht us",
       "no-messages": "S het keini Nachrichte vo dem Benutzer gfunde",
       "cancel": "Abbräche",
@@ -564,17 +770,17 @@
   },
   "utils": {
     "chat": {
-      "player-left": "{username} het s Spiel verlah",
-      "player-joined": "{username} isch em Spiil biträtte",
-      "player-reconnect": "{username} isch wieder im Spiel debi",
+      "player-left": "{name} isch us em Spiel gange",
+      "player-joined": "{name} isch zum Spiel dazugschtosse",
+      "player-reconnect": "{name} isch wider im Spiel",
       "argument-required": "Für de Befähl {command} bruucht’s eis oder meh Argument",
-      "player-already-muted": "{username} isch scho stummgschalte",
-      "player-muted": "{username} isch jetzt stumm gschalte",
-      "player-not-muted": "De {username} isch nöd stummgschalte",
-      "player-unmuted": "De Stumm-Modus isch für {username} ufghobe worde",
-      "wizz-sent": "Du häsch em {targetUsername} es Wizz gschickt!",
-      "wizz-self": "Du bisch vo {initiatorUsername} awizzed worde!",
-      "wizz-other": "{initiatorUsername} het de {targetUsername} awizzet!"
+      "player-already-muted": "{name} isch scho stumm gschaltet",
+      "player-muted": "{name} isch jetzt stumm gschaltet",
+      "player-not-muted": "{name} isch nöd stummgschalte",
+      "player-unmuted": "{name} isch nöd meh stumm gschaltet",
+      "wizz-sent": "Du hesch em {targetName} en Wizz gschickt!",
+      "wizz-self": "Du bisch vom {initiatorName} wizzed worde!",
+      "wizz-other": "{initiatorName} het {targetName} wizzed!"
     },
     "skymo": {
       "turn": {
@@ -676,7 +882,7 @@
       },
       "report-against-you": {
         "title": "Du bisch usegschmisse worde wägemene Rapport",
-        "description": "Dii Username oder eini vo dine Nachrichte isch gmoldä worde und als unpassend igstuufet worde. Bitte mach das nüme."
+        "description": "Dini Name oder öpis vo dine Nachrichte isch meldet worde und als unpassend bewertet worde. Bitte mach das nöd wieder."
       }
     }
   },
