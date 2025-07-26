@@ -396,7 +396,118 @@
     },
     "Settings": {
       "head": {
-        "title": "Kontoi-Stellige | Skymo - Skyjo Online Charte-Spiel"
+        "title": "Kontoi-Stellige | Skymo - Skyjo Online Charte-Spiel",
+        "description": "Verwalte dinne Account-Einstellungen uf Skymo. Änder dinne Anzeige-Name, Benutzername, E-Mail, Passwort und Account-Präferänze."
+      },
+      "title": "Kontoi-Stellige",
+      "description": "Verwalte dini Account und persönlichi Informatione.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Konto",
+        "password": "Passwort"
+      },
+      "buttons": {
+        "save": "Änderige speichere",
+        "saving": "Speichere...",
+        "delete-account": "Konto lösche",
+        "confirm-delete": "Ja, mini Account lösche"
+      },
+      "messages": {
+        "save-success": "Ihre Einstellungen sind erfolgreich gespeichert!",
+        "save-error": "Einstellungen chönd nöd gspeichered werde. Bitte probiersch nomal.",
+        "delete-confirmation": "Bisch sicher, dass du dini Account lösche wetsch? Dä Schritt chan nöd rückgängig gmacht werde und all dini Date werde permanent glöscht.",
+        "username-taken": "Dä Username isch scho vergitä.",
+        "email-taken": "Die E-Mail-Adressä isch scho iigheit.",
+        "password-incorrect": "D'aktuells Passwoert isch falsch.",
+        "account-deletion-scheduled": "Dini Usschaffige vom Konto isch berücksichtiged worde und wird i 48 Stund bearbeitet. Du wirsch en E-Mail zum Bestätige vo de Usschaffig erhälten.",
+        "account-deletion-failed": "Es isch en Fehler passieret bim Lösche vo dim Konto. Bitte probier's no mal."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Anzeigenaame",
+          "description": "Dini Name, wo anderne Spieler i de Spiel gseht.",
+          "placeholder": "Gib de Name ii",
+          "submit": "Name speichere"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Dini Spielfigur, wo uf dim Profil zeigt wird.",
+          "placeholder": "Wähl dis Avatar",
+          "submit": "Avatar speichere"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Konto",
+      "fields": {
+        "username": {
+          "label": "Benutzername",
+          "description": "Dyni einzigartigi Username, wo für din Profil-URL bruucht wird.",
+          "placeholder": "Gib dini Username ii",
+          "submit": "Benutzername speichere"
+        },
+        "email": {
+          "label": "E-Mail Adrässe",
+          "description": "Dini E-Mail-Adress, wo zum Ialogge und für wichtigi Benachrichtigunge bruucht wird. Aus Sicherheitsgründ wird e Warnig-E-Mail a dini aktuelli Adress gschickt, wänn du si ändersch.",
+          "placeholder": "Gib dini E-Mail-Adress ii",
+          "submit": "E-Mail speichere"
+        }
+      },
+      "delete-account": {
+        "title": "Mini Account lösche",
+        "description": "Din Account und alli dazueghörige Date lösche. Dises Vorgehe cha nöd rückgängig gmacht wärde und dinere Date werded für immer glöscht.",
+        "button": "Accout lösche",
+        "confirmation": {
+          "description": "Mit de Bestätigung starte mer en 48-Stundä-Countdown: Du bisch per E-Mail über en Link informiert, wo dich au wieder zum Stoppe vo de Löschig berechtigt, falls du din Sinn änderisch. Din Account bliebt i dere Zyt zugänglich. Nach 48 Stundä wird er endgültig glesche und du erhältsch en Bestätigungs-E-Mail.",
+          "input-label": "Gib DELETE ii zum Bestätige",
+          "input-placeholder": "LÖSCHEN",
+          "cancel-button": "Abbreche",
+          "delete-button": "Lösch mini Account"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Passwort ändere",
+      "fields": {
+        "password": {
+          "label": "Passwort",
+          "description": "Ändere din Passwörter.",
+          "current-password": "Aktuells Passwort",
+          "new-password": "Neues Passwort",
+          "confirm-password": "Passwort bestätige",
+          "current-placeholder": "Gib dis aktuells Passwort ii",
+          "new-placeholder": "Gib dis nöie Passwort ii",
+          "confirm-placeholder": "Bestätige dis nöie Passwort",
+          "submit": "Passwort speichere"
+        }
+      },
+      "messages": {
+        "password-incorrect": "D'aktuells Passwoert isch falsch."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Ungültigs Token",
+      "success": {
+        "title": "Abbruch vo Kontolöschig",
+        "description": "Dini Account-Löschig isch erfolgreich abbroche. Din Account isch sicher und wird nöd glöscht.",
+        "secure-message": "Dini Account isch jetzt sicher und blibt aktiv. Du chasch din Account normal wiiter bruuche."
+      },
+      "failed": {
+        "title": "Abbrich fehlgschlage",
+        "description": "Mir chönd din Account-Löschig nöd annulliere. Bitte probier's no mehls oder meld dich bim Support.",
+        "general-error": "Eis isch schief gloffe, wänn mir versuächt hend din Account z'lösche. Bitte probier's no einisch oder meld dich bim Support.",
+        "help-message": "Es isch öppis schief gange bi de Versuech, din Account z'lösche. Bitte probier's no mal oder meld dich bim Support."
+      },
+      "expired": {
+        "title": "D Stornierigs-Link isch abgloufe",
+        "description": "Dä Link zum Storniere isch abgloufe. Wenn Du din Account immer no wetsch behalte, meld Dich bi de Support.",
+        "help-message": "D 48-Stundige Annulierigsfrist isch abgloufe. Melde di bi Support, wänn du Hilf bruchsch."
+      },
+      "actions": {
+        "return-homepage": "Zrugg zum Hauptbildschirm"
       }
     }
   },
@@ -623,6 +734,17 @@
         "volume": {
           "label": "Volume ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Chat",
+        "chat-visibility": "Chat Sichtbarkeit",
+        "chat-notification-size": {
+          "label": "Chat-Notifikationsgrössi",
+          "values": {
+            "small": "Chlii",
+            "normal": "Normal"
+          }
+        }
       }
     },
     "Avatar": {
@@ -766,6 +888,18 @@
           "description": "Merssi für din Rapport, du häsch ghulfe d Qualitet vom Spiel z verbessere."
         }
       }
+    },
+    "Banner": {
+      "title": "Ich bruuche <gform>Dini Rückmeldig</gform>, zum d Zuekunft vo Skyjo z'gestalte!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Regle",
+        "leaderboard": "Rangliste"
+      }
+    },
+    "LoginButton": {
+      "login": "Mach mit!"
     }
   },
   "utils": {
