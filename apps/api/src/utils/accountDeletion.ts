@@ -10,7 +10,6 @@ export const accountDeletionQueue = new Queue<AccountDeletionJobData>(
       enableOfflineQueue: true,
     },
     defaultJobOptions: {
-      removeOnComplete: true,
       attempts: 3,
       backoff: {
         type: "exponential",

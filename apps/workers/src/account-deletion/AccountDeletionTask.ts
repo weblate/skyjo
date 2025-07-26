@@ -105,6 +105,7 @@ export class AccountDeletionTask {
             username: username,
             name: "deleted_user",
             avatar: "owl",
+            password: null,
             googleId: null,
             facebookId: null,
             updatedAt: new Date(),
