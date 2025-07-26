@@ -44,7 +44,7 @@
           "title": "{number} Zeiln"
         },
         "show-current-score": {
-          "label": "Zoag an aktuellen Punktestand während am Spui"
+          "label": "Zeig de Punktestand in Echtzeit o"
         },
         "score-to-end-game": {
           "label": "Punkte zum Spui-End",
@@ -86,7 +86,76 @@
         "title": "Datenschutzrichtlinie",
         "last-update": {
           "text": "Letzte Aktualisierung: {date}",
-          "date-format": "JJJJ-MM-TT - hh:mmA"
+          "date-format": "MMMM D, YYYY"
+        },
+        "tldr": {
+          "title": "TL;DR — Wosd wissa muasd",
+          "minimal-data": "Mia speichan bloß a wengal Datn, damitd spuin ko, egal obd eigloggt bist oda ois Gast.",
+          "guest-data": "Gast-Datn (Nåm, Avatar, Punktestand, Chats) wearn nur aufbewahrt, wenn a angmल्डda Spila im Spiel is.",
+          "personal-data": "Dei E-Mail, dei Benuzername und andere persönliche Infos wern nur gspeichert, wennst da an Account machst.",
+          "chat-storage": "De Chats wearn nur vorübergehend aufbewahrt und nur g'speichert, wenn's g'meldet wern.",
+          "privacy-compliance": "Mia hoidn dei Privatsphäre ei und machan wos de DSGVO sogt, ois sicha in da EU gspeichat.",
+          "data-rights": "Du konnst auf Datenzugriff, Korrekturen, Export oder Löschung jederzeit beantragen.",
+          "contact": "Für Frogn: <email></email>"
+        },
+        "operator": {
+          "operator-info": "Des Webseitn wird vo am Privatmenschn betriem:",
+          "title": "Wer betreibt de Webseitn?",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Koana Firma."
+        },
+        "data-collection": {
+          "title": "2. Wos samman ma o?",
+          "guest-players": {
+            "title": "Füa Gastspia:",
+            "note": "Dea Datn werd nur aufbewoat, wenn mindestens oana Spuia im Spui eing'loggt is.",
+            "items": "Namn, wosd beim Spui eiigibst;;Ausgwehlts Avatar;;Spui-Punktestand, Rang und wer gwunna hod;;Chat-Nachrichtn (bleim kurz drin, außer du markierst's)"
+          },
+          "description": "Mia sammanln Daten für registrierte und Gast-Spieler, aber nur, wenn a verbundna (eingloggta) Person beim Spui dabei is.",
+          "logged-users": {
+            "title": "Für eing'loggte Leit (zusätzlich zu ob'n):",
+            "items": "E-Mail-Adressn;;Benutzanam / Anzeigenam;;Avatar (aus vordefinierter Listn);;Gehashdes Passwort oda OAuth ID (Google, Facebook);;Sprachpräferenz;;E-Mail-Vafizierungsstatus"
+          },
+          "general": {
+            "title": "Allgemein (für olle Benützer):",
+            "items": "Spui-Sitzungs-Daten (Codes, Einstellungen);;Sitzungs-Cookie (gibt's 24 Stundn);;IP-Adress (bleibt nur kurz, wird ned lang gspeichert);;Anonyme Nutzungs-Analytik (mit PostHog, in da EU)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Wia wead dei Datn heagnumma?",
+          "items": "Spuiara (Gaßd oda regisdriad) bei de Spui mitmachan lassn;;Avatare, Naama, Punkteständ und Ranglistn oazoagn;;Bei Missbrauch a Moderation zumastelln;;Feedback und Kontowiederherstellung (für eigloggte Spuiara) bearbeitn;;De Seitn mid anonymn Analytik vabessan"
+        },
+        "data-retention": {
+          "title": "4. Wia long wearn dei Datn aufbewoart?",
+          "retention-table": {
+            "headers": "Datnart'n;;Aufbewahrung",
+            "rows": "Session-Cookies;;24 Stunden|||Account-Daten (eingeloggt);;Bis zur Löschanforderung|||Gastspieler-Daten;;Nur wenn ein verbundener Spieler im Spiel ist|||Spieldaten & Ergebnisse;;Dauerhaft gespeichert|||Chat-Nachrichten;;Temporär in Redis; gespeichert, wenn gemeldet|||Feedback;;Dauerhaft|||Verifizierungs-/Reset-Tokens;;Bis zur Verwendung oder Ablauf|||Account-Löschanforderungen;;Gelöscht nach 48 Stunden Gnadenfrist|||Analytics (PostHog);;Dauerhaft, EU-gehostet"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Gsetzliche Grundlagn (DSGVO)",
+          "description": "De Vaoaabeitung basiert auf:",
+          "items": "Einwilligung (Cookies, Statistiken);;Vertrag (Bereitstellung vom Spiel);;Berechtigtes Interesse (Moderation);;Gesetzliche Verpflichtung (Antworten auf Anfragen)"
+        },
+        "data-access": {
+          "title": "6. Wer ko dei Datn seng?",
+          "items": "Andere Spuila sehn dei öffentlicher Nam, dein Avatar und dei Spuigschicht;;Da Entwickla (Maxent Rouault) deaf auf de Datn zua Moderation zugreifa;;Koana Vaekauf oda Werbung mit deina Datn"
+        },
+        "your-rights": {
+          "title": "7. Deine Recham",
+          "items": "Deine Datn einsehn, korrigiern oda löschen;;Dein Konto löschen (oda bittn);;Deine Datn exportiern (auf Anfrage);;Banns bei appeal@skymo.online anfechtn"
+        },
+        "security": {
+          "title": "8. Sichaheit",
+          "items": "Verschlüsselte Passwörter;;Nur-HTTPS-Vabindungen;;Moderation und Missbrauchserkennung;;EU-basierte Server (Paris, Frankreich)"
+        },
+        "cookies-analytics": {
+          "title": "9. Cookies & Analytics",
+          "items": "Nötige Cookies nur (Session, Login);;Analyse über PostHog, EU-hostet, koa übergreifendes Tracking"
+        },
+        "contact": {
+          "description": "Allgemeine Frogn: <email></email>",
+          "title": "10. Kontakt"
         }
       },
       "head": {
@@ -156,12 +225,13 @@
       "game-of": "S Spui vom {name}"
     },
     "Rules": {
-      "title": "Skyjo Spuiregln",
+      "title": "Spui-Regln",
       "head": {
         "title": "Wia ma Skymo spuit | Skyjo Kartnspui Online",
         "description": "Lernt's, wia ma Skyjo spuit, mit unserm Skymo-Führer. Entdeckt's de Regln, Strategien und Tipps, um des lustige Online-Kartnspui zum Moasta zum wern. Spuit's jetzt mit Freind!",
         "keywords": "Skymo, Skyjo, Skyjo Regln, wia ma Skyjo spuit, Skyjo Spui, Kartnspui Regln, Online Kartnspui, Spuianleitung, Spuianleitung"
-      }
+      },
+      "play-button": "Spui online umsonst!"
     },
     "Create": {
       "head": {
@@ -191,7 +261,503 @@
         "cancel": "Ned wiederspui'n",
         "replay": "Noamoi afgspuit"
       },
-      "leave-button": "S Spui valassn"
+      "leave-button": "S Spui valassn",
+      "round": "Rundn {number}"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Leaderboard | Skymo - Skyjo Online Kartnspiel",
+        "description": "Schau da de besten Spia auf Skymo o! Schau da de besten Skymo-Spia und eanane Gwinnraten in unsana Wettkampf-Ranglistn o.",
+        "keywords": "Skymo, Skyjo, Bestenlistn, Top-Spiela, Ranglistn, beste Spila, gwunna-Rate, wettkampfmäßig, Online-Kartnspiel"
+      },
+      "lastUpdated": "Zuletzt aktualisiert: {date}",
+      "title": "Ranglistn",
+      "subtitle": "Entdeck de besten Skyjo-Spiela und kämpf um de obersten Plätz!",
+      "columns": {
+        "rank": "Rang",
+        "wins": "G'winn",
+        "player": "Spuia",
+        "totalGames": "G'spielte Partien",
+        "winRate": "G'winn-Rate"
+      },
+      "noData": "No Spier im Leaderboard gfunden.",
+      "error": "Mia kenna grad koa Leaderboard loden.",
+      "tryAgainLater": "Probier's späder no amoi.",
+      "callToAction": {
+        "guest": {
+          "title": "Bist bereit zum Wettkampf?",
+          "description": "Meld di o, damitst dei Fortschritt verfolgn und mit Leid weltweit wettkampfn kannst!",
+          "signup": "Meld di jetz o"
+        },
+        "authenticated": {
+          "description": "Spring in a Spiel und steig auf'm Leaderboard aufi!",
+          "createGame": "Spui mochan",
+          "title": "Bist bereit zum Wettkampf?",
+          "joinGame": "Spui beitreten"
+        }
+      },
+      "errorActions": {
+        "refresh": "Aktualisieren",
+        "backHome": "Zruck hoam"
+      }
+    },
+    "Signup": {
+      "head": {
+        "description": "Spui Skyjo online mid Freind! Mach da an kostenlosen Skymo-Account, damitst dei Fortschritt siehst, exklusive Sachen freischaltest und bei ana lebendign Community mitmachst.",
+        "title": "Schloß di bei Skyjo | Spiel Skyjo online gratis",
+        "keywords": "Skymo, spiel Skyjo online, Skyjo Online-Spui, meld di bei Skyjo o, erstell an Skymo-Account, tritt Skymo bei, Skymo Skyjo, Kartnspui online, Multiplayer Skyjo, kostenlos Skyjo-Spui, spiel Skyjo mit Freind, Skyjo Fortschritts-Tracking, Skyjo Community, exklusiva Skyjo Inhalt"
+      },
+      "title": "Oomeldn",
+      "or": "Oda",
+      "form": {
+        "email": {
+          "label": "E-Mail",
+          "button": "Weida mid E-Mail"
+        }
+      },
+      "already-have-account": {
+        "description": "Hast scho an Account?",
+        "link": "O'loggen"
+      },
+      "advantages": {
+        "title": "Kimm auf's Abenteuer",
+        "subtitle": "A Konto aufmach, damit da a ganze Welt vo Möglichkeiten aufgibt und dei Erlebnis no besser werd.",
+        "features": {
+          "personalized-experience": {
+            "title": "Aafgschneidertes Erlebnis",
+            "description": "Du kriagst Empfehlungen und Inhalte, de extra für di san."
+          },
+          "track-progress": {
+            "description": "Schau, wia di andan stehst und beobacht dei Fortschritt mit da Zeit.",
+            "title": "Dei Fortschridd aufzeichna"
+          },
+          "join-community": {
+            "title": "Kimm zua de Leit",
+            "description": "Vamittn mid andan Abenteuera, tausche Tipps aus und find neie Freind."
+          },
+          "exclusive-content": {
+            "title": "Exklusiva Zeig",
+            "description": "Exklusive Herausforderungen, Belohnungen und frühe Updates kriegen."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "terms-link": "Nutzungsbedingunga",
+        "text": "Wennst weidafährst, stimmst uns zu",
+        "and": "und",
+        "privacy-link": "Datenschutzrichtlinien"
+      }
+    },
+    "Login": {
+      "head": {
+        "description": "Logg di bei Skymo ei, damitst Skyjo online spuin kannst. Gib dei E-Mail und dei Passwoad ei, damitst auf dei Konto kimmst und glei losspuin kannst.",
+        "title": "Login | Skymo - Skyjo Online Kartnspiel",
+        "keywords": "Skymo, Skyjo, Login, Online-Kartnspui, Skyjo-Spui, Kartnspui, Online-Spui"
+      },
+      "title": "O'melda",
+      "or": "Oda",
+      "form": {
+        "login": {
+          "label": "E-Mail oda Nickname"
+        },
+        "password": {
+          "label": "Passwort"
+        },
+        "submit": "O'melda"
+      },
+      "signup": {
+        "description": "Hast koan Account?",
+        "link": "Meld di jetz o!"
+      },
+      "forgot-password": "Host dei Passwurt vagessn?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Vagessn's Passwort | Skymo - Skyjo Kartnspiel Online",
+        "description": "Setz dei Skymo-Passwort wieda zua, damitst wieda auf dei Konto kimmst und weida Skyjo online mit Freindn spuin kannst.",
+        "keywords": "Skymo, Skyjo, Passwurt vagessn, Passwurt zua setzn, Kontn-Wiedahella, Online-Koartnspiel"
+      },
+      "title": "Vagessn's mei Passwurt",
+      "description": "Gib dei E-Mail-Adressn ei, dann schick ma da an Link, damitst dei Passwoat wieda ändern kannst",
+      "form": {
+        "sending": "Verschickn...",
+        "submit": "Send Reset Link",
+        "email": {
+          "label": "E-Mail-Adress"
+        }
+      },
+      "success": {
+        "back": "Zruck zum Login",
+        "message": "Wenn a Kont mit der E-Mail existiert, is a Link zum Passwörter zrucksetzn gschickt worn.",
+        "title": "Schau in dei E-Mail nei"
+      },
+      "back": "Zruck zum Login"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Passwort zrucksetzn | Skymo - Skyjo Kartnspui online",
+        "description": "Erstell a neis Passwort für dei Skymo-Account, damitst wieda nei kimmst und Skyjo online spuin kannst.",
+        "keywords": "Skymo, Skyjo, Passwurt zua-setzn, neie Passwurt, Kont-wiederhoin, Online-Kartnspiel"
+      },
+      "title": "Passwort zuaücksetzn",
+      "description": "Gib dei neis Passwort unta ei.",
+      "form": {
+        "password": {
+          "label": "Neia Passwoat"
+        },
+        "confirmPassword": {
+          "label": "Bestätigung vo da neia Passwörter"
+        },
+        "submit": "Passwort zua'rucksetzn",
+        "resetting": "Zurücksetzen..."
+      },
+      "success": {
+        "title": "Passwort zua neia Setzerei gfiat",
+        "message": "Dei Passwoad is zruckgsetzt worn. Du konnst di jetzad mid deim neia Passwoad ologn.",
+        "back": "O'melda"
+      },
+      "back": "Zruck zum Login"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "E-Mail-Änderung zruckgsetzt",
+        "close": "Du koanst jetz de Seitn zumachá.",
+        "message": "Dei E-Mail-Änderung is erfolgreich zruckgsetzt worn und dei Kont is gschützt. Schau in dei E-Mail nach fia Passwörter-zurücksetz-Anweisungen."
+      },
+      "failed": {
+        "title": "E-Mail-Änderung Rückgängig macha ned glunga"
+      },
+      "back": "Zruck zum Login"
+    },
+    "OAuthCallbackPage": {
+      "title": "Umleitung lafft grad"
+    },
+    "Onboarding": {
+      "title": "Onboarding lafft grad...",
+      "form": {
+        "name": {
+          "label": "Spuianam",
+          "placeholder": "Jeff",
+          "description": "Anderen Spielern in Partien zoagt"
+        },
+        "username": {
+          "label": "Nam",
+          "placeholder": "Jef",
+          "description": "Fia's Login und Profil"
+        },
+        "password": {
+          "label": "Erstell a Passwoud",
+          "placeholder": "Gib a sichers Passwurt ei"
+        },
+        "submit": "Spui-bereid!"
+      },
+      "subtitle": "Vollständi dei Profil und tauch ei ins Skymo-Abenteuer!",
+      "head": {
+        "title": "Onboarding | Skymo - Skyjo Online Kartnspiel",
+        "description": "Vollständigs dei Profil und tauch ei in's Skyjo-Abenteuer!",
+        "keywords": "Skymo, Skyjo, Onboarding, Profi, Abenteuer, Online Kartnspiel"
+      },
+      "loading": "Loudn dei Profil...",
+      "success": "Onboarding erfolgreich obgschlossn! Weidaleitung auf d'Startseitn..."
+    },
+    "Verify": {
+      "head": {
+        "title": "E-Mail bestätigen | Skymo - Skyjo Kartnspiel Online",
+        "description": "Bestätig dei E-Mail-Adress, damit dei Skyjo-Account fertig werd und du mit de Freind Skyjo online spuin kannst.",
+        "keywords": "Skymo, Skyjo, E-Mail-Vafiziarung, Konto vafizian, Online-Kartnspiel"
+      },
+      "title": "E-Mail-Adressn bstätign",
+      "description": "Mia ham an 6-stellign Code an dei E-Mail-Adressn gschickt. Gib eam do unta ei.",
+      "resend": {
+        "countdown": "Resend Code in {seconds}s",
+        "prompt": "Hast den Code ned griagt?",
+        "button": "Neia Code o'foadarn",
+        "sending": "Schickat..."
+      },
+      "toast": {
+        "success": "E-Mail erfolgreich bestätigt!",
+        "resend-success": "A neie E-Mail is gschickt worn",
+        "email-already-sent": "A E-Mail is scho in de letztn 5 Minutn vaschickt worn. Schau in dei E-Mail-Postfach oda klick auf \"Neia Code oofordan\", damids an neia kriagst"
+      },
+      "loading": "Dei Profil werd grad glodn..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'s Profil | Skymo - Skyjo Kartnspiel Online",
+        "description": "Schau da {username} sei Profil auf Skyjo o. Schau si sei Spui-Statistikn, de letztn Aktivitätn und de Erfoig in Skyjo online.",
+        "keywords": "Skymo,Skyjo,User-Profül,Spui-Statistikn,Spui-Statistikn,letzte Spui,Erfoig,Online-Kartnspui"
+      },
+      "not-found": {
+        "title": "Dein Benutzer is ned do",
+        "back-to-home": "Zua Startseitn",
+        "description": "Da Benutzr \"{username}\" gibts ned oder hod sei Benutzaname gändat."
+      },
+      "error": {
+        "title": "Wos is bassiert",
+        "description": "Mia ham an Fehler kriagt, wia mia des Profil glodn ham. Probier's späder no amoi.",
+        "back-to-home": "Zruck auf d'Startseitn"
+      },
+      "stats": {
+        "total-games": "G'spielte Partien",
+        "win-rate": "G'winn-Rate",
+        "average-rank": "Durchschnittlicher Rang",
+        "public": "Öffntlich",
+        "private": "Privat"
+      },
+      "sections": {
+        "achievements": "Erfoig",
+        "recent-activity": "Letzte Aktivität",
+        "achievements-coming-soon": "De Auszoachnungs-System kimmt bald!"
+      },
+      "recent-activity": {
+        "game-code": "Spui-Numma #{code}",
+        "no-activity": "Koana neia Aktivität zum zoagn.",
+        "rank": "Rang #{rank}",
+        "winner": "G'wunna"
+      },
+      "search": {
+        "placeholder": "Suach an Spitznam"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Kontoeinstellungen | Skymo - Skyjo Kartnspiel Online",
+        "description": "Verwalde dei Kontoeinstellungen auf Skyjo. Änder dei Anzeigename, Benutzername, E-Mail, Passwort und Kontoeinstellungen."
+      },
+      "title": "Kontoeinstöiungen",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Konto",
+        "password": "Passwort"
+      },
+      "description": "Verwalte dei Kont und dei persöhnlichn Informaziona.",
+      "buttons": {
+        "saving": "Speichan...",
+        "save": "Speichern",
+        "delete-account": "Account löschen",
+        "confirm-delete": "Jo, mei Kont löschen"
+      },
+      "messages": {
+        "save-success": "Oisdog, basst scho!",
+        "username-taken": "Dea Username is scho va da Katz gnomma.",
+        "save-error": "D Settings hom se ned speichan lassn. Vasteichs no amoi.",
+        "email-taken": "De E-Mail is scho va gebrauchd.",
+        "delete-confirmation": "Bist da sicha, dassd dei Konto löschen mogst? Des konn ma ned rückgängig mochan und ois wos du ghabt host, werd für immer weg sei.",
+        "password-incorrect": "Dei jetzigs Passwort is foisch.",
+        "account-deletion-scheduled": "Dei Obmeldebitte is berücksichtigt und werd in 48 Stundn obgwicklt. Du kriagst a E-Mail zua Bestätigung vo da Obmeldung.",
+        "account-deletion-failed": "A Fehler is aufdretn beim Löschen vo deim Konto. Probiers no amoi."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profül",
+      "fields": {
+        "name": {
+          "label": "Namensanzeige",
+          "description": "Dei Nam, dea wos de andan Spuia in de Spile seng.",
+          "placeholder": "Gib dei Nam ei",
+          "submit": "Namen speichan"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Dei Avatar auf deim Profil.",
+          "placeholder": "Wähl dei Avatar aus",
+          "submit": "Avatar speichan"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Konto",
+      "fields": {
+        "username": {
+          "label": "Benutzername",
+          "description": "Dei einzigartiga Username, wos fia dei Profil-URL hergnomma wird.",
+          "placeholder": "Gib dei Spitznam ei",
+          "submit": "Speichan Benutzanåma"
+        },
+        "email": {
+          "label": "E-Mail-Adress",
+          "description": "Dei E-Mail-Adressn, de wia fia's Einloggn und wichtige Benochrichtigunga brauchan. Aus Sicherheitsgründn kriagst a Warnungs-E-Mail auf dei jetzige Adressn, wannst de ändern duast.",
+          "placeholder": "Gib dei E-Mail ei",
+          "submit": "E-Mail speichan"
+        },
+        "settings-sync": {
+          "label": "Settings-Sync",
+          "description": "Wennst di o'meldst, wearn dei Einstellungen auf oin deine Geräte synchronisiert.",
+          "enable-sync": "Einstöinige Einstellungen synchronisieren",
+          "disable-sync": "Einstönglung vo de Settings aussschoidn",
+          "status": {
+            "enabled": "Eingschaltd",
+            "disabled": "Gesperrt",
+            "syncing": "Synchronisiere...",
+            "offline": "Offline",
+            "error": "Synchronisation fehlgschlogn"
+          },
+          "last-sync": "Letzte Synchronisierung: {date}",
+          "sync-now": "Gleich synchronisiere"
+        }
+      },
+      "delete-account": {
+        "title": "Mei Konto löschen",
+        "button": "Account löschen",
+        "confirmation": {
+          "delete-button": "Mei Konto löschen",
+          "description": "Wennst des bestätigst, fangt a 48-Stundn-Countdown o: Du kriagst a E-Mail mid am Link zum Abbrecha vo da Löschung, wennst dei Meinung änderst. Dei Konto bleibt in dera Zeit erreichbar. Nach 48 Stundn wird's endgültig glöscht und du kriagst a Bestätigungs-E-Mail.",
+          "input-label": "Gib DELETE ei zua Bestätigung",
+          "input-placeholder": "Löschen",
+          "cancel-button": "Abbrecha"
+        },
+        "description": "Dei Kont löschen und olle dazua ghearign Datn. Des ko ma ned rückgängig mochn und olle deine Datn wern endgütig vaoaschwundn."
+      }
+    },
+    "SettingsPassword": {
+      "fields": {
+        "password": {
+          "current-password": "Aktuells Passwurt",
+          "new-placeholder": "Gib dei neis Passwoat ei",
+          "label": "Passwort",
+          "description": "Deng Passwurt ändan.",
+          "new-password": "Neia Passwoat",
+          "confirm-password": "Bestätig neis Passwort",
+          "current-placeholder": "Gib dei aktuells Passwurt ei",
+          "confirm-placeholder": "Bestätig dei neis Passwort",
+          "submit": "Passwort speichan"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Dei jetzigs Passwort is falsch."
+      },
+      "title": "Passwort ändern"
+    },
+    "CancelAccountDeletion": {
+      "failed": {
+        "title": "Abbruch fehlgschlogn",
+        "description": "Mir ham dei Kontolöschung ned abbrecha kenna. Probiers no amoi oda meld di beim Support.",
+        "general-error": "A wos is bassiert, wos ned basiern hätt deafn, wia ma dei Konto löschung obbrecha wollt. Probiers no amoi oda meld di beim Support.",
+        "help-message": "Da is wos schiefganga, wia ma dei Kontolöschung obbrecha ham wolln. Probiers no amoi oda meld di beim Support."
+      },
+      "expired": {
+        "title": "Stornierungs-Link abglaffa",
+        "description": "Der Abbrech-Link is obg'laffa. Wennst dei Konto no ham wuißt, meld di beim Support.",
+        "help-message": "De 48-Stundn-Stornierungsfrist is um. Meld di beim Support, wennst Hifd brauchst."
+      },
+      "invalid-token": "Ungültiger Token",
+      "success": {
+        "title": "Dei Kontolöschung is obbrocha",
+        "description": "Dei Kontolöschung is erfolgreich obbrocha. Dei Konto is sicha und werd ned glöscht.",
+        "secure-message": "Dei Kont is jetzt sicha und bleibt aktiv. Du konnst dei Kont normal weida vawendn."
+      },
+      "actions": {
+        "return-homepage": "Zua Startseitn zruck"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Nutzungsbedingungen | Skymo - Skyjo Kartnspiel Online",
+        "keywords": "Nutzungsbedingungen, Skymo, Skyjo, Online-Kartnspiel, Nutzungsvereinbarung, Plattformregeln",
+        "description": "Lies da Nutzungsbedingungen für Skymo, de Online-Skyjo-Kartnspui-Plattform. Erfahre wosd du ois Nutza muasst, wia de Plattform gnutzt werd und wos de Regeln san."
+      },
+      "content": {
+        "title": "Nutzungsbedingunga",
+        "last-update": {
+          "date-format": "MMMM D, YYYY um HH:mm",
+          "text": "Zuletzt aktualisiert: {date}"
+        },
+        "operator": {
+          "title": "1. Betreiba",
+          "content": "Des Webseitn wird betriem vo:",
+          "name": "Maxent Rouault",
+          "contact": "Kontakt: {email}",
+          "location": "Frankreich (ned-kommerzieller Einzel-Betreiber)"
+        },
+        "welcome": "Servus auf <b>skymo.online</b>, am Online-Multiplayer-Kartnspui vo Maxent Rouault. Wennst auf de Seitn gehsd oda de benutzd, bist mit deise Nutzungsbedingunga einverstandn. Wenn ned, deafsd de Plattform ned nutzn.",
+        "eligibility": {
+          "title": "2. Dazua basst's",
+          "content": "Du derfst den Service ois Gast nutzn oda di mit am Konto registrian. Indem dassd diese Webseitn nutzst, bestätigst dassd:",
+          "items": {
+            "1": "Du bist mindestens 13 Joahr oid (oda des Mindestalter, des in deim Land braucht werd).",
+            "2": "Wennst unter 18 bist, brauchst de Erlaubnis vo deim Erziehungsberechtigten."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Account & Gast-Nutzung",
+          "items": {
+            "1": "Gastspuila kenna spuin ohn Anmeldung, oba manche Funktionen kenna eigschränkt sei.",
+            "2": "Registrierte Leit miassn a gültige E-Mail und an Benutzanamen hergebm.",
+            "3": "Du bist verantwortlich für dei Kont und dei Aktivität. Du deafst dei Login ned teila.",
+            "4": "Du kannst dei Konto jederzeit löschen. Nach 48 Stundn wern dei personanbezognen Datn anonymisiert oda dauerhaft glöscht."
+          }
+        },
+        "data-storage": {
+          "title": "4. Datnspeicharung",
+          "content": "Mia speichan de foigndn Datn, je nach dem wia'd's benützt:",
+          "all-players": {
+            "title": "Fia olle Spuia:",
+            "items": {
+              "1": "In-game display name, avatar, score und Chat-Nachrichtn, **wenn mindestens oana vo de Spuila eingeloggt is**.",
+              "2": "IP-Adressn kenna vorübergehend gspeichat wern für Sicherheit und Moderation."
+            }
+          },
+          "registered-players": {
+            "title": "Fia registriade Spuia:",
+            "items": {
+              "1": "E-Mail, Benutzername, Avatar, Spielstatistiken und optional verknüpfte Konten (z.B. Google).",
+              "2": "Da Spui-Vahoidn, wia oft gspuit werd, oda wos ma im Spui mocht, ko gsammejt wern, damit ma des Spui besser macha kenna."
+            }
+          },
+          "storage-location": "Ois Daten wean in da **Europäischen Union** gspeichat und noch da <link>Datenschutzrichtlinie</link> behondlt."
+        },
+        "analytics-tracking": {
+          "title": "5. Analytics & Tracking",
+          "content": "Damit mia den Service besser macha kenna und du a bessare Erfahrung host, kenna mia:",
+          "items": {
+            "1": "Benutz **Analytics Tools** (z.B. PostHog oda ähnliche), um Nutzung und Gameplay-Muster z' verfolgn.",
+            "2": "Verhalten vo de Leit analysiern, damit ma Fehler findt, bessere Gegna findt oda neie Sachan baut.",
+            "3": "Mia kenna de Daten in Zukunft vawendn, um **personalisierte Inhalte oda Werbung zua liifern**, und dabei deine Datenschutzrechte noch da DSGVO eihoidn."
+          },
+          "data-rights": "Du koasch dem Tracking widersprecha oder de Löschung vo de persönlechn Datn vaoaung, indem dassd uns kontaktiast."
+        },
+        "ads-monetization": {
+          "title": "6. Reklamen & Monetarisierung",
+          "content": "D'Plattform koann Reklamen zoagn, aa vo Drittanbietern oda kontextbezogene. In Zukunft kenna, wennst eigloggt bist, **personalisierte Reklamen** zoagt wern, basierend auf deine Nutzungsdaten.",
+          "consent": "Mia gebn a klare Ankündigung und Zuastimmungsmechanismen, wenn und wann Verhaltens- oder personalisierte Werbung eingeführt werd."
+        },
+        "user-conduct": {
+          "content": "Du stimmst zua:",
+          "title": "7. Wia si da Leit auffiahn soin",
+          "items": {
+            "1": "Sei respektvoll und halt di an de Fairplay-Regeln.",
+            "2": "Ned schummeln, belästign, di andern ausgem, oda unpassende Benutzanamn oda Avatare vawendn.",
+            "3": "Koan Spam oda Missbrauch vom Chat oda andan Kommunikationsmittle."
+          },
+          "enforcement": "Mia behoidn uns des Recht vor, de, de de Regln ned eihoidn, zum Sperrn oda zum Einschränkn."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderation & Reporting",
+          "items": {
+            "1": "D' Chat-Nachrichtn wearn vorlaifig g'speichat und kenna bei Spui mit registrierten Spuiarn ganz g'speichat wern.",
+            "2": "Mia kenna de Nachrichten aufbewahrn, wenn a Spia a Meldung obgibt oda wenn a Moderation braucht werd.",
+            "3": "Du deafst Missbrauch per E-Mail meldn (schau ins Kontakt-Kapitl).",
+            "4": "Moderationsmassna und Meldunga kenna protokolliert wern, damit a Transparenz und Fairness gewährleistet is."
+          }
+        },
+        "availability": {
+          "title": "9. Verfügbarkeit",
+          "content": "Da Service werd \"wias is\" bereitgstöid. Mia kenna de Website oda Funktionalitätn jedazeid ohne Vorankündigung ändern, aussetzn oda eiistelln."
+        },
+        "intellectual-property": {
+          "title": "10. Geistigs Eigndum",
+          "content": "Ois original Inhalt, Artwork und Code ghead dem Maxent Rouault, wenn ned andersdogs gsogt werd. Du deafst koan Teil vo da Website wieda vawendn oda weida gibn, ohne Erlaubnis."
+        },
+        "legal": {
+          "title": "11. Rechtlich",
+          "jurisdiction": "Dei Seitn untalägt französischn Gsetzn und entspricht da Datenschutz-Grundvadoanung (DSGVO).",
+          "disputes": "Rechtsstreitigkeiten wern vo de französischn Gricht ghandhabt."
+        },
+        "contact": {
+          "title": "12. Kontakt",
+          "general": "Allgemeine Frogn: <email></email>"
+        }
+      }
     }
   },
   "components": {
@@ -211,7 +777,8 @@
       "privacy-policy": "Datenschutzerklärung",
       "attribution": {
         "avatars": "Avatars gmocht vo Freepik - Flaticon"
-      }
+      },
+      "translations": "Helfa, dass ma des Spui übersetzan!"
     },
     "KickVote": {
       "vote-failed": {
@@ -426,12 +993,15 @@
           "description": "Vergelt's Gott für dei'n Bericht, du hast mitghoifa, dass d'Qualität vom Spui besser worn is."
         }
       },
-      "title": "Bericht {username}",
-      "description": "Meld' an Nutzanama oda a Nachricht vom {username}, wenn's unpassend wirkt.",
+      "title": "Bericht {name}",
+      "description": "Meld den Namn oda a Botschaft vom {name}, wenn's unpassend erscheint.",
       "report-message": "A Nachricht meldn",
       "select-message": "Wähl d'Noachricht aus, de wo g'meldet wern soi",
       "select-message-placeholder": "Wähle a Nachricht aus",
-      "no-messages": "Koane Nachrichten vo dem Nutza gfundn"
+      "no-messages": "Koane Nachrichten vo dem Nutza gfundn",
+      "report-name": "Melde den Spuiarnam",
+      "comment": "Zuasätzlicher Kontext (freiwillig)",
+      "comment-placeholder": "Gib ma no a paar Infos zu dem Bericht..."
     },
     "Chat": {
       "title": "Ratsch"
@@ -456,7 +1026,17 @@
       "unread-messages": "{count} unglesene Nachricht{count, plural, =1 {} other {n}}"
     },
     "CopyLink": {
-      "message": "Lenk kopiert!"
+      "message": "Lenk kopiert!",
+      "copy": {
+        "button-title": "Link kopian",
+        "popover": "Link kopiat!"
+      },
+      "share": {
+        "title": "Kimm auf mei Skyjo-Spui!",
+        "text": "Kimmst mit mia Skyjo online spuin! Klick aufn Link und steig",
+        "button-title": "Spui teiln",
+        "tooltip": "Klick do hi, um des Spui zum teila!"
+      }
     },
     "DiscardPile": {
       "title": "Ablagestapel",
@@ -549,32 +1129,126 @@
         "volume": {
           "label": "Lautstärkn ({volume}%)"
         }
+      },
+      "chat": {
+        "chat-notification-size": {
+          "label": "Chat-Benachrichtigungsgröß",
+          "values": {
+            "small": "Kloa",
+            "normal": "Normal",
+            "big": "Groß"
+          }
+        },
+        "title": "Gred",
+        "chat-visibility": "Chat-Sichtbarkeit"
+      },
+      "mobile": {
+        "title": "Mobi",
+        "switch-to-player-who-is-playing": "Automatisch zum Spuiara wechsln, der grad am Spuin is",
+        "show-preview-opponents-cards": "Zeag a Vorschau vo de Kartn vo de Gegna in da Gegnalist"
+      },
+      "gameplay": {
+        "title": "Spuiablauf",
+        "gameboard": {
+          "title": "Spui-Brett",
+          "size": {
+            "label": "Größ vom dei Spui-Brettl",
+            "big-warning": "Kann des Display am Handy ned aufmachan",
+            "values": {
+              "normal": "Normal",
+              "big": "Groß"
+            }
+          },
+          "enlarge-active-player-board": "Da Spielfädl vom Spia, der grad dran is, grous macha"
+        },
+        "timer": {
+          "title": "Zeid",
+          "label": "Timer-Anzeigemodus",
+          "description": "Da schlaue Mod zeigt da Zeidmaschin in da Halbzeit und de letztn 15 Sekndn o.",
+          "modes": {
+            "never": "Nia",
+            "smart": "Schlauk",
+            "always": "Imma"
+          }
+        }
+      },
+      "account": {
+        "title": "Konto",
+        "sync": {
+          "label": "Kontoeinstellungen",
+          "description": "Wennst di ologgt host, wearn dei Eistellungen auf olle deine Geräde synchronisiert.",
+          "enabled": "Eingschaltd",
+          "disabled": "Gesperrt",
+          "syncing": "Synchronisiere...",
+          "offline": "Offline",
+          "error": "Synchronisation hod ned klappt",
+          "lastSync": "Letzte Synchronisierung: {date}"
+        }
       }
     },
     "Avatar": {
       "context-menu": {
-        "report": "Bericht {username}",
-        "kick": "Drah di {username}",
-        "vote-to-kick": "Stimm ab zum Rauswerfa vo {username}",
-        "ban": "Pfiat di, {username}",
-        "mute": "Stumm schalt'n {username}",
-        "unmute": "Stumm schalten aufheben {username}"
+        "report": "Bericht {name}",
+        "kick": "Kickn {name}",
+        "vote-to-kick": "Owawoin, dass da {name} rausfliegt",
+        "ban": "Ban {name}",
+        "mute": "Stumm schaltn {name}",
+        "unmute": "Entstumm {name}",
+        "transfer-host": "Da {name} is jetzt da Host"
       }
+    },
+    "Navbar": {
+      "links": {
+        "leaderboard": "Führerbrettl",
+        "rules": "Regln"
+      }
+    },
+    "Banner": {
+      "title": "I brauch dei Rückmeldung, damit i Skyjo weida entwickln ko!"
+    },
+    "LoginButton": {
+      "login": "Kimm mit ins Gspass!"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Weida mid Google"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Passwörter passn zamm",
+      "minimum-characters": "Mindestns 10 Zeicha",
+      "lowercase-letter": "A zmindest oana kloana Buchstab",
+      "capital-letter": "A mindestns a grosser Buchstab",
+      "number": "A zmindest oans Ziffer",
+      "special-character": "A wenigs a Sonderzeichn"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Noa, des dauad no a bissl...",
+        "available": "De Username is frei",
+        "taken": "Schon vagemnomma!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Wieda ins Spui nei geh",
+      "description": "Du woast in am Spui, des grad lafft. Wuißt da wieda nei?",
+      "reconnect-button": "Jo, wieda nei geh",
+      "dismiss-button": "Na, ob's des is"
     }
   },
   "utils": {
     "chat": {
-      "player-not-muted": "Da {username} is ned stummgschalt",
-      "player-reconnect": "{username} is wieda im Spui",
+      "player-not-muted": "Da {name} is ned stummgschalt't",
+      "player-reconnect": "Da {name} is wieda dabei bei da Partie",
       "argument-required": "Aans oda mehra Argument san fia'n Befehl erforderlich: {command}",
-      "wizz-sent": "Du hast a Wizz an {targetUsername} gschickt!",
-      "wizz-self": "Du bist vom {initiatorUsername} gwizzd worn!",
-      "player-joined": "{username} is ins Spui eitretn",
-      "player-left": "{username} hods Spui valossn",
-      "player-already-muted": "{username} is scho stummgschoit",
-      "player-unmuted": "Da {username} is nimma stummgschaltn",
-      "wizz-other": "Da {initiatorUsername} hod an {targetUsername} ogwizzd!",
-      "player-muted": "Da {username} is etz stummgschaltn"
+      "wizz-sent": "Du host an Wizz an {targetName} gschickt!",
+      "wizz-self": "Du woast vom {initiatorName} angeblasen!",
+      "player-joined": "Da {name} is ins Spui kemma",
+      "player-left": "Da {name} is ausm Spiel ausseganga",
+      "player-already-muted": "Da {name} is scho stumm gschoidt",
+      "player-unmuted": "Da {name} is nimma stumm gschoidt",
+      "wizz-other": "{initiatorName} hod an Wizz auf {targetName} gmocht!",
+      "player-muted": "Da {name} is jetzt stumm gschalt",
+      "welcome": "Seid's gütig und respektvoll. Ihr kenna {isMobile, select, true {lång drucka} other {rechtsklicka}} auf de Nachrichten, um Spila zum stumm schaltn oder zum meldn, wenn's braucht wird.",
+      "host-transferred": "Da {name} is jetz da Host"
     },
     "socket": {
       "error": {
@@ -599,6 +1273,9 @@
         },
         "game-is-full": {
           "description": "S Spui is scho voi, du kannst ned mitmacha"
+        },
+        "player-already-connected": {
+          "description": "Du bist scho vo ana andan Sitzung mit dem Spui vabundn"
         }
       }
     },
@@ -654,7 +1331,7 @@
       },
       "report-against-you": {
         "title": "Du bist wega am Bericht aussagworfa worn",
-        "description": "Dei Nutzanama oda oane vo deine Nachrichtn is gmeldet worn und ois unpassend eigstuft worn. Bittschee, des Vahoidn ned wiedahoin."
+        "description": "Dei Nam oda oana vo deina Nachrichtn is gmeldet worn und is ois unpassend eigstuft worn. Bitte mach des ned wieda."
       }
     },
     "BanContext": {
@@ -678,11 +1355,106 @@
         "title": "A unerwoarter Fejler is aufdredn",
         "description": "A unerwoarterter Fehler is aufgredn, wia a Spuier gschperrt worn is"
       }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Du host koa Erlaubnis, den Host zum übergem",
+        "description": "Nur da aktuelle Host ko de Host-Roin an andan Spia hergebm"
+      },
+      "player-not-found": {
+        "title": "Da Spuiar gibts ned",
+        "description": "Da Spuia, wo da Host hi gibm wui, gibts ned im Spui"
+      },
+      "player-not-connected": {
+        "title": "Da Spia is ned vabundn",
+        "description": "Da Spui, wo da Host hiatransfeat weadn soi, is grad ned mitm Spui vabundn"
+      },
+      "host-transferred": {
+        "title": "Host hod a neia Wirt!",
+        "description": "{newHostName} is jet da Host vom Spui"
+      },
+      "you-are-now-host": {
+        "title": "Du bist jetz da Host",
+        "description": "{previousHostName} hod de Host-Roin auf di übergemacht"
+      },
+      "unexpected-error": {
+        "title": "A unerwarteta Fehlr is aufg'treten",
+        "description": "A unerwarteta Fehlr is aufgetretn beim Host-Transfer"
+      }
     }
   },
   "head": {
     "title": "Skymo | Skyjo Kartenspui Online Kostnlos Spuin",
     "description": "Spui Skyjo gratis online mit Skymo! A schnöis Kartnspui für mehrane, wo Strategie und Spaß zammkemma. Fordere Freind heraus, dreh Kartn um und zui auf de niedrigste Punktzoi, um zum gwinnan!",
     "keywords": "Skymo, Skyjo, Skyjo online, Mehrspieler-Spui, Kartenspui, mit Freind spuin, kostenlose Online-Spui, Online-Kartnspui"
+  },
+  "errors": {
+    "logout-failed": "Mia ham di ned ausloggn kenna. Bitte schliaß dei Browser, damit de Session aufhört.",
+    "invalid-credentials": "De E-Mail oda des Passwort, wosd eigibn host, is foisch. Probiers no amoi.",
+    "session-not-found": "Deine Session is abglaffa oder ungültig. Log di wieda ei.",
+    "session-invalid": "Deine Session is ungültig. Log di wieda ei, damit's weida gehd.",
+    "session-expired": "Dei Sitzung is obg'laffa. Logg di wieda ei, damidsch weida mochst.",
+    "session-token-missing": "Dei Session-Token feid. Logg di ei, dassd an neia kriagst.",
+    "username-taken": "Der Name is scho va gebn. Such da an andan aus.",
+    "onboarding-error": "Da woar a Problem, deina Profil fertig zum macha. Probiar's no amoi.",
+    "reset-token-invalid": "Da Resett-Token, wosd gebn host, is ungültig. Bitt a neis o.",
+    "reset-token-expired": "Dei Passwoud-Reset-Token is obglaffa. Biddschee, bstöd an neia.",
+    "password-reset-failed": "Mia ham dei Passwurt ned zrucksetzn kenna. Probiers no amoi.",
+    "forgot-password-error": "Da woar a Problem beim Vaoabatn vo dei Passwurt-Reset-Oofrodung. Probier's spoda no amoi.",
+    "reset-password-error": "Mia ham dei Passwurt ned zrucksetzn kenna. Probier's no amoi.",
+    "oauth-restart-process": "A wos is passiert bei da Authentifizierung. Probier no amoi, di einzuloggn.",
+    "oauth-id-token-missing": "Mia ham koan ID-Token vom Authentifizierungsanbieter kriagt. Probier's no amoi.",
+    "oauth-account-creation-failed": "Mia ham koa Konto mit de Infos vo deim Anbieter mochan kenna. Probiers no amoi.",
+    "oauth-login-initiation-failed": "Mia ham'n Login-Prozess ned startn kenna. Probier's in a paar Augenblick' noamal.",
+    "verify-session-error": "Mia ham dei Session ned checkn kenna. Log di aus und wieda eini.",
+    "signup-error": "Mia ham dei Kont ned aufmacha kenna. Probier's späder no amoi.",
+    "login-error": "Da woar a Problem beim Einloggn. Probier's no amoi.",
+    "login-invalid-credentials": "De E-Mail oda des Passwort, desd eigebn host, is foisch. Probiers no amoi.",
+    "logout-error": "A unerwarteta Fehlr is aufdretn, wosd di ausloggt host.",
+    "check-username-error": "Mia ham's ned checkn kenna, ob da Benuzanama frei is. Probier's no amoi.",
+    "unknown-auth-error": "A unbekannter Authentifizierungsfehler is aufgetreten. Probier's no amoi.",
+    "get-user-error": "Mia ham's ned kriagt, dei Leitsprofil. Probier's späder no amoi.",
+    "creation-failed": "Mia ham'n Nutza grad ned aufi kriagt. Probier's no amoi!",
+    "user-not-found": "Dein gsouchta User is ned zum findn.",
+    "get-user-stats-error": "Mia ham de Statistikn vom Spia ned glengad zum lodn. Probier's noamal mid'm Neilodn vo da Seitn.",
+    "get-user-games-error": "Mia ham de Spui vom User ned la'n kenna. Bitte mach de Seitn neu.",
+    "username-same-as-current": "Des is scho dei Benuzanam.",
+    "email-taken": "De E-Mail-Adressn is scho va gebrauchd. Nimm a andane.",
+    "email-same-as-current": "Des is scho dei E-Mail-Adress.",
+    "update-name-error": "Mir ham dei Nam ned aktualisieren kenna. Probier's no amoi.",
+    "invalid-current-password": "Dei jetzige Passwurt, de du eiigemobbost, is foisch.",
+    "revert-email-error": "Mia ham dei E-Mail-Änderung ned zruckbekommen. Meld di beim Support.",
+    "update-email-error": "Mia ham dei E-Mail-Adress ned aktualisieren kenna. Probier's no amoi.",
+    "update-username-error": "Mia ham dei Username ned aktualisieren kenna. Probier's no amoi.",
+    "update-password-error": "Mia ham dei Passwurt ned aktualisiern kenna. Probiers no amoi.",
+    "update-avatar-error": "Mia ham dei Avatar ned aktualisieren kenna. Probiers no amoi.",
+    "delete-account-error": "Mir ham dei Ofrag zum Kontolöschung ned vakomman. Probiers no amoi.",
+    "unauthorized": "Du deafst des ned macha.",
+    "unexpected-error": "A unerwarteta Fehlr is aufgtaucht. Probiers no amoi.",
+    "cancel-delete-account-error": "Mia ham dei Kontolöschung ned abbrecha kenna. Meld di beim Support.",
+    "internal-server-error": "Unsara Server hod a Problem ghobt. Probiers spoda no amoi.",
+    "not-found": "De Ressource, de wo du suachst, is ned zum findn.",
+    "forbidden": "Du deafst auf de Ressource ned zuagreifen.",
+    "ip-not-found": "Mia ham dei IP-Adress ned findn kenna. Schau amoi, ob dei Vabindung passt.",
+    "invalid-request": "Dei Ofrag war ungültig. Bitte prüf de Datn und probier's no amoi.",
+    "too-many-requests": "Du host z'vui Oofrod gschickt. Wart a Weil und probiers no amoi.",
+    "invalid-pin": "Da PIN, den du eiigebn host, is foisch. Probiers no amoi.",
+    "verify-pin-error": "Mir ham dei PIN ned gscheid checkn kenna. Probier's no amoi.",
+    "send-feedback-error": "Mia ham dei Feedback ned hi schicka kenna. Probiers no amoi.",
+    "send-pin-error": "Mia ham koana Vafiziarungs-PIN an dei E-Mail schicka kenna. Probiers noamoi.",
+    "expired-pin": "De PIN, de wo du ei Gibbost host, is abglaffa. Mia ham da a neie gschickt.",
+    "feedback-error": "Mir ham dei Feedback ned hi schicka kenna. Probiers no amoi.",
+    "expired-cancellation-token": "Da Cancellation Token is obglaffa. Probier's no amoi.",
+    "get-public-games-error": "Mia ham de öffentlign Spui ned gleng, zum loden. Probiers no amoi.",
+    "invalid-cancellation-token": "Da Stornierungs-Token is ungültig. Probier's no amoi.",
+    "cancel-account-deletion-error": "Mia ham dei Kontolöschung ned abbrecha kenna. Probiers no amoi",
+    "invalid-reversion-token": "Da Wieda-Token is ungültig. Probiers no amoi.",
+    "oauth-unknown-error": "A unbekannter Fehler is beim Login aufgetreten. Probier's no amoi.",
+    "expired-reversion-token": "Da Reversion-Token is obglaffa. Probiers noamal.",
+    "name-min-characters": "Da Nam mua mindestens 2 Zechn hom",
+    "name-max-characters": "Da Nam deaf ned mehra wia 20 Zeiche ham",
+    "username-min-characters": "Da Nickname muaß mindestens 3 Zeacha ham",
+    "username-max-characters": "De Username deaf ned mehra wia 20 Zeiche ham",
+    "username-invalid-format": "Da Benutzanam deaf grod Buachstobn, Ziffan und Unterstrichal ham"
   }
 }
