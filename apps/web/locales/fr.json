@@ -1127,10 +1127,10 @@
       "context-menu": {
         "report": "Signaler {name}",
         "kick": "Expulser {name}",
-        "vote-to-kick": "Voter pour expulser {name}",
+        "vote-to-kick": "Voter pour exclure {name}",
         "ban": "Bannir {name}",
-        "mute": "Rendre muet {name}",
-        "unmute": "Rendre non muet {name}",
+        "mute": "Mettre {name} en sourdine",
+        "unmute": "Mettre {name} en sourdine",
         "transfer-host": "{name} est maintenant l'hôte"
       }
     },
@@ -1168,7 +1168,7 @@
       },
       "vote-against-you-succeeded": {
         "title": "Vous avez été expulsé",
-        "description": "Les joueurs ont voté pour vous expulser de la partie."
+        "description": "Les joueurs ont voté pour t'exclure de la partie."
       },
       "you-kick-player": {
         "title": "Vous avez expulsé {playerName}"
@@ -1201,7 +1201,7 @@
     },
     "ReportDialog": {
       "title": "Signaler {name}",
-      "description": "Signaler le pseudonyme ou un message de {name} s'il vous semble inapproprié.",
+      "description": "Signale le nom ou un message de {name} s'il te semble inapproprié.",
       "report-name": "Signaler le nom du joueur",
       "report-message": "Signaler un message",
       "select-message": "Sélectionner le message à signaler",
@@ -1264,15 +1264,16 @@
       "welcome": "Soyez gentil et respectueux sur le chat. Si besoin, vous pouvez rendre muet ou signaler un joueur en {isMobile, select, true {faisant un appui long} other {faisant un clic droit}} sur leur message ou sur lui.",
       "player-joined": "{name} a rejoint la partie",
       "player-left": "{name} a quitté la partie",
-      "player-reconnect": "{name} s'est reconnecté",
+      "player-reconnect": "{name} s'est reconnecté au jeu",
       "argument-required": "Un ou des arguments sont requis pour la commande : {command}",
-      "player-already-muted": "{name} est déjà muet",
-      "player-muted": "{name} est maintenant muet",
-      "player-not-muted": "{name} n'est pas muet",
-      "player-unmuted": "{name} n'est plus muet",
-      "wizz-sent": "Vous avez envoyé un wizz à {targetName} !",
-      "wizz-self": "Vous avez été wizz par {initiatorName} !",
-      "wizz-other": "{initiatorName} a wizz {targetName} !"
+      "player-already-muted": "{name} est déjà en sourdine",
+      "player-muted": "{name} est maintenant en sourdine",
+      "player-not-muted": "{name} n'est pas en sourdine",
+      "player-unmuted": "{name} n'est plus en sourdine",
+      "wizz-sent": "Tu as envoyé un wizz à {targetName} !",
+      "wizz-self": "Tu as été wizz par {initiatorName} !",
+      "wizz-other": "{initiatorName} a wizg {targetName} !",
+      "host-transferred": "{name} est maintenant l'hôte"
     },
     "avatar": {
       "bee": "abeille",
@@ -1367,7 +1368,33 @@
       },
       "report-against-you": {
         "title": "Vous avez été expulsé suite à un signalement",
-        "description": "Votre pseudonyme ou un de vos messages a été signalé et a été jugé inapproprié. Merci de ne pas répéter ce comportement."
+        "description": "Ton nom ou l'un de tes messages a été signalé et jugé inapproprié. Merci de ne pas reproduire ce comportement."
+      }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Tu n'as pas la permission de transférer l'hôte",
+        "description": "Seul l'hôte actuel peut transférer le rôle d'hôte à un autre joueur"
+      },
+      "player-not-found": {
+        "title": "Le joueur n'existe pas",
+        "description": "Le joueur à qui tu essaies de transférer l'hôte n'existe pas dans la partie"
+      },
+      "player-not-connected": {
+        "title": "Le joueur n'est pas connecté",
+        "description": "Le joueur à qui tu essaies de transférer l'hôte n'est pas actuellement connecté à la partie"
+      },
+      "host-transferred": {
+        "title": "Hôte transféré avec succès",
+        "description": "{newHostName} est maintenant l'hôte de la partie"
+      },
+      "you-are-now-host": {
+        "title": "Tu es maintenant l'hôte",
+        "description": "{previousHostName} t'a transféré le rôle d'hôte"
+      },
+      "unexpected-error": {
+        "title": "Une erreur inattendue s'est produite",
+        "description": "Une erreur inattendue s'est produite lors du transfert de l'hôte"
       }
     }
   },
