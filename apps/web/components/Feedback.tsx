@@ -28,6 +28,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Textarea } from "@/components/ui/textarea"
+import { useAuth } from "@/hooks/useAuth"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
 import { cn } from "@/lib/utils"
 
@@ -38,11 +39,12 @@ interface FeedbackProps {
 const FeedbackForm = ({ setOpen }: FeedbackProps) => {
   const t = useTranslations("components.Feedback")
   const tErrors = useTranslations("errors")
+  const { user } = useAuth()
   const [isPending, startTransition] = useTransition()
   const form = useForm({
     resolver: zodResolver(feedbackSchema),
     defaultValues: {
-      email: "",
+      email: user?.email ?? "",
       message: "",
     },
   })
