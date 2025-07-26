@@ -114,7 +114,7 @@
           "title": "Na začátku hry bude odhaleno {number} vašich karet"
         },
         "show-current-score": {
-          "label": "Zobrazit aktuální skóre během hry"
+          "label": "Zobrazit skóre v reálném čase"
         },
         "score-to-end-game": {
           "label": "Skóre pro ukončení hry",
@@ -159,7 +159,76 @@
         "title": "Zásady ochrany osobních údajů",
         "last-update": {
           "text": "Naposledy aktualizováno: {date}",
-          "date-format": "RRRR-MM-DD - hh:mmA"
+          "date-format": "DD. MM. RRRR"
+        },
+        "tldr": {
+          "title": "Stručně řečeno — Co potřebuješ vědět",
+          "minimal-data": "Ukládáme minimální množství dat, abychom ti umožnili hrát hry, ať už jsi přihlášený, nebo jako host.",
+          "guest-data": "Data hostů (jméno, avatar, skóre, chaty) se ukládají pouze v případě, že je ve hře přihlášený hráč.",
+          "personal-data": "Tvůj e-mail, uživatelské jméno a další osobní údaje jsou uloženy pouze v případě, že si vytvoříš účet.",
+          "chat-storage": "Chaty se ukládají dočasně a jsou uloženy pouze v případě nahlášení.",
+          "privacy-compliance": "Respektujeme tvoje soukromí a dodržujeme GDPR, vše bezpečně ukládáme v EU.",
+          "data-rights": "Můžeš kdykoli požádat o přístup k datům, jejich opravu, export nebo smazání.",
+          "contact": "Pro dotazy: <email></email>"
+        },
+        "operator": {
+          "title": "1. Kdo provozuje tyto webové stránky?",
+          "operator-info": "Tuto webovou stránku provozuje soukromá osoba:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Není společnost."
+        },
+        "data-collection": {
+          "title": "2. Jaká data shromažďujeme?",
+          "description": "Shromažďujeme data jak pro registrované, tak pro hostující hráče, a to pouze tehdy, když je součástí hry připojený (přihlášený) uživatel.",
+          "guest-players": {
+            "title": "Pro hostující hráče:",
+            "items": "Zobrazované jméno (vybrané při vstupu do hry);;Vybraný avatar;;Skóre hry, pořadí a stav vítěze;;Zprávy v chatu (dočasně uložené, pokud nejsou označeny)",
+            "note": "Tato data se ukládají pouze v případě, že je přihlášen alespoň jeden hráč ve hře."
+          },
+          "logged-users": {
+            "title": "Pro přihlášené uživatele (navíc k výše uvedenému):",
+            "items": "E-mailová adresa;;Uživatelské jméno / zobrazované jméno;;Avatar (z předdefinovaného seznamu);;Hašované heslo nebo OAuth ID (Google, Facebook);;Jazykové nastavení;;Stav ověření e-mailu"
+          },
+          "general": {
+            "title": "Obecné (pro všechny uživatele):",
+            "items": "Data herní relace (kódy, nastavení);;Soubor cookie relace (platnost 24 hodin);;IP adresa (dočasná, není dlouhodobě ukládána);;Anonymní analytika používání (přes PostHog, hostováno v EU)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Proč se vaše údaje používají?",
+          "items": "- Umožnit hráčům (hostům nebo registrovaným) připojit se a hrát hry\n- Zobrazovat avatary, jména, skóre a hodnocení\n- Umožnit moderování v případě zneužití\n- Zpracovávat zpětnou vazbu a obnovu účtu (pro přihlášené uživatele)\n- Vylepšit web pomocí anonymní analytiky"
+        },
+        "data-retention": {
+          "title": "4. Jak dlouho jsou vaše data uchovávána?",
+          "retention-table": {
+            "headers": "Typ dat;;Doba uchování",
+            "rows": "Soubory cookie pro relaci;;24 hodin|||Údaje o účtu (přihlášený);;Do žádosti o smazání|||Údaje o hostujícím hráči;;Pouze pokud je připojený hráč ve hře|||Údaje o hře a skóre;;Uloženo trvale|||Zprávy v chatu;;Dočasně v Redisu; uloženo, pokud je nahlášeno|||Zpětná vazba;;Trvale|||Ověřovací/resetovací tokeny;;Dokud nejsou použity nebo nevyprší|||Žádosti o smazání účtu;;Smazáno po 48hodinové ochranné lhůtě|||Analytika (PostHog);;Trvale, hostováno v EU"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Právní základ (GDPR)",
+          "description": "Zpracování je založeno na:",
+          "items": "Souhlas (cookies, statistiky);;Smlouva (poskytování hry);;Oprávněný zájem (moderování);;Zákonná povinnost (reagování na žádosti)"
+        },
+        "data-access": {
+          "title": "6. Kdo může vidět tvá data?",
+          "items": "Ostatní hráči vidí tvé veřejné jméno, avatara a historii her;;Vývojář (Maxent Rouault) může přistupovat k datům pro účely moderování;;Žádný prodej ani reklamní využití tvých dat"
+        },
+        "your-rights": {
+          "title": "7. Tvoje práva",
+          "items": "Přístup k vašim údajům, jejich opravu nebo smazání;;Smazání vašeho účtu (nebo jeho vyžádání);;Export vašich údajů (na vyžádání);;Odvolání proti banům na appeal@skymo.online"
+        },
+        "security": {
+          "title": "8. Zabezpečení",
+          "items": "Šifrovaná hesla;;Připojení pouze přes HTTPS;;Moderování a detekce zneužití;;Hosting v EU (Paříž, Francie)"
+        },
+        "cookies-analytics": {
+          "title": "9. Cookies a analýzy",
+          "items": "Pouze nezbytné cookies (relace, přihlášení);;Analytika přes PostHog, hostováno v EU, žádné sledování napříč weby"
+        },
+        "contact": {
+          "title": "10. Kontakt",
+          "description": "Obecné dotazy: <email></email>"
         }
       },
       "head": {
@@ -188,7 +257,8 @@
         "cancel": "Neopakovat",
         "replay": "Přehrát znovu"
       },
-      "leave-button": "Opustit hru"
+      "leave-button": "Opustit hru",
+      "round": "Kolo {number}"
     },
     "Rules": {
       "head": {
@@ -196,7 +266,503 @@
         "description": "Naučte se hrát Skyjo s naším průvodcem Skymo. Objevte pravidla, strategie a tipy, jak zvládnout tuto zábavnou online karetní hru. Hrajte s přáteli hned teď!",
         "keywords": "Skymo,Skyjo,pravidla Skyjo,jak hrát Skyjo,hra Skyjo,pravidla karetní hry,online karetní hra,herní instrukce,herní průvodce"
       },
-      "title": "Pravidla hry Skyjo"
+      "title": "Pravidla hry",
+      "play-button": "Hrát online zdarma!"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Žebříček | Skymo - Online karetní hra Skyjo",
+        "description": "Podívej se na nejlepší hráče na Skymo! Prohlédni si nejlepší hráče Skymo a jejich úspěšnost v našem žebříčku soutěží.",
+        "keywords": "Skymo,Skyjo,žebříček,nejlepší hráči,hodnocení,nejlepší hráči,míra výher,soutěžní,online karetní hra"
+      },
+      "title": "Žebříček",
+      "subtitle": "Objev nejlepší hráče Skyjo a soutěž o nejvyšší příčky!",
+      "lastUpdated": "Poslední aktualizace: {date}",
+      "columns": {
+        "rank": "Pořadí",
+        "player": "Hráč",
+        "wins": "Výhry",
+        "totalGames": "Celkem her",
+        "winRate": "Úspěšnost"
+      },
+      "noData": "V žebříčku zatím nebyli nalezeni žádní hráči.",
+      "error": "V tuto chvíli nelze načíst tabulku výsledků.",
+      "tryAgainLater": "Zkuste to prosím později.",
+      "callToAction": {
+        "guest": {
+          "title": "Chceš soutěžit?",
+          "description": "Zaregistruj se a sleduj svůj postup a soutěž s hráči po celém světě!",
+          "signup": "Zaregistruj se teď"
+        },
+        "authenticated": {
+          "title": "Jsi připraven soutěžit?",
+          "description": "Naskoč do hry a vyšplhej se v žebříčku!",
+          "createGame": "Vytvořit hru",
+          "joinGame": "Připojit se ke hře"
+        }
+      },
+      "errorActions": {
+        "refresh": "Obnovit",
+        "backHome": "Zpět domů"
+      }
+    },
+    "Signup": {
+      "head": {
+        "title": "Připoj se k Skyjo | Hraj Skyjo online zdarma",
+        "description": "Hrajte Skyjo online s přáteli! Vytvořte si bezplatný účet Skymo, abyste mohli sledovat svůj postup, odemykat exkluzivní obsah a připojit se k živoucí komunitě.",
+        "keywords": "skymo, hraj skyjo online, skyjo online hra, registrace skyjo, vytvořit účet skymo, připojit se ke skymo, skymo skyjo, online karetní hra, multiplayer skyjo, hra skyjo zdarma, hraj skyjo s přáteli, sledování postupu ve skyjo, komunita skyjo, exkluzivní obsah skyjo"
+      },
+      "title": "Registrace",
+      "or": "Nebo",
+      "form": {
+        "email": {
+          "label": "Email",
+          "button": "Pokračovat e-mailem"
+        }
+      },
+      "already-have-account": {
+        "description": "Už máš účet?",
+        "link": "Přihlásit se"
+      },
+      "advantages": {
+        "title": "Připoj se k dobrodružství",
+        "subtitle": "Vytvoř si účet a odemkni svět možností a vylepši svůj zážitek.",
+        "features": {
+          "track-progress": {
+            "title": "Sleduj svůj postup",
+            "description": "Podívej se, jak si vedeš proti ostatním, a sleduj své zlepšení v průběhu času."
+          },
+          "personalized-experience": {
+            "title": "Personalizovaný zážitek",
+            "description": "Získej doporučení a obsah přizpůsobený přímo tobě."
+          },
+          "join-community": {
+            "title": "Připoj se ke komunitě",
+            "description": "Spoj se s ostatními dobrodruhy, sdílej tipy a najdi si nové přátele."
+          },
+          "exclusive-content": {
+            "title": "Exkluzivní obsah",
+            "description": "Získej přístup ke speciálním výzvám, odměnám a včasným aktualizacím."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "text": "Pokračováním souhlasíš s našimi",
+        "terms-link": "Podmínky služby",
+        "and": "a",
+        "privacy-link": "Zásady ochrany osobních údajů"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Přihlásit se | Skymo - Online karetní hra Skyjo",
+        "description": "Přihlas se do Skymo a hraj Skyjo online. Zadej svůj email a heslo pro přístup ke svému účtu a okamžitě začni hrát.",
+        "keywords": "Skymo,Skyjo,přihlášení,online karetní hra,hra Skyjo,karetní hra,online hra"
+      },
+      "title": "Přihlášení",
+      "or": "Nebo",
+      "form": {
+        "login": {
+          "label": "E-mail nebo uživatelské jméno"
+        },
+        "password": {
+          "label": "Heslo"
+        },
+        "submit": "Přihlásit se"
+      },
+      "signup": {
+        "description": "Nemáš účet?",
+        "link": "Zaregistruj se teď!"
+      },
+      "forgot-password": "Zapomněl/a jsi heslo?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Zapomenuté heslo | Skymo - Online karetní hra Skyjo",
+        "description": "Resetuj své heslo k Skyjo, abys získal přístup ke svému účtu a mohl pokračovat ve hře Skyjo online s přáteli.",
+        "keywords": "Skymo,Skyjo,zapomenuté heslo,resetovat heslo,obnova účtu,online karetní hra"
+      },
+      "title": "Zapomenuté heslo",
+      "description": "Zadej svou e-mailovou adresu a pošleme ti odkaz na obnovení hesla",
+      "form": {
+        "email": {
+          "label": "E-mailová adresa"
+        },
+        "submit": "Odeslat odkaz pro resetování",
+        "sending": "Odesílám..."
+      },
+      "success": {
+        "title": "Zkontroluj svůj e-mail",
+        "message": "Pokud účet s tímto e-mailem existuje, byl odeslán odkaz pro obnovení hesla.",
+        "back": "Zpět na přihlášení"
+      },
+      "back": "Zpět na přihlášení"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Resetovat heslo | Skymo - Online karetní hra Skyjo",
+        "description": "Vytvoř si nové heslo pro svůj účet Skyjo, abys získal přístup a mohl pokračovat ve hře Skyjo online.",
+        "keywords": "Skymo,Skyjo,reset hesla,nové heslo,obnova účtu,online karetní hra"
+      },
+      "title": "Resetovat heslo",
+      "description": "Zadej své nové heslo níže.",
+      "form": {
+        "password": {
+          "label": "Nové heslo"
+        },
+        "confirmPassword": {
+          "label": "Potvrdit nové heslo"
+        },
+        "submit": "Resetovat heslo",
+        "resetting": "Resetuji..."
+      },
+      "success": {
+        "title": "Heslo bylo úspěšně resetováno",
+        "message": "Tvé heslo bylo resetováno. Nyní se můžeš přihlásit svým novým heslem.",
+        "back": "Přihlásit se"
+      },
+      "back": "Zpět na přihlášení"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "Změna e-mailu vrácena",
+        "message": "Tvá e-mailová adresa byla úspěšně vrácena zpět a tvůj účet je zabezpečen. Zkontroluj si prosím e-mail s instrukcemi pro reset hesla.",
+        "close": "Tuto stránku můžeš nyní zavřít."
+      },
+      "failed": {
+        "title": "Změna e-mailu se nepodařila vrátit"
+      },
+      "back": "Zpět na přihlášení"
+    },
+    "OAuthCallbackPage": {
+      "title": "Přesměrování probíhá…"
+    },
+    "Onboarding": {
+      "title": "Probíhá naskakování...",
+      "subtitle": "Dokonči svůj profil a ponoř se do dobrodružství Skyjo!",
+      "form": {
+        "name": {
+          "label": "Jméno hráče",
+          "placeholder": "Jeff",
+          "description": "Zobrazeno ostatním hráčům ve hrách"
+        },
+        "username": {
+          "label": "Jméno",
+          "placeholder": "jeff",
+          "description": "Pro přihlášení a profil"
+        },
+        "password": {
+          "label": "Vytvoř si heslo",
+          "placeholder": "Zadej bezpečné heslo"
+        },
+        "submit": "Připraven hrát!"
+      },
+      "head": {
+        "title": "Onboarding | Skymo - Online karetní hra Skyjo",
+        "description": "Dokonči svůj profil a ponoř se do dobrodružství Skyjo!",
+        "keywords": "Skymo,Skyjo,onboarding,profil,dobrodružství,online karetní hra"
+      },
+      "loading": "Načítání tvého profilu...",
+      "success": "Onboarding úspěšně dokončen! Přesměrování na domovskou stránku..."
+    },
+    "Verify": {
+      "head": {
+        "title": "Ověřit e-mail | Skymo - Online karetní hra Skyjo",
+        "description": "Ověř svou e-mailovou adresu pro dokončení nastavení účtu Skyjo a začni hrát Skyjo online s přáteli.",
+        "keywords": "Skymo,Skyjo,ověření e-mailu,ověřit účet,online karetní hra"
+      },
+      "title": "Ověř svůj e-mail",
+      "description": "Poslali jsme 6místný kód na tvou e-mailovou adresu. Zadej ho prosím níže.",
+      "resend": {
+        "countdown": "Znovu poslat kód za {seconds}s",
+        "prompt": "Kód jste neobdržel?",
+        "button": "Požádat o nový kód",
+        "sending": "Odesílám..."
+      },
+      "toast": {
+        "success": "Email úspěšně ověřen!",
+        "resend-success": "Byl odeslán nový e-mail",
+        "email-already-sent": "E-mail už byl odeslán během posledních 5 minut. Zkontroluj si schránku nebo klikni na „Vyžádat nový kód“ a odešli nový"
+      },
+      "loading": "Načítání tvého profilu..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "Profil '{username}' | Skymo - Online karetní hra Skyjo",
+        "description": "Zobrazit profil {username} na Skymo. Podívej se na jeho herní statistiky, nedávnou aktivitu a úspěchy ve hře Skyjo online.",
+        "keywords": "Skymo,Skyjo,profil hráče,statistiky hráče,statistiky hry,poslední hry,úspěchy,online karetní hra"
+      },
+      "not-found": {
+        "title": "Uživatel nenalezen",
+        "description": "Uživatel \"{username}\" neexistuje nebo si mohl změnit své uživatelské jméno.",
+        "back-to-home": "Zpět na hlavní stránku"
+      },
+      "error": {
+        "title": "Něco se pokazilo",
+        "description": "Při načítání tohoto profilu došlo k chybě. Zkuste to prosím později.",
+        "back-to-home": "Zpět na hlavní stránku"
+      },
+      "stats": {
+        "total-games": "Celkem her",
+        "win-rate": "Míra výher",
+        "average-rank": "Průměrné pořadí",
+        "public": "Veřejné",
+        "private": "Soukromé"
+      },
+      "sections": {
+        "achievements": "Úspěchy",
+        "achievements-coming-soon": "Systém úspěchů již brzy!",
+        "recent-activity": "Poslední aktivita"
+      },
+      "recent-activity": {
+        "no-activity": "Žádná nedávná aktivita k zobrazení.",
+        "game-code": "Hra #{code}",
+        "rank": "Pořadí #{rank}",
+        "winner": "Vítěz"
+      },
+      "search": {
+        "placeholder": "Hledat uživatelské jméno"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Nastavení účtu | Skymo - Online karetní hra Skyjo",
+        "description": "Spravuj nastavení svého účtu na Skymo. Změň své zobrazované jméno, uživatelské jméno, e-mail, heslo a předvolby účtu."
+      },
+      "title": "Nastavení účtu",
+      "description": "Spravuj svůj účet a osobní údaje.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Účet",
+        "password": "Heslo"
+      },
+      "buttons": {
+        "save": "Uložit změny",
+        "saving": "Ukládání...",
+        "delete-account": "Smazat účet",
+        "confirm-delete": "Ano, smazat můj účet"
+      },
+      "messages": {
+        "save-success": "Nastavení úspěšně uloženo!",
+        "save-error": "Nepodařilo se uložit nastavení. Zkus to prosím znovu.",
+        "delete-confirmation": "Jsi si jistý, že chceš smazat svůj účet? Tuto akci nelze vrátit zpět a všechna tvá data budou trvale odstraněna.",
+        "username-taken": "Toto uživatelské jméno je již obsazené.",
+        "email-taken": "Tento e-mail je již používán.",
+        "password-incorrect": "Zadané heslo není správné.",
+        "account-deletion-scheduled": "Vaše žádost o smazání účtu byla zaznamenána a bude zpracována do 48 hodin. Obdržíte e-mail s potvrzením smazání.",
+        "account-deletion-failed": "Došlo k chybě při mazání tvého účtu. Zkus to prosím znovu."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Zobrazované jméno",
+          "description": "Tvé jméno zobrazené ostatním hráčům ve hrách.",
+          "placeholder": "Zadej své jméno",
+          "submit": "Uložit jméno"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Tvůj avatar zobrazený na tvém profilu.",
+          "placeholder": "Vyber si avatara",
+          "submit": "Uložit avatara"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Účet",
+      "fields": {
+        "username": {
+          "label": "Uživatelské jméno",
+          "description": "Tvoje jedinečné uživatelské jméno používané pro URL tvého profilu.",
+          "placeholder": "Zadej své uživatelské jméno",
+          "submit": "Uložit uživatelské jméno"
+        },
+        "email": {
+          "label": "E-mailová adresa",
+          "description": "Tvoje e-mailová adresa používaná pro přihlášení a důležitá oznámení. Z bezpečnostních důvodů bude na tvou současnou adresu odeslán varovný e-mail, když ji změníš.",
+          "placeholder": "Zadej svůj email",
+          "submit": "Uložit e-mail"
+        },
+        "settings-sync": {
+          "label": "Synchronizace nastavení",
+          "description": "Synchronizuj svá nastavení na všech svých zařízeních, když jsi přihlášený.",
+          "enable-sync": "Povolit synchronizaci nastavení",
+          "disable-sync": "Zakázat synchronizaci nastavení",
+          "status": {
+            "enabled": "Povoleno",
+            "disabled": "Zakázáno",
+            "syncing": "Synchronizuji...",
+            "offline": "Offline",
+            "error": "Synchronizace selhala"
+          },
+          "last-sync": "Poslední synchronizace: {date}",
+          "sync-now": "Synchronizovat nyní"
+        }
+      },
+      "delete-account": {
+        "title": "Smazat můj účet",
+        "description": "Smaž svůj účet a všechna s ním spojená data. Tuto akci nelze vzít zpět a všechna tvá data budou trvale odstraněna.",
+        "button": "Smazat účet",
+        "confirmation": {
+          "description": "Potvrzením se spustí 48hodinové odpočítávání: obdržíš e-mail s odkazem na zrušení smazání, pokud si to rozmyslíš. Tvůj účet zůstane během této doby přístupný. Po 48 hodinách bude trvale smazán a obdržíš potvrzovací e-mail.",
+          "input-label": "Zadej DELETE pro potvrzení",
+          "input-placeholder": "SMAZAT",
+          "cancel-button": "Zrušit",
+          "delete-button": "Smazat můj účet"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Změnit heslo",
+      "fields": {
+        "password": {
+          "label": "Heslo",
+          "description": "Změň si heslo ke svému účtu.",
+          "current-password": "Aktuální heslo",
+          "new-password": "Nové heslo",
+          "confirm-password": "Potvrdit nové heslo",
+          "current-placeholder": "Zadej své aktuální heslo",
+          "new-placeholder": "Zadej své nové heslo",
+          "confirm-placeholder": "Potvrď své nové heslo",
+          "submit": "Uložit heslo"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Zadané heslo je nesprávné."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Neplatný token",
+      "success": {
+        "title": "Zrušení smazání účtu",
+        "description": "Tvé zrušení účtu bylo úspěšně zrušeno. Tvůj účet je v bezpečí a nebude smazán.",
+        "secure-message": "Tvůj účet je nyní zabezpečený a zůstane aktivní. Můžeš svůj účet nadále normálně používat."
+      },
+      "failed": {
+        "title": "Zrušení selhalo",
+        "description": "Nepodařilo se nám zrušit smazání tvého účtu. Zkus to prosím znovu nebo kontaktuj podporu.",
+        "general-error": "Něco se pokazilo při pokusu o zrušení smazání tvého účtu. Zkus to znovu nebo kontaktuj podporu.",
+        "help-message": "Něco se pokazilo při pokusu o zrušení smazání tvého účtu. Zkus to znovu nebo kontaktuj podporu."
+      },
+      "expired": {
+        "title": "Odkaz pro zrušení vypršel",
+        "description": "Odkaz na zrušení vypršel. Pokud si chceš svůj účet stále ponechat, kontaktuj prosím podporu.",
+        "help-message": "Časové období pro zrušení 48 hodin vypršelo. Pokud potřebuješ pomoc, kontaktuj podporu."
+      },
+      "actions": {
+        "return-homepage": "Zpět na hlavní stránku"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Podmínky služby | Skymo - Online karetní hra Skyjo",
+        "description": "Přečti si podmínky služby pro Skymo, online platformu karetní hry Skyjo. Seznam se s povinnostmi uživatele, používáním služby a pravidly platformy.",
+        "keywords": "Podmínky služby, Skymo, Skyjo, online karetní hra, uživatelská smlouva, pravidla platformy"
+      },
+      "content": {
+        "title": "Smluvní podmínky",
+        "last-update": {
+          "text": "Poslední aktualizace: {date}",
+          "date-format": "DD.MM.RRRR v HH:mm"
+        },
+        "welcome": "Vítej na <b>skymo.online</b>, online karetní hře pro více hráčů provozované společností Maxent Rouault. Přístupem na tuto webovou stránku nebo jejím používáním souhlasíš s těmito Podmínkami služby. Pokud nesouhlasíš, nemůžeš platformu používat.",
+        "operator": {
+          "title": "1. Provozovatel",
+          "content": "Tuto webovou stránku provozuje:",
+          "name": "Maxent Rouault",
+          "contact": "Kontakt: {email}",
+          "location": "Francie (nepodnikající fyzická osoba)"
+        },
+        "eligibility": {
+          "title": "2. Způsobilost",
+          "content": "Službu můžeš využívat jako host nebo registrací účtu. Používáním této webové stránky potvrzuješ, že:",
+          "items": {
+            "1": "Je ti alespoň 13 let (nebo minimální věk vyžadovaný ve tvé zemi).",
+            "2": "Pokud ti je méně než 18 let, máš povolení od zákonného zástupce."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Účet a používání hosta",
+          "items": {
+            "1": "Hostující hráči mohou hrát bez registrace, ale některé funkce mohou být omezené.",
+            "2": "Registrovaní uživatelé musí poskytnout platný e-mail a uživatelské jméno.",
+            "3": "Za svůj účet a aktivitu jsi zodpovědný ty. Nesmíš sdílet své přihlašovací údaje.",
+            "4": "Svůj účet můžeš kdykoli smazat. Po 48 hodinách budou tvé osobní údaje anonymizovány nebo trvale smazány."
+          }
+        },
+        "data-storage": {
+          "title": "4. Ukládání dat",
+          "content": "Ukládáme následující data v závislosti na tvém používání:",
+          "all-players": {
+            "title": "Pro všechny hráče:",
+            "items": {
+              "1": "Zobrazené jméno ve hře, avatar, skóre a chatovací zprávy, <b>pokud je přihlášen alespoň jeden hráč</b>.",
+              "2": "IP adresy mohou být dočasně uloženy pro účely zabezpečení a moderování."
+            }
+          },
+          "registered-players": {
+            "title": "Pro registrované hráče:",
+            "items": {
+              "1": "Email, uživatelské jméno, avatar, herní statistiky a volitelně propojené účty (např. Google).",
+              "2": "Analytická data, jako je herní chování, frekvence relací nebo používání funkcí, **mohou být shromažďována za účelem vylepšení hry**."
+            }
+          },
+          "storage-location": "Všechna data jsou uložena v <b>Evropské unii</b> a zpracovávána v souladu s <link>zásadami ochrany osobních údajů</link>."
+        },
+        "analytics-tracking": {
+          "title": "5. Analytika a sledování",
+          "content": "Abychom zlepšili službu a personalizovali uživatelský zážitek, můžeme:",
+          "items": {
+            "1": "Používejte **analytické nástroje** (např. PostHog nebo podobné) ke sledování používání a herních vzorců.",
+            "2": "Analyzovat chování uživatelů za účelem odhalování chyb, zlepšování párování nebo navrhování funkcí.",
+            "3": "V budoucnu můžeme tato data použít k **poskytování personalizovaného obsahu nebo reklam**, při zachování tvých práv na ochranu soukromí podle GDPR."
+          },
+          "data-rights": "Můžeš vznést námitku proti sledování nebo požádat o smazání osobních údajů tím, že nás kontaktuješ."
+        },
+        "ads-monetization": {
+          "title": "6. Reklamy a monetizace",
+          "content": "Platforma může zobrazovat reklamy, včetně reklam třetích stran nebo kontextových reklam. V budoucnu mohou být přihlášeným uživatelům na základě dat o používání zobrazovány **personalizované reklamy**.",
+          "consent": "Poskytneme jasná oznámení a mechanismy souhlasu, pokud a až budou zavedeny behaviorální nebo personalizované reklamy."
+        },
+        "user-conduct": {
+          "title": "7. Chování uživatele",
+          "content": "Souhlasíš s:",
+          "items": {
+            "1": "Buďte ohleduplní a dodržujte pravidla fair play.",
+            "2": "Nepodváděj, neobtěžuj, nevydávej se za jiné osoby ani nepoužívej urážlivá uživatelská jména nebo avatary.",
+            "3": "Nespamuj ani jinak nezneužívej chat ani žádné komunikační funkce."
+          },
+          "enforcement": "Vyhrazujeme si právo zakázat nebo omezit uživatele, kteří poruší tato pravidla."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderování a hlášení",
+          "items": {
+            "1": "Chatovací zprávy jsou dočasně uloženy a mohou být v plném rozsahu uloženy pro hry s registrovanými hráči.",
+            "2": "Můžeme si ponechat zprávy, když hráč odešle hlášení nebo pokud je vyžadována moderace.",
+            "3": "Zneužití můžeš nahlásit e-mailem (viz sekce kontakt).",
+            "4": "Moderovací akce a hlášení mohou být zaznamenány pro zajištění transparentnosti a spravedlnosti."
+          }
+        },
+        "availability": {
+          "title": "9. Dostupnost",
+          "content": "Služba je poskytována „tak, jak je“. Můžeme kdykoli bez předchozího upozornění upravit, pozastavit nebo ukončit provoz webových stránek nebo funkcí."
+        },
+        "intellectual-property": {
+          "title": "10. Duševní vlastnictví",
+          "content": "Veškerý původní obsah, grafika a kód patří společnosti Maxent Rouault, pokud není uvedeno jinak. Bez povolení nesmíš znovu použít ani redistribuovat žádnou část webu."
+        },
+        "legal": {
+          "title": "11. Právní informace",
+          "jurisdiction": "Tato stránka se řídí francouzským právem a je v souladu s Obecným nařízením o ochraně osobních údajů (GDPR).",
+          "disputes": "Právní spory budou řešeny francouzskými soudy."
+        },
+        "contact": {
+          "title": "12. Kontakt",
+          "general": "Obecné dotazy: <email></email>"
+        }
+      }
     }
   },
   "components": {
@@ -216,7 +782,8 @@
       "release-notes": "Poznámky k vydání",
       "attribution": {
         "avatars": "Avatary vytvořené Freepik - Flaticon"
-      }
+      },
+      "translations": "Přelož hru!"
     },
     "GameLobbyButtons": {
       "join-game-button": "Připojit se ke hře",
@@ -363,6 +930,61 @@
         "volume": {
           "label": "Hlasitost ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Chat",
+        "chat-visibility": "Viditelnost chatu",
+        "chat-notification-size": {
+          "label": "Velikost oznámení chatu",
+          "values": {
+            "small": "Malá",
+            "normal": "Normální",
+            "big": "Velký"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobilní",
+        "switch-to-player-who-is-playing": "Automaticky přepnout na hráče, který hraje",
+        "show-preview-opponents-cards": "Zobrazit náhled karet protihráčů v seznamu protihráčů"
+      },
+      "gameplay": {
+        "title": "Hra",
+        "gameboard": {
+          "title": "Herní deska",
+          "size": {
+            "label": "Velikost tvé herní desky",
+            "big-warning": "Může rozbít zobrazení na mobilu",
+            "values": {
+              "normal": "Normální",
+              "big": "Velký"
+            }
+          },
+          "enlarge-active-player-board": "Zvětšit hrací plochu hráče, na tahu"
+        },
+        "timer": {
+          "title": "Časovač",
+          "label": "Režim zobrazení časovače",
+          "description": "Chytrý režim zobrazuje časovač v polovině hry a posledních 15 sekund.",
+          "modes": {
+            "never": "Nikdy",
+            "smart": "Chytrý",
+            "always": "Vždy"
+          }
+        }
+      },
+      "account": {
+        "title": "Účet",
+        "sync": {
+          "label": "Nastavení účtu",
+          "description": "Synchronizuj svá nastavení napříč všemi svými zařízeními, když jsi přihlášený.",
+          "enabled": "Povoleno",
+          "disabled": "Zakázáno",
+          "syncing": "Synchronizuji...",
+          "offline": "Offline",
+          "error": "Synchronizace selhala",
+          "lastSync": "Poslední synchronizace: {date}"
+        }
       }
     },
     "KickVote": {
@@ -439,7 +1061,17 @@
       "unread-messages": "{count} nepřečtená zpráva{count, plural, =1 {} other {y}}"
     },
     "CopyLink": {
-      "message": "Odkaz zkopírován!"
+      "message": "Odkaz zkopírován!",
+      "copy": {
+        "button-title": "Zkopírovat odkaz",
+        "popover": "Odkaz zkopírován!"
+      },
+      "share": {
+        "title": "Připoj se k mé hře Skyjo!",
+        "text": "Přijď si zahrát Skyjo se mnou online! Klikni na odkaz a připoj se do hry.",
+        "button-title": "Sdílet hru",
+        "tooltip": "Klikni sem a sdílej tuto hru!"
+      }
     },
     "DiscardPile": {
       "title": "Odkládací balíček",
@@ -528,12 +1160,13 @@
     },
     "Avatar": {
       "context-menu": {
-        "report": "Nahlásit {username}",
-        "kick": "Vyhodit {username}",
-        "vote-to-kick": "Hlasovat pro vyhození {username}",
-        "ban": "Zakázat {username}",
-        "mute": "Ztlumit {username}",
-        "unmute": "Zrušit ztlumení uživatele {username}"
+        "report": "Nahlásit {name}",
+        "kick": "Vyhodit {name}",
+        "vote-to-kick": "Hlasovat pro vyloučení {name}",
+        "ban": "Zabanovat {name}",
+        "mute": "Ztlumit {name}",
+        "unmute": "Zrušit ztlumení {name}",
+        "transfer-host": "{name} je nyní hostitel"
       }
     },
     "AfkKick": {
@@ -551,8 +1184,8 @@
       }
     },
     "ReportDialog": {
-      "title": "Nahlásit {username}",
-      "description": "Nahlaste uživatelské jméno nebo zprávu od {username}, pokud se vám zdá nevhodná.",
+      "title": "Nahlásit {name}",
+      "description": "Nahlásit jméno nebo zprávu od {name}, pokud se zdá nevhodná.",
       "report-message": "Nahlásit zprávu",
       "select-message": "Vyberte zprávu k nahlášení",
       "select-message-placeholder": "Vyberte zprávu",
@@ -564,22 +1197,63 @@
           "title": "Hlášení odesláno",
           "description": "Děkujeme za vaše hlášení, přispěli jste ke zlepšení kvality hry."
         }
+      },
+      "report-name": "Nahlásit jméno hráče",
+      "comment": "Další kontext (volitelné)",
+      "comment-placeholder": "Poskytni další kontext k tomuto hlášení..."
+    },
+    "Banner": {
+      "title": "Potřebuji <gform>vaši zpětnou vazbu</gform>, abych mohl/a formovat budoucnost Skyjo!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Pravidla",
+        "leaderboard": "Žebříček"
       }
+    },
+    "LoginButton": {
+      "login": "Připoj se k zábavě!"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Pokračovat s Googlem"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Hesla se shodují",
+      "minimum-characters": "Aspoň 10 znaků",
+      "lowercase-letter": "Aspoň jedno malé písmeno",
+      "capital-letter": "Aspoň jedno velké písmeno",
+      "number": "Aspoň jedno číslo",
+      "special-character": "Aspoň jeden speciální znak"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Kontroluji...",
+        "available": "Uživatelské jméno je k dispozici",
+        "taken": "Už je obsazeno!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Znovu se připojit ke hře",
+      "description": "Byl jsi ve hře, která probíhá. Chceš se znovu připojit?",
+      "reconnect-button": "Ano, znovu se připojit",
+      "dismiss-button": "Ne, zavřít"
     }
   },
   "utils": {
     "chat": {
-      "player-already-muted": "Uživatel {username} je již ztlumen",
-      "player-unmuted": "Ztlumení hráče {username} bylo zrušeno",
-      "wizz-self": "Byl jste wizznut uživatelem {initiatorUsername}!",
-      "player-joined": "{username} se připojil/a ke hře",
-      "player-left": "{username} opustil hru",
-      "player-reconnect": "{username} se znovu připojil ke hře",
+      "player-already-muted": "{name} je již ztlumený",
+      "player-unmuted": "{name} už není ztlumený",
+      "wizz-self": "Byl jsi wizznut od {initiatorName}!",
+      "player-joined": "{name} se připojil ke hře",
+      "player-left": "{name} opustil hru",
+      "player-reconnect": "{name} se znovu připojil ke hře",
       "argument-required": "Pro příkaz je vyžadován jeden nebo více argumentů: {command}",
-      "player-muted": "{username} byl ztlumen",
-      "player-not-muted": "{username} není ztlumen",
-      "wizz-sent": "Poslal/a jsi wizz uživateli {targetUsername}!",
-      "wizz-other": "{initiatorUsername} poslal/a wizz uživateli {targetUsername}!"
+      "player-muted": "{name} je nyní ztlumený",
+      "player-not-muted": "{name} není ztlumený",
+      "wizz-sent": "Poslal jsi wizz na {targetName}!",
+      "wizz-other": "{initiatorName} má kouzlo na {targetName}!",
+      "welcome": "Prosím, buďte milí a ohleduplní. Pokud je to nutné, můžeš {isMobile, select, true {dlouze podržet} other {kliknout pravým tlačítkem}} na zprávy a ztlumit nebo nahlásit hráče.",
+      "host-transferred": "{name} je nyní hostitel"
     },
     "avatar": {
       "bee": "včela",
@@ -638,6 +1312,9 @@
         "rate-limit": {
           "title": "Posíláte příliš mnoho požadavků",
           "description": "Zkuste to prosím znovu za několik sekund"
+        },
+        "player-already-connected": {
+          "description": "Už jsi připojený k této hře z jiné relace"
         }
       }
     }
@@ -648,7 +1325,7 @@
         "title": "Hráč {playerName} byl vyloučen z důvodu nahlášení"
       },
       "report-against-you": {
-        "description": "Vaše uživatelské jméno nebo jedna z vašich zpráv byla nahlášena a shledána nevhodnou. Prosím, neopakujte toto chování.",
+        "description": "Tvoje jméno nebo jedna z tvých zpráv byla nahlášena a shledána nevhodnou. Prosím, toto chování neopakuj.",
         "title": "Byli jste vykopnuti na základě nahlášení"
       }
     },
@@ -683,6 +1360,101 @@
         "title": "Došlo k neočekávané chybě",
         "description": "Při blokování hráče došlo k neočekávané chybě"
       }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Nemáš oprávnění přenést hostitele",
+        "description": "Hostování můžeš předat jinému hráči pouze ty jako aktuální hostitel"
+      },
+      "player-not-found": {
+        "title": "Hráč neexistuje",
+        "description": "Hráč, kterému se pokoušíš předat hostování, ve hře neexistuje"
+      },
+      "player-not-connected": {
+        "title": "Hráč není připojen",
+        "description": "Hráč, na kterého se pokoušíš přenést hostování, není aktuálně připojen ke hře"
+      },
+      "host-transferred": {
+        "title": "Host byl úspěšně přenesen",
+        "description": "{newHostName} je nyní hostitelem hry"
+      },
+      "you-are-now-host": {
+        "title": "Jsi nyní hostitel",
+        "description": "{previousHostName} ti předal roli hostitele"
+      },
+      "unexpected-error": {
+        "title": "Došlo k neočekávané chybě",
+        "description": "Došlo k neočekávané chybě při přenosu hostitele"
+      }
     }
+  },
+  "errors": {
+    "invalid-credentials": "Zadaný e-mail nebo heslo je nesprávné. Zkuste to znovu.",
+    "logout-failed": "Nepodařilo se tě odhlásit. Prosím, zavři prohlížeč, abys ukončil relaci.",
+    "session-not-found": "Tvoje relace vypršela nebo je neplatná. Přihlas se prosím znovu.",
+    "session-invalid": "Tvoje relace je neplatná. Přihlas se prosím znovu, abys mohl/a pokračovat.",
+    "session-expired": "Tvoje relace vypršela. Přihlas se prosím znovu, abys mohl/a pokračovat.",
+    "session-token-missing": "Chybí ti token relace. Přihlas se a získej nový.",
+    "username-taken": "Toto uživatelské jméno je již obsazené. Vyber si jiné.",
+    "onboarding-error": "Došlo k problému s dokončením tvého profilu. Zkus to prosím znovu.",
+    "reset-token-invalid": "Poskytnutý resetovací token je neplatný. Požádej o nový.",
+    "reset-token-expired": "Tvůj token pro reset hesla vypršel. Požádej si o nový.",
+    "password-reset-failed": "Nemohli jsme resetovat tvé heslo. Zkus to prosím znovu.",
+    "forgot-password-error": "Došlo k problému při zpracování tvé žádosti o obnovení hesla. Zkus to prosím později znovu.",
+    "reset-password-error": "Nepodařilo se nám resetovat tvé heslo. Zkus to prosím znovu.",
+    "oauth-restart-process": "Došlo k chybě při autentizaci. Zkus se prosím přihlásit znovu.",
+    "oauth-id-token-missing": "Nepodařilo se nám získat ID token od poskytovatele autentizace. Zkus to prosím znovu.",
+    "oauth-account-creation-failed": "Nepodařilo se nám vytvořit účet s informacemi od tvého poskytovatele. Zkus to prosím znovu.",
+    "oauth-login-initiation-failed": "Nepodařilo se zahájit proces přihlášení. Zkuste to prosím znovu za chvíli.",
+    "verify-session-error": "Nepodařilo se nám ověřit tvou relaci. Odhlás se a znovu se přihlas.",
+    "signup-error": "V tuto chvíli se nám nepodařilo vytvořit tvůj účet. Zkus to prosím později.",
+    "login-error": "Došlo k problému s tvým přihlášením. Zkus to prosím znovu.",
+    "login-invalid-credentials": "Zadaný e-mail nebo heslo je nesprávné. Zkus to prosím znovu.",
+    "logout-error": "Došlo k neočekávané chybě při odhlašování.",
+    "check-username-error": "Nemohli jsme zkontrolovat dostupnost uživatelského jména. Zkus to prosím znovu.",
+    "unknown-auth-error": "Došlo k neznámé chybě ověření. Zkus to prosím znovu.",
+    "creation-failed": "V tuto chvíli jsme nemohli vytvořit uživatele. Zkus to prosím znovu.",
+    "get-user-error": "Nepodařilo se nám načíst profil uživatele. Zkuste to prosím později.",
+    "get-user-games-error": "Nepodařilo se nám načíst hry uživatele. Obnovte prosím stránku.",
+    "get-user-stats-error": "Nepodařilo se nám načíst statistiky uživatele. Obnovte prosím stránku.",
+    "user-not-found": "Uživatel, kterého hledáš, nebyl nalezen.",
+    "username-same-as-current": "Toto je již tvé uživatelské jméno.",
+    "email-taken": "Tato e-mailová adresa je již používána. Použijte prosím jinou.",
+    "email-same-as-current": "Tato e-mailová adresa už je tvoje.",
+    "invalid-current-password": "Zadané aktuální heslo není správné.",
+    "update-name-error": "Nemohli jsme aktualizovat tvé jméno. Zkus to prosím znovu.",
+    "update-username-error": "Nemohli jsme aktualizovat tvé uživatelské jméno. Zkus to prosím znovu.",
+    "update-email-error": "Nepodařilo se nám aktualizovat tvou e-mailovou adresu. Zkus to prosím znovu.",
+    "revert-email-error": "Nepodařilo se nám změnit tvůj e-mail. Prosím, kontaktuj podporu.",
+    "update-password-error": "Nemohli jsme aktualizovat tvé heslo. Zkus to prosím znovu.",
+    "update-avatar-error": "Nepodařilo se nám aktualizovat tvůj avatar. Zkus to prosím znovu.",
+    "delete-account-error": "Nepodařilo se nám zpracovat tvůj požadavek na smazání účtu. Zkus to prosím znovu.",
+    "cancel-delete-account-error": "Nemohli jsme zrušit smazání tvého účtu. Prosím, kontaktuj podporu.",
+    "unexpected-error": "Došlo k neočekávané chybě. Zkus to prosím znovu.",
+    "internal-server-error": "Naše servery narazily na problém. Zkus to prosím později.",
+    "unauthorized": "Nejsi oprávněn provést tuto akci.",
+    "forbidden": "Nemáš oprávnění přistupovat k tomuto zdroji.",
+    "not-found": "Zdrojem, který hledáš, se nepodarilo najít.",
+    "too-many-requests": "Poslal jsi příliš mnoho požadavků. Počkej chvíli a zkus to znovu.",
+    "ip-not-found": "Nemohli jsme identifikovat tvoji IP adresu. Zkontroluj své připojení.",
+    "invalid-request": "Tvůj požadavek byl neplatný. Zkontroluj prosím data a zkus to znovu.",
+    "send-feedback-error": "Nepodařilo se nám odeslat tvou zpětnou vazbu. Zkus to prosím znovu.",
+    "send-pin-error": "Nemohli jsme odeslat ověřovací PIN na tvůj e-mail. Zkus to prosím znovu.",
+    "verify-pin-error": "Nemohli jsme ověřit tvůj PIN. Zkus to prosím znovu.",
+    "invalid-pin": "Zadané PIN je nesprávné. Zkus to prosím znovu.",
+    "expired-pin": "Zadané PIN jste vypršelo. Poslali jsme vám nové.",
+    "feedback-error": "Nemohli jsme odeslat tvou zpětnou vazbu. Zkus to prosím znovu.",
+    "get-public-games-error": "Nepodařilo se nám načíst veřejné hry. Zkuste to prosím znovu.",
+    "invalid-cancellation-token": "Token pro zrušení je neplatný. Zkus to znovu.",
+    "expired-cancellation-token": "Platnost tokenu pro zrušení vypršela. Zkus to prosím znovu.",
+    "cancel-account-deletion-error": "Nepodařilo se nám zrušit smazání tvého účtu. Zkus to prosím znovu",
+    "oauth-unknown-error": "Došlo k neznámé chybě během přihlašování. Zkus to prosím znovu.",
+    "invalid-reversion-token": "Žeton pro vrácení je neplatný. Zkus to znovu.",
+    "expired-reversion-token": "Token pro vrácení akce vypršel. Zkus to znovu.",
+    "name-min-characters": "Zobrazované jméno musí mít alespoň 2 znaky",
+    "name-max-characters": "Zobrazované jméno může mít maximálně 20 znaků",
+    "username-min-characters": "Uživatelské jméno musí mít alespoň 3 znaky",
+    "username-max-characters": "Uživatelské jméno může mít maximálně 20 znaků",
+    "username-invalid-format": "Uživatelské jméno může obsahovat pouze písmena, čísla a podtržítka"
   }
 }
