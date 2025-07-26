@@ -129,6 +129,61 @@
         "volume": {
           "label": "Luudstärk ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Klaffen",
+        "chat-visibility": "Chat-Sichtbarkeit",
+        "chat-notification-size": {
+          "label": "Chat-Bekanntmaken-Grööt",
+          "values": {
+            "small": "Lütt",
+            "normal": "Normal",
+            "big": "Groten"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobil",
+        "switch-to-player-who-is-playing": "Automatisch to'n Speler wesseln, de speelt",
+        "show-preview-opponents-cards": "Vörschau vun de Korten vun de Gegners in de Gegnerslist wiesen"
+      },
+      "gameplay": {
+        "title": "Speel",
+        "gameboard": {
+          "title": "Speelbrett",
+          "size": {
+            "label": "Grööt vun dien Speelbrett",
+            "big-warning": "Kann op Mobil to'n Breken bringen",
+            "values": {
+              "normal": "Normal",
+              "big": "Groten"
+            }
+          },
+          "enlarge-active-player-board": "Dat Speelbrett vun den Speler, de an de Reeg is, grötter maken"
+        },
+        "timer": {
+          "title": "Tied",
+          "label": "Timer-Anzeigemodus",
+          "description": "In de Smart-Modus warrt de Timer bi de Half-Tied un de letzten 15 Sekunnen anwiesen.",
+          "modes": {
+            "never": "Nooit",
+            "smart": "Klug",
+            "always": "Immer"
+          }
+        }
+      },
+      "account": {
+        "title": "Konto",
+        "sync": {
+          "label": "Kontoinstellungen",
+          "description": "Wenn du an-mellt büst, warrt dien Instellungen op all dien Geräten gliekstellt.",
+          "enabled": "Anschalt",
+          "disabled": "Ut'nanner",
+          "syncing": "Synkroniseer'n...",
+          "offline": "Offline",
+          "error": "Sync fehlslahn",
+          "lastSync": "Letzte Synchronisation: {date}"
+        }
       }
     },
     "KickVote": {
@@ -193,8 +248,8 @@
     },
     "ReportDialog": {
       "no-messages": "Keen Narichten vun dissen Bruker funnen",
-      "title": "Mell {username}",
-      "description": "Meld den Brukernaam oder en Naricht vun {username}, wenn dat unpassend utsütt.",
+      "title": "Melden {name}",
+      "description": "Melde den Naam oder en Naricht vun {name}, wenn dat nich passlich schient.",
       "report-message": "Mell en Naricht",
       "select-message": "Söök de Naricht ut, de mellt warrn schall",
       "select-message-placeholder": "Söök en Naricht ut",
@@ -205,7 +260,10 @@
           "title": "Bericht inlevert",
           "description": "Hartlichen Dank för dien Bericht, du hest dormit hulpen, de Qualität vun't Speel to verbetern."
         }
-      }
+      },
+      "report-name": "Melden den Naam vun den Speler",
+      "comment": "Extra Kontext (optional)",
+      "comment-placeholder": "Geef mehr Tosatz-Kontext to dissen Bericht..."
     },
     "AppearanceSelect": {
       "light": "Licht",
@@ -235,7 +293,17 @@
       "unread-messages": "{count} unlesene Naricht{count, plural, =1 {} other {en}}"
     },
     "CopyLink": {
-      "message": "Koppel kopeert!"
+      "message": "Koppel kopeert!",
+      "copy": {
+        "button-title": "Kopieer Link",
+        "popover": "Link kopieert!"
+      },
+      "share": {
+        "title": "Kumm in mien Skyjo-Speel!",
+        "text": "Kumm un speel Skyjo mit mi online! Klick op den Link, üm mit to maken.",
+        "button-title": "Speel delen",
+        "tooltip": "Klick hier, üm dit Speel to delen!"
+      }
     },
     "DiscardPile": {
       "title": "Aflaggstapel",
@@ -280,7 +348,8 @@
       },
       "attribution": {
         "avatars": "Avatars maakt vun Freepik - Flaticon"
-      }
+      },
+      "translations": "Hülp, dat Speel to översetten!"
     },
     "GameLobbyButtons": {
       "reconnect-game-button": "Wedder mit dat Speel verbinnen",
@@ -358,13 +427,50 @@
     },
     "Avatar": {
       "context-menu": {
-        "report": "Mellen {username}",
-        "kick": "Smiet {username} rut",
-        "vote-to-kick": "Stimm för't Rutschmieten vun {username}",
-        "ban": "Sperr {username}",
-        "mute": "Stumm schalten {username}",
-        "unmute": "Stille vun {username} nehmen"
+        "report": "Melden {name}",
+        "kick": "Kick {name}",
+        "vote-to-kick": "Abstimmen, üm {name} rutensmieten",
+        "ban": "Ban {name}",
+        "mute": "Mute {name}",
+        "unmute": "Unmute {name}",
+        "transfer-host": "{name} is nu de Host"
       }
+    },
+    "Banner": {
+      "title": "Ik bruuk <gform>dien Feedback</gform>, üm de Tokunft vun Skymo to gestalten!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Regels",
+        "leaderboard": "Leaderboard"
+      }
+    },
+    "LoginButton": {
+      "login": "Kumm mit an'n Speelspaß!"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Wieter mit Google"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Passwöörds passt",
+      "minimum-characters": "Minstens 10 Tekens",
+      "lowercase-letter": "Minstens een lüttje Bookstaav",
+      "capital-letter": "Minne een groten Bookstaav",
+      "number": "Minstens een Tall",
+      "special-character": "Minstens een Sonderteken"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Prüf...",
+        "available": "Username is free",
+        "taken": "Allt eenfach weg!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Wedder mit dat Speel verbinnen",
+      "description": "Du weerst in en Speel, dat noch löppt. Willst du di wedder ansluten?",
+      "reconnect-button": "Jo, wedderverbinnen",
+      "dismiss-button": "Nee, wegsmieten"
     }
   },
   "pages": {
@@ -442,7 +548,7 @@
           "title": "{number} Regen"
         },
         "show-current-score": {
-          "label": "Wies den aktuellen Punktestand wiel dat Speel"
+          "label": "Anzeig de Punktestand in Echtied"
         },
         "first-player-flat-penalty": {
           "label": "Eerste Speler maakt flache Straaf",
@@ -487,7 +593,8 @@
         "cancel": "Nich wedder afspelen",
         "replay": "Wedder afspelen"
       },
-      "leave-button": "Verlaat dat Speel"
+      "leave-button": "Verlaat dat Speel",
+      "round": "Runn {number}"
     },
     "PrivacyPolicy": {
       "content": {
@@ -495,7 +602,76 @@
         "title": "Datenschuulverkloren",
         "last-update": {
           "text": "Toletzt aktualiseert: {date}",
-          "date-format": "JJJJ-MM-DD - hh:mmA"
+          "date-format": "MMMM D, YYYY"
+        },
+        "tldr": {
+          "title": "TL;DR — Wat du weten musst",
+          "minimal-data": "Wi slahn blots minimeel Daten op, dormit Du Spelen kannst, egal of Du an- oder afmeldt büst.",
+          "guest-data": "Gastdaten (Naam, Avatar, Punktestand, Chats) warrt blots opslahn, wenn en anmeldt Speler in't Speel is.",
+          "personal-data": "Wenn du di anmeldst, warrt dien E-Mail, de Naam, de du bruukst, un annere persönlichen Saken blots opbewohrt, wenn du en Konto maken deist.",
+          "chat-storage": "Chats warrt temporär lagert un blots opbewohrt, wenn se meldt warrt.",
+          "privacy-compliance": "Wi respekt't dien Privatschoon un doot uns an de DSGVO holen, allens seker in de EU lagern.",
+          "data-rights": "Du kannst jiedetied Toschlaag, Korrektur, Export oder Löschung vun Daten anfordern.",
+          "contact": "För Froogen: <email></email>"
+        },
+        "operator": {
+          "title": "1. Wer bedrifft disse Websteed?",
+          "operator-info": "Disse Websteed warrt vun en privat Person bedreven:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Keen Firma."
+        },
+        "data-collection": {
+          "title": "2. Welke Daten sammelt wi?",
+          "description": "Wi sammelt Daten för registreerte un ok för Gast-Spelers, aver blots, wenn en verbunnene (inloggte) Bruker Deel vun't Speel is.",
+          "guest-players": {
+            "title": "För Gästspeler:",
+            "items": "Anzeigenaam (bi'n Speelin-Träen utwählt);;Utwählt Avatar;;Speelstand, Rang un Winner-Status;;Chat-Narechten (temporär opslahn, wenn nich markeert)",
+            "note": "Disse Daten warrt blots opslaan, wenn mindst een Speler in't Speel anmelld is."
+          },
+          "logged-users": {
+            "title": "För anmellt Lüüd (dorneben):",
+            "items": "E-Mail-Adress;;Brukernoom / Naam för’t Anwiesen;;Avatar (ut vörgeven List);;Hash-Passwoort oder OAuth ID (Google, Facebook);;Spraak-Vörtoog;;Status vun de E-Mail-Verifikatschoon"
+          },
+          "general": {
+            "title": "Allgemeen (för all Brukers):",
+            "items": "Spelsession-Daten (Codes, Instellungen);;Session-Cookie (löhnt na 24 Stünnen);;IP-Adress (vergahn, nich lang lagert);;Anonyme Bruuk-Analytik (över PostHog, EU-hostet)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Woarüm ward dien Daten bruukt?",
+          "items": "Dat Spelers (Gäste oder registreert) bi Spelen mitmaken un spelen köönt;;Avatare, Naams, Punkten un Ranglisten anzeigen;;Moderation bi Missbruuk mööglich maken;;Feedback un Kontowiederherstellen (för anmeldte Brukers) verarbeiten;;De Siet mit anonyme Analytik verbetern"
+        },
+        "data-retention": {
+          "title": "4. Wo lang warrt dien Daten opbewohrt?",
+          "retention-table": {
+            "headers": "Datentyp;;Opbewohrung",
+            "rows": "Session-Cookies;;24 Stunnen|||Account-Daten (inloggt);;Bit to de Löschungsanfraag|||Gastspeler-Daten;;Bloots, wenn en verbunnene Speler in't Speel is|||Speeldaten un Punktestänn;;För immer opslaan|||Chat-Naraichten;;Temp in Redis; opslaan, wenn meldt|||Feedback;;För immer|||Verifikatschoons-/Reset-Tokens;;Bit bruukt oder afloopen|||Löschungsanfraagen för Konten;;Löscht na en Gnaadentiet vun 48 Stunnen|||Analytik (PostHog);;För immer, in de EU hostet"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Gesettliche Grundlaag (DSGVO)",
+          "description": "De Verarbeitung baseert sik op:",
+          "items": "Instimm'n (Cookies, Statistik);;Verdrag (Dat Speel anbeden);;Legitim Intresse (Moderatschoon);;Gesettlik Plicht (Op Anfragen reageern)"
+        },
+        "data-access": {
+          "title": "6. Wer kann dien Daten sehen?",
+          "items": "Annere Spelers süht dien Naam, dien Avatar un dien Speelhistorie;;De Entwickler (Maxent Rouault) kann op Daten för Moderatschoon togriepen;;Keen Verkoop oder Reklaam vun dien Daten"
+        },
+        "your-rights": {
+          "title": "7. Dien Rechten",
+          "items": "Toogriepen, korrigeern oder löschen vun dien Daten;;Dien Konto löschen (oder dorna fraagn);;Dien Daten exporteern (op Anfrag);;Bannen anfechten bi appeal@skymo.online"
+        },
+        "security": {
+          "title": "8. Sekerheit",
+          "items": "Verschlötelte Passwöörter;;HTTPS-allene Verbinnungen;;Moderatschoon un Missbruuk-Opdecken;;EU-basierte Hosting (Paris, Frankriek)"
+        },
+        "cookies-analytics": {
+          "title": "9. Cookies & Analyse",
+          "items": "Nödig Cookies blots (Session, Login);;Analyse över PostHog, EU-host, keen Cross-Site-Tracking"
+        },
+        "contact": {
+          "title": "10. Kontakt",
+          "description": "Allgemeene Froogen: <email></email>"
         }
       },
       "head": {
@@ -505,12 +681,13 @@
       }
     },
     "Rules": {
-      "title": "Skyjo Speelregeln",
+      "title": "Speelregeln",
       "head": {
         "title": "Woans man Skymo speelt | Skyjo Koortenspeel Online",
         "description": "Lehr, woans du Skyjo speelst mit unsen Skymo-Wieser. Föhr de Regeln, Strategien un Tipps rut, üm dit lustige Online-Koortenspeel to meistern. Speel nu mit Frünnen!",
         "keywords": "Skymo,Skyjo,Skyjo Regeln,woans speelt man Skyjo,Skyjo Speel,Koortenspeel Regeln,online Koortenspeel,Speelanwiesen,Speelguide"
-      }
+      },
+      "play-button": "Speel online gratis!"
     },
     "Index": {
       "name-input-placeholder": "Naam",
@@ -560,6 +737,501 @@
       "title": "Fehler 404",
       "description": "De Siet, de du söökst, gifft dat nich.",
       "go-back-to-homepage": "Gah trüch na de Startsiet"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Leaderboard | Skymo - Skyjo Online Koortenspeel",
+        "description": "Kiek di de besten Speelers op Skymo an! Bekiek de besten Skymo-Speelers un ehr Gewinnraten in uns Wettkamp-Ranglist.",
+        "keywords": "Skymo,Skyjo,Ranglist,Top-Spelers,Rangfolgen,beste Spelers,Winnrate,kompetitiv,online Koartenspeel"
+      },
+      "title": "Leaderboard",
+      "subtitle": "Opdecken de besten Skymo-Spelers un striet üm de Topp-Platzen!",
+      "lastUpdated": "Letzte Aktualiseerung: {date}",
+      "columns": {
+        "rank": "Rang",
+        "player": "Speler",
+        "wins": "Wunnen",
+        "totalGames": "All Spelen",
+        "winRate": "Winn-Quoot"
+      },
+      "noData": "No Spelers in de Ranglist funnen bet nu.",
+      "error": "Dat Leaderboard kann aktuell nich laadt warrn.",
+      "tryAgainLater": "Versöök dat later noch mal.",
+      "callToAction": {
+        "guest": {
+          "title": "Büst du kloor to'n Mitmaken?",
+          "description": "Meld di an, üm dien Fortgang to verfolgen un mit Spelers op de hele Welt to konkurreern!",
+          "signup": "Mel di nu an"
+        },
+        "authenticated": {
+          "title": "Büst du kloor to'n Mitmaken?",
+          "description": "Spring in en Speel un kletter op de Ranglist!",
+          "createGame": "Speel maken",
+          "joinGame": "Spel mitmaken"
+        }
+      },
+      "errorActions": {
+        "refresh": "Opfrischen",
+        "backHome": "Torück na Huus"
+      }
+    },
+    "Signup": {
+      "head": {
+        "title": "Join Skymo | Speel Skyjo online gratis",
+        "description": "Speel Skyjo online mit Fründ! Maak en kostenloos Skymo-Konto, üm dien Fortschritt to verfolgen, exklusiven Inholt freetoschalten un di en lebennige Gemeenschop an to sluten.",
+        "keywords": "skymo,speel skyjo online,skyjo online Speel,meld di bi skyjo an,maak en skymo Konto,noot di bi skymo an,skymo skyjo,Online Koortenspeel,Multiplayer skyjo,kostenlos skyjo Speel,speel skyjo mit Fründs,skyjo Fortschritten verfolgen, skyjo Gemeenschap,exklusiv skyjo Inholt"
+      },
+      "title": "Anmellen",
+      "or": "oder",
+      "form": {
+        "email": {
+          "label": "E-Mail",
+          "button": "Wieter mit E-Mail"
+        }
+      },
+      "already-have-account": {
+        "description": "Hast Du al en Konto?",
+        "link": "Anmellen"
+      },
+      "advantages": {
+        "title": "Kumm bi uns an't Avteuer",
+        "subtitle": "Maak en Konto, üm en Welt vun Mööglichkeiten to entsluten un dien Erlebnis to verbetern.",
+        "features": {
+          "track-progress": {
+            "title": "Dynen Fortgang verfolgen",
+            "description": "Kiek, wo Du steihst gegen annern un kiek op dien Verbetern över de Tiet."
+          },
+          "personalized-experience": {
+            "title": "Persönliche Erfohrung",
+            "description": "Krieg Empfehlungen un Inholde, de bloots för di maakt sünd."
+          },
+          "join-community": {
+            "title": "Kumm in de Community",
+            "description": "Verbin di mit annern Aventürers, deel Tipps un maken ne’e Fründs."
+          },
+          "exclusive-content": {
+            "title": "Exklusiv Inholt",
+            "description": "Krieg Togang to besünnere rutern, Belohnungen un fröhe Updates."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "text": "Wenn du wieder maakst, büst du mit uns eenverstahn",
+        "terms-link": "Dienstleistungsbedingungen",
+        "and": "un",
+        "privacy-link": "Privacy-Politik"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Login | Skymo - Skyjo Online Koortenspeel",
+        "description": "Login bi Skymo, üm Skyjo online to spelen. Ingiff dien E-Mail un Passwoort, üm di in dien Konto to holen un glieks to spelen.",
+        "keywords": "Skymo,Skyjo,Login,Online-Koortenspeel,Skyjo-Speel,Koortenspeel,Online-Speel"
+      },
+      "title": "Anmellen",
+      "or": "oder",
+      "form": {
+        "login": {
+          "label": "E-Mail oder Naam"
+        },
+        "password": {
+          "label": "Passwoort"
+        },
+        "submit": "Anmellen"
+      },
+      "signup": {
+        "description": "Keen Konto?",
+        "link": "Mel di nu an!"
+      },
+      "forgot-password": "Hast Du dien Passwoort vergeten?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Passwoort vergeten | Skymo - Skyjo Online Koortenspeel",
+        "description": "Set dien Skymo-Passwoort wedder, üm wedder Togang to dien Konto to kriegen un wieterhen Skyjo online mit Fründs to spelen.",
+        "keywords": "Skymo,Skyjo,Passwoort vergeten,Passwoort torüchsetten,Konto-Wiederherstellen,Online-Koortenspeel"
+      },
+      "title": "Passwoort vergeten",
+      "description": "Gib dien E-Mail-Adress in, un wi schickt di en Link, üm dien Passwoort to ännern",
+      "form": {
+        "email": {
+          "label": "E-Mail-Adress"
+        },
+        "submit": "Link för't Torüchsetten schicken",
+        "sending": "Sennen..."
+      },
+      "success": {
+        "title": "Kiek in dien E-Mail",
+        "message": "Wenn dat en Konto mit de E-Mail geev, is en Link för en Passwoort-Reset schickt worrn.",
+        "back": "Torügg na Login"
+      },
+      "back": "Torügg na Login"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Passwoort torüchsetten | Skymo - Skyjo Online Koortenspeel",
+        "description": "Maak en nee Passwoort för dien Skymo-Konto, dormit du wedder Togang kriggst un wieter Skyjo online spelen kannst.",
+        "keywords": "Skymo,Skyjo,Passwoort torüchsetten,neeet Passwoort,Konto-Wiederherstellen,online Koortenspeel"
+      },
+      "title": "Passwoort op'n niegen Stand bringen",
+      "description": "Gib dien neet Passwoort hier ünnen in.",
+      "form": {
+        "password": {
+          "label": "Nee Passwoort"
+        },
+        "confirmPassword": {
+          "label": "Bestätig dat ne'e Passwoort"
+        },
+        "submit": "Passwoort op'n niegen Stand bringen",
+        "resetting": "Zurücksetten..."
+      },
+      "success": {
+        "title": "Passwort-Reset spoodig",
+        "message": "Din Passwoort is torüchsett. Du kannst di nu mit dien neet Passwoort anmellen.",
+        "back": "Anmellen"
+      },
+      "back": "Torügg na Login"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "E-Mail-ännern torüchännert",
+        "message": "Din E-Mail-ännern is spikert un dien Konto is sekert. Kiek in dien E-Mail för de Anwiesungen för en neet Passwoort.",
+        "close": "Du kannst de Siet nu sluten."
+      },
+      "failed": {
+        "title": "E-Mail-ännern torüchsetten fehlslahn"
+      },
+      "back": "Torügg na Login"
+    },
+    "OAuthCallbackPage": {
+      "title": "Ümleiden löppt…"
+    },
+    "Onboarding": {
+      "title": "Onboarding löppt...",
+      "subtitle": "Vull diene Profil ut un duuk in dat Skymo-Avendüür!",
+      "form": {
+        "name": {
+          "label": "Spelernaam",
+          "placeholder": "Jeff",
+          "description": "An annere Spelers in Spelen wiest"
+        },
+        "username": {
+          "label": "Naam",
+          "placeholder": "Jeff",
+          "description": "För Login un Profil"
+        },
+        "password": {
+          "label": "Maak en Passwoort",
+          "placeholder": "Gib en seker Passwoort in"
+        },
+        "submit": "Klaar to spelen!"
+      },
+      "head": {
+        "title": "Onboarding | Skymo - Skyjo Online Koortenspeel",
+        "description": "Vull diene Profil ut un duuk in dat Skymo-Avendüür!",
+        "keywords": "Skymo, Skyjo, onboarding, profiel, avontuur, online koartenspeel"
+      },
+      "loading": "Lood diene Profil...",
+      "success": "Onboarding spoodich afslaten! Wi leidt di nu na de Startsie..."
+    },
+    "Verify": {
+      "head": {
+        "title": "E-Mail överprüven | Skymo - Skyjo Online Koortenspeel",
+        "description": "Kiek dien E-Mail-Adress na, dormit du dien Skymo-Konto toenn maken kannst un mit Fründs anfangen kannst, Skyjo online to spelen.",
+        "keywords": "Skymo,Skyjo,E-Mail-Verifizierun,Account verifieern,Online Koartenspeel"
+      },
+      "title": "Kiek dien E-Mail na",
+      "description": "Wi hebbt en 6-stellig Cod an dien E-Mail-Adress schickt. Bitte geev em hier in.",
+      "resend": {
+        "countdown": "Code nochmol sennt in {seconds}s",
+        "prompt": "Keen Code kregen?",
+        "button": "Nee Code anfordern",
+        "sending": "Sennen..."
+      },
+      "toast": {
+        "success": "E-Mail mit Spood verifieert!",
+        "resend-success": "En nee'e E-Mail is versandt",
+        "email-already-sent": "En E-Mail is al in de letzten 5 Minuuten versandt worrn. Kiek in dien Postfach oder klick op \"Neen Code anfordern\", üm en neen to schicken"
+      },
+      "loading": "Lood diene Profil..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'s Profil | Skymo - Skyjo Online Koortenspeel",
+        "description": "Kiek di dat Profil vun {username} op Skymo an. Seih di jemehr Speelstatistik, de jüngste Aktivität un de Erfolge in Skyjo online an.",
+        "keywords": "Skymo,Skyjo,Brukerprofil,Spelerstatistiken,Speelstatistiken,neeste Speele,Erfolgen,online Koortenspeel"
+      },
+      "not-found": {
+        "title": "Bruker nich funnen",
+        "description": "De Bruker \"{username}\" gifft dat nich oder hett sien Brukernamen ännert.",
+        "back-to-home": "Torüch to de Startsteed"
+      },
+      "error": {
+        "title": "Dor is wat schiefgahn",
+        "description": "Wi hebbt en Fehler funnen, as wi dissen Profil laden deen. Versöök dat later noch mol.",
+        "back-to-home": "Torüch to de Startsteed"
+      },
+      "stats": {
+        "total-games": "All Spelen",
+        "win-rate": "Winn-Quoot",
+        "average-rank": "Dörsnitt-Rang",
+        "public": "Öffentlich",
+        "private": "Privat"
+      },
+      "sections": {
+        "achievements": "Erfolgen",
+        "achievements-coming-soon": "Achievements-System bald dor!",
+        "recent-activity": "Recente Aktivität"
+      },
+      "recent-activity": {
+        "no-activity": "Keene ne’e Aktivität to wiesen.",
+        "game-code": "Speel #{code}",
+        "rank": "Reeg #{rank}",
+        "winner": "Winner"
+      },
+      "search": {
+        "placeholder": "Söök Naam"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Kontoinstellungen | Skymo - Skyjo Online Koortenspeel",
+        "description": "Verwalt dien Account-Instellungen op Skymo. Ännere dien Anzeigenaam, Bruukernaam, E-Mail, Passwoort un Account-Vörleevnissen."
+      },
+      "title": "Kontoinstellungen",
+      "description": "Verwalt dien Konto un dien persönlichen Informatschonen.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Konto",
+        "password": "Passwoort"
+      },
+      "buttons": {
+        "save": "Ännern övernehmen",
+        "saving": "Speichern...",
+        "delete-account": "Account löschen",
+        "confirm-delete": "Jo, mien Konto löschen"
+      },
+      "messages": {
+        "save-success": "Instellungen spikert!",
+        "save-error": "Dat Speichern vun de Instellungen is fehlslahn. Versöök dat noch mol.",
+        "delete-confirmation": "Büst Du seker, dat Du dien Konto löschen willst? Disse Aktion kann nich torüchnahmen warrn un all dien Daten warrt för jümmer wegmaakt.",
+        "username-taken": "Disse Naam is al vergeven.",
+        "email-taken": "Disse E-Mail is al in Bruuk.",
+        "password-incorrect": "Dat aktuelle Passwoort is verkehrt.",
+        "account-deletion-scheduled": "Din Andrag op Kontolöschung is opnahmen un warrt in 48 Stunnen bearbeidt. Du kriggst en E-Mail to Bestädigung vun de Löschung.",
+        "account-deletion-failed": "Dor is en Fehler opkamen, as dien Konto löscht warrn schull. Versöök dat noch mal."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Anzeigenaam",
+          "description": "Din Naam, de anner Speelers in Spelen wiest warrt.",
+          "placeholder": "Gib dien Naam in",
+          "submit": "Naam opspiekeren"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Din Avatar, de op dien Profil wiest warrt.",
+          "placeholder": "Wähl dien Avatar",
+          "submit": "Avatar spiekern"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Konto",
+      "fields": {
+        "username": {
+          "label": "Benutzernaam",
+          "description": "Din eenzigordig Naam, de för dien Profil-URL bruukt warrt.",
+          "placeholder": "Gib dien Naam in",
+          "submit": "Benutzernaam opseichern"
+        },
+        "email": {
+          "label": "E-Mail-Adress",
+          "description": "Din E-Mail-Adress, de för'n Login un wichtige Narichten bruukt warrt. Ut Sekerheitsgrünn warrt en Warn-E-Mail an dien aktuelle Adress schickt, wenn du se ännst.",
+          "placeholder": "Gib dien E-Mail-Adress in",
+          "submit": "E-Mail spiekern"
+        },
+        "settings-sync": {
+          "label": "Instellungs-Sync",
+          "description": "Wenn du an-mellt büst, warrt dien Instellungen op all dien Geräten gliekstellt.",
+          "enable-sync": "Instellungen-Sync anmaken",
+          "disable-sync": "Instellungen-Synchronisatschoon utschalten",
+          "status": {
+            "enabled": "Anschalt",
+            "disabled": "Ut'nanner",
+            "syncing": "Synkroniseer'n...",
+            "offline": "Offline",
+            "error": "Sync fehlslahn"
+          },
+          "last-sync": "Letzte Synchronisation: {date}",
+          "sync-now": "Nu synchroniseern"
+        }
+      },
+      "delete-account": {
+        "title": "Konto löschen",
+        "description": "Du kannst dien Konto un all dor tohören Daten löschen. Dat kannst nich torüch nehmen un all dien Daten warrt för immer weg.",
+        "button": "Account löschen",
+        "confirmation": {
+          "description": "Wenn Du bestätigst, fangt en 48-Stunden-Countdown an: Du kriggst en E-Mail mit en Link, üm de Löschung aftobreken, wenn Du di dat noch mal överleggst. Dien Konto blifft in de Tied noch togänglich. Na 48 Stunnen warrt dat för jümmer löscht un Du kriggst en Bestätigungs-E-Mail.",
+          "input-label": "Type DELETE, üm dat to bestätigen",
+          "input-placeholder": "Löschen",
+          "cancel-button": "Afbreken",
+          "delete-button": "Konto löschen"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Passwoort ännern",
+      "fields": {
+        "password": {
+          "label": "Passwoort",
+          "description": "Wessel dien Passwoort för dien Konto.",
+          "current-password": "Aktuell Passwoort",
+          "new-password": "Nee Passwoort",
+          "confirm-password": "Bestätig dat ne'e Passwoort",
+          "current-placeholder": "Gib dien aktuellt Passwoort in",
+          "new-placeholder": "Gib dien neet Passwoort in",
+          "confirm-placeholder": "Bestätig dien nee Passwoort",
+          "submit": "Passwoort spiekern"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Dat aktuelle Passwoort is verkehrt."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Ungüllig Token",
+      "success": {
+        "title": "Kontolöschung afbroken",
+        "description": "Du hest dien Kontolöschung spoodbor afbraken. Dien Konto is seker un warrt nich löscht.",
+        "secure-message": "Dien Konto is nu seker un blifft aktiv. Du kannst dien Konto normal wieder bruken."
+      },
+      "failed": {
+        "title": "Afbreken nich slach",
+        "description": "Wi künnen dien Kontolöschung nich stornieren. Versöök dat noch mal oder meld di bi den Support.",
+        "general-error": "Dor is wat schiefgahn, as wi versöcht hebbt, dien Konto-Löschung aftobreken. Versöök dat noch mal oder meld di bi den Support.",
+        "help-message": "Dor is wat schiefgahn, as wi versöcht hebbt, dien Konto-Löschung aftobreken. Versöök dat noch mal oder meld di bi den Support."
+      },
+      "expired": {
+        "title": "De Link för de Stornierung is ablopen",
+        "description": "Disse Kancel-Link is afloopen. Wenn du dien Konto noch beholen willst, denn meld di bi'n Support.",
+        "help-message": "De 48-Stunden-Stornierungsfrist is utlopen. Wenn du Hölp bruukst, meld di bi'n Support."
+      },
+      "actions": {
+        "return-homepage": "Torück na de Startsie"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Bedinungen för de Bruuk | Skymo - Skyjo Online Koortenspeel",
+        "description": "Lies de Nutzungsbedingungen för Skymo, de Online-Skyjo-Koortspelsplattform. Lees över de Plichten vun de Brukers, de Bruuk vun de Deenst un de Richtlienen vun de Plattform.",
+        "keywords": "Begreeps vun'n Deenst, Skymo, Skyjo, online Koortenspeel, Brukerövereenkamen, Plattformregeln"
+      },
+      "content": {
+        "title": "Dienstleistungsbedingungen",
+        "last-update": {
+          "text": "Letzte Aktualiseerung: {date}",
+          "date-format": "MMMM D, YYYY üm HH:mm"
+        },
+        "welcome": "Willkamen bi <b>skymo.online</b>, een Online-Multiplayer-Koortenspeel, dat vun Maxent Rouault bedreven warrt. Wenn du op disse Websteed togriepenst oder ehr bruukst, büst du mit disse Bruukensbedingen inverstahn. Wenn du nich inverstahn büst, dröffst du de Plattform nich bruken.",
+        "operator": {
+          "title": "1. Bedriever",
+          "content": "Disse Websteed warrt bedreven vun:",
+          "name": "Maxent Rouault",
+          "contact": "Kontakt: {email}",
+          "location": "Frankriek (keen kommerziell eenzeln Bedriever)"
+        },
+        "eligibility": {
+          "title": "2. Togang",
+          "content": "Du kannst den Deenst as Gast bruken oder indem du di mit en Konto registreerst. Wenn du disse Websteed bruukst, bestätigst du, dat:",
+          "items": {
+            "1": "Du büst minnstens 13 Johr oolt (oder dat Mindstöllers, dat in dien Land gellt).",
+            "2": "Wenn Du noch nich 18 Johr büst, bruukst Du de Tokunft vun dien Elern oder en annern Vörsitter."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Konto & Gastbruuk",
+          "items": {
+            "1": "Gastspeler köönt ahn Registratschoon spelen, aver manche Funkschoonen köönt be-chränkelt wesen.",
+            "2": "Registreerte Brukers mööt en gültige E-Mail-Adress un en Naam angeven.",
+            "3": "Du büst verantwoortlich för dien Konto un dien Aktivität. Du dröffst dien Login nich mit anner Lüüd delen.",
+            "4": "Du kannst dien Konto jümmer löschen. Na 48 Stunnen warrt dien persönlich Daten anonymiseert oder för jümmer löscht."
+          }
+        },
+        "data-storage": {
+          "title": "4. Datenspeichern",
+          "content": "Wi slaat de folgenden Daten op, je na dien Gebruk:",
+          "all-players": {
+            "title": "För all Spelers:",
+            "items": {
+              "1": "In-Game-Naam, Avatar, Punktestand un Chat-Nichten, wenn minnstens een Speler anmelld is.",
+              "2": "IP-Adressen künnt för Sekerheit un Moderatschoon temporär opspeichert warrn."
+            }
+          },
+          "registered-players": {
+            "title": "För registrete Spelers:",
+            "items": {
+              "1": "E-Mail, Brukernoom, Avatar, Speelstatistiken un optioneel verbundene Konten (t.B. Google).",
+              "2": "Analytics-Daten as Spelverhollen, Sietentaktheid oder Bruuk vun Funkschonen <b>könnt sammelt warrn, üm dat Speel to verbetern</b>."
+            }
+          },
+          "storage-location": "All Daten sünd in de <b>Europääsche Union</b> lagert un warrt na de <link>Privacy Policy</link> behannelt."
+        },
+        "analytics-tracking": {
+          "title": "5. Analytik & Tracking",
+          "content": "Um den Deenst to verbetern un de Brukererfohrung to personaliseren, köönt wi:",
+          "items": {
+            "1": "Bruuk <b>Analytics-Tools</b> (t.B. PostHog oder glieksoortig), üm de Bruuk- un Speelwies to verfolgen.",
+            "2": "Brukerverhollen analyseren, üm Fehlers to finnen, dat Matchen to verbetern oder Funkschonen to entwerfen.",
+            "3": "In de Tokumst köönt wi disse Daten bruken, üm di <b>individuelle Inholde oder Reklamen to wiesen</b>, un dorbi dien Privatschoopsrechten na de DSGVO achten."
+          },
+          "data-rights": "Du kannst de Verfolgen för de Verarbeiden vun Daten oder de Löschung vun persönlichen Daten widerspreeken, indem du uns kontaktst."
+        },
+        "ads-monetization": {
+          "title": "6. Annoncen un Monetarisierung",
+          "content": "De Plattform kann Reklamen anwiesen, dorünner Reklamen vun Drüdde oder kontextuelle Reklamen. In de Tokunft köönt, för inloggte Brukers, <b>personaliséierte Reklamen</b> op de Grundlaag vun Bruukdookdaten wiest warrn.",
+          "consent": "Wi geevt klor Bescheed un Instimmungs-Mechanismen, wenn un wenn Verhalens- oder personaliseerte Reklamen inföhrt warrt."
+        },
+        "user-conduct": {
+          "title": "7. Brukergedrag",
+          "content": "Du büst dormit inverstahn:",
+          "items": {
+            "1": "Sei respektvull un hol di an de Regeln för fair Play.",
+            "2": "Cheat nich, bedräng nich, gib di nich as en annern ut, oder bruuk beleidigend Brukernamen oder Avatars.",
+            "3": "Spam oder Missbruuk den Chat oder all Kommunikatschoonsfunkschoons nich."
+          },
+          "enforcement": "Wi behollt uns dat Recht vör, Brukers, de gegen disse Regeln verstööt, to sperren oder to beperken."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderatschoon & Melden",
+          "items": {
+            "1": "Chat-Nawrichten warrt temporär opspeichert un köönt för Speelen mit registreerte Spelers vullstännig optekent warrn.",
+            "2": "Wi köönt Narichten beholen, wenn en Speler en Melden afgifft oder wenn Moderatschoon nödig is.",
+            "3": "Du kannst Missbruuk per E-Mail melden (kiek in den Kontakt-Afsnitt).",
+            "4": "Moderatschoons-Akschonen un Berichten köönt loggt warrn, üm Transparenz un Fairness to sekerstellen."
+          }
+        },
+        "availability": {
+          "title": "9. Verfügborkeit",
+          "content": "De Deenst warrt \"as is\" anbeden. Wi köönt de Websteed oder Funkschonen to jede Tiet ahn Vörwiesung ännern, utsetten oder instellen."
+        },
+        "intellectual-property": {
+          "title": "10. Intellektuell Egendom",
+          "content": "All oorsprünglichen Inholten, Biller un Code sünd Maxent Rouault, wenn nix anners seggt is. Du dröffst keen Deel vun de Websteed wedder bruken oder wiedergeven, ahn Erlaubnis."
+        },
+        "legal": {
+          "title": "11. Rechtliches",
+          "jurisdiction": "Disse Siet warrt vun franzöösch Recht regeert un harrt de Allgemeine Bestimmungen för den Datenschutz (GDPR) in.",
+          "disputes": "Rechtsstrittigkeiten warrt in franzöösch Gerichten behannelt."
+        },
+        "contact": {
+          "title": "12. Kontakt",
+          "general": "Allgemeene Froogen: <email></email>"
+        }
+      }
     }
   },
   "utils": {
@@ -620,28 +1292,33 @@
         "rate-limit": {
           "title": "Du schickst to veel Anfragen",
           "description": "Wesen Se mal en poor Sekunnen, ehr Se dat noch mal versöken"
+        },
+        "player-already-connected": {
+          "description": "Du büst al vun en anner Session mit dit Speel verbunnen"
         }
       }
     },
     "chat": {
-      "player-joined": "{username} is in't Speel instegen",
-      "player-left": "{username} hett dat Speel verlaten",
-      "player-reconnect": "{username} hett sik wedder mit dat Speel verbunnen",
+      "player-joined": "{name} is bi dat Speel mit bi",
+      "player-left": "{name} is ut dat Speel rutgahn",
+      "player-reconnect": "{name} hett sik wedder mit dat Speel verbunnen",
       "argument-required": "Een oder mehr Argumenten sünd nödig för Befehl: {command}",
-      "player-already-muted": "{username} is al stumm schalt",
-      "wizz-sent": "Du hest en Wizz an {targetUsername} schickt!",
-      "wizz-self": "Du büst vun {initiatorUsername} wizz't worrn!",
-      "wizz-other": "{initiatorUsername} hett {targetUsername} wizz !",
-      "player-muted": "{username} is nu stumm schalt't",
-      "player-not-muted": "{username} is nich stumm schalt",
-      "player-unmuted": "{username} is nich länger stumm schalt"
+      "player-already-muted": "{name} is al stummstellt",
+      "wizz-sent": "Du hest en Wizz an {targetName} schickt!",
+      "wizz-self": "Du büst vun {initiatorName} wizzt!",
+      "wizz-other": "{initiatorName} hett {targetName} wizzed!",
+      "player-muted": "{name} is nu stummstellt",
+      "player-not-muted": "{name} is nich stummstellt",
+      "player-unmuted": "{name} is nich mehr stumm",
+      "welcome": "Sei bitte nett un respektvull. Du kannst op de Narichten {isMobile, select, true {lank dröcken} other {rechtsklicken}} üm Spelers to muten oder to melden, wenn dat nödig is.",
+      "host-transferred": "{name} is nu de Host"
     }
   },
   "contexts": {
     "ReportContext": {
       "report-against-you": {
         "title": "Du büst rutsmeten worrn wegen en Melden",
-        "description": "Dien Brukernaam oder een vun dien Narichten is mellt worrn un is as unpassend ansehn worrn. Maak dat nich noch mal."
+        "description": "De Naam vun di oder een vun dien Narichten is meldt worrn un as unpassend ansehn. Bitte wedderhol dissen Verdrag nich."
       },
       "report": {
         "title": "{playerName} is wegen en Melden rutschmeten worrn"
@@ -678,11 +1355,106 @@
         "title": "Dor is en unverwacht Fehler opkamen",
         "description": "En unverwacht Fehler is opkamen, as en Speler utslaten warrn schull"
       }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Du hest nich de Erlaubnis, de Host to överdragen",
+        "description": "Blots de aktuelle Host kann de Host-Rull an en annern Speler överdragen"
+      },
+      "player-not-found": {
+        "title": "De Speler gifft dat nich",
+        "description": "De Speler, op den du den Host överdragen willst, gifft dat in dat Speel nich"
+      },
+      "player-not-connected": {
+        "title": "De Speeler is nich verbunnen",
+        "description": "De Speler, op den Du den Host överdragen willst, is nich mit dat Speel verbunnen"
+      },
+      "host-transferred": {
+        "title": "Host erfolgreich överdragen",
+        "description": "{newHostName} is nu de Host vun dat Speel"
+      },
+      "you-are-now-host": {
+        "title": "Du büst nu de Host",
+        "description": "{previousHostName} hett di nu den Host-Status överdragen"
+      },
+      "unexpected-error": {
+        "title": "En unerwarteten Fehler is passeert",
+        "description": "En unverwoodlichen Fehler is opkamen, as de Host överdragen warrn schull"
+      }
     }
   },
   "head": {
     "title": "Skymo | Speel Skyjo Koortenspeel online free",
     "description": "Speel Skyjo online gratis mit Skymo! Een flink-flott Mehrspeler-Koortenspeel, wo Strategie un Spaaß tosamenkaamt. Foder Frünnen rut, dreih Koorten üm un versöök, de sietste Punktentall to kriegen, üm to winnen!",
     "keywords": "Skymo,Skyjo,Skyjo online,Multiplayer-Speel,Koortenspeel,speel mit Frünnen,free online Spelen,online Koortenspelen"
+  },
+  "errors": {
+    "invalid-credentials": "De E-Mail oder dat Paaswoort, dat du ingeven hest, is verkehrt. Versöök dat noch mal.",
+    "logout-failed": "Wi künntest di nich utloggen. Slutt dien Browser, üm de Sieschoon to be'ennen.",
+    "session-not-found": "Duene Seeschon is afloopen oder nich gültig. Melde di nochmol an.",
+    "session-invalid": "Duene Sieschoon is nich gültig. Melde di nochmol an, üm wieder to maken.",
+    "session-expired": "Du dien Session is afsloopen. Melk di noch mol an, dormit du wiedermaaken kannst.",
+    "session-token-missing": "Din Session-Token fehlt. Melde di an, üm en ne’en to kriegen.",
+    "username-taken": "Disen Brukernamen gifft dat al. Kieck di en annern ut.",
+    "onboarding-error": "Dor geev dat en Problem, dien Profil to beendigen. Versöök dat noch mol.",
+    "reset-token-invalid": "Dat Reset-Token, dat du angaven hest, is nich gültig. Fraag bitte en neet an.",
+    "reset-token-expired": "Din Passwoords-Reset-Token is ablopen. Biddd enen neen an.",
+    "password-reset-failed": "Wi künnen dien Passwoort nich torüchsetten. Versöök dat noch mal.",
+    "forgot-password-error": "Dor geev dat en Problem mit dien Passwoort-Reset-Anfraag. Versöök dat later noch mal.",
+    "reset-password-error": "Wi künnen dien Passwoort nich torüchsetten. Versöök dat noch mal.",
+    "oauth-restart-process": "Dor is wat schiefgahn bi de Authentifizeern. Versöök nochmal, di antomellen.",
+    "oauth-id-token-missing": "Wi hebbt keen ID-Token vun den Authentiseerens-Anbeder kregen. Versöök dat noch mal.",
+    "oauth-account-creation-failed": "Wi künnen keen Konto mit de Informatschonen vun dien Anbeder maken. Versöök dat noch mal.",
+    "oauth-login-initiation-failed": "Wi künnt den Login-Prozess nich starten. Versöök dat in een poor Momenta noch mal.",
+    "verify-session-error": "Wi künnen dien Session nich överprüven. Mel di af un wedder an.",
+    "signup-error": "Wi künnt dien Konto to dissen Tietpunkt nich maken. Versöök dat later noch mal.",
+    "login-error": "Dor geev dat en Problem, di bi di in to loggen. Versöök dat noch mal.",
+    "login-invalid-credentials": "De E-Mail oder dat Paaswoort, dat du ingeven hest, is verkehrt. Versöök dat noch mal.",
+    "logout-error": "Dor is en unerwarteten Fehler opkamen, as wi di utloggt hebbt.",
+    "check-username-error": "Wi künnen nich kieken, ob de Naam ver)--(fü)--(g)--(b)--(a)--(r) is. Versöök dat noch mal.",
+    "unknown-auth-error": "En unbekannten Authentikatschoonsfeler is opkamen. Versöök dat noch mol.",
+    "creation-failed": "Wi künnt den Bruker to dissen Tiet nich maken. Versöök dat noch mal.",
+    "get-user-error": "Wi künnen dat Profil nich kriegen. Versöök dat later noch mal.",
+    "get-user-games-error": "Wi künnen de Speelen vun den Bruker nich laden. Drück de Siet noch mal.",
+    "get-user-stats-error": "Wi künnen de Stats vun den Bruker nich laden. Versöök dat noch mal.",
+    "user-not-found": "De Bruker, den du söchst, kunn nich funnen warrn.",
+    "username-same-as-current": "Dit is al dien Naam.",
+    "email-taken": "Disse E-Mail-Adress is al in Bruuk. Bruuk en annere.",
+    "email-same-as-current": "Dit is al dien E-Mail-Adress.",
+    "invalid-current-password": "Dat aktuelle Passwoort, dat du ingipt hest, is verkehrt.",
+    "update-name-error": "Wi künnt dien Naam nich aktualiseeren. Versöök dat noch mol.",
+    "update-username-error": "Wi künnen dien Naam nich ännern. Versöök dat noch mol.",
+    "update-email-error": "Wi künnt dien E-Mail-Adress nich aktualiseeren. Versöök dat noch mol.",
+    "revert-email-error": "Wi künnt dien E-Mail-Ännern nich torüchdreihen. Mel di bi'n Support.",
+    "update-password-error": "Wi künnt dien Passwoort nich aktualiseern. Versöök dat noch mal.",
+    "update-avatar-error": "Wi künnen dien Avatar nich aktualiseeren. Versöök dat noch mal.",
+    "delete-account-error": "Wi künnen dien Ansöök to de Löschung vun dien Konto nich bearbeiten. Versöök dat noch mol.",
+    "cancel-delete-account-error": "Wi künnen dien Kontolöschung nich stornieren. Bitte kontaktier den Support.",
+    "unexpected-error": "Dor is en unverwochten Fehler opkamen. Versöök dat noch mol.",
+    "internal-server-error": "Uns Server harr en Problem. Versöök dat later noch mal.",
+    "unauthorized": "Du büst nich tolaten, disse Aktion utoföhren.",
+    "forbidden": "Du hest nich de Erlaubnis, op disse Ressource to togriepen.",
+    "not-found": "De Ressource, de du söchst, kunn nich funnen warrn.",
+    "too-many-requests": "Du hest to veel Anfraggen schickt. Bidd schick en Ogenblick un versöök dat noch mol.",
+    "ip-not-found": "Wi künnen dien IP-Adress nich identifizeern. Kieck mol dien Verbinnen na.",
+    "invalid-request": "Du hest en ungüllige Anfrag maakt. Kiek de Daten noch mal an un versöök dat noch mal.",
+    "send-feedback-error": "Wi künnen dien Feedback nich sennt. Versöök dat noch mol.",
+    "send-pin-error": "Wi künnen keen Verifikatschoon-PIN an dien E-Mail schicken. Versöök dat noch mol.",
+    "verify-pin-error": "Wi künnt dien PIN nich överprüven. Versöök dat noch mol.",
+    "invalid-pin": "De PIN, de du ingewesen hest, is verkehrt. Versöök dat noch mal.",
+    "expired-pin": "De PIN, de du ingewest hest, is utlopen. Wi hebbt di en ne’e schickt.",
+    "feedback-error": "Wi künnen dien Feedback nich sennt. Versöök dat noch mol.",
+    "get-public-games-error": "Wi künnen de ne'en Speelen nich laden. Versöök dat noch mal.",
+    "invalid-cancellation-token": "Dat Stornensymbol is nich gültig. Versöök dat noch mal.",
+    "expired-cancellation-token": "Dat Stüertoken is afloopen. Versöök dat noch mal.",
+    "cancel-account-deletion-error": "Wi künnt dien Kontolöschung nich stornieren. Versöök dat noch mol",
+    "oauth-unknown-error": "En unbekannten Fehler is bi't Anmellen opkamen. Versöök dat noch mal.",
+    "invalid-reversion-token": "De Reversion-Token is ungüllig. Versöök dat noch mal.",
+    "expired-reversion-token": "De Reversion-Token is ablopen. Versöök dat noch mol.",
+    "name-min-characters": "De Naam mutt minnstens 2 Tekens hebben",
+    "name-max-characters": "De Naam dröff nich mehr as 20 Tekens hebben",
+    "username-min-characters": "De Naam mutt minnstens 3 Tekens hebben",
+    "username-max-characters": "De Naam dröff nich mehr as 20 Tekens hebben",
+    "username-invalid-format": "De Naam dröff blots Bookstaven, Tallen un Ünnerstrich-Tekens bargen"
   }
 }
