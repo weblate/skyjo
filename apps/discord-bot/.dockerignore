@@ -1,4 +1,4 @@
-# API-specific exclusions
+# Discord Bot-specific exclusions
 # This file complements the root .dockerignore
 
 # Build artifacts
@@ -38,4 +38,4 @@ coverage
 
 # Temporary files
 tmp
-temp
+temp 

@@ -44,7 +44,7 @@ jobs:
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
-            
+
             # Use a separate directory for development
             if [ ! -d "dev/skymo" ]; then
               git clone https://github.com/maxentr/skymo.git dev/skymo
@@ -52,12 +52,14 @@ jobs:
 
             cd dev/skymo
             git pull
-            
+
             docker compose -f compose.dev.yml build dev-api
             docker compose -f compose.dev.yml build dev-workers
+            docker compose -f compose.dev.yml build dev-web
 
             pnpm i
             pnpm db:migrate
 
             docker compose -f compose.dev.yml up -d dev-api
             docker compose -f compose.dev.yml up -d dev-workers
+            docker compose -f compose.dev.yml up -d dev-web

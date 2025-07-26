@@ -1,4 +1,4 @@
-ARG PROJECT=@skymo/discord-bot
+ARG PROJECT=@skymo/web
 
 FROM node:24.3-alpine AS base
 RUN apk update && apk add --no-cache libc6-compat jemalloc && npm install -g pnpm@10.12.4 turbo@2.3.3
@@ -26,6 +26,9 @@ FROM base AS runner
 ARG PROJECT
 WORKDIR /app
 COPY --from=builder /app .
+WORKDIR /app/apps/web
+ENV NODE_ENV=production
+ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 
 # Create a non-root user
 RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nodejs
@@ -34,8 +37,9 @@ RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nodejs
 RUN chown -R nodejs:nodejs /app
 USER nodejs
 
-WORKDIR /app/apps/discord-bot
-ENV NODE_ENV=production
-ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
+EXPOSE 3000
+
+ENV PORT=3000
+ENV HOSTNAME="0.0.0.0"
 
 CMD ["pnpm", "run", "start"] 

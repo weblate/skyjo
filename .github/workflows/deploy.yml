@@ -30,6 +30,7 @@ jobs:
             docker compose build api
             docker compose build workers
             docker compose build discord-bot
+            docker compose build web
 
             pnpm i
             pnpm db:migrate
@@ -37,3 +38,4 @@ jobs:
             docker compose up -d api
             docker compose up -d workers
             docker compose up -d discord-bot
+            docker compose up -d web
