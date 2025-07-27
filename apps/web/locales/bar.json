@@ -8,18 +8,18 @@
         },
         "first-player-penalty-type": {
           "description": "Straaf gibt's, wann da easchte Spuia, dea olle Kartn aufdeckt, ned de wenigstn Punkt hod (gilt ned, wann da Punktestand kloana oda gleich 0 is)",
-          "label": "Straf-Art vom easchtn Spieler",
+          "label": "Straf-Art vom easchtn Spuia",
           "placeholder": "Wähl a Strofaart",
           "item": {
             "multiplier-only": "Nua Multiplikator",
-            "flat-only": "Bloß d'Wohnung",
-            "flat-then-multiplier": "Zerscht flach, nacha multipliziern",
-            "multiplier-then-flat": "Multiplikator nachher Flach"
+            "flat-only": "Bloß pauschal",
+            "flat-then-multiplier": "Zerscht pauschal, nacha multipliziern",
+            "multiplier-then-flat": "Multiplikator nachher pauschal"
           }
         },
         "initial-turned-count": {
           "title": "Am Anfang vom Spui wern {number} vo deine Kartn aufdeckt",
-          "label": "Anzahl vo de Kartn, de wo am Anfang aufdeckt worn san"
+          "label": "Anzahl vo de Kartn, de wo am Anfang aufdeckt wern"
         },
         "private": {
           "tooltip": {
@@ -1087,8 +1087,8 @@
         "label": "Strof-Typ für'n easchtn Spuier, wenn er ned de gloanste Punktzoi hod: ",
         "1": "Bloss Multiplikator",
         "2": "Nur Wohnung",
-        "3": "Zuerst flach, dann multiplikativ",
-        "4": "Multiplikator dann flach"
+        "3": "Zuerst pauschal, dann multiplikativ",
+        "4": "Multiplikator dann pauschal"
       },
       "first-player-multiplier-penalty": "Multiplikator-Strof: {value}",
       "first-player-flat-penalty": "Pauschale Strof: {value}"
