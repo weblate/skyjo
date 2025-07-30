@@ -49,7 +49,11 @@ export const LobbyPlayers = ({ className }: LobbyPlayersProps) => {
               (_, index) =>
                 index + CoreConstants.DEFAULT_GAME_SETTINGS.MIN_PLAYERS,
             ).map((value) => (
-              <SelectItem key={value} value={value.toString()}>
+              <SelectItem
+                key={value}
+                value={value.toString()}
+                disabled={value < game.players.length}
+              >
                 {t("player-section.select.item", { value })}
               </SelectItem>
             ))}

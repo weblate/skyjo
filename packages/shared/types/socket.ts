@@ -29,7 +29,10 @@ import type {
   ClientToServerPlayerEvents,
   ServerToClientPlayerEvents,
 } from "./events/player.js"
-import type { ClientToServerSettingsEvents } from "./events/settings.js"
+import type {
+  ClientToServerSettingsEvents,
+  ServerToClientSettingsEvents,
+} from "./events/settings.js"
 
 export type ClientToServerEvents = ClientToServerGameEvents &
   ClientToServerKickEvents &
@@ -47,6 +50,7 @@ export interface ServerToClientEvents
     ServerToClientKickEvents,
     ServerToClientLobbyEvents,
     ServerToClientPlayerEvents,
+    ServerToClientSettingsEvents,
     ServerToClientAfkEvents,
     ServerToClientBanEvents,
     ServerToClientHostTransferEvents,

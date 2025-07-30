@@ -125,6 +125,25 @@ export class LobbyService extends BaseService {
       )
     }
 
+    const currentPlayerCount = game.getConnectedPlayers().length
+    if (maxPlayers < currentPlayerCount) {
+      throw new CError(
+        `Cannot set maxPlayers to ${maxPlayers} because there are currently ${currentPlayerCount} players in the game.`,
+        {
+          code: ErrorConstants.ERROR.MAX_PLAYERS_TOO_LOW,
+          level: "warn",
+          meta: {
+            game: game.serialize(),
+            socketId: socket.id,
+            gameCode: game.code,
+            playerId: socket.data.playerId,
+            requestedMaxPlayers: maxPlayers,
+            currentPlayerCount,
+          },
+        },
+      )
+    }
+
     game.updatedAt = new Date()
 
     const stateManager = new GameStateTracker(game)

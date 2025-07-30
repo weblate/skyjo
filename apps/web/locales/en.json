@@ -1313,9 +1313,16 @@
         "player-already-connected": {
           "description": "You are already connected to this game from another session"
         },
+        "max-players-too-low": {
+          "description": "Cannot reduce maximum players below the current number of players in the game"
+        },
         "rate-limit": {
           "title": "You are sending too many requests",
           "description": "Please wait a few seconds before trying again"
+        },
+        "not-allowed": {
+          "title": "Permission denied",
+          "description": "You don't have permission to change game settings"
         }
       }
     }

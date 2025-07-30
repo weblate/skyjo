@@ -21,6 +21,7 @@ export class Constants {
     TOO_MANY_REQUESTS: "too-many-requests",
     GAME_ALREADY_PROCESSING_AFK: "game-already-processing-afk",
     PLAYER_ALREADY_CONNECTED: "player-already-connected",
+    MAX_PLAYERS_TOO_LOW: "max-players-too-low",
     UNEXPECTED_ERROR: "unexpected-error",
     MESSAGE_NOT_FOUND: "message-not-found",
   } as const

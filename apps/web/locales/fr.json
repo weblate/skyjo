@@ -1314,6 +1314,12 @@
         "rate-limit": {
           "title": "Vous envoyez trop de requêtes",
           "description": "Merci d'attendre quelques secondes avant de réessayer"
+        },
+        "max-players-too-low": {
+          "description": "Vous ne pouvez pas réduire le nombre de joueurs maximum en dessous du nombre de joueurs connectés à la partie"
+        },
+        "not-allowed": {
+          "description": "Vous n'avez pas la permission de changer les paramètres de la partie"
         }
       }
     }

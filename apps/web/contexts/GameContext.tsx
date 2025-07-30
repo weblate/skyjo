@@ -6,6 +6,8 @@ import {
   PlayerToJson,
   PlayPickCard,
 } from "@skymo/core"
+import { Constants as ErrorConstants } from "@skymo/error"
+import type { ErrorUpdateMaxPlayersMessage } from "@skymo/shared/types"
 import { UpdateGameSettings, UpdateMaxPlayers } from "@skymo/shared/validations"
 import {
   applyStateOperations,
@@ -13,9 +15,11 @@ import {
 } from "@skymo/state-operations"
 import dayjs from "dayjs"
 import utc from "dayjs/plugin/utc"
+import { useTranslations } from "next-intl"
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -116,10 +120,34 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const { playerId } = usePlayer()
   const router = useRouter()
   const { showAfkWarning, showAfkKick, showPlayerAfkKick } = useAfkKickToasts()
+  const tSettingsError = useTranslations("utils.socket.error")
 
   const [game, setGame] = useState<GameToJson>()
 
   const lastHiddenAt = useRef<number | null>(null)
+
+  //#region error descriptions
+  const updateMaxPlayersErrorDescription = useMemo(
+    () => ({
+      [ErrorConstants.ERROR.MAX_PLAYERS_TOO_LOW]: tSettingsError(
+        "max-players-too-low.description",
+      ),
+      [ErrorConstants.ERROR.NOT_ALLOWED]: tSettingsError(
+        "not-allowed.description",
+      ),
+    }),
+    [tSettingsError],
+  )
+
+  const onUpdateMaxPlayersError = useCallback(
+    (message: ErrorUpdateMaxPlayersMessage) => {
+      toast.error(updateMaxPlayersErrorDescription[message], {
+        duration: 5000,
+      })
+    },
+    [updateMaxPlayersErrorDescription],
+  )
+  //#endregion
 
   const player = getCurrentUser(game?.players, playerId)
   const opponents = getOpponents(game?.players, playerId)
@@ -316,6 +344,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const updateMaxPlayers = (maxPlayers: UpdateMaxPlayers) => {
     if (!host) return
 
+    socket!.once("error:update-max-players", onUpdateMaxPlayersError)
     socket!.emit("game:update-max-players", maxPlayers)
   }
 

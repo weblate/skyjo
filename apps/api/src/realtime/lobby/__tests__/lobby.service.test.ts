@@ -630,6 +630,42 @@ describe("LobbyService", () => {
 
       expect(service["socketManager"].sendToRoom).toHaveBeenCalled()
     })
+
+    it("should throw if maxPlayers is lower than current connected players count", async () => {
+      const player1 = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        TEST_SOCKET_ID,
+      )
+      const player2 = new Player(
+        { name: "player2", avatar: CoreConstants.AVATARS.BEE },
+        "socket456",
+      )
+      const player3 = new Player(
+        { name: "player3", avatar: CoreConstants.AVATARS.CAT },
+        "socket789",
+      )
+
+      const game = new Game({
+        hostId: player1.id,
+        settings: new Settings(true, 5),
+      })
+
+      game.addPlayer(player1)
+      game.addPlayer(player2)
+      game.addPlayer(player3)
+
+      const socket = mockSocket(TEST_SOCKET_ID)
+      socket.data = { gameCode: game.code, playerId: player1.id }
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await expect(service.onUpdateMaxPlayers(socket, 2)).toThrowCErrorWithCode(
+        ErrorConstants.ERROR.MAX_PLAYERS_TOO_LOW,
+      )
+      console.log("Connected players count:", game.getConnectedPlayers().length)
+
+      expect(socket.emit).not.toHaveBeenCalled()
+    })
   })
 
   describe("onUpdateSettings", () => {

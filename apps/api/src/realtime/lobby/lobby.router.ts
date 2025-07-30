@@ -5,7 +5,10 @@ import {
   joinGame,
 } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
-import type { ErrorJoinMessage } from "@skymo/shared/types"
+import type {
+  ErrorJoinMessage,
+  ErrorUpdateMaxPlayersMessage,
+} from "@skymo/shared/types"
 import {
   type UpdateGameSettings,
   type UpdateMaxPlayers,
@@ -82,10 +85,25 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:update-max-players",
     socketErrorWrapper(async (data: UpdateMaxPlayers) => {
-      await consumeSocketRateLimiter(settingsRateLimiter)(socket)
+      try {
+        await consumeSocketRateLimiter(settingsRateLimiter)(socket)
 
-      const maxPlayers = updateMaxPlayersSchema.parse(data)
-      await instance.onUpdateMaxPlayers(socket, maxPlayers)
+        const maxPlayers = updateMaxPlayersSchema.parse(data)
+        await instance.onUpdateMaxPlayers(socket, maxPlayers)
+      } catch (error) {
+        if (
+          error instanceof CError &&
+          (error.code === ErrorConstants.ERROR.MAX_PLAYERS_TOO_LOW ||
+            error.code === ErrorConstants.ERROR.NOT_ALLOWED)
+        ) {
+          socket.emit(
+            "error:update-max-players",
+            error.code satisfies ErrorUpdateMaxPlayersMessage,
+          )
+        } else {
+          throw error
+        }
+      }
     }),
   )
   socket.on(
