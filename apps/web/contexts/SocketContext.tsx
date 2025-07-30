@@ -21,6 +21,7 @@ import { useTranslations } from "next-intl"
 import {
   createContext,
   PropsWithChildren,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -58,29 +59,35 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const [socket, setSocket] = useState<GameSocket | null>(null)
 
   //#region error descriptions
-  const joinErrorDescription: Record<ErrorJoinMessage, string> = {
-    [ErrorConstants.ERROR.GAME_NOT_FOUND]: tSocketError(
-      "game-not-found.description",
-    ),
-    [ErrorConstants.ERROR.GAME_ALREADY_STARTED]: tSocketError(
-      "game-already-started.description",
-    ),
-    [ErrorConstants.ERROR.GAME_IS_FULL]: tSocketError(
-      "game-is-full.description",
-    ),
-    [ErrorConstants.ERROR.PLAYER_BANNED]: tSocketError(
-      "player-banned.description",
-    ),
-    [ErrorConstants.ERROR.PLAYER_ALREADY_CONNECTED]: tSocketError(
-      "player-already-connected.description",
-    ),
-  }
+  const joinErrorDescription = useMemo(
+    () => ({
+      [ErrorConstants.ERROR.GAME_NOT_FOUND]: tSocketError(
+        "game-not-found.description",
+      ),
+      [ErrorConstants.ERROR.GAME_ALREADY_STARTED]: tSocketError(
+        "game-already-started.description",
+      ),
+      [ErrorConstants.ERROR.GAME_IS_FULL]: tSocketError(
+        "game-is-full.description",
+      ),
+      [ErrorConstants.ERROR.PLAYER_BANNED]: tSocketError(
+        "player-banned.description",
+      ),
+      [ErrorConstants.ERROR.PLAYER_ALREADY_CONNECTED]: tSocketError(
+        "player-already-connected.description",
+      ),
+    }),
+    [tSocketError],
+  )
 
-  const reconnectErrorDescription: Record<ErrorReconnectMessage, string> = {
-    [ErrorConstants.ERROR.CANNOT_RECONNECT]: tSocketError(
-      "cannot-reconnect.description",
-    ),
-  }
+  const reconnectErrorDescription = useMemo(
+    () => ({
+      [ErrorConstants.ERROR.CANNOT_RECONNECT]: tSocketError(
+        "cannot-reconnect.description",
+      ),
+    }),
+    [tSocketError],
+  )
   //#endregion
 
   const getSocket = () => {
@@ -217,34 +224,40 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const onJoinGameSuccess = (
-    gameCode: string,
-    status: GameStatus,
-    playerId: string,
-    sessionId: string,
-  ) => {
-    localStorage.setItem(
-      "lastGame",
-      JSON.stringify({
-        gameCode,
-        playerId,
-        sessionId,
-      }),
-    )
+  const onJoinGameSuccess = useCallback(
+    (
+      gameCode: string,
+      status: GameStatus,
+      playerId: string,
+      sessionId: string,
+    ) => {
+      localStorage.setItem(
+        "lastGame",
+        JSON.stringify({
+          gameCode,
+          playerId,
+          sessionId,
+        }),
+      )
 
-    setPlayerId(playerId)
+      setPlayerId(playerId)
 
-    if (status === CoreConstants.GAME_STATUS.LOBBY)
-      router.replace(`/game/${gameCode}/lobby`)
-    else router.replace(`/game/${gameCode}`)
-  }
+      if (status === CoreConstants.GAME_STATUS.LOBBY)
+        router.replace(`/game/${gameCode}/lobby`)
+      else router.replace(`/game/${gameCode}`)
+    },
+    [setPlayerId, router],
+  )
 
-  const onJoinGameError = (message: ErrorJoinMessage) => {
-    console.log("onJoinGameError", message)
-    toast.error(joinErrorDescription[message], {
-      duration: 5000,
-    })
-  }
+  const onJoinGameError = useCallback(
+    (message: ErrorJoinMessage) => {
+      console.log("onJoinGameError", message)
+      toast.error(joinErrorDescription[message], {
+        duration: 5000,
+      })
+    },
+    [joinErrorDescription],
+  )
   //#endregion
 
   //#region reconnect
@@ -268,16 +281,19 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
     }
   }
 
-  const onReconnectError = (message: ErrorReconnectMessage) => {
-    // TODO check if relevant
-    clearLastGame()
+  const onReconnectError = useCallback(
+    (message: ErrorReconnectMessage) => {
+      // TODO check if relevant
+      clearLastGame()
 
-    toast.error(reconnectErrorDescription[message], {
-      duration: 5000,
-    })
+      toast.error(reconnectErrorDescription[message], {
+        duration: 5000,
+      })
 
-    router.replace("/")
-  }
+      router.replace("/")
+    },
+    [reconnectErrorDescription, router],
+  )
   //#endregion
 
   const value = useMemo(
