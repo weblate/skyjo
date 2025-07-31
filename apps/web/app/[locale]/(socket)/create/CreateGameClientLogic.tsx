@@ -46,7 +46,7 @@ const CreateGameClientLogic = () => {
       setCard((prev) => generateRandomCard(!prev.isVisible))
     }, 1000)
 
-    const handleCreateGame = async () => {
+    const _handleCreateGame = async () => {
       const player = getPlayer()
 
       if (!loading) {
@@ -55,16 +55,17 @@ const CreateGameClientLogic = () => {
       }
     }
 
-    handleCreateGame()
+    // handleCreateGame()
 
     return () => clearInterval(interval)
   }, [createGame, getPlayer, isPrivate, loading])
 
   return (
-    <div className="h-svh w-full flex flex-col gap-2 items-center justify-center -translate-y-12">
-      <GameCard key={card.id} card={card} size="normal" disabled={true} />
-
-      <p>{t("loading-text")}</p>
+    <div className="min-h-svh w-full flex flex-col gap-2 items-center justify-center">
+      <div className="flex flex-col gap-3 items-center justify-center -translate-y-12">
+        <GameCard key={card.id} card={card} size="normal" disabled={true} />
+        <p className="text-center">{t("loading-text")}</p>
+      </div>
     </div>
   )
 }
