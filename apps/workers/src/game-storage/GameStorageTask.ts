@@ -41,7 +41,7 @@ export class GameStorageTask {
           .values({
             code: game.code,
             settings: game.settings,
-            createdAt: new Date(game.createdAt),
+            createdAt: game.createdAt,
           })
           .returning({ id: gameTable.id })
 
