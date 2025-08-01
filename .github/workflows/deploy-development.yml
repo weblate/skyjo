@@ -68,11 +68,10 @@ jobs:
             export BUILDKIT_PROGRESS=plain
             export BUILDKIT_HOST_MEMORY_LIMIT=2g
 
-            # Use limited parallel builds - development uses less memory than production
-            docker compose -f compose.dev.yml build --parallel --jobs 2 dev-api dev-workers dev-web
+            # Use parallel builds - development uses less memory than production
+            docker compose -f compose.dev.yml build --parallel dev-api dev-workers dev-web
 
             pnpm i
             pnpm db:migrate
 
-            # Start services
             docker compose -f compose.dev.yml up -d dev-api dev-workers dev-web
