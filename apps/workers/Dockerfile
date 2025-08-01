@@ -1,41 +1,55 @@
 ARG PROJECT=@skymo/workers
 
+# Base stage with common dependencies
 FROM node:24.3-alpine AS base
-RUN apk update && apk add --no-cache libc6-compat jemalloc && npm install -g pnpm@10.12.4 turbo@2.3.3
+RUN apk update && \
+    apk add --no-cache libc6-compat jemalloc && \
+    npm install -g pnpm@10.12.4 turbo@2.3.3 && \
+    rm -rf /var/cache/apk/* && \
+    addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nodejs
 
+# Pruner stage
 FROM base AS pruner
 ARG PROJECT
 WORKDIR /app
 COPY . .
 RUN turbo prune --scope=${PROJECT} --docker
 
+# Builder stage with optimized layer caching
 FROM base AS builder
 ARG PROJECT
 WORKDIR /app
+
+# Copy package files first for better caching
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=pruner /app/out/json/ .
 
-RUN pnpm i --ignore-scripts
+# Install all dependencies
+RUN pnpm install --frozen-lockfile --ignore-scripts
+
+# Copy source and build
 COPY --from=pruner /app/out/full/ .
 RUN pnpm run build --filter=${PROJECT}
 
+# Install production dependencies
 ENV NODE_ENV=production
 RUN pnpm install --prod --ignore-scripts
 
+# Runtime stage
 FROM base AS runner
 ARG PROJECT
 WORKDIR /app
+ENV NODE_ENV=production
+ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
+
+# Copy built application
 COPY --from=builder /app .
 
-# Create a non-root user
-RUN addgroup --system --gid 1001 nodejs && adduser --system --uid 1001 nodejs
-
-# Set ownership of the app directory
+# Set ownership and switch to non-root user
 RUN chown -R nodejs:nodejs /app
 USER nodejs
 
 WORKDIR /app/apps/workers
-ENV NODE_ENV=production
-ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
 
 CMD ["pnpm", "run", "prod"]

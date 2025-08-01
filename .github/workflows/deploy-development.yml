@@ -53,13 +53,26 @@ jobs:
             cd dev/skymo
             git pull
 
-            docker compose -f compose.dev.yml build dev-api
-            docker compose -f compose.dev.yml build dev-workers
-            docker compose -f compose.dev.yml build dev-web
+            # Enable Docker buildx for better caching
+            docker buildx create --use --name skymo-dev-builder --driver docker-container 2>/dev/null || docker buildx use skymo-dev-builder
+
+            # Enable Docker buildx with resource-aware configuration
+            docker buildx create --use --name skymo-dev-builder --driver docker-container \
+              --driver-opt network=host \
+              --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=10485760 \
+              --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=10485760 \
+              2>/dev/null || docker buildx use skymo-dev-builder
+
+            # Configure build with controlled parallelism for development
+            export DOCKER_BUILDKIT=1
+            export BUILDKIT_PROGRESS=plain
+            export BUILDKIT_HOST_MEMORY_LIMIT=2g
+
+            # Use limited parallel builds - development uses less memory than production
+            docker compose -f compose.dev.yml build --parallel --jobs 2 dev-api dev-workers dev-web
 
             pnpm i
             pnpm db:migrate
 
-            docker compose -f compose.dev.yml up -d dev-api
-            docker compose -f compose.dev.yml up -d dev-workers
-            docker compose -f compose.dev.yml up -d dev-web
+            # Start services
+            docker compose -f compose.dev.yml up -d dev-api dev-workers dev-web

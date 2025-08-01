@@ -1,20 +1,21 @@
 # Monorepo-wide exclusions
 fly.toml
-Dockerfile
+Dockerfile*
 .dockerignore
 node_modules
 .turbo
+**/.turbo
 .git
 .next
+**/.next
 dist
+**/dist
 build
+**/build
 
 # Environment files
-.env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
+.env*
+**/.env*
 
 # IDE and editor files
 .vscode
@@ -22,6 +23,8 @@ build
 *.swp
 *.swo
 *~
+.cursor
+**/.cursor
 
 # OS generated files
 .DS_Store
@@ -34,12 +37,30 @@ Thumbs.db
 
 # Testing
 coverage
+**/coverage
 .nyc_output
 *.lcov
+**/*.test.ts
+**/*.spec.ts
+**/tests
+**/__tests__
+
+# Documentation and project files
+README.md
+**/README.md
+CONTRIBUTING.md
+CHANGELOG.md
+LICENSE
+.gitignore
+lefthook.yml
+.github
+**/.github
 
 # Logs
 logs
+**/logs
 *.log
+**/*.log
 
 # Runtime data
 pids
@@ -49,6 +70,8 @@ pids
 
 # Optional npm cache directory
 .npm
+**/.npm
+**/.pnpm-store
 
 # Optional eslint cache
 .eslintcache
@@ -61,7 +84,20 @@ pids
 
 # TypeScript
 *.tsbuildinfo
+**/tsconfig.tsbuildinfo
 
 # Temporary files
 tmp
 temp
+**/tmp
+**/temp
+
+# Development tools
+vitest.config.ts
+**/vitest.config.ts
+turbo.json
+biome.json
+compose*.yml
+uptime-kuma-data
+TASKS
+TASKS.md
