@@ -206,7 +206,7 @@
         },
         "data-usage": {
           "title": "3. Warum werden deine Daten verwendet?",
-          "items": "- Ermöglichen, dass Spieler (Gäste oder registrierte) Spielen beitreten und spielen können\n- Avatare, Namen, Punktestände und Ranglisten anzeigen\n- Moderation bei Missbrauch ermöglichen\n- Feedback und Kontowiederherstellung (für angemeldete Benutzer) verarbeiten\n- Die Website mithilfe anonymer Analysen verbessern"
+          "items": "Ermöglichen, dass Spieler (Gäste oder registrierte) Spielen beitreten und spielen können;;Avatare, Namen, Punktestände und Ranglisten anzeigen;;Moderation bei Missbrauch ermöglichen;;Feedback und Kontowiederherstellung (für angemeldete Benutzer) verarbeiten;;Die Website mithilfe anonymer Analysen verbessern"
         },
         "data-retention": {
           "title": "4. Wie lange werden deine Daten aufbewahrt?",
@@ -490,7 +490,7 @@
       "head": {
         "title": "Profil von '{username}' | Skymo - Skyjo Online Kartenspiel",
         "description": "Zeige das Profil von {username} auf Skymo. Sieh dir ihre Spielstatistiken, Aktivitäten und Erfolge in Skyjo online an.",
-        "keywords": "Skymo, Skyjo, Benutzerprofil, Spielerstatistiken, Spielstatistiken, letzte Spiele, Erfolge, Online-Kartenspiel"
+        "keywords": "Skymo,Skyjo,User-Profül,Spui-Statistikn,letzte Spui,Erfoig,Online-Kartnspui"
       },
       "not-found": {
         "title": "Benutzer nicht gefunden",
