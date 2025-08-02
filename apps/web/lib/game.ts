@@ -95,7 +95,9 @@ export const hasRevealedCardCount = (player: PlayerToJson, count: number) => {
 export const getCurrentWhoHasToPlay = (game: GameToJson) => {
   const players = getConnectedPlayers(game.players)
 
-  return players.find((player) => player.id === game.players[game.turn].id)
+  const currentPlayer = game.players?.[game.turn]
+
+  return players.find((player) => player.id === currentPlayer?.id)
 }
 
 export const getNextPlayerIndex = (
@@ -109,7 +111,7 @@ export const getNextPlayerIndex = (
   }
 
   const currentTurnIndex = game.players.findIndex(
-    (p) => p.id === game.players[game.turn].id,
+    (p) => p.id === currentPlayer.id,
   )
 
   let nextOpponentIndex = opponents.findIndex(
@@ -138,7 +140,11 @@ export const getHost = (game?: GameToJson) => {
 export const getCurrentScore = (player: PlayerToJson) => {
   return player.cards
     .flat()
-    .reduce((acc, card) => (card.isVisible ? acc + card.value! : acc), 0)
+    .reduce(
+      (acc, card) =>
+        card.isVisible && card.value !== undefined ? acc + card.value : acc,
+      0,
+    )
 }
 
 //#region round phases

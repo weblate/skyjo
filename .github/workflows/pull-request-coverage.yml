@@ -57,3 +57,12 @@ jobs:
           vite-config-path: "./apps/workers/vitest.config.ts"
           json-summary-path: "./apps/workers/tests/coverage/coverage-summary.json"
           json-final-path: "./apps/workers/tests/coverage/coverage-final.json"
+
+      - name: "Report Web coverage"
+        if: always()
+        uses: davelosert/vitest-coverage-report-action@v2
+        with: 
+          name: "Web"
+          vite-config-path: "./apps/web/vitest.config.ts"
+          json-summary-path: "./apps/web/tests/coverage/coverage-summary.json"
+          json-final-path: "./apps/web/tests/coverage/coverage-final.json"
