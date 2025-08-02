@@ -105,7 +105,7 @@ export class Constants {
   static readonly KICK_VOTE_EXPIRATION_TIME = 30000 // 30 seconds
 
   static readonly AFK_TIMEOUT = {
-    PUBLIC: 30000,
+    PUBLIC: 60000,
     PRIVATE: 120000,
     MAX_CONSECUTIVE: 2,
     MAX_TOTAL: 4,
