@@ -1275,7 +1275,7 @@
       "player-already-muted": "{name} ஏற்கனவே முடக்கப்பட்டுள்ளது",
       "player-muted": "{name} இப்போது முடக்கப்பட்டுள்ளது",
       "player-unmuted": "{name} இனி முடக்கப்படவில்லை",
-      "wizz-sent": "{இலக்கு பெயர் fo க்கு ஒரு விச்சை அனுப்பியுள்ளீர்கள்!",
+      "wizz-sent": "நீங்கள் {targetName} க்கு ஒரு விச்சை அனுப்பியுள்ளீர்கள்!",
       "welcome": "தயவுசெய்து அன்பாகவும் மரியாதையாகவும் இருங்கள். தேவைப்பட்டால் வீரர்களை mute செய்ய அல்லது report செய்ய, நீங்கள் {isMobile, select, true {long-press} other {right-click}} செய்யலாம்.",
       "host-transferred": "{name} இப்போது ஹோஸ்ட்"
     },
