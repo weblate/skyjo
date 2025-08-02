@@ -5,6 +5,10 @@
     "keywords": "Skymo,Skyjo,Skyjo en ligne,jeu multijoueur,jeu de cartes,jouer avec des amis,jeux en ligne gratuits,jeux de cartes en ligne"
   },
   "pages": {
+    "Reconnect": {
+      "title": "Reconnexion à votre partie",
+      "description": "Veuillez patienter pendant que nous vous reconnectons à votre partie en cours..."
+    },
     "Index": {
       "name-input-placeholder": "Nom",
       "explanation": {

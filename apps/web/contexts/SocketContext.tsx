@@ -32,7 +32,7 @@ import customParser from "socket.io-msgpack-parser"
 import { toast } from "sonner"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useRouter } from "@/i18n/routing"
-import { clearLastGame } from "@/utils/reconnection"
+import { clearLastGameCookie, setLastGameCookie } from "@/utils/gameCookie"
 
 dayjs.extend(utc)
 
@@ -231,14 +231,11 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
       playerId: string,
       sessionId: string,
     ) => {
-      localStorage.setItem(
-        "lastGame",
-        JSON.stringify({
-          gameCode,
-          playerId,
-          sessionId,
-        }),
-      )
+      setLastGameCookie({
+        gameCode,
+        playerId,
+        sessionId,
+      })
 
       setPlayerId(playerId)
 
@@ -283,8 +280,7 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
   const onReconnectError = useCallback(
     (message: ErrorReconnectMessage) => {
-      // TODO check if relevant
-      clearLastGame()
+      clearLastGameCookie()
 
       toast.error(reconnectErrorDescription[message], {
         duration: 5000,

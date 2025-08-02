@@ -46,7 +46,7 @@ const CreateGameClientLogic = () => {
       setCard((prev) => generateRandomCard(!prev.isVisible))
     }, 1000)
 
-    const _handleCreateGame = async () => {
+    const handleCreateGame = async () => {
       const player = getPlayer()
 
       if (!loading) {
@@ -55,7 +55,7 @@ const CreateGameClientLogic = () => {
       }
     }
 
-    // handleCreateGame()
+    handleCreateGame()
 
     return () => clearInterval(interval)
   }, [createGame, getPlayer, isPrivate, loading])

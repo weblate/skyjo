@@ -1,8 +1,9 @@
 "use client"
 
+import type { LastGame } from "@skymo/shared/validations"
 import { Howler } from "howler"
 import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -13,34 +14,21 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { useSocket } from "@/contexts/SocketContext"
-import { useGameStatus } from "@/hooks/useGameStatus"
-import { clearLastGame, getLastGame } from "@/utils/reconnection"
+import { clearLastGameCookie } from "@/utils/gameCookie"
 
-const ReconnectionModal = () => {
+interface ReconnectPrivateGameModalProps {
+  lastGame: LastGame
+}
+
+const ReconnectPrivateGameModal = ({
+  lastGame,
+}: ReconnectPrivateGameModalProps) => {
   const { reconnectGame } = useSocket()
   const t = useTranslations("components.ReconnectionModal")
 
   const [loading, setLoading] = useState<boolean>(false)
   const [showReconnectionModal, setShowReconnectionModal] =
-    useState<boolean>(false)
-
-  const lastGame = getLastGame()
-  const { gameStatus, gameExists, gameFetching } = useGameStatus(
-    lastGame?.gameCode,
-  )
-
-  useEffect(() => {
-    if (gameFetching) return
-
-    if (gameExists === false) {
-      clearLastGame()
-      return
-    }
-
-    if (gameStatus) {
-      setShowReconnectionModal(gameStatus.connectedPlayersCount > 0)
-    }
-  }, [gameFetching, gameExists, gameStatus])
+    useState<boolean>(true)
 
   const errorCallback = () => setLoading(false)
 
@@ -60,7 +48,7 @@ const ReconnectionModal = () => {
   }
 
   const handleModalDismiss = () => {
-    localStorage.removeItem("lastGame")
+    clearLastGameCookie()
     setShowReconnectionModal(false)
     setLoading(false)
   }
@@ -86,4 +74,4 @@ const ReconnectionModal = () => {
   )
 }
 
-export default ReconnectionModal
+export default ReconnectPrivateGameModal

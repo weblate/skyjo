@@ -5,6 +5,10 @@
     "keywords": "Skymo,Skyjo,Skyjo online,multiplayer game,card game,play with friends,free online games,online card games"
   },
   "pages": {
+    "Reconnect": {
+      "title": "Reconnecting to your game",
+      "description": "Please wait while we reconnect you to your active game..."
+    },
     "Index": {
       "name-input-placeholder": "Name",
       "explanation": {

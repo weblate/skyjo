@@ -1,7 +1,6 @@
 import Image from "next/image"
-import { useTranslations } from "next-intl"
-import { use } from "react"
-import { RulesButton } from "@/app/[locale]/(socket)/RulesButton"
+import { getTranslations } from "next-intl/server"
+import { RulesButton } from "@/app/[locale]/(socket)/(with-reconnection-redirect)/RulesButton"
 import Footer from "@/components/Footer"
 import MovingArrow from "@/components/MovingArrow"
 import Navbar from "@/components/Navbar"
@@ -27,9 +26,9 @@ interface SearchParams {
 interface IndexServerPageProps {
   searchParams: Promise<SearchParams>
 }
-const IndexServerPage = (props: IndexServerPageProps) => {
-  const searchParams = use(props.searchParams)
-  const t = useTranslations("pages.Index")
+const IndexServerPage = async (props: IndexServerPageProps) => {
+  const searchParams = await props.searchParams
+  const t = await getTranslations("pages.Index")
 
   return (
     <div className="bg-body dark:bg-dark-body flex flex-col">

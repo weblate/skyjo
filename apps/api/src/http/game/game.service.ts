@@ -64,6 +64,7 @@ export async function getGameStatus(
       gameCode: game.code,
       status: game.status,
       connectedPlayersCount: game.getConnectedPlayers().length,
+      isPrivate: game.settings.private,
     }
 
     return response

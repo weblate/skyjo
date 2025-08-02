@@ -55,7 +55,7 @@ import {
   isTurnTurnACard,
 } from "@/lib/game"
 import { Opponents } from "@/types/opponents"
-import { clearLastGame } from "@/utils/reconnection"
+import { clearLastGameCookie } from "@/utils/gameCookie"
 
 dayjs.extend(utc)
 
@@ -200,7 +200,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
 
       const inGame = game?.status === CoreConstants.GAME_STATUS.PLAYING
       if (inGame) event.preventDefault()
-      else clearLastGame()
+      else clearLastGameCookie()
     }
 
     window.addEventListener("beforeunload", onUnload)
@@ -334,7 +334,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }
 
   const onAfkKick = () => {
-    clearLastGame()
+    clearLastGameCookie()
     showAfkKick()
     router.replace("/")
   }

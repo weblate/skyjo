@@ -1,6 +1,6 @@
 import { SearchPage } from "./SearchPage"
 
-const SearchServerPage = () => {
+const SearchServerPage = async () => {
   return <SearchPage />
 }
 
