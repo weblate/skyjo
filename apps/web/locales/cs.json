@@ -196,7 +196,7 @@
         },
         "data-usage": {
           "title": "3. Proč se vaše údaje používají?",
-          "items": "- Umožnit hráčům (hostům nebo registrovaným) připojit se a hrát hry\n- Zobrazovat avatary, jména, skóre a hodnocení\n- Umožnit moderování v případě zneužití\n- Zpracovávat zpětnou vazbu a obnovu účtu (pro přihlášené uživatele)\n- Vylepšit web pomocí anonymní analytiky"
+          "items": "Umožnit hráčům (hostům nebo registrovaným) připojit se a hrát hry;;Zobrazovat avatary, jména, skóre a hodnocení;;Umožnit moderování v případě zneužití;;Zpracovávat zpětnou vazbu a obnovu účtu (pro přihlášené uživatele);;Vylepšit web pomocí anonymní analytiky"
         },
         "data-retention": {
           "title": "4. Jak dlouho jsou vaše data uchovávána?",
