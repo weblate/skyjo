@@ -193,7 +193,7 @@
           "title": "SKR — Ar pezh a rankez gouzout",
           "minimal-data": "Mir a reomp nebeut a roadennoù evit ma c'hellfes c'hoari, pa vefe kevreet pe n'eo ket.",
           "guest-data": "Dalc'het e vez an titouroù a-zivout ar c'houvidi (anv, avatar, skor, kaozeadennoù) nemet mar bez un c'hoarier kevreet er c'hoari.",
-          "personal-data": "{var}Do postumer, {var}do anv implijer, ha ditouroù personel all a vez miret nemet mar krouiñ ur c'hont.",
+          "personal-data": "Do postumer, do anv implijer, ha ditouroù personel all a vez miret nemet mar krouiñ ur c'hont.",
           "chat-storage": "Mir a reer ouzh ar c'haozeadennoù da gentañ ha miret e vezont nemet ma vezont droukvesket.",
           "privacy-compliance": "En urzhommomp da brevezded ha doujañ a reomp ouzh ar GDPR, o mirout pep tra war-sav-mat en UE.",
           "data-rights": "Gallout a rez goulenn mont-tre, reizhañ, ezporzhiañ pe diverrañ an titouroù a-berzh e-pad ar mare.",
@@ -243,7 +243,7 @@
           "items": "Ar c'hoarierien all a welo da anv foran, da avatar hag istor da c'hoarioù;;An aozer (Maxent Rouault) a c'hell kaout an titouroù evit an dereouri ;;N'eus ket gwerzh na implij reklam evit da ditouroù"
         },
         "your-rights": {
-          "title": "Daouzek. Da wirioneier",
+          "title": "7. Da wirioneier",
           "items": "Gouzañv, reizhañ pe dilemel da roadennoù;;Dilemel da gont (pe goulenn anezhañ);;Ezporzhiañ da roadennoù (war goulenn);;Apellat difennoù ouzh appeal@skymo.online"
         },
         "security": {
@@ -548,7 +548,7 @@
         "delete-confirmation": "Ha sur oc'h e fell deoc'h dilemel ho kont? N'haller ket didenkel an ober-mañ ha kement road a vo lamet da viken.",
         "username-taken": "Ar vout-houman zo kemeret dija.",
         "email-taken": "An postel-ma zo implijet c'hoazh.",
-        "password-incorrect": "{var} eo disavouet an ger-tremen an hini a-vremañ.",
+        "password-incorrect": "An ger-tremen a-vremañ zo direizh.",
         "account-deletion-scheduled": "Da goulenn dilemel da gont a zo bet kemeret e kont ha sevenet e vo en 48 eurvezh. Kemeret e vo ur postel ganeoc'h evit kadarnaat an dilem.",
         "account-deletion-failed": "An 오류 a c'hloaz pa'z eo bet diverket da gont. Klask en-dro, mar plij."
       }
@@ -630,7 +630,7 @@
         }
       },
       "messages": {
-        "password-incorrect": "{var} eo disavouket an ger-tremen a-vremañ."
+        "password-incorrect": "An ger-tremen a-vremañ zo direizh."
       }
     },
     "CancelAccountDeletion": {
@@ -854,7 +854,7 @@
       },
       "mobile": {
         "title": "Ar ger-heñvel",
-        "switch-to-player-who-is-playing": "Treiñ em- வழியு d'ar c'hoarier a zo o c'hoari",
+        "switch-to-player-who-is-playing": "Treiñ em-eeun d'ar c'hoarier a zo o c'hoari",
         "show-preview-opponents-cards": "Diskouez un rakweled eus kartenn an eneppartizien er roll eneppartizien"
       },
       "gameplay": {
@@ -1452,7 +1452,7 @@
     "invalid-reversion-token": "An arouezenn distro zo direizh. Klask a-nevez, mar plij.",
     "expired-reversion-token": "An token adsavet en deus re vuan. Klask a-nevez, mar plij.",
     "name-min-characters": "An anv diskouez a rank bezañ 2 sizunenn d'an nebeutañ",
-    "name-max-characters": "An anv diskouez a rank bezañ 20 동안 bennak",
+    "name-max-characters": "An anv diskouez a rank bezañ 20 arouezenn d'ar muiañ",
     "username-min-characters": "An anv implij a rank bezañ 3 arouezenn d'an nebeutañ",
     "username-max-characters": "An anv implij a rank bezañ 20 al lizherenn d'ar muiañ",
     "username-invalid-format": "N'hall ket an anv-implijer endelout nemet lizherennoù, niveroù hag an underscore"
