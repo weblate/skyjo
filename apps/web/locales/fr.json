@@ -1130,7 +1130,7 @@
         "vote-to-kick": "Voter pour exclure {name}",
         "ban": "Bannir {name}",
         "mute": "Mettre {name} en sourdine",
-        "unmute": "Mettre {name} en sourdine",
+        "unmute": "Réactiver le son de {name}",
         "transfer-host": "{name} est maintenant l'hôte"
       }
     },
@@ -1272,7 +1272,7 @@
       "player-unmuted": "{name} n'est plus en sourdine",
       "wizz-sent": "Tu as envoyé un wizz à {targetName} !",
       "wizz-self": "Tu as été wizz par {initiatorName} !",
-      "wizz-other": "{initiatorName} a wizg {targetName} !",
+      "wizz-other": "{initiatorName} a wizz {targetName} !",
       "host-transferred": "{name} est maintenant l'hôte"
     },
     "avatar": {
