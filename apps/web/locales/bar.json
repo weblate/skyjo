@@ -91,7 +91,7 @@
         "tldr": {
           "title": "TL;DR — Wosd wissa muasd",
           "minimal-data": "Mia speichan bloß a wengal Datn, damitd spuin ko, egal obd eigloggt bist oda ois Gast.",
-          "guest-data": "Gast-Datn (Nåm, Avatar, Punktestand, Chats) wearn nur aufbewahrt, wenn a angmल्डda Spila im Spiel is.",
+          "guest-data": "Gast-Datn (Nåm, Avatar, Punktestand, Chats) wearn nur aufbewahrt, wenn a angmelda Spila im Spiel is.",
           "personal-data": "Dei E-Mail, dei Benuzername und andere persönliche Infos wern nur gspeichert, wennst da an Account machst.",
           "chat-storage": "De Chats wearn nur vorübergehend aufbewahrt und nur g'speichert, wenn's g'meldet wern.",
           "privacy-compliance": "Mia hoidn dei Privatsphäre ei und machan wos de DSGVO sogt, ois sicha in da EU gspeichat.",
@@ -1086,7 +1086,7 @@
       "first-player-penalty-type": {
         "label": "Strof-Typ für'n easchtn Spuier, wenn er ned de gloanste Punktzoi hod: ",
         "1": "Bloss Multiplikator",
-        "2": "Nur Wohnung",
+        "2": "Nur pauschal",
         "3": "Zuerst pauschal, dann multiplikativ",
         "4": "Multiplikator dann pauschal"
       },
