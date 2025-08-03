@@ -100,7 +100,7 @@
           "title": "Maximální počet hráčů: {number}"
         },
         "remove-identical-column": "Odstranit stejné sloupce",
-        "remove-identical-row": "Odstranit duplicitní řádky",
+        "remove-identical-row": "Odstranit stejné řádky",
         "nb-columns": {
           "label": "Počet sloupců",
           "title": "{number} sloupců"
@@ -121,7 +121,7 @@
           "title": "Hra skončí, když hráč dosáhne {number} bodů"
         },
         "first-player-flat-penalty": {
-          "label": "Pevná penalizace prvního hráče",
+          "label": "Paušální penalizace pro prvního hráče",
           "title": "Prvnímu hráči bude přičteno dalších {number} bodů"
         },
         "first-player-multiplier-penalty": {
@@ -783,7 +783,7 @@
       "attribution": {
         "avatars": "Avatary vytvořené Freepik - Flaticon"
       },
-      "translations": "Přelož hru!"
+      "translations": "Pomozte přeložit hru!"
     },
     "GameLobbyButtons": {
       "join-game-button": "Připojit se ke hře",
@@ -1251,7 +1251,7 @@
       "player-muted": "{name} je nyní ztlumený",
       "player-not-muted": "{name} není ztlumený",
       "wizz-sent": "Poslal jsi wizz na {targetName}!",
-      "wizz-other": "{initiatorName} má kouzlo na {targetName}!",
+      "wizz-other": "{initiatorName} poslal(a) wizz na {targetName}!",
       "welcome": "Prosím, buďte milí a ohleduplní. Pokud je to nutné, můžeš {isMobile, select, true {dlouze podržet} other {kliknout pravým tlačítkem}} na zprávy a ztlumit nebo nahlásit hráče.",
       "host-transferred": "{name} je nyní hostitel"
     },
@@ -1275,7 +1275,7 @@
     },
     "skymo": {
       "waiting": "Čekání na hráče",
-      "turn-cards": "Otočte {number} kart{number, plural, =1 {u} other {y}}",
+      "turn-cards": "Otočte {number} {number, plural, =1 {kartu} other {karet}}",
       "waiting-opponents-to-turn-cards": "Čekání na protihráč{nbOpponents, plural, =1 {e} other {e}}, až otočí {number} kart{number, plural, =1 {u} other {y}}",
       "turn": {
         "chooseAPile": "Vyberte hromádku",
@@ -1442,7 +1442,7 @@
     "send-pin-error": "Nemohli jsme odeslat ověřovací PIN na tvůj e-mail. Zkus to prosím znovu.",
     "verify-pin-error": "Nemohli jsme ověřit tvůj PIN. Zkus to prosím znovu.",
     "invalid-pin": "Zadané PIN je nesprávné. Zkus to prosím znovu.",
-    "expired-pin": "Zadané PIN jste vypršelo. Poslali jsme vám nové.",
+    "expired-pin": "Zadané PIN vypršelo. Poslali jsme vám nové.",
     "feedback-error": "Nemohli jsme odeslat tvou zpětnou vazbu. Zkus to prosím znovu.",
     "get-public-games-error": "Nepodařilo se nám načíst veřejné hry. Zkuste to prosím znovu.",
     "invalid-cancellation-token": "Token pro zrušení je neplatný. Zkus to znovu.",
