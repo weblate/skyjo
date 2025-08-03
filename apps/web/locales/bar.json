@@ -52,7 +52,7 @@
         },
         "first-player-multiplier-penalty": {
           "label": "Strof-Multiplikator vom easchtn Spuier",
-          "title": "Da Punktestand vom easchtn Spieler wird mit {number} multipliziert, wenn er ned strikt schlechter is ois de andern Punkteständ vom Spui"
+          "title": "Da Punktestand vom easchtn Spieler wird mit {number} multipliziert, wenn er ned strikt niedriger is ois de andern Punkteständ vom Spui"
         },
         "validation-warning": "D'Spieleinstellungen kenna nimma g'ändert wern, wanns amoi bstätigt worn san"
       },
@@ -102,7 +102,7 @@
           "operator-info": "Des Webseitn wird vo am Privatmenschn betriem:",
           "title": "Wer betreibt de Webseitn?",
           "operator-name": "Maxent Rouault",
-          "operator-type": "Koana Firma."
+          "operator-type": "Koane Firma."
         },
         "data-collection": {
           "title": "2. Wos samman ma o?",
@@ -129,7 +129,7 @@
           "title": "4. Wia long wearn dei Datn aufbewoart?",
           "retention-table": {
             "headers": "Datnart'n;;Aufbewahrung",
-            "rows": "Session-Cookies;;24 Stunden|||Account-Daten (eingeloggt);;Bis zur Löschanforderung|||Gastspieler-Daten;;Nur wenn ein verbundener Spieler im Spiel ist|||Spieldaten & Ergebnisse;;Dauerhaft gespeichert|||Chat-Nachrichten;;Temporär in Redis; gespeichert, wenn gemeldet|||Feedback;;Dauerhaft|||Verifizierungs-/Reset-Tokens;;Bis zur Verwendung oder Ablauf|||Account-Löschanforderungen;;Gelöscht nach 48 Stunden Gnadenfrist|||Analytics (PostHog);;Dauerhaft, EU-gehostet"
+            "rows": "Session-Cookies;;24 Stundn|||Konto-Datn (ogmöd);;Bis ma's löscht|||Datn vo Gastspuia;;Nua, wenn a ogmöda Spuia im Spui is|||Spuidatn & Ergebnis;;Wern imma gspeichat|||Chat-Nochrichtn;;Vorlaifig in Redis; gspeichat, wenn's gmödt wern|||Feedback;;Fia imma|||Verifizierungs-/Reset-Tokens;;Bis zua Vawendung oda bis oblaffa san|||Konto-Löschungs-Afordaunga;;Wern noch 48 Stund gnadenfrist glöscht|||Analytics (PostHog);;Fia imma, in da EU gspeichat"
           }
         },
         "legal-basis": {
@@ -182,7 +182,7 @@
         },
         "how-to-play": {
           "title": "Wia spuit ma Skyjo?",
-          "content": "Zum Skyjo spuin, kriagt a jeder Spuier zwäif Koartn vawicklt. S Zui is, de wenigstn Punkt zum ham, indem ma Koartn umdraht und tauscht. Jede Rundn ziagt ma a Koartn vom Stapel oda vom Oblegestapel, dann entscheidt ma, ob ma oane vo de sichtborn Koartn ersetzt. Zoin-Koartn san so vui wert wia de Zoi, bsundere Koartn ham Aktiona. S Spui is aus, wenn a Spuier olle Koartn umdraht hod. Da Spuier mit de wenigstn Punkt gwinnnt. Mehr Infos findst in <rules>de Regln</rules>."
+          "content": "Zum Skyjo spuin, kriagt a jeder Spuier zwäif Koartn vawicklt. S Zui is, de wenigstn Punkt zum ham, indem ma Koartn umdraht und tauscht. Jede Rundn ziagt ma a Koartn vom Stapel oda vom Oblegestapel, dann entscheidt ma, ob ma oane vo de sichtborn Koartn ersetzt. Zoin-Koartn san so vui wert wia de Zoi, bsundere Koartn ham Aktiona. S Spui is aus, wenn a Spuier olle Koartn umdraht hod. Da Spuier mit de wenigstn Punkt gwinnt. Mehr Infos findst in <rules>de Regln</rules>."
         },
         "how-to-win": {
           "title": "Wia gwinnt ma bei Skyjo?",
@@ -790,7 +790,7 @@
       },
       "player-has-not-voted": {
         "kick-button": {
-          "label": "Tritt",
+          "label": "Ausschmeißn",
           "alt": "Schmeiß {playerName} raus"
         },
         "title": "Stimm ab, um {playerName} rauszschmeißn",
@@ -882,7 +882,7 @@
           "content-2": "Is Gsamtergebnis negativ, wird's vo de Gsamtpunkt vo de vorherign Rundn obzogn."
         },
         "first-to-finish": {
-          "content": "Wenn da Spuier, der de Rundn beendt hot (da easchte, der olle seine Kartn umdraht hot), ned, streng gnumma, de niedrigste Punktzoi fia de Rundn erreicht hot, dann werd de Summe seiner Punkte fia de Rundn verdoppelt.",
+          "content": "Wenn da Spuier, der de Rundn beendt hot (da easchte, der olle seine Kartn umdraht hot), ned, streng gnumma, de niedrigste Punktzoi fia de Rundn erreicht hot, dann werd de Summe seiner Punkte fia de Rundn vadopped.",
           "note": {
             "title": "Bitte beachtn Sie:",
             "content": "de Regl guit nua fia positive Punkt!"
@@ -1422,7 +1422,7 @@
     "email-taken": "De E-Mail-Adressn is scho va gebrauchd. Nimm a andane.",
     "email-same-as-current": "Des is scho dei E-Mail-Adress.",
     "update-name-error": "Mir ham dei Nam ned aktualisieren kenna. Probier's no amoi.",
-    "invalid-current-password": "Dei jetzige Passwurt, de du eiigemobbost, is foisch.",
+    "invalid-current-password": "Dei jetzigs Passwuat, wosd eig'gem hosd, is foisch.",
     "revert-email-error": "Mia ham dei E-Mail-Änderung ned zruckbekommen. Meld di beim Support.",
     "update-email-error": "Mia ham dei E-Mail-Adress ned aktualisieren kenna. Probier's no amoi.",
     "update-username-error": "Mia ham dei Username ned aktualisieren kenna. Probier's no amoi.",
