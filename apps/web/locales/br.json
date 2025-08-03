@@ -24,7 +24,7 @@
         },
         "how-to-play": {
           "title": "Penaos c'hoari Skyjo?",
-          "content": "Evit c'hoari Skyjo, dasparzhit 12 kartenn da bep c'hoarier, dremm kuzhet. Ar pel eo kaout an nebeutañ a boentoù en ur dreiñ hag en ur eskemm kartoù. Bep tro, pigosit ur gartenn adalek ar pigos pe ar c'hartoù skoet, ha dibabit eskemm anezhi gant unan eus ho kartoù hewel. Ar c'hartoù niverennet a ouzhpenn poentoù, ar c'hartoù ispisial o deus galloudoù. Echuet eo ar c'hoari p'en deus unan eus ar c'hoarierien troet holl e gartoù. Ar c'hoarier gant an nebeutañ a boentoù a c'hounez. Gallout a rin mont da lenn <rules>ar reolennoù</rules> evit kaout muioc'h a ditouroù."
+          "content": "Evit c'hoari Skyjo, dasparzhit 12 kartenn da bep c'hoarier, dremm kuzhet. Ar pel eo kaout an nebeutañ a boentoù en ur dreiñ hag en ur eskemm kartoù. Bep tro, pigosit ur gartenn adalek ar pigos pe ar c'hartoù skoet, ha dibabit eskemm anezhi gant unan eus ho kartoù hewel. Ar c'hartoù niverennet a ouzhpenn poentoù, ar c'hartoù ispisial o deus galloudoù. Echuet eo ar c'hoari p'en deus unan eus ar c'hoarierien troet holl e gartoù. Ar c'hoarier gant an nebeutañ a boentoù a c'hounez. C'hallit mont da lenn <rules>ar reolennoù</rules> evit kaout muioc'h a ditouroù."
         },
         "how-to-win": {
           "title": "Penaos gounit er Skyjo?",
@@ -128,7 +128,7 @@
           "description": "Ar c'hastiz a zo arloet ma n'eo ket bet tizhet an niver a boentoù izelañ gant ar c'hoarier⋅ez kentañ troet holl h⋅e gartoù ganti⋅añ (na vez ket arloet mard eo izeloc'h pe kevatal ar gont evit 0)"
         },
         "first-player-flat-penalty": {
-          "title": "Kont ar c'hoarier⋅ez kentañ a vo kresket a {number} ma n'eo ket bihanoc'h strizh evit kontoù all ar c'hoariadenn",
+          "title": "Ouzhpennet e vo {number} poent da gont ar c'hoarier kentañ",
           "label": "Kastiz plad evit ar c'hoarier⋅ez kentañ"
         },
         "first-player-multiplier-penalty": {
@@ -360,7 +360,7 @@
         "keywords": "Skymo,Skyjo,en em ouzh enskrivañ,kartennerzh enlinenn,c'hoariadenn Skyjo,kartennerzh,c'hoariadenn enlinenn"
       },
       "title": "Enskrivañ",
-      "or": "Pe",
+      "or": "PePe",
       "form": {
         "login": {
           "label": "Postel pe anv-implijer"
@@ -913,7 +913,7 @@
         }
       },
       "vote-against-you": {
-        "description": "{initiatorName} en/he deus goulennet ur vouezhiadeg evit skarzhañ ac'hanoc'h.",
+        "description": "Goulennet ez eus bet ur vouezhiadeg evit ho skarzhañ.",
         "title": "Mouezhioù evit skarzhañ ac'hanoc'h"
       },
       "player-has-voted": {
@@ -1005,7 +1005,7 @@
       "buy-game": "Prenañ ar c'hoari",
       "feedback": "Roit un distro-komz",
       "status": "Stad ar servijer",
-      "translations": "Treiñ an avel !"
+      "translations": "Sikourit da dreiñ ar c'hoari !"
     },
     "GameLobbyButtons": {
       "reconnect-game-button": "Adkennaskañ d'ar c'hoariadenn",
@@ -1203,7 +1203,7 @@
       }
     },
     "Banner": {
-      "title": "D'am boa ezhomm a'hoc'h <gform>barzhonegoù</gform> evit sevel dazont Skymo !"
+      "title": "D'am boa ezhomm a'hoc'h <gform>evezhiadennoù</gform> evit sevel dazont Skymo !"
     },
     "Navbar": {
       "links": {
@@ -1389,8 +1389,8 @@
     }
   },
   "errors": {
-    "invalid-credentials": "Ar postel pe an tremen-ger a-vezo digemeret eo direizh. Klask a-nevez, mar plij.",
-    "logout-failed": "N'omp ket bet evit diskonnekti anezout. Klask mat digori da merdeer evit fin ar sesion.",
+    "invalid-credentials": "N'eo ket mat an e-bost pe an ger-tremen a-grenit. Provit adarre.",
+    "logout-failed": "N'hon eus ket gallet digeriñ ac'hanoc'h. Serrit ho merdeer evit echuiñ an dalc'h mar plij.",
     "session-not-found": "Da session zo bet finet pe n'eo ket mat. Degouezh en-dro, mar plij.",
     "session-invalid": "Da session n'eo ket reizh. Pellid en-dro evit kenderc'hel.",
     "session-expired": "Da session zo finet. Dav eo dit en em enrollañ en-dro evit kenderc'hel.",
@@ -1418,7 +1418,7 @@
     "get-user-games-error": "N'hon eus bet mod ebet da gargañ c'hoarioù an implijer. Adlañs ar bajenn, mar plij.",
     "get-user-stats-error": "N'hon-eus bet evit kargañ stadegoù an implijer. Adkargit ar bajenn, mar plij.",
     "user-not-found": "N'eus ket bet kavet an implijer a glaskez.",
-    "username-same-as-current": "Already eo an anv-implijer-mañ.",
+    "username-same-as-current": "An anv-implijer-mañ eo hoc'h anv dija.",
     "email-taken": "D'hel koulz an chomlec'h postel-mañ zo implijet c'hoazh. Mar plij, implij unan all.",
     "email-same-as-current": "Setu eo da chomlec'h postel.",
     "invalid-current-password": "An ger-tremen anavezet hoc'h eus eo disevouret.",
@@ -1455,6 +1455,6 @@
     "name-max-characters": "An anv diskouez a rank bezañ 20 arouezenn d'ar muiañ",
     "username-min-characters": "An anv implij a rank bezañ 3 arouezenn d'an nebeutañ",
     "username-max-characters": "An anv implij a rank bezañ 20 al lizherenn d'ar muiañ",
-    "username-invalid-format": "N'hall ket an anv-implijer endelout nemet lizherennoù, niveroù hag an underscore"
+    "username-invalid-format": "An anv implijer ne c'hell kaout nemet lizherennoù, sifroù ha islinennoù"
   }
 }
