@@ -1,9 +1,9 @@
 "use client"
 
 import { ChatMessage } from "@skymo/shared/types"
-import { Report } from "@skymo/shared/validations"
+import { Report, reportReasons } from "@skymo/shared/validations"
 import { useTranslations } from "next-intl"
-import { useEffect, useMemo, useState } from "react"
+import { useMemo, useState } from "react"
 import { toast } from "sonner"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,7 +15,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group"
 import {
   Select,
   SelectContent,
@@ -30,7 +29,7 @@ import { useSocket } from "@/contexts/SocketContext"
 interface ReportDialogProps {
   open: boolean
   onOpenChange: (open: boolean) => void
-  report?: { playerId: string; messageId?: string }
+  report?: { playerId: string }
   messages: ChatMessage[]
 }
 const ReportDialog = ({
@@ -42,7 +41,10 @@ const ReportDialog = ({
   const { socket } = useSocket()
   const { opponents } = useGame()
   const t = useTranslations("components.ReportDialog")
-  const [reportType, setReportType] = useState<Report["type"]>("name")
+  const [reason, setReason] = useState<Report["reason"]>(
+    "inappropriate-username",
+  )
+  const [comment, setComment] = useState<string>("")
 
   const reportName = useMemo(
     () =>
@@ -51,52 +53,14 @@ const ReportDialog = ({
     [opponents, report],
   )
 
-  const userMessages = useMemo(
-    () =>
-      messages.filter(
-        (message) => "name" in message && message.name === reportName,
-      ),
-    [messages, reportName],
-  )
-
-  const [messageId, setMessageId] = useState<string>(
-    report?.messageId ?? userMessages[0]?.id ?? "",
-  )
-  const [comment, setComment] = useState<string>("")
-
-  useEffect(() => {
-    if (report?.messageId) {
-      setReportType("message")
-      setMessageId(report.messageId)
-    } else {
-      setReportType("name")
-    }
-  }, [report])
-
-  const submitNameReport = () => {
-    socket?.emit("report", {
-      targetId: report?.playerId,
-      type: "name",
-      comment: comment.trim() || undefined,
-    })
-  }
-
-  const submitMessageReport = () => {
-    socket?.emit("report", {
-      targetId: report?.playerId,
-      messageId,
-      type: "message",
-      comment: comment.trim() || undefined,
-    })
-  }
   const handleSubmit = () => {
-    if (!report) return
+    if (!report || !reason) return
 
-    if (reportType === "name") {
-      submitNameReport()
-    } else if (reportType === "message" && messageId) {
-      submitMessageReport()
-    }
+    socket?.emit("report", {
+      targetId: report.playerId,
+      reason,
+      comment: comment.trim() || undefined,
+    })
 
     toast.success(t("toast.report-submitted.title"), {
       description: t("toast.report-submitted.description"),
@@ -104,11 +68,12 @@ const ReportDialog = ({
 
     onOpenChange(false)
     setComment("")
+    setReason("inappropriate-username")
   }
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md">
+      <DialogContent className="max-w-lg sm:max-w-xl">
         <DialogHeader>
           <DialogTitle>{t("title", { name: reportName })}</DialogTitle>
           <DialogDescription>
@@ -117,53 +82,33 @@ const ReportDialog = ({
         </DialogHeader>
 
         <div className="flex flex-col py-2">
-          <RadioGroup
-            value={reportType}
-            onValueChange={(value) => setReportType(value as Report["type"])}
-            className="flex flex-col gap-3"
-          >
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="name" id="name" />
-              <Label htmlFor="name">{t("report-name")}</Label>
-            </div>
-            <div className="flex items-center space-x-2">
-              <RadioGroupItem value="message" id="message" />
-              <Label htmlFor="message">{t("report-message")}</Label>
-            </div>
-          </RadioGroup>
+          {/* Disclaimer */}
+          <div className="mb-4 p-3 bg-yellow-50 border border-yellow-200 rounded-md">
+            <p className="text-sm text-yellow-800">{t("disclaimer")}</p>
+          </div>
 
-          {reportType === "message" && (
-            <div className="flex flex-col gap-2 mt-6">
-              <Label htmlFor="message-select">{t("select-message")}</Label>
-              <Select
-                value={messageId}
-                onValueChange={setMessageId}
-                disabled={userMessages.length === 0}
-              >
-                <SelectTrigger id="message-select">
-                  {userMessages.length > 0 ? (
-                    <SelectValue
-                      placeholder={t("select-message-placeholder")}
-                    />
-                  ) : (
-                    <SelectValue placeholder={t("no-messages")} />
-                  )}
-                </SelectTrigger>
-                <SelectContent>
-                  {userMessages.map(
-                    (message) =>
-                      "name" in message && (
-                        <SelectItem key={message.id} value={message.id}>
-                          {message.message}
-                        </SelectItem>
-                      ),
-                  )}
-                </SelectContent>
-              </Select>
-            </div>
-          )}
+          {/* Reason Selection */}
+          <div className="flex flex-col gap-2 mb-6">
+            <Label htmlFor="reason-select">{t("reason-label")}</Label>
+            <Select
+              value={reason}
+              onValueChange={(value) => setReason(value as Report["reason"])}
+            >
+              <SelectTrigger id="reason-select">
+                <SelectValue placeholder={t("reason-placeholder")} />
+              </SelectTrigger>
+              <SelectContent>
+                {reportReasons.map((reasonOption) => (
+                  <SelectItem key={reasonOption} value={reasonOption}>
+                    {t(`reasons.${reasonOption}`)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
 
-          <div className="flex flex-col gap-2 mt-6">
+          {/* Comment */}
+          <div className="flex flex-col gap-2">
             <Label htmlFor="comment">{t("comment")}</Label>
             <Textarea
               id="comment"
@@ -181,11 +126,14 @@ const ReportDialog = ({
         </div>
 
         <DialogFooter>
-          <Button onClick={() => onOpenChange(false)}>{t("cancel")}</Button>
           <Button
-            onClick={handleSubmit}
-            disabled={reportType === "message" && !messageId}
+            onClick={() => onOpenChange(false)}
+            color="white"
+            shadow={false}
           >
+            {t("cancel")}
+          </Button>
+          <Button onClick={handleSubmit} disabled={!reason}>
             {t("submit")}
           </Button>
         </DialogFooter>

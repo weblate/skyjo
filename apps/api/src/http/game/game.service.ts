@@ -8,9 +8,12 @@ import type {
   PublicGame,
 } from "@skymo/shared/types"
 import { db } from "@/db/index.js"
+import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
+import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
 
 const gameRepository = new GameRepository()
+const socketManager = SocketManager.getInstance()
 
 export async function getRedisPublicGames(
   nbPerPage: number,
@@ -70,6 +73,62 @@ export async function getGameStatus(
     return response
   } catch (error) {
     Logger.error("Error getting game status:", { error, gameCode })
+    throw error
+  }
+}
+
+export async function kickPlayer(
+  gameCode: string,
+  playerId: string,
+): Promise<void> {
+  try {
+    const game = await gameRepository.getGameSafe(gameCode)
+    if (!game) {
+      throw new Error("Game not found")
+    }
+
+    const player = game.getPlayerById(playerId)
+    if (!player) {
+      throw new Error("Player not found")
+    }
+
+    const socket = socketManager.getSocket(player.socketId)
+    if (!socket) {
+      throw new Error("Socket not found")
+    }
+
+    socketManager.sendToRoom({
+      room: gameCode,
+      event: "kick:report",
+      data: [player.id, player.name],
+    })
+
+    // TODO REFACTOR THIS. THIS IS A COPY OF THE REALTIME KICK SERVICE + BASE SERVICE
+    const operationManager = new GameStateTracker(game)
+
+    await game.disconnectPlayer(player)
+
+    const operations = operationManager.getChanges()
+    if (!operations) return
+
+    await gameRepository.updateGame(game, operations)
+
+    socketManager.sendToRoom({
+      room: game.code,
+      event: "game:update",
+      data: [operations],
+    })
+
+    Logger.info(
+      `Player ${playerId} (${player.name}) kicked from game ${gameCode}`,
+      {
+        gameCode,
+        playerId,
+        playerName: player.name,
+      },
+    )
+  } catch (error) {
+    Logger.error("Error kicking player:", { error, gameCode, playerId })
     throw error
   }
 }

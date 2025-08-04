@@ -1,18 +1,7 @@
 import { ENV } from "@env"
 import { Logger } from "@skymo/logger"
+import type { ReportJobData } from "@skymo/worker-types"
 import { Queue } from "bullmq"
-
-export interface ReportJobData {
-  reportId: number
-  reporterName: string
-  reportedPlayerName: string
-  reportedContent: string
-  reportType: "name" | "message"
-  gameCode: string
-  reportedAt: string
-  aiValidation?: { safe: boolean; reason?: string }
-  targetUserId?: number
-}
 
 export class DiscordQueueService {
   private static instance: DiscordQueueService | null = null

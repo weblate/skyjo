@@ -22,6 +22,17 @@ export class MessageRepository extends RedisClient {
     return JSON.parse(message) as ChatMessage
   }
 
+  async getAllMessages(gameCode: string): Promise<ChatMessage[]> {
+    const client = await MessageRepository.getClient()
+
+    const key = this.getGameMessagesKey(gameCode)
+    const messages = await client.hGetAll(key)
+
+    return Object.values(messages).map(
+      (message) => JSON.parse(message) as ChatMessage,
+    )
+  }
+
   private getGameMessagesKey(gameCode: string) {
     return `game:${gameCode}:messages`
   }

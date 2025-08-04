@@ -188,27 +188,45 @@ export const scoreTable = pgTable("scores", {
 })
 export type ScoreDb = InferSelectModel<typeof scoreTable>
 
+export const reportReasonEnum = pgEnum("report_reason", [
+  "inappropriate-username",
+  "toxic-behavior",
+  "spam-advertising",
+  "cheating-exploiting",
+  "harassment",
+  "other",
+])
+
+export type reportData = {
+  reporterId: string
+  reporterName: string
+  reportedPlayerId: string
+  reportedPlayerName: string
+  gameCode: string
+  gameContext?: {
+    players: Array<{
+      id: string
+      name: string
+      username?: string
+      connectionStatus: number
+    }>
+    messages: Array<{
+      id: string
+      message: string
+      name?: string
+      timestamp: string
+    }>
+  }
+}
 export const reportTable = pgTable("reports", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => userTable.id),
-  reportData: json("report_data")
-    .$type<{
-      reporterName: string
-      reportedPlayerName: string
-      reportedContent: string
-      reportType: "name" | "message"
-      gameCode: string
-      reportedAt: string
-      comment?: string
-    }>()
-    .notNull(),
-  aiValidation: json("ai_validation").$type<{
-    safe: boolean
-    reason?: string
-    error?: string
-  }>(),
-  humanValidation: boolean("human_validation"),
-  reasonByMod: varchar("reason_by_mod", { length: 500 }),
+  guestId: varchar("guest_id", { length: 255 }),
+  reason: reportReasonEnum("reason").default("other").notNull(),
+  comment: varchar("comment", { length: 500 }),
+  reportData: json("report_data").$type<reportData>().notNull(),
+  validation: boolean("validation"),
+  moderatorComment: varchar("moderator_comment", { length: 500 }),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

@@ -19,7 +19,6 @@
     "@skymo/error": "workspace:*",
     "@skymo/logger": "workspace:*",
     "@skymo/transactional": "workspace:*",
-    "@skymo/worker-types": "workspace:*",
     "bullmq": "^5.56.1",
     "dotenv": "^17.0.1",
     "drizzle-orm": "^0.44.2",
@@ -30,6 +29,7 @@
   },
   "devDependencies": {
     "@skymo/ts-config": "workspace:*",
+    "@skymo/worker-types": "workspace:*",
     "@types/node": "^24.0.10",
     "@types/react": "^19.1.8",
     "tsx": "^4.20.3",

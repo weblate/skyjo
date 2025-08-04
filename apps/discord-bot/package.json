@@ -11,6 +11,7 @@
     "biome:check": "biome check . --write"
   },
   "dependencies": {
+    "@skymo/core": "workspace:*",
     "@skymo/database": "workspace:*",
     "@skymo/logger": "workspace:*",
     "@skymo/ts-config": "workspace:*",
@@ -22,6 +23,7 @@
     "zod": "^3.25.74"
   },
   "devDependencies": {
+    "@skymo/worker-types": "workspace:*",
     "@types/node": "^24.0.10",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"

@@ -1,9 +1,9 @@
 import { Logger } from "@skymo/logger"
+import type { ReportJobData } from "@skymo/worker-types"
 import { Job, Worker } from "bullmq"
 import { DiscordClient } from "@/discord.js"
 import { sendReportMessage } from "@/report/reportTask.js"
 import { ENV } from "../../env.js"
-import type { ReportJobData } from "../types/jobs.js"
 
 export class ReportMessageWorker {
   private readonly worker: Worker

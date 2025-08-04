@@ -27,11 +27,12 @@ async function handleInvalidReportSubmit(
   interaction: ModalSubmitInteraction,
 ): Promise<void> {
   const reportId = extractReportId(interaction.customId)
-  const reason = interaction.fields.getTextInputValue("reason")
+  const moderatorComment = interaction.fields.getTextInputValue("reason")
 
   try {
-    await interaction.deferReply({ flags: MessageFlags.Ephemeral })
-
+    await interaction.deferReply({
+      flags: MessageFlags.Ephemeral,
+    })
     const [report] = await db
       .select()
       .from(reportTable)
@@ -52,8 +53,8 @@ async function handleInvalidReportSubmit(
       await db
         .update(reportTable)
         .set({
-          humanValidation: false,
-          reasonByMod: reason,
+          validation: false,
+          moderatorComment,
         })
         .where(eq(reportTable.id, parseInt(reportId)))
       Logger.info(`Updated report record with dismissal`, {
@@ -62,13 +63,15 @@ async function handleInvalidReportSubmit(
       })
     }
 
-    await updateOriginalMessage(interaction, reportId, false, reason)
+    await updateOriginalMessage(interaction, reportId, false, moderatorComment)
 
     await interaction.editReply({
       content: "✅ Report dismissed successfully.",
     })
 
-    Logger.info(`Report ${reportId} dismissed by moderator`, { reason })
+    Logger.info(`Report ${reportId} dismissed by moderator`, {
+      moderatorComment,
+    })
   } catch (error) {
     Logger.error("Error dismissing report:", { error, reportId })
     await interaction.editReply({
@@ -81,10 +84,12 @@ async function handleValidReportSubmit(
   interaction: ModalSubmitInteraction,
 ): Promise<void> {
   const reportId = extractReportId(interaction.customId)
-  const reason = interaction.fields.getTextInputValue("reason")
+  const moderatorComment = interaction.fields.getTextInputValue("reason")
 
   try {
-    await interaction.deferReply({ ephemeral: true })
+    await interaction.deferReply({
+      flags: MessageFlags.Ephemeral,
+    })
 
     const [report] = await db
       .select()
@@ -106,50 +111,54 @@ async function handleValidReportSubmit(
       await db
         .update(reportTable)
         .set({
-          humanValidation: true,
-          reasonByMod: reason,
+          validation: true,
+          moderatorComment,
         })
         .where(eq(reportTable.id, parseInt(reportId)))
       Logger.info(`Updated report record with validation`, {
         reportId,
         userId: report.userId,
       })
-
-      const gameCode = report.reportData.gameCode
-      const reportedPlayerName = report.reportData.reportedPlayerName
-
-      try {
-        const apiClient = ApiClient.getInstance()
-        const gameStatus = await apiClient.checkGameStatus(gameCode)
-
-        if (gameStatus.isActive && gameStatus.hasPlayer) {
-          await apiClient.kickPlayer(gameCode, reportedPlayerName)
-          Logger.info(
-            `Player ${reportedPlayerName} kicked from active game ${gameCode}`,
-          )
-        } else {
-          Logger.info(
-            `Game ${gameCode} is not active or player not found, skipping kick`,
-          )
-        }
-      } catch (error) {
-        Logger.error("Error kicking player:", {
-          error,
-          gameCode,
-          reportedPlayerName,
-        })
-      }
     }
 
-    await updateOriginalMessage(interaction, reportId, true, reason)
+    const gameCode = report.reportData.gameCode
+    const reportedPlayerId = report.reportData.reportedPlayerId
+    const reportedPlayerName = report.reportData.reportedPlayerName
+
+    try {
+      const apiClient = ApiClient.getInstance()
+      const gameStatus = await apiClient.checkGameStatus(gameCode)
+
+      if (gameStatus.isActive && gameStatus.hasPlayer) {
+        await apiClient.kickPlayer(gameCode, reportedPlayerId)
+        Logger.info(
+          `Player ${reportedPlayerName} (ID: ${reportedPlayerId}) kicked from active game ${gameCode}`,
+        )
+      } else {
+        Logger.info(
+          `Game ${gameCode} is not active or player not found, skipping kick`,
+        )
+      }
+    } catch (error) {
+      Logger.error("Error kicking player", {
+        error,
+        gameCode,
+        reportedPlayerId,
+        reportedPlayerName,
+      })
+    }
+
+    await updateOriginalMessage(interaction, reportId, true, moderatorComment)
 
     await interaction.editReply({
       content: "✅ Report validated successfully. Player has been penalized.",
     })
 
-    Logger.info(`Report ${reportId} validated by moderator`, { reason })
+    Logger.info(`Report ${reportId} validated by moderator`, {
+      moderatorComment,
+    })
   } catch (error) {
-    Logger.error("Error validating report:", { error, reportId })
+    Logger.error("Error validating report", { error, reportId })
     await interaction.editReply({
       content: "❌ An error occurred while validating the report.",
     })

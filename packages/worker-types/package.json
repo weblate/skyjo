@@ -13,6 +13,7 @@
     "@skymo/core": "workspace:*"
   },
   "devDependencies": {
+    "@skymo/database": "workspace:*",
     "@skymo/ts-config": "workspace:*",
     "@skymo/transactional": "workspace:*",
     "typescript": "^5.8.3",

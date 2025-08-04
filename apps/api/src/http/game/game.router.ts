@@ -4,6 +4,7 @@ import {
   getGameStatusParamsSchema,
   getLeaderboardQuerySchema,
   getPublicGamesQuerySchema,
+  kickPlayerBodySchema,
 } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { RateLimiterMemory } from "rate-limiter-flexible"
@@ -11,6 +12,7 @@ import {
   getGameStatus,
   getLeaderboard,
   getRedisPublicGames,
+  kickPlayer,
 } from "@/http/game/game.service.js"
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 
@@ -29,6 +31,12 @@ const leaderboardRateLimiter = new RateLimiterMemory({
 const gameStatusRateLimiter = new RateLimiterMemory({
   keyPrefix: "game-status",
   points: 30,
+  duration: 60,
+})
+
+const kickPlayerRateLimiter = new RateLimiterMemory({
+  keyPrefix: "kick-player",
+  points: 5,
   duration: 60,
 })
 
@@ -87,6 +95,38 @@ export const gameRouter = new Hono()
           gameCode: params.code,
         })
         return c.json({ error: "get-game-status-error" }, 500)
+      }
+    },
+  )
+  .post(
+    "/:code/kick",
+    createRateLimiterMiddleware(kickPlayerRateLimiter),
+    zValidator("param", getGameStatusParamsSchema),
+    zValidator("json", kickPlayerBodySchema),
+    async (c) => {
+      const params = c.req.valid("param")
+      const body = c.req.valid("json")
+
+      try {
+        await kickPlayer(params.code, body.playerId)
+        return c.json({ success: true }, 200)
+      } catch (error) {
+        Logger.error("Error kicking player:", {
+          error,
+          gameCode: params.code,
+          playerId: body.playerId,
+        })
+
+        if (error instanceof Error) {
+          if (error.message === "Game not found") {
+            return c.json({ error: "game-not-found" }, 404)
+          }
+          if (error.message === "Player not found") {
+            return c.json({ error: "player-not-found" }, 404)
+          }
+        }
+
+        return c.json({ error: "kick-player-error" }, 500)
       }
     },
   )

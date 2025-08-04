@@ -1,5 +1,5 @@
 import { Logger } from "@skymo/logger"
-import { type Interaction } from "discord.js"
+import { type Interaction, MessageFlags } from "discord.js"
 import { handleButtonInteraction } from "./button.js"
 import { handleModalInteraction } from "./modal.js"
 
@@ -25,7 +25,7 @@ export async function handleInteraction(
     ) {
       await interaction.reply({
         content: "An error occurred while processing your request.",
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
       })
     }
   }
