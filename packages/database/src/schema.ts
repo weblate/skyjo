@@ -35,6 +35,9 @@ export const avatarEnum = pgEnum("avatar", [
   "cat",
 ])
 
+export const roleEnum = pgEnum("role", ["USER", "ADMIN"])
+export type UserRole = (typeof roleEnum.enumValues)[number]
+
 export const userTable = pgTable(
   "users",
   {
@@ -43,6 +46,7 @@ export const userTable = pgTable(
     avatar: avatarEnum("avatar").notNull().default("bee"),
     name: varchar("name", { length: 20 }),
     username: varchar("username", { length: 20 }).unique(),
+    role: roleEnum("role").notNull().default("USER"),
     password: varchar("password", { length: 255 }),
     googleId: varchar("google_id", { length: 255 }).unique(),
     facebookId: varchar("facebook_id", { length: 255 }).unique(),
@@ -65,10 +69,7 @@ export const userTable = pgTable(
     uniqueIndex("username_idx").on(t.username),
   ],
 )
-export type UserDb = Omit<
-  InferSelectModel<typeof userTable>,
-  "password" | "verifyPin"
->
+export type UserDb = Omit<InferSelectModel<typeof userTable>, "password">
 export type UserWithPasswordDb = InferSelectModel<typeof userTable>
 
 export const userVerificationTable = pgTable("user_verifications", {

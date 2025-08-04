@@ -14,6 +14,7 @@ import {
   getRedisPublicGames,
   kickPlayer,
 } from "@/http/game/game.service.js"
+import { authMiddleware } from "@/http/middlewares/auth.middleware.js"
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
 
 const publicGamesRateLimiter = new RateLimiterMemory({
@@ -101,6 +102,7 @@ export const gameRouter = new Hono()
   .post(
     "/:code/kick",
     createRateLimiterMiddleware(kickPlayerRateLimiter),
+    authMiddleware("ADMIN"),
     zValidator("param", getGameStatusParamsSchema),
     zValidator("json", kickPlayerBodySchema),
     async (c) => {

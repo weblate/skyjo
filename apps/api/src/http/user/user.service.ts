@@ -98,6 +98,7 @@ export async function createUser({
       avatar: userTable.avatar,
       emailVerified: userTable.emailVerified,
       onboardingCompleted: userTable.onboardingCompleted,
+      role: userTable.role,
       createdAt: userTable.createdAt,
       updatedAt: userTable.updatedAt,
       deletedAt: userTable.deletedAt,

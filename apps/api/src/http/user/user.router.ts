@@ -120,7 +120,7 @@ export const userRouter = new Hono<AuthContextVariables>()
   )
   .get(
     "/me/settings",
-    authMiddleware,
+    authMiddleware(),
     createRateLimiterMiddleware(getUserSettingsRateLimiter),
     async (c) => {
       const user = c.get("user")
@@ -136,7 +136,7 @@ export const userRouter = new Hono<AuthContextVariables>()
   )
   .put(
     "/me/settings",
-    authMiddleware,
+    authMiddleware(),
     zValidator("json", updateUserSettingsSchema),
     createRateLimiterMiddleware(updateUserSettingsRateLimiter),
     async (c) => {
@@ -158,7 +158,7 @@ export const userRouter = new Hono<AuthContextVariables>()
   )
   .patch(
     "/me/name",
-    authMiddleware,
+    authMiddleware(),
     zValidator("json", updateNameSchema),
     createRateLimiterMiddleware(updateNameRateLimiter),
     async (c) => {
@@ -178,7 +178,7 @@ export const userRouter = new Hono<AuthContextVariables>()
 
   .patch(
     "/me/username",
-    authMiddleware,
+    authMiddleware(),
     zValidator("json", updateUsernameSchema),
     createRateLimiterMiddleware(updateUsernameRateLimiter),
     async (c) => {
@@ -200,7 +200,7 @@ export const userRouter = new Hono<AuthContextVariables>()
   )
   .patch(
     "/me/email",
-    authMiddleware,
+    authMiddleware(),
     zValidator("json", updateEmailSchema),
     createRateLimiterMiddleware(updateEmailRateLimiter),
     async (c) => {
@@ -241,7 +241,7 @@ export const userRouter = new Hono<AuthContextVariables>()
   )
   .patch(
     "/me/password",
-    authMiddleware,
+    authMiddleware(),
     zValidator("json", updatePasswordSchema),
     createRateLimiterMiddleware(updatePasswordRateLimiter),
     async (c) => {
@@ -263,7 +263,7 @@ export const userRouter = new Hono<AuthContextVariables>()
   )
   .patch(
     "/me/avatar",
-    authMiddleware,
+    authMiddleware(),
     zValidator("json", updateAvatarSchema),
     createRateLimiterMiddleware(updateAvatarRateLimiter),
     async (c) => {
@@ -279,7 +279,7 @@ export const userRouter = new Hono<AuthContextVariables>()
       }
     },
   )
-  .post("/me/delete", authMiddleware, async (c) => {
+  .post("/me/delete", authMiddleware(), async (c) => {
     const user = c.get("user")
     try {
       await scheduleAccountDeletion(user.id)
