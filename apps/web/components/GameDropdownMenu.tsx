@@ -42,7 +42,7 @@ const GameDropdownMenuComponent = () => {
   const tAppearance = useTranslations("components.AppearanceSelect")
   const { theme } = useTheme()
   const { updateSetting } = useSettings()
-  const { actions } = useGame()
+  const { actions, game } = useGame()
 
   const appearanceOptions = [
     { value: "system", label: tAppearance("system"), icon: MonitorIcon },
@@ -126,13 +126,15 @@ const GameDropdownMenuComponent = () => {
             <span>{t("feedback")}</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
-        <DropdownMenuGroup>
-          <DropdownMenuSeparator />
-          <DropdownMenuItem onClick={() => actions.leave(true)}>
-            <DoorOpenIcon className="mr-2 size-4" />
-            <span>{t("leave-game")}</span>
-          </DropdownMenuItem>
-        </DropdownMenuGroup>
+        {game.settings.private && (
+          <DropdownMenuGroup>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem onClick={() => actions.leave(true)}>
+              <DoorOpenIcon className="mr-2 size-4" />
+              <span>{t("leave-game")}</span>
+            </DropdownMenuItem>
+          </DropdownMenuGroup>
+        )}
       </DropdownMenuContent>
     </DropdownMenu>
   )
