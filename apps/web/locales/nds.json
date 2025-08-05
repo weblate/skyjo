@@ -247,12 +247,8 @@
       }
     },
     "ReportDialog": {
-      "no-messages": "Keen Narichten vun dissen Bruker funnen",
       "title": "Melden {name}",
       "description": "Melde den Naam oder en Naricht vun {name}, wenn dat nich passlich schient.",
-      "report-message": "Mell en Naricht",
-      "select-message": "Söök de Naricht ut, de mellt warrn schall",
-      "select-message-placeholder": "Söök en Naricht ut",
       "cancel": "Afbreken",
       "submit": "Bericht",
       "toast": {
@@ -261,7 +257,6 @@
           "description": "Hartlichen Dank för dien Bericht, du hest dormit hulpen, de Qualität vun't Speel to verbetern."
         }
       },
-      "report-name": "Melden den Naam vun den Speler",
       "comment": "Extra Kontext (optional)",
       "comment-placeholder": "Geef mehr Tosatz-Kontext to dissen Bericht..."
     },

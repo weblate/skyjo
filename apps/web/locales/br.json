@@ -1152,8 +1152,6 @@
       }
     },
     "ReportDialog": {
-      "select-message-placeholder": "Dibab ur gemennadenn",
-      "select-message": "Diuzit ar c'hemennad da rentañ-kont",
       "description": "Disputit anv pe ur c'hemmad digant {name} mar seblant didalvez.",
       "toast": {
         "report-submitted": {
@@ -1161,12 +1159,9 @@
           "description": "Trugarez evit ho rentañ-kont, ho peus kemeret perzh e gwellaat kalite ar c'hoari."
         }
       },
-      "report-message": "Danevellit ur gemennadenn",
-      "no-messages": "N'eus bet kavet kemennadenn ebet eus an implijer-mañ",
       "submit": "Danevelliñ",
       "title": "Disput {name}",
       "cancel": "Nullañ",
-      "report-name": "Disput an anv",
       "comment": "Kontekst ouzhpenn (diret)",
       "comment-placeholder": "Ro un dachennad ouzhpenn d'an notenn-mañ..."
     },

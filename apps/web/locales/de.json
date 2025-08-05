@@ -1234,7 +1234,6 @@
     "ReportDialog": {
       "cancel": "Abbrechen",
       "submit": "Bericht",
-      "no-messages": "Keine Nachrichten von diesem Benutzer gefunden",
       "toast": {
         "report-submitted": {
           "title": "Bericht eingereicht",
@@ -1243,10 +1242,6 @@
       },
       "title": "Bericht {name}",
       "description": "Melde den Namen oder eine Nachricht von {name}, wenn sie unangemessen erscheint.",
-      "select-message": "Wähle die zu meldende Nachricht aus",
-      "select-message-placeholder": "Wähle eine Nachricht aus",
-      "report-message": "Eine Nachricht melden",
-      "report-name": "Melde den Namen des Spielers",
       "comment": "Zusätzlicher Kontext (optional)",
       "comment-placeholder": "Gib zusätzlichen Kontext zu diesem Bericht an..."
     },

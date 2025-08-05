@@ -1154,11 +1154,6 @@
     "ReportDialog": {
       "title": "Reportar {name}",
       "description": "Reportar el nombre de usuario o un mensaje de {name} si parece inapropiado.",
-      "report-name": "Reportar el nombre del jugador",
-      "report-message": "Reportar un mensaje",
-      "select-message": "Seleccionar mensaje para reportar",
-      "select-message-placeholder": "Seleccionar un mensaje",
-      "no-messages": "No hay mensajes encontrados de este usuario",
       "cancel": "Cancelar",
       "submit": "Reportar",
       "toast": {

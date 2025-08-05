@@ -1171,10 +1171,6 @@
     "ReportDialog": {
       "title": "Nahlásit {name}",
       "description": "Nahlásit jméno nebo zprávu od {name}, pokud se zdá nevhodná.",
-      "report-message": "Nahlásit zprávu",
-      "select-message": "Vyberte zprávu k nahlášení",
-      "select-message-placeholder": "Vyberte zprávu",
-      "no-messages": "Nenalezeny žádné zprávy od tohoto uživatele",
       "cancel": "Zrušit",
       "submit": "Nahlásit",
       "toast": {
@@ -1183,7 +1179,6 @@
           "description": "Děkujeme za vaše hlášení, přispěli jste ke zlepšení kvality hry."
         }
       },
-      "report-name": "Nahlásit jméno hráče",
       "comment": "Další kontext (volitelné)",
       "comment-placeholder": "Poskytni další kontext k tomuto hlášení..."
     },

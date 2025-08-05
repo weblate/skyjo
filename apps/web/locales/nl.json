@@ -1171,10 +1171,6 @@
     "ReportDialog": {
       "title": "Meld {name}",
       "description": "Meld de naam of een bericht van {name} als dit ongepast lijkt.",
-      "report-message": "Een bericht rapporteren",
-      "select-message": "Selecteer het bericht om te rapporteren",
-      "select-message-placeholder": "Selecteer een bericht",
-      "no-messages": "Geen berichten gevonden van deze gebruiker",
       "cancel": "Annuleren",
       "submit": "Rapport",
       "toast": {
@@ -1183,7 +1179,6 @@
           "description": "Bedankt voor je melding, je hebt bijgedragen aan het verbeteren van de kwaliteit van het spel."
         }
       },
-      "report-name": "Meld de naam van de speler",
       "comment": "Extra context (optioneel)",
       "comment-placeholder": "Geef extra context over dit rapport..."
     },

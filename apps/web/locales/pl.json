@@ -402,10 +402,6 @@
     "ReportDialog": {
       "title": "Zgłoś {name}",
       "description": "Zgłoś imię lub wiadomość od {name}, jeśli wydaje się nieodpowiednia.",
-      "report-message": "Zgłoś wiadomość",
-      "select-message": "Wybierz wiadomość do zgłoszenia",
-      "select-message-placeholder": "Wybierz wiadomość",
-      "no-messages": "Nie znaleziono wiadomości od tego użytkownika",
       "cancel": "Anuluj",
       "submit": "Zgłoś",
       "toast": {
@@ -414,7 +410,6 @@
           "description": "Dziękujemy za zgłoszenie, przyczyniłeś się do poprawy jakości gry."
         }
       },
-      "report-name": "Zgłoś imię gracza",
       "comment": "Dodatkowy kontekst (opcjonalnie)",
       "comment-placeholder": "Podaj dodatkowy kontekst dla tego raportu..."
     },
