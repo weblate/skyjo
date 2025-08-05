@@ -53,9 +53,6 @@ importers:
       '@skymo/state-operations':
         specifier: workspace:*
         version: link:../../packages/state-operations
-      '@skymo/worker-types':
-        specifier: workspace:*
-        version: link:../../packages/worker-types
       '@socket.io/redis-adapter':
         specifier: ^8.3.0
         version: 8.3.0(socket.io-adapter@2.5.5(bufferutil@4.0.9)(utf-8-validate@6.0.5))
@@ -99,6 +96,9 @@ importers:
         specifier: ^3.25.74
         version: 3.25.74
     devDependencies:
+      '@skymo/worker-types':
+        specifier: workspace:*
+        version: link:../../packages/worker-types
       '@types/node':
         specifier: ^24.0.10
         version: 24.0.10
@@ -136,6 +136,9 @@ importers:
 
   apps/discord-bot:
     dependencies:
+      '@skymo/core':
+        specifier: workspace:*
+        version: link:../../packages/core
       '@skymo/database':
         specifier: workspace:*
         version: link:../../packages/database
@@ -164,6 +167,9 @@ importers:
         specifier: ^3.25.74
         version: 3.25.74
     devDependencies:
+      '@skymo/worker-types':
+        specifier: workspace:*
+        version: link:../../packages/worker-types
       '@types/node':
         specifier: ^24.0.10
         version: 24.0.10
@@ -390,9 +396,6 @@ importers:
       '@skymo/transactional':
         specifier: workspace:*
         version: link:../../packages/transactional
-      '@skymo/worker-types':
-        specifier: workspace:*
-        version: link:../../packages/worker-types
       bullmq:
         specifier: ^5.56.1
         version: 5.56.1
@@ -418,6 +421,9 @@ importers:
       '@skymo/ts-config':
         specifier: workspace:*
         version: link:../../packages/config/ts
+      '@skymo/worker-types':
+        specifier: workspace:*
+        version: link:../../packages/worker-types
       '@types/node':
         specifier: ^24.0.10
         version: 24.0.10
@@ -638,6 +644,9 @@ importers:
         specifier: workspace:*
         version: link:../core
     devDependencies:
+      '@skymo/database':
+        specifier: workspace:*
+        version: link:../database
       '@skymo/transactional':
         specifier: workspace:*
         version: link:../transactional

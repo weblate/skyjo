@@ -130,6 +130,7 @@ const authRouter = new Hono<AuthContextVariables>()
               hasOAuth: !!(user.googleId ?? user.facebookId),
               email: user.email,
               onboardingCompleted: user.onboardingCompleted,
+              role: user.role,
             },
           },
           200,
@@ -140,7 +141,7 @@ const authRouter = new Hono<AuthContextVariables>()
       }
     },
   )
-  .post("/logout", authMiddleware, async (c) => {
+  .post("/logout", authMiddleware(), async (c) => {
     try {
       await logout(c)
 
@@ -161,7 +162,7 @@ const authRouter = new Hono<AuthContextVariables>()
   })
   .post(
     "/onboard",
-    authMiddleware,
+    authMiddleware(),
     zValidator("json", onboardingSchema),
     createRateLimiterMiddleware(onboardingRateLimiter),
     async (c) => {
@@ -183,7 +184,7 @@ const authRouter = new Hono<AuthContextVariables>()
   )
   .post(
     "/check-username",
-    authMiddleware,
+    authMiddleware(),
     zValidator("json", usernameAvailabilitySchema),
     createRateLimiterMiddleware(checkUsernameRateLimiter),
     async (c) => {

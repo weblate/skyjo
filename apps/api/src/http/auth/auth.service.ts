@@ -184,6 +184,7 @@ export async function getCurrentUser(c: Context) {
       facebookId: userTable.facebookId,
       createdAt: userTable.createdAt,
       updatedAt: userTable.updatedAt,
+      role: userTable.role,
     })
     .from(userTable)
     .where(eq(userTable.id, session[0].userId))
@@ -227,6 +228,7 @@ export async function completeOnboarding(userId: number, data: Onboarding) {
       name: userTable.name,
       settings: userTable.settings,
       onboardingCompleted: userTable.onboardingCompleted,
+      role: userTable.role,
     })
 
   return updatedUser

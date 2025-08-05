@@ -95,7 +95,6 @@ temp
 # Development tools
 vitest.config.ts
 **/vitest.config.ts
-turbo.json
 biome.json
 compose*.yml
 uptime-kuma-data

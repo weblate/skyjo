@@ -24,7 +24,6 @@
     "@skymo/logger": "workspace:*",
     "@skymo/shared": "workspace:*",
     "@skymo/state-operations": "workspace:*",
-    "@skymo/worker-types": "workspace:*",
     "@socket.io/redis-adapter": "^8.3.0",
     "arctic": "^3.7.0",
     "argon2": "^0.43.0",
@@ -41,6 +40,7 @@
     "zod": "^3.25.74"
   },
   "devDependencies": {
+    "@skymo/worker-types": "workspace:*",
     "@types/node": "^24.0.10",
     "@types/nodemailer": "^6.4.17",
     "@vitest/coverage-istanbul": "^3.2.4",

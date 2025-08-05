@@ -1,4 +1,4 @@
-import { locales } from "@skymo/shared/constants"
+import { hreflangMapping, locales } from "@skymo/shared/constants"
 import { Languages } from "next/dist/lib/metadata/types/alternative-urls-types"
 import { createNavigation } from "next-intl/navigation"
 import { defineRouting } from "next-intl/routing"
@@ -9,6 +9,14 @@ export const routing = defineRouting({
   defaultLocale: "en",
   localeDetection: true,
 })
+
+/**
+ * Generates hreflang alternates for SEO purposes.
+ *
+ * Some locales map to the same ISO language code (e.g., bar, nds, gsw → de).
+ * When duplicates occur, we keep the first occurrence to avoid conflicts.
+ * This ensures each hreflang code appears only once in the alternates object.
+ */
 export const generateAlternatesLanguages = (
   route?: string,
 ): Languages<string> => {
@@ -17,15 +25,24 @@ export const generateAlternatesLanguages = (
 
   const alternates: Record<string, string> = {}
 
-  alternates[routing.defaultLocale] = `${baseUrl}${path}`
+  // Add default locale (without prefix)
+  const defaultHreflang = hreflangMapping[routing.defaultLocale]
+  alternates[defaultHreflang] = `${baseUrl}${path}`
 
+  // Add other locales (with prefix)
   routing.locales.forEach((locale) => {
     if (locale !== routing.defaultLocale) {
-      alternates[locale] = `${baseUrl}/${locale}${path}`
+      const hreflangCode = hreflangMapping[locale]
+
+      // Only add if this hreflang code hasn't been added yet
+      // This prevents duplicates when multiple locales map to the same ISO code
+      if (!alternates[hreflangCode]) {
+        alternates[hreflangCode] = `${baseUrl}/${locale}${path}`
+      }
     }
   })
 
-  alternates["x-default"] = alternates[routing.defaultLocale]
+  alternates["x-default"] = alternates[defaultHreflang]
 
   return alternates
 }

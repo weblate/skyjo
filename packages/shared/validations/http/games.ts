@@ -9,3 +9,8 @@ export const getGameStatusParamsSchema = z.object({
   code: z.string().min(1),
 })
 export type GetGameStatusParams = z.infer<typeof getGameStatusParamsSchema>
+
+export const kickPlayerBodySchema = z.object({
+  playerId: z.string().uuid(),
+})
+export type KickPlayerBody = z.infer<typeof kickPlayerBodySchema>

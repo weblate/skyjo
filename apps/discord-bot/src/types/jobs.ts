@@ -1,15 +1,4 @@
-export interface ReportJobData {
-  reportId: number
-  reporterName: string
-  reportedPlayerName: string
-  reportedContent: string
-  reportType: "name" | "message"
-  gameCode: string
-  reportedAt: string
-  aiValidation?: { safe: boolean; reason?: string }
-  targetUserId?: number
-  comment?: string
-}
+import type { ReportJobData } from "@skymo/worker-types"
 
 export interface DiscordJobData {
   type: "report"

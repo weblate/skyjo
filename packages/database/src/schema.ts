@@ -35,6 +35,9 @@ export const avatarEnum = pgEnum("avatar", [
   "cat",
 ])
 
+export const roleEnum = pgEnum("role", ["USER", "ADMIN"])
+export type UserRole = (typeof roleEnum.enumValues)[number]
+
 export const userTable = pgTable(
   "users",
   {
@@ -43,6 +46,7 @@ export const userTable = pgTable(
     avatar: avatarEnum("avatar").notNull().default("bee"),
     name: varchar("name", { length: 20 }),
     username: varchar("username", { length: 20 }).unique(),
+    role: roleEnum("role").notNull().default("USER"),
     password: varchar("password", { length: 255 }),
     googleId: varchar("google_id", { length: 255 }).unique(),
     facebookId: varchar("facebook_id", { length: 255 }).unique(),
@@ -65,10 +69,7 @@ export const userTable = pgTable(
     uniqueIndex("username_idx").on(t.username),
   ],
 )
-export type UserDb = Omit<
-  InferSelectModel<typeof userTable>,
-  "password" | "verifyPin"
->
+export type UserDb = Omit<InferSelectModel<typeof userTable>, "password">
 export type UserWithPasswordDb = InferSelectModel<typeof userTable>
 
 export const userVerificationTable = pgTable("user_verifications", {
@@ -188,27 +189,45 @@ export const scoreTable = pgTable("scores", {
 })
 export type ScoreDb = InferSelectModel<typeof scoreTable>
 
+export const reportReasonEnum = pgEnum("report_reason", [
+  "inappropriate-username",
+  "toxic-behavior",
+  "spam-advertising",
+  "cheating-exploiting",
+  "harassment",
+  "other",
+])
+
+export type reportData = {
+  reporterId: string
+  reporterName: string
+  reportedPlayerId: string
+  reportedPlayerName: string
+  gameCode: string
+  gameContext?: {
+    players: Array<{
+      id: string
+      name: string
+      username?: string
+      connectionStatus: number
+    }>
+    messages: Array<{
+      id: string
+      message: string
+      name?: string
+      timestamp: string
+    }>
+  }
+}
 export const reportTable = pgTable("reports", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => userTable.id),
-  reportData: json("report_data")
-    .$type<{
-      reporterName: string
-      reportedPlayerName: string
-      reportedContent: string
-      reportType: "name" | "message"
-      gameCode: string
-      reportedAt: string
-      comment?: string
-    }>()
-    .notNull(),
-  aiValidation: json("ai_validation").$type<{
-    safe: boolean
-    reason?: string
-    error?: string
-  }>(),
-  humanValidation: boolean("human_validation"),
-  reasonByMod: varchar("reason_by_mod", { length: 500 }),
+  guestId: varchar("guest_id", { length: 255 }),
+  reason: reportReasonEnum("reason").default("other").notNull(),
+  comment: varchar("comment", { length: 500 }),
+  reportData: json("report_data").$type<reportData>().notNull(),
+  validation: boolean("validation"),
+  moderatorComment: varchar("moderator_comment", { length: 500 }),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
     .defaultNow(),

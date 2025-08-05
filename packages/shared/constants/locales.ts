@@ -1,5 +1,4 @@
 export const locales = [
-  "bar",
   "br",
   "cs",
   "da",
@@ -9,14 +8,52 @@ export const locales = [
   "es",
   "et",
   "fr",
-  "frs",
-  "gsw",
   "it",
-  "nds",
   "nl",
   "pl",
   "sv",
   "ta",
   "uk",
+  "bar",
+  "gsw",
+  "frs",
+  "nds",
 ] as const
 export type Locales = (typeof locales)[number]
+
+/**
+ * Maps internal locale codes to valid ISO 639-1 language codes for hreflang attributes.
+ *
+ * Some of our internal locale codes are not valid ISO 639-1 language codes (like "bar" for Bavarian
+ * or "gsw" for Swiss German). When generating hreflang attributes for SEO purposes, we need to
+ * use valid ISO language codes that search engines can understand.
+ *
+ * This mapping ensures that:
+ * 1. Search engines can properly index our localized pages
+ * 2. Browsers can suggest the correct language to users
+ * 3. We maintain compatibility with web standards
+ *
+ * For locales that are already valid ISO 639-1 codes, we map them to themselves.
+ * For non-standard codes, we map them to the closest valid ISO language code.
+ */
+export const hreflangMapping: Record<Locales, string> = {
+  bar: "de",
+  br: "br",
+  cs: "cs",
+  da: "da",
+  de: "de",
+  el: "el",
+  en: "en",
+  es: "es",
+  et: "et",
+  fr: "fr",
+  frs: "de",
+  gsw: "de-CH",
+  it: "it",
+  nds: "de",
+  nl: "nl",
+  pl: "pl",
+  sv: "sv",
+  ta: "ta",
+  uk: "uk",
+}
