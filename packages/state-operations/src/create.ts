@@ -22,7 +22,6 @@ export const createStateOperations = (
   if (playerOps) ops = { ...ops, ...playerOps }
 
   if (Object.keys(ops).length > 0) {
-    newState.stateVersion++
     ops.game = { ...ops.game, stateVersion: newState.stateVersion }
   }
 

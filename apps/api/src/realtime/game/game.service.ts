@@ -39,9 +39,15 @@ export class GameService extends BaseService {
     turnData: PlayRevealCard,
     clientStateVersion: number,
   ) {
-    await this.checkStateVersion(socket, clientStateVersion)
-
     const { column, row } = turnData
+
+    await this.checkStateVersion(
+      socket,
+      clientStateVersion,
+      false,
+      true, // Enable non-blocking mode
+    )
+
     const gameCode = socket.data.gameCode
 
     const game = await this.getGame(gameCode)
@@ -52,8 +58,6 @@ export class GameService extends BaseService {
         shouldLog: false,
       })
     }
-
-    const stateManager = new GameStateTracker(game)
 
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -68,6 +72,7 @@ export class GameService extends BaseService {
       })
     }
 
+    const stateManager = new GameStateTracker(game)
     await game.revealCard({ player, column, row })
 
     await this.updateAndSendGame(game, stateManager)
@@ -175,6 +180,7 @@ export class GameService extends BaseService {
     socket: GameSocket,
     clientStateVersion: number | null,
     firstTime: boolean = false,
+    allowNonBlocking: boolean = false,
   ) {
     const game = await this.getGame(socket.data.gameCode)
 
@@ -183,58 +189,65 @@ export class GameService extends BaseService {
 
       if (firstTime) return
 
-      throw new CError(
-        "Client state version is null. This should never happen. Sent full state update",
-        {
-          code: ErrorConstants.ERROR.STATE_VERSION_NULL,
-          meta: {
-            game: game.serialize(),
-            socketId: socket.id,
-            serverStateVersion: game.stateVersion,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
+      if (!allowNonBlocking) {
+        throw new CError(
+          "Client state version is null. This should never happen. Sent full state update",
+          {
+            code: ErrorConstants.ERROR.STATE_VERSION_NULL,
+            meta: {
+              game: game.serialize(),
+              socketId: socket.id,
+              serverStateVersion: game.stateVersion,
+              gameCode: game.code,
+              playerId: socket.data.playerId,
+            },
           },
-        },
-      )
+        )
+      }
+      return false
     }
 
     if (clientStateVersion > game.stateVersion) {
       this.socketManager.sendGameToSocket(socket.id, game)
 
-      throw new CError(
-        "Client state version is ahead of server. This should never happen. Sent full state update",
-        {
-          code: ErrorConstants.ERROR.STATE_VERSION_AHEAD,
-          meta: {
-            game: game.serialize(),
-            socketId: socket.id,
-            clientStateVersion,
-            serverStateVersion: game.stateVersion,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
+      if (!allowNonBlocking) {
+        throw new CError(
+          "Client state version is ahead of server. This should never happen. Sent full state update",
+          {
+            code: ErrorConstants.ERROR.STATE_VERSION_AHEAD,
+            meta: {
+              game: game.serialize(),
+              socketId: socket.id,
+              clientStateVersion,
+              serverStateVersion: game.stateVersion,
+              gameCode: game.code,
+              playerId: socket.data.playerId,
+            },
           },
-        },
-      )
+        )
+      }
     }
 
     if (clientStateVersion < game.stateVersion) {
       await this.sendMissingStatesToSocket(socket, game, clientStateVersion)
 
-      throw new CError(
-        "Client state is behind server, sent full state update",
-        {
-          code: ErrorConstants.ERROR.STATE_VERSION_BEHIND,
-          level: "warn",
-          meta: {
-            game: game.serialize(),
-            socketId: socket.id,
-            clientStateVersion,
-            serverStateVersion: game.stateVersion,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
+      if (!allowNonBlocking) {
+        throw new CError(
+          "Client state is behind server, sent full state update",
+          {
+            code: ErrorConstants.ERROR.STATE_VERSION_BEHIND,
+            level: "warn",
+            meta: {
+              game: game.serialize(),
+              socketId: socket.id,
+              clientStateVersion,
+              serverStateVersion: game.stateVersion,
+              gameCode: game.code,
+              playerId: socket.data.playerId,
+            },
           },
-        },
-      )
+        )
+      }
     }
 
     return clientStateVersion === game.stateVersion

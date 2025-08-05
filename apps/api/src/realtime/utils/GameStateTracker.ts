@@ -17,9 +17,6 @@ export class GameStateTracker {
     const currentState = this.game.toJson()
     const operations = createStateOperations(this.previousState, currentState)
 
-    if (Object.keys(operations).length === 0) return null
-    else this.game.stateVersion++
-
     this.previousState = structuredClone(currentState)
 
     return operations

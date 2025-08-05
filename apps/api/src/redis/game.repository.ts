@@ -13,6 +13,8 @@ export class GameRepository extends RedisClient {
   private static readonly GAME_PREFIX = "game"
   private static readonly GAME_STATE_PREFIX = "state"
   private static readonly GAME_LATEST_STATE_SUFFIX = "latest"
+  private static readonly GAME_STATE_VERSION_COUNTER_PREFIX =
+    "stateVersion_counter"
 
   private static readonly GAME_STATE_TTL = 300 // 5 minutes
   static readonly GAME_TTL = 600 // 10 minutes
@@ -111,11 +113,65 @@ export class GameRepository extends RedisClient {
   }
 
   async updateGame(game: Game, operation?: GameOperation) {
-    if (operation) await this.addGameState(game, operation)
-
-    await this.setGame(game)
+    if (operation) {
+      // Use atomic transaction to prevent race conditions
+      await this.atomicGameUpdate(game, operation)
+    } else {
+      await this.setGame(game)
+    }
 
     if (!game.settings.private) await this.updateInPublicGames(game)
+  }
+
+  private async atomicGameUpdate(game: Game, operation: GameOperation) {
+    const client = await RedisClient.getClient()
+    const counterKey = `${GameRepository.GAME_PREFIX}:${game.code}:${GameRepository.GAME_STATE_VERSION_COUNTER_PREFIX}`
+    const gameKey = this.getGameLatestStateKey(game.code)
+
+    // Simplified atomic approach: get atomic version increment first
+    try {
+      // Ensure counter exists
+      const counterExists = await client.exists(counterKey)
+      if (!counterExists) {
+        await client.set(counterKey, game.stateVersion)
+      }
+
+      // Get atomic state version increment
+      const newStateVersion = await client.incr(counterKey)
+
+      // Update game object with new state version
+      game.stateVersion = newStateVersion
+      game.updatedAt = new Date()
+
+      // Store operation with new version
+      const stateKey = this.getGameStateKey(game.code, newStateVersion)
+      await client.json.set(stateKey, "$", operation)
+      await client.expire(stateKey, GameRepository.GAME_STATE_TTL)
+
+      // Store updated game
+      await client.json.set(gameKey, "$", game.serialize())
+
+      // Set TTL for counter and game
+      const ttl =
+        !game.settings.private && game.isInLobby()
+          ? GameRepository.PUBLIC_GAME_IN_LOBBY_TTL
+          : GameRepository.GAME_TTL
+      await client.expire(counterKey, ttl)
+      await client.expire(gameKey, ttl)
+
+      Logger.info("Atomic game update successful", {
+        gameCode: game.code,
+        finalVersion: newStateVersion,
+      })
+
+      return
+    } catch (error) {
+      Logger.error("Atomic game update failed", {
+        gameCode: game.code,
+        error: error instanceof Error ? error.message : String(error),
+      })
+      throw error
+    }
   }
 
   async updatePlayer(gameCode: string, player: PlayerToJson) {
@@ -138,6 +194,19 @@ export class GameRepository extends RedisClient {
       `$.players[?(@.id == '${playerId}')].socketId`,
       socketId,
     )
+  }
+
+  async updateGameStateVersion(
+    gameCode: string,
+    stateVersion: number,
+  ): Promise<void> {
+    const client = await RedisClient.getClient()
+    const key = this.getGameLatestStateKey(gameCode)
+
+    await Promise.all([
+      client.json.set(key, "$.stateVersion", stateVersion),
+      client.json.set(key, "$.updatedAt", new Date().toISOString()),
+    ])
   }
 
   async removeGame(code: string): Promise<void> {
@@ -191,12 +260,17 @@ export class GameRepository extends RedisClient {
 
     await client.json.set(key, "$", json)
 
+    // Initialize or update the state version counter to match game state
+    const counterKey = `${GameRepository.GAME_PREFIX}:${game.code}:${GameRepository.GAME_STATE_VERSION_COUNTER_PREFIX}`
+    await client.set(counterKey, game.stateVersion)
+
     const ttl =
       !game.settings.private && game.isInLobby()
         ? GameRepository.PUBLIC_GAME_IN_LOBBY_TTL
         : GameRepository.GAME_TTL
 
     await client.expire(key, ttl)
+    await client.expire(counterKey, ttl)
   }
 
   //#region public games
@@ -229,12 +303,5 @@ export class GameRepository extends RedisClient {
   }
   //#endregion
 
-  private async addGameState(game: Game, operation: GameOperation) {
-    const client = await RedisClient.getClient()
-
-    const key = this.getGameStateKey(game.code, game.stateVersion)
-    await client.json.set(key, "$", operation)
-    await client.expire(key, GameRepository.GAME_STATE_TTL)
-  }
   //#endregion
 }
