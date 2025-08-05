@@ -65,8 +65,77 @@
         "back": "Tilbage til startsiden",
         "title": "Fortrolighedspolitik",
         "last-update": {
-          "date-format": "ÅÅÅÅ-MM-DD - tt:mmA",
+          "date-format": "DD.MM.ÅÅÅÅ",
           "text": "Sidst opdateret: {date}"
+        },
+        "tldr": {
+          "title": "TL;DR — Hvad du skal vide",
+          "minimal-data": "Vi gemmer minimale data for at lade dig spille spil, uanset om du er logget ind eller gæst.",
+          "guest-data": "Gæstedata (navn, avatar, score, chats) gemmes kun, hvis en logget spiller er i spillet.",
+          "personal-data": "Din e-mail, brugernavn og andre personlige oplysninger gemmes kun, hvis du opretter en konto.",
+          "chat-storage": "Chats gemmes midlertidigt og gemmes kun, hvis de anmeldes.",
+          "privacy-compliance": "Vi respekterer dit privatliv og overholder GDPR, og lagrer alt sikkert i EU.",
+          "data-rights": "Du kan til enhver tid anmode om dataadgang, rettelser, eksport eller sletning.",
+          "contact": "For spørgsmål: <email></email>"
+        },
+        "operator": {
+          "title": "Hvem driver denne hjemmeside?",
+          "operator-info": "Denne hjemmeside drives af en privatperson:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Ikke en virksomhed."
+        },
+        "data-collection": {
+          "title": "2. Hvilke data indsamler vi?",
+          "description": "Vi indsamler data for både registrerede og gæstespillere, kun når en forbundet (logget ind) bruger er en del af spillet.",
+          "guest-players": {
+            "title": "For gæstespillere:",
+            "items": "Visningsnavn (valgt ved spillets start);;Valgt avatar;;Spilscore, rangering og vinderstatus;;Chatbeskeder (gemmes midlertidigt, medmindre de er markeret)",
+            "note": "Disse data gemmes kun, hvis mindst én spiller i spillet er logget ind."
+          },
+          "logged-users": {
+            "title": "For logged-ind brugere (ud over ovenstående):",
+            "items": "E-mailadresse;;Brugernavn / visningsnavn;;Avatar (fra foruddefineret liste);;Hashed adgangskode eller OAuth ID (Google, Facebook);;Sprogpræference;;E-mail-verifikationsstatus"
+          },
+          "general": {
+            "title": "Generelt (for alle brugere):",
+            "items": "Spilsessionsdata (koder, indstillinger);;Sessionscookie (udløber efter 24 timer);;IP-adresse (midlertidig, ikke gemt langsigtet);;Anonym brugsanalyse (via PostHog, hostet i EU)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Hvorfor bruges dine data?",
+          "items": "At lade spillere (gæster eller registrerede) deltage og spille spil;;At vise avatarer, navne, scores og placeringer;;At tillade moderation i tilfælde af misbrug;;At behandle feedback og gendannelse af konto (for loggede brugere);;At forbedre siden ved hjælp af anonyme analyser"
+        },
+        "data-retention": {
+          "title": "4. Hvor længe opbevares dine data?",
+          "retention-table": {
+            "headers": "Datatype;;Opbevaring",
+            "rows": "Session cookies;;24 timer|||Kontooplysninger (logget ind);;Indtil sletningsanmodning|||Gæstespillerdata;;Kun hvis tilsluttet spiller er til stede i spillet|||Spildata & scores;;Gemmes permanent|||Chatbeskeder;;Midlertidigt i Redis; gemmes hvis rapporteret|||Feedback;;Permanent|||Verifikations-/nulstillings-tokens;;Indtil brugt eller udløbet|||Anmodninger om sletning af konto;;Slettes efter 48 timers betænkningstid|||Analyse (PostHog);;Permanent, EU-hostet"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Juridisk grundlag (GDPR)",
+          "description": "Behandling baseres på:",
+          "items": "Samtykke (cookies, statistik);;Kontrakt (levering af spillet);;Berettiget interesse (moderation);;Retlig forpligtelse (besvarelse af anmodninger)"
+        },
+        "data-access": {
+          "title": "6. Hvem kan se dine data?",
+          "items": "Andre spillere ser dit offentlige navn, avatar og spilhistorik;;Udvikleren (Maxent Rouault) kan tilgå data til moderation;;Ingen salgs- eller reklamebrug af dine data"
+        },
+        "your-rights": {
+          "title": "7. Dine rettigheder",
+          "items": "Få adgang til, ret eller slet dine data;;Slet din konto (eller anmod om det);;Eksporter dine data (efter anmodning);;Appellér udelukkelser på appeal@skymo.online"
+        },
+        "security": {
+          "title": "8. Sikkerhed",
+          "items": "Krypterede adgangskoder;;HTTPS-forbindelser alene;;Moderation og misbrugsdetektion;;Hosting i EU (Paris, Frankrig)"
+        },
+        "cookies-analytics": {
+          "title": "9. Cookies & Analyse",
+          "items": "Kun essentielle cookies (session, login);;Analyse via PostHog, EU-hostet, ingen sporing på tværs af websteder"
+        },
+        "contact": {
+          "title": "10. Kontakt",
+          "description": "Generelle henvendelser: <email></email>"
         }
       },
       "head": {
@@ -127,7 +196,7 @@
           "title": "Ved spillets start vil {number} af dine kort blive afsløret"
         },
         "show-current-score": {
-          "label": "Vis den aktuelle score under spillet"
+          "label": "Vis score i realtid"
         },
         "score-to-end-game": {
           "label": "Score for at afslutte spillet",
@@ -183,7 +252,8 @@
       "replay-button": {
         "cancel": "Afspil ikke igen",
         "replay": "Spil igen"
-      }
+      },
+      "round": "Runde {number}"
     },
     "Rules": {
       "head": {
@@ -191,7 +261,503 @@
         "description": "Lær at spille Skyjo med vores Skyjo-guide. Oplev reglerne, strategierne og tipsene til at mestre dette sjove online kortspil. Spil med venner nu!",
         "keywords": "Skymo, Skyjo, Skyjo regler, hvordan man spiller Skyjo, Skyjo spil, kortspilsregler, online kortspil, spilinstruktioner, gameplay guide"
       },
-      "title": "Skyjo spilleregler"
+      "title": "Spillets regler",
+      "play-button": "Spil gratis online!"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Leaderboard | Skymo - Skyjo Online Kortspil",
+        "description": "Se top-spillerne på Skymo! Tjek de bedste Skymo-spillere og deres vinderprocenter på vores konkurrencedygtige rangliste.",
+        "keywords": "Skymo,Skyjo,rangliste,topspillere,placeringer,bedste spillere,vinderchance,konkurrencepræget,online kortspil"
+      },
+      "title": "Leaderboard",
+      "subtitle": "Opdag de bedste Skyjo-spillere og kæmp om topplaceringerne!",
+      "lastUpdated": "Sidst opdateret: {date}",
+      "columns": {
+        "rank": "Rang",
+        "player": "Spiller",
+        "wins": "Sejre",
+        "totalGames": "Samlede spil",
+        "winRate": "Vinderate"
+      },
+      "noData": "Ingen spillere fundet på ranglisten endnu.",
+      "error": "Kunne ikke indlæse ranglisten i øjeblikket.",
+      "tryAgainLater": "Prøv igen senere.",
+      "callToAction": {
+        "guest": {
+          "title": "Klar til at konkurrere?",
+          "description": "Tilmeld dig for at spore dine fremskridt og konkurrere med spillere verden over!",
+          "signup": "Tilmeld dig nu"
+        },
+        "authenticated": {
+          "title": "Klar til at konkurrere?",
+          "description": "Spring ind i et spil og kravl op på ranglisten!",
+          "createGame": "Opret spil",
+          "joinGame": "Deltag i spil"
+        }
+      },
+      "errorActions": {
+        "refresh": "Opdater",
+        "backHome": "Tilbage til start"
+      }
+    },
+    "Signup": {
+      "head": {
+        "title": "Tilmeld dig Skymo | Spil Skyjo Online Gratis",
+        "description": "Spil Skyjo online med venner! Opret en gratis Skyjo-konto for at spore dine fremskridt, låse op for eksklusivt indhold og deltage i et levende fællesskab.",
+        "keywords": "skymo, spil skyjo online, skyjo online spil, tilmeld dig skyjo, opret skymo konto, bliv medlem af skymo, skymo skyjo, online kortspil, multiplayer skyjo, gratis skyjo spil, spil skyjo med venner, skyjo fremskridtssporing, skyjo fællesskab, eksklusivt skyjo indhold"
+      },
+      "title": "Tilmeld dig",
+      "or": "Eller",
+      "form": {
+        "email": {
+          "label": "E-mail",
+          "button": "Fortsæt med e-mail"
+        }
+      },
+      "already-have-account": {
+        "description": "Har du allerede en konto?",
+        "link": "Log ind"
+      },
+      "advantages": {
+        "title": "Bliv en del af eventyret",
+        "subtitle": "Opret en konto for at låse op for en verden af muligheder og forbedre din oplevelse.",
+        "features": {
+          "track-progress": {
+            "title": "Følg din fremgang",
+            "description": "Se hvordan du rangerer mod andre og følg din forbedring over tid."
+          },
+          "personalized-experience": {
+            "title": "Personlig oplevelse",
+            "description": "Få anbefalinger og indhold skræddersyet lige til dig."
+          },
+          "join-community": {
+            "title": "Bliv en del af fællesskabet",
+            "description": "Forbind dig med andre eventyrere, del tips, og få nye venner."
+          },
+          "exclusive-content": {
+            "title": "Eksklusivt indhold",
+            "description": "Få adgang til specielle udfordringer, belønninger og tidlige opdateringer."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "text": "Ved at fortsætte accepterer du vores",
+        "terms-link": "Servicevilkår",
+        "and": "og",
+        "privacy-link": "Privatlivspolitik"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Login | Skymo - Skyjo Online Kortspil",
+        "description": "Log ind på Skymo for at spille Skyjo online. Indtast din e-mail og adgangskode for at få adgang til din konto og begynde at spille med det samme.",
+        "keywords": "Skymo,Skyjo,login,online kortspil,Skyjo spil,kortspil,online spil"
+      },
+      "title": "Login",
+      "or": "Eller",
+      "form": {
+        "login": {
+          "label": "E-mail eller brugernavn"
+        },
+        "password": {
+          "label": "Adgangskode"
+        },
+        "submit": "Log ind"
+      },
+      "signup": {
+        "description": "Har du ikke en konto?",
+        "link": "Tilmeld dig nu!"
+      },
+      "forgot-password": "Glemt din adgangskode?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Glemt adgangskode | Skymo - Skyjo Online Kortspil",
+        "description": "Nulstil din Skyjo-adgangskode for at få adgang til din konto igen og fortsæt med at spille Skyjo online med venner.",
+        "keywords": "Skymo,Skyjo,glemt adgangskode,nulstil adgangskode,konto gendannelse,online kortspil"
+      },
+      "title": "Glemt adgangskode",
+      "description": "Indtast din e-mailadresse, så sender vi dig et link til at nulstille din adgangskode",
+      "form": {
+        "email": {
+          "label": "E-mailadresse"
+        },
+        "submit": "Send nulstillingslink",
+        "sending": "Sender..."
+      },
+      "success": {
+        "title": "Tjek din e-mail",
+        "message": "Hvis der findes en konto med denne e-mail, er der sendt et link til nulstilling af adgangskoden.",
+        "back": "Tilbage til login"
+      },
+      "back": "Tilbage til login"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Nulstil adgangskode | Skymo - Skyjo Online Kortspil",
+        "description": "Opret en ny adgangskode til din Skyjo-konto for at få adgang igen og fortsætte med at spille Skyjo online.",
+        "keywords": "Skymo,Skyjo,nulstil adgangskode,ny adgangskode,konto-gendannelse,online kortspil"
+      },
+      "title": "Nulstil adgangskode",
+      "description": "Indtast dit nye kodeord nedenfor.",
+      "form": {
+        "password": {
+          "label": "Nyt kodeord"
+        },
+        "confirmPassword": {
+          "label": "Bekræft nyt kodeord"
+        },
+        "submit": "Nulstil adgangskode",
+        "resetting": "Nulstiller..."
+      },
+      "success": {
+        "title": "Adgangskode nulstillet succesfuldt",
+        "message": "Din adgangskode er blevet nulstillet. Du kan nu logge ind med din nye adgangskode.",
+        "back": "Login"
+      },
+      "back": "Tilbage til login"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "E-mailændring annulleret",
+        "message": "Din e-mailændring er blevet succesfuldt tilbagerullet, og din konto er blevet sikret. Tjek venligst din e-mail for instruktioner til nulstilling af adgangskode.",
+        "close": "Du kan nu lukke denne side."
+      },
+      "failed": {
+        "title": "E-mailændring kunne ikke gendannes"
+      },
+      "back": "Tilbage til login"
+    },
+    "OAuthCallbackPage": {
+      "title": "Omdirigerer…"
+    },
+    "Onboarding": {
+      "title": "Onboarding i gang...",
+      "subtitle": "Færdiggør din profil og dyk ned i Skymo-eventyret!",
+      "form": {
+        "name": {
+          "label": "Spillernavn",
+          "placeholder": "Jeff",
+          "description": "Vist til andre spillere i spil"
+        },
+        "username": {
+          "label": "Navn",
+          "placeholder": "brugernavn",
+          "description": "Til login og profil"
+        },
+        "password": {
+          "label": "Opret en adgangskode",
+          "placeholder": "Indtast en sikker adgangskode"
+        },
+        "submit": "Klar til at spille!"
+      },
+      "head": {
+        "title": "Onboarding | Skymo - Skyjo Online Kortspil",
+        "description": "Fuldfør din profil og dyk ned i Skymo-eventyret!",
+        "keywords": "Skymo,Skyjo,onboarding,profil,eventyr,online kortspil"
+      },
+      "loading": "Indlæser din profil...",
+      "success": "Onboarding gennemført succesfuldt! Omdirigerer til startsiden..."
+    },
+    "Verify": {
+      "head": {
+        "title": "Bekræft e-mail | Skymo - Skyjo Online Kortspil",
+        "description": "Bekræft din e-mailadresse for at fuldføre din Skymo-kontoopsætning og begynde at spille Skyjo online med venner.",
+        "keywords": "Skymo,Skyjo,e-mail verifikation,bekræft konto,online kortspil"
+      },
+      "title": "Bekræft din e-mail",
+      "description": "Vi har sendt en 6-cifret kode til din e-mailadresse. Indtast den venligst herunder.",
+      "resend": {
+        "countdown": "Gensend kode om {seconds}s",
+        "prompt": "Modtog du ikke koden?",
+        "button": "Anmod om ny kode",
+        "sending": "Sender..."
+      },
+      "toast": {
+        "success": "E-mail verificeret succesfuldt!",
+        "resend-success": "En ny e-mail er blevet sendt",
+        "email-already-sent": "En e-mail blev allerede sendt inden for de sidste 5 minutter. Tjek din indbakke eller klik på \"Anmod om ny kode\" for at sende en ny"
+      },
+      "loading": "Indlæser din profil..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'s profil | Skymo - Skyjo Online Kortspil",
+        "description": "Se {username}s profil på Skymo. Tjek deres spilstatistikker, seneste aktivitet og præstationer i Skyjo online.",
+        "keywords": "Skymo,Skyjo,brugerprofil,spillerstatistik,spilstats,seneste spil,præstationer,online kortspil"
+      },
+      "not-found": {
+        "title": "Bruger ikke fundet",
+        "description": "Brugeren \"{username}\" findes ikke, eller også har vedkommende ændret sit brugernavn.",
+        "back-to-home": "Tilbage til startsiden"
+      },
+      "error": {
+        "title": "Der gik noget galt",
+        "description": "Vi stødte på en fejl under indlæsning af denne profil. Prøv igen senere.",
+        "back-to-home": "Tilbage til startsiden"
+      },
+      "stats": {
+        "total-games": "Samlede spil",
+        "win-rate": "Vinderate",
+        "average-rank": "Gennemsnitlig rang",
+        "public": "Offentlig",
+        "private": "Privat"
+      },
+      "sections": {
+        "achievements": "Præstationer",
+        "achievements-coming-soon": "Achievement-system kommer snart!",
+        "recent-activity": "Seneste aktivitet"
+      },
+      "recent-activity": {
+        "no-activity": "Ingen nylig aktivitet at vise.",
+        "game-code": "Spil #{code}",
+        "rank": "Rang #{rank}",
+        "winner": "Vinder"
+      },
+      "search": {
+        "placeholder": "Søg brugernavn"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Kontoindstillinger | Skymo - Skyjo Online Kortspil",
+        "description": "Administrer dine kontoindstillinger på Skymo. Skift dit visningsnavn, brugernavn, e-mail, adgangskode og kontoindstillinger."
+      },
+      "title": "Kontoindstillinger",
+      "description": "Administrer din konto og personlige oplysninger.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Konto",
+        "password": "Adgangskode"
+      },
+      "buttons": {
+        "save": "Gem ændringer",
+        "saving": "Gemmer...",
+        "delete-account": "Slet konto",
+        "confirm-delete": "Ja, slet min konto"
+      },
+      "messages": {
+        "save-success": "Indstillinger gemt succesfuldt!",
+        "save-error": "Kunne ikke gemme indstillinger. Prøv venligst igen.",
+        "delete-confirmation": "Er du sikker på, at du vil slette din konto? Denne handling kan ikke fortrydes, og alle dine data vil blive permanent fjernet.",
+        "username-taken": "Dette brugernavn er allerede taget.",
+        "email-taken": "Denne e-mail er allerede i brug.",
+        "password-incorrect": "Dit nuværende kodeord er forkert.",
+        "account-deletion-scheduled": "Din anmodning om sletning af konto er blevet taget i betragtning og vil blive behandlet inden for 48 timer. Du vil modtage en e-mail for at bekræfte sletningen.",
+        "account-deletion-failed": "Der opstod en fejl under sletningen af din konto. Prøv venligst igen."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Visningsnavn",
+          "description": "Dit navn vises for andre spillere i spil.",
+          "placeholder": "Indtast dit navn",
+          "submit": "Gem navn"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Din avatar vises på din profil.",
+          "placeholder": "Vælg din avatar",
+          "submit": "Gem avatar"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Konto",
+      "fields": {
+        "username": {
+          "label": "Brugernavn",
+          "description": "Dit unikke brugernavn, der bruges til din profil-URL.",
+          "placeholder": "Indtast dit brugernavn",
+          "submit": "Gem brugernavn"
+        },
+        "email": {
+          "label": "E-mailadresse",
+          "description": "Din e-mailadresse, der bruges til login og vigtige meddelelser. Af sikkerhedsmæssige årsager vil en advarsels-e-mail blive sendt til din nuværende adresse, når du ændrer den.",
+          "placeholder": "Indtast din e-mail",
+          "submit": "Gem e-mail"
+        },
+        "settings-sync": {
+          "label": "Synkronisering af indstillinger",
+          "description": "Synkroniser dine indstillinger på tværs af alle dine enheder, når du er logget ind.",
+          "enable-sync": "Aktivér synkronisering af indstillinger",
+          "disable-sync": "Deaktiver synkronisering af indstillinger",
+          "status": {
+            "enabled": "Aktiveret",
+            "disabled": "Deaktiveret",
+            "syncing": "Synkroniserer...",
+            "offline": "Offline",
+            "error": "Synkronisering mislykkedes"
+          },
+          "last-sync": "Sidste synkronisering: {date}",
+          "sync-now": "Synkroniser nu"
+        }
+      },
+      "delete-account": {
+        "title": "Slet min konto",
+        "description": "Slet din konto og alle tilknyttede data. Denne handling kan ikke fortrydes, og alle dine data vil blive permanent fjernet.",
+        "button": "Slet konto",
+        "confirmation": {
+          "description": "Ved at bekræfte starter en 48-timers nedtælling: Du vil modtage en e-mail med et link til at annullere sletningen, hvis du ombestemmer dig. Din konto vil forblive tilgængelig i denne periode. Efter 48 timer vil den blive slettet permanent, og du vil modtage en bekræftelses-e-mail.",
+          "input-label": "Skriv DELETE for at bekræfte",
+          "input-placeholder": "SLET",
+          "cancel-button": "Annuller",
+          "delete-button": "Slet min konto"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Skift adgangskode",
+      "fields": {
+        "password": {
+          "label": "Adgangskode",
+          "description": "Skift din adgangskode.",
+          "current-password": "Nuværende adgangskode",
+          "new-password": "Nyt kodeord",
+          "confirm-password": "Bekræft nyt kodeord",
+          "current-placeholder": "Indtast din nuværende adgangskode",
+          "new-placeholder": "Indtast din nye adgangskode",
+          "confirm-placeholder": "Bekræft dit nye kodeord",
+          "submit": "Gem adgangskode"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Dit nuværende kodeord er forkert."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Ugyldigt token",
+      "success": {
+        "title": "Annulleret konto sletning",
+        "description": "Din kontoafmelding er blevet annulleret med succes. Din konto er sikker og vil ikke blive slettet.",
+        "secure-message": "Din konto er nu sikker og forbliver aktiv. Du kan fortsætte med at bruge din konto normalt."
+      },
+      "failed": {
+        "title": "Annullering mislykkedes",
+        "description": "Vi kunne ikke annullere sletningen af din konto. Prøv igen eller kontakt support.",
+        "general-error": "Der opstod en fejl under forsøget på at annullere din konto-sletning. Prøv igen eller kontakt support.",
+        "help-message": "Der opstod en fejl under forsøget på at annullere din konto-sletning. Prøv igen eller kontakt support."
+      },
+      "expired": {
+        "title": "Link til annullering er udløbet",
+        "description": "Dette annulleringslink er udløbet. Hvis du stadig vil beholde din konto, bedes du kontakte support.",
+        "help-message": "Annulleringsperioden på 48 timer er udløbet. Kontakt support, hvis du har brug for hjælp."
+      },
+      "actions": {
+        "return-homepage": "Tilbage til startsiden"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Vilkår for brug | Skymo - Skyjo Online Kortspil",
+        "description": "Læs servicevilkårene for Skymo, online Skyjo-kortspilplatformen. Lær om brugerforpligtelser, servicebrug og platformpolitikker.",
+        "keywords": "Vilkår for brug, Skymo, Skyjo, online kortspil, brugeraftale, platformregler"
+      },
+      "content": {
+        "title": "Servicevilkår",
+        "last-update": {
+          "text": "Sidst opdateret: {date}",
+          "date-format": "DD.MM.ÅÅÅÅ kl. HH:mm"
+        },
+        "welcome": "Velkommen til <b>skymo.online</b>, et online multiplayer kortspil drevet af Maxent Rouault. Ved at tilgå eller bruge denne hjemmeside accepterer du disse servicevilkår. Hvis du ikke accepterer, må du ikke bruge platformen.",
+        "operator": {
+          "title": "1. Operatør",
+          "content": "Denne hjemmeside drives af:",
+          "name": "Maxent Rouault",
+          "contact": "Kontakt: {email}",
+          "location": "Frankrig (ikke-kommerciel individuel operatør)"
+        },
+        "eligibility": {
+          "title": "2. Berettigelse",
+          "content": "Du kan bruge tjenesten som gæst eller ved at registrere en konto. Ved at bruge denne hjemmeside bekræfter du, at:",
+          "items": {
+            "1": "Du er mindst 13 år gammel (eller den mindstealder, der kræves i dit land).",
+            "2": "Hvis du er under 18 år, har du tilladelse fra en værge."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Konto & Gæstebrug",
+          "items": {
+            "1": "Gæstespillere kan spille uden registrering, men visse funktioner kan være begrænsede.",
+            "2": "Registrerede brugere skal angive en gyldig e-mail og et gyldigt brugernavn.",
+            "3": "Du er ansvarlig for din konto og aktivitet. Du må ikke dele dit login.",
+            "4": "Du kan til enhver tid slette din konto. Efter 48 timer vil dine personlige data blive anonymiseret eller permanent slettet."
+          }
+        },
+        "data-storage": {
+          "title": "4. Datalagring",
+          "content": "Vi gemmer følgende data afhængigt af din brug:",
+          "all-players": {
+            "title": "For alle spillere:",
+            "items": {
+              "1": "Visningsnavn i spillet, avatar, score og chatbeskeder, **hvis mindst én spiller er logget ind**.",
+              "2": "IP-adresser kan midlertidigt gemmes af sikkerheds- og moderationsårsager."
+            }
+          },
+          "registered-players": {
+            "title": "For registrerede spillere:",
+            "items": {
+              "1": "E-mail, brugernavn, avatar, spilstatistikker og valgfrit tilknyttede konti (f.eks. Google).",
+              "2": "Analytiske data såsom spilleadfærd, sessionsfrekvens eller funktionsbrug <b>kan indsamles for at forbedre spillet</b>."
+            }
+          },
+          "storage-location": "Alle data gemmes i **EU** og behandles i overensstemmelse med <link>privatlivspolitikken</link>."
+        },
+        "analytics-tracking": {
+          "title": "5. Analyse og sporing",
+          "content": "For at forbedre servicen og personliggøre brugeroplevelsen kan vi:",
+          "items": {
+            "1": "Brug <b>analyseværktøjer</b> (f.eks. PostHog eller lignende) til at spore brug og gameplay-mønstre.",
+            "2": "Analyser brugeradfærd for at opdage fejl, forbedre matchmaking eller designe funktioner.",
+            "3": "I fremtiden kan vi bruge disse data til at **levere personligt tilpasset indhold eller annoncer**, samtidig med at vi respekterer dine privatlivsrettigheder i henhold til GDPR."
+          },
+          "data-rights": "Du kan gøre indsigelse mod sporing eller anmode om sletning af personlige data ved at kontakte os."
+        },
+        "ads-monetization": {
+          "title": "6. Annoncer og Monetarisering",
+          "content": "Platformen kan vise annoncer, herunder tredjepartsannoncer eller kontekstuelle annoncer. I fremtiden kan der blive vist **personaliserede annoncer** til loggede brugere baseret på brugsdata.",
+          "consent": "Vi vil give klare meddelelses- og samtykkemekanismer, hvis og når adfærdsbaserede eller personlige annoncer introduceres."
+        },
+        "user-conduct": {
+          "title": "7. Brugeradfærd",
+          "content": "Du accepterer:",
+          "items": {
+            "1": "Vær respektfuld og følg fair play-reglerne.",
+            "2": "Snyd ikke, chikaner ikke, udgiv dig ikke for at være andre, eller brug stødende brugernavne eller avatarer.",
+            "3": "Spam eller misbrug ikke chatten eller andre kommunikationsfunktioner."
+          },
+          "enforcement": "Vi forbeholder os retten til at udelukke eller begrænse brugere, der overtræder disse regler."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderation & Rapportering",
+          "items": {
+            "1": "Chatbeskeder gemmes midlertidigt og kan blive gemt fuldt ud for spil, der involverer registrerede spillere.",
+            "2": "Vi kan beholde beskeder, når en spiller indsender en rapport, eller hvis der er behov for moderation.",
+            "3": "Du kan anmelde misbrug via e-mail (se kontaktsektionen).",
+            "4": "Moderationshandlinger og rapporter kan blive logget for at sikre gennemsigtighed og retfærdighed."
+          }
+        },
+        "availability": {
+          "title": "9. Tilgængelighed",
+          "content": "Tjenesten leveres \"som den er\". Vi kan ændre, suspendere eller afbryde hjemmesiden eller funktioner til enhver tid uden varsel."
+        },
+        "intellectual-property": {
+          "title": "10. Immaterielle rettigheder",
+          "content": "Alt originalt indhold, grafik og kode tilhører Maxent Rouault, medmindre andet er angivet. Du må ikke genbruge eller distribuere dele af hjemmesiden uden tilladelse."
+        },
+        "legal": {
+          "title": "11. Juridisk",
+          "jurisdiction": "Dette websted er underlagt fransk lovgivning og overholder den generelle databeskyttelsesforordning (GDPR).",
+          "disputes": "Rettigheder og tvister vil blive behandlet ved franske domstole."
+        },
+        "contact": {
+          "title": "12. Kontakt",
+          "general": "Generelle henvendelser: <email></email>"
+        }
+      }
     }
   },
   "components": {
@@ -236,7 +802,7 @@
         "frs": "Eastern Frisian",
         "en": "English",
         "fr": "Français",
-        "bar": "Bavarian",
+        "bar": "Bairisch",
         "da": "Dansk",
         "nl": "Nederlands",
         "nds": "Plattdeutsch",
@@ -327,9 +893,9 @@
       }
     },
     "ReportDialog": {
-      "title": "Rapportér {username}",
+      "title": "Anmeld {name}",
       "select-message": "Vælg den meddelelse, der skal rapporteres",
-      "description": "Rapportér brugernavnet eller en besked fra {username}, hvis det virker upassende.",
+      "description": "Anmeld navnet eller en besked fra {name}, hvis det virker upassende.",
       "report-message": "Rapportér en besked",
       "select-message-placeholder": "Vælg en besked",
       "no-messages": "Ingen beskeder fundet fra denne bruger",
@@ -340,7 +906,10 @@
           "title": "Rapport indsendt",
           "description": "Tak for din rapport, du har bidraget til at forbedre spillets kvalitet."
         }
-      }
+      },
+      "report-name": "Anmeld spillerens navn",
+      "comment": "Yderligere kontekst (valgfrit)",
+      "comment-placeholder": "Giv yderligere kontekst til denne rapport..."
     },
     "AppearanceSelect": {
       "light": "Lys",
@@ -357,7 +926,17 @@
       }
     },
     "CopyLink": {
-      "message": "Link kopieret!"
+      "message": "Link kopieret!",
+      "copy": {
+        "button-title": "Kopiér link",
+        "popover": "Link kopieret!"
+      },
+      "share": {
+        "title": "Deltag i mit Skyjo-spil!",
+        "text": "Kom og spil Skyjo med mig online! Klik på linket for at deltage i spillet.",
+        "button-title": "Del spil",
+        "tooltip": "Klik her for at dele dette spil!"
+      }
     },
     "ChatMessageList": {
       "unread-messages": "{count} ulæst meddelelse{count, plural, =1 {} other {r}}"
@@ -408,7 +987,8 @@
       },
       "attribution": {
         "avatars": "Avatarer skabt af Freepik - Flaticon"
-      }
+      },
+      "translations": "Hjælp med at oversætte spillet!"
     },
     "GameLobbyButtons": {
       "reconnect-game-button": "Opret forbindelse til spillet igen",
@@ -503,16 +1083,72 @@
         "volume": {
           "label": "Lydstyrke ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Chat",
+        "chat-visibility": "Chat synlighed",
+        "chat-notification-size": {
+          "label": "Chatbeskedstørrelse",
+          "values": {
+            "small": "Lille",
+            "normal": "Normal",
+            "big": "Stor"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobil",
+        "switch-to-player-who-is-playing": "Skift automatisk til den spiller, der spiller",
+        "show-preview-opponents-cards": "Vis en forhåndsvisning af modstandernes kort i modstanderlisten"
+      },
+      "gameplay": {
+        "title": "Spil",
+        "gameboard": {
+          "title": "Spilleplade",
+          "size": {
+            "label": "Størrelse på dit spilbræt",
+            "big-warning": "Kan bryde visning på mobil",
+            "values": {
+              "normal": "Normal",
+              "big": "Stor"
+            }
+          },
+          "enlarge-active-player-board": "Forstør brættet for den spiller, hvis tur det er"
+        },
+        "timer": {
+          "title": "Timer",
+          "label": "Timer visningstilstand",
+          "description": "Smart tilstand viser timeren ved halvleg og de sidste 15 sekunder.",
+          "modes": {
+            "never": "Aldrig",
+            "smart": "Smart",
+            "always": "Altid"
+          }
+        }
+      },
+      "account": {
+        "title": "Konto",
+        "sync": {
+          "label": "Kontoindstillinger",
+          "description": "Synkroniser dine indstillinger på tværs af alle dine enheder, når du er logget ind.",
+          "enabled": "Aktiveret",
+          "disabled": "Deaktiveret",
+          "syncing": "Synkroniserer...",
+          "offline": "Offline",
+          "error": "Synkronisering mislykkedes",
+          "lastSync": "Sidste synkronisering: {date}"
+        }
       }
     },
     "Avatar": {
       "context-menu": {
-        "report": "Rapportér {username}",
-        "kick": "Smid {username} ud",
-        "vote-to-kick": "Stem for at smide {username} ud",
-        "ban": "Bandlys {username}",
-        "mute": "Slå lyden fra {username}",
-        "unmute": "Slå lyd til for {username}"
+        "report": "Anmeld {name}",
+        "kick": "Spark {name}",
+        "vote-to-kick": "Stem for at sparke {name}",
+        "ban": "Ban {name}",
+        "mute": "Slå {name} fra",
+        "unmute": "Fjern lyd fra {name}",
+        "transfer-host": "{name} er nu vært"
       }
     },
     "KickVote": {
@@ -560,6 +1196,42 @@
       "host-kick-you": {
         "title": "Du er blevet smidt ud af spillet af værten"
       }
+    },
+    "Banner": {
+      "title": "Jeg har brug for <gform>din feedback</gform> til at forme fremtiden for Skymo!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Regler",
+        "leaderboard": "Rangliste"
+      }
+    },
+    "LoginButton": {
+      "login": "Vær med til det sjove!"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Fortsæt med Google"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Adgangskoder matcher",
+      "minimum-characters": "Mindst 10 tegn",
+      "lowercase-letter": "Mindst ét lille bogstav",
+      "capital-letter": "Mindst ét stort bogstav",
+      "number": "Mindst ét tal",
+      "special-character": "Mindst ét specialtegn"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Tjekker...",
+        "available": "Brugernavn ledigt",
+        "taken": "Allerede taget!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Genopret forbindelse til spil",
+      "description": "Du var i et spil, der er i gang. Vil du genoprette forbindelsen?",
+      "reconnect-button": "Ja, genopret forbindelse",
+      "dismiss-button": "Nej, afvis"
     }
   },
   "utils": {
@@ -598,17 +1270,19 @@
       "game-ended": "Spillet er slut!"
     },
     "chat": {
-      "player-joined": "{username} er med i spillet",
-      "player-left": "{username} forlod spillet",
-      "player-reconnect": "{username} genoprettede forbindelse til spillet",
+      "player-joined": "{name} er kommet med i spillet",
+      "player-left": "{name} forlod spillet",
+      "player-reconnect": "{name} genforbandt sig til spillet",
       "argument-required": "Der kræves et eller flere argumenter for kommandoen: {command}",
-      "player-already-muted": "{username} er allerede slået fra",
-      "player-muted": "{username} er nu slået fra",
-      "player-not-muted": "{username} er ikke slået fra",
-      "player-unmuted": "{username} er ikke længere slået fra",
-      "wizz-sent": "Du har sendt et wizz til {targetUsername}!",
-      "wizz-self": "Du er blevet wiz'et af {initiatorUsername}!",
-      "wizz-other": "{initiatorUsername} har wizzet {targetUsername}!"
+      "player-already-muted": "{name} er allerede mutet",
+      "player-muted": "{name} er nu mutet",
+      "player-not-muted": "{name} er ikke mutet",
+      "player-unmuted": "{name} er ikke længere mutet",
+      "wizz-sent": "Du har sendt en wizz til {targetName}!",
+      "wizz-self": "Du er blevet viftet med af {initiatorName}!",
+      "wizz-other": "{initiatorName} har wizzet {targetName}!",
+      "welcome": "Vær venlig og respektfuld. Du kan {isMobile, select, true {trykke og holde nede} other {højreklikke}} på beskeder for at slå spillere fra eller anmelde dem, hvis nødvendigt.",
+      "host-transferred": "{name} er nu vært"
     },
     "socket": {
       "error": {
@@ -633,6 +1307,9 @@
         "rate-limit": {
           "title": "Du sender for mange anmodninger",
           "description": "Vent venligst et par sekunder, før du prøver igen"
+        },
+        "player-already-connected": {
+          "description": "Du er allerede forbundet til dette spil fra en anden session"
         }
       }
     }
@@ -640,7 +1317,7 @@
   "contexts": {
     "ReportContext": {
       "report-against-you": {
-        "description": "Dit brugernavn eller en af dine beskeder er blevet rapporteret og er blevet anset for upassende. Gentag venligst ikke denne adfærd.",
+        "description": "Dit navn eller en af dine beskeder er blevet rapporteret og fundet upassende. Lad være med at gentage denne adfærd.",
         "title": "Du er blevet smidt ud på grund af en rapport"
       },
       "report": {
@@ -678,11 +1355,106 @@
       },
       "connection-lost": "Forbindelse tabt. Forsøger at genoprette forbindelse...",
       "reconnection": "Forbindelse genoprettet"
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Du har ikke tilladelse til at overføre vært",
+        "description": "Kun den nuværende vært kan overføre vært-rollen til en anden spiller"
+      },
+      "player-not-found": {
+        "title": "Spilleren findes ikke",
+        "description": "Den spiller, du forsøger at overføre værtskab til, findes ikke i spillet"
+      },
+      "player-not-connected": {
+        "title": "Spilleren er ikke forbundet",
+        "description": "Den spiller, du forsøger at overføre værtskab til, er ikke forbundet til spillet lige nu"
+      },
+      "host-transferred": {
+        "title": "Vært overført succesfuldt",
+        "description": "{newHostName} er nu spillets vært"
+      },
+      "you-are-now-host": {
+        "title": "Du er nu vært",
+        "description": "{previousHostName} har overført værtsrollen til dig"
+      },
+      "unexpected-error": {
+        "title": "Der opstod en uventet fejl",
+        "description": "Der opstod en uventet fejl under overførsel af vært"
+      }
     }
   },
   "head": {
     "description": "Spil Skyjo online gratis med Skymo! Et tempofyldt multiplayer-kortspil, hvor strategi møder sjov. Udfordr venner, vend kort, og sigt efter den laveste score for at vinde!",
     "keywords": "Skymo, Skyjo, Skyjo online, multiplayer spil, kortspil, spil med venner, gratis online spil, online kortspil",
     "title": "Skymo | Spil Skyjo kortspil gratis online"
+  },
+  "errors": {
+    "invalid-credentials": "Den e-mail eller adgangskode, du indtastede, er forkert. Prøv venligst igen.",
+    "logout-failed": "Vi kunne ikke logge dig ud. Luk venligst din browser for at afslutte sessionen.",
+    "session-not-found": "Din session er udløbet eller ugyldig. Log venligst ind igen.",
+    "session-invalid": "Din session er ugyldig. Log venligst ind igen for at fortsætte.",
+    "session-expired": "Din session er udløbet. Log venligst ind igen for at fortsætte.",
+    "session-token-missing": "Din sessions-token mangler. Log venligst ind for at få en ny.",
+    "username-taken": "Brugernavnet er allerede taget. Vælg venligst et andet.",
+    "onboarding-error": "Der var et problem med at fuldføre din profil. Prøv venligst igen.",
+    "reset-token-invalid": "Det nulstillingstoken, du har angivet, er ugyldigt. Anmod venligst om et nyt.",
+    "reset-token-expired": "Dit kodeordsnulstillings-token er udløbet. Anmod venligst om et nyt.",
+    "password-reset-failed": "Vi kunne ikke nulstille din adgangskode. Prøv venligst igen.",
+    "forgot-password-error": "Der opstod et problem med at behandle din anmodning om nulstilling af adgangskode. Prøv venligst igen senere.",
+    "reset-password-error": "Vi kunne ikke nulstille din adgangskode. Prøv venligst igen.",
+    "oauth-restart-process": "Der opstod en fejl under godkendelsen. Prøv at logge ind igen.",
+    "oauth-id-token-missing": "Vi modtog ikke et ID-token fra autentificeringsudbyderen. Prøv venligst igen.",
+    "oauth-account-creation-failed": "Vi kunne ikke oprette en konto med din udbyders oplysninger. Prøv venligst igen.",
+    "oauth-login-initiation-failed": "Vi kunne ikke starte login-processen. Prøv igen om et øjeblik.",
+    "verify-session-error": "Vi kunne ikke verificere din session. Log venligst ud og log ind igen.",
+    "signup-error": "Vi kunne ikke oprette din konto på dette tidspunkt. Prøv venligst igen senere.",
+    "login-error": "Der var et problem med at logge dig ind. Prøv venligst igen.",
+    "login-invalid-credentials": "Den e-mail eller adgangskode, du indtastede, er forkert. Prøv venligst igen.",
+    "logout-error": "Der opstod en uventet fejl under logud.",
+    "check-username-error": "Vi kunne ikke tjekke, om brugernavnet er ledigt. Prøv venligst igen.",
+    "unknown-auth-error": "Der opstod en ukendt godkendelsesfejl. Prøv venligst igen.",
+    "creation-failed": "Vi kunne ikke oprette brugeren på dette tidspunkt. Prøv venligst igen.",
+    "get-user-error": "Vi kunne ikke hente brugerprofilen. Prøv igen senere.",
+    "get-user-games-error": "Vi kunne ikke indlæse brugerens spil. Opdater venligst siden.",
+    "get-user-stats-error": "Vi kunne ikke indlæse brugerens statistik. Opdater venligst siden.",
+    "user-not-found": "Brugeren du leder efter, kunne ikke findes.",
+    "username-same-as-current": "Dette er allerede dit brugernavn.",
+    "email-taken": "Denne e-mailadresse er allerede i brug. Brug venligst en anden.",
+    "email-same-as-current": "Dette er allerede din e-mailadresse.",
+    "invalid-current-password": "Det aktuelle kodeord, du indtastede, er forkert.",
+    "update-name-error": "Vi kunne ikke opdatere dit navn. Prøv venligst igen.",
+    "update-username-error": "Vi kunne ikke opdatere dit brugernavn. Prøv venligst igen.",
+    "update-email-error": "Vi kunne ikke opdatere din e-mailadresse. Prøv venligst igen.",
+    "revert-email-error": "Vi kunne ikke rulle din e-mailændring tilbage. Kontakt support.",
+    "update-password-error": "Vi kunne ikke opdatere din adgangskode. Prøv venligst igen.",
+    "update-avatar-error": "Vi kunne ikke opdatere din avatar. Prøv venligst igen.",
+    "delete-account-error": "Vi kunne ikke behandle din anmodning om sletning af konto. Prøv venligst igen.",
+    "cancel-delete-account-error": "Vi kunne ikke annullere sletningen af din konto. Kontakt venligst support.",
+    "unexpected-error": "Der opstod en uventet fejl. Prøv venligst igen.",
+    "internal-server-error": "Vores server stødte på et problem. Prøv venligst igen senere.",
+    "unauthorized": "Du har ikke tilladelse til at udføre denne handling.",
+    "forbidden": "Du har ikke tilladelse til at tilgå denne ressource.",
+    "not-found": "Den ressource, du leder efter, kunne ikke findes.",
+    "too-many-requests": "Du har sendt for mange anmodninger. Vent venligst et øjeblik og prøv igen.",
+    "ip-not-found": "Vi kunne ikke identificere din IP-adresse. Tjek venligst din forbindelse.",
+    "invalid-request": "Din anmodning var ugyldig. Tjek venligst dataene og prøv igen.",
+    "send-feedback-error": "Vi kunne ikke sende din feedback. Prøv venligst igen.",
+    "send-pin-error": "Vi kunne ikke sende en bekræftelses-PIN til din e-mail. Prøv igen.",
+    "verify-pin-error": "Vi kunne ikke verificere din PIN-kode. Prøv venligst igen.",
+    "invalid-pin": "Den PIN-kode, du indtastede, er forkert. Prøv venligst igen.",
+    "expired-pin": "Den PIN-kode, du indtastede, er udløbet. Vi har sendt dig en ny.",
+    "feedback-error": "Vi kunne ikke sende din feedback. Prøv venligst igen.",
+    "get-public-games-error": "Vi kunne ikke indlæse de offentlige spil. Prøv venligst igen.",
+    "invalid-cancellation-token": "Annullerings-tokenet er ugyldigt. Prøv igen.",
+    "expired-cancellation-token": "Annullerings-tokenet er udløbet. Prøv igen.",
+    "cancel-account-deletion-error": "Vi kunne ikke annullere din konto-sletning. Prøv venligst igen",
+    "oauth-unknown-error": "Der opstod en ukendt fejl under login. Prøv venligst igen.",
+    "invalid-reversion-token": "Reverterings-tokenet er ugyldigt. Prøv igen.",
+    "expired-reversion-token": "Reverterings-tokenet er udløbet. Prøv igen.",
+    "name-min-characters": "Visningsnavn skal være mindst 2 tegn",
+    "name-max-characters": "Visningsnavn må højst være 20 tegn",
+    "username-min-characters": "Brugernavn skal være mindst 3 tegn",
+    "username-max-characters": "Brugernavn må højst være 20 tegn",
+    "username-invalid-format": "Brugernavn må kun indeholde bogstaver, tal og understregninger"
   }
 }

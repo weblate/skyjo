@@ -24,7 +24,7 @@
         },
         "how-to-play": {
           "title": "Penaos c'hoari Skyjo?",
-          "content": "Evit c'hoari Skyjo, dasparzhit 12 kartenn da bep c'hoarier, dremm kuzhet. Ar pel eo kaout an nebeutañ a boentoù en ur dreiñ hag en ur eskemm kartoù. Bep tro, pigosit ur gartenn adalek ar pigos pe ar c'hartoù skoet, ha dibabit eskemm anezhi gant unan eus ho kartoù hewel. Ar c'hartoù niverennet a ouzhpenn poentoù, ar c'hartoù ispisial o deus galloudoù. Echuet eo ar c'hoari p'en deus unan eus ar c'hoarierien troet holl e gartoù. Ar c'hoarier gant an nebeutañ a boentoù a c'hounez. Gallout a rin mont da lenn <rules>ar reolennoù</rules> evit kaout muioc'h a ditouroù."
+          "content": "Evit c'hoari Skyjo, dasparzhit 12 kartenn da bep c'hoarier, dremm kuzhet. Ar pel eo kaout an nebeutañ a boentoù en ur dreiñ hag en ur eskemm kartoù. Bep tro, pigosit ur gartenn adalek ar pigos pe ar c'hartoù skoet, ha dibabit eskemm anezhi gant unan eus ho kartoù hewel. Ar c'hartoù niverennet a ouzhpenn poentoù, ar c'hartoù ispisial o deus galloudoù. Echuet eo ar c'hoari p'en deus unan eus ar c'hoarierien troet holl e gartoù. Ar c'hoarier gant an nebeutañ a boentoù a c'hounez. C'hallit mont da lenn <rules>ar reolennoù</rules> evit kaout muioc'h a ditouroù."
         },
         "how-to-win": {
           "title": "Penaos gounit er Skyjo?",
@@ -128,7 +128,7 @@
           "description": "Ar c'hastiz a zo arloet ma n'eo ket bet tizhet an niver a boentoù izelañ gant ar c'hoarier⋅ez kentañ troet holl h⋅e gartoù ganti⋅añ (na vez ket arloet mard eo izeloc'h pe kevatal ar gont evit 0)"
         },
         "first-player-flat-penalty": {
-          "title": "Kont ar c'hoarier⋅ez kentañ a vo kresket a {number} ma n'eo ket bihanoc'h strizh evit kontoù all ar c'hoariadenn",
+          "title": "Ouzhpennet e vo {number} poent da gont ar c'hoarier kentañ",
           "label": "Kastiz plad evit ar c'hoarier⋅ez kentañ"
         },
         "first-player-multiplier-penalty": {
@@ -139,7 +139,7 @@
         "remove-identical-row": "Dilemel ar rannoù heñvel",
         "remove-identical-column": "Dilemel ar bannigoù heñvel",
         "show-current-score": {
-          "label": "Diskouez ar poentoù red e-pad ar c'hoari"
+          "label": "Diskouez ar skor en amzer gwir"
         }
       },
       "player-section": {
@@ -173,7 +173,8 @@
         "replay": "C'hoari en-dro"
       },
       "title": "Disoc'hoù ar c'hoari",
-      "leave-button": "Kuitaat ar c'hoariadenn"
+      "leave-button": "Kuitaat ar c'hoariadenn",
+      "round": "Troennad {number}"
     },
     "PrivacyPolicy": {
       "head": {
@@ -186,7 +187,76 @@
         "title": "Reolennoù a-fet buhez prevez",
         "last-update": {
           "text": "Hizivaet da ziwezhañ: {date}",
-          "date-format": "DD/MM/YYYY - HH:mm"
+          "date-format": "MMMM D, YYYY"
+        },
+        "tldr": {
+          "title": "SKR — Ar pezh a rankez gouzout",
+          "minimal-data": "Mir a reomp nebeut a roadennoù evit ma c'hellfes c'hoari, pa vefe kevreet pe n'eo ket.",
+          "guest-data": "Dalc'het e vez an titouroù a-zivout ar c'houvidi (anv, avatar, skor, kaozeadennoù) nemet mar bez un c'hoarier kevreet er c'hoari.",
+          "personal-data": "Do postumer, do anv implijer, ha ditouroù personel all a vez miret nemet mar krouiñ ur c'hont.",
+          "chat-storage": "Mir a reer ouzh ar c'haozeadennoù da gentañ ha miret e vezont nemet ma vezont droukvesket.",
+          "privacy-compliance": "En urzhommomp da brevezded ha doujañ a reomp ouzh ar GDPR, o mirout pep tra war-sav-mat en UE.",
+          "data-rights": "Gallout a rez goulenn mont-tre, reizhañ, ezporzhiañ pe diverrañ an titouroù a-berzh e-pad ar mare.",
+          "contact": "Evit goulennoù: <email></email>"
+        },
+        "operator": {
+          "title": "1. Piv a ra war-benn al lec'hienn-mañ?",
+          "operator-info": "Ar web-lec'h-mañ a zo renet gant un den prevez:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "N'eo ket un embregerezh."
+        },
+        "data-collection": {
+          "title": "2. Daoust hag eñ em-ez dedeoñ?",
+          "description": "Gromad a reomp roadennoù evit an c'hoarierien enrollet hag evit ar re n'int ket, hepken pa vez ur c'hoarier gwiriet (en-barzh) e-barzh ar c'hoari.",
+          "guest-players": {
+            "title": "Evit ar c'hoarierien a c'houlennerien:",
+            "items": "Anv diskwelet (dibabet pa'z a reer er c'hoari);;Aveltar dibabet;;Skor ar c'hoari, renk, hag an status gounezer;;Kemenadennoù predoù (dalc'het da c'hortoz nemet ma vezont merket)",
+            "note": "Dalc'het eo an titouroù-mañ nemet mar bezo ur c'hoarier bennak er c'hrogad kevreet."
+          },
+          "logged-users": {
+            "title": "Evit an implijidi kevreet (e-maez ouzhpenn an traoù a-us):",
+            "items": "Chomlec'h postel;;Anv implijer / anv diskwelet;;Skeudenn (eus roll ravaouet);;Ger-tremen gwisket pe ID OAuth (Google, Facebook);;Diuizadur yezh;;Statud gwiriekadur postel"
+          },
+          "general": {
+            "title": "Hol (evit an holl implijerien):",
+            "items": "Dati eus ar c'hoariadenn (kodoù, parametroù);;Koukouk an diaz-pad (a ya da get goude 24 eurvezh);;Chomlec'h IP (da c'hortoz, n'eo ket miret pell-amzer);;Keleverañ implij divanv (dre PostHog, gweshket en UE)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Perak e vez implijet da roadennoù?",
+          "items": "- Da belladenn an c'hoarierien (gwesker pe enrollet) da gemer perzh ha c'hoari;;Da ziskouez an avatarioù, an anvioù, ar skor hag ar renkadennoù;;Da aotreañ ar reoliñ e-pad an abadennoù;;Da verañ an adlodennoù hag an adkavadennoù kont (evit an implijerien enrollet);;Da wellaat al lec'hienn gant an dielfennadurioù dizanv"
+        },
+        "data-retention": {
+          "title": "4. Ken hir e vo dalc'het da roadennoù?",
+          "retention-table": {
+            "headers": "Seurt A-gwareziñ;;A-gwareziñ",
+            "rows": "Koukouloù-amzeriad;;24 eurvezh|||Daveoù-kont (en-barzh);;Betek goulennoù dilemel|||Daveoù c'hast;;Nemetañ ma 'z eus un c'hoarier kevreet er c'hoari|||Daveoù-c'hoari & disoc'hoù;;Dalc'hadur pad|||Kemenadennoù-kaser;;Badez en Redis; savet mar d'eo bet adroet|||Distroadur;;Da viken|||Tokenoù gwiriekadur/adlakaat;;Betek implijet pe tremen an termeniñ|||Goulennoù dilemel-kont;;Dilemet goude 48 eurvezh a amzer-digwadiñ|||Analizennoù (PostHog);;Da viken, gwestelet en UE"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Pagel-diazez (GDPR)",
+          "description": "Ar c'hrouiñ a zo diazezet war:",
+          "items": "Asant (kefalioù, stadegoù);;Kevrad (da reiñ ar c'hoari);;Interes lezennel (merañ);;Skylded lezennel (respont d'ar goulennoù)"
+        },
+        "data-access": {
+          "title": "6. Piv a c'hall gwelet da roadennoù?",
+          "items": "Ar c'hoarierien all a welo da anv foran, da avatar hag istor da c'hoarioù;;An aozer (Maxent Rouault) a c'hell kaout an titouroù evit an dereouri ;;N'eus ket gwerzh na implij reklam evit da ditouroù"
+        },
+        "your-rights": {
+          "title": "7. Da wirioneier",
+          "items": "Gouzañv, reizhañ pe dilemel da roadennoù;;Dilemel da gont (pe goulenn anezhañ);;Ezporzhiañ da roadennoù (war goulenn);;Apellat difennoù ouzh appeal@skymo.online"
+        },
+        "security": {
+          "title": "8. Surentez",
+          "items": "Koumanzhet gerioù-tremen gwirheñvel;;Kevreadennoù HTTPS hepken;;Mererezh ha kavout abafiz;;Pellgontadur diazezet en UE (Pariz, Bro-C'hall)"
+        },
+        "cookies-analytics": {
+          "title": "9. Kookiennoù & Analitik",
+          "items": "N'evit an teknologiezhioù nemetken (digor, kevreañ);;Analis dre PostHog, war an EU, hep heñchañ etre lec'hiennoù"
+        },
+        "contact": {
+          "title": "10. Kenurzh",
+          "description": "Goulenn general: <email></email>"
         }
       }
     },
@@ -196,7 +266,503 @@
         "keywords": "Reolennoù Skyjo,penaos c'hoari Skyjo,c'hoari Skyjo,reolennoù ar c'hoari kartoù,c'hoari kartoù enlinenn,ditouroù ar c'hoari,sturlevr ar gameplay",
         "description": "Deskit penaos c'hoari Skyjo gant hon sturlevr klok. Grit anaoudegezh gant ar reolennoù, ar strategiezhoù hag an tunioù evit mestroniañ ar c'hoari kartoù-mañ. C'hoariit Skyjo enlinenn gant ho mignoned bremañ!"
       },
-      "title": "Reolennoù c'hoari Skyjo"
+      "title": "Reolennoù ar c'hoari",
+      "play-button": "C'hoari en-linenn digoust !"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Bann an titouroù | Skymo - Skyjo Kartenn C'hoari En-linenn",
+        "description": "Gwelet an dud wellañ war Skymo! Sellet ouzh gwellañ c'hoarierien Skymo hag o feurioù trec'h en hon renkadeg kenkevezus.",
+        "keywords": "Skymo, Skyjo, renk, gwellañ c'hoarierien, renkadennoù, gwellañ c'hoarierien, feur trec'h, kenstrivadeg, kartenn c'hoari en-linenn"
+      },
+      "title": "Roll an arvesterien",
+      "subtitle": "Gouzout a reoc'h an c'hoarierien Skyjo gwellañ ha kenstrivañ evit ar plasoù kentañ!",
+      "lastUpdated": "Diwezhañ hizivadur: {date}",
+      "columns": {
+        "rank": "Renk",
+        "player": "C'hoarier",
+        "wins": "Trec'hioù",
+        "totalGames": "C'hoarioù hollek",
+        "winRate": "Patez an trec'h"
+      },
+      "noData": "N'eus bet kavet c'hoazh a c'hoarierien er renk-mañ.",
+      "error": "N'haller ket kargañ an titouroù a-vremañ.",
+      "tryAgainLater": "Klask a-nevez war-lerc'h un nebeud amzer.",
+      "callToAction": {
+        "guest": {
+          "title": "Prest da gemer perzh?",
+          "description": "Enskrivit evit heuliañ da ziorren ha kenstrivañ gant c'hoarierien dre ar bed !",
+          "signup": "Enskrivañ bremañ"
+        },
+        "authenticated": {
+          "title": "Prest da gemer perzh?",
+          "description": "Lammat en ur c'hoari ha pignañ war an renkelladenn!",
+          "createGame": "Krouiñ ur c'hoari",
+          "joinGame": "Gevred"
+        }
+      },
+      "errorActions": {
+        "refresh": "Adlañsa",
+        "backHome": "Distreiñ d'ar gêr"
+      }
+    },
+    "Signup": {
+      "head": {
+        "title": "Liamm ouzh Skymo | C'hoari Skyjo en-linenn digoust",
+        "description": "C'hoari Skyjo en-linenn gant mignoned! Krouiñ ur gont Skymo digoust evit heuilh da ziorren, digeriñ endalc'had dibar, ha mont e-barzh ur gumuniezh bev-buhevek.",
+        "keywords": "skymo,c'hoari skyjo en-linenn,c'hoari skyjo en-linenn,enskrivañ skyjo,krouiñ konto skymo,mont da skymo,skymo skyjo,c'hoari kartoù en-linenn,skyjo liesc'hoarier,c'hoari skyjo digoust,c'hoari skyjo gant mignoned,heuliañ diorroadur skyjo,kêvredigezh skyjo,endalc'had dibar skyjo"
+      },
+      "title": "Enskrivañ",
+      "or": "PePe",
+      "form": {
+        "email": {
+          "label": "Postel",
+          "button": "Kendalc'h gant postel"
+        }
+      },
+      "already-have-account": {
+        "description": "Kont a-vremañ ganit?",
+        "link": "Enskrivañ"
+      },
+      "advantages": {
+        "title": "Sinet gant an Avantur",
+        "subtitle": "Krouiñ ur c'hont evit digeriñ ur bed a c'halloudegezhioù ha gwellaat da brofidiñ.",
+        "features": {
+          "track-progress": {
+            "title": "Heul an araokadennoù",
+            "description": "Gwelet penaos e renk an dud all hag e heuliañ da welladennoù dre amzer."
+          },
+          "personalized-experience": {
+            "title": "Dibaradur personelaet",
+            "description": "Tapet kinnigoù ha danvezioù personel evit te."
+          },
+          "join-community": {
+            "title": "Liamm gant ar gumuniezh",
+            "description": "Kevarz gant kenveajourion all, rann titouroù, ha gounid mignoned nevez."
+          },
+          "exclusive-content": {
+            "title": "Endalc'hadour dibar",
+            "description": "Tap dañvez da c'houzout ouzh an alc'hwezioù-kas, ar gwirioù-kaer, hag an nevezadurioù kentañ."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "text": "Dre kenderc'hel, ec'h asurir ouzh hon",
+        "terms-link": "Termenoù Servij",
+        "and": "ha",
+        "privacy-link": "Politikerezh prevezded"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Loc'hinañ | Skymo - Skyjo Kartenn C'hoari Internet",
+        "description": "Kevreañ e Skymo evit c'hoari Skyjo en-linenn. Degas da postel ha da ger-tremen evit mont da'z kont ha kregiñ da c'hoari war-eeun.",
+        "keywords": "Skymo,Skyjo,en em ouzh enskrivañ,kartennerzh enlinenn,c'hoariadenn Skyjo,kartennerzh,c'hoariadenn enlinenn"
+      },
+      "title": "Enskrivañ",
+      "or": "PePe",
+      "form": {
+        "login": {
+          "label": "Postel pe anv-implijer"
+        },
+        "password": {
+          "label": "Ger-tremened"
+        },
+        "submit": "Enskrivañ"
+      },
+      "signup": {
+        "description": "N'ez po ket ur c'hont?",
+        "link": "Enskrivañ bremañ!"
+      },
+      "forgot-password": "Kollet da ger-tremen?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Kollet an Tremen-ger | Skymo - Skyjo Kartenn-c'hoari En-linenn",
+        "description": "Adlaka da ger-tremen Skymo evit adtapout an digarez d'da gont ha kenderc'hel da c'hoari Skyjo en-linenn gant da vignoned.",
+        "keywords": "Skymo,Skyjo,ankouadiet ger-tremen,adlakaat ger-tremen,adfarou an konto,karten-c'hoari enlinenn"
+      },
+      "title": "Ankounac'haet ho Password",
+      "description": "Degas da chomlec'h postel ha kas a reom dit ur c'henger a-benn adlakaat da ger-tremen",
+      "form": {
+        "email": {
+          "label": "Chomlec'h postel"
+        },
+        "submit": "Kasit ul liamm aduñ",
+        "sending": "Ouzhpenn..."
+      },
+      "success": {
+        "title": "Gwiria da bostel",
+        "message": "Mar ez eus ur c'hont war-lerc'h ar postel-mañ, ur c'houladadenn evit adlakaat ar ger-tremen zo bet kaset.",
+        "back": "Distreiñ d'al Loc'hañ"
+      },
+      "back": "Distreiñ d'al Lostell"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Adlakaat ger-tremen | Skymo - Skyjo Card Game Online",
+        "description": "Krouiñ un ger-tremen nevez evit da gonto Skymo evit adkavout an tu da vont en-dro ha kendelc'her da c'hoari Skyjo en-linenn.",
+        "keywords": "Skymo, Skyjo, adlakaat ger-tremen, ger-tremen nevez, adkavout kont, kartenn c'hoari en-linenn"
+      },
+      "title": "Adlakaat ger-tremen",
+      "description": "Skriv da ger-tremen nevez amañ.",
+      "form": {
+        "password": {
+          "label": "Ger-tremen nevez"
+        },
+        "confirmPassword": {
+          "label": "Kadarna an hevelep ger-tremen"
+        },
+        "submit": "Adlakaat ger-tremen",
+        "resetting": "Adsevel..."
+      },
+      "success": {
+        "title": "Kudennoù-ger gwiriekaet",
+        "message": "D'eo bet adaozet da ger-tremen. Gallout a rez bremañ kevreañ gant da ger-tremen nevez.",
+        "back": "Enskrivañ"
+      },
+      "back": "Distreiñ d'al Loc'hañ"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "Kemenet eo bet cheñch an e-bost",
+        "message": "D'eo bet distroet cheñchadur da postel ha saveteet eo bet da gontoù. Kontrollañ a reer postel evit keloù adlakaat ger-tremen.",
+        "close": "Gallout a rez serriñ ar bajenn-mañ bremañ."
+      },
+      "failed": {
+        "title": "N'eo ket deuet a-benn da adlakaat ar postel"
+      },
+      "back": "Distreiñ d'al Loc'hañ"
+    },
+    "OAuthCallbackPage": {
+      "title": "Adkavet oc'h o vont en-dro…"
+    },
+    "Onboarding": {
+      "title": "War-gresk an deskadurezh...",
+      "subtitle": "Peillet da brofil ha lammat en avantur Skymo !",
+      "form": {
+        "name": {
+          "label": "Anv c'hoarier",
+          "placeholder": "Jeff",
+          "description": "Diskouezet d'ar c'hoarierien all er c'hoarioù"
+        },
+        "username": {
+          "label": "Anv",
+          "placeholder": "jeff",
+          "description": "Evit kevreañ ha profil"
+        },
+        "password": {
+          "label": "Krouiñ ur ger-tremen",
+          "placeholder": "Degas ur ger-tremenan sur"
+        },
+        "submit": "Prest da c'hoari!"
+      },
+      "head": {
+        "description": "Kloka da brofil ha lammat en avantur Skymo !",
+        "keywords": "Skymo,Skyjo,degouezout,profild,abaden,kard-c'hoari enlinenn",
+        "title": "Onboarding | Skymo - Skyjo Online Card Game"
+      },
+      "loading": "Ouzhpennadur hoc'h profile...",
+      "success": "Ebarzhadeg deuet mat da benn! Adkaset war an titl..."
+    },
+    "Verify": {
+      "head": {
+        "title": "Gwiriekañ Postel | Skymo - Skyjo Kortenn C'hoari",
+        "description": "Gwiri da chomlec'h postel evit echuiñ savidigezh da gonto Skymo ha kregiñ da c'hoari Skyjo en-linenn gant da vignoned.",
+        "keywords": "Skymo,Skyjo,gwiridigezh postel,gwiriañ kont,kard-c'hoari en-linenn"
+      },
+      "title": "Gwiriekañ da bostel",
+      "description": "Kemeret ez omp bet ur c'hod 6 digor en da chomlec'h postel. Laka anezan amañ dindan, mar plij.",
+      "resend": {
+        "countdown": "Kasit ar c'hod en-dro e {seconds}s",
+        "prompt": "N'ez es ket bet resevet ar c'hod?",
+        "button": "Goulenn ur c'hod nevez",
+        "sending": "Ouzhpenn '..."
+      },
+      "toast": {
+        "success": "Kadarnet eo ar postel !",
+        "resend-success": "Kaset ez eus bet un postel nevez",
+        "email-already-sent": "Kinniget eo bet un e-bost dija er 5 munutenn ziwezhañ. Chetil da voutel pe klikit war \"Goulenn kod nevez\" evit kas unan all"
+      },
+      "loading": "Ouzhpennadur hoc'h rummad..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "Profil '{username}' | Skymo - Skyjo Online Card Game",
+        "description": "Gwelet profile {username} war Skymo. Sellet ouzh o stadegoù-c'hoari, o labour diwezhañ, hag o lorc'hadurioù e Skyjo online.",
+        "keywords": "Skymo,Skyjo,profilu,stadegoù an c'hoarier,stadegoù ar c'hoari,c'hoarioù nevez,prizioù,kartennoù-c'hoari en-linenn"
+      },
+      "not-found": {
+        "title": "N'eus ket eus an implijer",
+        "description": "An implijer \"{username}\" n'eus ket anezhañ pe he deus cheñchet hec'h anv implijer.",
+        "back-to-home": "Distreiñ d'ar gêr"
+      },
+      "error": {
+        "title": "N'eus ket bet mat",
+        "description": "Degouezhet ez eus ur fazi pa oamp o kargañ ar profil-mañ. Klask a-nevez war-lerc'h.",
+        "back-to-home": "Distreiñ d'ar gêr"
+      },
+      "stats": {
+        "total-games": "C'hoarioù hollek",
+        "win-rate": "Prizadenn trec'h",
+        "average-rank": "Renk keitat",
+        "public": "Publik",
+        "private": "Prevez"
+      },
+      "sections": {
+        "achievements": "Perzheñver",
+        "achievements-coming-soon": "Ar sistem lorioù a zeuio buan!",
+        "recent-activity": "Oberoù diwezhañ"
+      },
+      "recent-activity": {
+        "no-activity": "N'eus ket a obererezh nevez da ziskouez.",
+        "game-code": "C'hoari #{code}",
+        "rank": "Renk #{rank}",
+        "winner": "Gounid"
+      },
+      "search": {
+        "placeholder": "Klask anv implijer"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Kevredadenn | Skymo - Skyjo Kartenn C'hoari En-linenn",
+        "description": "Keren da gont war Skymo. Cheñch da anv diskouez, da anv implijer, da postel, da ger-tremen, ha da raktisoù kont."
+      },
+      "title": "Kevredadenn",
+      "description": "Keren da gont ha da ditouroù personel.",
+      "Navigation": {
+        "profile": "Profild",
+        "account": "Kont",
+        "password": "Ger-tremen"
+      },
+      "buttons": {
+        "save": "Enroll an kemm",
+        "saving": "O saveteiñ...",
+        "delete-account": "Dilemel kont",
+        "confirm-delete": "Ya, Dilemañ ma Gontoù"
+      },
+      "messages": {
+        "save-success": "Setu savet mat !",
+        "save-error": "N'eo ket deuet a-benn da enrollañ an arventennoù. Klask a-nevez, mar plij.",
+        "delete-confirmation": "Ha sur oc'h e fell deoc'h dilemel ho kont? N'haller ket didenkel an ober-mañ ha kement road a vo lamet da viken.",
+        "username-taken": "Ar vout-houman zo kemeret dija.",
+        "email-taken": "An postel-ma zo implijet c'hoazh.",
+        "password-incorrect": "An ger-tremen a-vremañ zo direizh.",
+        "account-deletion-scheduled": "Da goulenn dilemel da gont a zo bet kemeret e kont ha sevenet e vo en 48 eurvezh. Kemeret e vo ur postel ganeoc'h evit kadarnaat an dilem.",
+        "account-deletion-failed": "An 오류 a c'hloaz pa'z eo bet diverket da gont. Klask en-dro, mar plij."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profild",
+      "fields": {
+        "name": {
+          "label": "Anv diskwel",
+          "description": "Da anv diskouezet d'ar c'hoarierien all er c'hoarioù.",
+          "placeholder": "Laka da anv",
+          "submit": "Enroll anv"
+        },
+        "avatar": {
+          "label": "Skeud",
+          "description": "Da avatar diskouezet war da brofil.",
+          "placeholder": "Dibab da avatar",
+          "submit": "Enroll skeudenn"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Kont",
+      "fields": {
+        "username": {
+          "label": "Anv-implij",
+          "description": "Da anv implij unique implijet evit URL da brofil.",
+          "placeholder": "Degemer da anv implijer",
+          "submit": "Enroll an anv"
+        },
+        "email": {
+          "label": "Chomlec'h postel",
+          "description": "Da chomlec'h postel a implijer evit kevreañ hag evit kemenadennoù a bouez. Evit an surentez, ur postel a viz a vo kaset d'da chomlec'h a-vremañ pa cheñchfe anezhañ.",
+          "placeholder": "Ensell en emeil",
+          "submit": "Enrollañ postel"
+        },
+        "settings-sync": {
+          "description": "Sina an titour a-dreuz da holl ho lowennerioù pa vezit kevreet.",
+          "enable-sync": "Aotreañ kenroulañ an arventennoù",
+          "status": {
+            "enabled": "Gwelet",
+            "disabled": "Dizoloet",
+            "syncing": "Ouzhpennañ...",
+            "offline": "Di-linenn",
+            "error": "N'eo ket deuet a-benn an endroadur"
+          },
+          "label": "Kevreañ an arloadurioù",
+          "disable-sync": "Diaktiñ synk an arloadurioù",
+          "last-sync": "Diwezhañ sync: {date}",
+          "sync-now": "Sink bremañ"
+        }
+      },
+      "delete-account": {
+        "title": "Dilemet ma c'hont",
+        "description": "Dilekut da gonto hag an holl roadennoù stag outañ. N'haller ket didroc'hañ an ober-se ha divaskell a vo taolet da viken da holl ho roadennoù.",
+        "button": "Dilemel kont",
+        "confirmation": {
+          "description": "Dre kadarna, un dellad-kannad 48 eur a grogo: resevi a reot un postel gant ul liamm evit nullañ an dilamet ma cheñchot ali. Ho kont a chomo digor e-pad an amzer-se. Goude 48 eur, e vo dilamet da viken ha resevi a reot un postel kadarna.",
+          "input-label": "Skriv DELETE evit kadarnaat",
+          "input-placeholder": "DILAMMAT",
+          "cancel-button": "Nullañ",
+          "delete-button": "Dilekiñ ma c'hont"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Cheñch ger-tremen",
+      "fields": {
+        "password": {
+          "label": "Ger-tremen",
+          "description": "Kemm an ger-tremen a-vremañ.",
+          "current-password": "Ger-tremen a-vremañ",
+          "new-password": "Ger-kuzh nevez",
+          "confirm-password": "Kadarnañ an tremen-ger nevez",
+          "current-placeholder": "Degas da ger-tremen a-vremañ",
+          "new-placeholder": "Degemer da ger-tremen nevez",
+          "confirm-placeholder": "Kadarnait ho ger-tremen nevez",
+          "submit": "Mirout ho ger-tremened"
+        }
+      },
+      "messages": {
+        "password-incorrect": "An ger-tremen a-vremañ zo direizh."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Token direizh",
+      "success": {
+        "title": "Kanslet eo dilez kont",
+        "description": "Da vac'hant eo bet nullet da zilec'hiadenn kont. Da gont a zo saveteet ha ne vo ket dilec'hiet.",
+        "secure-message": "Da c'hont a zo bremañ sur ha chomo a-sav. Gallout a raout kenderc'hel da implijout da c'hont end-eeun."
+      },
+      "failed": {
+        "title": "Nulledigezh c'hwitet",
+        "description": "N'hon eus bet tu ebet da nullañ diveradur da gont. Klask a-nevez pe digevred ouzh an harp.",
+        "general-error": "Kement-ha-kement a yeas evit-al-laezh pa glaskas dit a-barzh da zilegadur kont. Klask a-nevez pe skoazell a-gleiz.",
+        "help-message": "Kement-ha-kement a yeas evit-al-laezh pa glaskej a-barzh da nullañ dilezadenn da gontoù. Klask adarre pe degemer skoazell."
+      },
+      "expired": {
+        "title": "Liamm an nuladenn a zo tremenet",
+        "description": "N'eo ket deuet a-benn ar web-chomlec'h-mañ evit nuladiñ. Mard eo bet goulennet ganit mirout da gont, kit e darec'h d'ar servij harp.",
+        "help-message": "Tremenet eo ar prantad a zileg an 48 eurvezh. Kit e darec'h d'ar skoazell mar fellout deoc'h sikour."
+      },
+      "actions": {
+        "return-homepage": "Distreiñ d'ar bajenn-gentañ"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Termenoù Servij | Skymo - Skyjo Kartenn C'hoari En-linenn",
+        "description": "Lenn an Termenoù Servij evit Skymo, ar savlec'h kartoù Skyjo en-linenn. Kemer titour diwar-benn redioù an implijerien, implij ar servij, ha politikerezhioù al savlec'h.",
+        "keywords": "Terms of Service, Skymo, Skyjo, kartenn-c'hoari en-linenn, emglev implijer, reolennoù ar savlec'h"
+      },
+      "content": {
+        "title": "Termenoù Servij",
+        "last-update": {
+          "text": "Diwezhañ hizivadur: {date}",
+          "date-format": "MMMM D, YYYY da HH:mm"
+        },
+        "welcome": "Degemer mat war <b>skymo.online</b>, ur c'hoari kartoù lies-c'hoarier enlinenn renet gant Maxent Rouault. Dre gement a-benn implijout al lec'hienn-mañ, e asuri an holl da reolennoù an implij. Ma n'eo ket a-du, ne c'hell ket implijout ar savadur.",
+        "operator": {
+          "title": "1. Oberier",
+          "content": "Ar web-lec'h-mañ a zo renet gant:",
+          "name": "Maxent Rouault",
+          "contact": "Kenwerzh: {email}",
+          "location": "Frañs (operatour prevez nann-kenwerzhel)"
+        },
+        "eligibility": {
+          "title": "2. Kêveziñ",
+          "content": "Gallout a rez implijout ar servij evel a-vremañ pe dre ur c'hont. Dre implijout al lec'hienn-mañ, e kadarnañ a rez ez:",
+          "items": {
+            "1": "Nei ouzh 13 bloaz (pe an oad izelañ rekis en da vro) eo da oad.",
+            "2": "Ma out dindan 18 vloaz, ez eus aotre digant un evezhier lezennel."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Kont & Implijet a Vred",
+          "items": {
+            "1": "C'hall an c'hoarierien degemer c'hoari hep enskrivañ, met lod eus an arc'hwelioù a c'hell bezañ bevennet.",
+            "2": "An implijidi enrollet a rank rei un postel hag un anv implijet reizh.",
+            "3": "Eus da gonto e respont an holl traoù. Ne dle ket da login bezañ kempennet gant unan all.",
+            "4": "Gallout a rez dilemel da gont e-pad e-pad. Goude 48 eurvezh, da roadennoù personel a vo anaoudegoet pe diverket da viken."
+          }
+        },
+        "data-storage": {
+          "title": "4. Endorry an roadennoù",
+          "content": "Mir a reomp an data-mañ, hervez da implij:",
+          "all-players": {
+            "title": "Evit an holl c'hoarierien:",
+            "items": {
+              "1": "Anv diskouezet er c'hoari, avatar, skor, ha kemenadennoù-komz **mar bez unan bennak o c'hoari enlinenn**.",
+              "2": "Gallout a ra an chomadennoù IP bezañ miret da c'houlz evit abegoù surentez ha mererezh."
+            }
+          },
+          "registered-players": {
+            "title": "Evit ar c'hoarierien enrollet:",
+            "items": {
+              "1": "Postel, anv implijour, avatar, stadegoù-c'hoari, ha kontoù staget (da skouer, Google) a-boan.",
+              "2": "Gall an titouroù analitik evel emzalc’h ar c’hoari, aliesañ ar seizoù pe implij an arc’hwelioù **kaout dastumad evit gwellaat ar c’hoari**."
+            }
+          },
+          "storage-location": "An holl roadennoù a vez miret en <b>Unvaniezh Europa</b> hag int kaset da-benn hervez ar <link>Politikerezh prevezded</link>."
+        },
+        "analytics-tracking": {
+          "title": "5. Analiñ & Heñchañ",
+          "content": "Evit gwellaat an heskoberezh hag evit personelaat an endevoud implijer, e c'hellfemp:",
+          "items": {
+            "1": "Implij <b>binvioù analitik</b> (da skouer, PostHog pe re all heñvel) evit heuliañ ar c'houlzad hag ar patromoù c'hoari.",
+            "2": "Greskiñ emzalc'h an implijerien evit kavout fazioù, gwellaat an adkemprañ, pe ijinañ arc'hwelioù.",
+            "3": "Er bloavezhioù da zont, e c'hallofeomp implijout an titouroù-se evit **kas deoc'h danvezioù pe bruderezh personellet**, o enoriñ ho gwirioù prevez a-benn ar GDPR."
+          },
+          "data-rights": "Gallout a rez enebiñ ouzh an heuliañ pe goulenn diverrañ da zatioù personel dre hor c'hevatalout."
+        },
+        "ads-monetization": {
+          "title": "6. Reklameoù & Monetization",
+          "content": "An diaz-sav a c'hall diskouez bruderezh, en o zouez bruderezhioù digenvez pe re a-ziwar an danvez. Er bloavezhioù da zont, **bruderezhioù personelaet** a c'hallfe bezañ diskouezet d'ar gweredourien kevreet diouzh o zevezh-implij.",
+          "consent": "Degemeret e vo mekanismoù sklaer evit an diviz hag ar sammet-kenvezañ mar bez ads emzalc'hel pe ads personelaet degaset."
+        },
+        "user-conduct": {
+          "title": "7. Emzalc'h an implijer",
+          "content": "E fellout a ra dit:",
+          "items": {
+            "1": "Bepach doujañ ha heuliañ reolennoù ar c'hoari reizh.",
+            "2": "Na disebri, na trubuilhañ, na gwiskañ tud all, na implijout anvioù-implijer pe skeudennoù displeget.",
+            "3": "Na spammit na abuzit ket eus ar chat pe eus forzh penaos aezamantoù all evit komunikañ."
+          },
+          "enforcement": "Mirout a reomp an gwir da berzhiañ pe terriñ implijerien a disebri an reolennoù-mañ."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderation & Kas",
+          "items": {
+            "1": "Dalc'het e vez ar c'hemennadennoù prevezi da goulz, ha gallout a reont bezañ savet en o fezh evit ar c'hoarioù gant c'hoarierien enrollet.",
+            "2": "E-kemer a reer ar c'hennadurioù pa gas un c'hoarier ur raport pe mar bez ezhomm a vediadur.",
+            "4": "Gallout a ra bezañ enrollet an oberiadurioù kempouezadur hag ar c'hen διαφημίσεις evit diskouez an treuzaskellander hag ar reizhded.",
+            "3": "Gallout a rez kas ur c'helaouadenn dre bostel (sell ouzh an titouroù-kenurzhiañ)."
+          }
+        },
+        "availability": {
+          "title": "9. Kavad",
+          "content": "Ar servij a vez roet \"evel ma'z eo\". Gallout a reomp kemmañ, paou-kefiañ, pe diskregiñ al lec'hienn pe an arc'hwelioù d'ar c'houlz bennak hep kemenn a-raok."
+        },
+        "intellectual-property": {
+          "title": "10. Perzhioù speredel",
+          "content": "An holl endalc'had orin, oberennoù arzel ha kod a zo perc'hennet gant Maxent Rouault, nemet ma vo diskleriet un dra all. N'hell ket adimplijout pe dasparzhiañ lodenn ebet eus al lec'hienn hep aotre."
+        },
+        "legal": {
+          "jurisdiction": "Ar lec'hienn-mañ a zo renet gant lezenn c'hGallaou hag a sent ouzh ar Reoladenn Hollek war Gwareziñ an Datiou (GDPR).",
+          "disputes": "Ar prosezioù a vo kaset en-dro e lezioù-varn gall.",
+          "title": "11. Lezennel"
+        },
+        "contact": {
+          "general": "Goulenned hollek: <email></email>",
+          "title": "12. Darev"
+        }
+      }
     }
   },
   "components": {
@@ -273,6 +839,61 @@
         "volume": {
           "label": "Ampled ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Komzoù",
+        "chat-visibility": "Gweledusted ar c'hao",
+        "chat-notification-size": {
+          "label": "Mentadeg kemennoù-res an teñzor",
+          "values": {
+            "small": "Bihan",
+            "normal": "Normal",
+            "big": "Bras"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Ar ger-heñvel",
+        "switch-to-player-who-is-playing": "Treiñ em-eeun d'ar c'hoarier a zo o c'hoari",
+        "show-preview-opponents-cards": "Diskouez un rakweled eus kartenn an eneppartizien er roll eneppartizien"
+      },
+      "gameplay": {
+        "title": "C'hoariadeg",
+        "gameboard": {
+          "title": "Taolenn c'hoari",
+          "size": {
+            "label": "Ment da c'harto",
+            "big-warning": "Gallout a ra diskouezadur war ar pellgomz",
+            "values": {
+              "normal": "Normal",
+              "big": "Bras"
+            }
+          },
+          "enlarge-active-player-board": "Astenn taol ar c'hoarier emañ e tro"
+        },
+        "timer": {
+          "title": "Amzer",
+          "label": "Doare diskouez an eurier",
+          "description": "Ar mod fur a ziskouez an eurier e-pad an hanter-amzer hag an 15 segondenn diwezhañ.",
+          "modes": {
+            "never": "Biken",
+            "smart": "Fur",
+            "always": "Atav"
+          }
+        }
+      },
+      "account": {
+        "title": "Kont",
+        "sync": {
+          "label": "Darvoudoù kont",
+          "description": "Kevezit ho termenoù war holl ho poelladennoù pa vezit kevreet.",
+          "enabled": "Gwelet",
+          "disabled": "Dizoloet",
+          "syncing": "Ouzhpennañ...",
+          "offline": "Di-linenn",
+          "error": "N'eo ket deuet a-benn an endroadur",
+          "lastSync": "Diwezhañ sync: {date}"
+        }
       }
     },
     "KickVote": {
@@ -292,7 +913,7 @@
         }
       },
       "vote-against-you": {
-        "description": "{initiatorName} en/he deus goulennet ur vouezhiadeg evit skarzhañ ac'hanoc'h.",
+        "description": "Goulennet ez eus bet ur vouezhiadeg evit ho skarzhañ.",
         "title": "Mouezhioù evit skarzhañ ac'hanoc'h"
       },
       "player-has-voted": {
@@ -348,7 +969,17 @@
       "unread-messages": "{count} a gemennadennoù anlennet"
     },
     "CopyLink": {
-      "message": "Ere eilet!"
+      "message": "Ere eilet!",
+      "copy": {
+        "button-title": "Eilañ al liamm",
+        "popover": "Kopiet al liamm!"
+      },
+      "share": {
+        "title": "Kemer perzh e'm c'hoari Skyjo !",
+        "text": "Deuit da c'hoari Skyjo ganin war-lin! Klikañ war al liamm evit emezelañ d'ar c'hrogad.",
+        "button-title": "Rannañ ar c'hoari",
+        "tooltip": "Klika amañ evit rannañ ar c'hoari-mañ!"
+      }
     },
     "DiscardPile": {
       "title": "Pakad an diskarg",
@@ -373,7 +1004,8 @@
       },
       "buy-game": "Prenañ ar c'hoari",
       "feedback": "Roit un distro-komz",
-      "status": "Stad ar servijer"
+      "status": "Stad ar servijer",
+      "translations": "Sikourit da dreiñ ar c'hoari !"
     },
     "GameLobbyButtons": {
       "reconnect-game-button": "Adkennaskañ d'ar c'hoariadenn",
@@ -412,7 +1044,7 @@
         "frs": "Eastern Frisian",
         "en": "English",
         "fr": "Français",
-        "bar": "Bavarian",
+        "bar": "Bairisch",
         "da": "Dansk",
         "nl": "Nederlands",
         "nds": "Plattdeutsch",
@@ -496,12 +1128,13 @@
     },
     "Avatar": {
       "context-menu": {
-        "kick": "Skarzhañ {username}",
-        "mute": "Mudañ",
-        "unmute": "Divudañ",
-        "report": "Danevell {username}",
-        "vote-to-kick": "Votiñ evit skarzhañ {username}",
-        "ban": "Ban {username}"
+        "kick": "Skoraj {name}",
+        "mute": "Muzul {name}",
+        "unmute": "Distagañ {name}",
+        "report": "Dañvad {name}",
+        "vote-to-kick": "Votiñ da skarzhañ {name}",
+        "ban": "Gwareziñ {name}",
+        "transfer-host": "{name} eo an ost a-vremañ"
       }
     },
     "EndRoundDialog": {
@@ -536,7 +1169,7 @@
     "ReportDialog": {
       "select-message-placeholder": "Dibab ur gemennadenn",
       "select-message": "Diuzit ar c'hemennad da rentañ-kont",
-      "description": "Danevellit an anv-implijer pe ur gemennadenn digant {username} ma seblant direizh.",
+      "description": "Disputit anv pe ur c'hemmad digant {name} mar seblant didalvez.",
       "toast": {
         "report-submitted": {
           "title": "Danevell a zo bet kaset",
@@ -546,8 +1179,11 @@
       "report-message": "Danevellit ur gemennadenn",
       "no-messages": "N'eus bet kavet kemennadenn ebet eus an implijer-mañ",
       "submit": "Danevelliñ",
-      "title": "Danevell {username}",
-      "cancel": "Nullañ"
+      "title": "Disput {name}",
+      "cancel": "Nullañ",
+      "report-name": "Disput an anv",
+      "comment": "Kontekst ouzhpenn (diret)",
+      "comment-placeholder": "Ro un dachennad ouzhpenn d'an notenn-mañ..."
     },
     "OpponentBoard": {
       "disconnected": "Kuitaet eo bet ar c'hoari gant ar c'hoarier. Ur bot a c'hoario en o lec'h e-pad an troioù kentañ betek ma vo adkevreet."
@@ -565,6 +1201,42 @@
         "title": "C'hoarier Skarzhet",
         "description": "{playerName} zo bet skarzhet eus ar c'hoari abalamour d'an digasted."
       }
+    },
+    "Banner": {
+      "title": "D'am boa ezhomm a'hoc'h <gform>evezhiadennoù</gform> evit sevel dazont Skymo !"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Reolennoù",
+        "leaderboard": "Roll an rennerien"
+      }
+    },
+    "LoginButton": {
+      "login": "Kenwerzh gant an dudi !"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Kenderc'hel gant Google"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Gerioù-tremen a glot",
+      "minimum-characters": "D'an nebeutañ 10 a zigentili",
+      "lowercase-letter": "Un lizherenn vihan da nebeutañ",
+      "capital-letter": "Un lizherenn vras d'an nebeutañ",
+      "number": "Un niverenn da nebeutañ",
+      "special-character": "Un nebeut a arouezennoù dibar da nebeutañ"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Ouzhpenn 'zo o klask...",
+        "available": "Anv implijer a c'haller implijout",
+        "taken": "Kemeret dija!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Adkengargañ gant ar c'hoari",
+      "description": "Emaout e-barzh ur c'hoari a-vremañ. Fellout a ra dit adkengregiñ?",
+      "reconnect-button": "Ya, adkendañ",
+      "dismiss-button": "Nann, dilezel"
     }
   },
   "utils": {
@@ -597,7 +1269,9 @@
       "player-unmuted": "Divudet eo bet {name}",
       "wizz-sent": "Kaset ho peus ur wizz da {targetName}!",
       "wizz-self": "Wizzet hoc'h bet gant {initiatorName}!",
-      "wizz-other": "{initiatorName} en/he deus wizzet {targetName}!"
+      "wizz-other": "{initiatorName} en/he deus wizzet {targetName}!",
+      "welcome": "Mar plij, bezit donezon ha doujañ. Gallout a rez {isMobile, select, true {gwaskañ hir} other {klikañ a-zehou}} war ar c'hemennadennoù evit mud-dallat pe kas ur c'helaouadenn war-benn c'hoarierien ma vez ezhomm.",
+      "host-transferred": "{name} eo an ost a-vremañ"
     },
     "socket": {
       "error": {
@@ -622,6 +1296,9 @@
         },
         "player-banned": {
           "description": "Bet oc'h bet difennet diouzh ar c'hoari-mañ"
+        },
+        "player-already-connected": {
+          "description": "Emaout c'hinniget dija d'ar c'hoari-mañ eus un abadenn all"
         }
       }
     },
@@ -677,12 +1354,107 @@
     },
     "ReportContext": {
       "report-against-you": {
-        "description": "Ho anv-implijer pe unan eus ho kemennadennoù zo bet degaset ha kavet direizh. Na adit ket an emzalc'h-se mar plij.",
+        "description": "D'anv pe unan eus da gemenadennoù a zo bet droukvesket ha kavet eo bet didal. Mar plij, n'ad ket an emzalc'h-se.",
         "title": "Skoet oc'h bet er-maez abalamour d'un danevell"
       },
       "report": {
         "title": "{playerName} zo bet skoet er-maez abalamour d'un danevell"
       }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "N'eus ket aotreet da gas an ostiz",
+        "description": "Nemetañ an hini a zo degemerer a c'hell kas an roll degemerer d'un c'hoarier all"
+      },
+      "player-not-found": {
+        "title": "N'eus ket eus an c'hoarier",
+        "description": "Ar c'hoarier emaout o klask kas an ostiz dezhañ n'eus ket anezhañ er c'hoari"
+      },
+      "player-not-connected": {
+        "title": "Ar c'hoarier n'eo ket konektet",
+        "description": "An hini a glasker kas an aotrouniezh dezhañ n'eo ket stag ouzh ar c'hoari evit poent"
+      },
+      "host-transferred": {
+        "title": "Kaset eo bet an ostiz",
+        "description": "{newHostName} eo an ost a-vremañ er c'hoari"
+      },
+      "you-are-now-host": {
+        "title": "Emaout bremañ an ostiz",
+        "description": "{previousHostName} en deus kaset an roll a ost a-vremañ dit"
+      },
+      "unexpected-error": {
+        "title": "Erreur dizanavez",
+        "description": "An urzhiañ fazi digenvez a c'hoarvezas pa veze kaset an ostiz"
+      }
     }
+  },
+  "errors": {
+    "invalid-credentials": "N'eo ket mat an e-bost pe an ger-tremen a-grenit. Provit adarre.",
+    "logout-failed": "N'hon eus ket gallet digeriñ ac'hanoc'h. Serrit ho merdeer evit echuiñ an dalc'h mar plij.",
+    "session-not-found": "Da session zo bet finet pe n'eo ket mat. Degouezh en-dro, mar plij.",
+    "session-invalid": "Da session n'eo ket reizh. Pellid en-dro evit kenderc'hel.",
+    "session-expired": "Da session zo finet. Dav eo dit en em enrollañ en-dro evit kenderc'hel.",
+    "session-token-missing": "Da babell-sessian a vank. Mar plij, kev en em ouzh evit kaout unan nevez.",
+    "username-taken": "N'eo ket posubl implijout an anv-implijer-mañ. Dibabet unan all, mar plij.",
+    "onboarding-error": "N'eus bet un dra a-benn peurvikaat da brofil. Klask a-nevez, mar plij.",
+    "reset-token-invalid": "An token aduñvañ a roas a zo direizh. Mar plij, goulennet unan nevez.",
+    "reset-token-expired": "Da c'houlenn unan nevez.",
+    "password-reset-failed": "N'hon eus bet tu da adlakaat da ger-tremen. Klask a-nevez, mar plij.",
+    "forgot-password-error": "Degouezhet ez eus ur gudenn o labourat war da goulenn adlakaat ger-tremen. Klask a-nevez war-lerc'h un nebeud amzer.",
+    "reset-password-error": "N'hon eus bet tu da adlakaat da ger-tremen. Klask a-nevez, mar plij.",
+    "oauth-restart-process": "Kement-ha-kement ez eas a-dreuz e-pad an authentification. Klask en-dro da en enrollañ, mar plij.",
+    "oauth-id-token-missing": "N'hon eus bet digemeret tamm token-ID digant an aozer aotreañ. Provañ a-nevez, mar plij.",
+    "oauth-account-creation-failed": "N'hon-eus bet evit krouiñ ur c'hont anavezet gant titouroù da pourchaser. Klask a-nevez, mar plij.",
+    "oauth-login-initiation-failed": "N'hon boa ket gallet kregiñ gant an ouzhpennañ. Klask a-nevez war-lerc'h un nebeud mareoù.",
+    "verify-session-error": "N'hon eus bet mod ebet da wiriañ da ziladenn. Mont kuit ha distro da-barzh, mar plij.",
+    "signup-error": "N'hon eus bet tu ebet da grouiñ da gontoñ evit poent. Klask a-nevez war-lerc'h, mar plij.",
+    "login-error": "Degouezhet ez eus ur gudenn o'm c'houlenn digantout. Klask a-nevez, mar plij.",
+    "login-invalid-credentials": "N'eo ket mat an e-bost pe an ger-tremen a-grenit. Provit adarre.",
+    "logout-error": "An urreur dic'hortoz zo c'hoarvezet pa 'z oc'h o vont kuit.",
+    "check-username-error": "N'hon eus bet tu da wiriañ ha diskuiñ eo an anv implijer. Klask a-nevez, mar plij.",
+    "unknown-auth-error": "Ur fazi autentikasion dianavezet en deus c'hoarvezet. Klask a-nevez, mar plij.",
+    "creation-failed": "N'hon eus bet tu da grouiñ an implijer evit poent. Klask a-nevez, mar plij.",
+    "get-user-error": "N'hon eus bet tu ebet da adkavout ho profil implijer. Klaskit en-dro diwezhatoc'h, mar plij.",
+    "get-user-games-error": "N'hon eus bet mod ebet da gargañ c'hoarioù an implijer. Adlañs ar bajenn, mar plij.",
+    "get-user-stats-error": "N'hon-eus bet evit kargañ stadegoù an implijer. Adkargit ar bajenn, mar plij.",
+    "user-not-found": "N'eus ket bet kavet an implijer a glaskez.",
+    "username-same-as-current": "An anv-implijer-mañ eo hoc'h anv dija.",
+    "email-taken": "D'hel koulz an chomlec'h postel-mañ zo implijet c'hoazh. Mar plij, implij unan all.",
+    "email-same-as-current": "Setu eo da chomlec'h postel.",
+    "invalid-current-password": "An ger-tremen anavezet hoc'h eus eo disevouret.",
+    "update-name-error": "N'hon eus ket gallet hiziviskañ da anv. Klask a-nevez, mar plij.",
+    "update-username-error": "N'hon eus bet tu da hizivikañ da anv-implijer. Klask a-nevez, mar plij.",
+    "update-email-error": "N'hon eus bet tu da hizivikañ da chomlec'h postel. Klask a-nevez, mar plij.",
+    "revert-email-error": "N'hon boa ket gallet cheñch da postel. Mar plij, kontact an harp.",
+    "update-password-error": "N'hon eus ket gallet hiziviskañ da ger-tremen. Klask a-nevez, mar plij.",
+    "update-avatar-error": "N'hon eus bet kaledet da hizivanaat da avatar. Klask a-nevez, mar plij.",
+    "delete-account-error": "N'hon eus bet tu ebet da labourat da goulenn dilemel da gont. Klask a-nevez, mar plij.",
+    "cancel-delete-account-error": "Ne c'halljomp ket nulenn da zilegout da gont. Kenurzh ouzh an harp.",
+    "unexpected-error": "An fazi ouzhpennet a zo c'hoarvezet. Klask a-nevez, mar plij.",
+    "internal-server-error": "Hentour hon servijer a zo bet ur gudenn. Klask a-nevez war-lerc'h, mar plij.",
+    "unauthorized": "N'eus ket aotreet da seveniñ an ober-mañ.",
+    "forbidden": "N'eus ket a aotre da dizhagnout an danvez-mañ.",
+    "not-found": "N'eus ket bet kavet an danvez a glaskez.",
+    "too-many-requests": "Kemeret ez eus beteg an arc'hwelioù. Chom a reoc'h ur paouez ha klask a reoc'h adarre.",
+    "ip-not-found": "N'hon-eus bet anavezet da chomlec'h IP. Kontrollañ dit da genstokadenn, mar plij.",
+    "invalid-request": "Daou c'houlenn a oa dister. Kontrollañ an titouroù a reont hag adarre klask.",
+    "send-feedback-error": "N'hon eus bet tu da gas da dra. Klask a-nevez, mar plij.",
+    "send-pin-error": "N'hon eus bet tu da gas ur PIN kadarnaat da'z postel. Klask a-nevez, mar plij.",
+    "verify-pin-error": "N'hon eus bet mod ebet da wiriañ da PIN. Klask a-nevez, mar plij.",
+    "invalid-pin": "Ar PIN a-vezo digennet ez eo direizh. Klask a-nevez, mar plij.",
+    "expired-pin": "Ar PIN amès a zo deuet fin dezhañ. Ni a gasas dit unan nevez.",
+    "feedback-error": "N'hon eus bet tu da gas da dra a-benn. Klask a-nevez, mar plij.",
+    "get-public-games-error": "N'hon eus bet mod ebet da gargañ ar c'hoarioù foran. Klask a-nevez, mar plij.",
+    "invalid-cancellation-token": "An token-a-vezañ-paouezet a zo direizh. Klask a-nevez, mar plij.",
+    "expired-cancellation-token": "An token-a-goanañ a zo tremenet. Klask a-nevez, mar plij.",
+    "cancel-account-deletion-error": "N'hon eus bet tu ebet da nullañ diveradur da gont. Klask a-nevez, mar plij",
+    "oauth-unknown-error": "Degouezhet eo un error dianav e-pad ar c'helc'h. Klask a-nevez, mar plij.",
+    "invalid-reversion-token": "An arouezenn distro zo direizh. Klask a-nevez, mar plij.",
+    "expired-reversion-token": "An token adsavet en deus re vuan. Klask a-nevez, mar plij.",
+    "name-min-characters": "An anv diskouez a rank bezañ 2 sizunenn d'an nebeutañ",
+    "name-max-characters": "An anv diskouez a rank bezañ 20 arouezenn d'ar muiañ",
+    "username-min-characters": "An anv implij a rank bezañ 3 arouezenn d'an nebeutañ",
+    "username-max-characters": "An anv implij a rank bezañ 20 al lizherenn d'ar muiañ",
+    "username-invalid-format": "An anv implijer ne c'hell kaout nemet lizherennoù, sifroù ha islinennoù"
   }
 }

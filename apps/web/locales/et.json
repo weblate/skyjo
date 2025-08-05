@@ -127,7 +127,7 @@
           "title": "Mängu alguses avaldatakse {number} teie kaardist"
         },
         "show-current-score": {
-          "label": "Näita mängu ajal praegust skoori"
+          "label": "Näita skoori reaalajas"
         },
         "score-to-end-game": {
           "label": "Tulemus mängu lõpetamiseks",
@@ -168,7 +168,8 @@
       "rank": "Järjestus",
       "player": "Mängija",
       "total": "Kokku",
-      "player-want-to-replay": "Mängijad, kes soovivad uuesti mängida:"
+      "player-want-to-replay": "Mängijad, kes soovivad uuesti mängida:",
+      "round": "Voor {number}"
     },
     "PrivacyPolicy": {
       "head": {
@@ -181,7 +182,76 @@
         "title": "Privaatsuspoliitika",
         "last-update": {
           "text": "Viimati värskendatud: {date}",
-          "date-format": "AAAA-KK-PP - hh:mmA"
+          "date-format": "DD.MM.YYYY"
+        },
+        "tldr": {
+          "title": "TL;DR — Mida pead teadma",
+          "minimal-data": "Salvestame minimaalselt andmeid, et saaksid mänge mängida, olenemata sellest, kas oled sisse logitud või külaline.",
+          "guest-data": "Külalisandmed (nimi, avatar, skoor, vestlused) salvestatakse ainult siis, kui mängus on sisse logitud mängija.",
+          "personal-data": "Sinu e-posti aadress, kasutajanimi ja muu isiklik teave salvestatakse ainult siis, kui sa konto loomisega nõustud.",
+          "chat-storage": "Vestlusi säilitatakse ajutiselt ja salvestatakse ainult siis, kui need on teatatud.",
+          "privacy-compliance": "Austame sinu privaatsust ja järgime GDPR-i, säilitades kõike turvaliselt EL-is.",
+          "data-rights": "Saad igal ajal taotleda andmetele juurdepääsu, parandusi, eksporti või kustutamist.",
+          "contact": "Küsimuste korral: <email></email>"
+        },
+        "operator": {
+          "title": "1. Kes seda veebisaiti haldab?",
+          "operator-info": "Seda veebisaiti haldab eraisik:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Ei ole ettevõte."
+        },
+        "data-collection": {
+          "title": "2. Milliseid andmeid me kogume?",
+          "description": "Me kogume andmeid nii registreeritud kui ka külalis-mängijate kohta, ainult siis, kui mängus osaleb ühendatud (sisse logitud) kasutaja.",
+          "guest-players": {
+            "title": "Külalisemängijatele:",
+            "items": "Kuvamisnimi (valitud mängu sisenedes);;Valitud avatar;;Mängu skoor, auaste ja võitja staatus;;Vestlussõnumid (säilitatakse ajutiselt, välja arvatud juhul, kui need on märgistatud)",
+            "note": "See andmeid salvestatakse ainult siis, kui vähemalt üks mängija mängus on sisse logitud."
+          },
+          "logged-users": {
+            "title": "Sisseloginud kasutajatele (lisaks ülaltoodule):",
+            "items": "E-posti aadress;;Kasutajanimi / kuvatav nimi;;Avatari (eelmääratletud loendist);;Räsitud parool või OAuth ID (Google, Facebook);;Keele-eelistus;;E-posti kinnituse olek"
+          },
+          "general": {
+            "title": "Üldine (kõigile kasutajatele):",
+            "items": "Mängusessiooni andmed (koodid, seaded);;Sessiooniküpsis (aegub 24 tunni pärast);;IP-aadress (ajutine, ei salvestata pikaajaliselt);;Anonüümne kasutusanalüüs (PostHogi kaudu, EL-is hostitud)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Miks sinu andmeid kasutatakse?",
+          "items": "Mängijatel (külalistel või registreeritud kasutajatel) mängudega liitumise ja mängimise võimaldamiseks;;Avatare, nimesid, skoore ja edetabeleid kuvamiseks;;Väärkasutuse korral modereerimise lubamiseks;;Tagasiside ja konto taastamise töötlemiseks (sisselogitud kasutajatele);;Ananüümse analüütika abil saidi täiustamiseks"
+        },
+        "data-retention": {
+          "title": "4. Kui kaua teie andmeid säilitatakse?",
+          "retention-table": {
+            "headers": "Andmetüüp;;Säilitusaeg",
+            "rows": "Sessiooniküpsised;;24 tundi|||Konto andmed (sisselogitud);;Kuni kustutamise taotluseni|||Külalisemängija andmed;;Ainult siis, kui ühendatud mängija on mängus kohal|||Mängu andmed ja skoorid;;Salvestatud püsivalt|||Vestlussõnumid;;Ajutised Redis; salvestatakse, kui sellest teatatakse|||Tagasiside;;Püsivalt|||Kontroll-/lähtestamissümbolid;;Kuni kasutamiseni või aegumiseni|||Konto kustutamise taotlused;;Kustutatakse pärast 48-tunnist ooteperioodi|||Analüütika (PostHog);;Püsivalt, EL-is hostitud"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Juriidiline alus (GDPR)",
+          "description": "Töötlemine põhineb:",
+          "items": "Nõusolek (küpsised, statistika);;Leping (mängu pakkumine);;Õigustatud huvi (modereerimine);;Juriidiline kohustus (päringutele vastamine)"
+        },
+        "data-access": {
+          "title": "6. Kes näeb sinu andmeid?",
+          "items": "Teised mängijad näevad sinu avalikku nime, avatari ja mänguajalugu;;Arendaja (Maxent Rouault) võib andmetele ligi pääseda modereerimise eesmärgil;;Sinu andmeid ei müüda ega kasutata reklaamiks"
+        },
+        "your-rights": {
+          "title": "7. Sinu õigused",
+          "items": "Juurdepääs oma andmetele, nende parandamine või kustutamine;;Oma konto kustutamine (või selle taotlemine);;Oma andmete eksportimine (soovi korral);;Apelleeri keeludele aadressil appeal@skymo.online"
+        },
+        "security": {
+          "title": "8. Turvalisus",
+          "items": "Krüpteeritud paroolid;;HTTPS-põhised ühendused;;Mõjutus- ja kuritarvituste tuvastus;;EL-i-põhine hostimine (Pariis, Prantsusmaa)"
+        },
+        "cookies-analytics": {
+          "title": "9. Küpsised ja analüütika",
+          "items": "Ainult hädavajalikud küpsised (seanss, sisselogimine);;Analüütika PostHogi kaudu, hostitud EL-is, saitideülene jälgimine puudub"
+        },
+        "contact": {
+          "title": "10. Kontakt",
+          "description": "Üldised küsimused: <email></email>"
         }
       }
     },
@@ -196,7 +266,503 @@
         "description": "Õpi mängima Skyjo'd meie Skyjo juhendi abil. Avasta reeglid, strateegiad ja näpunäited, et omandada see lõbus online-kaardimäng. Mängi sõpradega kohe!",
         "keywords": "Skymo, Skyjo, Skyjo reeglid, kuidas mängida Skyjo'd, Skyjo mäng, kaardimängu reeglid, online kaardimäng, mängujuhised, mängujuhend"
       },
-      "title": "Skyjo mängureeglid"
+      "title": "Mängureeglid",
+      "play-button": "Mängi tasuta veebis!"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Edetabel | Skymo - Skyjo online kaardimäng",
+        "description": "Vaata Skymo tippmängijaid! Tutvu parimate Skymo mängijate ja nende võidumääradega meie võistluslikul edetabelil.",
+        "keywords": "Skymo, Skyjo, edetabel, parimad mängijad, paremusjärjestus, võidud, võiduvõimalus, võistluslik, online-kaartmäng"
+      },
+      "title": "Edetabel",
+      "subtitle": "Avasta parimad Skyjo mängijad ja võistle tiitlite eest!",
+      "lastUpdated": "Viimati uuendatud: {date}",
+      "columns": {
+        "rank": "Järk",
+        "player": "Mängija",
+        "wins": "Võidud",
+        "totalGames": "Kõik mängud",
+        "winRate": "Võidumäär"
+      },
+      "noData": "Juhtide edetabelis pole veel mängijaid leitud.",
+      "error": "Kahjuks ei saa edetabelit praegu laadida.",
+      "tryAgainLater": "Palun proovi hiljem uuesti.",
+      "callToAction": {
+        "guest": {
+          "title": "Valmis võistlema?",
+          "description": "Registreeru, et jälgida oma edenemist ja võistelda mängijatega üle kogu maailma!",
+          "signup": "Registreeru kohe"
+        },
+        "authenticated": {
+          "title": "Valmis võistlema?",
+          "description": "Liitu mänguga ja tõuse edetabelis!",
+          "createGame": "Loo mäng",
+          "joinGame": "Liitu mänguga"
+        }
+      },
+      "errorActions": {
+        "refresh": "Värskenda",
+        "backHome": "Tagasi koju"
+      }
+    },
+    "Signup": {
+      "head": {
+        "title": "Liitu Skyjo | Mängi Skyjo tasuta veebis",
+        "description": "Mängi Skyjot veebis sõpradega! Loo tasuta Skyjo konto, et jälgida oma edenemist, avada eksklusiivset sisu ja liituda elava kogukonnaga.",
+        "keywords": "skymo, mängi skyjo online, skyjo online mäng, registreeru skyjo, loo skymo konto, liitu skymo, skymo skyjo, online kaardimäng, mitmikmängu skyjo, tasuta skyjo mäng, mängi skyjo sõpradega, skyjo edenemise jälgimine, skyjo kogukond, eksklusiivne skyjo sisu"
+      },
+      "title": "Registreeru",
+      "or": "Või",
+      "form": {
+        "email": {
+          "label": "E-post",
+          "button": "Jätka meili teel"
+        }
+      },
+      "already-have-account": {
+        "description": "Kas sul on juba konto?",
+        "link": "Logi sisse"
+      },
+      "advantages": {
+        "title": "Liitu seiklusega",
+        "subtitle": "Loo konto, et avada uusi võimalusi ja täiustada oma kogemust.",
+        "features": {
+          "track-progress": {
+            "title": "Jälgi oma edenemist",
+            "description": "Vaata, kuidas sa teiste seas asetud ja jälgi oma arengut aja jooksul."
+          },
+          "personalized-experience": {
+            "title": "Isikupärastatud kogemus",
+            "description": "Saad just sulle kohandatud soovitusi ja sisu."
+          },
+          "join-community": {
+            "title": "Liitu kogukonnaga",
+            "description": "Liitu teiste seiklejatega, jaga nippe ja leia uusi sõpru."
+          },
+          "exclusive-content": {
+            "title": "Eksklusiivne sisu",
+            "description": "Saad juurdepääsu eriväljakutsetele, auhindadele ja varajastele uuendustele."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "text": "Jätkates nõustud meie",
+        "terms-link": "Kasutustingimused",
+        "and": "ja",
+        "privacy-link": "Privaatsuspoliitika"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Logi sisse | Skymo - Skyjo online kaardimäng",
+        "description": "Logi sisse Skymosse, et mängida Skyjo online. Sisesta oma e-posti aadress ja parool, et oma kontole ligi pääseda ja kohe mängima hakata.",
+        "keywords": "Skymo,Skyjo,login,online kaardimäng,Skyjo mäng,kaardimäng,online mäng"
+      },
+      "title": "Logi sisse",
+      "or": "Või",
+      "form": {
+        "login": {
+          "label": "E-post või kasutajanimi"
+        },
+        "password": {
+          "label": "Parool"
+        },
+        "submit": "Logi sisse"
+      },
+      "signup": {
+        "description": "Pole kontot?",
+        "link": "Registreeru kohe!"
+      },
+      "forgot-password": "Unustasid salasõna?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Unustasin parooli | Skymo - Skyjo online kaardimäng",
+        "description": "Lähtesta oma Skyjo salasõna, et saada oma kontole uuesti juurdepääs ja jätkata Skyjo mängimist sõpradega võrgus.",
+        "keywords": "Skymo,Skyjo,unustasin parooli,reset parool,konto taastamine,online kaardimäng"
+      },
+      "title": "Unustasin parooli",
+      "description": "Sisesta oma e-posti aadress ja saadame sulle lingi parooli lähtestamiseks",
+      "form": {
+        "email": {
+          "label": "E-posti aadress"
+        },
+        "submit": "Saada lähtestamise link",
+        "sending": "Saadan..."
+      },
+      "success": {
+        "title": "Kontrolli oma e-posti",
+        "message": "Kui selle e-posti aadressiga konto olemas on, siis parooli lähtestamise link on saadetud.",
+        "back": "Tagasi sisselogimisse"
+      },
+      "back": "Tagasi sisselogimisse"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Uue salasõna määramine | Skymo - Skyjo online kaardimäng",
+        "description": "Loo oma Skyjo konto jaoks uus salasõna, et saada uuesti ligipääs ja jätkata Skyjo mängimist veebis.",
+        "keywords": "Skymo,Skyjo,parooli lähtestamine,uus parool,konto taastamine,online kaardimäng"
+      },
+      "title": "Uue salasõna määramine",
+      "description": "Sisesta oma uus salasõna allpool.",
+      "form": {
+        "password": {
+          "label": "Uus salasõna"
+        },
+        "confirmPassword": {
+          "label": "Kinnita uus salasõna"
+        },
+        "submit": "Uue parooli määramine",
+        "resetting": "Läheb lähtestamiseks..."
+      },
+      "success": {
+        "title": "Parooli lähtestamine õnnestus",
+        "message": "Sinu salasõna on lähtestatud. Saad nüüd sisse logida oma uue salasõnaga.",
+        "back": "Logi sisse"
+      },
+      "back": "Tagasi sisselogimisse"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "Meili muutmine tühistatud",
+        "message": "Sinu e-posti aadressi muutmine on edukalt tühistatud ja sinu konto on turvatud. Palun kontrolli oma e-posti parooli lähtestamise juhiste saamiseks.",
+        "close": "Saad selle lehe nüüd sulgeda."
+      },
+      "failed": {
+        "title": "E-posti muutmise tagasivõtmine ebaõnnestus"
+      },
+      "back": "Tagasi sisselogimisse"
+    },
+    "OAuthCallbackPage": {
+      "title": "Ümbersuunamine käib…"
+    },
+    "Onboarding": {
+      "title": "Onboarding käib...",
+      "subtitle": "Täienda oma profiil ja sukeldu Skyjo seiklusse!",
+      "form": {
+        "name": {
+          "label": "Mängija nimi",
+          "placeholder": "Jeff",
+          "description": "Näidatud teistele mängijatele mängudes"
+        },
+        "username": {
+          "label": "Nimi",
+          "placeholder": "jeff",
+          "description": "Sisselogimiseks ja profiili jaoks"
+        },
+        "password": {
+          "label": "Loo salasõna",
+          "placeholder": "Sisesta turvaline parool"
+        },
+        "submit": "Valmis mängima!"
+      },
+      "head": {
+        "title": "Sissejuhatus | Skymo - Skyjo online kaardimäng",
+        "description": "Täienda oma profiil ja sukeldu Skyjo seiklusse!",
+        "keywords": "Skymo,Skyjo,sissejuhatus,profiil,seiklus,online kaardimäng"
+      },
+      "loading": "Laen su profiili...",
+      "success": "Onboarding lõpetatud edukalt! Suunatakse avalehele..."
+    },
+    "Verify": {
+      "head": {
+        "title": "Kinnita e-post | Skymo - Skyjo kaardimäng",
+        "description": "Kinnita oma e-posti aadress, et lõpetada oma Skyjo konto seadistamine ja hakata Skyjot veebis sõpradega mängima.",
+        "keywords": "Skymo,Skyjo,e-posti kinnitamine,konto kinnitamine,online kaardimäng"
+      },
+      "title": "Kinnita oma e-post",
+      "description": "Oleme saatnud su e-posti aadressile 6-kohalise koodi. Palun sisesta see allpool.",
+      "resend": {
+        "countdown": "Saada kood uuesti {seconds}s jooksul",
+        "prompt": "Ei saanud koodi?",
+        "button": "Uue koodi taotlemine",
+        "sending": "Saadan..."
+      },
+      "toast": {
+        "success": "E-post on edukalt kinnitatud!",
+        "resend-success": "Uus e-kiri on saadetud",
+        "email-already-sent": "Viimase 5 minuti jooksul saadeti juba e-kiri. Palun kontrolli oma postkasti või klõpsa \"Saada uus kood\", et saata uus"
+      },
+      "loading": "Laen su profiili..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'i profiil | Skymo - Skyjo online kaardimäng",
+        "description": "Vaata {username} profiili Skymos. Vaata nende mängustatistikat, hiljutist tegevust ja saavutusi Skyjo online'is.",
+        "keywords": "Skymo,Skyjo,kasajaprofiil,mängija statistika,mängude statistika,hiljutised mängud,saavutused,online kaardimäng"
+      },
+      "not-found": {
+        "title": "Kasutajat ei leitud",
+        "description": "Kasutajat \"{username}\" pole olemas või on ta oma kasutajanime muutnud.",
+        "back-to-home": "Tagasi avalehele"
+      },
+      "error": {
+        "title": "Midagi läks valesti",
+        "description": "Meil tekkis selle profiili laadimisel viga. Palun proovi hiljem uuesti.",
+        "back-to-home": "Tagasi kodulehele"
+      },
+      "stats": {
+        "total-games": "Kõik mängud",
+        "win-rate": "Võidumäär",
+        "average-rank": "Keskmine auaste",
+        "public": "Avalik",
+        "private": "Privaatne"
+      },
+      "sections": {
+        "achievements": "Saavutused",
+        "achievements-coming-soon": "Saavutuste süsteem peagi tulemas!",
+        "recent-activity": "Hiljutine tegevus"
+      },
+      "recent-activity": {
+        "no-activity": "Pole hiljutist tegevust, mida näidata.",
+        "game-code": "Mäng #{code}",
+        "rank": "Järjekoht #{rank}",
+        "winner": "Võitja"
+      },
+      "search": {
+        "placeholder": "Otsi kasutajanime"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Konto seaded | Skymo - Skyjo online kaardimäng",
+        "description": "Hallake oma konto seadeid Skymos. Muutke oma kuvatavat nime, kasutajanime, e-posti aadressi, parooli ja konto eelistusi."
+      },
+      "title": "Konto seaded",
+      "description": "Hallake oma kontot ja isiklikku teavet.",
+      "Navigation": {
+        "profile": "Profiil",
+        "account": "Konto",
+        "password": "Parool"
+      },
+      "buttons": {
+        "save": "Salvesta muudatused",
+        "saving": "Salvestan...",
+        "delete-account": "Kustuta konto",
+        "confirm-delete": "Jah, kustuta minu konto"
+      },
+      "messages": {
+        "save-success": "Seaded salvestatud edukalt!",
+        "save-error": "Ei õnnestunud sätteid salvestada. Palun proovi uuesti.",
+        "delete-confirmation": "Oled sa kindel, et soovid oma konto kustutada? Seda toimingut ei saa tagasi võtta ja kõik sinu andmed kustutatakse jäädavalt.",
+        "username-taken": "See kasutajanimi on juba võetud.",
+        "email-taken": "See e-posti aadress on juba kasutusel.",
+        "password-incorrect": "Praegune parool on vale.",
+        "account-deletion-scheduled": "Sinu konto kustutamise taotlus on arvesse võetud ja seda töödeldakse 48 tunni jooksul. Saadetakse sulle kinnituse saamiseks e-kiri.",
+        "account-deletion-failed": "Teie konto kustutamisel ilmnes viga. Palun proovige uuesti."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profiil",
+      "fields": {
+        "name": {
+          "label": "Kuvamisnimi",
+          "description": "Sinu nimi, mida teised mängijad mängudes näevad.",
+          "placeholder": "Sisesta oma nimi",
+          "submit": "Salvesta nimi"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Sinu profiilil kuvatav avatar.",
+          "placeholder": "Vali oma avatar",
+          "submit": "Salvesta avatar"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Konto",
+      "fields": {
+        "username": {
+          "label": "Kasutajanimi",
+          "description": "Sinu unikaalne kasutajanimi, mida kasutatakse sinu profiili URL-is.",
+          "placeholder": "Sisesta oma kasutajanimi",
+          "submit": "Salvesta kasutajanimi"
+        },
+        "email": {
+          "label": "E-posti aadress",
+          "description": "Sinu e-posti aadress, mida kasutatakse sisselogimiseks ja oluliste teavituste jaoks. Turvalisuse tagamiseks saadetakse sinu praegusele aadressile hoiatusmeil, kui seda muudad.",
+          "placeholder": "Sisesta oma e-posti aadress",
+          "submit": "Salvesta e-post"
+        },
+        "settings-sync": {
+          "label": "Sünkroniseeri seaded",
+          "description": "Sünkroniseeri oma seaded kõigis seadmetes, kui oled sisse logitud.",
+          "enable-sync": "Sünkrooni sätete lubamine",
+          "disable-sync": "Sünkroonimise keelamine",
+          "status": {
+            "enabled": "Lubatud",
+            "disabled": "Keelatud",
+            "syncing": "Sünkroniseerib...",
+            "offline": "Võrguühenduseta",
+            "error": "Sünkroonimine ebaõnnestus"
+          },
+          "last-sync": "Viimane sünkroonimine: {date}",
+          "sync-now": "Sünkroniseeri kohe"
+        }
+      },
+      "delete-account": {
+        "title": "Kustuta minu konto",
+        "description": "Kustuta oma konto ja kõik sellega seotud andmed. Seda tegevust ei saa tagasi võtta ja kõik sinu andmed kustutatakse jäädavalt.",
+        "button": "Konto kustutamine",
+        "confirmation": {
+          "description": "Kinnitamisel algab 48-tunnine etteteatamisaeg: saad e-kirja lingiga, et tühistada kustutamine, kui oma meelt muudad. Sinu konto jääb selle aja jooksul kättesaadavaks. 48 tunni pärast kustutatakse see jäädavalt ja saad kinnituse e-kirja.",
+          "input-label": "Sisesta DELETE kinnitamiseks",
+          "input-placeholder": "KUSTUTA",
+          "cancel-button": "Tühista",
+          "delete-button": "Kustuta minu konto"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Muuda salasõna",
+      "fields": {
+        "password": {
+          "label": "Parool",
+          "description": "Muuda oma konto parooli.",
+          "current-password": "Praegune salasõna",
+          "new-password": "Uus salasõna",
+          "confirm-password": "Kinnita uus salasõna",
+          "current-placeholder": "Sisesta oma praegune salasõna",
+          "new-placeholder": "Sisesta oma uus salasõna",
+          "confirm-placeholder": "Kinnita oma uus salasõna",
+          "submit": "Salvesta parool"
+        }
+      },
+      "messages": {
+        "password-incorrect": "Praegune salasõna on vale."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Vigane token",
+      "success": {
+        "title": "Konto kustutamine tühistatud",
+        "description": "Sinu konto kustutamine on edukalt tühistatud. Sinu konto on turvaline ja seda ei kustutata.",
+        "secure-message": "Sinu konto on nüüd turvaline ja jääb aktiivseks. Saad oma kontot tavapäraselt kasutada."
+      },
+      "failed": {
+        "title": "Tühistamine ebaõnnestus",
+        "description": "Me ei saanud sinu konto kustutamist tühistada. Proovi uuesti või võta ühendust tugiteenusega.",
+        "general-error": "Midagi läks valesti konto kustutamise tühistamisel. Proovi uuesti või võta ühendust tugiteenusega.",
+        "help-message": "Midagi läks valesti konto kustutamise tühistamisel. Proovi uuesti või võta ühendust tugiteenusega."
+      },
+      "expired": {
+        "title": "Tühistamislink aegus",
+        "description": "See tühistamislink on aegunud. Kui soovid oma konto alles jätta, võta ühendust tugiteenusega.",
+        "help-message": "48-tunnine tühistamisperiood on möödunud. Abi saamiseks võtke ühendust tugiteenusega."
+      },
+      "actions": {
+        "return-homepage": "Tagasi avalehele"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Teenusetingimused | Skymo - Skyjo Online Card Game",
+        "description": "Lugege Skymo, Skyjo online-kaardimängu platvormi, teenusetingimusi. Tutvuge kasutajakohustuste, teenuse kasutamise ja platvormi reeglitega.",
+        "keywords": "Teenusetingimused,Skymo,Skyjo,online kaardimäng,kasutustingimused,platvormi reeglid"
+      },
+      "content": {
+        "title": "Teenusetingimused",
+        "last-update": {
+          "text": "Viimati värskendatud: {date}",
+          "date-format": "DD.MM.YYYY kell HH:mm"
+        },
+        "welcome": "Tere tulemast <b>skymo.online</b>, Maxent Rouault'i hallatavasse veebipõhisesse mitme mängijaga kaardimängu. Selle veebisaidi kasutamisega nõustud nende teenusetingimustega. Kui sa nendega ei nõustu, ei tohi sa platvormi kasutada.",
+        "operator": {
+          "title": "1. Operaator",
+          "content": "See veebisait on opereeritud:",
+          "name": "Maxent Rouault",
+          "contact": "Kontakt: {email}",
+          "location": "Prantsusmaa (mitteäriline üksikkasutaja)"
+        },
+        "eligibility": {
+          "title": "2. Abikõlblikkus",
+          "content": "Sa võid teenust kasutada külalisena või konto registreerimisega. Selle veebisaidi kasutamisega kinnitad, et:",
+          "items": {
+            "1": "Oled vähemalt 13-aastane (või sinu riigis nõutud miinimumvanus).",
+            "2": "Kui oled alla 18-aastane, peab sul olema seadusliku eestkostja luba."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Konto ja külaliskasutus",
+          "items": {
+            "1": "Külalisemängijad saavad mängida ilma registreerimiseta, kuid mõned funktsioonid võivad olla piiratud.",
+            "2": "Registreeritud kasutajad peavad esitama kehtiva e-posti aadressi ja kasutajanime.",
+            "3": "Sa vastutad oma konto ja tegevuse eest. Sa ei tohi oma sisselogimisandmeid jagada.",
+            "4": "Sa võid oma konto igal ajal kustutada. 48 tunni pärast anonüümistatakse või kustutatakse sinu isikuandmed jäädavalt."
+          }
+        },
+        "data-storage": {
+          "title": "4. Andmesalvestus",
+          "content": "Säilitame järgmisi andmeid sõltuvalt sinu kasutusest:",
+          "all-players": {
+            "title": "Kõigile mängijatele:",
+            "items": {
+              "1": "Mängusisene kuvatav nimi, avatar, skoor ja vestlussõnumid, **kui vähemalt üks mängija on sisse logitud**.",
+              "2": "IP-aadresse võib turvalisuse ja modereerimise eesmärgil ajutiselt salvestada."
+            }
+          },
+          "registered-players": {
+            "title": "Registreerunud mängijatele:",
+            "items": {
+              "1": "E-post, kasutajanimi, avatar, mängustatistika ja valikuliselt lingitud kontod (nt Google).",
+              "2": "Analüüsianalüüsid, nagu mängukäitumine, sessioonide sagedus või funktsioonide kasutamine, **võidakse koguda mängu täiustamiseks**."
+            }
+          },
+          "storage-location": "Kõik andmed salvestatakse <b>Euroopa Liidus</b> ja neid käsitletakse vastavalt <link>privaatsuspoliitikale</link>."
+        },
+        "analytics-tracking": {
+          "title": "5. Analüüs ja jälgimine",
+          "content": "Teenuse parandamiseks ja kasutajakogemuse isikupärastamiseks võime:",
+          "items": {
+            "1": "Kasuta **analüüsivahendeid** (nt PostHog või sarnaseid), et jälgida kasutust ja mängukäiku.",
+            "2": "Analüüsi kasutajakäitumist vigade tuvastamiseks, mängude sobitamise parandamiseks või funktsioonide kavandamiseks.",
+            "3": "Tulevikus võime seda andmestikku kasutada, et **pakkuda sulle personaalset sisu või reklaame**, järgides samal ajal sinu privaatsusõigusi GDPRi alusel."
+          },
+          "data-rights": "Sa saad jälgimisele vastu vaielda või isikuandmete kustutamist taotleda, meiega ühendust võttes."
+        },
+        "ads-monetization": {
+          "title": "6. Reklaamid ja monetiseerimine",
+          "content": "Platvormil võidakse kuvada reklaame, sealhulgas kolmandate osapoolte või kontekstuaalseid reklaame. Tulevikus võidakse sisseloginud kasutajatele kuvada **isikupärastatud reklaame** kasutusandmete põhjal.",
+          "consent": "Pakume selgeid teavitamis- ja nõusolekumehhanisme, kui ja kui käitumuslikud või isikupärastatud reklaamid kasutusele võetakse."
+        },
+        "user-conduct": {
+          "title": "7. Kasutaja käitumine",
+          "content": "Nõustud:",
+          "items": {
+            "1": "Ole lugupidav ja järgi ausa mängu reegleid.",
+            "2": "Ära peta, ahista, kehastu teisteks ega kasuta solvavaid kasutajanimesid või avatare.",
+            "3": "Ära spämmita ega kuritarvita vestlust ega muid suhtlusfunktsioone."
+          },
+          "enforcement": "Jätame endale õiguse keelata või piirata kasutajaid, kes rikuvad neid reegleid."
+        },
+        "moderation-reporting": {
+          "title": "8. Vahendus ja aruandlus",
+          "items": {
+            "1": "Vestlussõnumid salvestatakse ajutiselt ja võivad registreeritud mängijatega mängude puhul täielikult säilitada.",
+            "2": "Võime sõnumeid säilitada, kui mängija esitab raporti või kui on vajalik modereerimine.",
+            "3": "Väärkohtlemisest võid teatada e-posti teel (vt kontaktide jaotist).",
+            "4": "Modereerimistoimingud ja raportid võivad olla logitud läbipaistvuse ja õigluse tagamiseks."
+          }
+        },
+        "availability": {
+          "title": "9. Kättesaadavus",
+          "content": "Teenust osutatakse „nagu on“. Võime veebisaiti või funktsioone igal ajal ilma ette teatamata muuta, peatada või lõpetada."
+        },
+        "intellectual-property": {
+          "title": "10. Intellektuaalomand",
+          "content": "Kogu originaalsisu, kunstiteosed ja kood kuuluvad Maxent Rouaultile, kui pole teisiti märgitud. Sa ei tohi ilma loata kasutada ega levitada ühtegi veebisaidi osa."
+        },
+        "legal": {
+          "title": "11. Juriidiline",
+          "jurisdiction": "Seda saiti reguleerib Prantsuse õigus ja see vastab üldisele andmekaitsemäärusele (GDPR).",
+          "disputes": "Õiguslikud vaidlused lahendatakse Prantsuse kohtutes."
+        },
+        "contact": {
+          "title": "12. Kontakt",
+          "general": "Üldised küsimused: <email></email>"
+        }
+      }
     }
   },
   "components": {
@@ -235,7 +801,8 @@
       "rules": "Mängureeglid",
       "attribution": {
         "avatars": "Avatari loonud Freepik - Flaticon"
-      }
+      },
+      "translations": "Tõlgi mängu aitamine!"
     },
     "GameRules": {
       "title": "Mängureeglid",
@@ -384,16 +951,72 @@
           "label": "Helitugevus ({volume}%)"
         }
       },
-      "title": "Seaded"
+      "title": "Seaded",
+      "chat": {
+        "title": "Vestlus",
+        "chat-visibility": "Vestluse nähtavus",
+        "chat-notification-size": {
+          "label": "Vestluse teavituse suurus",
+          "values": {
+            "small": "Väike",
+            "normal": "Tavaline",
+            "big": "Suur"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobiilne",
+        "switch-to-player-who-is-playing": "Automaatselt lülitu mängiva mängija juurde",
+        "show-preview-opponents-cards": "Näita vastaste kaartide eelvaadet vastaste loendis"
+      },
+      "gameplay": {
+        "title": "Mängu käik",
+        "gameboard": {
+          "title": "Mängulaud",
+          "size": {
+            "label": "Sinu mängulaua suurus",
+            "big-warning": "Ekraani rikkumine mobiilis",
+            "values": {
+              "normal": "Normaalne",
+              "big": "Suur"
+            }
+          },
+          "enlarge-active-player-board": "Laienda mängija lauda, kelle kord on"
+        },
+        "timer": {
+          "title": "Taimer",
+          "label": "Taimeri kuvamisrežiim",
+          "description": "Nutikas režiim kuvab taimerit poolajal ja viimased 15 sekundit.",
+          "modes": {
+            "never": "Mitte kunagi",
+            "smart": "Nutikas",
+            "always": "Alati"
+          }
+        }
+      },
+      "account": {
+        "title": "Konto",
+        "sync": {
+          "label": "Konto seaded",
+          "description": "Sünkroniseeri oma seaded kõigis seadmetes, kui oled sisse logitud.",
+          "enabled": "Lubatud",
+          "disabled": "Keelatud",
+          "syncing": "Sünkroniseerib...",
+          "offline": "Võrguühenduseta",
+          "error": "Sünkroonimine ebaõnnestus",
+          "lastSync": "Viimane sünkroonimine: {date}"
+        }
+      }
     },
     "Avatar": {
       "context-menu": {
-        "report": "Teata kasutajast {username}",
-        "kick": "Viska välja {username}",
-        "vote-to-kick": "Hääleta kasutaja {username} eemaldamise poolt",
-        "ban": "Keela {username}",
-        "unmute": "Vaigistuse tühistamine {username}",
-        "mute": "Vaigista {username}"
+        "report": "Teata {name}",
+        "kick": "Löö {name} välja",
+        "vote-to-kick": "Hääleta {name} väljakoputamise poolt",
+        "ban": "Keela {name}",
+        "unmute": "Tühista vaigistus {name}",
+        "mute": "Vaigista {name}",
+        "transfer-host": "{name} on nüüd host"
       }
     },
     "KickVote": {
@@ -457,8 +1080,8 @@
       }
     },
     "ReportDialog": {
-      "description": "Teatage kasutajanimest või sõnumist kasutajalt {username}, kui see tundub sobimatu.",
-      "title": "Teata kasutajast {username}",
+      "description": "Teata nimest või sõnumist {name}, kui see tundub sobimatu.",
+      "title": "Teata {name}",
       "report-message": "Teata sõnumist",
       "select-message": "Valige teade, millest teatada",
       "select-message-placeholder": "Vali sõnum",
@@ -470,7 +1093,10 @@
           "title": "Aruanne esitatud",
           "description": "Aitäh teile aruande eest, olete aidanud parandada mängu kvaliteeti."
         }
-      }
+      },
+      "report-name": "Mängija nime teatamine",
+      "comment": "Lisakontekst (valikuline)",
+      "comment-placeholder": "Anna lisakonteksti selle aruande kohta..."
     },
     "AppearanceSelect": {
       "light": "Hele",
@@ -500,7 +1126,17 @@
       "unread-messages": "{count} lugemata sõnum{count, plural, =1 {} other {it}}"
     },
     "CopyLink": {
-      "message": "Link kopeeritud!"
+      "message": "Link kopeeritud!",
+      "copy": {
+        "button-title": "Kopeeri link",
+        "popover": "Link kopeeritud!"
+      },
+      "share": {
+        "title": "Liitu minu Skyjo mänguga!",
+        "text": "Tule mängi Skyjot minuga veebis! Klõpsa lingil, et mänguga liituda.",
+        "button-title": "Jaga mängu",
+        "tooltip": "Klõpsa siia, et seda mängu jagada!"
+      }
     },
     "DiscardPile": {
       "title": "Viskamispakk",
@@ -531,7 +1167,7 @@
         "frs": "Eastern Frisian",
         "en": "English",
         "fr": "Français",
-        "bar": "Bavarian",
+        "bar": "Bairisch",
         "da": "Dansk",
         "nl": "Nederlands",
         "nds": "Plattdeutsch",
@@ -565,21 +1201,59 @@
       "name": "Nimi",
       "round": "Ümar",
       "total": "Kokku"
+    },
+    "Banner": {
+      "title": "Vajan <gform>sinu tagasisidet</gform>, et kujundada Skyjo tulevikku!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Reeglid",
+        "leaderboard": "Edetabel"
+      }
+    },
+    "LoginButton": {
+      "login": "Liitu lõbuga!"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Jätka Google'iga"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Paroolid ühtivad",
+      "minimum-characters": "Vähemalt 10 tähemärki",
+      "lowercase-letter": "Vähemalt üks väiketäht",
+      "capital-letter": "Vähemalt üks suur täishäälik",
+      "number": "Vähemalt üks number",
+      "special-character": "Vähemalt üks erimärk"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Kontrollin...",
+        "available": "Kasutajanimi on saadaval",
+        "taken": "Võetud!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Uuesti mänguga ühendamine",
+      "description": "Oled mängus, mis on pooleli. Kas soovid uuesti ühendust võtta?",
+      "reconnect-button": "Jah, ühenda uuesti",
+      "dismiss-button": "Ei, tühista"
     }
   },
   "utils": {
     "chat": {
-      "player-reconnect": "{username} ühendus mänguga taastus",
+      "player-reconnect": "{name} ühendas mänguga uuesti",
       "argument-required": "Käsu jaoks on vaja ühte või mitut argumenti: {command}",
-      "player-joined": "{username} liitus mänguga",
-      "player-left": "{username} lahkus mängust",
-      "player-already-muted": "{username} on juba vaigistatud",
-      "player-muted": "{username} on nüüd vaigistatud",
-      "player-not-muted": "{username} ei ole vaigistatud",
-      "player-unmuted": "{username} ei ole enam vaigistatud",
-      "wizz-sent": "Sa saatsid {targetUsername} kasutajale wizzi!",
-      "wizz-self": "Teid on wizzinud {initiatorUsername}!",
-      "wizz-other": "{initiatorUsername} on {targetUsername} ära võlunud!"
+      "player-joined": "{name} liitus mänguga",
+      "player-left": "{name} lahkus mängust",
+      "player-already-muted": "{name} on juba vaigistatud",
+      "player-muted": "{name} on nüüd vaigistatud",
+      "player-not-muted": "{name} ei ole vaigistatud",
+      "player-unmuted": "{name} ei ole enam vaigistatud",
+      "wizz-sent": "Sa saatsid vihje {targetName}!",
+      "wizz-self": "{initiatorName} saatis sulle vihje!",
+      "wizz-other": "{initiatorName} tegi {targetName} pihta piiksu!",
+      "welcome": "Palun ole viisakas ja lugupidav. Sa saad {isMobile, select, true {pikka vajutust} other {paremklõpsu}} teha sõnumitele, et mängijaid vajadusel vaigistada või neist teatada.",
+      "host-transferred": "{name} on nüüd host"
     },
     "avatar": {
       "penguin": "pingviin",
@@ -622,6 +1296,9 @@
         "rate-limit": {
           "title": "Päringuid on liiga palju",
           "description": "Palun oodake mõni sekund enne uuesti proovimist"
+        },
+        "player-already-connected": {
+          "description": "Sa oled juba teisest seansist selle mänguga ühendatud"
         }
       }
     },
@@ -681,8 +1358,103 @@
       },
       "report-against-you": {
         "title": "Teid on teate tõttu välja visatud",
-        "description": "Teie kasutajanimest või ühest teie sõnumist on teatatud ning seda on peetud sobimatuks. Palun ärge sellist käitumist korrake."
+        "description": "Sinu nimi või üks sinu sõnumitest on teatatud ja tunnistatud sobimatuks. Palun ära korda seda käitumist."
+      }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Sul pole õigust hosti üle kanda",
+        "description": "Ainult praegune võõrustaja saab võõrustaja rolli teisele mängijale üle anda"
+      },
+      "player-not-found": {
+        "title": "Mängijat pole olemas",
+        "description": "Mängija, kellele üritad hostimist üle kanda, ei eksisteeri mängus"
+      },
+      "player-not-connected": {
+        "title": "Mängija pole ühendatud",
+        "description": "Mängija, kellele üritad hosti üle kanda, pole hetkel mänguga ühendatud"
+      },
+      "host-transferred": {
+        "title": "Host edukalt üle antud",
+        "description": "{newHostName} on nüüd mängu host"
+      },
+      "you-are-now-host": {
+        "title": "Sa oled nüüd host",
+        "description": "{previousHostName} on sulle peremehe rolli üle andnud"
+      },
+      "unexpected-error": {
+        "title": "Ilmnes ootamatu viga",
+        "description": "Hosti ülekande ajal tekkis ootamatu viga"
       }
     }
+  },
+  "errors": {
+    "invalid-credentials": "Sisestatud e-posti aadress või parool on vale. Palun proovi uuesti.",
+    "logout-failed": "Me ei saanud sind välja logida. Lõpetamiseks sule oma brauser.",
+    "session-not-found": "Sinu sessioon on aegunud või kehtetu. Logi uuesti sisse.",
+    "session-invalid": "Sinu sessioon on aegunud. Logi uuesti sisse, et jätkata.",
+    "session-expired": "Sinu sessioon on aegunud. Logi uuesti sisse, et jätkata.",
+    "session-token-missing": "Sinu sessiooni token puudub. Logi sisse, et saada uus.",
+    "username-taken": "See kasutajanimi on juba võetud. Palun vali teine.",
+    "onboarding-error": "Teie profiili täitmisel tekkis probleem. Palun proovige uuesti.",
+    "reset-token-invalid": "Esitatud lähtestamise märguanne on kehtetu. Palun taotle uut.",
+    "reset-token-expired": "Sinu parooli lähtestamise märguanne on aegunud. Palun taotle uut.",
+    "password-reset-failed": "Me ei saanud sinu salasõna lähtestada. Palun proovi uuesti.",
+    "forgot-password-error": "Teie salasõna lähtestamise taotluse töötlemisel tekkis probleem. Palun proovige hiljem uuesti.",
+    "reset-password-error": "Me ei saanud sinu salasõna lähtestada. Palun proovi uuesti.",
+    "oauth-restart-process": "Autentimisel tekkis viga. Proovi uuesti sisse logida.",
+    "oauth-id-token-missing": "Autentimisteenus ei andnud meile ID-tokenit. Palun proovi uuesti.",
+    "oauth-account-creation-failed": "Me ei saanud sinu teenusepakkuja andmetega kontot luua. Proovi uuesti.",
+    "oauth-login-initiation-failed": "Me ei saanud sisselogimisprotsessi alustada. Proovi mõne hetke pärast uuesti.",
+    "verify-session-error": "Sessiooni kinnitamine ebaõnnestus. Logi välja ja sisse uuesti.",
+    "signup-error": "Me ei saanud sinu kontot praegu luua. Proovi hiljem uuesti.",
+    "login-error": "Logimisel tekkis probleem. Palun proovi uuesti.",
+    "login-invalid-credentials": "Sisestatud e-posti aadress või parool on vale. Palun proovi uuesti.",
+    "logout-error": "Logisid välja logimisel tekkis ootamatu tõrge.",
+    "check-username-error": "Ei õnnestunud kontrollida, kas kasutajanimi on vaba. Palun proovi uuesti.",
+    "unknown-auth-error": "Tundmatu autentimisviga ilmnes. Palun proovi uuesti.",
+    "creation-failed": "Sellel hetkel ei õnnestunud kasutajat luua. Palun proovi uuesti.",
+    "get-user-error": "Me ei saanud kasutajaprofiili kätte. Palun proovi hiljem uuesti.",
+    "get-user-games-error": "Me ei saanud kasutaja mänge laadida. Värskenda lehte.",
+    "get-user-stats-error": "Me ei saanud kasutaja statistikat laadida. Palun värskenda lehte.",
+    "user-not-found": "Kasutajat, keda otsid, ei leitud.",
+    "username-same-as-current": "See on juba sinu kasutajanimi.",
+    "email-taken": "See e-posti aadress on juba kasutusel. Palun kasuta teist.",
+    "email-same-as-current": "See on juba sinu e-posti aadress.",
+    "invalid-current-password": "Sisestatud praegune salasõna on vale.",
+    "update-name-error": "Me ei saanud sinu nime uuendada. Palun proovi uuesti.",
+    "update-username-error": "Me ei saanud sinu kasutajanime uuendada. Palun proovi uuesti.",
+    "update-email-error": "Me ei saanud sinu e-posti aadressi uuendada. Palun proovi uuesti.",
+    "revert-email-error": "Me ei saanud sinu e-posti muudatust tagasi võtta. Võta ühendust tugiteenusega.",
+    "update-password-error": "Me ei saanud sinu salasõna uuendada. Palun proovi uuesti.",
+    "update-avatar-error": "Me ei saanud sinu avatari värskendada. Proovi uuesti.",
+    "delete-account-error": "Me ei saanud sinu konto kustutamise päringut töödelda. Proovi uuesti.",
+    "cancel-delete-account-error": "Me ei saanud sinu konto kustutamist tühistada. Palun võta ühendust klienditoega.",
+    "unexpected-error": "Ilmnes ootamatu tõrge. Palun proovi uuesti.",
+    "internal-server-error": "Meie serveril tekkis probleem. Palun proovi hiljem uuesti.",
+    "unauthorized": "Sul pole selle toimingu tegemiseks luba.",
+    "forbidden": "Sul pole luba seda ressurssi kasutada.",
+    "not-found": "Viga: ressurssi ei leitud.",
+    "too-many-requests": "Saatsid liiga palju päringuid. Palun oota hetk ja proovi uuesti.",
+    "ip-not-found": "Me ei suutnud sinu IP-aadressi tuvastada. Palun kontrolli oma ühendust.",
+    "invalid-request": "Sinu päring oli vigane. Palun kontrolli andmeid ja proovi uuesti.",
+    "send-feedback-error": "Me ei saanud sinu tagasisidet saata. Palun proovi uuesti.",
+    "send-pin-error": "Me ei saanud sinu e-posti aadressile kinnituskoodi saata. Palun proovi uuesti.",
+    "verify-pin-error": "Me ei saanud sinu PIN-koodi kinnitada. Proovi uuesti.",
+    "invalid-pin": "Sisestatud PIN-kood on vale. Proovi uuesti.",
+    "expired-pin": "Sisestatud PIN-kood on aegunud. Saatsime sulle uue.",
+    "feedback-error": "Me ei saanud teie tagasisidet saata. Palun proovige uuesti.",
+    "get-public-games-error": "Me ei saanud avalikke mänge laadida. Palun proovi uuesti.",
+    "invalid-cancellation-token": "Tühistamismärguanne on vigane. Proovi uuesti.",
+    "expired-cancellation-token": "Tühistamise token on aegunud. Palun proovi uuesti.",
+    "cancel-account-deletion-error": "Me ei saanud sinu konto kustutamist tühistada. Palun proovi uuesti",
+    "oauth-unknown-error": "Logimisel tekkis tundmatu viga. Palun proovi uuesti.",
+    "invalid-reversion-token": "Reversioonimärge on kehtetu. Proovi uuesti.",
+    "expired-reversion-token": "Reversioonimärguanne on aegunud. Proovi uuesti.",
+    "name-min-characters": "Nime peab olema vähemalt 2 tähemärki",
+    "name-max-characters": "Kuvatav nimi võib olla maksimaalselt 20 tähemärki pikk",
+    "username-min-characters": "Kasutajanimi peab olema vähemalt 3 tähemärki pikk",
+    "username-max-characters": "Kasutajanimi võib olla kuni 20 tähemärki pikk",
+    "username-invalid-format": "Kasutajanimi võib sisaldada ainult tähti, numbreid ja allkriipsusid"
   }
 }

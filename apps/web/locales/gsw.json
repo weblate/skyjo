@@ -34,7 +34,7 @@
           "title": "Am Afang vom Spiel werded {number} vo dine Charte offe gleit"
         },
         "show-current-score": {
-          "label": "Zeig de aktuelli Spielstand wärend em Spiel"
+          "label": "Zeig d Punktzahl live a"
         },
         "score-to-end-game": {
           "label": "Punkte zum Spiil-Ändi",
@@ -150,7 +150,8 @@
         "cancel": "Nöd nomal abspiile",
         "replay": "Wiederhole"
       },
-      "leave-button": "S Spiel verlah"
+      "leave-button": "S Spiel verlah",
+      "round": "Rundi {number}"
     },
     "PrivacyPolicy": {
       "content": {
@@ -158,7 +159,76 @@
         "title": "Däteschutz",
         "last-update": {
           "text": "Zuletzt aktualisiert: {date}",
-          "date-format": "JJJJ-MM-TT - hh:mmA"
+          "date-format": "MM.JJJJ"
+        },
+        "tldr": {
+          "title": "TL;DR — Was du wüsse musst",
+          "minimal-data": "Mir speichere nur mini Date, damit Du Spiele chasch spiele, egal öb Du igloggt bisch oder als Gast.",
+          "guest-data": "Gastdate (Name, Avatar, Punktestand, Chats) werded nur gspeichret, wenn en iglogglete Spieler im Spiel isch.",
+          "personal-data": "Dini E-Mail, Benutzername und anderi persönlechi Date werded nur gspeicheret, wänn du es Konto erstellsch.",
+          "chat-storage": "Chats werded nur churz gspeicheret und nur gspeicheret, wänn se meldet werded.",
+          "privacy-compliance": "Mir respektiered din Datenschutz und halte eus a d'DSGVO, alles wird sicher i de EU gspeichered.",
+          "data-rights": "Du chasch Datezugriff, Korrekturä, Export oder Löschig jederziit verlanqe.",
+          "contact": "Für Frooge: <email></email>"
+        },
+        "operator": {
+          "title": "1. Wer betriibt die Website?",
+          "operator-info": "Diä Website wird vo privater Person betreibe:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Kei Firma."
+        },
+        "data-collection": {
+          "title": "2. Welchi Date sammle mer?",
+          "description": "Mir sammle Date vo registrierte und au vo Gast-Spieler, aber nur, wenn en verbundene (iigloggte) User Teil vom Spiel isch.",
+          "guest-players": {
+            "title": "Für Gastspieleri:",
+            "items": "Anzeigenaame (wählsch, wännischs Spiel betrittsch);;Usgwählts Avatar;;Spielstand, Rang und Gwünnerstatus;;Chat-Nachrichte (churzzytig gspeicheret, es wärde kei Date ghaue, wänn si nid markiert sind)",
+            "note": "Die Date werded nur gspeicheret, wenn mindestens ein Spieler im Spiel igloggt isch."
+          },
+          "logged-users": {
+            "title": "Für igloggti User (zudäm was obe schtöht):",
+            "items": "E-Mail-Adress;;Benutzername / Anzeigename;;Avatar (vo vordefinierti List);;Gehashts Passwort oder OAuth ID (Google, Facebook);;Sprochpräferenz;;Status vo de E-Mail-Verifizierig"
+          },
+          "general": {
+            "title": "Allgemein (für alli Benutzer):",
+            "items": "Spiel-Session-Date (Codes, Einstellungen);;Session-Cookie (verfällt nach 24h);;IP-Adress (vergänglich, wird nöd lang gspeicheret);;Anonymi Nutzig-Analytik (über PostHog, EU-hosted)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Warum werdet dini Date bruucht?",
+          "items": "Spieler (Gäscht oder registriert) zum Mitmache und Spiele z'laa;;Avatare, Name, Punktestand und Rangliste z'zeige;;Moderation bi Missbruch z'laa;;Feedback und Kontowiederherstellig verarbeite (für igloggte Nutzer);;D Website mit anonyme Analytik verbessere"
+        },
+        "data-retention": {
+          "title": "4. Wie lang werdet dine Date ufgwage?",
+          "retention-table": {
+            "headers": "Datätyp;;Aufbewariigtsziit",
+            "rows": "Session-Cookies;;24 Stund|||Account-Date (iigloggt);;Bis zur Löschungs-Uuffrag|||Gastspieler-Date;;Nur wenn verbundene Spieler im Spiel isch|||Spiel-Date & Pünkt;;Für immer gspeicheret|||Chat-Nöcherichte;;Temporär i Redis; gspeicheret wenn gmeldet|||Feedback;;Für immer|||Verifikations-/Reset-Tokens;;Bis bruucht oder abgloufe|||Account-Löschungs-Uufdräge;;Nach 48h Bedenkziit glöscht|||Analytik (PostHog);;Für immer, EU-hosted"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Rechtlichi Grundlag (DSGVO)",
+          "description": "Die Verarbeitung basiert uf:",
+          "items": "Zustimmig (Cookies, Statistik);;Vertrag (Spiel bereitstelle);;Berechtigts Interesse (Moderation);;Gsetzlichi Pflicht (Uusfragä beantworte)"
+        },
+        "data-access": {
+          "title": "6. Wer chan dinä Date gseh?",
+          "items": "Anderi Spieler gseht din öffentliche Name, Avatar und dini Spielhistorie;;De Entwickler (Maxent Rouault) chan druf zugreife für Moderationszwecki;;Kei Verchauf oder Werbung mit dine Date"
+        },
+        "your-rights": {
+          "title": "7. Dini Reecht",
+          "items": "Dini Date zugängig mache, korrigiere oder lösche;;Dini Account lösche (oder es verlan-ge);;Dini Date exportiere (uf Verlan-g);;Banns bi appeal@skymo.online afochte"
+        },
+        "security": {
+          "title": "8. Sicherheit",
+          "items": "Verschlüssleti Passwörter;;HTTPS-verbindige;;Moderation und Missbruuch-Erkennig;;EU-Hosting (Paris, Frankriich)"
+        },
+        "cookies-analytics": {
+          "title": "9. Cookies & Analytik",
+          "items": "Nur essenzieli Cookies (Session, Login);;Analytik über PostHog, EU-gehostet, kei plattformübergreifsches Tracking"
+        },
+        "contact": {
+          "title": "10. Kontakt",
+          "description": "Allgmeini Froge: <email></email>"
         }
       },
       "head": {
@@ -191,7 +261,503 @@
         "keywords": "Skymo, Skyjo, Skyjo Regle, wie me Skyjo spielt, Skyjo Spiel, Chartegame Regle, Online-Chartegame, Spielaaletige, Gameplay Guide",
         "title": "Wie me Skymo spiilt | Skyjo Chartegame Online"
       },
-      "title": "Skyjo Spielregle"
+      "title": "Spielregle",
+      "play-button": "Online gratis spiele!"
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Leaderboard | Skymo - Skyjo Online Chärtäspiel",
+        "description": "Lueg der di beschte Spieler uf Skymo a! Entdecke di beschte Skymo-Spieler und ihri Gwinnrate uf eusere Ranglist.",
+        "keywords": "Skymo,Skyjo,Rangliste,Top-Spieler,Rangliste,beschti Spieler,Gwinrate,kompetitiv,Online-Chärtäspiel"
+      },
+      "title": "Rangliste",
+      "subtitle": "Entdecke die beschte Skyjo-Spieler und kämpf um die Top-Plätze!",
+      "lastUpdated": "Zuletzt aktualisiert: {date}",
+      "columns": {
+        "rank": "Rang",
+        "player": "Spieler",
+        "wins": "G'winne",
+        "totalGames": "Total Spiel",
+        "winRate": "Gwinnrate"
+      },
+      "noData": "Noch kei Spieler i de Ranglisti gfunde.",
+      "error": "D Leaderboard chan im Moment nöd glade werde.",
+      "tryAgainLater": "Versuech's spöter no mal.",
+      "callToAction": {
+        "guest": {
+          "title": "Bisch bereit zum Mitmache?",
+          "description": "Melde Dich a, zum Din Fortschritt z'verfolge und mit Spieler ufd Wält z'konkurriere!",
+          "signup": "Jetzt registriere dich"
+        },
+        "authenticated": {
+          "title": "Bereit zum Wettkampf?",
+          "description": "Spring is Spiel und climb di Ranglist uf!",
+          "createGame": "Spiel erstelle",
+          "joinGame": "Spiel beitrete"
+        }
+      },
+      "errorActions": {
+        "refresh": "Uffrische",
+        "backHome": "Zrugg zum Heimet"
+      }
+    },
+    "Signup": {
+      "head": {
+        "title": "Skymo beitrete | Spiel Skyjo gratis online",
+        "description": "Zock Skyjo online mit Fründä! Erstellsch der es gratis Skymo-Konto, zum din Fortschritt z'verfolge, exklusivi Inhaltsstoffe freizschalte und Teil vo ere lebendige Community z'werde.",
+        "keywords": "skymo, skyjo online spiele, skyjo online Spiel, skyjo registriere dich, skymo Account erstelle, skymo beitrete, skymo skyjo, online Kartenspiel, skyjo Multiplayer, skyjo gratis Spiel, skyjo mit Fründe spiele, skyjo Fortschritt verfolge, skyjo Community, exklusivi skyjo Inhalts"
+      },
+      "title": "Umschriibe",
+      "or": "Oder",
+      "form": {
+        "email": {
+          "label": "E-Mail",
+          "button": "Wiiter mit E-Mail"
+        }
+      },
+      "already-have-account": {
+        "description": "Hesch scho en Account?",
+        "link": "Login"
+      },
+      "advantages": {
+        "title": "Mach mit bi de Abentür",
+        "subtitle": "Erstell es Konto zum öppne e Wält vo Möglechkeite und verbessere din Erlebni.",
+        "features": {
+          "track-progress": {
+            "title": "Dini Fortschritt verfolge",
+            "description": "Lueg, wie du im Vergliich zu andere abschneidsch und verfolge dini Fortschritt über d Ziit."
+          },
+          "personalized-experience": {
+            "title": "Persönlichs Erläbnis",
+            "description": "Hol der Empfehlige und Inhalts, wo genau für dich gmacht sind."
+          },
+          "join-community": {
+            "title": "Tritt de Community bi",
+            "description": "Verbind di mit andere Abentüürer, teile Tipps und finde neui Fründä."
+          },
+          "exclusive-content": {
+            "title": "Exklusivi Inhalts",
+            "description": "Erhalte zugang zu spezielle Herausforderige, Belohnige und früe Update."
+          }
+        }
+      },
+      "terms-acceptance": {
+        "text": "Wenn Du weitermachsch, stimmsch Du unserne",
+        "terms-link": "Nutzigsbedingige",
+        "and": "und",
+        "privacy-link": "Datuaschutzbestimmige"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Login | Skymo - Skyjo Online Chärtenspiel",
+        "description": "Logg di bi Skymo i zum Skyjo online z'spiele. Gib din E-Mail und s Passwörter ii zum uf dini Account z'zugriife und glich z'anoate.",
+        "keywords": "Skymo,Skyjo,Login,Online-Chärtenspiel,Skyjo-Spiel,Chärtenspiel,Online-Spiel"
+      },
+      "title": "Login",
+      "or": "Oder",
+      "form": {
+        "login": {
+          "label": "E-Mail oder Benutzername"
+        },
+        "password": {
+          "label": "Passwort"
+        },
+        "submit": "Login"
+      },
+      "signup": {
+        "description": "Hesch no kei Konto?",
+        "link": "Meld Dich jetzt a!"
+      },
+      "forgot-password": "Passwort vergässe?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Passwort vergässe | Skymo - Skyjo Online Charte-Spiel",
+        "description": "Setz din Skymo-Passwort zrugg, zum wieder Uffgriff uf din Account z'ha und wiiter Skyjo online mit Fründä z'spielä.",
+        "keywords": "Skymo,Skyjo,Passwort vergässe,Passwort zueschdelle,Kontowiederherstellig,Online Charte-Spiel"
+      },
+      "title": "Passwort vergässe",
+      "description": "Gib din E-Mail-Adress ii, mir schicked der denn en Link zum Passwörter z'ändere",
+      "form": {
+        "email": {
+          "label": "E-Mail Adrässe"
+        },
+        "submit": "Reset-Link schicke",
+        "sending": "Sändet..."
+      },
+      "success": {
+        "title": "Check dini E-Mail",
+        "message": "Falls es es Konto mit dere E-Mail-Adress gäbt, isch en Link zum Passwörter z'änder schickt worde.",
+        "back": "Zrugg zum Login"
+      },
+      "back": "Zrugg zum Login"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Passwort z'rücksetze | Skymo - Skyjo Online Charte-Spiel",
+        "description": "Erstell es neu's Passwort für din Skymo Account, damit du wieder druf chasch und Skyjo online witerzocke chasch.",
+        "keywords": "Skymo,Skyjo,Passwort zueschdelle,Neus Passwort,Kontowiederherstellig,Online Charte-Spiel"
+      },
+      "title": "Passwort z'rücksetze",
+      "description": "Gib dini neu Passwörter untere i.",
+      "form": {
+        "password": {
+          "label": "Neues Passwort"
+        },
+        "confirmPassword": {
+          "label": "Passwort bestätige"
+        },
+        "submit": "Passwort zruggsetze",
+        "resetting": "Zurücksetze..."
+      },
+      "success": {
+        "title": "Passwort erfolgreich zrugggsetzt",
+        "message": "Dini Passwörter isch zrugggsetzt worde. Du chasch dich jetzt mit dim neue Passwort aamelde.",
+        "back": "Login"
+      },
+      "back": "Zurück zum Login"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "E-Mail-Änderig zrugg gsetzt",
+        "message": "Dini E-Mail-Änderig isch erfolgreich zrugg gsetzt worde und din Account isch gichert. Bitte lueg i dim E-Mail nach de Anleitung zum Passwort z'änderä.",
+        "close": "Du chasch die Seit jetzt schliesse."
+      },
+      "failed": {
+        "title": "E-Mail-Änderig zruggsetze fehlgschlage"
+      },
+      "back": "Zrugg zum Login"
+    },
+    "OAuthCallbackPage": {
+      "title": "Umlaitig am laufe…"
+    },
+    "Onboarding": {
+      "title": "Onboarding lauft...",
+      "subtitle": "Füll din Profil us und tauch is Skymo-Abentüür ii!",
+      "form": {
+        "name": {
+          "label": "Spielername",
+          "placeholder": "Jeff",
+          "description": "Andere Spieler im Spiel gezeigt"
+        },
+        "username": {
+          "label": "Name",
+          "placeholder": "Jeff",
+          "description": "Zum Login und Profil"
+        },
+        "password": {
+          "label": "Passwort erstelle",
+          "placeholder": "Gib es sicheres Passwort ii"
+        },
+        "submit": "Bereit zum Spiele!"
+      },
+      "head": {
+        "title": "Onboarding | Skymo - Skyjo Online Chärtenspiel",
+        "description": "Füll dini Profil us und tauch is Skymo-Abentüür ii!",
+        "keywords": "Skymo,Skyjo,onboarding,profil,abenteuer,online chärtenspil"
+      },
+      "loading": "Lade din Profil...",
+      "success": "Onboarding erfolgreich abgschlosse! Wiiterleitig zur Startsiite..."
+    },
+    "Verify": {
+      "head": {
+        "title": "E-Mail bestätige | Skymo - Skyjo Online Charte-Spiel",
+        "description": "Bestätige dini E-Mail-Adress, zum din Skymo-Account abzschliesse und mit Fründä Skyjo online z'spiele.",
+        "keywords": "Skymo,Skyjo,E-Mail-Verifizierung,Konto verifiziere,Online-Chärtenspil"
+      },
+      "title": "E-Mail verifiziere",
+      "description": "Mir hend der en 6-stellige Code a dini E-Mail-Adress gschickt. Bitte gib en do ini.",
+      "resend": {
+        "countdown": "Code nochmal schicke i de {seconds}s",
+        "prompt": "Code nöd erhale?",
+        "button": "Neues Code afrage",
+        "sending": "Sende..."
+      },
+      "toast": {
+        "success": "E-Mail erfolgreich verifiziert!",
+        "resend-success": "E-Mail isch verschickt worde",
+        "email-already-sent": "E-Mail isch scho i de letschte 5 Minute gschickt worde. Bitte lueg i dim Postfach oder klick uf \"Neui Code aaforderä\", zum no eini z'schicke"
+      },
+      "loading": "Lade din Profil..."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}'s Profil | Skymo - Skyjo Online Chärtenspil",
+        "description": "Zeig {username}s Profil uf Skymo. Lueg ihre Spielstatistik, jüngschti Aktivität und Errungeschafte i Skyjo online a.",
+        "keywords": "Skymo,Skyjo,User-Profil,Spieler-Statistike,Spiel-Statistike,letschti Spiel,Errungeschafte,Online-Chärtenspiel"
+      },
+      "not-found": {
+        "title": "User nöd gfunde",
+        "description": "Dä Benutzer \"{username}\" existiert nöd oder het villicht sini Benutzername gänderet.",
+        "back-to-home": "Zrugg zum Start"
+      },
+      "error": {
+        "title": "Es isch öppis schief gange",
+        "description": "Mir händ en Fehler gha, wo mir das Profil glade händ. Bitte probiersch es spöter no mal.",
+        "back-to-home": "Zrugg zum Start"
+      },
+      "stats": {
+        "total-games": "Total Spiel",
+        "win-rate": "Gwinnrate",
+        "average-rank": "Durchschnittsrang",
+        "public": "Öffentli",
+        "private": "Privat"
+      },
+      "sections": {
+        "achievements": "Erfolg",
+        "achievements-coming-soon": "Achievements System bald da!",
+        "recent-activity": "Schiinbari Aktivitäte"
+      },
+      "recent-activity": {
+        "no-activity": "Keini letschti Aktivität zum zeige.",
+        "game-code": "Spiel-Code #{code}",
+        "rank": "Rang #{rank}",
+        "winner": "Gwinner"
+      },
+      "search": {
+        "placeholder": "Benutzername sueche"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Kontoi-Stellige | Skymo - Skyjo Online Charte-Spiel",
+        "description": "Verwalte dinne Account-Einstellungen uf Skymo. Änder dinne Anzeige-Name, Benutzername, E-Mail, Passwort und Account-Präferänze."
+      },
+      "title": "Kontoi-Stellige",
+      "description": "Verwalte dini Account und persönlichi Informatione.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Konto",
+        "password": "Passwort"
+      },
+      "buttons": {
+        "save": "Änderige speichere",
+        "saving": "Speichere...",
+        "delete-account": "Konto lösche",
+        "confirm-delete": "Ja, mini Account lösche"
+      },
+      "messages": {
+        "save-success": "Ihre Einstellungen sind erfolgreich gespeichert!",
+        "save-error": "Einstellungen chönd nöd gspeichered werde. Bitte probiersch nomal.",
+        "delete-confirmation": "Bisch sicher, dass du dini Account lösche wetsch? Dä Schritt chan nöd rückgängig gmacht werde und all dini Date werde permanent glöscht.",
+        "username-taken": "Dä Username isch scho vergitä.",
+        "email-taken": "Die E-Mail-Adressä isch scho iigheit.",
+        "password-incorrect": "D'aktuells Passwoert isch falsch.",
+        "account-deletion-scheduled": "Dini Usschaffige vom Konto isch berücksichtiged worde und wird i 48 Stund bearbeitet. Du wirsch en E-Mail zum Bestätige vo de Usschaffig erhälten.",
+        "account-deletion-failed": "Es isch en Fehler passieret bim Lösche vo dim Konto. Bitte probier's no mal."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Anzeigenaame",
+          "description": "Dini Name, wo anderne Spieler i de Spiel gseht.",
+          "placeholder": "Gib de Name ii",
+          "submit": "Name speichere"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Dini Spielfigur, wo uf dim Profil zeigt wird.",
+          "placeholder": "Wähl dis Avatar",
+          "submit": "Avatar speichere"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Konto",
+      "fields": {
+        "username": {
+          "label": "Benutzername",
+          "description": "Dyni einzigartigi Username, wo für din Profil-URL bruucht wird.",
+          "placeholder": "Gib dini Username ii",
+          "submit": "Benutzername speichere"
+        },
+        "email": {
+          "label": "E-Mail Adrässe",
+          "description": "Dini E-Mail-Adress, wo zum Ialogge und für wichtigi Benachrichtigunge bruucht wird. Aus Sicherheitsgründ wird e Warnig-E-Mail a dini aktuelli Adress gschickt, wänn du si ändersch.",
+          "placeholder": "Gib dini E-Mail-Adress ii",
+          "submit": "E-Mail speichere"
+        },
+        "settings-sync": {
+          "label": "Iischtellige synchronisiere",
+          "description": "Synchronisiere dini Eligestellige über alli dini Grät, wänn du igloggt bisch.",
+          "disable-sync": "Sync vo de Eligänge deaktiviere",
+          "status": {
+            "enabled": "Aktiviert",
+            "syncing": "Synchronisiere...",
+            "offline": "Offline",
+            "disabled": "Uusgschaltet",
+            "error": "Sync fehlgeschlage"
+          },
+          "last-sync": "Letzti Synchronisation: {date}",
+          "sync-now": "Jetzt synchronisiere",
+          "enable-sync": "Sync-Einstellungen aktiviere"
+        }
+      },
+      "delete-account": {
+        "title": "Mini Account lösche",
+        "description": "Din Account und alli dazueghörige Date lösche. Dises Vorgehe cha nöd rückgängig gmacht wärde und dinere Date werded für immer glöscht.",
+        "button": "Accout lösche",
+        "confirmation": {
+          "description": "Mit de Bestätigung starte mer en 48-Stundä-Countdown: Du bisch per E-Mail über en Link informiert, wo dich au wieder zum Stoppe vo de Löschig berechtigt, falls du din Sinn änderisch. Din Account bliebt i dere Zyt zugänglich. Nach 48 Stundä wird er endgültig glesche und du erhältsch en Bestätigungs-E-Mail.",
+          "input-label": "Gib DELETE ii zum Bestätige",
+          "input-placeholder": "LÖSCHEN",
+          "cancel-button": "Abbreche",
+          "delete-button": "Lösch mini Account"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Passwort ändere",
+      "fields": {
+        "password": {
+          "label": "Passwort",
+          "description": "Ändere din Passwörter.",
+          "current-password": "Aktuells Passwort",
+          "new-password": "Neues Passwort",
+          "confirm-password": "Passwort bestätige",
+          "current-placeholder": "Gib dis aktuells Passwort ii",
+          "new-placeholder": "Gib dis nöie Passwort ii",
+          "confirm-placeholder": "Bestätige dis nöie Passwort",
+          "submit": "Passwort speichere"
+        }
+      },
+      "messages": {
+        "password-incorrect": "D'aktuells Passwoert isch falsch."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Ungültigs Token",
+      "success": {
+        "title": "Abbruch vo Kontolöschig",
+        "description": "Dini Account-Löschig isch erfolgreich abbroche. Din Account isch sicher und wird nöd glöscht.",
+        "secure-message": "Dini Account isch jetzt sicher und blibt aktiv. Du chasch din Account normal wiiter bruuche."
+      },
+      "failed": {
+        "title": "Abbrich fehlgschlage",
+        "description": "Mir chönd din Account-Löschig nöd annulliere. Bitte probier's no mehls oder meld dich bim Support.",
+        "general-error": "Eis isch schief gloffe, wänn mir versuächt hend din Account z'lösche. Bitte probier's no einisch oder meld dich bim Support.",
+        "help-message": "Es isch öppis schief gange bi de Versuech, din Account z'lösche. Bitte probier's no mal oder meld dich bim Support."
+      },
+      "expired": {
+        "title": "D Stornierigs-Link isch abgloufe",
+        "description": "Dä Link zum Storniere isch abgloufe. Wenn Du din Account immer no wetsch behalte, meld Dich bi de Support.",
+        "help-message": "D 48-Stundige Annulierigsfrist isch abgloufe. Melde di bi Support, wänn du Hilf bruchsch."
+      },
+      "actions": {
+        "return-homepage": "Zrugg zum Hauptbildschirm"
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "AGBs | Skymo - Skyjo Online Chärtenspiel",
+        "description": "Lies die Nutzungsbedingungen für Skymo, die Online-Skyjo-Kartenspielplattform. Erfahre mehr über die Pflichten der Nutzer, die Nutzung der Dienste und die Richtlinien der Plattform.",
+        "keywords": "Nutzigsbedingige, Skymo, Skyjo, Online-Chärtenspiel, Nutzerabkomme, Plattformregle"
+      },
+      "content": {
+        "title": "Nutzigsbedingige",
+        "last-update": {
+          "text": "Zuletzt aktualisiert: {date}",
+          "date-format": "MMMM D, YYYY um HH:mm"
+        },
+        "welcome": "Willkomme bi <b>skymo.online</b>, eme Online-Multiplayer-Chärtespiil, wo vo Maxent Rouault betreit wird. Indem dass du uf die Website zugisch oder sie bruchsch, erklärsch dich mit dene Nutzungsbedingige iverstande. Wenn du nöd iverstande bisch, darfsch die Plattform nöd bruche.",
+        "operator": {
+          "title": "1. Betriber",
+          "content": "Betriibe wird die Website vo:",
+          "name": "Maxent Rouault",
+          "contact": "Kontakt: {email}",
+          "location": "Frankrych (privati Person, nid-gwerbli)"
+        },
+        "eligibility": {
+          "title": "2. Berechtigung",
+          "content": "Du chasch de Service als Gast bruche oder indem dassch en Account registriersch. Indem dassch diessi Website bruchsch, bestätigsch, dass:",
+          "items": {
+            "1": "Du bisch mindestens 13 Johr alt (oder es Mindesalter, wo i dim Land gilt).",
+            "2": "Wenn Du unter 18 Johr alt bisch, bruchsch d Erlaubnis vo dim gesetzliche Vertretter."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Account & Gästebnutzig",
+          "items": {
+            "1": "Gastspieleri chönd ohni Registrierig spile, aber öppis vo de Funktione chönnt igschränkt sii.",
+            "2": "Registrierti Benutzer müend e gültigi E-Mail und en Username aageh.",
+            "3": "Du bisch für dini Account und dini Aktivitäte verantwortlich. Du derfsch dini Login-Date nöd wiitergeh.",
+            "4": "Du chasch dini Account jederzeit lösche. Nach 48 Stunde werded dini persöndliche Date anonymisiert oder für immer glöscht."
+          }
+        },
+        "data-storage": {
+          "title": "4. Datenspeichrig",
+          "content": "Mir speichere folgendi Date, je nachdem, wie du sie bruchsch:",
+          "all-players": {
+            "title": "Für alli Spieler:",
+            "items": {
+              "1": "In-Game-Name, Avatar, Punktestand und Chat-Nachrichte, **wenn mindestens ein Spieler igloggt isch**.",
+              "2": "IP-Adressä chönd us Sicherheits- und Moderationsgründ vorübergehend gspeicheret werde."
+            }
+          },
+          "registered-players": {
+            "title": "Für registrierte Spieler:",
+            "items": {
+              "1": "E-Mail, Benutzername, Avatar, Spielstatistik und optional verknüpfiti Accounts (z.B. Google).",
+              "2": "Analytics-Date, wie z.B. Spielverhalte, Sitzungsfrequenz oder Funktionsnutzig, **chönd gsammelet wärde zum Spiel z'verbessere**."
+            }
+          },
+          "storage-location": "All Datea werdet i de <b>Europäische Union</b> gspeichret und gmäss de <link>Datenschutzrichtlinie</link> behandelt."
+        },
+        "analytics-tracking": {
+          "title": "5. Analytics & Tracking",
+          "content": "Zum Service z'verbessere und d'Benutzererlebnis z'personalisiere, chöimme mir:",
+          "items": {
+            "1": "Bruuch <b>Analytics-Tools</b> (z.B. PostHog oder ähnliches) zum Nutzigs- und Gameplay-Muster z'verfolge.",
+            "2": "Nutzerverhalte analysiere, zum Bugs finde, Matchmaking verbessere oder Features entwickle.",
+            "3": "Mir chönd die Date i Zuekunft bruuche, zum **personalisierte Inhalts- oder Werbig z'lieferä**, und das alles unter Berücksichtigig vo dim Privatsphäre-Recht nach DSGVO."
+          },
+          "data-rights": "Du chasch de Verfolgige widerspräche oder d Löschig vo persönliche Date verlanche, indem dass du üs kontaktisch."
+        },
+        "ads-monetization": {
+          "title": "6. Werbung & Monetarisierig",
+          "content": "D Plattform cha Werbig aazeige, inklusiv vo dritt Parti oder kontextbezogene Werbig. Zuekunftig chönti für igloggti Benutzer <b>personalisierti Werbig</b> basierend uf Nutzigsdate zeigt werde.",
+          "consent": "Mir gänd klari Informatione und Stimmigs-Mechanisme, falls und wenn Verhalde- oder personalisierti Werbig igfüehrt wird."
+        },
+        "user-conduct": {
+          "title": "7. User Conduct",
+          "content": "Du stimmsch zu:",
+          "items": {
+            "1": "Sei respektvoll und halte dich a die Fairplay-Regle.",
+            "2": "Cheate, belästige oder gib dich nöd als anderi us, und bruch kei beleidigendi Username oder Avatare.",
+            "3": "Cheibe oder missbruche de Chat oder anderi Kommunikationsfunktione nöd."
+          },
+          "enforcement": "Mir behalte uns vor, Nutzerwaltige, wo gege die Regle verstosse, z' sperre oder z' beschränke."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderation & Meldewese",
+          "items": {
+            "1": "Chat-Nöchrichte werded vorübergehend gspeicheret und chönd für Spili mit registrierte Spieler vollstendi gspeicheret werde.",
+            "2": "Mir chönd Nachrichte behalte, wänn öpper e Meldig macht oder wänn Moderazio nötig isch.",
+            "3": "Du chasch Missbruuch per E-Mail melde (gseht im Kontakt-Abschnitt).",
+            "4": "Moderationshandlige und Meldige chönd protokolliert werde, zum Transparenz und Fairness z'gewährleiste."
+          }
+        },
+        "availability": {
+          "title": "9. Verfüegbaräit",
+          "content": "Dä Service wird \"wie er isch\" aabote. Mir chöi d'Website oder Funktione jedi Zyt ohni Vorankündigung aalegge, unterbreche oder iistelle."
+        },
+        "intellectual-property": {
+          "title": "10. Geistigs Eigentum",
+          "content": "All Originalinhalt, Artwork und Code ghöred Maxent Rouault, wänn nöd anders erwähnt isch. Du derfscht kei Teil vo de Website ohni Erlaubnis wederverwende no wiiderverteile."
+        },
+        "legal": {
+          "title": "11. Rechtliches",
+          "jurisdiction": "Dïï Site wird vom französesche Gsetz reglet und entsprich de Alder-Datenschutz-Grundverordnig (DSGVO).",
+          "disputes": "Rechtsstreitigkeiten werded vor franziösisches Gricht usgrichtet."
+        },
+        "contact": {
+          "title": "12. Kontakt",
+          "general": "Allgmeini Froge: <email></email>"
+        }
+      }
     }
   },
   "components": {
@@ -284,7 +850,8 @@
       },
       "attribution": {
         "avatars": "Avatär erstellt vo Freepik - Flaticon"
-      }
+      },
+      "translations": "Hilf mit, s Spiel z übersetze!"
     },
     "LanguageCombobox": {
       "select-language": "Sprach usgwähle",
@@ -298,7 +865,7 @@
         "frs": "Eastern Frisian",
         "en": "English",
         "fr": "Français",
-        "bar": "Bavarian",
+        "bar": "Bairisch",
         "da": "Dansk",
         "nl": "Nederlands",
         "nds": "Plattdeutsch",
@@ -417,16 +984,72 @@
         "volume": {
           "label": "Volume ({volume}%)"
         }
+      },
+      "chat": {
+        "title": "Chat",
+        "chat-visibility": "Chat Sichtbarkeit",
+        "chat-notification-size": {
+          "label": "Chat-Notifikationsgrössi",
+          "values": {
+            "small": "Chlii",
+            "normal": "Normal",
+            "big": "Gross"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobil",
+        "switch-to-player-who-is-playing": "Automatisch zum Spieler wächsle, wo grad am Zug isch",
+        "show-preview-opponents-cards": "Zeig e Vorschau vo de Ggnekarte i de Ggne-Lischt"
+      },
+      "gameplay": {
+        "title": "Spielablauf",
+        "gameboard": {
+          "title": "Spielbrett",
+          "size": {
+            "label": "Grööss vo dim Spielbrett",
+            "big-warning": "Kann Anzeige uf em Handy kaputtmache",
+            "values": {
+              "normal": "Normal",
+              "big": "Gross"
+            }
+          },
+          "enlarge-active-player-board": "Vergrösser das Spiilfeld vom Spieler, wo grad am Zug isch"
+        },
+        "timer": {
+          "title": "Timer",
+          "label": "Timer-Anzeigemodus",
+          "description": "Im Smart Mode wird de Timer i dr Halbzeit und di letschte 15 Sekunde aazeigt.",
+          "modes": {
+            "never": "Niemals",
+            "smart": "Intelligänt",
+            "always": "Immer"
+          }
+        }
+      },
+      "account": {
+        "sync": {
+          "label": "Accout-Einstellungen",
+          "description": "Synchronisiere dini Eligestellige uf all dine Geräte, wänn du igloggt bisch.",
+          "enabled": "Aktiviert",
+          "disabled": "Uusgschaltet",
+          "syncing": "Synchronisiere...",
+          "offline": "Offline",
+          "error": "Sync fehlgeschlage",
+          "lastSync": "Letzti Synchronisation: {date}"
+        },
+        "title": "Konto"
       }
     },
     "Avatar": {
       "context-menu": {
-        "ban": "De {username} spärre",
-        "report": "Rapport {username}",
-        "kick": "De {username} usehaue",
-        "vote-to-kick": "Stimm ab zum {username} usezschmeisse",
-        "mute": "Stumm schalte {username}",
-        "unmute": "Lüüt {username} wider ii"
+        "ban": "Banne {name}",
+        "report": "Meld {name}",
+        "kick": "Kick {name}",
+        "vote-to-kick": "Abstimmig zum Usewärfe vo {name}",
+        "mute": "Mute {name}",
+        "unmute": "Unmute {name}",
+        "transfer-host": "{name} isch jetzt de Host"
       }
     },
     "AppearanceSelect": {
@@ -444,7 +1067,17 @@
       "unread-messages": "{count} ungleseni Nachrichte{count, plural, =1 {} other {n}}"
     },
     "CopyLink": {
-      "message": "De Link isch kopiert worde!"
+      "message": "De Link isch kopiert worde!",
+      "copy": {
+        "button-title": "Link kopiere",
+        "popover": "Link kopiert!"
+      },
+      "share": {
+        "title": "Chunsch i mini Skyjo-Rundi!",
+        "text": "Komm spiel Skyjo mit mir online! Klick uf de Link zum Spiel beitrete.",
+        "button-title": "Spiel teile",
+        "tooltip": "Klick do zum ds Spiel teile!"
+      }
     },
     "DiscardPile": {
       "title": "Abwurfstapel",
@@ -548,8 +1181,8 @@
     "ReportDialog": {
       "report-message": "Meld e Nachricht",
       "select-message": "Wähl d'Nachricht us, wo du wotsch mälde",
-      "title": "Rapport {username}",
-      "description": "Mäld de Benutzername oder e Nachricht vom {username}, wenn's unpassend isch.",
+      "title": "Meldä {name}",
+      "description": "Melde de Name oder e Nachricht vo {name}, wänn's unpassend isch.",
       "select-message-placeholder": "Wähle e Nachricht us",
       "no-messages": "S het keini Nachrichte vo dem Benutzer gfunde",
       "cancel": "Abbräche",
@@ -559,22 +1192,63 @@
           "title": "Rapport isch igreicht worde",
           "description": "Merssi für din Rapport, du häsch ghulfe d Qualitet vom Spiel z verbessere."
         }
+      },
+      "report-name": "Meld de Spielername",
+      "comment": "Zuesätzliche Info (optional)",
+      "comment-placeholder": "Gib meh meh Info zu dem Bericht..."
+    },
+    "Banner": {
+      "title": "Ich bruuche <gform>Dini Rückmeldig</gform>, zum d Zuekunft vo Skyjo z'gestalte!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Regle",
+        "leaderboard": "Rangliste"
       }
+    },
+    "LoginButton": {
+      "login": "Mach mit!"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Wiiter mit Google"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Passwörter stimmed überei",
+      "minimum-characters": "Mindeschtens 10 Zeiche",
+      "lowercase-letter": "Mindeschdens ein chliiini Buchstabe",
+      "capital-letter": "Mindeschtens ein Grossbuchstabe",
+      "number": "Säit minschtens eis Zahl",
+      "special-character": "Mindeschtens ein Sonderzeiche"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Überprüfä...",
+        "available": "Username isch frei",
+        "taken": "Schon vergit!"
+      }
+    },
+    "ReconnectionModal": {
+      "title": "Wieder mit em Spiel verbinde",
+      "description": "Du bisch i öppere Spiel gsi, wo grad am Laufe isch. Wotsch wieder verbinde?",
+      "reconnect-button": "Ja, verbinde neu",
+      "dismiss-button": "Nei, schliesse"
     }
   },
   "utils": {
     "chat": {
-      "player-left": "{username} het s Spiel verlah",
-      "player-joined": "{username} isch em Spiil biträtte",
-      "player-reconnect": "{username} isch wieder im Spiel debi",
+      "player-left": "{name} isch us em Spiel gange",
+      "player-joined": "{name} isch zum Spiel dazugschtosse",
+      "player-reconnect": "{name} isch wider im Spiel",
       "argument-required": "Für de Befähl {command} bruucht’s eis oder meh Argument",
-      "player-already-muted": "{username} isch scho stummgschalte",
-      "player-muted": "{username} isch jetzt stumm gschalte",
-      "player-not-muted": "De {username} isch nöd stummgschalte",
-      "player-unmuted": "De Stumm-Modus isch für {username} ufghobe worde",
-      "wizz-sent": "Du häsch em {targetUsername} es Wizz gschickt!",
-      "wizz-self": "Du bisch vo {initiatorUsername} awizzed worde!",
-      "wizz-other": "{initiatorUsername} het de {targetUsername} awizzet!"
+      "player-already-muted": "{name} isch scho stumm gschaltet",
+      "player-muted": "{name} isch jetzt stumm gschaltet",
+      "player-not-muted": "{name} isch nöd stummgschalte",
+      "player-unmuted": "{name} isch nöd meh stumm gschaltet",
+      "wizz-sent": "Du hesch em {targetName} en Wizz gschickt!",
+      "wizz-self": "Du bisch vom {initiatorName} wizzed worde!",
+      "wizz-other": "{initiatorName} het {targetName} wizzed!",
+      "welcome": "Bitte sii nett und respektvoll. Du chasch (uf Mobilgerätschafte: lang drüücke, susch: mit dr rechta Maustast) drüücke üf Nachrichte, zum Spieler stummschalte oder melde, falls nötig.",
+      "host-transferred": "{name} isch jetzt de Host"
     },
     "skymo": {
       "turn": {
@@ -633,6 +1307,9 @@
         },
         "game-is-full": {
           "description": "D'Spil isch voll, du chasch nöd mitmache"
+        },
+        "player-already-connected": {
+          "description": "Du bisch scho vo öppem andere Session mit däm Spiel verbunde"
         }
       }
     }
@@ -676,7 +1353,33 @@
       },
       "report-against-you": {
         "title": "Du bisch usegschmisse worde wägemene Rapport",
-        "description": "Dii Username oder eini vo dine Nachrichte isch gmoldä worde und als unpassend igstuufet worde. Bitte mach das nüme."
+        "description": "Dini Name oder öpis vo dine Nachrichte isch meldet worde und als unpassend bewertet worde. Bitte mach das nöd wieder."
+      }
+    },
+    "HostTransferContext": {
+      "not-allowed": {
+        "title": "Du hesch kei Erlaubnis, de Host z'übernäh",
+        "description": "Nur de aktuelli Host chan die Host-Rolle an anderi Spieler übergä"
+      },
+      "player-not-found": {
+        "title": "Där Spieler existiert nöd",
+        "description": "Dä Spieler, wo du versuechsch, de Host z'übertröge, existiert im Spiel nöd"
+      },
+      "player-not-connected": {
+        "title": "De Spieler isch nöd verbunde",
+        "description": "Dä Spieler, wo du versuechsch, de Host z'übertröge, isch grad nöd mit em Spiel verbunde"
+      },
+      "host-transferred": {
+        "title": "Host erfolgreich übergehändet",
+        "description": "{newHostName} isch jetzt de Host vom Spiel"
+      },
+      "you-are-now-host": {
+        "title": "Du bisch jetzt de Host",
+        "description": "{previousHostName} hät d'Host-Rolle a di übergeh"
+      },
+      "unexpected-error": {
+        "title": "Es isch en unerwartete Fehler ufträtte",
+        "description": "Es isch en unerwartete Fehler bi de Überträgig vom Host ufträtte"
       }
     }
   },
@@ -684,5 +1387,74 @@
     "title": "Skymo | Skyjo-Chartegame gratis online spile",
     "description": "Spiel Skyjo gratis online mit Skymo! Es schnälls Multiplayer-Charte-Spiel, wo Strategie uf Spass trifft. Fordere Fründe use, dräi Charte um und versuech de tüüfst Mööglichststand z'erreiche zum gwünne!",
     "keywords": "Skymo,Skyjo,Skyjo online,Mehrspieler-Spiel,Kartespiel,mit Fründe spiele,gratis Online-Spiel,Online-Kartespiel"
+  },
+  "errors": {
+    "invalid-credentials": "D E-Mail oder s Passwoert wo du igibä is falsch. Bitte versuechs no einisch.",
+    "logout-failed": "Mir chönd Dich nöd uslogge. Schliess bitte din Browser, zum die Sitzig z'beendi.",
+    "session-not-found": "Dini Session isch abgloufe oder ungültig. Bitte logg di weder ih.",
+    "session-invalid": "Dini Session isch ungültig. Logg di nomal a zum witerz'mache.",
+    "session-expired": "Dini Session isch abglouffe. Logg di wider ih, zum witerz'mache.",
+    "session-token-missing": "Dini Session-Token fehlt. Logg di bitte ih, zum ne nöie z'ha.",
+    "username-taken": "Dä Username isch scho vergitä. Bitte wählsch en andere.",
+    "onboarding-error": "Es isch es Problem mit dim Profil ufgeträtte. Bitte versuech's no mal.",
+    "reset-token-invalid": "Dä Reset-Token, wo du aageh bisch, isch ungültig. Bitte fordere en nöie a.",
+    "reset-token-expired": "Dini Passwörter-Reset-Token isch abgloufe. Bitte fordere es neu a.",
+    "password-reset-failed": "Mir chönd din Passwoert nid zruggsetze. Bitte versuech's no einisch.",
+    "forgot-password-error": "Es isch es Problem bi de Verarbätig vo dim Passwort-Reset-Uufdrag ufträtte. Bitte versuechs spöter no einisch.",
+    "reset-password-error": "Mir chönd din Passwoert nöd zruggsetze. Bitte probiers nomal.",
+    "oauth-restart-process": "Es isch öppis schief gange bi de Authentifizierig. Bitte versuech no einisch, dich a zumälde.",
+    "oauth-id-token-missing": "Mir hei kei ID-Token vom Authentifizierigsprovider übercho. Bitte versuechs no einisch.",
+    "oauth-account-creation-failed": "Mir chönd kei Account mit de Date vo dim Provider erstelle. Bitte versuech's no einisch.",
+    "oauth-login-initiation-failed": "Mir chönd de Login-Prozess nöd starte. Bitte probiersch es paar Möumänt später nomal.",
+    "verify-session-error": "Mir chönd din Session nöd bestätige. Log dich bitte us und wieder ih.",
+    "signup-error": "Mir chönd din Account grad nöd erstelle. Bitte probier's spöter no mal.",
+    "login-error": "Es git es Problem bim Ihloge. Bitte versuechs no einisch.",
+    "login-invalid-credentials": "D E-Mail oder s Passwoert, wo du igibäsch, isch falsch. Bitte probier's no mehrmal.",
+    "logout-error": "Es isch en unerwartete Fehler ufcho, wo du usgloggd bisch worde.",
+    "check-username-error": "Mir chönd nöd luege, öb de Username verfügbar isch. Bitte probier's no mal.",
+    "unknown-auth-error": "E unbekannte Authentifizierigsfehler isch ufdrätte. Bitte versuechs nomal.",
+    "creation-failed": "Mir chönd de User grad nöd erstelle. Bitte probiers nomal.",
+    "get-user-error": "Mir hends nöd chönne, s'Userprofil z'lade. Bitte probiersch spöter no einisch.",
+    "get-user-games-error": "Mir hend d'Spile vom User nöd chönne lade. Bitte lade d'Siite neu.",
+    "get-user-stats-error": "Mir chönd d'Statistike vom User nöd lade. Bitte lade d'Site neu.",
+    "user-not-found": "Dä User, wo du suechesch, isch nöd gfunde worde.",
+    "username-same-as-current": "Das isch scho din Benutzername.",
+    "email-taken": "Dä E-Mail-Adrässe isch scho iigsetzt. Bitte bruchsch en anderi.",
+    "email-same-as-current": "Das isch scho din E-Mail-Adrässe.",
+    "invalid-current-password": "D'aktuells Passwoert, wo du igibsch, isch falsch.",
+    "update-name-error": "Mir chönd de Name nöd aktualisiere. Bitte probier's no mal.",
+    "update-username-error": "Mir chönd de Username nöd aktualisiere. Bitte probiers nomal.",
+    "update-email-error": "Mir chönd din E-Mail-Adrässe nöd aktualisiere. Bitte probiers nomal.",
+    "revert-email-error": "Mir chönd din E-Mail-Wächsel nöd rückgängig mache. Bitte kontaktiere de Support.",
+    "update-password-error": "Mir chönd din Passwoert nid aktualisiere. Bitte versuech's no einisch.",
+    "update-avatar-error": "Mir hend din Avatar nöd chönne aktualisiere. Bitte versuechs nomal.",
+    "delete-account-error": "Mir chönd din Wunsch zum Konto lösche nöd verarbeite. Bitte versuech's no emol.",
+    "cancel-delete-account-error": "Mir hend din Account-Löschig nöd chönne abbreche. Bitte meld dich bim Support.",
+    "unexpected-error": "Es isch en unerwartete Fehler ufträtte. Bitte versuechs nomal.",
+    "internal-server-error": "Unsrem Server isch es Problem passiert. Bitte versuechs spöter no mal.",
+    "unauthorized": "Du bisch nöd authorisiert, die Aktion uszfüehre.",
+    "forbidden": "Du hesch kei Erlaubnis für de Zugriff uf die Ressource.",
+    "not-found": "D Ressource, wo du suechsch, isch nöd gfunde worde.",
+    "too-many-requests": "Du hesch z'viel Abfragä gschickt. Warte bitte chli und probiers no einisch.",
+    "ip-not-found": "Mir hend din IP-Adress nöd chönne identifiziere. Bitte überpröif din Internet-Anschluss.",
+    "invalid-request": "Dini Uuffrag isch ungültig gsi. Bitte pröef d Date und versuechs no einisch.",
+    "send-feedback-error": "Mir chönd din Feedback nöd schicke. Bitte probiers nomal.",
+    "send-pin-error": "Mir chönd kei Verifikations-PIN a diini E-Mail schicke. Bitte probier's no mehmal.",
+    "verify-pin-error": "Mir chönd din PIN nöd bestätige. Bitte versuech's no einisch.",
+    "invalid-pin": "D PIN, wo du igibä häsch, isch falsch. Bitte probier's no mal.",
+    "expired-pin": "D PIN, wo du igäh bisch, isch abgloufe. Mir hend der e nöii gschickt.",
+    "feedback-error": "Mir chönd din Feedback nöd schicke. Bitte probiers nomal.",
+    "get-public-games-error": "Mir chönd die öffentliche Spiel nöd lade. Bitte probiers nomal.",
+    "invalid-cancellation-token": "De Cancellation Token isch ungültig. Bitte versuech's nohmol.",
+    "expired-cancellation-token": "D Cancellation Token isch abgloufe. Bitte versuech's no mal.",
+    "cancel-account-deletion-error": "Mir chönd din Account-Löschig nöd annulliere. Bitte versuechs nomal",
+    "oauth-unknown-error": "Bi dim Login isch es unbekannti Problem ufträtte. Bitte versuechs nomal.",
+    "invalid-reversion-token": "D'Reversions-Token isch ungültig. Bitte versuechs nomal.",
+    "expired-reversion-token": "D'Reversion-Token isch abgloffe. Bitte versuech's no mehrmol.",
+    "name-min-characters": "Dini Name muess mindestens 2 Zeiche lang sii",
+    "name-max-characters": "Dini Anzeige-Name darf maximal 20 Zeiche lang sii",
+    "username-min-characters": "D Name muess mindeschtens 3 Zeiche lang sii",
+    "username-max-characters": "Dini Username darf maximal 20 Zeiche lang sii",
+    "username-invalid-format": "Dini Username darf nume Buachstabe, Zahlä und Unterstrichä enthalte"
   }
 }
