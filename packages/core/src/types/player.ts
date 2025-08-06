@@ -20,6 +20,7 @@ export type PlayerToJson = {
   scores: PlayerScore[]
   turnStartTime: number | null
   cards: CardToJson[][]
+  username?: string
 }
 
 export type PlayerRedisDb = {
@@ -27,6 +28,7 @@ export type PlayerRedisDb = {
   name: string
   avatar: Avatar
   socketId: string
+  username?: string | null
   connectionStatus: ConnectionStatus
   score: number
   scores: PlayerScore[]

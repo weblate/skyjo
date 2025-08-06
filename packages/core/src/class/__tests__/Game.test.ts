@@ -32,6 +32,8 @@ describe("Game", () => {
     player = new Player(
       { name: "player1", avatar: Constants.AVATARS.BEE },
       TEST_SOCKET_ID,
+      1,
+      "username1",
     )
     settings = new Settings()
     game = new Game({ hostId: player.id, settings })
@@ -943,6 +945,7 @@ describe("Game", () => {
             name: player.name,
             avatar: Constants.AVATARS.BEE,
             userId: player.userId ?? null,
+            username: player.username ?? null,
             cards: player.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,
@@ -966,6 +969,7 @@ describe("Game", () => {
             name: opponent.name,
             avatar: Constants.AVATARS.ELEPHANT,
             userId: opponent.userId ?? null,
+            username: opponent.username ?? null,
             cards: opponent.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,

@@ -17,7 +17,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useGame } from "@/contexts/GameContext"
-import { useRouter } from "@/i18n/routing"
+import { Link, useRouter } from "@/i18n/routing"
 import { formatScoreDisplay } from "@/lib/penalty-utils"
 import { cn, getRedirectionUrl } from "@/lib/utils"
 
@@ -104,52 +104,56 @@ const ResultsPage = () => {
               </MotionTableHeader>
             )}
             <TableBody>
-              {visibleRows.map((player, index) => (
-                <MotionTableRow
-                  key={player.id}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  transition={{ duration: 0.5 }}
-                >
-                  <TableCell className="w-8">
-                    {player.connectionStatus ===
-                    CoreConstants.CONNECTION_STATUS.CONNECTED
-                      ? allRowsVisible && index + 1
-                      : "-"}
-                  </TableCell>
-                  <TableCell
-                    className={cn(
-                      "w-52 py-2 flex flex-row gap-2 items-center",
-                      player.connectionStatus ===
-                        CoreConstants.CONNECTION_STATUS.CONNECTED
-                        ? "grayscale-0"
-                        : "grayscale",
-                    )}
+              {visibleRows.map((player, index) => {
+                const isConnected =
+                  player.connectionStatus ===
+                  CoreConstants.CONNECTION_STATUS.CONNECTED
+
+                console.log(player)
+
+                return (
+                  <MotionTableRow
+                    key={player.id}
+                    initial={{ opacity: 0, y: -20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: 20 }}
+                    transition={{ duration: 0.5 }}
                   >
-                    <UserAvatar
-                      player={player}
-                      size="small"
-                      showName={false}
-                      allowContextMenu={false}
-                    />
-                    <p className="text-sm text-ellipsis overflow-hidden whitespace-nowrap">
-                      {player.name}
-                    </p>
-                  </TableCell>
-                  {player.scores.map((score, scoreIndex) => (
-                    <TableCell
-                      key={`${player.id}-round-${scoreIndex + 1}`}
-                      className="py-2"
-                    >
-                      {formatScoreDisplay(score)}
+                    <TableCell className="w-8">
+                      {isConnected ? allRowsVisible && index + 1 : "-"}
                     </TableCell>
-                  ))}
-                  <TableCell className="py-2 text-right font-semibold">
-                    {player.score}
-                  </TableCell>
-                </MotionTableRow>
-              ))}
+                    <TableCell
+                      className={cn(
+                        "w-52 py-2 flex flex-row gap-2 items-center",
+                        isConnected ? "grayscale-0" : "grayscale",
+                      )}
+                    >
+                      {player.username ? (
+                        <Link
+                          href={`/u/${player.username}`}
+                          target="_blank"
+                          className="underline underline-offset-2 flex flex-row gap-2 items-center"
+                        >
+                          <Player player={player} />
+                        </Link>
+                      ) : (
+                        <Player player={player} />
+                      )}
+                    </TableCell>
+                    {player.scores.map((score, scoreIndex) => (
+                      <TableCell
+                        key={`${player.id}-round-${scoreIndex + 1}`}
+                        className="py-2"
+                      >
+                        {formatScoreDisplay(score)}
+                      </TableCell>
+                    ))}
+                    <TableCell className="py-2 text-right font-semibold">
+                      {player.score}
+                    </TableCell>
+                  </MotionTableRow>
+                )
+              })}
             </TableBody>
           </Table>
 
@@ -209,6 +213,22 @@ const ResultsPage = () => {
         </m.div>
       </div>
     </AnimatePresence>
+  )
+}
+
+const Player = ({ player }: { player: PlayerToJson }) => {
+  return (
+    <>
+      <UserAvatar
+        player={player}
+        size="small"
+        showName={false}
+        allowContextMenu={false}
+      />
+      <p className="text-sm text-ellipsis overflow-hidden whitespace-nowrap">
+        {player.name}
+      </p>
+    </>
   )
 }
 
