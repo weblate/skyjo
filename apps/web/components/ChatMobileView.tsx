@@ -54,7 +54,7 @@ const ChatMobileView = ({
           <ChatMessageList />
         </div>
         <DrawerFooter className="p-4 pt-0">
-          <ChatForm chatOpen={open} />
+          <ChatForm chatOpen={open} disabled={disabled} />
         </DrawerFooter>
       </DrawerContent>
     </Drawer>

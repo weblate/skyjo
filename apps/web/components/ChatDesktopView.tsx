@@ -90,7 +90,7 @@ const ChatDesktopView = ({
             {t("title")}
           </p>
           <ChatMessageList />
-          <ChatForm chatOpen={open} />
+          <ChatForm chatOpen={open} disabled={disabled} />
         </m.div>
       </div>
     </div>

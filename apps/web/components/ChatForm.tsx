@@ -13,6 +13,7 @@ import { Form, FormControl, FormField, FormItem } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
 import { useChat } from "@/contexts/ChatContext"
 import { useGame } from "@/contexts/GameContext"
+import { Link } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 
 const chatFormSchema = z.object({
@@ -21,8 +22,9 @@ const chatFormSchema = z.object({
 
 interface ChatFormProps {
   chatOpen: boolean
+  disabled?: boolean
 }
-const ChatForm = ({ chatOpen }: ChatFormProps) => {
+const ChatForm = ({ chatOpen, disabled = false }: ChatFormProps) => {
   const { opponents } = useGame()
   const {
     sendMessage,
@@ -230,6 +232,37 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
     clearDraftMessage()
   }
 
+  if (disabled) {
+    return (
+      <div className="flex flex-col items-center justify-center h-full text-center">
+        <p className="text-sm text-gray-500 dark:text-gray-400">
+          {t.rich("disabled-chat-message", {
+            login: (chunks) => (
+              <Link
+                href="/login"
+                className="text-blue-500 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {chunks}
+              </Link>
+            ),
+            "create-account": (chunks) => (
+              <Link
+                href="/register"
+                className="text-blue-500 hover:underline"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {chunks}
+              </Link>
+            ),
+          })}
+        </p>
+      </div>
+    )
+  }
+
   return (
     <Form {...form}>
       <form
@@ -255,6 +288,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
                   onChange={handleInputChange}
                   onKeyDown={handleKeyDown}
                   ref={inputRef}
+                  disabled={disabled}
                 />
               </FormControl>
             </FormItem>
@@ -273,6 +307,7 @@ const ChatForm = ({ chatOpen }: ChatFormProps) => {
           title={t("button-title")}
           tabIndex={tabIndex}
           className="cursor-pointer"
+          disabled={disabled}
         >
           <SendIcon width={16} height={16} />
         </Button>
