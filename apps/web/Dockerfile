@@ -30,8 +30,6 @@ RUN pnpm install --frozen-lockfile --ignore-scripts
 
 # Copy source and build
 COPY --from=pruner /app/out/full/ .
-# Ensure .env files are available for build
-COPY ./apps/web/.env ./apps/web/.env
 RUN pnpm run build --filter=${PROJECT}
 
 # Install production dependencies
