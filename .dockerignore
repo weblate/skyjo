@@ -13,10 +13,6 @@ dist
 build
 **/build
 
-# Environment files
-.env*
-**/.env*
-
 # IDE and editor files
 .vscode
 .idea
