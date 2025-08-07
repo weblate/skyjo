@@ -826,21 +826,6 @@
         "title": "Da {playerName} is vom Host ausm Spui gschmissn worn"
       }
     },
-    "PWABanner": {
-      "Safari": "Druck auf's Teilen-Symbol, dann auf \"Zum Dock hinzufügn\", um's zu installiern",
-      "FirefoxIOS": "Tipp auf's Menü-Symbol, dann auf's Teilen-Symbol, dann scroll und tipp auf \"Zum Startbildschirm hinzufügen\" zum Installiern",
-      "Chrome": "Klick auf'n \"Installieren\"-Knopf, um's zu installiern",
-      "FirefoxAndroid": "Druck auf's Menü-Symbol, dann auf \"Zum Startbildschirm hinzufügen\", um's zu installiern",
-      "ChromeAndroid": "Tippa Sie aufs Menü-Symbol, dann auf \"Zum Startbildschirm hinzufügen\", um's zu installiern",
-      "install-button": {
-        "title": "De App installiern",
-        "content": "Installiern"
-      },
-      "title": "Installier Skymo auf deim Gerät!",
-      "SamsungBrowser": "Tipp auf's Menü-Symbol, dann auf \"Seitn hiizua\", dann auf \"Startbildschirm\" zum Installiern",
-      "ChromeIOS": "Druck auf's Teilen-Symbol, dann scroll und druck auf 'Zum Startbildschirm hinzufügen' zum Installiern",
-      "SafariIOS": "Druck auf's Teilen-Symbol, dann scroll und druck auf \"Zum Startbildschirm hinzufügen\" zum Installiern"
-    },
     "Rules": {
       "round-start": {
         "content-1": "Da Spieler ko de easchte Kartn, de wo umdraht worn is, vom Oblegestapla aussasucha",

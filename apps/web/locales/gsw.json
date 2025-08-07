@@ -1142,21 +1142,6 @@
     "PlayerBoard": {
       "you": "Du"
     },
-    "PWABanner": {
-      "title": "Installier Skymo uf dim Grät!",
-      "Safari": "Tipp uf s Teilesymbol, denn 'Zum Dock dezuefüege' zum installiere",
-      "Chrome": "Klick uf de Knopf 'Installiere' zum installiere",
-      "FirefoxAndroid": "Tipp de Menü-Button a denn 'Zum Homescreen hinzuefüege' zum installiere",
-      "ChromeAndroid": "Tipp de Menü-Button a denn 'Zum Homescreen hinzuefüege' zum installiere",
-      "SamsungBrowser": "Tipp de Menü-Button a denn 'Uf Startbildschirm' zum Installiere",
-      "ChromeIOS": "Tipp de Share-Button, denn scroll und tipp 'Zum Home-Bildschirm' zum installiere",
-      "FirefoxIOS": "Tipp uf s Menü-Icon, denn uf s Teilet-Icon, und denn scroll und tipp uf 'Zum Homescreen hinzuefüege' zum installiere",
-      "SafariIOS": "Tipp de Share-Button, denn scroll und tipp 'Zum Home-Bildschirm' zum installiere",
-      "install-button": {
-        "title": "Installier d App",
-        "content": "Installiere"
-      }
-    },
     "RulesDialog": {
       "title": "Spielregle",
       "trigger": {

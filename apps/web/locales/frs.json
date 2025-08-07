@@ -1141,21 +1141,6 @@
     "PlayerBoard": {
       "you": "Du"
     },
-    "PWABanner": {
-      "title": "Installier Skymo ap dien Reedschap!",
-      "Safari": "Tippje dat Deel-Ikoon, dan 'An't Dock touföigje' uum tou installierjen",
-      "Chrome": "Klickje op de 'Install' Knop, uum tou installierjen",
-      "FirefoxAndroid": "Tippje ap dät Menü-Ikon, dan 'Tou Startsied touföigje' uum tou installierjen",
-      "ChromeAndroid": "Tippje ap dät Menü-Ikon, dan 'Tou Startsied touföigje' uum tou installierjen",
-      "SamsungBrowser": "Tippje op dät Menü-Ikoon, dan 'Siede touföigje tou', dan 'Startschierm' uum tou installierjen",
-      "ChromeIOS": "Tippje op dät Deel-Ikoon, scrollje un tippje dan op 'Tou Startschierm touföigje' uum tou installierjen",
-      "FirefoxIOS": "Tippje dat Menü-Ikoon, dan dat Deel-Ikoon, scrollje dan un tippbje 'Tou Startsäärge touföögje' uum tou installierjen",
-      "SafariIOS": "Tippje op dät Deel-Ikoon, scrollje un tippje dan op 'Tou Startschierm touföigje' uum tou installierjen",
-      "install-button": {
-        "title": "Installier de App",
-        "content": "Installere"
-      }
-    },
     "RulesDialog": {
       "title": "Spulregeln",
       "trigger": {

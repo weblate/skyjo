@@ -856,21 +856,6 @@
     "PlayerBoard": {
       "you": "Teie"
     },
-    "PWABanner": {
-      "Safari": "Puudutage jagamise ikooni, seejärel installimiseks „Lisa dokki”",
-      "Chrome": "Klõpsake installimiseks nupul „Installi”",
-      "title": "Installige Skymo oma seadmesse!",
-      "FirefoxAndroid": "Puudutage menüüikooni, seejärel installimiseks valikut „Lisa avakuvale”",
-      "ChromeAndroid": "Puudutage menüüikooni, seejärel valikut „Lisa avakuvale”, et installida",
-      "FirefoxIOS": "Puudutage menüüikooni, seejärel jagamisikooni, kerige ja puudutage installimiseks valikut „Lisa avakuvale”",
-      "SafariIOS": "Puudutage jagamise ikooni, seejärel kerige ja puudutage installimiseks „Lisa avakuvale”",
-      "install-button": {
-        "title": "Installige rakendus",
-        "content": "Installi"
-      },
-      "SamsungBrowser": "Puuduta menüüikooni, seejärel „Lisa leht asukohta“, seejärel „Avakuva“, et installida",
-      "ChromeIOS": "Puudutage jagamise ikooni, seejärel kerige ja puudutage installimiseks „Lisa avakuvale”"
-    },
     "Rules": {
       "round-start": {
         "title": "Ringi algus",

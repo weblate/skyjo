@@ -1095,21 +1095,6 @@
     "PlayerBoard": {
       "you": "C'hwi"
     },
-    "PWABanner": {
-      "title": "Stailhit Skyjo war ho trevnad!",
-      "Safari": "Stokit an arlun evit rannañ, hag ouzhpennit 'Lakaat en Dock' evit staliañ",
-      "Chrome": "Klikit war ar bouton \"Staliañ\" evit staliañ",
-      "FirefoxAndroid": "Stokit an arlun lañser, ha 'ouzhpennañ d'ar skramm degemer' evit staliañ",
-      "ChromeAndroid": "Stokit an arlun lañser, ha 'ouzhpennañ d'ar skramm degemer' evit staliañ",
-      "SamsungBrowser": "Pouezit war an arlun lañser, ha \"ouzhpennañ d'ar bajenn\" ha \"skramm degemer\" evit staliañ",
-      "ChromeIOS": "Stokit an arlun rannañ, dibunit ha stokit \"ouzhpennañ d'ar skramm degemer\" evit staliañ",
-      "FirefoxIOS": "Stokit an arlun lañser, an arlun rannañ da c'houde, dibunit ha stokit 'Ouzhpennañ d'ar skramm degemer' evit staliañ",
-      "SafariIOS": "Stokit an arlun rannañ, dibunit ha stokit 'ouzhpennañ d'ar skramm degemer' evit staliañ",
-      "install-button": {
-        "title": "Staliañ an arload",
-        "content": "Staliañ"
-      }
-    },
     "RulesDialog": {
       "title": "Reolennoù ar c'hoari",
       "trigger": {

@@ -835,21 +835,6 @@
         "et": "Eesti"
       }
     },
-    "PWABanner": {
-      "Chrome": "Klikněte na tlačítko 'Instalovat' pro instalaci",
-      "title": "Nainstalujte si Skymo do svého zařízení!",
-      "Safari": "Klepněte na ikonu sdílení a poté na 'Přidat na panel' pro instalaci",
-      "FirefoxAndroid": "Klepněte na ikonu menu a poté na 'Přidat na plochu' pro instalaci",
-      "ChromeAndroid": "Klepněte na ikonu menu a poté na 'Přidat na plochu' pro instalaci",
-      "SamsungBrowser": "Klepněte na ikonu menu, poté na 'Přidat stránku do' a následně na 'Domovská obrazovka' pro instalaci",
-      "ChromeIOS": "Klepněte na ikonu sdílení, poté přejděte dolů a klepnutím na 'Přidat na plochu' proveďte instalaci",
-      "FirefoxIOS": "Klepněte na ikonu menu, poté na ikonu sdílení, pak posuňte dolů a klepněte na 'Přidat na plochu' pro instalaci",
-      "SafariIOS": "Klepněte na ikonu sdílení, poté přejděte dolů a klepnutím na 'Přidat na plochu' proveďte instalaci",
-      "install-button": {
-        "title": "Nainstalovat aplikaci",
-        "content": "Instalovat"
-      }
-    },
     "Rules": {
       "round-start": {
         "choice-2": {

@@ -1037,21 +1037,6 @@
     "PlayerBoard": {
       "you": "Du"
     },
-    "PWABanner": {
-      "title": "Installer Skymo på din enhed!",
-      "Chrome": "Klik på knappen 'Installer' for at installere",
-      "FirefoxAndroid": "Tryk på menuikonet, derefter 'Føj til startskærm' for at installere",
-      "Safari": "Tryk på deleikonet, og derefter 'Føj til Dock' for at installere",
-      "ChromeAndroid": "Tryk på menuikonet, og derefter 'Føj til startskærm' for at installere",
-      "ChromeIOS": "Tryk på deleikonet, rul ned, og tryk på \"Føj til hjemmeskærm\" for at installere",
-      "FirefoxIOS": "Tryk på menuikonet, derefter på deleikonet, rul og tryk på \"Føj til hjemmeskærm\" for at installere",
-      "SamsungBrowser": "Tryk på menuikonet, derefter 'Føj side til', derefter 'Startskærm' for at installere",
-      "SafariIOS": "Tryk på deleikonet, rul ned, og tryk på \"Føj til hjemmeskærm\" for at installere",
-      "install-button": {
-        "content": "Installer",
-        "title": "Installer appen"
-      }
-    },
     "RulesDialog": {
       "title": "Spilleregler",
       "trigger": {

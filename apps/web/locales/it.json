@@ -1069,21 +1069,6 @@
     "PlayerBoard": {
       "you": "Tu"
     },
-    "PWABanner": {
-      "FirefoxAndroid": "Tocca l'icona del menu, quindi \"Aggiungi a schermata Home\" per installare",
-      "SamsungBrowser": "Tocca l'icona del menu, poi \"Aggiungi pagina a\", quindi \"Schermata Home\" per installare",
-      "title": "Installa Skymo sul tuo dispositivo!",
-      "Safari": "Tocca l'icona di condivisione, quindi \"Aggiungi al Dock\" per installare",
-      "Chrome": "Fare clic sul pulsante \"Installa\" per installare",
-      "ChromeAndroid": "Tocca l'icona del menu, quindi \"Aggiungi a schermata Home\" per installare",
-      "SafariIOS": "Tocca l'icona di condivisione, quindi scorri e tocca \"Aggiungi a schermata Home\" per installare",
-      "ChromeIOS": "Tocca l'icona di condivisione, quindi scorri e tocca \"Aggiungi a schermata Home\" per installare",
-      "FirefoxIOS": "Tocca l'icona del menu, poi l'icona di condivisione, quindi scorri e tocca \"Aggiungi a schermata Home\" per installare",
-      "install-button": {
-        "content": "Installa",
-        "title": "Installa l'app"
-      }
-    },
     "Avatar": {
       "context-menu": {
         "vote-to-kick": "Vota per espellere {name}",

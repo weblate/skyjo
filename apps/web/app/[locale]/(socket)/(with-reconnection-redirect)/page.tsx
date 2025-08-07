@@ -4,7 +4,6 @@ import { RulesButton } from "@/app/[locale]/(socket)/(with-reconnection-redirect
 import Footer from "@/components/Footer"
 import MovingArrow from "@/components/MovingArrow"
 import Navbar from "@/components/Navbar"
-import PWABanner from "@/components/PWABanner"
 import {
   Accordion,
   AccordionContent,
@@ -33,7 +32,6 @@ const IndexServerPage = async (props: IndexServerPageProps) => {
   return (
     <div className="bg-body dark:bg-dark-body flex flex-col">
       <div className="relative h-dvh flex flex-col">
-        <PWABanner />
         {/* <Banner /> */}
         <Navbar />
         <div className="flex flex-col grow items-center justify-between p-6">

@@ -264,21 +264,6 @@
     "PlayerBoard": {
       "you": "Ty"
     },
-    "PWABanner": {
-      "title": "Zainstaluj Skymo na swoim urządzeniu!",
-      "Safari": "Dotknij ikony udostępniania, następnie wybierz 'Dodaj do Docka', aby zainstalować",
-      "FirefoxAndroid": "Dotknij ikony menu, następnie wybierz 'Dodaj do ekranu głównego', aby zainstalować",
-      "Chrome": "Kliknij przycisk 'Instaluj', aby zainstalować",
-      "ChromeAndroid": "Dotknij ikony menu, następnie wybierz 'Dodaj do ekranu głównego', aby zainstalować",
-      "SamsungBrowser": "Stuknij ikonę menu, następnie 'Dodaj stronę do', a potem 'Ekran główny', aby zainstalować",
-      "ChromeIOS": "Dotknij ikonę udostępniania, następnie przewiń i dotknij 'Dodaj do ekranu głównego', aby zainstalować",
-      "install-button": {
-        "title": "Zainstaluj aplikację",
-        "content": "Zainstaluj"
-      },
-      "FirefoxIOS": "Stuknij ikonę menu, następnie ikonę udostępniania, przewiń i stuknij 'Dodaj do ekranu głównego', aby zainstalować",
-      "SafariIOS": "Dotknij ikonę udostępniania, następnie przewiń i dotknij 'Dodaj do ekranu głównego', aby zainstalować"
-    },
     "RulesDialog": {
       "title": "Zasady gry",
       "trigger": {

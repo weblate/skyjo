@@ -943,21 +943,6 @@
     "PlayerBoard": {
       "you": "U"
     },
-    "PWABanner": {
-      "FirefoxAndroid": "Tik op het menupictogram en vervolgens op 'Toevoegen aan startscherm' om te installeren",
-      "ChromeAndroid": "Tik op het menupictogram en vervolgens op 'Toevoegen aan startscherm' om te installeren",
-      "ChromeIOS": "Tik op het deelicoon, scroll dan en tik op 'Zet op beginscherm' om te installeren",
-      "FirefoxIOS": "Tik op het menupictogram, dan op het deelpictogram, scroll dan en tik op 'Toevoegen aan beginscherm' om te installeren",
-      "title": "Installeer Skymo op uw apparaat!",
-      "Safari": "Tik op het deelicoon en vervolgens op 'Voeg toe aan Dock' om te installeren",
-      "Chrome": "Klik op de knop 'Installeren' om te installeren",
-      "SamsungBrowser": "Tik op het menupictogram, dan op 'Pagina toevoegen aan', dan op 'Startscherm' om te installeren",
-      "SafariIOS": "Tik op het deelicoon en scroll vervolgens naar 'Voeg toe aan beginscherm' en tik erop om te installeren",
-      "install-button": {
-        "title": "Installeer de app",
-        "content": "Installeren"
-      }
-    },
     "OpponentBoard": {
       "disconnected": "Speler heeft het spel verlaten. Een bot zal voor hen spelen gedurende de volgende paar beurten totdat ze opnieuw verbinding maken."
     },

@@ -1214,21 +1214,6 @@
         "title": "Du wurdest vom Host aus dem Spiel geworfen"
       }
     },
-    "PWABanner": {
-      "ChromeAndroid": "Tippe auf das Menüsymbol und dann auf „Zum Startbildschirm hinzufügen“, um die Installation durchzuführen",
-      "Safari": "Tippe auf das Teilen-Symbol und dann auf „Zum Dock hinzufügen“, um es zu installieren",
-      "title": "Installiere Skymo auf deinem Gerät!",
-      "Chrome": "Klicke auf den Button „Installieren“, um die Installation zu starten",
-      "FirefoxAndroid": "Tippe auf das Menüsymbol und dann auf „Zum Startbildschirm hinzufügen“, um es zu installieren",
-      "FirefoxIOS": "Tippe auf das Menü-Symbol, dann auf das Teilen-Symbol, scrolle und tippe dann auf „Zum Home-Bildschirm hinzufügen“, um es zu installieren",
-      "SafariIOS": "Tippe auf das Teilen-Symbol, scrolle dann und tippe auf „Zum Home-Bildschirm hinzufügen“, um es zu installieren",
-      "install-button": {
-        "content": "Installieren",
-        "title": "App installieren"
-      },
-      "ChromeIOS": "Tippe auf das Teilen-Symbol, scrolle dann und tippe auf „Zum Home-Bildschirm hinzufügen“, um es zu installieren",
-      "SamsungBrowser": "Tippe auf das Menüsymbol, dann auf „Zu Seite hinzufügen“, dann auf „Startbildschirm“, um die Installation durchzuführen"
-    },
     "OpponentBoard": {
       "disconnected": "Der Spieler hat das Spiel verlassen. Ein Bot spielt für ihn in den nächsten Runden, bis er sich wieder verbindet."
     },

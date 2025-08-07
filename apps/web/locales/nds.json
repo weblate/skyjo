@@ -398,21 +398,6 @@
     "PlayerBoard": {
       "you": "Du"
     },
-    "PWABanner": {
-      "title": "Install Skymo op dien Reedschop!",
-      "Safari": "Tipp dat Deel-Icoon an, denn 'To'n Dock tofögen' to'n Installeren",
-      "Chrome": "Klick op den 'Install'-Knoop, üm to installeren",
-      "FirefoxAndroid": "Tipp dat Menü-Icoon an, denn 'To Startbildschirm tofögen' to'n Installeren",
-      "ChromeAndroid": "Tipp dat Menü-Icoon an, denn 'To Startbildschierm tofögen' to'n Installeern",
-      "SamsungBrowser": "Tipp dat Menü-Icoon an, denn 'Siet tofögen to', denn 'Startbildschirm' to'n Installeren",
-      "ChromeIOS": "Tipp dat Deel-Icoon an, rull denn un tipp 'To Startbildschirm tofögen' an, üm dat to installeern",
-      "FirefoxIOS": "Tipp dat Menü-Icoon an, denn dat Deel-Icoon, rull denn rünner un tipp 'To'n Startbildschirm tofögen' an, üm to installeren",
-      "SafariIOS": "Tipp dat Deel-Icoon an, rull denn un tipp 'To Startbildschirm tofögen' an, üm dat to installeern",
-      "install-button": {
-        "title": "Installier de App",
-        "content": "Installeren"
-      }
-    },
     "ScoreDialog": {
       "title": "Punktetall",
       "description": "{name} hett wunnen mit {score} Punkten!"

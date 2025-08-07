@@ -1035,21 +1035,6 @@
         "title": "Regla especial:"
       }
     },
-    "PWABanner": {
-      "SamsungBrowser": "Toque el icono del menú, luego 'Añadir página', luego 'Pantalla de inicio' para instalar",
-      "ChromeIOS": "Pulse el icono de compartir, luego deslice y toque 'Agregar a la pantalla de inicio' para instalar",
-      "FirefoxAndroid": "Toque el icono de menú y, a continuación, \"Añadir a la pantalla de inicio\" para instalar",
-      "ChromeAndroid": "Toque el icono del menú, a continuación 'Añadir a la pantalla de inicio' para instalar",
-      "title": "¡Instala Skymo en tu dispositivo!",
-      "FirefoxIOS": "Pulse el icono del menú, luego el icono de compartir, luego deslice y toque 'Agregar a la pantalla de inicio' para instalar",
-      "install-button": {
-        "title": "Instalar la aplicación",
-        "content": "Instalar"
-      },
-      "Safari": "Toca el icono de compartir y, a continuación, \"Añadir al Dock\" para instalarlo",
-      "Chrome": "Haga clic en el botón \"Instalar\" para instalar",
-      "SafariIOS": "Pulsa el icono de compartir, desplázate y pulsa \"Añadir a la pantalla de inicio\" para instalarlo"
-    },
     "Footer": {
       "feedback": "Dejar un comentario",
       "rules": "Reglas del juego",

@@ -1077,21 +1077,6 @@
     "PlayerBoard": {
       "you": "Du"
     },
-    "PWABanner": {
-      "title": "Installera Skymo på din enhet!",
-      "Safari": "Tryck på delningsikonen och sedan på \"Lägg till i Dock\" för att installera",
-      "Chrome": "Klicka på knappen \"Installera\" för att installera",
-      "FirefoxAndroid": "Tryck på menyikonen och sedan på \"Lägg till på startskärmen\" för att installera",
-      "ChromeAndroid": "Tryck på menyikonen och sedan på \"Lägg till på startskärmen\" för att installera",
-      "SamsungBrowser": "Tryck på menyikonen, sedan \"Lägg till sida i\", sedan \"Startskärmen\" för att installera",
-      "ChromeIOS": "Tryck på delningsikonen, scrolla sedan och tryck på \"Lägg till på hemskärmen\" för att installera",
-      "FirefoxIOS": "Tryck på menyikonen, sedan på delningsikonen, scrolla sedan och tryck på \"Lägg till på hemskärmen\" för att installera",
-      "SafariIOS": "Tryck på delningsikonen, scrolla sedan och tryck på \"Lägg till på hemskärmen\" för att installera",
-      "install-button": {
-        "title": "Installera appen",
-        "content": "Installera"
-      }
-    },
     "Scoreboard": {
       "button-title": "Visa resultattavla"
     },

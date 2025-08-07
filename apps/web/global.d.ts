@@ -1,12 +1,3 @@
-import { BeforeInstallPromptEvent } from "@/types/beforeInstallPrompt";
-
-
-declare global {
-  interface WindowEventMap {
-    beforeinstallprompt: BeforeInstallPromptEvent;
-  }
-}
-
 import {routing} from '@/i18n/routing';
 import {formats} from '@/i18n/request';
 type EnglishMessages = typeof import("./locales/en.json")
