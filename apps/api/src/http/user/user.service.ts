@@ -126,7 +126,7 @@ export async function getUserFromGoogleId(
 }
 
 export async function createUsername(name: string) {
-  const parsedUsername = name.slice(0, 15)
+  const parsedUsername = name.slice(0, 15).toLowerCase()
 
   let username = ""
   // Generate a user tag until it's unique. Maximum of 20 retries before throwing an error
@@ -152,7 +152,7 @@ export async function getUserByUsername(
   const [user] = await db
     .select()
     .from(userTable)
-    .where(eq(userTable.username, username))
+    .where(eq(userTable.username, username.toLowerCase()))
     .limit(1)
 
   if (!user) return null
@@ -170,7 +170,7 @@ export async function getUserGames(
       FROM ${gameTable} g
       INNER JOIN ${playerTable} p ON g.id = p.game_id
       INNER JOIN ${userTable} u ON p.user_id = u.id
-      WHERE u.username = ${username}
+      WHERE LOWER(u.username) = LOWER(${username})
       ORDER BY g.finished_at DESC
       LIMIT ${limit} OFFSET ${offset}
     )
@@ -215,7 +215,10 @@ export async function getUserGames(
 
     const game = gamesMap.get(gameId)
 
-    if (row.player_username === username) {
+    if (
+      row.player_username &&
+      row.player_username.toLowerCase() === username.toLowerCase()
+    ) {
       game.rank = row.player_rank
     }
 
@@ -350,7 +353,7 @@ export async function updateUsername(userId: number, data: UpdateUsername) {
   const [updatedUser] = await db
     .update(userTable)
     .set({
-      username: data.username,
+      username: data.username.toLowerCase(),
       updatedAt: new Date(),
     })
     .where(eq(userTable.id, userId))
