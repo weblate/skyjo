@@ -15,6 +15,7 @@ interface PlayerInterface {
   readonly socketId: string
   readonly avatar: Avatar
   readonly userId?: number
+  readonly username?: string
   connectionStatus: ConnectionStatus
   afkCount: number
   consecutiveAfkCount: number
@@ -53,6 +54,7 @@ export class Player implements PlayerInterface {
   wantsReplay: boolean = false
   turnStartTime: number | null = null
   userId?: number
+  username?: string
   private sessionId: string = crypto.randomUUID()
 
   constructor(
@@ -62,11 +64,13 @@ export class Player implements PlayerInterface {
     },
     socketId: string = "",
     userId?: number,
+    username?: string | null,
   ) {
     this.name = playerToCreate.name
     this.socketId = socketId
     this.avatar = playerToCreate.avatar
     this.userId = userId
+    this.username = username ?? undefined
   }
 
   populate(player: PlayerRedisDb) {
@@ -74,6 +78,7 @@ export class Player implements PlayerInterface {
     this.name = player.name
     this.avatar = player.avatar
     this.socketId = player.socketId
+    this.username = player.username ?? undefined
     this.connectionStatus = player.connectionStatus
     this.score = player.score
     this.scores = player.scores
@@ -265,6 +270,7 @@ export class Player implements PlayerInterface {
       connectionStatus: this.connectionStatus,
       scores: this.scores,
       turnStartTime: this.turnStartTime,
+      username: this.username,
       cards: this.cards.map((column) => column.map((card) => card.toJson())),
     }
   }

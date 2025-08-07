@@ -416,6 +416,7 @@ describe("Player", () => {
         scores: [],
         wantsReplay: false,
         connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
+        username: undefined,
       })
     })
   })
