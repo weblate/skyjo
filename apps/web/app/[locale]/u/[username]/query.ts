@@ -6,9 +6,6 @@ export async function fetchUserProfile(
   try {
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_API_URL}/users/${username}`,
-      {
-        next: { revalidate: 300 }, // 5 minute cache for user profile
-      },
     )
 
     if (!response.ok) {

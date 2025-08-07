@@ -5,8 +5,6 @@ import { RecentActivityList } from "@/app/[locale]/u/[username]/RecentActivity"
 import { UserNotFound } from "@/app/[locale]/u/[username]/UserNotFound"
 import { UserProfile } from "@/app/[locale]/u/[username]/UserProfile"
 
-export const revalidate = 300 // 5 minute cache
-
 interface UserPageProps {
   params: Promise<{ locale: Locales; username: string }>
 }
