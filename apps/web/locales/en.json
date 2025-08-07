@@ -790,10 +790,12 @@
     "Chat": {
       "title": "Chat"
     },
+    "ChatNotLoggedIn": {
+      "description": "You must be logged in to chat"
+    },
     "ChatForm": {
       "message-input-placeholder": "Message",
       "button-title": "Send",
-      "disabled-chat-message": "To chat, please <login>Login</login> or <create-account>Create an account</create-account>",
       "message-too-long": {
         "description": "The message is too long (max 200 characters)"
       },

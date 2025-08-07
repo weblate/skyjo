@@ -24,6 +24,7 @@ export class Constants {
     MAX_PLAYERS_TOO_LOW: "max-players-too-low",
     UNEXPECTED_ERROR: "unexpected-error",
     MESSAGE_NOT_FOUND: "message-not-found",
+    UNAUTHORIZED: "unauthorized",
   } as const
 
   static readonly BAN_ERROR = {

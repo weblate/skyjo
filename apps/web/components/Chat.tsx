@@ -6,7 +6,6 @@ import { ChatDesktopView } from "@/components/ChatDesktopView"
 import { ChatMobileView } from "@/components/ChatMobileView"
 import { useChat } from "@/contexts/ChatContext"
 import { useSettings } from "@/contexts/SettingsContext"
-import { useAuth } from "@/hooks/useAuth"
 import { useMediaQuery } from "@/hooks/useMediaQuery"
 
 interface ChatProps {
@@ -15,7 +14,6 @@ interface ChatProps {
 const Chat = ({ className }: ChatProps) => {
   const { chat, setHasUnreadMessage, addUnreadMessage, clearUnreadMessages } =
     useChat()
-  const { isAuthenticated } = useAuth()
   const {
     settings: { chatVisibility },
   } = useSettings()
@@ -54,7 +52,6 @@ const Chat = ({ className }: ChatProps) => {
         className={className}
         open={open}
         toggleOpening={toggleOpening}
-        disabled={!isAuthenticated}
       />
     )
   }
@@ -64,7 +61,6 @@ const Chat = ({ className }: ChatProps) => {
       className={className}
       open={open}
       toggleOpening={toggleOpening}
-      disabled={!isAuthenticated}
     />
   )
 }

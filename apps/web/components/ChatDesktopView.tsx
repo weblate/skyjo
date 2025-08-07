@@ -7,8 +7,10 @@ import { m } from "motion/react"
 import { useTranslations } from "next-intl"
 import ChatForm from "@/components/ChatForm"
 import { ChatMessageList } from "@/components/ChatMessageList"
+import ChatNotLoggedIn from "@/components/ChatNotLoggedIn"
 import { useChat } from "@/contexts/ChatContext"
 import { useSettings } from "@/contexts/SettingsContext"
+import { useAuth } from "@/hooks/useAuth"
 import { cn } from "@/lib/utils"
 
 const ChatNotificationVariant = cva(
@@ -27,13 +29,11 @@ const ChatNotificationVariant = cva(
 interface ChatDesktopViewProps {
   open: boolean
   toggleOpening: () => void
-  disabled?: boolean
   className?: ClassValue
 }
 const ChatDesktopView = ({
   open,
   toggleOpening,
-  disabled = false,
   className,
 }: ChatDesktopViewProps) => {
   const t = useTranslations("components.Chat")
@@ -41,6 +41,7 @@ const ChatDesktopView = ({
   const {
     settings: { chatNotificationSize },
   } = useSettings()
+  const { isAuthenticated } = useAuth()
 
   return (
     <div
@@ -54,7 +55,6 @@ const ChatDesktopView = ({
         <button
           className="absolute bottom-16 right-full w-10 h-24 flex items-center justify-center bg-button dark:bg-dark-button text-center text-black dark:text-dark-font border-2 border-r-0 rounded-s-lg border-black dark:border-dark-border transition-all duration-200 focus-visible:outline-black focus-visible:-outline-offset-4 shadow-[3px_3px_0px_0px_rgba(0,0,0)] cursor-pointer"
           onClick={toggleOpening}
-          disabled={disabled}
         >
           {hasUnreadMessage && (
             <>
@@ -90,7 +90,8 @@ const ChatDesktopView = ({
             {t("title")}
           </p>
           <ChatMessageList />
-          <ChatForm chatOpen={open} disabled={disabled} />
+          {!isAuthenticated && <ChatNotLoggedIn className="mb-2" />}
+          <ChatForm chatOpen={open} disabled={!isAuthenticated} />
         </m.div>
       </div>
     </div>

@@ -28,11 +28,10 @@ const rateLimiterWizz = new RateLimiterMemory({
 })
 
 const chatRouter = (socket: GameSocket) => {
-  socket.use((event, next) => isAuthenticated(socket, next))
-
   socket.on(
     "message",
     socketErrorWrapper(async (data: SendChatMessage) => {
+      isAuthenticated(socket)
       await consumeSocketRateLimiter(rateLimiter)(socket)
 
       const message = sendChatMessage.parse(data)
@@ -43,6 +42,7 @@ const chatRouter = (socket: GameSocket) => {
   socket.on(
     "wizz",
     socketErrorWrapper(async (data: WizzPlayerName) => {
+      isAuthenticated(socket)
       await consumeSocketRateLimiter(rateLimiterWizz)(socket)
 
       const targetName = wizzPlayerName.parse(data)

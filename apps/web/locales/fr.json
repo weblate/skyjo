@@ -785,6 +785,9 @@
     "Chat": {
       "title": "Chat"
     },
+    "ChatNotLoggedIn": {
+      "description": "Vous devez être connecté pour discuter"
+    },
     "ChatForm": {
       "message-input-placeholder": "Message",
       "button-title": "Envoyer",

@@ -1,6 +1,7 @@
 import { ClassValue } from "clsx"
 import { MessageCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
+import ChatNotLoggedIn from "@/components/ChatNotLoggedIn"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
@@ -12,6 +13,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useChat } from "@/contexts/ChatContext"
+import { useAuth } from "@/hooks/useAuth"
 import { cn } from "@/lib/utils"
 import ChatForm from "./ChatForm"
 import { ChatMessageList } from "./ChatMessageList"
@@ -25,11 +27,11 @@ interface ChatDrawerProps {
 const ChatMobileView = ({
   open,
   toggleOpening,
-  disabled = false,
   className,
 }: ChatDrawerProps) => {
   const t = useTranslations("components.Chat")
   const { hasUnreadMessage } = useChat()
+  const { isAuthenticated } = useAuth()
 
   return (
     <Drawer open={open} onOpenChange={toggleOpening} repositionInputs={false}>
@@ -37,7 +39,6 @@ const ChatMobileView = ({
         <Button
           variant="icon"
           className={cn("fixed bottom-4 right-4", className)}
-          disabled={disabled}
         >
           <MessageCircle className="h-[1.2rem] w-[1.2rem]" />
           {hasUnreadMessage && (
@@ -50,11 +51,12 @@ const ChatMobileView = ({
           <DrawerTitle className="text-center">{t("title")}</DrawerTitle>
           <DrawerDescription></DrawerDescription>
         </DrawerHeader>
-        <div className="px-4 my-2 flex flex-col-reverse overflow-y-auto">
+        <div className="px-4 my-2 flex flex-1 flex-col-reverse overflow-y-auto">
           <ChatMessageList />
         </div>
         <DrawerFooter className="p-4 pt-0">
-          <ChatForm chatOpen={open} disabled={disabled} />
+          {!isAuthenticated && <ChatNotLoggedIn />}
+          <ChatForm chatOpen={open} disabled={!isAuthenticated} />
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
