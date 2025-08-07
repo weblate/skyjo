@@ -5,7 +5,7 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "relative inline-flex flex-row items-center justify-center gap-1 whitespace-nowrap bg-button dark:bg-dark-button border-2 border-black dark:border-dark-border text-black dark:text-dark-font data-[loading=true]:text-transparent dark:data-[loading=true]:text-transparent font-normal transition-all duration-200 -outline-offset-2 focus-visible:outline-black focus-visible:outline-2 focus-visible:outline-offset-[-6px] dark:focus-visible:outline-dark-border disabled:cursor-not-allowed disabled:opacity-50",
+  "relative inline-flex flex-row items-center justify-center gap-1 whitespace-nowrap bg-button dark:bg-dark-button border-2 border-black dark:border-dark-border text-black dark:text-dark-font font-normal transition-all duration-200 -outline-offset-2 focus-visible:outline-black focus-visible:outline-2 focus-visible:outline-offset-[-6px] dark:focus-visible:outline-dark-border disabled:cursor-not-allowed disabled:opacity-50 data-[loading=true]:text-transparent dark:data-[loading=true]:text-transparent [&[data-loading=true]>*:not(.loading-spinner)]:invisible",
   {
     variants: {
       variant: {
@@ -21,7 +21,7 @@ const buttonVariants = cva(
           "bg-red-600 hover:bg-red-700 dark:bg-red-800 dark:hover:bg-red-900 text-white dark:text-black dark:border-0",
       },
       shadow: {
-        true: "shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:shadow-[2px_2px_0px_0px_rgba(137,137,137)] active:translate-x-1 active:translate-y-1 active:shadow-[0px_0px_0px_0px_rgba(0,0,0)] dark:active:shadow-[0px_0px_0px_0px_rgba(137,137,137)]",
+        true: "shadow-[2px_2px_0px_0px_rgba(0,0,0)] dark:shadow-[2px_2px_0px_0px_rgba(137,137,137)] active:enabled:translate-x-1 active:enabled:translate-y-1 active:enabled:shadow-[0px_0px_0px_0px_rgba(0,0,0)] dark:active:enabled:shadow-[0px_0px_0px_0px_rgba(137,137,137)]",
         false: "",
       },
       clickable: {
@@ -38,7 +38,7 @@ const buttonVariants = cva(
 )
 
 const loadingContainerVariants = cva(
-  "absolute inset-0 opacity-100 flex items-center justify-center rounded-md z-50 pointer-events-none",
+  "loading-spinner absolute inset-0 opacity-100 flex items-center justify-center rounded-md z-50 pointer-events-none",
   {
     variants: {
       color: {
