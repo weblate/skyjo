@@ -862,6 +862,91 @@ describe("Game", () => {
       // Verify turn is passed to next player
       expect(game.turn).toBe(1)
     })
+
+    it("should finish turn in last lap, show all player cards and discard matching cards", async () => {
+      game.settings.initialTurnedCount = 0
+      game.settings.removeIdenticalColumn = true
+      await game.start()
+      game.turn = 0
+      game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
+      player.hasPlayedLastTurn = false
+      opponent.hasPlayedLastTurn = true
+
+      player.cards = [
+        [new Card(5, false), new Card(3, true), new Card(1, true)], // Column 0: hidden 5, visible 3, visible 1
+        [new Card(5, false), new Card(4, true), new Card(2, true)], // Column 1: hidden 5, visible 4, visible 2
+        [new Card(5, false), new Card(6, true), new Card(7, true)], // Column 2: hidden 5, visible 6, visible 7
+        [new Card(8, false), new Card(9, true), new Card(10, true)], // Column 3: hidden 8, visible 9, visible 10
+      ]
+
+      const operationOrder: string[] = []
+      let checkCardsToDiscardCallCount = 0
+
+      const turnAllCardsSpy = vi
+        .spyOn(player, "turnAllCards")
+        .mockImplementation(() => {
+          operationOrder.push("turnAllCards")
+          player.cards.flat().forEach((card) => card.turnVisible())
+        })
+
+      const checkCardsToDiscardSpy = vi
+        .spyOn(game as any, "checkCardsToDiscard")
+        // @ts-ignore - test code
+        .mockImplementation((playerParam: Player) => {
+          checkCardsToDiscardCallCount++
+          operationOrder.push(
+            `checkCardsToDiscard-${checkCardsToDiscardCallCount}`,
+          )
+
+          const allCardsVisible = playerParam.cards
+            .flat()
+            .every((card) => card.isVisible)
+
+          if (checkCardsToDiscardCallCount === 1) {
+            expect(allCardsVisible).toBe(false)
+          } else if (checkCardsToDiscardCallCount === 2) {
+            expect(allCardsVisible).toBe(true)
+
+            if (playerParam === player) {
+              const column0Cards = [
+                player.cards[0][0],
+                player.cards[1][0],
+                player.cards[2][0],
+              ]
+              if (
+                column0Cards.every((card) => card.value === 5 && card.isVisible)
+              ) {
+                column0Cards.forEach((card) => game.discardCard(card.value))
+              }
+            }
+          }
+        })
+
+      const shouldEndRoundSpy = vi
+        .spyOn(game as any, "shouldEndRound")
+        .mockReturnValue(true)
+      const endRoundSpy = vi
+        .spyOn(game as any, "endRound")
+        .mockImplementation(() => {})
+
+      await game.finishTurn({ wasAfk: false })
+
+      expect(operationOrder).toEqual([
+        "checkCardsToDiscard-1",
+        "turnAllCards",
+        "checkCardsToDiscard-2",
+      ])
+
+      expect(turnAllCardsSpy).toHaveBeenCalled()
+      expect(checkCardsToDiscardSpy).toHaveBeenCalledTimes(2)
+
+      expect(endRoundSpy).toHaveBeenCalled()
+
+      turnAllCardsSpy.mockRestore()
+      checkCardsToDiscardSpy.mockRestore()
+      shouldEndRoundSpy.mockRestore()
+      endRoundSpy.mockRestore()
+    })
   })
 
   describe("togglePlayerReplay", () => {

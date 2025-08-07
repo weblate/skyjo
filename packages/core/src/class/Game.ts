@@ -889,6 +889,7 @@ export class Game implements GameInterface {
       currentPlayer.hasPlayedLastTurn = true
       this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
       currentPlayer.turnAllCards()
+      this.checkCardsToDiscard(currentPlayer)
 
       if (this.shouldEndRound()) await this.endRound()
     }
