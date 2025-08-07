@@ -109,8 +109,6 @@ const ResultsPage = () => {
                   player.connectionStatus ===
                   CoreConstants.CONNECTION_STATUS.CONNECTED
 
-                console.log(player)
-
                 return (
                   <MotionTableRow
                     key={player.id}
