@@ -2,8 +2,11 @@ packages:
   - apps/*
   - packages/*
   - packages/config/*
+
 onlyBuiltDependencies:
   - '@biomejs/biome'
+  - '@tailwindcss/oxide'
+  - argon2
   - bufferutil
   - core-js
   - esbuild
