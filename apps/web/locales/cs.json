@@ -517,8 +517,7 @@
       "recent-activity": {
         "no-activity": "Žádná nedávná aktivita k zobrazení.",
         "game-code": "Hra #{code}",
-        "rank": "Pořadí #{rank}",
-        "winner": "Vítěz"
+        "rank": "Pořadí #{rank}"
       },
       "search": {
         "placeholder": "Hledat uživatelské jméno"

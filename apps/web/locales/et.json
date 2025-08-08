@@ -517,8 +517,7 @@
       "recent-activity": {
         "no-activity": "Pole hiljutist tegevust, mida näidata.",
         "game-code": "Mäng #{code}",
-        "rank": "Järjekoht #{rank}",
-        "winner": "Võitja"
+        "rank": "Järjekoht #{rank}"
       },
       "search": {
         "placeholder": "Otsi kasutajanime"

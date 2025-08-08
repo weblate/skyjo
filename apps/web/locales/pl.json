@@ -966,8 +966,7 @@
       "recent-activity": {
         "no-activity": "Brak ostatniej aktywności do wyświetlenia.",
         "game-code": "Gra #{code}",
-        "rank": "Ranga #{rank}",
-        "winner": "Zwycięzca"
+        "rank": "Ranga #{rank}"
       },
       "search": {
         "placeholder": "Szukaj nazwy użytkownika"

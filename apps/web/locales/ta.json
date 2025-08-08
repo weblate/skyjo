@@ -621,8 +621,7 @@
       "recent-activity": {
         "no-activity": "காட்ட அண்மைக் கால செயல்பாடு இல்லை.",
         "game-code": "விளையாட்டு #{code}",
-        "rank": "தரவரிசை #{rank}",
-        "winner": "வெற்றியாளர்"
+        "rank": "தரவரிசை #{rank}"
       },
       "search": {
         "placeholder": "பயனர்பெயரைத் தேடுங்கள்"

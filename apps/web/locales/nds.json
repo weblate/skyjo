@@ -966,8 +966,7 @@
       "recent-activity": {
         "no-activity": "Keene ne’e Aktivität to wiesen.",
         "game-code": "Speel #{code}",
-        "rank": "Reeg #{rank}",
-        "winner": "Winner"
+        "rank": "Reeg #{rank}"
       },
       "search": {
         "placeholder": "Söök Naam"

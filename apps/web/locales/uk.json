@@ -512,8 +512,7 @@
       "recent-activity": {
         "no-activity": "Немає останньої активності для відображення.",
         "game-code": "Гра #{code}",
-        "rank": "Ранг #{rank}",
-        "winner": "Переможець"
+        "rank": "Ранг #{rank}"
       },
       "search": {
         "placeholder": "Шукати ім'я користувача"

@@ -517,8 +517,7 @@
       "recent-activity": {
         "no-activity": "Nien neie Aktivität to wiesen.",
         "game-code": "Speel #{code}",
-        "rank": "Rang #{rank}",
-        "winner": "Winner"
+        "rank": "Rang #{rank}"
       },
       "search": {
         "placeholder": "Säik noom"

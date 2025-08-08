@@ -512,8 +512,7 @@
       "recent-activity": {
         "game-code": "Spui-Numma #{code}",
         "no-activity": "Koana neia Aktivität zum zoagn.",
-        "rank": "Rang #{rank}",
-        "winner": "G'wunna"
+        "rank": "Rang #{rank}"
       },
       "search": {
         "placeholder": "Suach an Spitznam"

@@ -512,8 +512,7 @@
       "recent-activity": {
         "no-activity": "Δεν υπάρχει πρόσφατη δραστηριότητα για εμφάνιση.",
         "game-code": "Παιχνίδι #{code}",
-        "rank": "Κατάταξη #{rank}",
-        "winner": "Νικητής"
+        "rank": "Κατάταξη #{rank}"
       },
       "search": {
         "placeholder": "Αναζήτηση ονόματος χρήστη"

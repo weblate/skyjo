@@ -517,8 +517,7 @@
       "recent-activity": {
         "no-activity": "No hay actividad reciente para mostrar.",
         "game-code": "Partida #{code}",
-        "rank": "Rango #{rank}",
-        "winner": "Ganador"
+        "rank": "Rango #{rank}"
       },
       "search": {
         "placeholder": "Buscar nombre de usuario"

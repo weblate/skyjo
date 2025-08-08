@@ -517,8 +517,7 @@
       "recent-activity": {
         "no-activity": "N'eus ket a obererezh nevez da ziskouez.",
         "game-code": "C'hoari #{code}",
-        "rank": "Renk #{rank}",
-        "winner": "Gounid"
+        "rank": "Renk #{rank}"
       },
       "search": {
         "placeholder": "Klask anv implijer"

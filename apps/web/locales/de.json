@@ -517,8 +517,7 @@
       "recent-activity": {
         "game-code": "Spiel #{code}",
         "no-activity": "Keine aktuellen Aktivitäten anzuzeigen.",
-        "rank": "Rang #{rank}",
-        "winner": "Gewinner"
+        "rank": "Rang #{rank}"
       },
       "search": {
         "placeholder": "Benutzernamen suchen"

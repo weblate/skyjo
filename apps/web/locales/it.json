@@ -512,8 +512,7 @@
       "recent-activity": {
         "no-activity": "Nessuna attività recente da mostrare.",
         "game-code": "Partita #{code}",
-        "rank": "Classifica #{rank}",
-        "winner": "Vincitore"
+        "rank": "Classifica #{rank}"
       },
       "search": {
         "placeholder": "Cerca nome utente"

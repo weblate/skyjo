@@ -512,8 +512,7 @@
       "recent-activity": {
         "no-activity": "Ingen ny aktivitet att visa.",
         "game-code": "Spel #{code}",
-        "rank": "Rankning #{rank}",
-        "winner": "Vinnare"
+        "rank": "Rankning #{rank}"
       },
       "search": {
         "placeholder": "Sök användarnamn"

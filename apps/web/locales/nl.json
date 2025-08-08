@@ -517,8 +517,7 @@
       "recent-activity": {
         "no-activity": "Geen recente activiteit om weer te geven.",
         "game-code": "Spel #{code}",
-        "rank": "Rang #{rank}",
-        "winner": "Winnaar"
+        "rank": "Rang #{rank}"
       },
       "search": {
         "placeholder": "Zoek gebruikersnaam"
