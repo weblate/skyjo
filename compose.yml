@@ -3,6 +3,8 @@ services:
     build:
       context: .
       dockerfile: ./apps/web/Dockerfile
+      cache_from:
+        - type=inline
     ports:
       - "3000:3000"
     networks:
@@ -26,6 +28,8 @@ services:
     build:
       context: .
       dockerfile: ./apps/api/Dockerfile
+      cache_from:
+        - type=inline
     depends_on:
       - redis
     ports:
@@ -52,6 +56,8 @@ services:
     build:
       context: .
       dockerfile: ./apps/workers/Dockerfile
+      cache_from:
+        - type=inline
     depends_on:
       - redis
     networks:
@@ -75,6 +81,8 @@ services:
     build:
       context: .
       dockerfile: ./apps/discord-bot/Dockerfile
+      cache_from:
+        - type=inline
     depends_on:
       - redis
     networks:

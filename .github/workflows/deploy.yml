@@ -27,25 +27,25 @@ jobs:
             cd skymo
             git pull
 
-            # Enable Docker buildx for better caching
-            docker buildx create --use --name skymo-prod-builder --driver docker-container 2>/dev/null || docker buildx use skymo-prod-builder
-
-            # Enable Docker buildx with resource-aware configuration
+            # Enable Docker buildx with advanced caching
             docker buildx create --use --name skymo-prod-builder --driver docker-container \
               --driver-opt network=host \
               --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=10485760 \
               --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=10485760 \
               2>/dev/null || docker buildx use skymo-prod-builder
 
-            # Configure build with controlled parallelism
+            # Configure build with controlled parallelism and inline cache
             export DOCKER_BUILDKIT=1
             export BUILDKIT_PROGRESS=plain
             export BUILDKIT_HOST_MEMORY_LIMIT=3g
+            export COMPOSE_DOCKER_CLI_BUILD=1
 
-            echo "Building with parallel execution (3GB memory limit)..."
+            echo "Building with parallel execution and inline cache..."
 
-            # Use parallel builds to balance speed vs resource usage
-            docker compose build --parallel api workers discord-bot web
+            # Build with inline cache export for better layer reuse
+            docker compose build \
+              --build-arg BUILDKIT_INLINE_CACHE=1 \
+              --parallel api workers discord-bot web
 
             pnpm i
             pnpm db:migrate

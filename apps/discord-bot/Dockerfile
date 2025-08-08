@@ -25,12 +25,20 @@ WORKDIR /app
 COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 COPY --from=pruner /app/out/json/ .
 
-# Install all dependencies
-RUN pnpm install --frozen-lockfile --ignore-scripts
+# Install all dependencies with cache mount
+RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
+    pnpm install --frozen-lockfile --ignore-scripts
 
-# Copy source and build
-COPY --from=pruner /app/out/full/ .
-RUN pnpm run build --filter=${PROJECT}
+# Copy source files separately for better cache invalidation
+# First copy package sources (changes less frequently)
+COPY --from=pruner /app/out/full/packages ./packages
+COPY --from=pruner /app/out/full/apps ./apps
+COPY --from=pruner /app/out/full/turbo.json ./turbo.json
+COPY --from=pruner /app/out/full/tsconfig.json ./tsconfig.json
+
+# Build with Turbo cache mount
+RUN --mount=type=cache,target=/app/.turbo \
+    pnpm run build --filter=${PROJECT}
 
 # Install production dependencies
 ENV NODE_ENV=production
