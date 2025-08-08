@@ -1,63 +1,63 @@
-ARG PROJECT=@skymo/discord-bot
-
-# Base stage with common dependencies
 FROM node:24.3-alpine AS base
+
+# Install base dependencies
+FROM base AS deps
+RUN apk update && apk add --no-cache libc6-compat
+WORKDIR /app
+
+# Install turbo globally
+RUN yarn global add turbo
+
+# Copy everything and prune for discord-bot
+COPY . .
+RUN turbo prune @skymo/discord-bot --docker
+
+# Install dependencies stage
+FROM base AS installer
+RUN apk update && apk add --no-cache libc6-compat
+WORKDIR /app
+
+# First install dependencies (as they change less often)
+COPY --from=deps /app/out/json/ .
+COPY --from=deps /app/out/pnpm-lock.yaml* ./
+
+# Use pnpm for consistency with your project
+RUN npm install -g pnpm@10.12.4 && \
+    pnpm install --frozen-lockfile
+
+# Copy the full pruned source
+COPY --from=deps /app/out/full/ .
+
+# Install tsx globally for production runtime
+RUN npm install -g tsx
+
+# Build the project (only if needed for packages)
+RUN pnpm turbo build --filter=@skymo/discord-bot
+
+# Production runtime stage
+FROM base AS runner
+WORKDIR /app
+
+# Install only runtime essentials
 RUN apk update && \
-    apk add --no-cache libc6-compat jemalloc && \
-    npm install -g pnpm@10.12.4 turbo@2.3.3 && \
-    rm -rf /var/cache/apk/* && \
-    addgroup --system --gid 1001 nodejs && \
+    apk add --no-cache libc6-compat && \
+    npm install -g pnpm@10.12.4 tsx && \
+    rm -rf /var/cache/apk/*
+
+# Create non-root user
+RUN addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nodejs
 
-# Pruner stage
-FROM base AS pruner
-ARG PROJECT
-WORKDIR /app
-COPY . .
-RUN turbo prune --scope=${PROJECT} --docker
+# Copy application from installer
+COPY --from=installer --chown=nodejs:nodejs /app .
 
-# Builder stage with optimized layer caching
-FROM base AS builder
-ARG PROJECT
-WORKDIR /app
-
-# Copy package files first for better caching
-COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
-COPY --from=pruner /app/out/json/ .
-
-# Install all dependencies with cache mount
-RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile --ignore-scripts
-
-# Copy source files separately for better cache invalidation
-# First copy package sources (changes less frequently)
-COPY --from=pruner /app/out/full/packages ./packages
-COPY --from=pruner /app/out/full/apps ./apps
-COPY --from=pruner /app/out/full/turbo.json ./turbo.json
-COPY --from=pruner /app/out/full/tsconfig.json ./tsconfig.json
-
-# Build with Turbo cache mount
-RUN --mount=type=cache,target=/app/.turbo \
-    pnpm run build --filter=${PROJECT}
-
-# Install production dependencies
+# Set to production
 ENV NODE_ENV=production
-RUN pnpm install --prod --ignore-scripts
 
-# Runtime stage
-FROM base AS runner
-ARG PROJECT
-WORKDIR /app
-ENV NODE_ENV=production
-ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
-
-# Copy built application
-COPY --from=builder /app .
-
-# Set ownership and switch to non-root user
-RUN chown -R nodejs:nodejs /app
+# Switch to non-root user
 USER nodejs
 
+# Start the discord-bot using tsx
 WORKDIR /app/apps/discord-bot
 
-CMD ["pnpm", "run", "start"] 
+CMD ["npm", "run", "start"] 

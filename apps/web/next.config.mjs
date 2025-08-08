@@ -63,8 +63,15 @@ const nextConfig = {
   // This is required to support PostHog trailing slash API requests
   skipTrailingSlashRedirect: true,
 
-  reactStrictMode: false,
+  reactStrictMode: process.env.NODE_ENV === "production",
   turbopack: {},
+  output: "standalone",
+  transpilePackages: [
+    "@skymo/core",
+    "@skymo/error",
+    "@skymo/shared",
+    "@skymo/state-operations",
+  ],
   compiler: {
     removeConsole:
       process.env.NODE_ENV === "production" ? { exclude: ["error"] } : false,

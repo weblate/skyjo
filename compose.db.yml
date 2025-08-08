@@ -1,0 +1,40 @@
+services:
+  redis:
+    image: redis/redis-stack-server:latest
+    command: >
+      redis-server 
+      --loadmodule /opt/redis-stack/lib/rejson.so 
+      --requirepass ${REDIS_PASSWORD}
+      --maxmemory 10gb
+      --maxmemory-policy noeviction
+      --appendonly yes
+      --appendfsync everysec
+      --io-threads 4
+      --tcp-keepalive 300
+      --maxclients 10000
+      --timeout 300
+      --tcp-backlog 511
+      --databases 16
+      --loglevel notice
+      --client-output-buffer-limit normal 0 0 0
+      --client-output-buffer-limit replica 256mb 64mb 60
+      --client-output-buffer-limit pubsub 32mb 8mb 60
+    volumes:
+      - redis-data:/data
+    ports:
+      - 6379:6379
+    networks:
+      - internal
+      - external
+    env_file:
+      - .env
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD}
+    restart: always
+
+networks:
+  internal:
+  external:
+
+volumes:
+  redis-data:

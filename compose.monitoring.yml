@@ -1,0 +1,33 @@
+services:
+  seq:
+    image: datalust/seq:latest
+    ports:
+      - "5341:80"
+    networks:
+      - internal
+      - external
+    env_file:
+      - .env
+    environment:
+      - ACCEPT_EULA=Y
+    restart: unless-stopped
+    volumes:
+      - seq-data:/data
+
+  uptime-kuma:
+    image: louislam/uptime-kuma:latest
+    container_name: uptime-kuma
+    volumes:
+      - ./uptime-kuma-data:/app/data
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 3002:3001
+    restart: always
+
+networks:
+  internal:
+  external:
+
+volumes:
+  seq-data:
+  uptime-kuma-data:

@@ -53,23 +53,7 @@ jobs:
             cd dev/skymo
             git pull
 
-            # Enable Docker buildx for better caching
-            docker buildx create --use --name skymo-dev-builder --driver docker-container 2>/dev/null || docker buildx use skymo-dev-builder
-
-            # Enable Docker buildx with resource-aware configuration
-            docker buildx create --use --name skymo-dev-builder --driver docker-container \
-              --driver-opt network=host \
-              --driver-opt env.BUILDKIT_STEP_LOG_MAX_SIZE=10485760 \
-              --driver-opt env.BUILDKIT_STEP_LOG_MAX_SPEED=10485760 \
-              2>/dev/null || docker buildx use skymo-dev-builder
-
-            # Configure build with controlled parallelism for development
-            export DOCKER_BUILDKIT=1
-            export BUILDKIT_PROGRESS=plain
-            export BUILDKIT_HOST_MEMORY_LIMIT=2g
-
-            # Use parallel builds - development uses less memory than production
-            docker compose -f compose.dev.yml build --parallel dev-api dev-workers dev-web
+            COMPOSE_BAKE=true docker compose -f compose.dev.yml build --parallel dev-api dev-workers dev-web
 
             pnpm i
             pnpm db:migrate

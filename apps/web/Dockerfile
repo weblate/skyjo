@@ -1,68 +1,56 @@
 ARG PROJECT=@skymo/web
 
-# Base stage with common dependencies
 FROM node:24.3-alpine AS base
-RUN apk update && \
-    apk add --no-cache curl jemalloc libc6-compat && \
-    npm install -g pnpm@10.12.4 turbo@2.3.3 && \
-    rm -rf /var/cache/apk/* && \
-    addgroup --system --gid 1001 nodejs && \
-    adduser --system --uid 1001 nodejs
 
-# Pruner stage
+# Pruner stage - extract only needed files
 FROM base AS pruner
 ARG PROJECT
+RUN npm install -g turbo
 WORKDIR /app
 COPY . .
 RUN turbo prune --scope=${PROJECT} --docker
 
-# Builder stage with optimized layer caching
+# Builder stage - build the app
 FROM base AS builder
 ARG PROJECT
+RUN apk add --no-cache libc6-compat
+RUN npm install -g pnpm@10.12.4
 WORKDIR /app
 
-# Copy package files first for better caching
-COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+# Copy lockfile and package.json files
 COPY --from=pruner /app/out/json/ .
+COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 
-# Install all dependencies with cache mount
+# Install ALL dependencies (dev + prod)
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile --ignore-scripts
+    pnpm install --frozen-lockfile
 
-# Copy source files separately for better cache invalidation
-# First copy package sources (changes less frequently)
-COPY --from=pruner /app/out/full/packages ./packages
-COPY --from=pruner /app/out/full/apps ./apps
-COPY --from=pruner /app/out/full/turbo.json ./turbo.json
-COPY --from=pruner /app/out/full/tsconfig.json ./tsconfig.json
+# Copy source code
+COPY --from=pruner /app/out/full/ .
 
-# Build with Turbo cache mount
-RUN --mount=type=cache,target=/app/.turbo \
-    pnpm run build --filter=${PROJECT}
+# Build the app
+RUN pnpm turbo build --filter=${PROJECT}
 
-# Install production dependencies
-ENV NODE_ENV=production
-RUN pnpm install --prod --ignore-scripts
-
-# Runtime stage
-FROM base AS runner
-ARG PROJECT
+# Runtime stage - minimal final image
+FROM node:24.3-alpine AS runner
 WORKDIR /app
+
+RUN apk add --no-cache libc6-compat && \
+    addgroup --system --gid 1001 nodejs && \
+    adduser --system --uid 1001 nextjs
+
 ENV NODE_ENV=production
-ENV LD_PRELOAD=/usr/lib/libjemalloc.so.2
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Copy built application
-COPY --from=builder /app .
+# Copy standalone application
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
+COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
-# Set ownership and switch to non-root user
-RUN chown -R nodejs:nodejs /app
-USER nodejs
-
-WORKDIR /app/apps/web
+USER nextjs
 
 EXPOSE 3000
-
 ENV PORT=3000
 ENV HOSTNAME="0.0.0.0"
 
-CMD ["pnpm", "run", "start"] 
+CMD ["node", "apps/web/server.js"]
