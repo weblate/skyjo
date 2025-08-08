@@ -21,6 +21,8 @@ export type PlayerToJson = {
   turnStartTime: number | null
   cards: CardToJson[][]
   username?: string
+  forfeited: boolean
+  forfeitedAt: number | null
 }
 
 export type PlayerRedisDb = {
@@ -40,4 +42,6 @@ export type PlayerRedisDb = {
   userId: number | null
   sessionId: string
   cards: CardRedisDb[][]
+  forfeited: boolean
+  forfeitedAt: number | null
 }

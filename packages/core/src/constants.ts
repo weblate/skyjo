@@ -93,6 +93,7 @@ export class Constants {
     PLAYER_JOINED: "player-joined",
     PLAYER_RECONNECT: "player-reconnect",
     PLAYER_LEFT: "player-left",
+    PLAYER_FORFEITED: "player-forfeited",
     HOST_TRANSFERRED: "host-transferred",
   } as const
 

@@ -1,5 +1,5 @@
 import { ENV } from "@env"
-import type { Avatar, SettingsRedisDb } from "@skymo/core"
+import type { Avatar, ConnectionStatus, SettingsRedisDb } from "@skymo/core"
 import {
   accountDeletionTable,
   emailChangeTable,
@@ -41,6 +41,9 @@ interface GamePlayerResult {
   player_username: string | null
   player_avatar: Avatar
   player_rank: number
+  player_forfeited: boolean
+  player_forfeited_at: string | null
+  player_connection_status: ConnectionStatus
   host_name: string
 }
 
@@ -184,6 +187,9 @@ export async function getUserGames(
       u.username as player_username,
       p.avatar as player_avatar,
       p.rank as player_rank,
+      p.forfeited as player_forfeited,
+      p.forfeited_at as player_forfeited_at,
+      p.connection_status as player_connection_status,
       host_player.name as host_name
     FROM user_game_ids ugi
     INNER JOIN ${gameTable} g ON ugi.id = g.id
@@ -227,6 +233,11 @@ export async function getUserGames(
       username: row.player_username,
       avatar: row.player_avatar,
       rank: row.player_rank,
+      forfeited: row.player_forfeited,
+      forfeitedAt: row.player_forfeited_at
+        ? new Date(row.player_forfeited_at).getTime()
+        : null,
+      connectionStatus: row.player_connection_status,
     })
   }
 

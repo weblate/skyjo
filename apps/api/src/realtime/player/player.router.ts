@@ -25,6 +25,14 @@ const playerRouter = (socket: GameSocket) => {
   )
 
   socket.on(
+    "forfeit",
+    socketErrorWrapper(async () => {
+      await instance.onForfeit(socket)
+      socket.emit("forfeit:success")
+    }),
+  )
+
+  socket.on(
     "disconnect",
     socketErrorWrapper(async (reason: DisconnectReason) => {
       Logger.info(`Socket ${socket.id} disconnected for reason ${reason}`)

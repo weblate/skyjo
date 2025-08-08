@@ -1,4 +1,4 @@
-import type { Avatar, SettingsRedisDb } from "@skymo/core"
+import type { Avatar, ConnectionStatus, SettingsRedisDb } from "@skymo/core"
 
 export interface UserProfile {
   username: string
@@ -43,6 +43,9 @@ export interface UserRecentActivity {
     username: string | null
     avatar: Avatar
     rank: number
+    forfeited: boolean
+    forfeitedAt: number | null
+    connectionStatus: ConnectionStatus
   }[]
   createdAt: string
   finishedAt: string

@@ -81,6 +81,7 @@ interface GameContext {
     turnCard: (column: number, row: number) => void
     replay: () => void
     leave: (canReconnect?: boolean) => void
+    forfeit: () => void
   }
   roundPhase: {
     isRevealCards: boolean
@@ -182,8 +183,10 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
 
   useEffect(() => {
     socket!.on("leave:success", onLeave)
+    socket!.on("forfeit:success", onForfeitSuccess)
     return () => {
       socket!.off("leave:success", onLeave)
+      socket!.off("forfeit:success", onForfeitSuccess)
     }
   }, [game?.settings.private])
 
@@ -269,6 +272,12 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }
 
   const onLeave = () => {
+    setGame(undefined)
+    if (game?.settings.private) router.replace("/")
+    else router.replace("/search")
+  }
+
+  const onForfeitSuccess = () => {
     setGame(undefined)
     if (game?.settings.private) router.replace("/")
     else router.replace("/search")
@@ -442,6 +451,12 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     socket!.emit("leave")
   }
 
+  const forfeit = () => {
+    toast.dismiss()
+    clearLastGameCookie()
+    socket!.emit("forfeit")
+  }
+
   const actions = {
     updateMaxPlayers,
     updateSingleSettings,
@@ -456,6 +471,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
     turnCard,
     replay,
     leave,
+    forfeit,
   }
   //#endregion
 

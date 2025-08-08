@@ -39,7 +39,11 @@ export default async function UserPage({ params }: Readonly<UserPageProps>) {
           <h3 className="text-lg font-medium text-black dark:text-dark-font">
             {t("sections.recent-activity")}
           </h3>
-          <RecentActivityList games={userProfile.games} locale={locale} />
+          <RecentActivityList
+            games={userProfile.games}
+            locale={locale}
+            username={username}
+          />
         </div>
       </div>
     </>

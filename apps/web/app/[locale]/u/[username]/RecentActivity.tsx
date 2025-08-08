@@ -1,4 +1,4 @@
-import { constructTagArray } from "@skymo/core"
+import { Constants, constructTagArray } from "@skymo/core"
 import { Locales } from "@skymo/shared/constants"
 import { UserRecentActivity } from "@skymo/shared/types"
 import { cva } from "class-variance-authority"
@@ -28,6 +28,10 @@ const rankVariants = cva(
         6: "",
         7: "",
         8: "",
+        forfeited:
+          "bg-gray-100 dark:bg-gray-900/30 text-gray-600 dark:text-gray-400",
+        disconnected:
+          "bg-gray-100 dark:bg-gray-900/30 text-gray-600 dark:text-gray-400",
       },
     },
     compoundVariants: [
@@ -43,10 +47,12 @@ const rankVariants = cva(
 interface RecentActivityListProps {
   games: UserRecentActivity[]
   locale: Locales
+  username: string
 }
 export const RecentActivityList = async ({
   games,
   locale,
+  username,
 }: RecentActivityListProps) => {
   const t = await getTranslations("pages.UserProfile")
   const tAvatar = await getTranslations("utils.avatar")
@@ -76,6 +82,47 @@ export const RecentActivityList = async ({
         const minutes = duration % 60
         const minutesText = minutes.toString().padStart(2, "0")
         const durationText = `${hoursText}:${minutesText}`
+
+        // Find the current user's player data to determine their state
+        const currentUserPlayer = game.players.find(
+          (player) => player.username?.toLowerCase() === username.toLowerCase(),
+        )
+
+        // Determine display state based on connection status and forfeit state
+        let rankDisplayVariant:
+          | "forfeited"
+          | "disconnected"
+          | 1
+          | 2
+          | 3
+          | 4
+          | 5
+          | 6
+          | 7
+          | 8
+        let rankDisplayText: string
+
+        if (
+          currentUserPlayer?.connectionStatus ===
+            Constants.CONNECTION_STATUS.DISCONNECTED &&
+          currentUserPlayer?.forfeited
+        ) {
+          rankDisplayVariant = "forfeited"
+          rankDisplayText = t("recent-activity.forfeited")
+        } else if (
+          currentUserPlayer?.connectionStatus ===
+            Constants.CONNECTION_STATUS.DISCONNECTED &&
+          !currentUserPlayer?.forfeited
+        ) {
+          rankDisplayVariant = "disconnected"
+          rankDisplayText = t("recent-activity.left")
+        } else {
+          // Normal rank display
+          rankDisplayVariant = [1, 2, 3, 4, 5, 6, 7, 8].includes(game.rank)
+            ? (game.rank as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)
+            : (8 as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)
+          rankDisplayText = game.rank === 1 ? "1" : game.rank.toString()
+        }
 
         return (
           <div
@@ -154,12 +201,15 @@ export const RecentActivityList = async ({
               <div className="absolute right-0 top-0 sm:top-7 sm:right-0">
                 <div
                   className={rankVariants({
-                    rank: [1, 2, 3, 4, 5, 6, 7, 8].includes(game.rank)
-                      ? (game.rank as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8)
-                      : (8 as 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8),
+                    rank: rankDisplayVariant,
                   })}
                 >
-                  {game.rank === 1 ? (
+                  {rankDisplayVariant === "forfeited" ||
+                  rankDisplayVariant === "disconnected" ? (
+                    <span className="flex flex-row items-center gap-0.5">
+                      {rankDisplayText}
+                    </span>
+                  ) : game.rank === 1 ? (
                     <span className="flex flex-row items-center gap-1">
                       <CrownIcon className="size-4 text-amber-500 fill-amber-500" />
                       1

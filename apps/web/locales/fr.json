@@ -173,6 +173,8 @@
       "player": "Joueur",
       "round": "Manche {number}",
       "total": "Total",
+      "forfeit": "Abandon",
+      "disconnected": "Déconnecté",
       "player-want-to-replay": "Joueurs qui veulent rejouer :",
       "replay-button": {
         "cancel": "Ne pas rejouer",
@@ -631,7 +633,8 @@
         "no-activity": "Aucune activité récente à afficher.",
         "game-code": "Partie #{code}",
         "rank": "Rang #{rank}",
-        "winner": "Gagnant"
+        "forfeited": "Abandon",
+        "left": "Parti"
       },
       "search": {
         "placeholder": "Rechercher un nom d'utilisateur"
@@ -947,7 +950,14 @@
       "feedback": "Laisser un commentaire",
       "discord": "Discord",
       "settings": "Paramètres",
-      "leave-game": "Quitter la partie"
+      "leave-game": "Quitter la partie",
+      "forfeit": "Abandonner"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Abandonner la partie ?",
+      "message": "Êtes-vous sûr de vouloir abandonner ? Vous quitterez définitivement la partie et ne pourrez pas la rejoindre.",
+      "confirm": "Oui, Abandonner",
+      "cancel": "Annuler"
     },
     "OpponentBoard": {
       "disconnected": "Le joueur a quitté la partie. Un bot jouera pour lui pendant les prochains tours jusqu'à sa reconnexion."
@@ -1258,6 +1268,7 @@
       "welcome": "Soyez gentil et respectueux sur le chat. Si besoin, vous pouvez rendre muet ou signaler un joueur en {isMobile, select, true {faisant un appui long} other {faisant un clic droit}} sur leur message ou sur lui.",
       "player-joined": "{name} a rejoint la partie",
       "player-left": "{name} a quitté la partie",
+      "player-forfeited": "{name} a abandonné la partie",
       "player-reconnect": "{name} s'est reconnecté au jeu",
       "argument-required": "Un ou des arguments sont requis pour la commande : {command}",
       "player-already-muted": "{name} est déjà en sourdine",

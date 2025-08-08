@@ -144,12 +144,8 @@ export const gameTable = pgTable("games", {
   code: varchar("code", { length: 8 }),
   hostId: integer("host_id"),
   settings: json("settings").$type<SettingsRedisDb>(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  finishedAt: timestamp("finished_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
+  createdAt: timestamp("created_at", { mode: "date" }).notNull().defaultNow(),
+  finishedAt: timestamp("finished_at", { mode: "date" }).notNull().defaultNow(),
 })
 export const gameRelations = relations(gameTable, ({ one }) => ({
   host: one(playerTable, {
@@ -173,6 +169,8 @@ export const playerTable = pgTable("players", {
   score: smallint("score").notNull().default(0),
   rank: smallint("rank").notNull(),
   connectionStatus: smallint("connection_status").notNull().default(1),
+  forfeited: boolean("forfeited").notNull().default(false),
+  forfeitedAt: timestamp("forfeited_at", { mode: "date" }),
 })
 export type PlayerDb = InferSelectModel<typeof playerTable>
 

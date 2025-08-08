@@ -22,6 +22,8 @@ export const createMockPlayer = (
   scores: [],
   turnStartTime: null,
   cards,
+  forfeited: false,
+  forfeitedAt: null,
 })
 
 export const createMockCard = (

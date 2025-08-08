@@ -118,7 +118,15 @@ const ResultsPage = () => {
                     transition={{ duration: 0.5 }}
                   >
                     <TableCell className="w-8">
-                      {isConnected ? allRowsVisible && index + 1 : "-"}
+                      {isConnected ? (
+                        allRowsVisible && index + 1
+                      ) : player.forfeited ? (
+                        <span className="text-gray-500">{t("forfeit")}</span>
+                      ) : (
+                        <span className="text-gray-500">
+                          {t("disconnected")}
+                        </span>
+                      )}
                     </TableCell>
                     <TableCell
                       className={cn(

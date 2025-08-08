@@ -499,6 +499,8 @@ export class Game implements GameInterface {
         turnStartTime: player.turnStartTime,
         userId: player.userId ?? null,
         sessionId: player.getSessionId(),
+        forfeited: player.forfeited,
+        forfeitedAt: player.forfeitedAt,
         cards: player.cards.map((column) =>
           column.map((card) => ({
             id: card.id,

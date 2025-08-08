@@ -159,6 +159,8 @@ describe("Game", () => {
             ],
             hasPlayedLastTurn: false,
             sessionId: crypto.randomUUID(),
+            forfeited: false,
+            forfeitedAt: null,
           },
         ],
 
@@ -1048,6 +1050,8 @@ describe("Game", () => {
             socketId: player.socketId,
             wantsReplay: player.wantsReplay,
             sessionId: player.getSessionId(),
+            forfeited: player.forfeited,
+            forfeitedAt: player.forfeitedAt,
           },
           {
             id: opponent.id,
@@ -1072,6 +1076,8 @@ describe("Game", () => {
             socketId: opponent.socketId,
             wantsReplay: opponent.wantsReplay,
             sessionId: opponent.getSessionId(),
+            forfeited: opponent.forfeited,
+            forfeitedAt: opponent.forfeitedAt,
           },
         ],
         settings: {

@@ -160,4 +160,49 @@ export class PlayerService extends BaseService {
 
     await this.updateAndSendGame(game, stateManager)
   }
+
+  async onForfeit(socket: GameSocket) {
+    try {
+      const game = await this.getGame(socket.data.gameCode)
+      const stateManager = new GameStateTracker(game)
+
+      const player = game.getPlayerById(socket.data.playerId)
+      if (!player) {
+        throw new CError(
+          `Player try to forfeit a game but he has not been found in it.`,
+          {
+            code: ErrorConstants.ERROR.PLAYER_NOT_FOUND,
+            level: "warn",
+            meta: {
+              game: game.serialize(),
+              socketId: socket.id,
+              gameCode: game.code,
+              playerId: socket.data.playerId,
+            },
+          },
+        )
+      }
+
+      // Mark player as forfeited with timestamp
+      player.forfeited = true
+      player.forfeitedAt = Date.now()
+
+      await game.disconnectPlayer(player)
+
+      const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_FORFEITED
+      await this.sendServerMessage(game.code, player.name, messageType)
+
+      await this.updateAndSendGame(game, stateManager)
+      await socket.leave(game.code)
+    } catch (error) {
+      if (
+        error instanceof CError &&
+        error.code === ErrorConstants.ERROR.GAME_NOT_FOUND
+      ) {
+        return
+      } else {
+        throw error
+      }
+    }
+  }
 }

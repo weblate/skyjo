@@ -17,6 +17,7 @@ import {
   useMemo,
   useState,
 } from "react"
+import { toast } from "sonner"
 import { usePlayer } from "@/contexts/PlayerContext"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useSocket } from "@/contexts/SocketContext"
@@ -119,8 +120,18 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
       message.type === CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_RECONNECT
     ) {
       playerJoinedSound.play()
-    } else if (message.type === CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT) {
+    } else if (
+      message.type === CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT ||
+      message.type === CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_FORFEITED
+    ) {
       playerLeftSound.play()
+
+      // Show toast notification for forfeit
+      if (message.type === CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_FORFEITED) {
+        toast.warning(t(message.message, { name: message.name }), {
+          duration: 5000,
+        })
+      }
     }
 
     const chatMessage = {

@@ -58,7 +58,7 @@ describe("GameStorageTask", () => {
 
   describe("calculatePlayerRanks", () => {
     // Access private method for testing
-    const calculatePlayerRanks = (GameStorageTask as any).calculatePlayerRanks
+    const calculatePlayerRanks = GameStorageTask["calculatePlayerRanks"]
 
     it("should rank connected players first, then disconnected players", () => {
       const players = [
@@ -78,6 +78,8 @@ describe("GameStorageTask", () => {
           sessionId: "session1",
           cards: [],
           scores: [10, 10],
+          forfeited: false,
+          forfeitedAt: null,
         },
         {
           id: "player2",
@@ -95,6 +97,8 @@ describe("GameStorageTask", () => {
           sessionId: "session2",
           cards: [],
           scores: [11, 11],
+          forfeited: false,
+          forfeitedAt: null,
         },
         {
           id: "player3",
@@ -112,6 +116,8 @@ describe("GameStorageTask", () => {
           sessionId: "session3",
           cards: [],
           scores: [1],
+          forfeited: false,
+          forfeitedAt: null,
         },
       ]
 
@@ -147,6 +153,8 @@ describe("GameStorageTask", () => {
           sessionId: "session1",
           cards: [],
           scores: [25, 25],
+          forfeited: false,
+          forfeitedAt: null,
         },
         {
           id: "player2",
@@ -164,6 +172,8 @@ describe("GameStorageTask", () => {
           sessionId: "session2",
           cards: [],
           scores: [5],
+          forfeited: false,
+          forfeitedAt: null,
         },
         {
           id: "player3",
@@ -181,6 +191,8 @@ describe("GameStorageTask", () => {
           sessionId: "session3",
           cards: [],
           scores: [10],
+          forfeited: false,
+          forfeitedAt: null,
         },
       ]
 
@@ -195,8 +207,8 @@ describe("GameStorageTask", () => {
       )
 
       expect(connected1?.rank).toBe(1) // Only connected player
-      expect(disconnected1?.rank).toBe(2) // Best disconnected player (score 5)
-      expect(disconnected2?.rank).toBe(3) // Worse disconnected player (score 10)
+      expect(disconnected1?.rank).toBe(3) // All disconnected players get worst rank (punitive)
+      expect(disconnected2?.rank).toBe(3) // All disconnected players get worst rank (punitive)
     })
 
     it("should handle all connected players", () => {
@@ -217,6 +229,8 @@ describe("GameStorageTask", () => {
           sessionId: "session1",
           cards: [],
           scores: [5, 5],
+          forfeited: false,
+          forfeitedAt: null,
         },
         {
           id: "player2",
@@ -234,6 +248,8 @@ describe("GameStorageTask", () => {
           sessionId: "session2",
           cards: [],
           scores: [5],
+          forfeited: false,
+          forfeitedAt: null,
         },
       ]
 
@@ -264,6 +280,8 @@ describe("GameStorageTask", () => {
           sessionId: "session1",
           cards: [],
           scores: [10, 10],
+          forfeited: false,
+          forfeitedAt: null,
         },
         {
           id: "player2",
@@ -281,6 +299,8 @@ describe("GameStorageTask", () => {
           sessionId: "session2",
           cards: [],
           scores: [15],
+          forfeited: false,
+          forfeitedAt: null,
         },
       ]
 
@@ -293,8 +313,8 @@ describe("GameStorageTask", () => {
         (p) => p.name === "Disconnected2",
       )
 
-      expect(disconnected2?.rank).toBe(1) // Better score (15)
-      expect(disconnected1?.rank).toBe(2) // Worse score (20)
+      expect(disconnected2?.rank).toBe(2) // All disconnected players get worst rank (punitive)
+      expect(disconnected1?.rank).toBe(2) // All disconnected players get worst rank (punitive)
     })
 
     it("should handle players with same scores", () => {
@@ -315,6 +335,8 @@ describe("GameStorageTask", () => {
           sessionId: "session1",
           cards: [],
           scores: [5, 5],
+          forfeited: false,
+          forfeitedAt: null,
         },
         {
           id: "player2",
@@ -332,6 +354,8 @@ describe("GameStorageTask", () => {
           sessionId: "session2",
           cards: [],
           scores: [5, 5],
+          forfeited: false,
+          forfeitedAt: null,
         },
         {
           id: "player3",
@@ -349,6 +373,8 @@ describe("GameStorageTask", () => {
           sessionId: "session3",
           cards: [],
           scores: [5, 5],
+          forfeited: false,
+          forfeitedAt: null,
         },
       ]
 
@@ -365,6 +391,299 @@ describe("GameStorageTask", () => {
       expect(connected2?.rank).toBe(1)
       // Disconnected player should rank after connected players (3)
       expect(disconnected1?.rank).toBe(3)
+    })
+
+    it("should rank players in 3-tier system: connected > forfeited > disconnected", () => {
+      const players = [
+        {
+          id: "player1",
+          name: "Connected1",
+          connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
+          score: 30,
+          avatar: Constants.AVATARS.BEE,
+          socketId: "socket1",
+          userId: 1,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session1",
+          cards: [],
+          scores: [15, 15],
+          forfeited: false,
+          forfeitedAt: null,
+        },
+        {
+          id: "player2",
+          name: "Forfeited1",
+          connectionStatus: Constants.CONNECTION_STATUS.DISCONNECTED,
+          score: 5,
+          avatar: Constants.AVATARS.CAT,
+          socketId: "socket2",
+          userId: 2,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session2",
+          cards: [],
+          scores: [5],
+          forfeited: true,
+          forfeitedAt: 1000,
+        },
+        {
+          id: "player3",
+          name: "Disconnected1",
+          connectionStatus: Constants.CONNECTION_STATUS.DISCONNECTED,
+          score: 1,
+          avatar: Constants.AVATARS.DOG,
+          socketId: "socket3",
+          userId: 3,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session3",
+          cards: [],
+          scores: [1],
+          forfeited: false,
+          forfeitedAt: null,
+        },
+      ]
+
+      const rankedPlayers = calculatePlayerRanks(players)
+
+      const connected1 = rankedPlayers.find((p) => p.name === "Connected1")
+      const forfeited1 = rankedPlayers.find((p) => p.name === "Forfeited1")
+      const disconnected1 = rankedPlayers.find(
+        (p) => p.name === "Disconnected1",
+      )
+
+      // Connected player ranks first despite higher score
+      expect(connected1?.rank).toBe(1)
+      // Forfeited player ranks second despite best score
+      expect(forfeited1?.rank).toBe(2)
+      // Disconnected player gets worst rank as punishment
+      expect(disconnected1?.rank).toBe(3)
+    })
+
+    it("should rank multiple forfeited players by forfeit time (later forfeit = better rank)", () => {
+      const players = [
+        {
+          id: "player1",
+          name: "Connected1",
+          connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
+          score: 50,
+          avatar: Constants.AVATARS.BEE,
+          socketId: "socket1",
+          userId: 1,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session1",
+          cards: [],
+          scores: [25, 25],
+          forfeited: false,
+          forfeitedAt: null,
+        },
+        {
+          id: "player2",
+          name: "EarlyForfeit",
+          connectionStatus: Constants.CONNECTION_STATUS.DISCONNECTED,
+          score: 10,
+          avatar: Constants.AVATARS.CAT,
+          socketId: "socket2",
+          userId: 2,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session2",
+          cards: [],
+          scores: [5, 5],
+          forfeited: true,
+          forfeitedAt: 1000,
+        },
+        {
+          id: "player3",
+          name: "LateForfeit",
+          connectionStatus: Constants.CONNECTION_STATUS.DISCONNECTED,
+          score: 20,
+          avatar: Constants.AVATARS.DOG,
+          socketId: "socket3",
+          userId: 3,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session3",
+          cards: [],
+          scores: [10, 10],
+          forfeited: true,
+          forfeitedAt: 2000,
+        },
+        {
+          id: "player4",
+          name: "Disconnected1",
+          connectionStatus: Constants.CONNECTION_STATUS.DISCONNECTED,
+          score: 5,
+          avatar: Constants.AVATARS.BEE,
+          socketId: "socket4",
+          userId: 4,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session4",
+          cards: [],
+          scores: [5],
+          forfeited: false,
+          forfeitedAt: null,
+        },
+      ]
+
+      const rankedPlayers = calculatePlayerRanks(players)
+
+      const connected1 = rankedPlayers.find((p) => p.name === "Connected1")
+      const earlyForfeit = rankedPlayers.find((p) => p.name === "EarlyForfeit")
+      const lateForfeit = rankedPlayers.find((p) => p.name === "LateForfeit")
+      const disconnected1 = rankedPlayers.find(
+        (p) => p.name === "Disconnected1",
+      )
+
+      expect(connected1?.rank).toBe(1) // Connected player first
+      expect(lateForfeit?.rank).toBe(2) // Later forfeit = better rank
+      expect(earlyForfeit?.rank).toBe(3) // Earlier forfeit = worse rank
+      expect(disconnected1?.rank).toBe(4) // Disconnected players get worst rank
+    })
+
+    it("should handle mixed scenario with all three player types", () => {
+      const players = [
+        {
+          id: "player1",
+          name: "Connected1",
+          connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
+          score: 40,
+          avatar: Constants.AVATARS.BEE,
+          socketId: "socket1",
+          userId: 1,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session1",
+          cards: [],
+          scores: [20, 20],
+          forfeited: false,
+          forfeitedAt: null,
+        },
+        {
+          id: "player2",
+          name: "Connected2",
+          connectionStatus: Constants.CONNECTION_STATUS.LOST,
+          score: 10,
+          avatar: Constants.AVATARS.CAT,
+          socketId: "socket2",
+          userId: 2,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session2",
+          cards: [],
+          scores: [5, 5],
+          forfeited: false,
+          forfeitedAt: null,
+        },
+        {
+          id: "player3",
+          name: "Forfeited1",
+          connectionStatus: Constants.CONNECTION_STATUS.DISCONNECTED,
+          score: 5,
+          avatar: Constants.AVATARS.DOG,
+          socketId: "socket3",
+          userId: 3,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session3",
+          cards: [],
+          scores: [5],
+          forfeited: true,
+          forfeitedAt: 1500,
+        },
+        {
+          id: "player4",
+          name: "Forfeited2",
+          connectionStatus: Constants.CONNECTION_STATUS.DISCONNECTED,
+          score: 30,
+          avatar: Constants.AVATARS.BEE,
+          socketId: "socket4",
+          userId: 4,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session4",
+          cards: [],
+          scores: [15, 15],
+          forfeited: true,
+          forfeitedAt: 1000,
+        },
+        {
+          id: "player5",
+          name: "Disconnected1",
+          connectionStatus: Constants.CONNECTION_STATUS.DISCONNECTED,
+          score: 1,
+          avatar: Constants.AVATARS.BEE,
+          socketId: "socket5",
+          userId: 5,
+          wantsReplay: false,
+          hasPlayedLastTurn: false,
+          afkCount: 0,
+          consecutiveAfkCount: 0,
+          turnStartTime: null,
+          sessionId: "session5",
+          cards: [],
+          scores: [1],
+          forfeited: false,
+          forfeitedAt: null,
+        },
+      ]
+
+      const rankedPlayers = calculatePlayerRanks(players)
+
+      const connected1 = rankedPlayers.find((p) => p.name === "Connected1")
+      const connected2 = rankedPlayers.find((p) => p.name === "Connected2")
+      const forfeited1 = rankedPlayers.find((p) => p.name === "Forfeited1")
+      const forfeited2 = rankedPlayers.find((p) => p.name === "Forfeited2")
+      const disconnected1 = rankedPlayers.find(
+        (p) => p.name === "Disconnected1",
+      )
+
+      // Tier 1: Connected players (by score)
+      expect(connected2?.rank).toBe(1) // Best connected score (10)
+      expect(connected1?.rank).toBe(2) // Worse connected score (40)
+
+      // Tier 2: Forfeited players (by forfeit time - later = better)
+      expect(forfeited1?.rank).toBe(3) // Later forfeit (1500ms)
+      expect(forfeited2?.rank).toBe(4) // Earlier forfeit (1000ms)
+
+      // Tier 3: Disconnected players (punitive worst rank)
+      expect(disconnected1?.rank).toBe(5) // Total players count
     })
   })
 })

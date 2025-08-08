@@ -173,6 +173,8 @@
       "player": "Player",
       "round": "Round {number}",
       "total": "Total",
+      "forfeit": "Forfeit",
+      "disconnected": "Disconnected",
       "player-want-to-replay": "Players who want to replay:",
       "replay-button": {
         "cancel": "Do not replay",
@@ -631,7 +633,8 @@
         "no-activity": "No recent activity to show.",
         "game-code": "Game #{code}",
         "rank": "Rank #{rank}",
-        "winner": "Winner"
+        "forfeited": "Forfeited",
+        "left": "Left"
       },
       "search": {
         "placeholder": "Search username"
@@ -959,7 +962,14 @@
       "feedback": "Leave a feedback",
       "discord": "Discord",
       "settings": "Settings",
-      "leave-game": "Leave game"
+      "leave-game": "Leave game",
+      "forfeit": "Forfeit"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Forfeit Game?",
+      "message": "Are you sure you want to forfeit? You will leave the game permanently and cannot rejoin.",
+      "confirm": "Yes, Forfeit",
+      "cancel": "Cancel"
     },
     "OpponentBoard": {
       "disconnected": "Player has left the game. A bot will play for them during the next few turns until they reconnect."
@@ -1259,6 +1269,7 @@
       "welcome": "Please be nice and respectful. You can {isMobile, select, true {long-press} other {right-click}} on messages to mute or report players if needed.",
       "player-joined": "{name} joined the game",
       "player-left": "{name} left the game",
+      "player-forfeited": "{name} has forfeited the game",
       "player-reconnect": "{name} reconnected to the game",
       "host-transferred": "{name} is now the host",
       "argument-required": "One or more arguments are required for command: {command}",

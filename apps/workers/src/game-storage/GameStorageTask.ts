@@ -41,7 +41,7 @@ export class GameStorageTask {
           .values({
             code: game.code,
             settings: game.settings,
-            createdAt: game.createdAt,
+            createdAt: new Date(game.createdAt),
           })
           .returning({ id: gameTable.id })
 
@@ -81,6 +81,8 @@ export class GameStorageTask {
           score: player.score,
           rank: player.rank,
           connectionStatus: player.connectionStatus,
+          forfeited: player.forfeited,
+          forfeitedAt: player.forfeitedAt ? new Date(player.forfeitedAt) : null,
           // Only connected players can be winners
           winner:
             player.connectionStatus !==
@@ -137,14 +139,22 @@ export class GameStorageTask {
   private static calculatePlayerRanks(
     players: PlayerRedisDb[],
   ): PlayerWithRank[] {
-    // Separate connected and disconnected players
+    const totalPlayers = players.length
+
+    // Separate into three groups
     const connectedPlayers = players.filter(
       (player) =>
         player.connectionStatus !== Constants.CONNECTION_STATUS.DISCONNECTED,
     )
+    const forfeitedPlayers = players.filter(
+      (player) =>
+        player.connectionStatus === Constants.CONNECTION_STATUS.DISCONNECTED &&
+        player.forfeited,
+    )
     const disconnectedPlayers = players.filter(
       (player) =>
-        player.connectionStatus === Constants.CONNECTION_STATUS.DISCONNECTED,
+        player.connectionStatus === Constants.CONNECTION_STATUS.DISCONNECTED &&
+        !player.forfeited,
     )
 
     // Sort connected players by score (ascending - lower score is better)
@@ -152,17 +162,18 @@ export class GameStorageTask {
       (a, b) => a.score - b.score,
     )
 
-    // Sort disconnected players by score (ascending)
-    const sortedDisconnectedPlayers = [...disconnectedPlayers].sort(
-      (a, b) => a.score - b.score,
-    )
+    // Sort forfeited players by forfeit time (later forfeit = better rank)
+    const sortedForfeitedPlayers = [...forfeitedPlayers].sort((a, b) => {
+      // Higher timestamp (later forfeit) should come first (better rank)
+      return (b.forfeitedAt || 0) - (a.forfeitedAt || 0)
+    })
 
     const playersWithRanks: PlayerWithRank[] = []
 
-    // Assign ranks to connected players first
-    sortedConnectedPlayers.forEach((player, index) => {
+    // 1. Assign ranks to connected players (with tie handling)
+    sortedConnectedPlayers.forEach((player) => {
       let rank = 1
-      // Find rank by counting how many connected players have a better (lower) score
+      // Count how many connected players have a better (lower) score
       for (const otherPlayer of sortedConnectedPlayers) {
         if (otherPlayer.score < player.score) {
           rank++
@@ -171,17 +182,16 @@ export class GameStorageTask {
       playersWithRanks.push({ ...player, rank })
     })
 
-    // Assign ranks to disconnected players starting after the last connected player rank
-    const lastConnectedRank = connectedPlayers.length
-    sortedDisconnectedPlayers.forEach((player) => {
-      let rank = lastConnectedRank + 1
-      // Find rank among disconnected players
-      for (const otherPlayer of sortedDisconnectedPlayers) {
-        if (otherPlayer.score < player.score) {
-          rank++
-        }
-      }
+    // 2. Assign ranks to forfeited players (sequential after connected)
+    const baseRankForfeited = connectedPlayers.length
+    sortedForfeitedPlayers.forEach((player, index) => {
+      const rank = baseRankForfeited + index + 1
       playersWithRanks.push({ ...player, rank })
+    })
+
+    // 3. All disconnected players get worst rank (punitive)
+    disconnectedPlayers.forEach((player) => {
+      playersWithRanks.push({ ...player, rank: totalPlayers })
     })
 
     return playersWithRanks

@@ -47,6 +47,8 @@ export class Player implements PlayerInterface {
   connectionStatus: ConnectionStatus = Constants.CONNECTION_STATUS.CONNECTED
   afkCount: number = 0
   consecutiveAfkCount: number = 0 // Consecutive timeouts
+  forfeited: boolean = false
+  forfeitedAt: number | null = null
   cards: Card[][] = []
   score: number = 0
   scores: PlayerScore[] = []
@@ -89,6 +91,8 @@ export class Player implements PlayerInterface {
     this.turnStartTime = player.turnStartTime
     this.userId = player?.userId ?? undefined
     this.sessionId = player.sessionId
+    this.forfeited = player.forfeited ?? false
+    this.forfeitedAt = player.forfeitedAt ?? null
 
     if (player.cards.length > 0) {
       this.cards = player.cards.map((column) =>
@@ -272,6 +276,8 @@ export class Player implements PlayerInterface {
       turnStartTime: this.turnStartTime,
       username: this.username,
       cards: this.cards.map((column) => column.map((card) => card.toJson())),
+      forfeited: this.forfeited,
+      forfeitedAt: this.forfeitedAt,
     }
   }
 

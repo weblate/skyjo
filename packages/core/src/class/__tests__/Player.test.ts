@@ -50,6 +50,8 @@ describe("Player", () => {
       userId: null,
       sessionId: crypto.randomUUID(),
       cards: [],
+      forfeited: false,
+      forfeitedAt: null,
     }
 
     const player = new Player().populate(dbPlayer)
@@ -84,6 +86,8 @@ describe("Player", () => {
         [new Card(3), new Card(4), new Card(5)],
         [new Card(6), new Card(7), new Card(8)],
       ],
+      forfeited: false,
+      forfeitedAt: null,
     }
 
     const player = new Player().populate(dbPlayer)
@@ -417,6 +421,8 @@ describe("Player", () => {
         wantsReplay: false,
         connectionStatus: Constants.CONNECTION_STATUS.CONNECTED,
         username: undefined,
+        forfeited: false,
+        forfeitedAt: null,
       })
     })
   })
