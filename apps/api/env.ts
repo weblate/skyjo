@@ -15,13 +15,6 @@ export const envSchema = z.object({
     message: "GMAIL_APP_PASSWORD must be set in .env file",
   }),
 
-  SIGHTENGINE_API_USER: z.string({
-    message: "SIGHTENGINE_API_USER must be set in .env file",
-  }),
-  SIGHTENGINE_API_SECRET: z.string({
-    message: "SIGHTENGINE_API_SECRET must be set in .env file",
-  }),
-
   GOOGLE_CLIENT_ID: z.string({
     message: "GOOGLE_CLIENT_ID must be set in .env file",
   }),

@@ -123,8 +123,6 @@ vi.spyOn(process, "env", "get").mockReturnValue({
   SEQ_API_KEY: "e",
   REDIS_URL: "redis://mock-redis-url",
   npm_package_version: "-99",
-  SIGHTENGINE_API_USER: "test-api-user",
-  SIGHTENGINE_API_SECRET: "test-api-secret",
   POSTGRES_URL: "postgresql://mock-postgres-url",
   GOOGLE_CLIENT_ID: "test-google-client-id",
   GOOGLE_CLIENT_SECRET: "test-google-client-secret",
