@@ -13,64 +13,87 @@ import { formatScoreDisplay, getScoreValue } from "@/lib/penalty-utils"
 
 interface ScoreTableProps {
   players: PlayerToJson[]
-  winner?: PlayerToJson
   scrollToEnd?: boolean
 }
-const ScoreTable = ({
-  players,
-  winner,
-  scrollToEnd = false,
-}: ScoreTableProps) => {
+
+const ScoreTable = ({ players, scrollToEnd = false }: ScoreTableProps) => {
   const t = useTranslations("components.ScoreTable")
 
   const nbRounds = players[0].scores.length
+  const winningScore = Math.min(...players.map((p) => p.score))
 
   useEffect(() => {
     if (!scrollToEnd) return
 
     const table = document.querySelector("#end-round-table")
-
     table?.scrollIntoView({
       block: "end",
       inline: "end",
     })
-  }, [])
+  }, [scrollToEnd])
 
-  const sortedConnectedPlayers = players
-    .filter(
-      (player) =>
-        player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED,
-    )
-    .sort((a, b) => a.score - b.score)
+  const sortPlayers = (players: PlayerToJson[]) => {
+    const winners = players
+      .filter((p) => p.score === winningScore)
+      .sort((a, b) => a.name.localeCompare(b.name))
 
-  const sortedDisconnectedPlayers = players
-    .filter(
-      (player) =>
-        player.connectionStatus !== CoreConstants.CONNECTION_STATUS.CONNECTED,
-    )
-    .sort((a, b) => a.score - b.score)
+    const losers = players
+      .filter((p) => p.score !== winningScore)
+      .sort((a, b) => a.score - b.score)
+
+    return [...winners, ...losers]
+  }
+
+  const connectedPlayers = players.filter(
+    (player) =>
+      player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED,
+  )
+
+  const disconnectedPlayers = players.filter(
+    (player) =>
+      player.connectionStatus !== CoreConstants.CONNECTION_STATUS.CONNECTED,
+  )
 
   const sortedPlayers = [
-    ...sortedConnectedPlayers,
-    ...sortedDisconnectedPlayers,
+    ...sortPlayers(connectedPlayers),
+    ...sortPlayers(disconnectedPlayers),
   ]
+
+  // Calculate ranks (only after first round)
+  const ranks: { [playerId: string]: number | string } = {}
+  if (nbRounds === 0) {
+    // First round: show "-" instead of ranks
+    sortedPlayers.forEach((player) => {
+      ranks[player.id] = "-"
+    })
+  } else {
+    // After first round: calculate actual ranks
+    let rank = 1
+    for (let i = 0; i < sortedPlayers.length; i++) {
+      if (i > 0 && sortedPlayers[i].score > sortedPlayers[i - 1].score) {
+        rank = i + 1
+      }
+      ranks[sortedPlayers[i].id] = rank
+    }
+  }
 
   return (
     <Table id="end-round-table" className="bg-container">
       <TableHeader>
         <TableRow>
-          <TableHead className="sticky left-0 w-full z-10">
-            {t("name")}
+          <TableHead className="sticky left-0 z-10 w-20 text-center">
+            {t("rank")}
           </TableHead>
+          <TableHead className="sticky left-14 z-10">{t("name")}</TableHead>
           {Array.from({ length: nbRounds }).map((_, index) => (
             <TableHead
               key={`round-${index}`}
-              className="text-center w-fit text-nowrap"
+              className="text-center text-nowrap w-28"
             >
               {t("round")} {index + 1}
             </TableHead>
           ))}
-          <TableHead className="sticky right-0 w-full z-10 font-semibold">
+          <TableHead className="sticky right-0 z-10 font-[550] w-28 text-center">
             {t("total")}
           </TableHead>
         </TableRow>
@@ -78,18 +101,22 @@ const ScoreTable = ({
       <TableBody>
         {sortedPlayers.map((player) => (
           <TableRow key={player.id}>
-            <TableCell className="sticky left-0 z-10">
-              {player.name} {winner?.id === player.id && "🏆"}
+            <TableCell className="sticky left-0 z-10 text-center w-fit">
+              {ranks[player.id]}
+            </TableCell>
+            <TableCell className="sticky left-12 z-10">
+              {player.name}{" "}
+              {nbRounds > 0 && player.score === winningScore && "🏆"}
             </TableCell>
             {player.scores.map((score, scoreIndex) => (
               <TableCell
                 key={`${player.id}-round-${scoreIndex + 1}`}
-                className="text-center w-fit"
+                className="text-center"
               >
                 {formatScoreDisplay(score)}
               </TableCell>
             ))}
-            <TableCell className="sticky right-0 z-10 font-semibold text-center">
+            <TableCell className="sticky right-0 z-10 font-[550] text-center">
               {player.scores.reduce((a: number, b) => a + getScoreValue(b), 0)}
             </TableCell>
           </TableRow>

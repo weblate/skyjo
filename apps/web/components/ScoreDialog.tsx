@@ -21,7 +21,7 @@ const ScoreDialog = ({ open, onOpenChange }: ScoreDialogProps) => {
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent>
+      <DialogContent className="w-[100vw] md:w-fit md:min-w-lg max-w-[90vw]">
         <DialogHeader>
           <DialogTitle className="text-center">{t("title")}</DialogTitle>
         </DialogHeader>

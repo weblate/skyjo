@@ -1051,6 +1051,7 @@
     },
     "ScoreTable": {
       "name": "Nom",
+      "rank": "Rang",
       "round": "Manche",
       "total": "Total"
     },
