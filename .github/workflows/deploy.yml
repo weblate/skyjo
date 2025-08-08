@@ -19,16 +19,10 @@ jobs:
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
 
-            # check if the directory exists. If not, clone the repository
-            if [ ! -d "skymo" ]; then
-              git clone https://github.com/maxentr/skymo.git
-            fi
-
             cd skymo
             git pull
 
-            COMPOSE_BAKE=true docker compose build \
-              --parallel api workers discord-bot web
+            COMPOSE_BAKE=true docker compose build --no-cache --parallel api workers discord-bot web
 
             pnpm i
             pnpm db:migrate
