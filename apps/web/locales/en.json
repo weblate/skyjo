@@ -1063,6 +1063,7 @@
     },
     "ScoreTable": {
       "name": "Name",
+      "rank": "Rank",
       "round": "Round",
       "total": "Total"
     },
