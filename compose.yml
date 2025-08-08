@@ -77,7 +77,6 @@ services:
       dockerfile: ./apps/discord-bot/Dockerfile
     depends_on:
       - redis
-      - postgres
     networks:
       - internal
       - external
@@ -154,23 +153,6 @@ services:
       - 3002:3001
     restart: always
 
-  postgres:
-    image: postgres:17.4-alpine3.21
-    restart: always
-    environment:
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - internal
-      - external
-    env_file:
-      - .env
-
 networks:
   internal:
   external:
@@ -179,4 +161,3 @@ volumes:
   redis-data:
   seq-data:
   uptime-kuma-data:
-  postgres-data:

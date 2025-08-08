@@ -1,7 +1,7 @@
 import { emailChangeTable, passwordResetTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import { lt } from "drizzle-orm"
-import { db } from "../postgres.js"
+import { db } from "@/postgres.js"
 
 export class PostgresCleanupTask {
   private static readonly BATCH_SIZE = 100
