@@ -79,7 +79,7 @@ const SignupForm = () => {
   })
 
   return (
-    <div className="bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border p-8 rounded-lg shadow-lg lg:shadow-none">
+    <div className="bg-container dark:bg-dark-container border-2 border-black dark:border-dark-border p-8 rounded-lg">
       <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6 text-center">
         {t("title")}
       </h2>
