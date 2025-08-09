@@ -17,6 +17,7 @@ import { decodeIdToken } from "arctic"
 import { and, eq, ne, or } from "drizzle-orm"
 import type { Context } from "hono"
 import { deleteCookie, getCookie } from "hono/cookie"
+import { HTTPException } from "hono/http-exception"
 import { db } from "@/db/index.js"
 import { setSessionTokenCookie } from "@/http/auth/lib/cookie.js"
 import {
@@ -75,12 +76,16 @@ export async function login(c: Context, data: LoginUser) {
     .limit(1)
 
   if (user.length === 0 || !user[0].password) {
-    throw new Error("login-invalid-credentials")
+    throw new HTTPException(401, {
+      message: "login-invalid-credentials",
+    })
   }
 
   const isValidPassword = await verifyPassword(user[0].password, password)
   if (!isValidPassword) {
-    throw new Error("login-invalid-credentials")
+    throw new HTTPException(401, {
+      message: "login-invalid-credentials",
+    })
   }
 
   const token = generateSessionToken()
@@ -152,13 +157,18 @@ export async function logout(c: Context) {
       error,
     })
 
-    throw new Error("logout-error")
+    throw new HTTPException(500, {
+      message: "logout-error",
+    })
   }
 }
 
 export async function getCurrentUser(c: Context) {
   const sessionIdFromCookie = getCookie(c, SESSION_COOKIE_NAME)
-  if (!sessionIdFromCookie) throw new Error("session-not-found")
+  if (!sessionIdFromCookie)
+    throw new HTTPException(401, {
+      message: "session-not-found",
+    })
 
   const session = await db
     .select()
@@ -168,7 +178,9 @@ export async function getCurrentUser(c: Context) {
 
   if (session.length === 0) {
     deleteCookie(c, SESSION_COOKIE_NAME)
-    throw new Error("get-user-error")
+    throw new HTTPException(401, {
+      message: "session-not-found",
+    })
   }
 
   const user = await db
@@ -198,7 +210,9 @@ export async function getCurrentUser(c: Context) {
       },
     )
     deleteCookie(c, SESSION_COOKIE_NAME)
-    throw new Error("get-user-error")
+    throw new HTTPException(404, {
+      message: "user-not-found",
+    })
   }
 
   return user[0]
@@ -207,7 +221,10 @@ export async function getCurrentUser(c: Context) {
 export async function completeOnboarding(userId: number, data: Onboarding) {
   const isAvailable = await checkUsernameAvailability(data.username, userId)
 
-  if (!isAvailable) throw new Error("username-taken")
+  if (!isAvailable)
+    throw new HTTPException(400, {
+      message: "username-taken",
+    })
 
   const [updatedUser] = await db
     .update(userTable)
@@ -319,7 +336,9 @@ export async function resetPassword(data: ResetPassword) {
     .limit(1)
 
   if (resetRecord.length === 0) {
-    throw new Error("reset-token-invalid")
+    throw new HTTPException(400, {
+      message: "reset-token-invalid",
+    })
   }
 
   const reset = resetRecord[0]
@@ -329,7 +348,9 @@ export async function resetPassword(data: ResetPassword) {
     await db
       .delete(passwordResetTable)
       .where(eq(passwordResetTable.id, reset.id))
-    throw new Error("reset-token-expired")
+    throw new HTTPException(400, {
+      message: "reset-token-expired",
+    })
   }
 
   const hashedPassword = await hashPassword(password)

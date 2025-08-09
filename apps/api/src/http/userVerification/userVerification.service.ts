@@ -7,6 +7,7 @@ import { Logger } from "@skymo/logger"
 import { randomInt } from "crypto"
 import dayjs from "dayjs"
 import { and, eq } from "drizzle-orm"
+import { HTTPException } from "hono/http-exception"
 import { db } from "@/db/index.js"
 import { mailerQueue } from "@/utils/mailer.js"
 
@@ -38,7 +39,9 @@ export async function sendVerifyPin(email: string) {
     existingVerification?.createdAt &&
     existingVerification.createdAt > fiveMinutesAgo
   if (existingVerification && isRecent) {
-    throw new Error("email-already-sent")
+    throw new HTTPException(400, {
+      message: "email-already-sent",
+    })
   }
 
   const locale = user.settings?.locale ?? "en"
@@ -92,7 +95,9 @@ export async function verifyPin(email: string, pin: string) {
     .limit(1)
 
   if (!result) {
-    throw new Error("invalid-pin")
+    throw new HTTPException(400, {
+      message: "invalid-pin",
+    })
   }
 
   const { users: user, user_verifications } = result
@@ -101,7 +106,9 @@ export async function verifyPin(email: string, pin: string) {
   if (user_verifications.expiresAt < new Date()) {
     await generateVerifyPin(user)
 
-    throw new Error("expired-pin")
+    throw new HTTPException(400, {
+      message: "expired-pin",
+    })
   }
 
   await db

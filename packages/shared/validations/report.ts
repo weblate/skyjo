@@ -12,7 +12,7 @@ export const reportReasons = [
 export const report = z.object({
   targetId: z.string(),
   reason: z.enum(reportReasons),
-  comment: z.string().max(500).optional(),
+  comment: z.string().max(500, "comment-max-characters").optional(),
 })
 
 export type Report = z.infer<typeof report>

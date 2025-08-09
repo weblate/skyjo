@@ -23,6 +23,7 @@ import type {
 } from "@skymo/shared/validations"
 import dayjs from "dayjs"
 import { and, avg, count, eq, ne, sql, sum } from "drizzle-orm"
+import { HTTPException } from "hono/http-exception"
 import { db } from "@/db/index.js"
 import { requestPasswordReset } from "@/http/auth/auth.service.js"
 import { hashPassword, verifyPassword } from "@/http/auth/lib/password.js"
@@ -108,7 +109,11 @@ export async function createUser({
     })
 
   const user = row?.[0]
-  if (!user) throw new Error("unexpected-error")
+  if (!user) {
+    throw new HTTPException(500, {
+      message: "unexpected-error",
+    })
+  }
 
   return user
 }
@@ -143,7 +148,10 @@ export async function createUsername(name: string) {
       .limit(1)
 
     if (existingUser.length === 0) break
-    if (i === 19) throw new Error("creation-failed")
+    if (i === 19)
+      throw new HTTPException(500, {
+        message: "username-creation-failed",
+      })
   }
 
   return username
@@ -358,7 +366,9 @@ export async function updateUsername(userId: number, data: UpdateUsername) {
     .limit(1)
 
   if (existingUser.length > 0) {
-    throw new Error("username-taken")
+    throw new HTTPException(400, {
+      message: "username-taken",
+    })
   }
 
   const [updatedUser] = await db
@@ -388,6 +398,18 @@ export async function updateEmail(user: UserDb, data: UpdateEmail) {
   const reversionToken = generateRandomToken()
   const hashedReversionToken = hashToken(reversionToken)
   const expiresAt = dayjs().add(7, "days").toDate()
+
+  const existingEmail = await db
+    .select({ id: userTable.id })
+    .from(userTable)
+    .where(eq(userTable.email, newEmail))
+    .limit(1)
+
+  if (existingEmail.length > 0) {
+    throw new HTTPException(400, {
+      message: "email-already-exists",
+    })
+  }
 
   await db.transaction(async (tx) => {
     await tx
@@ -453,14 +475,18 @@ export async function revertEmail(token: string) {
     .limit(1)
 
   if (!emailChange) {
-    throw new Error("invalid-reversion-token")
+    throw new HTTPException(400, {
+      message: "invalid-reversion-token",
+    })
   }
 
   if (emailChange.expiresAt < new Date()) {
     await db
       .delete(emailChangeTable)
       .where(eq(emailChangeTable.id, emailChange.id))
-    throw new Error("expired-reversion-token")
+    throw new HTTPException(400, {
+      message: "expired-reversion-token",
+    })
   }
 
   const [userData] = await db
@@ -509,13 +535,19 @@ export async function updatePassword(userId: number, data: UpdatePassword) {
     .where(eq(userTable.id, userId))
     .limit(1)
 
-  if (!user?.password) throw new Error("invalid-current-password")
+  if (!user?.password)
+    throw new HTTPException(400, {
+      message: "invalid-current-password",
+    })
 
   const isValidPassword = await verifyPassword(
     user.password,
     data.currentPassword,
   )
-  if (!isValidPassword) throw new Error("invalid-current-password")
+  if (!isValidPassword)
+    throw new HTTPException(400, {
+      message: "invalid-current-password",
+    })
 
   const hashedPassword = await hashPassword(data.newPassword)
 
@@ -572,7 +604,10 @@ export async function scheduleAccountDeletion(userId: number) {
     .where(eq(userTable.id, userId))
     .limit(1)
 
-  if (!userData) throw new Error("not-found")
+  if (!userData)
+    throw new HTTPException(404, {
+      message: "user-not-found",
+    })
 
   const [existingRequest] = await db
     .select()
@@ -581,7 +616,9 @@ export async function scheduleAccountDeletion(userId: number) {
     .limit(1)
 
   if (existingRequest) {
-    throw new Error("Account deletion is already scheduled")
+    throw new HTTPException(400, {
+      message: "account-deletion-already-scheduled",
+    })
   }
 
   const cancellationToken = generateRandomToken(64)
@@ -601,16 +638,24 @@ export async function scheduleAccountDeletion(userId: number) {
   )
 
   if (!job?.id) {
-    throw new Error("Failed to schedule account deletion")
+    throw new HTTPException(500, {
+      message: "account-deletion-schedule-failed",
+    })
   }
 
   // Store the deletion request in the database
-  await db.insert(accountDeletionTable).values({
-    userId: userData.id,
-    jobId: job.id,
-    token: hashedToken,
-    expiresAt: expiresAt,
-  })
+  try {
+    await db.insert(accountDeletionTable).values({
+      userId: userData.id,
+      jobId: job.id,
+      token: hashedToken,
+      expiresAt: expiresAt,
+    })
+  } catch (error) {
+    // Clean up the job if database insert fails
+    await accountDeletionQueue.remove(job.id)
+    throw error
+  }
 
   const cancellationUrl = `${process.env.FRONTEND_URL}/cancel-account-deletion/${cancellationToken}`
 
@@ -646,7 +691,9 @@ export async function cancelAccountDeletion(token: string) {
     .limit(1)
 
   if (!deletionRequest) {
-    throw new Error("invalid-cancellation-token")
+    throw new HTTPException(400, {
+      message: "invalid-cancellation-token",
+    })
   }
 
   if (deletionRequest.expiresAt < new Date()) {
@@ -654,7 +701,9 @@ export async function cancelAccountDeletion(token: string) {
     await db
       .delete(accountDeletionTable)
       .where(eq(accountDeletionTable.id, deletionRequest.id))
-    throw new Error("expired-cancellation-token")
+    throw new HTTPException(400, {
+      message: "expired-cancellation-token",
+    })
   }
 
   // Remove the scheduled job from the queue
@@ -706,7 +755,10 @@ export async function updateUserSettings(
     .where(eq(userTable.id, userId))
     .limit(1)
 
-  if (!user) throw new Error("user-not-found")
+  if (!user)
+    throw new HTTPException(404, {
+      message: "user-not-found",
+    })
 
   const currentSettings = (user.settings as UserSettings) || {}
   const newSettings = { ...currentSettings, ...data.settings }

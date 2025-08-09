@@ -5,6 +5,7 @@ type CErrorLevel = "debug" | "info" | "warn" | "error" | "critical"
 
 export interface CErrorOptions {
   code?: ThrownError
+  statusCode?: number
   level?: CErrorLevel
   shouldLog?: boolean
 
@@ -20,6 +21,7 @@ interface CErrorMeta {
 export class CError extends Error {
   code?: ThrownError
   level?: CErrorLevel = "error"
+  statusCode?: number = 400
   stackTrace?: string
   shouldLog?: boolean = true
   meta?: CErrorMeta
@@ -35,6 +37,7 @@ export class CError extends Error {
 
     const { meta, ...rest } = options
     if (rest.code) this.code = rest.code
+    if (rest.statusCode) this.statusCode = rest.statusCode
     if (rest.level) this.level = rest.level
     if (rest.shouldLog) this.shouldLog = rest.shouldLog
 

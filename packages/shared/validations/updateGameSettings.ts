@@ -4,8 +4,8 @@ import { z } from "zod"
 export const updateMaxPlayersSchema = z
   .number()
   .int()
-  .min(CoreConstants.DEFAULT_GAME_SETTINGS.MIN_PLAYERS)
-  .max(CoreConstants.DEFAULT_GAME_SETTINGS.MAX_PLAYERS)
+  .min(CoreConstants.DEFAULT_GAME_SETTINGS.MIN_PLAYERS, "min-players-invalid")
+  .max(CoreConstants.DEFAULT_GAME_SETTINGS.MAX_PLAYERS, "max-players-invalid")
 
 export type UpdateMaxPlayers = z.input<typeof updateMaxPlayersSchema>
 
@@ -16,23 +16,39 @@ export const updateGameSettingsSchema = z.object({
   cardPerRow: z
     .number()
     .int()
-    .min(1)
-    .max(CoreConstants.DEFAULT_GAME_SETTINGS.CARDS.PER_ROW)
+    .min(1, "card-per-row-min-invalid")
+    .max(
+      CoreConstants.DEFAULT_GAME_SETTINGS.CARDS.PER_ROW,
+      "card-per-row-max-invalid",
+    )
     .optional(),
   cardPerColumn: z
     .number()
     .int()
-    .min(1)
-    .max(CoreConstants.DEFAULT_GAME_SETTINGS.CARDS.PER_COLUMN)
+    .min(1, "card-per-column-min-invalid")
+    .max(
+      CoreConstants.DEFAULT_GAME_SETTINGS.CARDS.PER_COLUMN,
+      "card-per-column-max-invalid",
+    )
     .optional(),
-  scoreToEndGame: z.number().int().min(1).max(10000000).optional(),
+  scoreToEndGame: z
+    .number()
+    .int()
+    .min(1, "score-to-end-game-min-invalid")
+    .max(10000000, "score-to-end-game-max-invalid")
+    .optional(),
   firstPlayerMultiplierPenalty: z
     .number()
     .int()
-    .min(1)
-    .max(10000000)
+    .min(1, "first-player-multiplier-penalty-min-invalid")
+    .max(10000000, "first-player-multiplier-penalty-max-invalid")
     .optional(),
-  firstPlayerFlatPenalty: z.number().int().min(0).max(10000000).optional(),
+  firstPlayerFlatPenalty: z
+    .number()
+    .int()
+    .min(0, "first-player-flat-penalty-min-invalid")
+    .max(10000000, "first-player-flat-penalty-max-invalid")
+    .optional(),
   firstPlayerPenaltyType: z
     .nativeEnum(CoreConstants.FIRST_PLAYER_PENALTY_TYPE)
     .optional(),

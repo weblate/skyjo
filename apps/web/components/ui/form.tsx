@@ -1,5 +1,6 @@
 import * as LabelPrimitive from "@radix-ui/react-label"
 import { Slot } from "@radix-ui/react-slot"
+import { useTranslations } from "next-intl"
 import * as React from "react"
 import {
   Controller,
@@ -9,7 +10,6 @@ import {
   FormProvider,
   useFormContext,
 } from "react-hook-form"
-
 import { Label } from "@/components/ui/label"
 import { cn } from "@/lib/utils"
 
@@ -167,10 +167,18 @@ const FormMessage = ({
   ref?: React.RefObject<HTMLParagraphElement>
 }) => {
   const { error, formMessageId } = useFormField()
+  const t = useTranslations("errors")
   const body = error ? String(error?.message) : children
 
   if (!body) {
     return null
+  }
+
+  // biome-ignore lint/suspicious/noExplicitAny: body can be anything
+  let errorMessage = t(body as any)
+
+  if (`errors.${body}` === errorMessage) {
+    errorMessage = `Untranslated error: ${body}`
   }
 
   return (
@@ -183,7 +191,7 @@ const FormMessage = ({
       )}
       {...props}
     >
-      {body}
+      {errorMessage}
     </p>
   )
 }

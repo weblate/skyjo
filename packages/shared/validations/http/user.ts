@@ -25,14 +25,11 @@ export type Onboarding = z.infer<typeof onboardingSchema>
 
 export const passwordSchema = z
   .string()
-  .min(10, "Password must be at least 10 characters")
-  .regex(passwordLowercaseRegex, "Must contain at least one lowercase letter")
-  .regex(passwordUppercaseRegex, "Must contain at least one uppercase letter")
-  .regex(passwordNumberRegex, "Must contain at least one number")
-  .regex(
-    passwordSpecialCharRegex,
-    "Must contain at least one special character",
-  )
+  .min(10, "password-min-characters")
+  .regex(passwordLowercaseRegex, "password-lowercase-required")
+  .regex(passwordUppercaseRegex, "password-uppercase-required")
+  .regex(passwordNumberRegex, "password-number-required")
+  .regex(passwordSpecialCharRegex, "password-special-char-required")
 export type Password = z.infer<typeof passwordSchema>
 
 export const onboardingWithPasswordSchema = z.object({
@@ -57,17 +54,14 @@ export type UpdateName = z.infer<typeof updateNameSchema>
 export const updateUsernameSchema = z.object({
   username: z
     .string()
-    .min(3, "Name must be at least 3 characters")
-    .max(20, "Name must be at most 20 characters")
-    .regex(
-      /^\w+$/,
-      "Username can only contain letters, numbers, and underscores",
-    ),
+    .min(3, "name-min-characters")
+    .max(20, "name-max-characters")
+    .regex(/^\w+$/, "username-invalid-format"),
 })
 export type UpdateUsername = z.infer<typeof updateUsernameSchema>
 
 export const updateEmailSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("email-invalid"),
 })
 export type UpdateEmail = z.infer<typeof updateEmailSchema>
 
@@ -78,20 +72,20 @@ export type UpdateAvatar = z.infer<typeof updateAvatarSchema>
 
 export const updatePasswordSchema = z
   .object({
-    currentPassword: z.string().min(1, "Current password is required"),
+    currentPassword: z.string().min(1, "current-password-required"),
     newPassword: passwordSchema,
     confirmPassword: passwordSchema,
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "passwords-dont-match",
     path: ["confirmPassword"],
   })
 export type UpdatePassword = z.infer<typeof updatePasswordSchema>
 
 export const deleteAccountSchema = z.object({
-  password: z.string().min(1, "Password is required to delete account"),
+  password: z.string().min(1, "password-required"),
   confirmation: z.literal("DELETE", {
-    errorMap: () => ({ message: "Please type DELETE to confirm" }),
+    errorMap: () => ({ message: "delete-account-confirmation-required" }),
   }),
 })
 export type DeleteAccount = z.infer<typeof deleteAccountSchema>

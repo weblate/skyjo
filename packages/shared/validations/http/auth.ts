@@ -4,7 +4,7 @@ import { locales } from "../../constants/locales.js"
 import { passwordSchema, userSettingsSchema } from "./user.js"
 
 export const signupSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("email-invalid"),
   locale: z.enum(locales).default("en"),
   name: z
     .string()
@@ -24,18 +24,18 @@ export const loginSchema = z.object({
 export type LoginUser = z.infer<typeof loginSchema>
 
 export const forgotPasswordSchema = z.object({
-  email: z.string().email("Invalid email address"),
+  email: z.string().email("email-invalid"),
 })
 export type ForgotPassword = z.infer<typeof forgotPasswordSchema>
 
 export const resetPasswordSchema = z
   .object({
-    token: z.string().min(1, "Token is required"),
+    token: z.string().min(1, "token-required"),
     password: passwordSchema,
     confirmPassword: passwordSchema,
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "Passwords don't match",
+    message: "passwords-dont-match",
     path: ["confirmPassword"],
   })
 export type ResetPassword = z.infer<typeof resetPasswordSchema>

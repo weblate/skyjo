@@ -19,7 +19,6 @@ import { useAuth } from "@/hooks/useAuth"
 
 export function useSettingsApi() {
   const t = useTranslations("pages.Settings")
-  const tErrors = useTranslations("errors")
   const { refetch, logout } = useAuth()
   const [loading, setLoading] = useState<string | null>(null)
 
@@ -39,14 +38,13 @@ export function useSettingsApi() {
       )
 
       if (!response.ok) {
-        const error = await jsonError<UpdateNameError>(response)
-        return tErrors(error)
+        return await jsonError<UpdateNameError>(response)
       }
 
       await refetch()
       toast.success(t("messages.save-success"))
     } catch {
-      return tErrors("update-name-error")
+      return "update-name-error"
     } finally {
       setLoading(null)
     }
@@ -68,14 +66,13 @@ export function useSettingsApi() {
       )
 
       if (!response.ok) {
-        const error = await jsonError<UpdateUsernameError>(response)
-        return tErrors(error)
+        return await jsonError<UpdateUsernameError>(response)
       }
 
       await refetch()
       toast.success(t("messages.save-success"))
     } catch {
-      return tErrors("update-username-error")
+      return "update-username-error"
     } finally {
       setLoading(null)
     }
@@ -97,14 +94,13 @@ export function useSettingsApi() {
       )
 
       if (!response.ok) {
-        const error = await jsonError<UpdateEmailError>(response)
-        return tErrors(error)
+        return await jsonError<UpdateEmailError>(response)
       }
 
       await refetch()
       toast.success(t("messages.save-success"))
     } catch {
-      return tErrors("update-email-error")
+      return "update-email-error"
     } finally {
       setLoading(null)
     }
@@ -126,13 +122,12 @@ export function useSettingsApi() {
       )
 
       if (!response.ok) {
-        const error = await jsonError<UpdatePasswordError>(response)
-        return tErrors(error)
+        return await jsonError<UpdatePasswordError>(response)
       }
 
       toast.success(t("messages.save-success"))
     } catch {
-      return tErrors("update-password-error")
+      return "update-password-error"
     } finally {
       setLoading(null)
     }
@@ -150,14 +145,13 @@ export function useSettingsApi() {
       )
 
       if (!response.ok) {
-        const error = await jsonError<DeleteAccountError>(response)
-        return tErrors(error)
+        return await jsonError<DeleteAccountError>(response)
       }
 
       toast.success(t("messages.account-deletion-scheduled"))
       logout()
     } catch {
-      return tErrors("delete-account-error")
+      return "delete-account-error"
     } finally {
       setLoading(null)
     }

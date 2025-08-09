@@ -1,5 +1,4 @@
 import { zValidator } from "@hono/zod-validator"
-import { Logger } from "@skymo/logger"
 import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import {
   forgotPasswordSchema,
@@ -11,6 +10,7 @@ import {
 } from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { getCookie } from "hono/cookie"
+import { HTTPException } from "hono/http-exception"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 import {
   checkUsernameAvailability,
@@ -72,14 +72,9 @@ const authRouter = new Hono<AuthContextVariables>()
     createRateLimiterMiddleware(signupRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
-      try {
-        await signup(c, data)
 
-        return c.json({}, 201)
-      } catch (error) {
-        Logger.error("Error signing up", { error })
-        return c.json({ error: "signup-error" }, 500)
-      }
+      await signup(c, data)
+      return c.json({}, 201)
     },
   )
   .post(
@@ -88,18 +83,8 @@ const authRouter = new Hono<AuthContextVariables>()
     createRateLimiterMiddleware(loginRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
-      try {
-        await login(c, data)
-
-        return c.json({}, 200)
-      } catch (error) {
-        if (error instanceof Error) {
-          return c.json({ error: error.message }, 401)
-        }
-
-        Logger.error("Error logging in", { error })
-        return c.json({ error: "login-error" }, 500)
-      }
+      await login(c, data)
+      return c.json({}, 200)
     },
   )
   .post(
@@ -109,56 +94,40 @@ const authRouter = new Hono<AuthContextVariables>()
       const sessionToken = getCookie(c, SESSION_COOKIE_NAME)
 
       if (!sessionToken) {
-        return c.json({ error: "session-token-missing" }, 400)
+        throw new HTTPException(400, {
+          message: "session-token-missing",
+        })
       }
 
-      try {
-        const { session, user } = await validateSessionToken(sessionToken)
+      const { session, user } = await validateSessionToken(sessionToken)
 
-        if (!session || !user) {
-          await logout(c)
-          return c.json({ error: "session-invalid" }, 401)
-        }
+      if (!session || !user) {
+        await logout(c)
+        throw new HTTPException(401, {
+          message: "session-invalid",
+        })
+      }
 
-        return c.json(
-          {
-            user: {
-              emailVerified: user.emailVerified,
-              name: user.name,
-              username: user.username,
-              avatar: user.avatar,
-              hasOAuth: !!(user.googleId ?? user.facebookId),
-              email: user.email,
-              onboardingCompleted: user.onboardingCompleted,
-              role: user.role,
-            },
+      return c.json(
+        {
+          user: {
+            emailVerified: user.emailVerified,
+            name: user.name,
+            username: user.username,
+            avatar: user.avatar,
+            hasOAuth: !!(user.googleId ?? user.facebookId),
+            email: user.email,
+            onboardingCompleted: user.onboardingCompleted,
+            role: user.role,
           },
-          200,
-        )
-      } catch (error) {
-        Logger.error("Error verifying session", { error })
-        return c.json({ error: "verify-session-error" }, 500)
-      }
+        },
+        200,
+      )
     },
   )
   .post("/logout", authMiddleware(), async (c) => {
-    try {
-      await logout(c)
-
-      return c.json({}, 200)
-    } catch (error) {
-      if (error instanceof Error) {
-        return c.json({ error: error.message }, 500)
-      }
-
-      Logger.error("Error logging out", { error })
-      return c.json(
-        {
-          error: "logout-error",
-        },
-        500,
-      )
-    }
+    await logout(c)
+    return c.json({}, 200)
   })
   .post(
     "/onboard",
@@ -168,18 +137,8 @@ const authRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
-      try {
-        const updatedUser = await completeOnboarding(user.id, data)
-
-        return c.json({ user: updatedUser }, 200)
-      } catch (error) {
-        if (error instanceof Error) {
-          return c.json({ error: error.message }, 400)
-        }
-
-        Logger.error("Error checking username availability", { error })
-        return c.json({ error: "onboarding-error" }, 500)
-      }
+      const updatedUser = await completeOnboarding(user.id, data)
+      return c.json({ user: updatedUser }, 200)
     },
   )
   .post(
@@ -190,17 +149,8 @@ const authRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
-      try {
-        const available = await checkUsernameAvailability(
-          data.username,
-          user?.id,
-        )
-
-        return c.json({ available }, 200)
-      } catch (error) {
-        Logger.error("Error checking username availability", { error })
-        return c.json({ error: "check-username-error" }, 500)
-      }
+      const available = await checkUsernameAvailability(data.username, user?.id)
+      return c.json({ available }, 200)
     },
   )
   .post(
@@ -209,14 +159,8 @@ const authRouter = new Hono<AuthContextVariables>()
     createRateLimiterMiddleware(forgotPasswordRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
-      try {
-        await requestPasswordReset(data)
-
-        return c.json({}, 200)
-      } catch (error) {
-        Logger.error("Error requesting password reset", { error })
-        return c.json({ error: "forgot-password-error" }, 500)
-      }
+      await requestPasswordReset(data)
+      return c.json({}, 200)
     },
   )
   .post(
@@ -225,18 +169,8 @@ const authRouter = new Hono<AuthContextVariables>()
     createRateLimiterMiddleware(resetPasswordRateLimiter),
     async (c) => {
       const data = c.req.valid("json")
-      try {
-        await resetPassword(data)
-
-        return c.json({}, 200)
-      } catch (error) {
-        if (error instanceof Error) {
-          return c.json({ error: error.message }, 400)
-        }
-
-        Logger.error("Error resetting password", { error })
-        return c.json({ error: "reset-password-error" }, 500)
-      }
+      await resetPassword(data)
+      return c.json({}, 200)
     },
   )
 

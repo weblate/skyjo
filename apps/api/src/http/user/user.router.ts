@@ -1,5 +1,4 @@
 import { zValidator } from "@hono/zod-validator"
-import { Logger } from "@skymo/logger"
 import {
   updateAvatarSchema,
   updateEmailSchema,
@@ -9,6 +8,7 @@ import {
   updateUserSettingsSchema,
 } from "@skymo/shared/validations"
 import { Hono } from "hono"
+import { HTTPException } from "hono/http-exception"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 import {
   type AuthContextVariables,
@@ -89,33 +89,30 @@ export const userRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const username = c.req.param("username")
 
-      try {
-        const user = await getUserByUsername(username)
-        if (!user) {
-          return c.json({ error: "user-not-found" }, 404)
-        }
-
-        const gamesPromise = getUserGames(username, {
-          limit: 10,
-          offset: 0,
+      const user = await getUserByUsername(username)
+      if (!user) {
+        throw new HTTPException(404, {
+          message: "user-not-found",
         })
-
-        const statsPromise = getUserStats(username)
-
-        const [games, stats] = await Promise.all([gamesPromise, statsPromise])
-
-        return c.json(
-          {
-            user,
-            games,
-            stats,
-          },
-          200,
-        )
-      } catch (error) {
-        Logger.error("Error getting user games:", { error })
-        return c.json({ error: "get-user-error" }, 500)
       }
+
+      const gamesPromise = getUserGames(username, {
+        limit: 10,
+        offset: 0,
+      })
+
+      const statsPromise = getUserStats(username)
+
+      const [games, stats] = await Promise.all([gamesPromise, statsPromise])
+
+      return c.json(
+        {
+          user,
+          games,
+          stats,
+        },
+        200,
+      )
     },
   )
   .get(
@@ -124,14 +121,8 @@ export const userRouter = new Hono<AuthContextVariables>()
     createRateLimiterMiddleware(getUserSettingsRateLimiter),
     async (c) => {
       const user = c.get("user")
-
-      try {
-        const settings = await getUserSettings(user.id)
-        return c.json({ settings }, 200)
-      } catch (error) {
-        Logger.error("Error getting user settings:", { error })
-        return c.json({ error: "get-user-settings-error" }, 500)
-      }
+      const settings = await getUserSettings(user.id)
+      return c.json({ settings }, 200)
     },
   )
   .put(
@@ -142,18 +133,8 @@ export const userRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
-
-      try {
-        const settings = await updateUserSettings(user.id, data)
-        return c.json({ settings }, 200)
-      } catch (error) {
-        if (error instanceof Error) {
-          return c.json({ error: error.message }, 400)
-        }
-
-        Logger.error("Error updating user settings:", { error })
-        return c.json({ error: "update-user-settings-error" }, 500)
-      }
+      const settings = await updateUserSettings(user.id, data)
+      return c.json({ settings }, 200)
     },
   )
   .patch(
@@ -164,18 +145,10 @@ export const userRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
-
-      try {
-        await updateName(user.id, data)
-
-        return c.json({}, 200)
-      } catch (error) {
-        Logger.error("Failed to update name", { error })
-        return c.json({ error: "update-name-error" }, 500)
-      }
+      await updateName(user.id, data)
+      return c.json({}, 200)
     },
   )
-
   .patch(
     "/me/username",
     authMiddleware(),
@@ -184,18 +157,8 @@ export const userRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
-
-      try {
-        await updateUsername(user.id, data)
-        return c.json({}, 200)
-      } catch (error) {
-        if (error instanceof Error) {
-          return c.json({ error: error.message }, 400)
-        }
-
-        Logger.error("Failed to update username", { error })
-        return c.json({ error: "update-username-error" }, 500)
-      }
+      await updateUsername(user.id, data)
+      return c.json({}, 200)
     },
   )
   .patch(
@@ -206,37 +169,17 @@ export const userRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
-
-      try {
-        await updateEmail(user, data)
-        return c.json({}, 200)
-      } catch (error) {
-        if (error instanceof Error) {
-          return c.json({ error: error.message }, 400)
-        }
-
-        Logger.error("Failed to update email", { error })
-        return c.json({ error: "update-email-error" }, 500)
-      }
+      await updateEmail(user, data)
+      return c.json({}, 200)
     },
   )
   .get(
     "/me/revert-email/:token",
     createRateLimiterMiddleware(revertEmailRateLimiter),
     async (c) => {
-      try {
-        const token = c.req.param("token")
-        await revertEmail(token)
-
-        return c.json({}, 200)
-      } catch (error) {
-        if (error instanceof Error) {
-          return c.json({ error: error.message }, 400)
-        }
-
-        Logger.error("Failed to revert email", { error })
-        return c.json({ error: "revert-email-error" }, 500)
-      }
+      const token = c.req.param("token")
+      await revertEmail(token)
+      return c.json({}, 200)
     },
   )
   .patch(
@@ -247,18 +190,8 @@ export const userRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
-
-      try {
-        await updatePassword(user.id, data)
-        return c.json({}, 200)
-      } catch (error) {
-        if (error instanceof Error) {
-          return c.json({ error: error.message }, 400)
-        }
-
-        Logger.error("Failed to update password", { error })
-        return c.json({ error: "update-password-error" }, 500)
-      }
+      await updatePassword(user.id, data)
+      return c.json({}, 200)
     },
   )
   .patch(
@@ -269,37 +202,21 @@ export const userRouter = new Hono<AuthContextVariables>()
     async (c) => {
       const data = c.req.valid("json")
       const user = c.get("user")
-
-      try {
-        await updateAvatar(user.id, data)
-        return c.json({}, 200)
-      } catch (error) {
-        Logger.error("Failed to update avatar", { error })
-        return c.json({ error: "unexpected-error" }, 500)
-      }
+      await updateAvatar(user.id, data)
+      return c.json({}, 200)
     },
   )
   .post("/me/delete", authMiddleware(), async (c) => {
     const user = c.get("user")
-    try {
-      await scheduleAccountDeletion(user.id)
-      return c.json({}, 200)
-    } catch (error) {
-      Logger.error("Failed to schedule account deletion", { error })
-      return c.json({ error: "delete-account-error" }, 500)
-    }
+    await scheduleAccountDeletion(user.id)
+    return c.json({}, 200)
   })
   .post(
     "/me/cancel-deletion/:token",
     createRateLimiterMiddleware(cancelAccountDeletionRateLimiter),
     async (c) => {
-      try {
-        const token = c.req.param("token")
-        await cancelAccountDeletion(token)
-        return c.json({}, 200)
-      } catch (error) {
-        Logger.error("Failed to cancel account deletion", { error })
-        return c.json({ error: "cancel-account-deletion-error" }, 500)
-      }
+      const token = c.req.param("token")
+      await cancelAccountDeletion(token)
+      return c.json({}, 200)
     },
   )
