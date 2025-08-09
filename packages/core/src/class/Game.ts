@@ -328,6 +328,11 @@ export class Game implements GameInterface {
     row: number
     wasAfk?: boolean
   }) {
+    console.log(
+      this.isPlaying(),
+      this.isRoundRevealCards(),
+      player.hasRevealedCardCount(this.settings.initialTurnedCount),
+    )
     if (
       !this.isPlaying() ||
       !this.isRoundRevealCards() ||
@@ -340,6 +345,8 @@ export class Game implements GameInterface {
     }
 
     player.turnCard(column, row)
+
+    this.checkCardsToDiscard(player)
 
     if (player.hasRevealedCardCount(this.settings.initialTurnedCount)) {
       player.turnStartTime = null

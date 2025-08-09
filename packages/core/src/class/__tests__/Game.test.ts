@@ -588,6 +588,105 @@ describe("Game", () => {
       startRoundSpy.mockRestore()
       haveAllPlayersRevealedSpy.mockRestore()
     })
+
+    it("should reveal a 5 and then discard it because it's a column of 3 identical cards", async () => {
+      game.settings.initialTurnedCount = 3
+      await game.start()
+
+      player.cards = [
+        [new Card(5, false), new Card(5, true), new Card(5, true)],
+        [new Card(1, false), new Card(2, false), new Card(3, false)],
+        [new Card(4, false), new Card(6, false), new Card(7, false)],
+        [new Card(8, false), new Card(9, false), new Card(10, false)],
+      ]
+
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 0,
+      })
+
+      // 0 because the 3 cards are discarded
+      expect(player.cards.flat().filter((card) => card.isVisible).length).toBe(
+        0,
+      )
+
+      const nbColumns = player.cards.length
+      expect(nbColumns).toBe(3)
+
+      const nbRows = player.cards[0].length
+      expect(nbRows).toBe(3)
+    })
+
+    it("should discard matching cards when revealing card completes a matching set", async () => {
+      game.status = Constants.GAME_STATUS.PLAYING
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+      game.settings.initialTurnedCount = 2
+      game.settings.removeIdenticalColumn = true
+      game.settings.removeIdenticalRow = false
+
+      // Set up player cards where revealing one card will complete a matching column
+      // Create cards explicitly to ensure we can mutate them
+      const card1 = new Card(5, false) // Hidden card that will be revealed
+      const card2 = new Card(5, false) // Hidden card
+      const card3 = new Card(5, true) // Already visible card (only 1 visible, so can reveal more)
+
+      player.cards = [
+        [card1, card2, card3], // Column 0: two hidden 5s, one visible 5
+        [new Card(1, false), new Card(2, false), new Card(3, false)], // Column 1: different values
+        [new Card(4, false), new Card(6, false), new Card(7, false)], // Column 2: different values
+        [new Card(8, false), new Card(9, false), new Card(10, false)], // Column 3: different values
+      ]
+
+      // Verify initial state - only 1 card is visible (less than initialTurnedCount=2)
+      const initialVisibleCount = player.cards
+        .flat()
+        .filter((card) => card.isVisible).length
+      expect(initialVisibleCount).toBe(1)
+      expect(player.cards[0][0].isVisible).toBe(false)
+
+      // Mock the player's checkColumnsAndDiscard method to return the matching cards when all are visible
+      const checkColumnsSpy = vi
+        .spyOn(player, "checkColumnsAndDiscard")
+        .mockImplementation(() => {
+          // After revealing the card, check if all cards in column 0 are visible and matching
+          const allColumn0Visible = player.cards[0].every(
+            (card) => card.isVisible,
+          )
+          const allColumn0Same = player.cards[0].every(
+            (card) => card.value === 5,
+          )
+
+          if (allColumn0Visible && allColumn0Same) {
+            return [card1, card2, card3] // Return the actual matching cards to be discarded
+          }
+          return []
+        })
+
+      // Track discarded cards
+      const discardedCards: number[] = []
+      const discardCardSpy = vi
+        .spyOn(game, "discardCard")
+        .mockImplementation((value: number) => {
+          discardedCards.push(value)
+        })
+
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 0, // Reveal the hidden card in column 0 - this is the second revealed card
+      })
+
+      // Verify the card was revealed
+      expect(player.cards[0][0].isVisible).toBe(true)
+
+      // Verify that checkColumnsAndDiscard was called
+      expect(checkColumnsSpy).toHaveBeenCalled()
+
+      // Clean up spies
+      checkColumnsSpy.mockRestore()
+      discardCardSpy.mockRestore()
+    })
   })
 
   describe("drawCard", () => {
