@@ -350,7 +350,7 @@ describe("PlayerService", () => {
       expect(game.players.length).toBe(1)
     })
 
-    it("should remove the player if the game is finished", async () => {
+    it("should not remove the player if the game is finished", async () => {
       const opponent = new Player(
         { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
         "socket456",
@@ -391,7 +391,7 @@ describe("PlayerService", () => {
 
       expect(game.isFinished()).toBeTruthy()
       expect(game.isRoundOver()).toBeTruthy()
-      expect(game.players.length).toBe(1)
+      expect(game.players.length).toBe(2)
     })
 
     it("should remove the player and the game if they are no more players", async () => {

@@ -1117,6 +1117,107 @@ describe("Game", () => {
     })
   })
 
+  describe("setPlayerToLeave", () => {
+    it("should trigger replay when last non-voting player leaves finished game", async () => {
+      // Setup: Create a finished game with 3 players
+      const player3 = new Player(
+        { name: "player3", avatar: Constants.AVATARS.DOG },
+        "socket3",
+      )
+      game.addPlayer(opponent)
+      game.addPlayer(player3)
+      game.status = Constants.GAME_STATUS.FINISHED
+
+      // Mock the startNewGame method to track if it's called
+      const startNewGameSpy = vi
+        .spyOn(game as any, "startNewGame")
+        .mockImplementation(() => Promise.resolve())
+
+      // Player 1 and 2 want to replay, player 3 doesn't
+      player.wantsReplay = true
+      opponent.wantsReplay = true
+      player3.wantsReplay = false
+
+      // When player 3 leaves, the game should start new game
+      await game.setPlayerToLeave(player3)
+
+      // Verify player 3 is marked as LEAVE (not DISCONNECTED since game is finished)
+      expect(player3.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+
+      // Verify startNewGame was called
+      expect(startNewGameSpy).toHaveBeenCalled()
+
+      // Restore the mock
+      startNewGameSpy.mockRestore()
+    })
+
+    it("should not trigger replay when not enough remaining players want to replay", async () => {
+      // Setup: Create a finished game with 3 players
+      const player3 = new Player(
+        { name: "player3", avatar: Constants.AVATARS.DOG },
+        "socket3",
+      )
+      game.addPlayer(opponent)
+      game.addPlayer(player3)
+      game.status = Constants.GAME_STATUS.FINISHED
+
+      // Mock the startNewGame method
+      const startNewGameSpy = vi
+        .spyOn(game as any, "startNewGame")
+        .mockImplementation(() => Promise.resolve())
+
+      // Only player 1 wants to replay, opponents don't
+      player.wantsReplay = true
+      opponent.wantsReplay = false
+      player3.wantsReplay = false
+
+      // When player 3 leaves, the game should NOT start new game
+      // because not all remaining players want to replay (opponent doesn't want to)
+      await game.setPlayerToLeave(player3)
+
+      // Verify player 3 is marked as LEAVE
+      expect(player3.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+
+      // Verify startNewGame was NOT called
+      expect(startNewGameSpy).not.toHaveBeenCalled()
+
+      // Restore the mock
+      startNewGameSpy.mockRestore()
+    })
+
+    it("should mark player as LEAVE when game is playing", async () => {
+      // Setup: Game is playing
+      game.addPlayer(opponent)
+      game.status = Constants.GAME_STATUS.PLAYING
+
+      // When player leaves during game
+      await game.setPlayerToLeave(opponent)
+
+      // Verify player is marked as LEAVE (not DISCONNECTED)
+      expect(opponent.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+    })
+
+    it("should disconnect player when game is in lobby", async () => {
+      // Setup: Game is in lobby
+      game.addPlayer(opponent)
+      game.status = Constants.GAME_STATUS.LOBBY
+
+      // Mock disconnectPlayer
+      const disconnectSpy = vi
+        .spyOn(game, "disconnectPlayer")
+        .mockImplementation(() => Promise.resolve())
+
+      // When player leaves from lobby
+      await game.setPlayerToLeave(opponent)
+
+      // Verify disconnectPlayer was called
+      expect(disconnectSpy).toHaveBeenCalledWith(opponent)
+
+      // Restore the mock
+      disconnectSpy.mockRestore()
+    })
+  })
+
   describe("resetRound", () => {
     it("should reset the round of the game", () => {
       game.roundNumber = 10

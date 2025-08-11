@@ -27,33 +27,44 @@ const ResultsPage = () => {
   const t = useTranslations("pages.ResultsPage")
   const [visibleRows, setVisibleRows] = useState<PlayerToJson[]>([])
 
-  const sortedConnectedPlayers = game.players
+  // Players who are connected
+  const connectedPlayers = game.players.filter(
+    (player) =>
+      player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED,
+  )
+
+  // Players who are not disconnected (connected, leave, lost)
+  const sortedNotDisconnectedPlayers = game.players
     .filter(
       (player) =>
-        player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED,
+        player.connectionStatus !==
+        CoreConstants.CONNECTION_STATUS.DISCONNECTED,
     )
     .sort((a, b) => b.score - a.score)
 
+  // Players who are disconnected
   const sortedDisconnectedPlayers = game.players
     .filter(
       (player) =>
-        player.connectionStatus !== CoreConstants.CONNECTION_STATUS.CONNECTED,
+        player.connectionStatus ===
+        CoreConstants.CONNECTION_STATUS.DISCONNECTED,
     )
     .sort((a, b) => b.score - a.score)
 
-  const allRowsVisible = visibleRows.length >= sortedConnectedPlayers.length
+  const allRowsVisible =
+    visibleRows.length >= sortedNotDisconnectedPlayers.length
 
-  const hasMoreThanOneConnectedPlayer = sortedConnectedPlayers.length > 1
+  const hasMoreThanOneConnectedPlayer = connectedPlayers.length > 1
 
   useEffect(() => {
     let interval: NodeJS.Timeout
-    if (visibleRows.length < sortedConnectedPlayers.length) {
-      const nextPlayer = sortedConnectedPlayers[visibleRows.length]
+    if (visibleRows.length < sortedNotDisconnectedPlayers.length) {
+      const nextPlayer = sortedNotDisconnectedPlayers[visibleRows.length]
 
       interval = setInterval(() => {
         if (nextPlayer) setVisibleRows((prev) => [nextPlayer, ...prev])
       }, 2000)
-    } else if (visibleRows.length === sortedConnectedPlayers.length) {
+    } else if (visibleRows.length === sortedNotDisconnectedPlayers.length) {
       interval = setInterval(() => {
         setVisibleRows((prev) => [...prev, ...sortedDisconnectedPlayers])
       }, 1000)
@@ -106,8 +117,8 @@ const ResultsPage = () => {
             <TableBody>
               {visibleRows.map((player, index) => {
                 const isConnected =
-                  player.connectionStatus ===
-                  CoreConstants.CONNECTION_STATUS.CONNECTED
+                  player.connectionStatus !==
+                  CoreConstants.CONNECTION_STATUS.DISCONNECTED
 
                 return (
                   <MotionTableRow
@@ -176,7 +187,7 @@ const ResultsPage = () => {
                     {t("player-want-to-replay")}
                   </p>
                   <div className="flex flex-row gap-1">
-                    {sortedConnectedPlayers.map((player) =>
+                    {connectedPlayers.map((player) =>
                       player.wantsReplay ? (
                         <CheckCircle2Icon
                           key={player.id}

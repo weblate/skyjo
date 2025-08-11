@@ -166,10 +166,14 @@ export class Game implements GameInterface {
   }
 
   async setPlayerToLeave(player: Player) {
-    if (!this.isPlaying()) {
+    if (!this.isPlaying() && !this.isFinished()) {
       await this.disconnectPlayer(player)
     } else {
       player.connectionStatus = Constants.CONNECTION_STATUS.LEAVE
+
+      if (this.isFinished() && this.shouldStartNewGame()) {
+        await this.startNewGame()
+      }
     }
   }
 
@@ -755,7 +759,10 @@ export class Game implements GameInterface {
   }
 
   private removeDisconnectedPlayers() {
-    this.players = this.getConnectedPlayers()
+    this.players = this.players.filter(
+      (player) =>
+        player.connectionStatus === Constants.CONNECTION_STATUS.CONNECTED,
+    )
   }
 
   private checkFirstPlayerPenalty() {
@@ -917,7 +924,15 @@ export class Game implements GameInterface {
   }
 
   private shouldStartNewGame() {
-    return this.getConnectedPlayers().every((player) => player.wantsReplay)
+    const activePlayers = this.players.filter(
+      (player) =>
+        player.connectionStatus === Constants.CONNECTION_STATUS.CONNECTED,
+    )
+
+    return (
+      activePlayers.length > 0 &&
+      activePlayers.every((player) => player.wantsReplay)
+    )
   }
 
   private async startNewGame() {
