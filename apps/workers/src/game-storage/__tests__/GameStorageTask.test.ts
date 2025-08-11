@@ -1,12 +1,13 @@
 import { Constants } from "@skymo/core"
+import type { GameStorageJobData } from "@skymo/worker-types"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { GameStorageTask } from "../GameStorageTask.js"
 
 // Mock the database and logger
-vi.mock("@skymo/database/client", () => ({
-  createDatabaseClient: vi.fn().mockReturnValue({
+vi.mock("@/postgres.js", () => ({
+  db: {
     transaction: vi.fn(),
-  }),
+  },
 }))
 
 vi.mock("@skymo/logger", () => ({

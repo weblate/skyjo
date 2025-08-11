@@ -1,5 +1,10 @@
-import { drizzle } from "drizzle-orm/neon-http"
+import { drizzle } from "drizzle-orm/node-postgres"
+import { Pool } from "pg"
 
 export function createDatabaseClient(connectionString: string) {
-  return drizzle(connectionString)
+  const pool = new Pool({
+    connectionString,
+  })
+
+  return drizzle({ client: pool })
 }
