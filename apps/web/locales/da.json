@@ -512,8 +512,7 @@
       "recent-activity": {
         "no-activity": "Ingen nylig aktivitet at vise.",
         "game-code": "Spil #{code}",
-        "rank": "Rang #{rank}",
-        "winner": "Vinder"
+        "rank": "Rang #{rank}"
       },
       "search": {
         "placeholder": "Søg brugernavn"
@@ -894,11 +893,7 @@
     },
     "ReportDialog": {
       "title": "Anmeld {name}",
-      "select-message": "Vælg den meddelelse, der skal rapporteres",
       "description": "Anmeld navnet eller en besked fra {name}, hvis det virker upassende.",
-      "report-message": "Rapportér en besked",
-      "select-message-placeholder": "Vælg en besked",
-      "no-messages": "Ingen beskeder fundet fra denne bruger",
       "cancel": "Annuller",
       "submit": "Rapportér",
       "toast": {
@@ -907,7 +902,6 @@
           "description": "Tak for din rapport, du har bidraget til at forbedre spillets kvalitet."
         }
       },
-      "report-name": "Anmeld spillerens navn",
       "comment": "Yderligere kontekst (valgfrit)",
       "comment-placeholder": "Giv yderligere kontekst til denne rapport..."
     },

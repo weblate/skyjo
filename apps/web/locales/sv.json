@@ -512,8 +512,7 @@
       "recent-activity": {
         "no-activity": "Ingen ny aktivitet att visa.",
         "game-code": "Spel #{code}",
-        "rank": "Rankning #{rank}",
-        "winner": "Vinnare"
+        "rank": "Rankning #{rank}"
       },
       "search": {
         "placeholder": "Sök användarnamn"
@@ -1166,10 +1165,6 @@
     "ReportDialog": {
       "title": "Rapportera {name}",
       "description": "Anmäl namnet eller ett meddelande från {name} om det verkar olämpligt.",
-      "report-message": "Rapportera ett meddelande",
-      "select-message": "Välj meddelandet att rapportera",
-      "select-message-placeholder": "Välj ett meddelande",
-      "no-messages": "Inga meddelanden hittades från den här användaren",
       "cancel": "Avbryt",
       "submit": "Rapport",
       "toast": {
@@ -1178,7 +1173,6 @@
           "title": "Rapport inskickad"
         }
       },
-      "report-name": "Rapportera spelarens namn",
       "comment": "Ytterligare kontext (valfritt)",
       "comment-placeholder": "Ge ytterligare kontext om den här rapporten..."
     },

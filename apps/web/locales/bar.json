@@ -512,8 +512,7 @@
       "recent-activity": {
         "game-code": "Spui-Numma #{code}",
         "no-activity": "Koana neia Aktivität zum zoagn.",
-        "rank": "Rang #{rank}",
-        "winner": "G'wunna"
+        "rank": "Rang #{rank}"
       },
       "search": {
         "placeholder": "Suach an Spitznam"
@@ -980,11 +979,6 @@
       },
       "title": "Bericht {name}",
       "description": "Meld den Namn oda a Botschaft vom {name}, wenn's unpassend erscheint.",
-      "report-message": "A Nachricht meldn",
-      "select-message": "Wähl d'Noachricht aus, de wo g'meldet wern soi",
-      "select-message-placeholder": "Wähle a Nachricht aus",
-      "no-messages": "Koane Nachrichten vo dem Nutza gfundn",
-      "report-name": "Melde den Spuiarnam",
       "comment": "Zuasätzlicher Kontext (freiwillig)",
       "comment-placeholder": "Gib ma no a paar Infos zu dem Bericht..."
     },

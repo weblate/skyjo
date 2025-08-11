@@ -517,8 +517,7 @@
       "recent-activity": {
         "no-activity": "Pole hiljutist tegevust, mida näidata.",
         "game-code": "Mäng #{code}",
-        "rank": "Järjekoht #{rank}",
-        "winner": "Võitja"
+        "rank": "Järjekoht #{rank}"
       },
       "search": {
         "placeholder": "Otsi kasutajanime"
@@ -1067,10 +1066,6 @@
     "ReportDialog": {
       "description": "Teata nimest või sõnumist {name}, kui see tundub sobimatu.",
       "title": "Teata {name}",
-      "report-message": "Teata sõnumist",
-      "select-message": "Valige teade, millest teatada",
-      "select-message-placeholder": "Vali sõnum",
-      "no-messages": "Sellelt kasutajalt ei leitud sõnumeid",
       "cancel": "Tühista",
       "submit": "Aruanne",
       "toast": {
@@ -1079,7 +1074,6 @@
           "description": "Aitäh teile aruande eest, olete aidanud parandada mängu kvaliteeti."
         }
       },
-      "report-name": "Mängija nime teatamine",
       "comment": "Lisakontekst (valikuline)",
       "comment-placeholder": "Anna lisakonteksti selle aruande kohta..."
     },

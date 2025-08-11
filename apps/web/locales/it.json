@@ -512,8 +512,7 @@
       "recent-activity": {
         "no-activity": "Nessuna attività recente da mostrare.",
         "game-code": "Partita #{code}",
-        "rank": "Classifica #{rank}",
-        "winner": "Vincitore"
+        "rank": "Classifica #{rank}"
       },
       "search": {
         "placeholder": "Cerca nome utente"
@@ -1163,13 +1162,8 @@
         }
       },
       "title": "Segnala {name}",
-      "report-message": "Segnala un messaggio",
-      "select-message": "Seleziona il messaggio da segnalare",
-      "select-message-placeholder": "Seleziona un messaggio",
-      "no-messages": "Nessun messaggio trovato da questo utente",
       "cancel": "Annulla",
       "submit": "Rapporto",
-      "report-name": "Segnala il nome del giocatore",
       "comment": "Contesto aggiuntivo (facoltativo)",
       "comment-placeholder": "Fornisci un contesto aggiuntivo per questo report..."
     },

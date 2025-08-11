@@ -517,8 +517,7 @@
       "recent-activity": {
         "no-activity": "Nien neie Aktivität to wiesen.",
         "game-code": "Speel #{code}",
-        "rank": "Rang #{rank}",
-        "winner": "Winner"
+        "rank": "Rang #{rank}"
       },
       "search": {
         "placeholder": "Säik noom"
@@ -969,11 +968,7 @@
     },
     "ReportDialog": {
       "title": "Meld {name}",
-      "select-message-placeholder": "Säik {a} Bouk",
       "description": "Meld den Naam of en Boodschap vun {name}, wenn dat nich good is.",
-      "report-message": "Meld en Naricht",
-      "select-message": "Säik de Naricht uut, ju Du mälde woltst",
-      "no-messages": "Keen Narichten fun dissen Benutser funnen",
       "cancel": "Ofbreke",
       "submit": "Bericht",
       "toast": {
@@ -982,7 +977,6 @@
           "description": "Moin, danke för dien Bericht, du hest mithulpen, de Qualität vun't Speel to verbeetern."
         }
       },
-      "report-name": "Melde den Spelernaam",
       "comment": "Tujus Kontekst (nich plichtich)",
       "comment-placeholder": "Geev hier noch'n beten mehr Info to dissen Bericht..."
     },

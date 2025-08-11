@@ -512,8 +512,7 @@
       "recent-activity": {
         "no-activity": "Keini letschti Aktivität zum zeige.",
         "game-code": "Spiel-Code #{code}",
-        "rank": "Rang #{rank}",
-        "winner": "Gwinner"
+        "rank": "Rang #{rank}"
       },
       "search": {
         "placeholder": "Benutzername sueche"
@@ -1164,12 +1163,8 @@
       "total": "Total"
     },
     "ReportDialog": {
-      "report-message": "Meld e Nachricht",
-      "select-message": "Wähl d'Nachricht us, wo du wotsch mälde",
       "title": "Meldä {name}",
       "description": "Melde de Name oder e Nachricht vo {name}, wänn's unpassend isch.",
-      "select-message-placeholder": "Wähle e Nachricht us",
-      "no-messages": "S het keini Nachrichte vo dem Benutzer gfunde",
       "cancel": "Abbräche",
       "submit": "Rapport",
       "toast": {
@@ -1178,7 +1173,6 @@
           "description": "Merssi für din Rapport, du häsch ghulfe d Qualitet vom Spiel z verbessere."
         }
       },
-      "report-name": "Meld de Spielername",
       "comment": "Zuesätzliche Info (optional)",
       "comment-placeholder": "Gib meh meh Info zu dem Bericht..."
     },
