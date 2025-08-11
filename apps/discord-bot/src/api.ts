@@ -21,6 +21,7 @@ export class ApiClient {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Cookie: `skymo-session=${ENV.API_SESSION_ID}`,
         },
         body: JSON.stringify({ playerId }),
       })

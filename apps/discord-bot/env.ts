@@ -16,6 +16,9 @@ export const envSchema = z.object({
   API_BASE_URL: z.string({
     message: "API_BASE_URL must be set in .env file",
   }),
+  API_SESSION_ID: z.string({
+    message: "API_SESSION_ID must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)
