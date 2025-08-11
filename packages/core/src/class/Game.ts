@@ -166,10 +166,10 @@ export class Game implements GameInterface {
   }
 
   async setPlayerToLeave(player: Player) {
-    player.connectionStatus = Constants.CONNECTION_STATUS.LEAVE
-
     if (!this.isPlaying()) {
       await this.disconnectPlayer(player)
+    } else {
+      player.connectionStatus = Constants.CONNECTION_STATUS.LEAVE
     }
   }
 

@@ -311,6 +311,45 @@ describe("PlayerService", () => {
       expect(game.players.length).toBe(3)
     })
 
+    it("should set DISCONNECTED status when leaving in lobby", async () => {
+      // Edge case test: Player leaves in lobby should get DISCONNECTED, not LEAVE
+      const opponent = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+      )
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+
+      game.addPlayer(opponent)
+
+      const player = new Player(
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      game.addPlayer(player)
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      // Game is still in lobby
+      expect(game.isInLobby()).toBeTruthy()
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await service.onLeave(socket)
+
+      // Player should be DISCONNECTED in lobby, not LEAVE
+      expect(player.connectionStatus).toBe<ConnectionStatus>(
+        CoreConstants.CONNECTION_STATUS.DISCONNECTED,
+      )
+      expect(player.connectionStatus).not.toBe<ConnectionStatus>(
+        CoreConstants.CONNECTION_STATUS.LEAVE,
+      )
+      expect(game.players.length).toBe(1)
+    })
+
     it("should remove the player if the game is finished", async () => {
       const opponent = new Player(
         { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
@@ -568,6 +607,44 @@ describe("PlayerService", () => {
   })
 
   describe("onRecover", () => {
+    it("should properly recover player with LEAVE status during game", async () => {
+      // Edge case test: Player leaves during game, then recovers
+      const opponent = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+      )
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
+      })
+      game.addPlayer(opponent)
+
+      const player = new Player(
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      game.addPlayer(player)
+      socket.data.gameCode = game.code
+      socket.data.playerId = player.id
+
+      await game.start()
+
+      // Simulate player leaving during game
+      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LEAVE
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await service.onRecover(socket)
+
+      // Player should now be CONNECTED, not LEAVE
+      expect(player.connectionStatus).toBe<ConnectionStatus>(
+        CoreConstants.CONNECTION_STATUS.CONNECTED,
+      )
+      expect(player.connectionStatus).not.toBe<ConnectionStatus>(
+        CoreConstants.CONNECTION_STATUS.LEAVE,
+      )
+    })
+
     it("should throw if player not found", async () => {
       vi.useFakeTimers()
 

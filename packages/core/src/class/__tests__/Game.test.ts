@@ -265,7 +265,7 @@ describe("Game", () => {
   })
 
   describe("setPlayerToLeave", () => {
-    it("should set player connection status to leave", async () => {
+    it("should set player connection status to leave when game is playing", async () => {
       // Set game status to PLAYING so disconnectPlayer is not called
       game.status = Constants.GAME_STATUS.PLAYING
 
@@ -291,6 +291,62 @@ describe("Game", () => {
 
       expect(spy).not.toHaveBeenCalled()
       spy.mockRestore()
+    })
+
+    it("should set DISCONNECTED status when leaving in lobby", async () => {
+      game.status = Constants.GAME_STATUS.LOBBY
+
+      await game.setPlayerToLeave(player)
+
+      // disconnectPlayer sets the status to DISCONNECTED
+      expect(player.connectionStatus).toBe(
+        Constants.CONNECTION_STATUS.DISCONNECTED,
+      )
+    })
+
+    it("should only set LEAVE status when leaving during gameplay", async () => {
+      game.status = Constants.GAME_STATUS.PLAYING
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+
+      await game.setPlayerToLeave(player)
+
+      // Should only be LEAVE, not DISCONNECTED
+      expect(player.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+    })
+
+    it("should allow player to reconnect after leaving during game", async () => {
+      // Simulate player leaving during game
+      game.status = Constants.GAME_STATUS.PLAYING
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+
+      await game.setPlayerToLeave(player)
+      expect(player.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+
+      // Simulate reconnection - status should update properly
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      expect(player.connectionStatus).toBe(
+        Constants.CONNECTION_STATUS.CONNECTED,
+      )
+    })
+
+    it("should not have LEAVE status persist after recovery", async () => {
+      // Edge case: Player leaves, then recovers connection
+      game.status = Constants.GAME_STATUS.PLAYING
+
+      // Player leaves
+      await game.setPlayerToLeave(player)
+      expect(player.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+
+      // Player recovers (simulating what happens in onRecover)
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+
+      // Status should be CONNECTED, not LEAVE
+      expect(player.connectionStatus).toBe(
+        Constants.CONNECTION_STATUS.CONNECTED,
+      )
+      expect(player.connectionStatus).not.toBe(
+        Constants.CONNECTION_STATUS.LEAVE,
+      )
     })
   })
 
