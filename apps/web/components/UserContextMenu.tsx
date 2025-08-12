@@ -33,25 +33,22 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
   const { transferHost } = useHostTransfer()
   const t = useTranslations("components.Avatar")
 
+  const hasMoreThanTwoPlayers = game.players.length > 2
+  const isCurrentUserHost = isHost(game, currentPlayer.id)
+
+  const isHostAndPrivate = isCurrentUserHost && game.settings.private
+
+  const cannotKickPlayer =
+    (kickVoteInProgress || !hasMoreThanTwoPlayers) && !isHostAndPrivate
+
   const handleKickPlayer = () => {
-    if ((hasLessThanThreePlayers || kickVoteInProgress) && !isCurrentUserHost)
-      return
+    if (cannotKickPlayer) return
 
     actions.initiateKickVote(player.id)
   }
 
-  const handleBanPlayer = () => {
-    banPlayer(player.id)
-  }
-
-  const handleTransferHost = () => {
-    transferHost(player.id)
-  }
-
-  const hasLessThanThreePlayers = game.players.length <= 2
-  const isCurrentUserHost = isHost(game, currentPlayer.id)
-
-  const isHostAndPrivate = isCurrentUserHost && game.settings.private
+  const handleBanPlayer = () => banPlayer(player.id)
+  const handleTransferHost = () => transferHost(player.id)
 
   return (
     <ContextMenuContent>
@@ -67,12 +64,7 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
         </ContextMenuItem>
       )}
 
-      <ContextMenuItem
-        onClick={handleKickPlayer}
-        disabled={
-          (kickVoteInProgress || hasLessThanThreePlayers) && isHostAndPrivate
-        }
-      >
+      <ContextMenuItem onClick={handleKickPlayer} disabled={cannotKickPlayer}>
         <UserRoundXIcon className="w-4 h-4 mr-2" />
         {t(
           isHostAndPrivate ? "context-menu.kick" : "context-menu.vote-to-kick",
