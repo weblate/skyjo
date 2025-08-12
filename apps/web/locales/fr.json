@@ -1373,8 +1373,8 @@
         "title": "{playerName} a été expulsé suite à un signalement"
       },
       "report-against-you": {
-        "title": "Vous avez été expulsé suite à un signalement",
-        "description": "Ton nom ou l'un de tes messages a été signalé et jugé inapproprié. Merci de ne pas reproduire ce comportement."
+        "title": "Vous avez été exclu(e) suite à un signalement",
+        "description": "Un administrateur a validé un signalement vous concernant. Merci de ne pas reproduire ce comportement, sans quoi des sanctions supplémentaires pourraient être appliquées"
       }
     },
     "HostTransferContext": {

@@ -1375,8 +1375,8 @@
         "title": "{playerName} has been kicked due to a report"
       },
       "report-against-you": {
-        "title": "You have been kicked due to a report",
-        "description": "Your name or one of your messages has been reported and has been deemed inappropriate. Please do not repeat this behavior."
+        "title": "You have been removed from the game following a report",
+        "description": "An administrator has validated a report against you. Please avoid repeating this behavior, or further sanctions may be applied."
       }
     },
     "HostTransferContext": {
