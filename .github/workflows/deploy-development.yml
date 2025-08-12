@@ -1,9 +1,7 @@
 name: Deploy Development
 
 on:
-  push:
-    branches:
-      - trunk
+  workflow_dispatch:
 
 jobs:
   test:
