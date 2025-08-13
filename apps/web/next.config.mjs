@@ -42,27 +42,6 @@ const nextConfig = {
       },
     ]
   },
-
-  async rewrites() {
-    return [
-      {
-        source: "/ulysse/static/:path*",
-        destination: "https://eu-assets.i.posthog.com/static/:path*",
-      },
-      {
-        source: "/ulysse/:path*",
-        destination: "https://eu.i.posthog.com/:path*",
-      },
-      {
-        source: "/ulysse/flags",
-        destination: "https://eu.i.posthog.com/flags",
-      },
-    ]
-  },
-
-  // This is required to support PostHog trailing slash API requests
-  skipTrailingSlashRedirect: true,
-
   reactStrictMode: process.env.NODE_ENV === "production",
   turbopack: {},
   output: "standalone",
