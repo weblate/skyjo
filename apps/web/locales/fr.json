@@ -1463,6 +1463,7 @@
     "invalid-pin": "Le code PIN que vous avez saisi est incorrect. Veuillez réessayer.",
     "expired-pin": "Le code PIN que vous avez saisi a expiré. Nous vous en avons envoyé un nouveau.",
     "login-invalid-credentials": "L'email ou le mot de passe que vous avez saisi est incorrect. Veuillez réessayer.",
+    "disposable-email-not-allowed": "Les adresses email jetables ou temporaires ne sont pas autorisées. Veuillez utiliser une adresse email permanente.",
     "creation-failed": "Nous n'avons pas pu créer l'utilisateur pour le moment. Veuillez réessayer.",
     "send-feedback-error": "Nous n'avons pas pu envoyer votre commentaire. Veuillez réessayer.",
     "get-public-games-error": "Nous n'avons pas pu charger les parties publiques. Veuillez réessayer.",

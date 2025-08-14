@@ -30,6 +30,7 @@ import {
   generateSessionToken,
 } from "@/http/session/session.service.js"
 import { createUser, createUsername } from "@/http/user/user.service.js"
+import { isEmailValid } from "@/utils/disposableEmail.js"
 import { normalizeEmail } from "@/utils/emailNormalization.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
@@ -39,6 +40,14 @@ export async function signup(c: Context, data: Signup) {
   const { email, locale, name, avatar, settings } = data
 
   const normalizedEmail = normalizeEmail(email)
+
+  // Check if email is from a disposable/temporary email service
+  const isValid = await isEmailValid(normalizedEmail)
+  if (!isValid) {
+    throw new HTTPException(400, {
+      message: "disposable-email-not-allowed",
+    })
+  }
 
   const existingUser = await db
     .select({ id: userTable.id, email: userTable.email })
@@ -290,6 +299,14 @@ export async function requestPasswordReset(data: ForgotPassword) {
   const { email } = data
 
   const normalizedEmail = normalizeEmail(email)
+
+  // Check if email is from a disposable/temporary email service
+  const isValid = await isEmailValid(normalizedEmail)
+  if (!isValid) {
+    // For security, we don't reveal if the email is disposable or not
+    Logger.warn("Password reset requested with disposable email", { email })
+    return
+  }
 
   const user = await db
     .select({

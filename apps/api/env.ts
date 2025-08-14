@@ -28,6 +28,10 @@ export const envSchema = z.object({
   WEBSITE_URL: z.string({
     message: "WEBSITE_URL must be set in .env file",
   }),
+
+  TEMP_MAIL_API_KEY: z.string({
+    message: "TEMP_MAIL_API_KEY must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

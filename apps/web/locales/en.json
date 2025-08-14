@@ -1433,6 +1433,7 @@
     "signup-error": "We couldn't create your account at this time. Please try again later.",
     "login-error": "There was a problem logging you in. Please try again.",
     "login-invalid-credentials": "The email or password you entered is incorrect. Please try again.",
+    "disposable-email-not-allowed": "Disposable or temporary email addresses are not allowed. Please use a permanent email address.",
     "logout-error": "An unexpected error occurred while logging you out.",
     "check-username-error": "We couldn't check if the username is available. Please try again.",
     "unknown-auth-error": "An unknown authentication error occurred. Please try again.",
