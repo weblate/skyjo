@@ -30,6 +30,7 @@ import {
   generateSessionToken,
 } from "@/http/session/session.service.js"
 import { createUser, createUsername } from "@/http/user/user.service.js"
+import { normalizeEmail } from "@/utils/emailNormalization.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 import { hashPassword, verifyPassword } from "./lib/password.js"
@@ -37,10 +38,12 @@ import { hashPassword, verifyPassword } from "./lib/password.js"
 export async function signup(c: Context, data: Signup) {
   const { email, locale, name, avatar, settings } = data
 
+  const normalizedEmail = normalizeEmail(email)
+
   const existingUser = await db
     .select({ id: userTable.id, email: userTable.email })
     .from(userTable)
-    .where(eq(userTable.email, email))
+    .where(eq(userTable.email, normalizedEmail))
     .limit(1)
 
   if (existingUser.length > 0) {
@@ -52,7 +55,7 @@ export async function signup(c: Context, data: Signup) {
   }
 
   const user = await createUser({
-    email,
+    email: normalizedEmail,
     locale,
     name,
     avatar,
@@ -69,10 +72,18 @@ export async function login(c: Context, data: LoginUser) {
 
   const username = login.replace("@", "")
 
+  // If login contains @, normalize it as an email
+  const normalizedLogin = login.includes("@") ? normalizeEmail(login) : login
+
   const user = await db
     .select()
     .from(userTable)
-    .where(or(eq(userTable.email, login), eq(userTable.username, username)))
+    .where(
+      or(
+        eq(userTable.email, normalizedLogin),
+        eq(userTable.username, username),
+      ),
+    )
     .limit(1)
 
   if (user.length === 0 || !user[0].password) {
@@ -105,13 +116,19 @@ export async function loginGoogle(
   const googleId = claims.sub
   const name = claims.name
   const email = claims.email
+  const normalizedEmail = normalizeEmail(email)
   const locale = locales.find((l) => l === claims?.locale) ?? "en"
   const emailVerified = claims?.email_verified
 
   const userRecord = await db
     .select()
     .from(userTable)
-    .where(or(eq(userTable.googleId, googleId), eq(userTable.email, email)))
+    .where(
+      or(
+        eq(userTable.googleId, googleId),
+        eq(userTable.email, normalizedEmail),
+      ),
+    )
     .limit(1)
   const user = userRecord?.[0]
   let userId = user?.id
@@ -125,7 +142,7 @@ export async function loginGoogle(
   } else if (!user) {
     const username = await createUsername(name?.split(" ")[0] ?? "unnamed")
     const newUser = await createUser({
-      email,
+      email: normalizedEmail,
       username,
       googleId: googleId ?? null,
       locale,
@@ -272,6 +289,8 @@ export async function checkUsernameAvailability(
 export async function requestPasswordReset(data: ForgotPassword) {
   const { email } = data
 
+  const normalizedEmail = normalizeEmail(email)
+
   const user = await db
     .select({
       id: userTable.id,
@@ -279,7 +298,7 @@ export async function requestPasswordReset(data: ForgotPassword) {
       settings: userTable.settings,
     })
     .from(userTable)
-    .where(eq(userTable.email, email))
+    .where(eq(userTable.email, normalizedEmail))
     .limit(1)
 
   if (user.length === 0) {

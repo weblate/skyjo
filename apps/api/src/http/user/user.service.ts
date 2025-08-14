@@ -29,6 +29,7 @@ import { requestPasswordReset } from "@/http/auth/auth.service.js"
 import { hashPassword, verifyPassword } from "@/http/auth/lib/password.js"
 import { invalidateUserSessions } from "@/http/session/session.service.js"
 import { accountDeletionQueue } from "@/utils/accountDeletion.js"
+import { normalizeEmail } from "@/utils/emailNormalization.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 
@@ -393,7 +394,7 @@ export async function updateUsername(userId: number, data: UpdateUsername) {
 
 export async function updateEmail(user: UserDb, data: UpdateEmail) {
   const oldEmail = user.email
-  const newEmail = data.email
+  const newEmail = normalizeEmail(data.email)
 
   const reversionToken = generateRandomToken()
   const hashedReversionToken = hashToken(reversionToken)
