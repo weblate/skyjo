@@ -9,13 +9,14 @@ import { redirect } from "next/navigation"
 import { cache } from "react"
 
 export interface SessionData {
-  emailVerified: boolean
+  id: number
   email: string
   name: string | null
   username: string | null
   avatar: Avatar
   hasOAuth: boolean
   onboardingCompleted: boolean
+  role: "USER" | "ADMIN"
 }
 
 export const verifySession = async (): Promise<SessionData | null> => {

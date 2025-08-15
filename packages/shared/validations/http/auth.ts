@@ -3,19 +3,6 @@ import { z } from "zod"
 import { locales } from "../../constants/locales.js"
 import { passwordSchema, userSettingsSchema } from "./user.js"
 
-export const signupSchema = z.object({
-  email: z.string().email("email-invalid"),
-  locale: z.enum(locales).default("en"),
-  name: z
-    .string()
-    .min(1)
-    .transform((val) => val.slice(0, 20).replace(/ /g, "_"))
-    .optional(),
-  avatar: z.nativeEnum(Constants.AVATARS).optional(),
-  settings: userSettingsSchema.optional(),
-})
-export type Signup = z.infer<typeof signupSchema>
-
 export const loginSchema = z.object({
   // login either email or username
   login: z.string().trim().min(3),
@@ -39,3 +26,23 @@ export const resetPasswordSchema = z
     path: ["confirmPassword"],
   })
 export type ResetPassword = z.infer<typeof resetPasswordSchema>
+
+export const sendVerificationEmailSchema = z.object({
+  email: z.string().email("email-invalid"),
+  locale: z.enum(locales).default("en"),
+})
+export type SendVerificationEmail = z.infer<typeof sendVerificationEmailSchema>
+
+export const tryVerificationEmailSchema = z.object({
+  pin: z.string().length(6, "pin-invalid-length"),
+  email: z.string().email("email-invalid"),
+  locale: z.enum(locales).default("en"),
+  name: z
+    .string()
+    .min(1)
+    .transform((val) => val.slice(0, 20).replace(/ /g, "_"))
+    .optional(),
+  avatar: z.nativeEnum(Constants.AVATARS).optional(),
+  settings: userSettingsSchema.optional(),
+})
+export type TryVerificationEmail = z.infer<typeof tryVerificationEmailSchema>

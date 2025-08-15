@@ -56,7 +56,6 @@ interface CreateUserParams {
   googleId?: string
   locale?: Locales
   avatar?: Avatar
-  emailVerified?: boolean
   password?: string
   settings?: UserSettings
 }
@@ -67,7 +66,6 @@ export async function createUser({
   username,
   locale,
   avatar,
-  emailVerified,
   password,
   settings,
 }: CreateUserParams): Promise<UserDb> {
@@ -90,7 +88,6 @@ export async function createUser({
       googleId: googleId ?? null,
       settings: finalSettings,
       avatar,
-      emailVerified,
     })
     .returning({
       id: userTable.id,
@@ -101,7 +98,6 @@ export async function createUser({
       facebookId: userTable.facebookId,
       settings: userTable.settings,
       avatar: userTable.avatar,
-      emailVerified: userTable.emailVerified,
       onboardingCompleted: userTable.onboardingCompleted,
       role: userTable.role,
       createdAt: userTable.createdAt,
@@ -417,7 +413,6 @@ export async function updateEmail(user: UserDb, data: UpdateEmail) {
       .update(userTable)
       .set({
         email: newEmail,
-        emailVerified: false,
         updatedAt: new Date(),
       })
       .where(eq(userTable.id, user.id))
@@ -510,7 +505,6 @@ export async function revertEmail(token: string) {
       .update(userTable)
       .set({
         email: emailChange.oldEmail,
-        emailVerified: true,
         updatedAt: new Date(),
       })
       .where(eq(userTable.id, emailChange.userId))

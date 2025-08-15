@@ -11,7 +11,8 @@ import type {
   LoginUser,
   Onboarding,
   ResetPassword,
-  Signup,
+  SendVerificationEmail,
+  TryVerificationEmail,
 } from "@skymo/shared/validations"
 import { decodeIdToken } from "arctic"
 import { and, eq, ne, or } from "drizzle-orm"
@@ -30,15 +31,18 @@ import {
   generateSessionToken,
 } from "@/http/session/session.service.js"
 import { createUser, createUsername } from "@/http/user/user.service.js"
+import {
+  sendVerifyPin,
+  verifyPin,
+} from "@/http/userVerification/userVerification.service.js"
 import { isEmailValid } from "@/utils/disposableEmail.js"
 import { normalizeEmail } from "@/utils/emailNormalization.js"
 import { mailerQueue } from "@/utils/mailer.js"
 import { generateRandomToken, hashToken } from "@/utils/randomString.js"
 import { hashPassword, verifyPassword } from "./lib/password.js"
 
-export async function signup(c: Context, data: Signup) {
-  const { email, locale, name, avatar, settings } = data
-
+export async function sendVerificationEmail(data: SendVerificationEmail) {
+  const { email, locale } = data
   const normalizedEmail = normalizeEmail(email)
 
   // Check if email is from a disposable/temporary email service
@@ -49,20 +53,36 @@ export async function signup(c: Context, data: Signup) {
     })
   }
 
+  await sendVerifyPin(normalizedEmail, locale)
+}
+
+export async function tryVerificationEmail(
+  c: Context,
+  data: TryVerificationEmail,
+) {
+  const { email, pin, locale, name, avatar, settings } = data
+  const normalizedEmail = normalizeEmail(email)
+
+  // Verify the PIN
+  await verifyPin(normalizedEmail, pin)
+
+  // Check if user already exists
   const existingUser = await db
-    .select({ id: userTable.id, email: userTable.email })
+    .select()
     .from(userTable)
     .where(eq(userTable.email, normalizedEmail))
     .limit(1)
 
   if (existingUser.length > 0) {
-    // TODO: Add job to email queue: send email to existingUser[0].email
-    //  - Subject: Registration attempt on this email
-    //  - Content: Explain that an account with this email already exists.
-    //             Provide options like "Log in" or "Forgot your password?"
-    return
+    // User exists - log them in
+    const user = existingUser[0]
+    const token = generateSessionToken()
+    const session = await createSession(token, user.id)
+    setSessionTokenCookie(c, token, session.expiresAt)
+    return { user, isNewUser: false }
   }
 
+  // Create new user account
   const user = await createUser({
     email: normalizedEmail,
     locale,
@@ -74,6 +94,8 @@ export async function signup(c: Context, data: Signup) {
   const token = generateSessionToken()
   const session = await createSession(token, user.id)
   setSessionTokenCookie(c, token, session.expiresAt)
+
+  return { user, isNewUser: true }
 }
 
 export async function login(c: Context, data: LoginUser) {
@@ -127,8 +149,6 @@ export async function loginGoogle(
   const email = claims.email
   const normalizedEmail = normalizeEmail(email)
   const locale = locales.find((l) => l === claims?.locale) ?? "en"
-  const emailVerified = claims?.email_verified
-
   const userRecord = await db
     .select()
     .from(userTable)
@@ -155,7 +175,7 @@ export async function loginGoogle(
       username,
       googleId: googleId ?? null,
       locale,
-      emailVerified,
+      // OAuth users are trusted to have verified emails - no additional verification needed
     })
 
     userId = newUser.id
@@ -217,7 +237,7 @@ export async function getCurrentUser(c: Context) {
       username: userTable.username,
       avatar: userTable.avatar,
       settings: userTable.settings,
-      emailVerified: userTable.emailVerified,
+      onboardingCompleted: userTable.onboardingCompleted,
       googleId: userTable.googleId,
       facebookId: userTable.facebookId,
       createdAt: userTable.createdAt,

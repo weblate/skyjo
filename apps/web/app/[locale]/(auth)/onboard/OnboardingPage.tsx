@@ -84,10 +84,7 @@ const OnboardingPage = () => {
   }
 
   useEffect(() => {
-    if (!user?.emailVerified) {
-      router.replace("/verify")
-      return
-    } else if (user?.emailVerified && user.onboardingCompleted) {
+    if (user?.onboardingCompleted) {
       router.replace("/")
       return
     }

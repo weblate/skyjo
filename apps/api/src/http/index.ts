@@ -8,7 +8,6 @@ import { googleRouter } from "@/http/auth/google.router.js"
 import { feedbackRouter } from "@/http/feedback/feedback.router.js"
 import { gameRouter } from "@/http/game/game.router.js"
 import { userRouter } from "@/http/user/user.router.js"
-import { userVerificationRouter } from "@/http/userVerification/userVerification.router.js"
 
 const httpApp = new Hono()
 
@@ -32,7 +31,6 @@ const httpApp = new Hono()
   .route("/games", gameRouter)
   .route("/feedbacks", feedbackRouter)
   .route("/users", userRouter)
-  .route("/verification", userVerificationRouter)
   .onError((error, c) => {
     if (error instanceof HTTPException) {
       Logger.error("HTTPException", {

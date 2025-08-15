@@ -10,13 +10,14 @@ import { toast } from "sonner"
 import { usePathname, useRouter } from "@/i18n/routing"
 
 interface AuthenticatedUser {
-  emailVerified: boolean
+  id: number
   email?: string
   name?: string
   username?: string
   avatar?: Avatar
   hasOAuth?: boolean
   onboardingCompleted?: boolean
+  role?: string
 }
 
 export const useAuth = () => {
@@ -100,14 +101,10 @@ export const useAuth = () => {
 
     // Skip client-side redirects for auth flow pages to prevent infinite loops
     // These redirects are handled by server-side layouts
-    const isAuthFlowPage = pathname === "/verify" || pathname === "/onboard"
+    const isAuthFlowPage = pathname === "/onboard"
     if (isAuthFlowPage) return
 
-    if (!user?.emailVerified) {
-      router.replace("/verify")
-    }
-
-    if (user?.emailVerified && !user.onboardingCompleted) {
+    if (!user.onboardingCompleted) {
       router.replace("/onboard")
     }
   }, [user, pathname, router])

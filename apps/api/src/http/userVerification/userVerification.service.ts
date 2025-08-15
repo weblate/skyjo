@@ -1,56 +1,35 @@
-import {
-  type UserDb,
-  userTable,
-  userVerificationTable,
-} from "@skymo/database/schema"
-import { Logger } from "@skymo/logger"
+import { userVerificationTable } from "@skymo/database/schema"
+import { type Locales } from "@skymo/shared/constants"
 import { randomInt } from "crypto"
 import dayjs from "dayjs"
-import { and, eq } from "drizzle-orm"
+import { eq } from "drizzle-orm"
 import { HTTPException } from "hono/http-exception"
 import { db } from "@/db/index.js"
 import { mailerQueue } from "@/utils/mailer.js"
 
-export async function sendVerifyPin(email: string) {
-  const userResult = await db
-    .select()
-    .from(userTable)
-    .where(and(eq(userTable.email, email), eq(userTable.emailVerified, false)))
-    .limit(1)
-
-  const user = userResult?.[0]
-  if (!user) {
-    Logger.info("User not found or already verified. Skipping email sending.", {
-      email,
-    })
-
-    return
-  }
-
+export async function sendVerifyPin(email: string, locale: Locales = "en") {
   // Check if email was already sent in the last 5 minutes
   const [existingVerification] = await db
     .select()
     .from(userVerificationTable)
-    .where(eq(userVerificationTable.userId, user.id))
+    .where(eq(userVerificationTable.email, email))
     .limit(1)
 
-  const fiveMinutesAgo = dayjs().subtract(5, "minutes").toDate()
+  const oneMinuteAgo = dayjs().subtract(1, "minute").toDate()
   const isRecent =
     existingVerification?.createdAt &&
-    existingVerification.createdAt > fiveMinutesAgo
-  if (existingVerification && isRecent) {
-    throw new HTTPException(400, {
-      message: "email-already-sent",
-    })
-  }
+    existingVerification.createdAt > oneMinuteAgo
 
-  const locale = user.settings?.locale ?? "en"
+  if (existingVerification && isRecent) return
 
-  const pin = await generateVerifyPin(user)
+  const pin = await generateVerifyPin(email)
+
+  // Use the same template for both cases for now
+  const template = "verify-pin"
 
   await mailerQueue.add("verify-pin", {
     to: email,
-    template: "verify-pin",
+    template,
     locale,
     content: {
       pin,
@@ -58,15 +37,14 @@ export async function sendVerifyPin(email: string) {
   })
 }
 
-export async function generateVerifyPin(user: UserDb) {
+export async function generateVerifyPin(email: string) {
   const pin = randomInt(0, 1000000).toString().padStart(6, "0")
-  // 10 minutes
-  const expiresAt = dayjs().add(10, "minutes").toDate()
+  const expiresAt = dayjs().add(20, "minutes").toDate()
 
   const existingPinResult = await db
     .select()
     .from(userVerificationTable)
-    .where(eq(userVerificationTable.userId, user.id))
+    .where(eq(userVerificationTable.email, email))
     .limit(1)
 
   const existingPin = existingPinResult?.[0]
@@ -78,7 +56,7 @@ export async function generateVerifyPin(user: UserDb) {
   } else {
     await db.insert(userVerificationTable).values({
       pin,
-      userId: user.id,
+      email,
       expiresAt,
     })
   }
@@ -87,24 +65,20 @@ export async function generateVerifyPin(user: UserDb) {
 }
 
 export async function verifyPin(email: string, pin: string) {
-  const [result] = await db
+  const [verificationResult] = await db
     .select()
     .from(userVerificationTable)
-    .innerJoin(userTable, eq(userVerificationTable.userId, userTable.id))
-    .where(and(eq(userVerificationTable.pin, pin), eq(userTable.email, email)))
+    .where(eq(userVerificationTable.email, email))
     .limit(1)
 
-  if (!result) {
+  if (!verificationResult || verificationResult.pin !== pin) {
     throw new HTTPException(400, {
       message: "invalid-pin",
     })
   }
 
-  const { users: user, user_verifications } = result
-
-  // If the pin has expired, generate a new one and return unsuccessful
-  if (user_verifications.expiresAt < new Date()) {
-    await generateVerifyPin(user)
+  if (verificationResult.expiresAt < new Date()) {
+    await generateVerifyPin(email)
 
     throw new HTTPException(400, {
       message: "expired-pin",
@@ -112,11 +86,8 @@ export async function verifyPin(email: string, pin: string) {
   }
 
   await db
-    .update(userTable)
-    .set({ emailVerified: true })
-    .where(eq(userTable.id, user_verifications.userId))
-
-  await db
     .delete(userVerificationTable)
-    .where(eq(userVerificationTable.id, user_verifications.id))
+    .where(eq(userVerificationTable.id, verificationResult.id))
+
+  return verificationResult
 }

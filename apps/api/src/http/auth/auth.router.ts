@@ -1,16 +1,14 @@
 import { zValidator } from "@hono/zod-validator"
-import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import {
   forgotPasswordSchema,
   loginSchema,
   onboardingSchema,
   resetPasswordSchema,
-  signupSchema,
+  sendVerificationEmailSchema,
+  tryVerificationEmailSchema,
   usernameAvailabilitySchema,
 } from "@skymo/shared/validations"
 import { Hono } from "hono"
-import { getCookie } from "hono/cookie"
-import { HTTPException } from "hono/http-exception"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 import {
   checkUsernameAvailability,
@@ -19,7 +17,8 @@ import {
   logout,
   requestPasswordReset,
   resetPassword,
-  signup,
+  sendVerificationEmail,
+  tryVerificationEmail,
 } from "@/http/auth/auth.service.js"
 import { googleRouter } from "@/http/auth/google.router.js"
 import {
@@ -27,16 +26,19 @@ import {
   authMiddleware,
 } from "@/http/middlewares/auth.middleware.js"
 import { createRateLimiterMiddleware } from "@/http/middlewares/rateLimiter.js"
-import { validateSessionToken } from "@/http/session/session.service.js"
-
-const signupRateLimiter = new RateLimiterMemory({
-  points: 5,
-  duration: 600, // 10 minutes
-})
 
 const loginRateLimiter = new RateLimiterMemory({
   points: 10,
   duration: 60, // 1 minute
+})
+
+const sendVerificationEmailRateLimiter = new RateLimiterMemory({
+  points: 2,
+  duration: 40, // 40 seconds
+})
+const tryVerifyEmailRateLimiter = new RateLimiterMemory({
+  points: 10,
+  duration: 8,
 })
 
 const verifyRateLimiter = new RateLimiterMemory({
@@ -67,17 +69,6 @@ const resetPasswordRateLimiter = new RateLimiterMemory({
 const authRouter = new Hono<AuthContextVariables>()
   .route("", googleRouter)
   .post(
-    "/signup",
-    zValidator("json", signupSchema),
-    createRateLimiterMiddleware(signupRateLimiter),
-    async (c) => {
-      const data = c.req.valid("json")
-
-      await signup(c, data)
-      return c.json({}, 201)
-    },
-  )
-  .post(
     "/login",
     zValidator("json", loginSchema),
     createRateLimiterMiddleware(loginRateLimiter),
@@ -89,29 +80,14 @@ const authRouter = new Hono<AuthContextVariables>()
   )
   .post(
     "/verify",
+    authMiddleware(),
     createRateLimiterMiddleware(verifyRateLimiter),
     async (c) => {
-      const sessionToken = getCookie(c, SESSION_COOKIE_NAME)
-
-      if (!sessionToken) {
-        throw new HTTPException(400, {
-          message: "session-token-missing",
-        })
-      }
-
-      const { session, user } = await validateSessionToken(sessionToken)
-
-      if (!session || !user) {
-        await logout(c)
-        throw new HTTPException(401, {
-          message: "session-invalid",
-        })
-      }
-
+      const user = c.get("user")
       return c.json(
         {
           user: {
-            emailVerified: user.emailVerified,
+            id: user.id,
             name: user.name,
             username: user.username,
             avatar: user.avatar,
@@ -120,6 +96,42 @@ const authRouter = new Hono<AuthContextVariables>()
             onboardingCompleted: user.onboardingCompleted,
             role: user.role,
           },
+        },
+        200,
+      )
+    },
+  )
+  .post(
+    "/send-verification-email",
+    zValidator("json", sendVerificationEmailSchema),
+    createRateLimiterMiddleware(sendVerificationEmailRateLimiter),
+    async (c) => {
+      const data = c.req.valid("json")
+      await sendVerificationEmail(data)
+      return c.json({}, 200)
+    },
+  )
+  .post(
+    "/try-verification-email",
+    zValidator("json", tryVerificationEmailSchema),
+    createRateLimiterMiddleware(tryVerifyEmailRateLimiter),
+    async (c) => {
+      const data = c.req.valid("json")
+      const result = await tryVerificationEmail(c, data)
+
+      return c.json(
+        {
+          user: {
+            id: result.user.id,
+            name: result.user.name,
+            username: result.user.username,
+            avatar: result.user.avatar,
+            hasOAuth: !!(result.user.googleId ?? result.user.facebookId),
+            email: result.user.email,
+            onboardingCompleted: result.user.onboardingCompleted,
+            role: result.user.role,
+          },
+          isNewUser: result.isNewUser,
         },
         200,
       )

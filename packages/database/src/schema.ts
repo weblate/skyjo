@@ -51,7 +51,6 @@ export const userTable = pgTable(
     googleId: varchar("google_id", { length: 255 }).unique(),
     facebookId: varchar("facebook_id", { length: 255 }).unique(),
     settings: json("settings").$type<UserSettings>(),
-    emailVerified: boolean("email_verified").notNull().default(false),
     onboardingCompleted: boolean("onboarding_completed")
       .notNull()
       .default(false),
@@ -74,9 +73,7 @@ export type UserWithPasswordDb = InferSelectModel<typeof userTable>
 
 export const userVerificationTable = pgTable("user_verifications", {
   id: serial("id").primaryKey(),
-  userId: integer("user_id")
-    .notNull()
-    .references(() => userTable.id),
+  email: varchar("email", { length: 255 }).notNull(),
   pin: varchar("pin", { length: 6 }).notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()
