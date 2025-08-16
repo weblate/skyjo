@@ -1,5 +1,5 @@
 {
-  "id": "827490be-7665-4dd6-8fd7-229d400ddd2f",
+  "id": "1ff3af98-a0b2-4138-9834-91fd5dfd78df",
   "prevId": "2b5d87a1-64b8-422b-8b1c-a5c148814d6b",
   "version": "7",
   "dialect": "postgresql",
@@ -51,19 +51,19 @@
         "account_deletions_user_id_users_id_fk": {
           "name": "account_deletions_user_id_users_id_fk",
           "tableFrom": "account_deletions",
-          "columnsFrom": ["user_id"],
           "tableTo": "users",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "account_deletions_token_unique": {
           "name": "account_deletions_token_unique",
-          "columns": ["token"],
-          "nullsNotDistinct": false
+          "nullsNotDistinct": false,
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -123,19 +123,19 @@
         "email_changes_user_id_users_id_fk": {
           "name": "email_changes_user_id_users_id_fk",
           "tableFrom": "email_changes",
-          "columnsFrom": ["user_id"],
           "tableTo": "users",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "email_changes_token_unique": {
           "name": "email_changes_token_unique",
-          "columns": ["token"],
-          "nullsNotDistinct": false
+          "nullsNotDistinct": false,
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -234,19 +234,19 @@
         "password_resets_user_id_users_id_fk": {
           "name": "password_resets_user_id_users_id_fk",
           "tableFrom": "password_resets",
-          "columnsFrom": ["user_id"],
           "tableTo": "users",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
         "password_resets_token_unique": {
           "name": "password_resets_token_unique",
-          "columns": ["token"],
-          "nullsNotDistinct": false
+          "nullsNotDistinct": false,
+          "columns": ["token"]
         }
       },
       "policies": {},
@@ -333,20 +333,20 @@
         "players_game_id_games_id_fk": {
           "name": "players_game_id_games_id_fk",
           "tableFrom": "players",
-          "columnsFrom": ["game_id"],
           "tableTo": "games",
+          "columnsFrom": ["game_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         },
         "players_user_id_users_id_fk": {
           "name": "players_user_id_users_id_fk",
           "tableFrom": "players",
-          "columnsFrom": ["user_id"],
           "tableTo": "users",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -428,11 +428,11 @@
         "reports_user_id_users_id_fk": {
           "name": "reports_user_id_users_id_fk",
           "tableFrom": "reports",
-          "columnsFrom": ["user_id"],
           "tableTo": "users",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -481,20 +481,20 @@
         "scores_game_id_games_id_fk": {
           "name": "scores_game_id_games_id_fk",
           "tableFrom": "scores",
-          "columnsFrom": ["game_id"],
           "tableTo": "games",
+          "columnsFrom": ["game_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         },
         "scores_player_id_players_id_fk": {
           "name": "scores_player_id_players_id_fk",
           "tableFrom": "scores",
-          "columnsFrom": ["player_id"],
           "tableTo": "players",
+          "columnsFrom": ["player_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -531,11 +531,11 @@
         "sessions_user_id_users_id_fk": {
           "name": "sessions_user_id_users_id_fk",
           "tableFrom": "sessions",
-          "columnsFrom": ["user_id"],
           "tableTo": "users",
+          "columnsFrom": ["user_id"],
           "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
+          "onDelete": "no action",
+          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -612,13 +612,6 @@
           "primaryKey": false,
           "notNull": false
         },
-        "email_verified": {
-          "name": "email_verified",
-          "type": "boolean",
-          "primaryKey": false,
-          "notNull": true,
-          "default": false
-        },
         "onboarding_completed": {
           "name": "onboarding_completed",
           "type": "boolean",
@@ -659,9 +652,9 @@
             }
           ],
           "isUnique": true,
-          "with": {},
+          "concurrently": false,
           "method": "btree",
-          "concurrently": false
+          "with": {}
         },
         "username_idx": {
           "name": "username_idx",
@@ -674,9 +667,9 @@
             }
           ],
           "isUnique": true,
-          "with": {},
+          "concurrently": false,
           "method": "btree",
-          "concurrently": false
+          "with": {}
         }
       },
       "foreignKeys": {},
@@ -684,23 +677,23 @@
       "uniqueConstraints": {
         "users_email_unique": {
           "name": "users_email_unique",
-          "columns": ["email"],
-          "nullsNotDistinct": false
+          "nullsNotDistinct": false,
+          "columns": ["email"]
         },
         "users_username_unique": {
           "name": "users_username_unique",
-          "columns": ["username"],
-          "nullsNotDistinct": false
+          "nullsNotDistinct": false,
+          "columns": ["username"]
         },
         "users_google_id_unique": {
           "name": "users_google_id_unique",
-          "columns": ["google_id"],
-          "nullsNotDistinct": false
+          "nullsNotDistinct": false,
+          "columns": ["google_id"]
         },
         "users_facebook_id_unique": {
           "name": "users_facebook_id_unique",
-          "columns": ["facebook_id"],
-          "nullsNotDistinct": false
+          "nullsNotDistinct": false,
+          "columns": ["facebook_id"]
         }
       },
       "policies": {},
@@ -717,9 +710,9 @@
           "primaryKey": true,
           "notNull": true
         },
-        "user_id": {
-          "name": "user_id",
-          "type": "integer",
+        "email": {
+          "name": "email",
+          "type": "varchar(255)",
           "primaryKey": false,
           "notNull": true
         },
@@ -744,17 +737,7 @@
         }
       },
       "indexes": {},
-      "foreignKeys": {
-        "user_verifications_user_id_users_id_fk": {
-          "name": "user_verifications_user_id_users_id_fk",
-          "tableFrom": "user_verifications",
-          "columnsFrom": ["user_id"],
-          "tableTo": "users",
-          "columnsTo": ["id"],
-          "onUpdate": "no action",
-          "onDelete": "no action"
-        }
-      },
+      "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {},
       "policies": {},
@@ -804,10 +787,11 @@
     }
   },
   "schemas": {},
+  "sequences": {},
+  "roles": {},
+  "policies": {},
   "views": {
     "public.leaderboard_view": {
-      "name": "leaderboard_view",
-      "schema": "public",
       "columns": {
         "id": {
           "name": "id",
@@ -837,13 +821,12 @@
         }
       },
       "definition": "select row_number() over (order by round((count(case when \"players\".\"winner\" = true then 1 end) * 100.0 / count(*)), 2) desc, count(case when \"players\".\"winner\" = true then 1 end) desc, count(*) desc, avg(\"players\".\"score\") asc) as \"rank\", \"users\".\"id\", \"users\".\"name\", \"users\".\"username\", \"users\".\"avatar\", count(case when \"players\".\"winner\" = true then 1 end) as \"wins\", count(*) as \"total_games\", round((count(case when \"players\".\"winner\" = true then 1 end) * 100.0 / count(*)), 2) as \"win_rate\" from \"users\" inner join \"players\" on \"users\".\"id\" = \"players\".\"user_id\" where \"users\".\"deleted_at\" is null and \"players\".\"user_id\" is not null group by \"users\".\"id\", \"users\".\"name\", \"users\".\"username\", \"users\".\"avatar\" having count(*) >= 10 order by round((count(case when \"players\".\"winner\" = true then 1 end) * 100.0 / count(*)), 2) desc, count(case when \"players\".\"winner\" = true then 1 end) desc, count(*) desc, avg(\"players\".\"score\") asc",
-      "materialized": false,
-      "isExisting": false
+      "name": "leaderboard_view",
+      "schema": "public",
+      "isExisting": false,
+      "materialized": false
     }
   },
-  "sequences": {},
-  "roles": {},
-  "policies": {},
   "_meta": {
     "columns": {},
     "schemas": {},
