@@ -2,6 +2,7 @@ import { Logger } from "@skymo/logger"
 import { type Interaction, MessageFlags } from "discord.js"
 import { handleButtonInteraction } from "./button.js"
 import { handleModalInteraction } from "./modal.js"
+import { handleSelectInteraction } from "./select.js"
 
 export async function handleInteraction(
   interaction: Interaction,
@@ -11,6 +12,8 @@ export async function handleInteraction(
       await handleButtonInteraction(interaction)
     } else if (interaction.isModalSubmit()) {
       await handleModalInteraction(interaction)
+    } else if (interaction.isStringSelectMenu()) {
+      await handleSelectInteraction(interaction)
     }
   } catch (error) {
     Logger.error("Error in interaction handler:", {

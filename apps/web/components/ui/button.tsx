@@ -1,5 +1,6 @@
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
+import { ClassValue } from "clsx"
 import { Loader2Icon } from "lucide-react"
 import * as React from "react"
 import { cn } from "@/lib/utils"
@@ -52,11 +53,15 @@ const loadingContainerVariants = cva(
 )
 
 export interface ButtonProps
-  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "color">,
+  extends Omit<
+      React.ButtonHTMLAttributes<HTMLButtonElement>,
+      "color" | "className"
+    >,
     VariantProps<typeof buttonVariants> {
   asChild?: boolean
   children?: React.ReactNode
   loading?: boolean
+  className?: ClassValue
 }
 
 const Button = ({

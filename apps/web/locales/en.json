@@ -1248,6 +1248,30 @@
         "available": "Username available",
         "taken": "Already taken!"
       }
+    },
+    "PlayAgainButton": {
+      "disabled": "Play Again",
+      "button": "Play Again",
+      "leavebusterMessage": "Complete your leavebuster penalty to play again"
+    },
+    "PenaltyCheck": {
+      "ban": {
+        "title": "Account Banned",
+        "permanent": "This ban is permanent."
+      },
+      "tempban": {
+        "title": "Temporary Ban",
+        "expiresAt": "Ban expires: {date}"
+      }
+    },
+    "LeavebusterModal": {
+      "title": "Leavebuster Penalty",
+      "description": "You left a public game early. Complete this penalty to continue playing.",
+      "progress": "Progress: {completed}/{required}",
+      "timeRemaining": "Time remaining: {time}",
+      "completeButton": "Complete ({time})",
+      "completedButton": "Completed!",
+      "closeButton": "Close"
     }
   },
   "utils": {

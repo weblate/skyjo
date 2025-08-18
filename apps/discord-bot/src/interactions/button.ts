@@ -3,6 +3,7 @@ import {
   ActionRowBuilder,
   type ButtonInteraction,
   ModalBuilder,
+  StringSelectMenuBuilder,
   TextInputBuilder,
   TextInputStyle,
 } from "discord.js"
@@ -51,24 +52,47 @@ async function handleReportValid(
 ): Promise<void> {
   const reportId = extractReportId(interaction.customId)
 
-  const modal = new ModalBuilder()
-    .setCustomId(`valid_report_modal_${reportId}`)
-    .setTitle("Validate Report")
+  // Show penalty type selection menu
+  const penaltyTypeSelect = new StringSelectMenuBuilder()
+    .setCustomId(`penalty_type_${reportId}`)
+    .setPlaceholder("Select penalty type (optional)")
+    .addOptions([
+      {
+        label: "No Penalty (Warning Only)",
+        value: "none",
+        description: "Validate report but apply no penalty",
+      },
+      {
+        label: "Leavebuster",
+        value: "leavebuster",
+        description: "Temporary restriction on joining games",
+      },
+      {
+        label: "Chat Restriction",
+        value: "chat_restrict",
+        description: "Disable chat functionality",
+      },
+      {
+        label: "Temporary Ban",
+        value: "tempban",
+        description: "Temporary ban from playing games",
+      },
+      {
+        label: "Permanent Ban",
+        value: "ban",
+        description: "Permanent account ban",
+      },
+    ])
 
-  const reasonInput = new TextInputBuilder()
-    .setCustomId("reason")
-    .setLabel("Reason for validation")
-    .setStyle(TextInputStyle.Paragraph)
-    .setPlaceholder("Enter the reason for validating this report...")
-    .setRequired(true)
-    .setMaxLength(500)
-
-  const actionRow = new ActionRowBuilder<TextInputBuilder>().addComponents(
-    reasonInput,
+  const row = new ActionRowBuilder<StringSelectMenuBuilder>().addComponents(
+    penaltyTypeSelect,
   )
-  modal.addComponents(actionRow)
 
-  await interaction.showModal(modal)
+  await interaction.reply({
+    content: "Select a penalty to apply:",
+    components: [row],
+    ephemeral: true,
+  })
 }
 
 function extractReportId(customId: string): string {

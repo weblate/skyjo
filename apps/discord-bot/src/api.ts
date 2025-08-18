@@ -65,4 +65,34 @@ export class ApiClient {
       return { isActive: false, hasPlayer: false }
     }
   }
+
+  async applyPenalty(penaltyData: {
+    targetUserId?: number | null
+    targetGuestId?: string | null
+    type: string
+    level?: number
+    durationMinutes?: number
+    reason: string
+    reportId: number
+  }): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseUrl}/penalties/apply`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: `skymo-session=${ENV.API_SESSION_ID}`,
+        },
+        body: JSON.stringify(penaltyData),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Failed to apply penalty: ${response.statusText}`)
+      }
+
+      Logger.info(`Penalty applied successfully`, { penaltyData })
+    } catch (error) {
+      Logger.error("Failed to apply penalty:", { error, penaltyData })
+      throw error
+    }
+  }
 }

@@ -1246,6 +1246,30 @@
       "description": "Il semble que vous étiez dans une partie. Voulez-vous vous reconnecter ?",
       "dismiss-button": "Ignorer",
       "reconnect-button": "Se reconnecter"
+    },
+    "PlayAgainButton": {
+      "disabled": "Rejouer",
+      "button": "Rejouer",
+      "leavebusterMessage": "Terminez votre pénalité de déconnexion pour rejouer"
+    },
+    "PenaltyCheck": {
+      "ban": {
+        "title": "Compte Banni",
+        "permanent": "Ce bannissement est permanent."
+      },
+      "tempban": {
+        "title": "Bannissement Temporaire",
+        "expiresAt": "Le bannissement expire le : {date}"
+      }
+    },
+    "LeavebusterModal": {
+      "title": "Pénalité de Déconnexion",
+      "description": "Vous avez quitté une partie publique prématurément. Terminez cette pénalité pour continuer à jouer.",
+      "progress": "Progression : {completed}/{required}",
+      "timeRemaining": "Temps restant : {time}",
+      "completeButton": "Terminer ({time})",
+      "completedButton": "Terminé !",
+      "closeButton": "Fermer"
     }
   },
   "utils": {

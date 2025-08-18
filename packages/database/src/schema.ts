@@ -160,6 +160,7 @@ export const playerTable = pgTable("players", {
     .notNull()
     .references(() => gameTable.id),
   userId: integer("user_id").references(() => userTable.id),
+  guestId: varchar("guest_id", { length: 255 }),
   winner: boolean("winner"),
   avatar: avatarEnum("avatar").notNull(),
   name: varchar("name", { length: 20 }).notNull(),
@@ -229,6 +230,40 @@ export const reportTable = pgTable("reports", {
   deletedAt: timestamp("deleted_at", { withTimezone: true }),
 })
 export type ReportDb = InferSelectModel<typeof reportTable>
+
+export const penaltyTypeEnum = pgEnum("penalty_type", [
+  "leavebuster",
+  "chat_restrict",
+  "tempban",
+  "ban",
+])
+export type PenaltyType = (typeof penaltyTypeEnum.enumValues)[number]
+
+export const penaltyTable = pgTable(
+  "penalties",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("user_id").references(() => userTable.id),
+    guestId: varchar("guest_id", { length: 255 }),
+    reportId: integer("report_id").references(() => reportTable.id),
+    type: penaltyTypeEnum("type").notNull(),
+    level: integer("level"), // Only for leavebuster (1-5)
+    reason: text("reason").notNull(),
+    // For counter-based leavebuster
+    completionsRequired: integer("completions_required"),
+    completionsDone: integer("completions_done").default(0),
+    // For time-based penalties (chat_restrict, tempban)
+    expiresAt: timestamp("expires_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (t) => [
+    uniqueIndex("penalties_user_idx").on(t.userId),
+    uniqueIndex("penalties_guest_idx").on(t.guestId),
+  ],
+)
+export type PenaltyDb = InferSelectModel<typeof penaltyTable>
 
 export const leaderboardView = pgView("leaderboard_view").as((qb) => {
   return qb
