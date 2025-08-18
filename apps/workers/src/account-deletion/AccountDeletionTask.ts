@@ -137,7 +137,7 @@ export class AccountDeletionTask {
           .where(eq(passwordResetTable.userId, userId))
         await tx
           .delete(userVerificationTable)
-          .where(eq(userVerificationTable.userId, userId))
+          .where(eq(userVerificationTable.email, user.email))
       })
 
       await mailerQueue.add("account-deleted", {
