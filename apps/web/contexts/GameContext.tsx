@@ -202,8 +202,12 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       if (!game?.status) return
 
       const inGame = game?.status === CoreConstants.GAME_STATUS.PLAYING
-      if (inGame) event.preventDefault()
-      else clearLastGameCookie()
+      if (inGame) {
+        event.preventDefault()
+        // For public games, disconnect properly to trigger forfeit
+        const isPublic = !game?.settings.private
+        if (isPublic) socket?.disconnect()
+      } else clearLastGameCookie()
     }
 
     window.addEventListener("beforeunload", onUnload)
@@ -214,7 +218,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       socket!.off("disconnect", onDisconnect)
       window.removeEventListener("beforeunload", onUnload)
     }
-  }, [game?.status])
+  }, [game?.status, game?.settings.private])
 
   // Get the game when the tab is visible
   useEffect(() => {

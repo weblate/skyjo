@@ -37,8 +37,16 @@ const playerRouter = (socket: GameSocket) => {
     socketErrorWrapper(async (reason: DisconnectReason) => {
       Logger.info(`Socket ${socket.id} disconnected for reason ${reason}`)
 
-      if (reason === "ping timeout") await instance.onConnectionLost(socket)
-      else await instance.onLeave(socket)
+      if (reason === "client namespace disconnect") {
+        // User intentionally disconnected (tab close, navigation, socket.disconnect())
+        await instance.onIntentionalDisconnect(socket)
+      } else if (reason === "ping timeout") {
+        // Connection lost
+        await instance.onConnectionLost(socket)
+      } else {
+        // Other reasons
+        await instance.onLeave(socket)
+      }
     }),
   )
 

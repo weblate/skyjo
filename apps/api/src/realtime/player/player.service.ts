@@ -161,6 +161,28 @@ export class PlayerService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
+  async onIntentionalDisconnect(socket: GameSocket) {
+    try {
+      const game = await this.getGame(socket.data.gameCode)
+
+      // For public games during play, forfeit the player
+      if (!game.settings.private && game.isPlaying()) {
+        await this.onForfeit(socket)
+      } else {
+        await this.onLeave(socket)
+      }
+    } catch (error) {
+      if (
+        error instanceof CError &&
+        error.code === ErrorConstants.ERROR.GAME_NOT_FOUND
+      ) {
+        return
+      } else {
+        throw error
+      }
+    }
+  }
+
   async onForfeit(socket: GameSocket) {
     try {
       const game = await this.getGame(socket.data.gameCode)
