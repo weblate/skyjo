@@ -112,7 +112,7 @@ const GameDropdownMenuComponent = () => {
           <DropdownMenuGroup>
             <DropdownMenuItem>
               <a
-                href="https://discord.gg/uSmGjhzZAE"
+                href={process.env.NEXT_PUBLIC_DISCORD_URL}
                 target="_blank"
                 className="flex flex-row items-center mr-2"
               >
