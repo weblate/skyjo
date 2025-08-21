@@ -110,10 +110,14 @@ export class GameRepository extends RedisClient {
     return player !== null
   }
 
-  async updateGame(game: Game, operation?: GameOperation) {
+  async updateGame(
+    game: Game,
+    operation?: GameOperation,
+    expectedVersion?: number,
+  ) {
     if (operation) {
       // Use atomic transaction to prevent race conditions
-      await this.atomicGameUpdate(game, operation)
+      await this.atomicGameUpdate(game, operation, expectedVersion)
     } else {
       await this.setGame(game)
     }
@@ -121,7 +125,11 @@ export class GameRepository extends RedisClient {
     if (!game.settings.private) await this.updateInPublicGames(game)
   }
 
-  private async atomicGameUpdate(game: Game, operation: GameOperation) {
+  private async atomicGameUpdate(
+    game: Game,
+    operation: GameOperation,
+    expectedVersion?: number,
+  ) {
     const client = await RedisClient.getClient()
     const gameKey = this.getGameLatestStateKey(game.code)
 
@@ -132,6 +140,23 @@ export class GameRepository extends RedisClient {
       })) as number[] | null
 
       const currentVersion = currentVersionResult?.[0] ?? game.stateVersion
+
+      // Check for version mismatch if expectedVersion is provided
+      if (expectedVersion !== undefined && currentVersion !== expectedVersion) {
+        throw new CError(
+          "Game state version mismatch - concurrent modification detected",
+          {
+            code: ErrorConstants.ERROR.VERSION_MISMATCH,
+            level: "info",
+            meta: {
+              gameCode: game.code,
+              expectedVersion,
+              currentVersion,
+            },
+          },
+        )
+      }
+
       const newStateVersion = currentVersion + 1
 
       // Update game object with the new version

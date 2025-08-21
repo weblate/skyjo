@@ -49,11 +49,12 @@ export abstract class BaseService {
   protected async updateAndSendGame(
     game: Game,
     stateManager: GameStateTracker,
+    expectedVersion?: number,
   ) {
     const operations = stateManager.getChanges()
     if (!operations) return
 
-    await this.redis.updateGame(game, operations)
+    await this.redis.updateGame(game, operations, expectedVersion)
 
     this.socketManager.sendToRoom({
       room: game.code,

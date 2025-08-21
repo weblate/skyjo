@@ -280,28 +280,74 @@ export class LobbyService extends BaseService {
     game: Game,
     player: Player,
   ) {
-    if (!game.isInLobby()) {
-      throw new CError(
-        `Player try to join a game but the game is not in the lobby.`,
-        {
-          code: ErrorConstants.ERROR.GAME_ALREADY_STARTED,
-          level: "info",
-          meta: {
-            game: game.serialize(),
-            socketId: socket.id,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
-          },
-        },
-      )
+    const MAX_RETRIES = 3
+
+    for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
+      try {
+        // Re-fetch game on retry to get latest state
+        if (attempt > 0) {
+          game = await this.getGame(game.code)
+        }
+
+        // Check if game is in lobby
+        if (!game.isInLobby()) {
+          throw new CError(
+            `Player try to join a game but the game is not in the lobby.`,
+            {
+              code: ErrorConstants.ERROR.GAME_ALREADY_STARTED,
+              level: "info",
+              meta: {
+                game: game.serialize(),
+                socketId: socket.id,
+                gameCode: game.code,
+                playerId: socket.data.playerId,
+              },
+            },
+          )
+        }
+
+        // Check if game is already full before attempting to add
+        if (game.isFull()) {
+          throw new CError("Cannot add player, game is full", {
+            code: ErrorConstants.ERROR.GAME_IS_FULL,
+            level: "info",
+            meta: {
+              game: game.serialize(),
+              socketId: socket.id,
+              gameCode: game.code,
+              playerId: player.id,
+            },
+          })
+        }
+
+        // Remember the version before modification
+        const expectedVersion = game.stateVersion
+
+        const stateManager = new GameStateTracker(game)
+
+        game.addPlayer(player)
+        game.updatedAt = new Date()
+
+        // Try atomic update with version check
+        await this.updateAndSendGame(game, stateManager, expectedVersion)
+
+        // Success! Exit the retry loop
+        return
+      } catch (error) {
+        // Check if it's a version mismatch and we have retries left
+        if (
+          error instanceof CError &&
+          error.code === ErrorConstants.ERROR.VERSION_MISMATCH &&
+          attempt < MAX_RETRIES - 1
+        ) {
+          // Version conflict - retry with fresh data
+          continue
+        }
+
+        // Other error or max retries reached - rethrow
+        throw error
+      }
     }
-
-    const stateManager = new GameStateTracker(game)
-
-    game.addPlayer(player)
-    game.updatedAt = new Date()
-
-    await this.updateAndSendGame(game, stateManager)
   }
   //#endregion
 }

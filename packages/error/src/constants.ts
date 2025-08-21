@@ -18,6 +18,7 @@ export class Constants {
     STATE_VERSION_AHEAD: "state-version-ahead",
     STATE_VERSION_BEHIND: "state-version-behind",
     STATE_VERSION_NULL: "state-version-null",
+    VERSION_MISMATCH: "version-mismatch",
     TOO_MANY_REQUESTS: "too-many-requests",
     GAME_ALREADY_PROCESSING_AFK: "game-already-processing-afk",
     PLAYER_ALREADY_CONNECTED: "player-already-connected",
