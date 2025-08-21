@@ -1,7 +1,7 @@
 import { Locales } from "@skymo/shared/constants"
 import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
-import CallbackLogic from "@/app/[locale]/(auth)/auth/callback/CallbackPage"
+import CallbackLogic from "@/app/[locale]/auth/callback/CallbackPage"
 import { routing } from "@/i18n/routing"
 
 interface OAuthCallbackLayoutParams {
