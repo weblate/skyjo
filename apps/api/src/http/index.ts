@@ -33,9 +33,8 @@ const httpApp = new Hono()
   .route("/users", userRouter)
   .onError((error, c) => {
     if (error instanceof HTTPException) {
-      Logger.error("HTTPException", {
-        ...error.getResponse(),
-      })
+      handleHttpException(error)
+
       return c.json({ error: error.message }, error.status)
     }
 
@@ -46,4 +45,27 @@ const httpApp = new Hono()
 
     return c.json({ error: "internal-server-error" }, 500)
   })
+
+const handleHttpException = (error: HTTPException) => {
+  if (error.status === 500) {
+    Logger.critical(`HTTPException: ${error.message}. Cause: ${error.cause}`, {
+      message: error.message,
+      cause: error.cause,
+      status: error.status,
+      stack: error.stack,
+      res: error.res,
+      response: error.getResponse(),
+    })
+  } else {
+    Logger.info(`HTTPException: ${error.message}. Cause: ${error.cause}`, {
+      message: error.message,
+      cause: error.cause,
+      status: error.status,
+      stack: error.stack,
+      res: error.res,
+      response: error.getResponse(),
+    })
+  }
+}
+
 export { httpApp }
