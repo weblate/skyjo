@@ -3,7 +3,10 @@ import { cva, VariantProps } from "class-variance-authority"
 import Image from "next/image"
 import { useTranslations } from "next-intl"
 import { UserContextMenu } from "@/components/UserContextMenu"
-import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
+import {
+  ContextMenu,
+  ContextMenuTriggerWithLeftClick,
+} from "@/components/ui/context-menu"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 
@@ -55,6 +58,7 @@ interface UserAvatarProps extends VariantProps<typeof containerVariants> {
   allowContextMenu?: boolean
   showName?: boolean
   animate?: boolean
+  leftClickToOpen?: boolean
 }
 
 const UserAvatar = ({
@@ -63,6 +67,7 @@ const UserAvatar = ({
   allowContextMenu = true,
   showName = true,
   animate = false,
+  leftClickToOpen = false,
 }: UserAvatarProps) => {
   const tAvatar = useTranslations("utils.avatar")
   const { player: currentPlayer } = useGame()
@@ -73,9 +78,10 @@ const UserAvatar = ({
 
   return (
     <ContextMenu>
-      <ContextMenuTrigger
+      <ContextMenuTriggerWithLeftClick
         disabled={disableContextMenu}
         className={containerVariants({ size })}
+        leftClickToOpen={leftClickToOpen}
       >
         <Image
           src={`/avatars/${player.avatar}.svg`}
@@ -94,7 +100,7 @@ const UserAvatar = ({
         {player.name && showName && (
           <p className={textVariants({ size })}>{player.name}</p>
         )}
-      </ContextMenuTrigger>
+      </ContextMenuTriggerWithLeftClick>
       {!disableContextMenu && <UserContextMenu player={player} />}
     </ContextMenu>
   )

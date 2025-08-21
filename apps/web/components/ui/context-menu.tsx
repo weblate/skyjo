@@ -1,14 +1,58 @@
 "use client"
 
 import * as ContextMenuPrimitive from "@radix-ui/react-context-menu"
+import { cva } from "class-variance-authority"
 import { Check, ChevronRight, Circle } from "lucide-react"
 import * as React from "react"
-
 import { cn } from "@/lib/utils"
 
 const ContextMenu = ContextMenuPrimitive.Root
 
 const ContextMenuTrigger = ContextMenuPrimitive.Trigger
+
+const contextMenuTriggerWithLeftClickVariants = cva("cursor-default", {
+  variants: {
+    leftClickToOpen: {
+      true: "[&:not([data-disabled])]:cursor-pointer",
+      false: "",
+    },
+  },
+})
+const ContextMenuTriggerWithLeftClick = React.forwardRef<
+  React.ElementRef<typeof ContextMenuPrimitive.Trigger>,
+  React.ComponentPropsWithoutRef<typeof ContextMenuPrimitive.Trigger> & {
+    leftClickToOpen?: boolean
+  }
+>(({ leftClickToOpen = false, onClick, ...props }, ref) => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    if (leftClickToOpen) {
+      e.preventDefault()
+      const contextMenuEvent = new MouseEvent("contextmenu", {
+        bubbles: true,
+        cancelable: true,
+        clientX: e.clientX,
+        clientY: e.clientY,
+      })
+      e.currentTarget.dispatchEvent(contextMenuEvent)
+    }
+    onClick?.(e)
+  }
+
+  return (
+    <ContextMenuPrimitive.Trigger
+      ref={ref}
+      onClick={handleClick}
+      {...props}
+      className={cn(
+        contextMenuTriggerWithLeftClickVariants({
+          leftClickToOpen,
+        }),
+        props.className,
+      )}
+    />
+  )
+})
+ContextMenuTriggerWithLeftClick.displayName = "ContextMenuTriggerWithLeftClick"
 
 const ContextMenuGroup = ContextMenuPrimitive.Group
 
@@ -222,6 +266,7 @@ ContextMenuShortcut.displayName = "ContextMenuShortcut"
 export {
   ContextMenu,
   ContextMenuTrigger,
+  ContextMenuTriggerWithLeftClick,
   ContextMenuContent,
   ContextMenuItem,
   ContextMenuCheckboxItem,

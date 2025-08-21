@@ -62,7 +62,12 @@ export const LobbyPlayers = ({ className }: LobbyPlayersProps) => {
       )}
       <div className="flex flex-row flex-wrap justify-center gap-2 mt-2 lg:mt-5">
         {game.players.map((player) => (
-          <UserAvatar key={player.id} player={player} size="small" />
+          <UserAvatar
+            key={player.id}
+            player={player}
+            size="small"
+            leftClickToOpen={true}
+          />
         ))}
       </div>
     </div>

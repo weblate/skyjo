@@ -6,7 +6,12 @@ import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { UserAvatar } from "@/components/UserAvatar"
+import { UserContextMenu } from "@/components/UserContextMenu"
 import { Button } from "@/components/ui/button"
+import {
+  ContextMenu,
+  ContextMenuTriggerWithLeftClick,
+} from "@/components/ui/context-menu"
 import {
   MotionTableHeader,
   MotionTableRow,
@@ -17,12 +22,12 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { useGame } from "@/contexts/GameContext"
-import { Link, useRouter } from "@/i18n/routing"
+import { useRouter } from "@/i18n/routing"
 import { formatScoreDisplay } from "@/lib/penalty-utils"
 import { cn, getRedirectionUrl } from "@/lib/utils"
 
 const ResultsPage = () => {
-  const { player, game, actions } = useGame()
+  const { player: currentPlayer, game, actions } = useGame()
   const router = useRouter()
   const t = useTranslations("pages.ResultsPage")
   const [visibleRows, setVisibleRows] = useState<PlayerToJson[]>([])
@@ -145,16 +150,20 @@ const ResultsPage = () => {
                         isConnected ? "grayscale-0" : "grayscale",
                       )}
                     >
-                      {player.username ? (
-                        <Link
-                          href={`/u/${player.username}`}
-                          target="_blank"
-                          className="underline underline-offset-2 flex flex-row gap-2 items-center"
-                        >
-                          <Player player={player} />
-                        </Link>
-                      ) : (
+                      {player.id === currentPlayer.id ? (
                         <Player player={player} />
+                      ) : (
+                        <ContextMenu>
+                          <ContextMenuTriggerWithLeftClick
+                            asChild
+                            leftClickToOpen={true}
+                          >
+                            <div className="flex flex-row gap-2 items-center cursor-pointer">
+                              <Player player={player} />
+                            </div>
+                          </ContextMenuTriggerWithLeftClick>
+                          <UserContextMenu player={player} />
+                        </ContextMenu>
                       )}
                     </TableCell>
                     {player.scores.map((score, scoreIndex) => (
@@ -212,7 +221,7 @@ const ResultsPage = () => {
                   hasMoreThanOneConnectedPlayer ? "" : "mt-6",
                 )}
               >
-                {player.wantsReplay
+                {currentPlayer.wantsReplay
                   ? t("replay-button.cancel")
                   : t("replay-button.replay")}
               </Button>
@@ -240,7 +249,7 @@ const Player = ({ player }: { player: PlayerToJson }) => {
         player={player}
         size="small"
         showName={false}
-        allowContextMenu={false}
+        allowContextMenu={true}
       />
       <p className="text-sm text-ellipsis overflow-hidden whitespace-nowrap">
         {player.name}

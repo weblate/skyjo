@@ -1130,7 +1130,7 @@
         "ban": "Bannir {name}",
         "mute": "Mettre {name} en sourdine",
         "unmute": "Réactiver le son de {name}",
-        "transfer-host": "{name} est maintenant l'hôte"
+        "transfer-host": "Transférer l'hôte à {name}"
       }
     },
     "KickVote": {

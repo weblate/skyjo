@@ -1136,13 +1136,14 @@
     },
     "Avatar": {
       "context-menu": {
+        "view-profile": "View {name}'s profile",
         "report": "Report {name}",
         "kick": "Kick {name}",
         "vote-to-kick": "Vote to kick {name}",
         "ban": "Ban {name}",
         "mute": "Mute {name}",
         "unmute": "Unmute {name}",
-        "transfer-host": "{name} is now the host"
+        "transfer-host": "Transfer host to {name}"
       }
     },
     "KickVote": {

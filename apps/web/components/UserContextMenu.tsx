@@ -5,12 +5,14 @@ import {
   MessageSquareIcon,
   MessageSquareOffIcon,
   ShieldBanIcon,
+  UserRoundIcon,
   UserRoundXIcon,
 } from "lucide-react"
 import { useTranslations } from "next-intl"
 import {
   ContextMenuContent,
   ContextMenuItem,
+  ContextMenuSeparator,
 } from "@/components/ui/context-menu"
 import { useBan } from "@/contexts/BanContext"
 import { useChat } from "@/contexts/ChatContext"
@@ -18,6 +20,7 @@ import { useGame } from "@/contexts/GameContext"
 import { useHostTransfer } from "@/contexts/HostTransferContext"
 import { useKick } from "@/contexts/KickContext"
 import { useReport } from "@/contexts/ReportContext"
+import { Link } from "@/i18n/routing"
 import { isHost } from "@/lib/game"
 
 interface UserContextMenuProps {
@@ -52,18 +55,34 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
 
   return (
     <ContextMenuContent>
+      {player.username && (
+        <>
+          <ContextMenuItem asChild>
+            <Link href={`/u/${player.username}`} target="_blank">
+              <UserRoundIcon className="w-4 h-4 mr-2" />
+              {t("context-menu.view-profile", { name: player.name })}
+            </Link>
+          </ContextMenuItem>
+          <ContextMenuSeparator />
+        </>
+      )}
+
       <ContextMenuItem onClick={() => reportPlayer(player.id, reportMessageId)}>
         <FrownIcon className="w-4 h-4 mr-2" />
         {t("context-menu.report", { name: player.name })}
       </ContextMenuItem>
 
       {isCurrentUserHost && player.id !== currentPlayer.id && (
-        <ContextMenuItem onClick={handleTransferHost}>
-          <CrownIcon className="w-4 h-4 mr-2" />
-          {t("context-menu.transfer-host", { name: player.name })}
-        </ContextMenuItem>
+        <>
+          <ContextMenuSeparator />
+          <ContextMenuItem onClick={handleTransferHost}>
+            <CrownIcon className="w-4 h-4 mr-2" />
+            {t("context-menu.transfer-host", { name: player.name })}
+          </ContextMenuItem>
+        </>
       )}
 
+      <ContextMenuSeparator />
       <ContextMenuItem onClick={handleKickPlayer} disabled={cannotKickPlayer}>
         <UserRoundXIcon className="w-4 h-4 mr-2" />
         {t(
@@ -82,6 +101,7 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
         </ContextMenuItem>
       )}
 
+      <ContextMenuSeparator />
       {mutedPlayers.includes(player.name) ? (
         <ContextMenuItem onClick={() => unmutePlayer(player.name)}>
           <MessageSquareIcon className="w-4 h-4 mr-2" />
