@@ -1216,6 +1216,69 @@ describe("Game", () => {
       // Restore the mock
       disconnectSpy.mockRestore()
     })
+
+    it("should transfer host when host leaves finished game during replay flow", async () => {
+      // Setup: Game is finished, player B is host
+      game.addPlayer(opponent)
+      game.status = Constants.GAME_STATUS.FINISHED
+      game.hostId = opponent.id // opponent (player B) is the host
+
+      // Verify initial state
+      expect(game.hostId).toBe(opponent.id)
+      expect(game.isHost(opponent.id)).toBe(true)
+      expect(game.isHost(player.id)).toBe(false)
+
+      // When host (opponent/player B) leaves the finished game
+      await game.setPlayerToLeave(opponent)
+
+      // Verify host was transferred to remaining player
+      expect(game.hostId).toBe(player.id)
+      expect(game.isHost(player.id)).toBe(true)
+      expect(game.isHost(opponent.id)).toBe(false)
+
+      // Verify opponent's status is set to LEAVE (not disconnected since game is finished)
+      expect(opponent.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+    })
+
+    it("should handle the original bug scenario: host leaves after other player replays", async () => {
+      // Scenario: End of game with Player B as host
+      game.addPlayer(opponent)
+      game.status = Constants.GAME_STATUS.FINISHED
+      game.hostId = opponent.id // Player B (opponent) is host
+
+      // Ensure both players are connected initially
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      opponent.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+
+      // Step 1: Player A (player) wants to replay
+      await game.togglePlayerReplay(player.id)
+      expect(player.wantsReplay).toBe(true)
+      expect(opponent.wantsReplay).toBe(false) // Player B hasn't chosen yet
+
+      // Verify game is still finished (not started because not all players want replay)
+      expect(game.status).toBe(Constants.GAME_STATUS.FINISHED)
+      expect(game.hostId).toBe(opponent.id) // Player B still host
+
+      // Step 2: Player B (host) leaves
+      await game.setPlayerToLeave(opponent)
+
+      // Verify the fix: When host leaves after a player wants replay,
+      // the new game should start automatically and Player A should be the host
+      expect(game.status).toBe(Constants.GAME_STATUS.LOBBY) // New game started automatically
+      expect(game.hostId).toBe(player.id) // Player A is now host
+      expect(game.isHost(player.id)).toBe(true)
+      expect(game.isHost(opponent.id)).toBe(false)
+
+      // Verify Player B's status is LEAVE
+      expect(opponent.connectionStatus).toBe(Constants.CONNECTION_STATUS.LEAVE)
+      // Verify Player A is still connected
+      expect(player.connectionStatus).toBe(
+        Constants.CONNECTION_STATUS.CONNECTED,
+      )
+
+      // Verify Player A can control the new game as host
+      // (this was the original bug - Player A would not be host)
+    })
   })
 
   describe("resetRound", () => {

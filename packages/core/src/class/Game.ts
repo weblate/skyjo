@@ -166,6 +166,8 @@ export class Game implements GameInterface {
   }
 
   async setPlayerToLeave(player: Player) {
+    this.handleHostTransfer(player)
+
     if (!this.isPlaying() && !this.isFinished()) {
       await this.disconnectPlayer(player)
     } else {
@@ -185,17 +187,14 @@ export class Game implements GameInterface {
       await this.operationManager.kickSocket(socket)
     }
 
-    // Skip host change if this is the last player in lobby - let Redis TTL handle cleanup
-    const isLastPlayerInLobby = this.isInLobby() && this.players.length === 1
-    if (this.isHost(player.id) && !isLastPlayerInLobby) {
-      this.changeHost()
-    }
+    this.handleHostTransfer(player)
 
     if (this.isPlaying() && this.getCurrentPlayer()?.id === player.id) {
       await this.finishTurn({ wasAfk: false })
     }
 
     // Skip player removal if this is the last player in lobby - let Redis TTL handle cleanup
+    const isLastPlayerInLobby = this.isInLobby() && this.players.length === 1
     if (!this.isPlaying() && !isLastPlayerInLobby) {
       this.players = this.players.filter((p) => p.id !== player.id)
     }
@@ -248,6 +247,16 @@ export class Game implements GameInterface {
     if (players.length === 0) return
 
     this.hostId = players[0].id
+  }
+
+  private handleHostTransfer(player: Player) {
+    if (this.isHost(player.id)) {
+      // Skip host change if this is the last player in lobby - let Redis TTL handle cleanup
+      const isLastPlayerInLobby = this.isInLobby() && this.players.length === 1
+      if (!isLastPlayerInLobby) {
+        this.changeHost()
+      }
+    }
   }
 
   isFull() {
