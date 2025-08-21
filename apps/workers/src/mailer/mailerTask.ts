@@ -82,7 +82,7 @@ export class MailerTask {
 
     if (templateName === "account-deleted") {
       return {
-        from: "Skymo <no-reply@skymo.online>",
+        from: "Skymo <support@skymo.online>",
         subject: getAccountDeletedEmailSubject(locale),
         react: AccountDeletedEmail,
       } as EmailTemplateReact<T>
