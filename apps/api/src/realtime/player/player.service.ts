@@ -81,6 +81,13 @@ export class PlayerService extends BaseService {
       await this.sendServerMessage(game.code, player.name, messageType)
 
       await this.updateAndSendGame(game, stateManager)
+
+      // Clean up empty games that are finished or stopped
+      const hasNoConnectedPlayers = game.getConnectedPlayers().length === 0
+      if (hasNoConnectedPlayers && !game.isPlaying()) {
+        await this.redis.removeGame(game.code)
+      }
+
       await socket.leave(game.code)
     } catch (error) {
       if (
@@ -215,6 +222,13 @@ export class PlayerService extends BaseService {
       await this.sendServerMessage(game.code, player.name, messageType)
 
       await this.updateAndSendGame(game, stateManager)
+
+      // Clean up empty games that are finished or stopped
+      const hasNoConnectedPlayers = game.getConnectedPlayers().length === 0
+      if (hasNoConnectedPlayers && (game.isStopped() || game.isFinished())) {
+        await this.redis.removeGame(game.code)
+      }
+
       await socket.leave(game.code)
     } catch (error) {
       if (

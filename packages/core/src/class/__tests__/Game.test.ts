@@ -2139,19 +2139,19 @@ describe("Game", () => {
       expect(game.status).toBe(Constants.GAME_STATUS.STOPPED)
     })
 
-    it("should not remove game if no more players and game is not playing (disabled for mobile stability)", async () => {
+    it("should remove game if no more players and game is not playing", async () => {
       game.players = [player]
 
       const removeGameSpy = vi.spyOn(game["operationManager"], "removeGame")
 
       await game.disconnectPlayer(player)
 
-      expect(removeGameSpy).not.toHaveBeenCalled()
+      expect(removeGameSpy).toHaveBeenCalled()
 
       removeGameSpy.mockClear()
     })
 
-    it("should not remove game if no more players and game is playing", async () => {
+    it("should remove game if no more players and game is playing", async () => {
       game.players = [player]
       game.status = Constants.GAME_STATUS.PLAYING
 
@@ -2159,12 +2159,12 @@ describe("Game", () => {
 
       await game.disconnectPlayer(player)
 
-      expect(removeGameSpy).not.toHaveBeenCalled()
+      expect(removeGameSpy).toHaveBeenCalled()
 
       removeGameSpy.mockClear()
     })
 
-    it("should not remove the game if no players are left (disabled for mobile stability)", async () => {
+    it("should remove the game if no players are left", async () => {
       game.status = Constants.GAME_STATUS.LOBBY // Ensure we're not in playing mode
 
       const mockOperationManager = {
@@ -2190,8 +2190,7 @@ describe("Game", () => {
       // Disconnect the only player
       await testGame.disconnectPlayer(player)
 
-      // Verify removeGame was NOT called (behavior disabled for mobile stability)
-      expect(mockOperationManager.removeGame).not.toHaveBeenCalled()
+      expect(mockOperationManager.removeGame).toHaveBeenCalled()
     })
 
     it("should set game status to STOPPED if minimum players are not connected while playing", async () => {

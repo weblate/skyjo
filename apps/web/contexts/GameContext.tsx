@@ -450,7 +450,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   const leave = (canReconnect = false) => {
     toast.dismiss()
 
-    if (!canReconnect) localStorage.removeItem("lastGame")
+    if (!canReconnect) clearLastGameCookie()
 
     socket!.emit("leave")
   }

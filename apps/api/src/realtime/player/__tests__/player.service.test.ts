@@ -415,7 +415,7 @@ describe("PlayerService", () => {
 
       await service.onLeave(socket)
 
-      expect(removeGameSpy).not.toHaveBeenCalledWith(game.code)
+      expect(removeGameSpy).toHaveBeenCalledWith(game.code)
 
       removeGameSpy.mockClear()
     })

@@ -193,9 +193,7 @@ export class Game implements GameInterface {
       await this.finishTurn({ wasAfk: false })
     }
 
-    // Skip player removal if this is the last player in lobby - let Redis TTL handle cleanup
-    const isLastPlayerInLobby = this.isInLobby() && this.players.length === 1
-    if (!this.isPlaying() && !isLastPlayerInLobby) {
+    if (!this.isPlaying()) {
       this.players = this.players.filter((p) => p.id !== player.id)
     }
 
@@ -209,11 +207,12 @@ export class Game implements GameInterface {
 
     if (this.shouldStopGame()) await this.stopGame()
 
-    // Commented out to prevent automatic removal of empty games when all players disconnect
-    // This helps resolve mobile disconnection issues
-    // if (this.players.length === 0) {
-    //   await this.operationManager.removeGame(this.code)
-    // }
+    // Remove game if no more players and game is not playing
+    const hasNoConnectedPlayers = this.getConnectedPlayers().length === 0
+    const shouldRemove = hasNoConnectedPlayers && !this.isPlaying()
+    if (shouldRemove) {
+      await this.operationManager.removeGame(this.code)
+    }
   }
 
   isHost(playerId: string) {
