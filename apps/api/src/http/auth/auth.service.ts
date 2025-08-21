@@ -149,7 +149,7 @@ export async function loginGoogle(
   const email = claims.email
   const normalizedEmail = normalizeEmail(email)
   const locale = locales.find((l) => l === claims?.locale) ?? "en"
-  const userRecord = await db
+  const [user] = await db
     .select()
     .from(userTable)
     .where(
@@ -159,11 +159,10 @@ export async function loginGoogle(
       ),
     )
     .limit(1)
-  const user = userRecord?.[0]
   let userId = user?.id
 
-  // If the user exists and has no googleId, set the googleId
-  if (user && user.googleId === null) {
+  // If the user exists and has a different googleId, set the googleId
+  if (user && user.googleId !== googleId) {
     await db
       .update(userTable)
       .set({ googleId })
