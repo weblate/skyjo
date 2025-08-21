@@ -332,11 +332,6 @@ export class Game implements GameInterface {
     row: number
     wasAfk?: boolean
   }) {
-    console.log(
-      this.isPlaying(),
-      this.isRoundRevealCards(),
-      player.hasRevealedCardCount(this.settings.initialTurnedCount),
-    )
     if (
       !this.isPlaying() ||
       !this.isRoundRevealCards() ||

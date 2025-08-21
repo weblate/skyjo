@@ -1,5 +1,6 @@
 import { Locales } from "@skymo/shared/constants"
 import { RedirectType } from "next/dist/client/components/redirect-error"
+import ReconnectPrivateGameModal from "@/components/ReconnectPrivateGameModal"
 import { redirect } from "@/i18n/routing"
 import { canReconnect } from "@/utils/canReconnect"
 
@@ -22,5 +23,12 @@ export default async function SocketLayout(props: Readonly<LocaleLayoutProps>) {
     )
   }
 
-  return props.children
+  return (
+    <>
+      {lastGame && isPrivate && (
+        <ReconnectPrivateGameModal lastGame={lastGame} />
+      )}
+      {props.children}
+    </>
+  )
 }
