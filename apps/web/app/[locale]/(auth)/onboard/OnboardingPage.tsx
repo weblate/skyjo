@@ -4,6 +4,7 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { OnboardingError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import {
+  Onboarding,
   onboardingSchema,
   onboardingWithPasswordSchema,
   passwordSchema,
@@ -13,7 +14,6 @@ import { useTranslations } from "next-intl"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
-import { z } from "zod"
 import { PasswordRequirements } from "@/components/PasswordRequirements"
 import SelectAvatar from "@/components/SelectAvatar"
 import { Button } from "@/components/ui/button"
@@ -72,17 +72,6 @@ const OnboardingPage = () => {
 
   const { usernameAvailability } = useUsernameValidation(watchedUsername)
 
-  // Helper function to translate validation errors
-  const getTranslatedError = (error: string | undefined) => {
-    if (!error) return undefined
-    // Check if the error is a translation key
-    if (error.includes("-")) {
-      // biome-ignore lint/suspicious/noExplicitAny: tErrors take specific keys that are not typed here since it's an error
-      return tErrors(error as any)
-    }
-    return error
-  }
-
   useEffect(() => {
     if (user?.onboardingCompleted) {
       router.replace("/")
@@ -111,7 +100,7 @@ const OnboardingPage = () => {
   }, [avatarIndex, form, getAvatar])
 
   const { mutate, isPending } = useMutation({
-    mutationFn: async (data: z.infer<typeof onboardingSchema>) => {
+    mutationFn: async (data: Onboarding) => {
       setApiError(null)
 
       const payload = user?.hasOAuth
@@ -165,7 +154,7 @@ const OnboardingPage = () => {
     return isNameValid && isUsernameValid && isAvatarValid && isPasswordValid
   }
 
-  const onSubmit = (data: z.infer<typeof onboardingSchema>) => {
+  const onSubmit = (data: Onboarding) => {
     mutate(data)
   }
 
@@ -226,11 +215,7 @@ const OnboardingPage = () => {
                     {...field}
                     disabled={isPending}
                   />
-                  {fieldState.error && (
-                    <div className="text-sm font-medium text-red-600 dark:text-red-600">
-                      {getTranslatedError(fieldState.error.message)}
-                    </div>
-                  )}
+                  <FormMessage />
                 </FormItem>
               )}
             />
