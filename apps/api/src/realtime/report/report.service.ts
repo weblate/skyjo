@@ -49,8 +49,7 @@ export class ReportService extends BaseService {
       .insert(reportTable)
       .values({
         userId: target.userId ?? null,
-        guestId: null,
-        // TODO: replace with guestId: target.guestId
+        guestId: target.guestId ?? null,
         reason: report.reason,
         comment: report.comment,
         reportData: {
@@ -74,6 +73,7 @@ export class ReportService extends BaseService {
       gameCode: game.code,
       reportedAt: new Date().toISOString(),
       targetUserId: target.userId,
+      targetGuestId: target.guestId,
       comment: report.comment,
       gameContext,
     })

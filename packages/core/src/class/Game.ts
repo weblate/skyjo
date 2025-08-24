@@ -501,6 +501,7 @@ export class Game implements GameInterface {
         id: player.id,
         name: player.name,
         socketId: player.socketId,
+        guestId: player.guestId ?? null,
         username: player.username ?? null,
         avatar: player.avatar,
         score: player.score,

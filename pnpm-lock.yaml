@@ -148,6 +148,9 @@ importers:
       '@skymo/logger':
         specifier: workspace:*
         version: link:../../packages/logger
+      '@skymo/shared':
+        specifier: workspace:*
+        version: link:../../packages/shared
       '@skymo/ts-config':
         specifier: workspace:*
         version: link:../../packages/config/ts

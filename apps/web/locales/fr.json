@@ -791,6 +791,9 @@
     "ChatNotLoggedIn": {
       "description": "Vous devez être connecté pour discuter"
     },
+    "ChatRestricted": {
+      "description": "Vous êtes interdit de chat"
+    },
     "ChatForm": {
       "message-input-placeholder": "Message",
       "button-title": "Envoyer",
@@ -1262,7 +1265,7 @@
         "expiresAt": "Le bannissement expire le : {date}"
       }
     },
-    "LeavebusterModal": {
+    "LeavebusterDialog": {
       "title": "Pénalité de Déconnexion",
       "description": "Vous avez quitté une partie publique prématurément. Terminez cette pénalité pour continuer à jouer.",
       "progress": "Progression : {completed}/{required}",
@@ -1270,6 +1273,24 @@
       "completeButton": "Terminer ({time})",
       "completedButton": "Terminé !",
       "closeButton": "Fermer"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Restriction de Chat",
+      "description": "Vos privilèges de chat ont été temporairement restreints. Vous ne pouvez pas envoyer de messages pendant cette période.",
+      "detailedDescription": "Vous êtes restreint de communiquer via le chat suite à un signalement de votre comportement qui a été validé par un administrateur. Vous pourrez à nouveau discuter le : ",
+      "detailedDescriptionPermanent": "Vous êtes restreint de communiquer via le chat suite à un signalement de votre comportement qui a été validé par un administrateur.",
+      "reason": {
+        "title": "Raison"
+      },
+      "duration": {
+        "title": "Durée",
+        "expiresAt": "Le chat sera restauré le : {date}"
+      },
+      "report": {
+        "title": "Signalement Associé",
+        "id": "ID du signalement : #{reportId}"
+      },
+      "acknowledgeButton": "J'ai compris"
     }
   },
   "utils": {

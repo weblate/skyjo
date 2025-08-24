@@ -36,6 +36,7 @@ export class LobbyService extends BaseService {
       socket.id,
       socket.user?.id,
       socket.user?.username,
+      socket.guestId,
     )
 
     if (game.isPlayerBanned(player)) {
@@ -264,6 +265,7 @@ export class LobbyService extends BaseService {
       socket.id,
       socket.user?.id,
       socket.user?.username,
+      socket.guestId,
     )
     const game = new Game({
       hostId: player.id,

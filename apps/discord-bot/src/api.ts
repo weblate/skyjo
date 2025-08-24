@@ -1,5 +1,6 @@
 import { Constants as CoreConstants, type GameStatus } from "@skymo/core"
 import { Logger } from "@skymo/logger"
+import type { CreatePenalty } from "@skymo/shared/validations"
 import { ENV } from "../env.js"
 
 export class ApiClient {
@@ -66,17 +67,9 @@ export class ApiClient {
     }
   }
 
-  async applyPenalty(penaltyData: {
-    targetUserId?: number | null
-    targetGuestId?: string | null
-    type: string
-    level?: number
-    durationMinutes?: number
-    reason: string
-    reportId: number
-  }): Promise<void> {
+  async applyPenalty(penaltyData: CreatePenalty): Promise<void> {
     try {
-      const response = await fetch(`${this.baseUrl}/penalties/apply`, {
+      const response = await fetch(`${this.baseUrl}/penalties`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

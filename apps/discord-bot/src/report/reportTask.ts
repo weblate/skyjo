@@ -59,17 +59,19 @@ function createReportEmbed(reportData: ReportJobData): EmbedBuilder {
     { name: "🎮 Game", value: reportData.gameCode, inline: false },
     {
       name: "🧑‍⚖️ Reporter",
-      value: `${reportData.reporterName}\n*ID: ${reportData.reporterId}*`,
+      value: reportData.reporterName,
       inline: false,
     },
     {
       name: "🕵️ Reported",
-      value: `${reportData.reportedPlayerName}\n*ID: ${reportData.reportedPlayerId}*`,
+      value: reportData.reportedPlayerName,
       inline: false,
     },
     {
       name: "🔒 Has account",
-      value: reportData.targetUserId ? "Yes" : "No",
+      value: reportData.targetUserId
+        ? `Yes (userID: ${reportData.targetUserId})`
+        : `No (guestID: ${reportData.targetGuestId ?? "Unknown Guest ID (should not happen)"})`,
       inline: false,
     },
     {
@@ -96,9 +98,7 @@ function createReportEmbed(reportData: ReportJobData): EmbedBuilder {
 
   const embed = new EmbedBuilder()
     .setTitle(`Report #${reportData.reportId}`)
-    .setDescription(
-      "Hey <@&1333090255603105833>, a new report just came in!\n\n⬇️ Check the thread below for full game context",
-    )
+    .setDescription("Hey <@&1333090255603105833>, a new report just came in!\n")
     .setColor(0xff6b6b)
     .addFields(fields)
     .setFooter({
@@ -233,12 +233,12 @@ function createReportButtons(
   reportId: number,
 ): ActionRowBuilder<ButtonBuilder> {
   const invalidButton = new ButtonBuilder()
-    .setCustomId(`invalid_report_${reportId}`)
+    .setCustomId(`report:dismiss:${reportId}`)
     .setLabel("Invalid report")
     .setStyle(ButtonStyle.Secondary)
 
   const validButton = new ButtonBuilder()
-    .setCustomId(`valid_report_${reportId}`)
+    .setCustomId(`report:validate:${reportId}`)
     .setLabel("Valid report")
     .setStyle(ButtonStyle.Danger)
 

@@ -796,6 +796,9 @@
     "ChatNotLoggedIn": {
       "description": "You must be logged in to chat"
     },
+    "ChatRestricted": {
+      "description": "You are forbidden to chat"
+    },
     "ChatForm": {
       "message-input-placeholder": "Message",
       "button-title": "Send",
@@ -1264,7 +1267,7 @@
         "expiresAt": "Ban expires: {date}"
       }
     },
-    "LeavebusterModal": {
+    "LeavebusterDialog": {
       "title": "Leavebuster Penalty",
       "description": "You left a public game early. Complete this penalty to continue playing.",
       "progress": "Progress: {completed}/{required}",
@@ -1272,6 +1275,24 @@
       "completeButton": "Complete ({time})",
       "completedButton": "Completed!",
       "closeButton": "Close"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chat Restriction",
+      "description": "Your chat privileges have been temporarily restricted. You cannot send messages during this time.",
+      "detailedDescription": "You are restricted from communicating via chat following a report of your behavior that has been validated by an administrator. You will be able to chat again the:",
+      "detailedDescriptionPermanent": "You are restricted from communicating via chat following a report of your behavior that has been validated by an administrator.",
+      "reason": {
+        "title": "Reason"
+      },
+      "duration": {
+        "title": "Duration",
+        "expiresAt": "Chat will be restored on: {date}"
+      },
+      "report": {
+        "title": "Related Report",
+        "id": "Report ID: #{reportId}"
+      },
+      "acknowledgeButton": "I understand"
     }
   },
   "utils": {

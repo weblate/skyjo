@@ -1,10 +1,10 @@
-import {
-  type PenaltyDb,
-  type PenaltyType,
-  penaltyTable,
-} from "@skymo/database/schema"
+import type { Player } from "@skymo/core"
+import { type PenaltyDb, penaltyTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
+import type { CreatePenalty } from "@skymo/shared/validations"
+import dayjs from "dayjs"
 import { and, eq, gte, isNull, lt, ne, or, sql } from "drizzle-orm"
+import { HTTPException } from "hono/http-exception"
 import { db } from "@/db/index.js"
 
 export const LEAVEBUSTER_CONFIG = {
@@ -15,41 +15,69 @@ export const LEAVEBUSTER_CONFIG = {
   5: { completions: 5, duration: 300 }, // 5 times, 5 minutes each
 } as const
 
-export async function getPenaltyById(
-  penaltyId: number,
-): Promise<PenaltyDb | null> {
+export async function createPenalty(data: CreatePenalty): Promise<PenaltyDb> {
+  if (!data.targetUserId && !data.targetGuestId) {
+    throw new Error("Either targetUserId or targetGuestId must be provided")
+  }
+
+  const penaltyData: Partial<
+    Pick<
+      PenaltyDb,
+      "level" | "completionsRequired" | "completionsDone" | "expiresAt"
+    >
+  > = {}
+
+  switch (data.type) {
+    case "leavebuster":
+      const level = data.level || 1
+      const config =
+        LEAVEBUSTER_CONFIG[level as keyof typeof LEAVEBUSTER_CONFIG]
+
+      penaltyData.completionsRequired = config.completions
+      penaltyData.completionsDone = 0
+      penaltyData.expiresAt = null
+      break
+    case "chat_restrict":
+    case "tempban":
+      if (!data.durationMinutes) {
+        throw new HTTPException(400, {
+          message: "Duration required for time-based penalties",
+        })
+      }
+      penaltyData.level = null
+      penaltyData.expiresAt = dayjs()
+        .add(data.durationMinutes, "minutes")
+        .toDate()
+      break
+    case "ban":
+      penaltyData.level = null
+      penaltyData.expiresAt = null
+      break
+
+    default:
+      throw new Error(`Unsupported penalty type: ${data.type}`)
+  }
+
   const [penalty] = await db
-    .select()
-    .from(penaltyTable)
-    .where(eq(penaltyTable.id, penaltyId))
-    .limit(1)
+    .insert(penaltyTable)
+    .values({
+      userId: data.targetUserId || null,
+      guestId: data.targetGuestId || null,
+      type: data.type,
+      reason: data.reason || "no reason",
+      reportId: data.reportId || null,
+      ...penaltyData,
+    })
+    .returning()
 
-  return penalty || null
-}
+  Logger.info("Applied penalty", {
+    type: data.type,
+    userId: data.targetUserId,
+    guestId: data.targetGuestId,
+    reason: data.reason,
+  })
 
-export async function hasActiveLeavebuster(
-  userId?: number,
-  guestId?: string,
-): Promise<PenaltyDb | null> {
-  if (!userId && !guestId) return null
-
-  const conditions = []
-  if (userId) conditions.push(eq(penaltyTable.userId, userId))
-  if (guestId) conditions.push(eq(penaltyTable.guestId, guestId))
-
-  const [penalty] = await db
-    .select()
-    .from(penaltyTable)
-    .where(
-      and(
-        or(...conditions),
-        eq(penaltyTable.type, "leavebuster"),
-        lt(penaltyTable.completionsDone, penaltyTable.completionsRequired),
-      ),
-    )
-    .limit(1)
-
-  return penalty || null
+  return penalty
 }
 
 export async function getActivePenalties(
@@ -89,9 +117,23 @@ export async function getActivePenalties(
   return penalties
 }
 
-/**
- * Complete one leavebuster instance
- */
+export async function getPenaltyById(
+  penaltyId: number,
+): Promise<PenaltyDb | null> {
+  const [penalty] = await db
+    .select()
+    .from(penaltyTable)
+    .where(eq(penaltyTable.id, penaltyId))
+    .limit(1)
+
+  return penalty || null
+}
+
+export async function canChat(player: Player): Promise<boolean> {
+  const penalties = await getActivePenalties(player.userId, player.guestId)
+  return !penalties.some((p) => p.type === "chat_restrict")
+}
+
 export async function completeLeavebuster(
   penaltyId: number,
 ): Promise<PenaltyDb> {
@@ -123,9 +165,6 @@ export async function completeLeavebuster(
   return updated
 }
 
-/**
- * Calculate escalation level for a new leavebuster penalty
- */
 export async function calculateLeavebusterLevel(
   userId?: number,
   guestId?: string,
@@ -155,9 +194,6 @@ export async function calculateLeavebusterLevel(
   return Math.min(count + 1, 5) // Cap at level 5
 }
 
-/**
- * Apply a leavebuster penalty
- */
 export async function applyLeavebuster(
   userId: number | undefined,
   guestId: string | undefined,
@@ -167,7 +203,6 @@ export async function applyLeavebuster(
     throw new Error("Either userId or guestId must be provided")
   }
 
-  // Calculate level if not provided
   const penaltyLevel =
     level || (await calculateLeavebusterLevel(userId, guestId))
   const config =
@@ -183,7 +218,7 @@ export async function applyLeavebuster(
       completionsRequired: config.completions,
       completionsDone: 0,
       reason: "Left public game without returning",
-      expiresAt: null, // No expiration for leavebuster
+      expiresAt: null,
     })
     .returning()
 
@@ -197,113 +232,13 @@ export async function applyLeavebuster(
   return penalty
 }
 
-/**
- * Apply a general penalty (for admin/Discord bot use)
- */
-export async function applyPenalty(data: {
-  targetUserId?: number
-  targetGuestId?: string
-  type: PenaltyType
-  level?: number // Only for leavebuster
-  durationMinutes?: number // For time-based penalties
-  reason: string
-  reportId?: number
-}): Promise<PenaltyDb> {
-  if (!data.targetUserId && !data.targetGuestId) {
-    throw new Error("Either targetUserId or targetGuestId must be provided")
-  }
+export async function acknowledgePenalty(penaltyId: number): Promise<void> {
+  const now = new Date()
 
-  const baseData = {
-    userId: data.targetUserId || null,
-    guestId: data.targetGuestId || null,
-    type: data.type,
-    reason: data.reason,
-    reportId: data.reportId || null,
-  }
+  await db
+    .update(penaltyTable)
+    .set({ acknowledgedAt: now })
+    .where(eq(penaltyTable.id, penaltyId))
 
-  // Configure based on penalty type
-  let penaltyData
-  switch (data.type) {
-    case "leavebuster":
-      const level = data.level || 1
-      const config =
-        LEAVEBUSTER_CONFIG[level as keyof typeof LEAVEBUSTER_CONFIG]
-      penaltyData = {
-        ...baseData,
-        level,
-        completionsRequired: config.completions,
-        completionsDone: 0,
-        expiresAt: null,
-      }
-      break
-
-    case "chat_restrict":
-    case "tempban":
-      if (!data.durationMinutes) {
-        throw new Error("Duration required for time-based penalties")
-      }
-      penaltyData = {
-        ...baseData,
-        level: null,
-        expiresAt: new Date(Date.now() + data.durationMinutes * 60 * 1000),
-      }
-      break
-
-    case "ban":
-      penaltyData = {
-        ...baseData,
-        level: null,
-        expiresAt: null, // Permanent
-      }
-      break
-
-    default:
-      throw new Error(`Unsupported penalty type: ${data.type}`)
-  }
-
-  const [penalty] = await db
-    .insert(penaltyTable)
-    .values(penaltyData)
-    .returning()
-
-  Logger.info("Applied penalty", {
-    type: data.type,
-    userId: data.targetUserId,
-    guestId: data.targetGuestId,
-    reason: data.reason,
-  })
-
-  return penalty
-}
-
-/**
- * Check if a user can play games (no blocking penalties)
- */
-export async function canPlay(
-  userId?: number,
-  guestId?: string,
-): Promise<boolean> {
-  if (!userId && !guestId) return true
-
-  const blockingPenalties = await getActivePenalties(userId, guestId)
-
-  // Check for any blocking penalty types
-  return !blockingPenalties.some(
-    (p) => p.type === "leavebuster" || p.type === "tempban" || p.type === "ban",
-  )
-}
-
-/**
- * Check if a user can use chat
- */
-export async function canChat(
-  userId?: number,
-  guestId?: string,
-): Promise<boolean> {
-  if (!userId && !guestId) return true
-
-  const penalties = await getActivePenalties(userId, guestId)
-
-  // Check for chat restriction
-  return !penalties.some((p) => p.type === "chat_restrict")
+  Logger.info(`Penalty acknowledged`, { penaltyId, acknowledgedAt: now })
 }

@@ -31,6 +31,7 @@ export type PlayerRedisDb = {
   avatar: Avatar
   socketId: string
   username?: string | null
+  guestId?: string | null
   connectionStatus: ConnectionStatus
   score: number
   scores: PlayerScore[]

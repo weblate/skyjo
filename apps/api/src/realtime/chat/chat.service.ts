@@ -1,6 +1,7 @@
 import { Constants as CoreConstants } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type { UserChatMessage } from "@skymo/shared/types"
+import { canChat } from "@/http/penalty/penalty.service.js"
 import { BaseService } from "@/realtime/base/base.service.js"
 import type { GameSocket } from "@/realtime/types/gameSocket.js"
 
@@ -19,6 +20,16 @@ export class ChatService extends BaseService {
           playerId: socket.data.playerId,
         },
       })
+    }
+
+    const playerCanChat = await canChat(player)
+    if (!playerCanChat) {
+      socket.volatile.emit("message:system", {
+        id: crypto.randomUUID(),
+        message: "You are currently restricted from chatting.",
+        type: "system",
+      })
+      return
     }
 
     game.updatedAt = new Date()

@@ -27,6 +27,7 @@ export type ReportJobData = {
   gameCode: string
   reportedAt: string
   targetUserId?: number
+  targetGuestId?: string
   comment?: string
   gameContext: {
     players: ReportJobGameContextPlayer[]

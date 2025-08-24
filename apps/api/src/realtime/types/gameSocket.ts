@@ -18,4 +18,5 @@ export type GameSocket = Socket<
 > & {
   user?: UserDb
   session?: SessionDb
+  guestId?: string
 }

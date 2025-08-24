@@ -2,27 +2,22 @@
 
 import { useTranslations } from "next-intl"
 import { usePenalty } from "@/contexts/PenaltyContext"
-import { LeavebusterModal } from "./LeavebusterModal"
+import { ChatRestrictionDialog } from "./ChatRestrictionDialog"
+import { LeavebusterDialog } from "./LeavebusterDialog"
 
 /**
  * Component that checks for active penalties and shows appropriate modals.
  * Add this component directly to pages where penalties should be displayed
  * (homepage, search/browse pages).
  *
- * Priority: BAN > TEMPBAN > LEAVEBUSTER
+ * Priority: BAN > TEMPBAN > CHAT_RESTRICT > LEAVEBUSTER
  */
 export function PenaltyCheck() {
   const t = useTranslations("components.PenaltyCheck")
-  const { penalties, completeLeavebuster } = usePenalty()
+  const { penalties } = usePenalty()
 
   // Find penalties by priority
   const activeBan = penalties.find((penalty) => penalty.type === "ban")
-  const activeTempban = penalties.find((penalty) => penalty.type === "tempban")
-  const activeLeavebuster = penalties.find(
-    (penalty) =>
-      penalty.type === "leavebuster" &&
-      (penalty.completionsDone || 0) < (penalty.completionsRequired || 0),
-  )
 
   // Priority 1: Permanent ban (blocks everything)
   if (activeBan) {
@@ -44,6 +39,7 @@ export function PenaltyCheck() {
   }
 
   // Priority 2: Temporary ban (blocks everything except permanent ban)
+  const activeTempban = penalties.find((penalty) => penalty.type === "tempban")
   if (activeTempban) {
     return (
       <div className="fixed inset-0 z-[9999] bg-black/50 flex items-center justify-center">
@@ -68,14 +64,22 @@ export function PenaltyCheck() {
     )
   }
 
-  // Priority 3: Leavebuster (only shows if no ban/tempban)
+  // Priority 3: Chat restriction (only shows if not acknowledged)
+  const activeChatRestrict = penalties.find(
+    (penalty) => penalty.type === "chat_restrict" && !penalty.acknowledgedAt,
+  )
+  if (activeChatRestrict) {
+    return <ChatRestrictionDialog penalty={activeChatRestrict} />
+  }
+
+  // Priority 4: Leavebuster (only shows if no ban/tempban/chat restriction)
+  const activeLeavebuster = penalties.find(
+    (penalty) =>
+      penalty.type === "leavebuster" &&
+      (penalty.completionsDone || 0) < (penalty.completionsRequired || 0),
+  )
   if (activeLeavebuster) {
-    return (
-      <LeavebusterModal
-        penalty={activeLeavebuster}
-        onComplete={completeLeavebuster}
-      />
-    )
+    return <LeavebusterDialog penalty={activeLeavebuster} />
   }
 
   return null

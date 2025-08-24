@@ -1,5 +1,8 @@
 import { zValidator } from "@hono/zod-validator"
-import { applyPenaltySchema, penaltyIdParamSchema } from "@skymo/shared/validations"
+import {
+  createPenaltySchema,
+  penaltyIdParamSchema,
+} from "@skymo/shared/validations"
 import { Hono } from "hono"
 import { authMiddleware } from "@/http/middlewares/auth.middleware.js"
 import {
@@ -7,17 +10,31 @@ import {
   guestAuthMiddleware,
 } from "@/http/middlewares/guestAuth.middleware.js"
 import {
-  applyPenalty,
-  canChat,
-  canPlay,
+  acknowledgePenalty,
   completeLeavebuster,
+  createPenalty,
   getActivePenalties,
   getPenaltyById,
-  hasActiveLeavebuster,
   LEAVEBUSTER_CONFIG,
 } from "@/http/penalty/penalty.service.js"
 
 const app = new Hono<GuestAuthContextVariables>()
+
+app.post(
+  "/",
+  authMiddleware("ADMIN"),
+  zValidator("json", createPenaltySchema),
+  async (c) => {
+    const penaltyData = c.req.valid("json")
+
+    try {
+      const penalty = await createPenalty(penaltyData)
+      return c.json({ penalty })
+    } catch {
+      return c.json({ error: "failed-to-apply-penalty" }, 500)
+    }
+  },
+)
 
 app.get("/active", guestAuthMiddleware(), async (c) => {
   const userId = c.get("user")?.id
@@ -39,59 +56,6 @@ app.get("/active", guestAuthMiddleware(), async (c) => {
 
   return c.json({ penalties: penaltiesWithConfig })
 })
-
-app.get("/can-play", guestAuthMiddleware(), async (c) => {
-  const userId = c.get("user")?.id
-  const guestId = c.get("guestId")
-
-  const canPlayGames = await canPlay(userId, guestId)
-
-  if (!canPlayGames) {
-    const leavebuster = await hasActiveLeavebuster(userId, guestId)
-    if (leavebuster) {
-      const config =
-        LEAVEBUSTER_CONFIG[leavebuster.level as keyof typeof LEAVEBUSTER_CONFIG]
-      return c.json({
-        canPlay: false,
-        blockingPenalty: {
-          type: "leavebuster",
-          level: leavebuster.level,
-          completionsRemaining:
-            (leavebuster.completionsRequired || 0) -
-            (leavebuster.completionsDone || 0),
-          displayDuration: config?.duration,
-        },
-      })
-    }
-  }
-
-  return c.json({ canPlay: canPlayGames })
-})
-
-app.get("/can-chat", guestAuthMiddleware(), async (c) => {
-  const userId = c.get("user")?.id
-  const guestId = c.get("guestId")
-
-  const canUseChat = await canChat(userId, guestId)
-
-  return c.json({ canChat: canUseChat })
-})
-
-app.post(
-  "/apply",
-  authMiddleware("ADMIN"),
-  zValidator("json", applyPenaltySchema),
-  async (c) => {
-    const penaltyData = c.req.valid("json")
-
-    try {
-      const penalty = await applyPenalty(penaltyData)
-      return c.json({ penalty })
-    } catch {
-      return c.json({ error: "failed-to-apply-penalty" }, 500)
-    }
-  },
-)
 
 app.post(
   "/:penaltyId/complete-leavebuster",
@@ -121,6 +85,37 @@ app.post(
       remaining: completionsRemaining,
       isFinished,
     })
+  },
+)
+
+app.post(
+  "/:penaltyId/acknowledge",
+  guestAuthMiddleware(),
+  zValidator("param", penaltyIdParamSchema),
+  async (c) => {
+    const { penaltyId } = c.req.valid("param")
+    const userId = c.get("user")?.id
+    const guestId = c.get("guestId")
+
+    const penalty = await getPenaltyById(penaltyId)
+
+    if (!penalty) {
+      return c.json({ error: "penalty-not-found" }, 404)
+    }
+
+    // Verify the penalty belongs to this user
+    if (penalty.userId !== userId && penalty.guestId !== guestId) {
+      return c.json({ error: "unauthorized" }, 403)
+    }
+
+    // Check if already acknowledged
+    if (penalty.acknowledgedAt) {
+      return c.json({ error: "penalty-already-acknowledged" }, 400)
+    }
+
+    await acknowledgePenalty(penaltyId)
+
+    return c.json({ success: true })
   },
 )
 

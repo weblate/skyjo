@@ -16,6 +16,7 @@ interface PlayerInterface {
   readonly avatar: Avatar
   readonly userId?: number
   readonly username?: string
+  readonly guestId?: string
   connectionStatus: ConnectionStatus
   afkCount: number
   consecutiveAfkCount: number
@@ -57,6 +58,7 @@ export class Player implements PlayerInterface {
   turnStartTime: number | null = null
   userId?: number
   username?: string
+  guestId?: string
   private sessionId: string = crypto.randomUUID()
 
   constructor(
@@ -67,12 +69,14 @@ export class Player implements PlayerInterface {
     socketId: string = "",
     userId?: number,
     username?: string | null,
+    guestId?: string,
   ) {
     this.name = playerToCreate.name
     this.socketId = socketId
     this.avatar = playerToCreate.avatar
     this.userId = userId
     this.username = username ?? undefined
+    this.guestId = guestId
   }
 
   populate(player: PlayerRedisDb) {
@@ -90,6 +94,7 @@ export class Player implements PlayerInterface {
     this.consecutiveAfkCount = player.consecutiveAfkCount
     this.turnStartTime = player.turnStartTime
     this.userId = player?.userId ?? undefined
+    this.guestId = player?.guestId ?? undefined
     this.sessionId = player.sessionId
     this.forfeited = player.forfeited ?? false
     this.forfeitedAt = player.forfeitedAt ?? null

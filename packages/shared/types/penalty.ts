@@ -1,5 +1,10 @@
 // Penalty types enum
-export const penaltyTypes = ["leavebuster", "chat_restrict", "tempban", "ban"] as const
+export const penaltyTypes = [
+  "leavebuster",
+  "chat_restrict",
+  "tempban",
+  "ban",
+] as const
 export type PenaltyType = (typeof penaltyTypes)[number]
 
 // Penalty data interface
@@ -19,6 +24,7 @@ export interface PenaltyData {
   createdAt: string
   // Added by API for frontend
   displayDuration?: number
+  acknowledgedAt?: string
 }
 
 // Leavebuster configuration

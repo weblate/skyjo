@@ -254,6 +254,7 @@ export const penaltyTable = pgTable(
     completionsDone: integer("completions_done").default(0),
     // For time-based penalties (chat_restrict, tempban)
     expiresAt: timestamp("expires_at", { withTimezone: true }),
+    acknowledgedAt: timestamp("acknowledged_at", { withTimezone: true }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

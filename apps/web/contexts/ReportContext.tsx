@@ -39,6 +39,7 @@ export const ReportProvider = ({ children }: PropsWithChildren) => {
     if (playerToKickId === player.id) {
       toast(t("report-against-you.title"), {
         description: t("report-against-you.description"),
+        duration: 12000,
       })
       router.replace("/")
     } else {
