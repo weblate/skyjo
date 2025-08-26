@@ -1,4 +1,5 @@
 import { zValidator } from "@hono/zod-validator"
+import { Logger } from "@skymo/logger"
 import {
   createPenaltySchema,
   penaltyIdParamSchema,
@@ -30,7 +31,8 @@ app.post(
     try {
       const penalty = await createPenalty(penaltyData)
       return c.json({ penalty })
-    } catch {
+    } catch (error) {
+      Logger.error("Failed to apply penalty:", { error })
       return c.json({ error: "failed-to-apply-penalty" }, 500)
     }
   },
