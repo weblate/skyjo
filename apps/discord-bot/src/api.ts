@@ -33,8 +33,7 @@ export class ApiClient {
 
       Logger.info(`Player ${playerId} kicked from game ${gameCode}`)
     } catch (error) {
-      Logger.error("Failed to kick player:", { error, gameCode, playerId })
-      throw error
+      Logger.warn("Failed to kick player:", { error, gameCode, playerId })
     }
   }
 
