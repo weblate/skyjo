@@ -120,6 +120,13 @@
       "when": 1755849877667,
       "tag": "0016_next_mysterio",
       "breakpoints": true
+    },
+    {
+      "idx": 17,
+      "version": "7",
+      "when": 1756228522775,
+      "tag": "0017_far_black_bolt",
+      "breakpoints": true
     }
   ]
 }
