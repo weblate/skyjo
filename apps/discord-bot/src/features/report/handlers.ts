@@ -336,11 +336,13 @@ const selectHandlers = {
 
       case "chat_restrict":
         durationSelect.addOptions([
-          { label: "30 minutes", value: "30" },
           { label: "1 hour", value: "60" },
           { label: "6 hours", value: "360" },
           { label: "24 hours", value: "1440" },
           { label: "48 hours", value: "2880" },
+          { label: "1 week", value: "10080" },
+          { label: "2 weeks", value: "20160" },
+          { label: "1 month", value: "43200" },
         ])
         break
 
