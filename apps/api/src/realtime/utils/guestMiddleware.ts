@@ -1,4 +1,5 @@
 import { GUEST_ID_COOKIE_NAME } from "@skymo/shared/constants"
+import { parse } from "hono/utils/cookie"
 import type { GameSocket } from "@/realtime/types/gameSocket.js"
 
 /**
@@ -12,13 +13,9 @@ export const guestMiddleware = async (
     const cookieHeader = socket.handshake.headers.cookie
     if (!cookieHeader) throw new Error("No cookie header")
 
-    const match = new RegExp(`${GUEST_ID_COOKIE_NAME}=([^;]+)`).exec(
-      cookieHeader,
-    )
-    if (!match) throw new Error("No guestId cookie")
-
-    const guestId = decodeURIComponent(match[1])
-    if (!guestId) throw new Error("No guestId value")
+    const cookies = parse(cookieHeader)
+    const guestId = cookies[GUEST_ID_COOKIE_NAME]
+    if (!guestId) throw new Error("No guestId cookie")
 
     socket.guestId = guestId
 
