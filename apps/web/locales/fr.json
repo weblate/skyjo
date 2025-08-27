@@ -791,6 +791,9 @@
     "ChatNotLoggedIn": {
       "description": "Vous devez être connecté pour discuter"
     },
+    "ChatRestricted": {
+      "description": "Vous êtes interdit de chat"
+    },
     "ChatForm": {
       "message-input-placeholder": "Message",
       "button-title": "Envoyer",
@@ -1246,6 +1249,46 @@
       "description": "Il semble que vous étiez dans une partie. Voulez-vous vous reconnecter ?",
       "dismiss-button": "Ignorer",
       "reconnect-button": "Se reconnecter"
+    },
+    "PlayAgainButton": {
+      "disabled": "Rejouer",
+      "button": "Rejouer",
+      "leavebusterMessage": "Terminez votre pénalité de déconnexion pour rejouer"
+    },
+    "LeavebusterDialog": {
+      "title": "Pénalité de Déconnexion",
+      "description": "Vous avez quitté une partie publique prématurément. Terminez cette pénalité pour continuer à jouer.",
+      "progress": "Progression : {completed}/{required}",
+      "timeRemaining": "Temps restant : {time}",
+      "completeButton": "Terminer ({time})",
+      "completedButton": "Terminé !",
+      "closeButton": "Fermer"
+    },
+    "BanDialog": {
+      "title": "Compte Suspendu",
+      "suspensionMessage": "Vous êtes {isPermanent, select, true {suspendu de jouer de façon permanente} other {suspendu de jouer}} en raison de votre comportement dans le jeu.",
+      "temporary": "Vous pourrez rejouer le : {date}.",
+      "reasonLabel": "Motif :",
+      "defaultReason": "Aucun motif fourni.",
+      "understandButton": "J'ai compris"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Restriction de Chat",
+      "description": "Vos privilèges de chat ont été temporairement restreints. Vous ne pouvez pas envoyer de messages pendant cette période.",
+      "detailedDescription": "Vous êtes restreint de communiquer via le chat suite à un signalement de votre comportement qui a été validé par un administrateur. Vous pourrez à nouveau discuter le : ",
+      "detailedDescriptionPermanent": "Vous êtes restreint de communiquer via le chat suite à un signalement de votre comportement qui a été validé par un administrateur.",
+      "reason": {
+        "title": "Raison"
+      },
+      "duration": {
+        "title": "Durée",
+        "expiresAt": "Le chat sera restauré le : {date}"
+      },
+      "report": {
+        "title": "Signalement Associé",
+        "id": "ID du signalement : #{reportId}"
+      },
+      "acknowledgeButton": "J'ai compris"
     }
   },
   "utils": {

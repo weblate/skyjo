@@ -2,6 +2,7 @@ import type { ServerType } from "@hono/node-server"
 import { Logger } from "@skymo/logger"
 import { Server as HttpServer } from "http"
 import { reportRouter } from "@/realtime/report/report.router.js"
+import { guestMiddleware } from "@/realtime/utils/guestMiddleware.js"
 import { userMiddleware } from "@/realtime/utils/userMiddleware.js"
 import { banRouter } from "./ban/ban.router.js"
 import { chatRouter } from "./chat/chat.router.js"
@@ -29,6 +30,7 @@ export const initializeSocketServer = async (server: ServerType) => {
       })
     })
 
+    io.use(guestMiddleware)
     io.use(userMiddleware)
     io.on("connection", (socket: GameSocket) => {
       Logger.debug(`New socket connection: ${socket.id}`)

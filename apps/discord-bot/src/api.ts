@@ -1,5 +1,6 @@
 import { Constants as CoreConstants, type GameStatus } from "@skymo/core"
 import { Logger } from "@skymo/logger"
+import type { CreatePenalty } from "@skymo/shared/validations"
 import { ENV } from "../env.js"
 
 export class ApiClient {
@@ -32,8 +33,7 @@ export class ApiClient {
 
       Logger.info(`Player ${playerId} kicked from game ${gameCode}`)
     } catch (error) {
-      Logger.error("Failed to kick player:", { error, gameCode, playerId })
-      throw error
+      Logger.warn("Failed to kick player:", { error, gameCode, playerId })
     }
   }
 
@@ -63,6 +63,28 @@ export class ApiClient {
     } catch (error) {
       Logger.error("Failed to check game status:", { error, gameCode })
       return { isActive: false, hasPlayer: false }
+    }
+  }
+
+  async applyPenalty(penaltyData: CreatePenalty): Promise<void> {
+    try {
+      const response = await fetch(`${this.baseUrl}/penalties`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Cookie: `skymo-session=${ENV.API_SESSION_ID}`,
+        },
+        body: JSON.stringify(penaltyData),
+      })
+
+      if (!response.ok) {
+        throw new Error(`Failed to apply penalty: ${response.statusText}`)
+      }
+
+      Logger.info(`Penalty applied successfully`, { penaltyData })
+    } catch (error) {
+      Logger.error("Failed to apply penalty:", { error, penaltyData })
+      throw error
     }
   }
 }

@@ -83,8 +83,8 @@ describe("Game", () => {
         drawPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         selectedCardValue: null,
         firstToFinishPlayerId: null,
-        bannedPlayerIds: [],
-        bannedNames: [],
+        bannedUserIds: [],
+        bannedGuestIds: [],
         players: [],
 
         settings: {
@@ -136,8 +136,8 @@ describe("Game", () => {
         drawPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         selectedCardValue: null,
         firstToFinishPlayerId: null,
-        bannedPlayerIds: [],
-        bannedNames: [],
+        bannedUserIds: [],
+        bannedGuestIds: [],
         players: [
           {
             id: crypto.randomUUID(),
@@ -701,31 +701,26 @@ describe("Game", () => {
       expect(initialVisibleCount).toBe(1)
       expect(player.cards[0][0].isVisible).toBe(false)
 
-      // Mock the player's checkColumnsAndDiscard method to return the matching cards when all are visible
+      // Helper function to check if column 0 cards match and are visible
+      const checkColumn0Matching = () => {
+        const allColumn0Visible = player.cards[0].every(
+          (card) => card.isVisible,
+        )
+        const allColumn0Same = player.cards[0].every((card) => card.value === 5)
+        return allColumn0Visible && allColumn0Same ? [card1, card2, card3] : []
+      }
+
+      // Mock the player's checkColumnsAndDiscard method
       const checkColumnsSpy = vi
         .spyOn(player, "checkColumnsAndDiscard")
-        .mockImplementation(() => {
-          // After revealing the card, check if all cards in column 0 are visible and matching
-          const allColumn0Visible = player.cards[0].every(
-            (card) => card.isVisible,
-          )
-          const allColumn0Same = player.cards[0].every(
-            (card) => card.value === 5,
-          )
-
-          if (allColumn0Visible && allColumn0Same) {
-            return [card1, card2, card3] // Return the actual matching cards to be discarded
-          }
-          return []
-        })
+        .mockImplementation(checkColumn0Matching)
 
       // Track discarded cards
       const discardedCards: number[] = []
+      const discardCardMock = (value: number) => discardedCards.push(value)
       const discardCardSpy = vi
         .spyOn(game, "discardCard")
-        .mockImplementation((value: number) => {
-          discardedCards.push(value)
-        })
+        .mockImplementation(discardCardMock)
 
       await game.revealCard({
         player,
@@ -1046,38 +1041,45 @@ describe("Game", () => {
           player.cards.flat().forEach((card) => card.turnVisible())
         })
 
+      // Helper function to handle column 0 card discarding
+      const handleColumn0Discard = (playerParam: Player) => {
+        if (playerParam === player) {
+          const column0Cards = [
+            player.cards[0][0],
+            player.cards[1][0],
+            player.cards[2][0],
+          ]
+          if (
+            column0Cards.every((card) => card.value === 5 && card.isVisible)
+          ) {
+            column0Cards.forEach((card) => game.discardCard(card.value))
+          }
+        }
+      }
+
+      // Mock implementation for checkCardsToDiscard
+      const checkCardsToDiscardMock = (playerParam: Player) => {
+        checkCardsToDiscardCallCount++
+        operationOrder.push(
+          `checkCardsToDiscard-${checkCardsToDiscardCallCount}`,
+        )
+
+        const allCardsVisible = playerParam.cards
+          .flat()
+          .every((card) => card.isVisible)
+
+        if (checkCardsToDiscardCallCount === 1) {
+          expect(allCardsVisible).toBe(false)
+        } else if (checkCardsToDiscardCallCount === 2) {
+          expect(allCardsVisible).toBe(true)
+          handleColumn0Discard(playerParam)
+        }
+      }
+
       const checkCardsToDiscardSpy = vi
         .spyOn(game as any, "checkCardsToDiscard")
         // @ts-ignore - test code
-        .mockImplementation((playerParam: Player) => {
-          checkCardsToDiscardCallCount++
-          operationOrder.push(
-            `checkCardsToDiscard-${checkCardsToDiscardCallCount}`,
-          )
-
-          const allCardsVisible = playerParam.cards
-            .flat()
-            .every((card) => card.isVisible)
-
-          if (checkCardsToDiscardCallCount === 1) {
-            expect(allCardsVisible).toBe(false)
-          } else if (checkCardsToDiscardCallCount === 2) {
-            expect(allCardsVisible).toBe(true)
-
-            if (playerParam === player) {
-              const column0Cards = [
-                player.cards[0][0],
-                player.cards[1][0],
-                player.cards[2][0],
-              ]
-              if (
-                column0Cards.every((card) => card.value === 5 && card.isVisible)
-              ) {
-                column0Cards.forEach((card) => game.discardCard(card.value))
-              }
-            }
-          }
-        })
+        .mockImplementation(checkCardsToDiscardMock)
 
       const shouldEndRoundSpy = vi
         .spyOn(game as any, "shouldEndRound")
@@ -1343,8 +1345,8 @@ describe("Game", () => {
         turn: game.turn,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
-        bannedPlayerIds: game.bannedPlayerIds,
-        bannedNames: game.bannedNames,
+        bannedUserIds: game.bannedUserIds,
+        bannedGuestIds: game.bannedGuestIds,
         players: [
           {
             id: player.id,
@@ -1352,6 +1354,7 @@ describe("Game", () => {
             avatar: Constants.AVATARS.BEE,
             userId: player.userId ?? null,
             username: player.username ?? null,
+            guestId: player.guestId ?? null,
             cards: player.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,
@@ -1378,6 +1381,7 @@ describe("Game", () => {
             avatar: Constants.AVATARS.ELEPHANT,
             userId: opponent.userId ?? null,
             username: opponent.username ?? null,
+            guestId: opponent.guestId ?? null,
             cards: opponent.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,
@@ -2227,11 +2231,12 @@ describe("Game", () => {
 
   // Add tests for ban feature
   describe("banPlayer", () => {
-    it("should add player id to bannedPlayerIds if not already included", () => {
+    it("should add userId to bannedUserIds if not already included", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        21312213132,
       )
       game.addPlayer(targetPlayer)
 
@@ -2239,32 +2244,36 @@ describe("Game", () => {
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedPlayerIds).toContain(targetPlayer.id)
-      expect(game.bannedPlayerIds.length).toBe(1)
+      expect(game.bannedUserIds).toContain(targetPlayer.userId)
+      expect(game.bannedUserIds.length).toBe(1)
     })
 
-    it("should not add player id to bannedPlayerIds if already included", () => {
+    it("should not add userId to bannedUserIds if already included", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        21312213132,
       )
       game.addPlayer(targetPlayer)
-      game.bannedPlayerIds.push(targetPlayer.id)
+      game.bannedUserIds.push(targetPlayer.userId!)
 
       // Execute
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedPlayerIds).toContain(targetPlayer.id)
-      expect(game.bannedPlayerIds.length).toBe(1)
+      expect(game.bannedUserIds).toContain(targetPlayer.userId!)
+      expect(game.bannedUserIds.length).toBe(1)
     })
 
-    it("should add player name to bannedNames if not already included", () => {
+    it("should add guestId to bannedGuestIds if not already included", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        123,
+        "guestId",
+        "guestId",
       )
       game.addPlayer(targetPlayer)
 
@@ -2272,25 +2281,28 @@ describe("Game", () => {
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedNames).toContain(targetPlayer.name)
-      expect(game.bannedNames.length).toBe(1)
+      expect(game.bannedGuestIds).toContain(targetPlayer.guestId!)
+      expect(game.bannedGuestIds.length).toBe(1)
     })
 
-    it("should not add player name to bannedNames if already included", () => {
+    it("should not add guestId to bannedGuestIds if already included", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        123,
+        "guestId",
+        "guestId",
       )
       game.addPlayer(targetPlayer)
-      game.bannedNames.push(targetPlayer.name)
+      game.bannedGuestIds.push(targetPlayer.guestId!)
 
       // Execute
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedNames).toContain(targetPlayer.name)
-      expect(game.bannedNames.length).toBe(1)
+      expect(game.bannedGuestIds).toContain(targetPlayer.guestId!)
+      expect(game.bannedGuestIds.length).toBe(1)
     })
   })
 
@@ -2300,22 +2312,24 @@ describe("Game", () => {
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        21312213132,
       )
       game.addPlayer(targetPlayer)
-      game.bannedPlayerIds.push(targetPlayer.id)
+      game.bannedUserIds.push(targetPlayer.userId!)
 
       // Execute & Verify
       expect(game.isPlayerBanned(targetPlayer)).toBe(true)
     })
 
-    it("should return true if player name is in bannedNames", () => {
+    it("should return true if player userId is in bannedUserIds", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        21312213132,
       )
       game.addPlayer(targetPlayer)
-      game.bannedNames.push(targetPlayer.name)
+      game.bannedUserIds.push(targetPlayer.userId!)
 
       // Execute & Verify
       expect(game.isPlayerBanned(targetPlayer)).toBe(true)

@@ -1,0 +1,1 @@
+ALTER TABLE "penalties" ADD COLUMN "acknowledged_at" timestamp with time zone;

@@ -186,6 +186,95 @@ const domainCheckCache = new Map<
 const CACHE_DURATION_MS = 60 * 60 * 1000 // 1 hour
 
 /**
+ * Extract and validate domain from email address
+ */
+function extractDomain(email: string): string | null {
+  const domain = email.toLowerCase().split("@")[1]
+  return domain || null
+}
+
+/**
+ * Check if domain is in trusted or blacklisted domains
+ */
+function checkKnownDomains(domain: string): DisposableEmailCheckResult | null {
+  if (TRUSTED_EMAIL_DOMAINS.has(domain)) {
+    return {
+      isDisposable: false,
+      domain,
+    }
+  }
+
+  if (DISPOSABLE_EMAIL_DOMAINS.has(domain)) {
+    return {
+      isDisposable: true,
+      domain,
+    }
+  }
+
+  return null
+}
+
+/**
+ * Get cached result for domain if still valid
+ */
+function getCachedResult(domain: string): DisposableEmailCheckResult | null {
+  const cached = domainCheckCache.get(domain)
+  if (cached && cached.expiresAt > Date.now()) {
+    return cached.result
+  }
+  return null
+}
+
+/**
+ * Cache the result and clean up expired entries if needed
+ */
+function cacheResult(domain: string, result: DisposableEmailCheckResult): void {
+  domainCheckCache.set(domain, {
+    result,
+    expiresAt: Date.now() + CACHE_DURATION_MS,
+  })
+
+  // Clean up old cache entries periodically
+  if (domainCheckCache.size > 1000) {
+    const now = Date.now()
+    for (const [key, value] of domainCheckCache.entries()) {
+      if (value.expiresAt < now) {
+        domainCheckCache.delete(key)
+      }
+    }
+  }
+}
+
+/**
+ * Call the external API to check if domain is disposable
+ */
+async function checkDomainViaAPI(
+  domain: string,
+): Promise<DisposableEmailCheckResult> {
+  const apiUrl = `https://www.istempmail.com/api/check/${ENV.TEMP_MAIL_API_KEY}/${encodeURIComponent(domain)}`
+
+  const response = await fetch(apiUrl, {
+    method: "GET",
+    headers: {
+      Accept: "application/json",
+    },
+    signal: AbortSignal.timeout(5000), // 5 second timeout
+  })
+
+  if (!response.ok) {
+    throw new Error(`API returned status ${response.status}`)
+  }
+
+  const data = (await response.json()) as TempMailApiResponse
+
+  return {
+    isDisposable: data.blocked,
+    domain: data.name,
+    isUnresolvable: data.unresolvable,
+  }
+}
+
+/**
  * Check if an email address is from a disposable/temporary email service
  *
  * @param email - The email address to check
@@ -196,7 +285,7 @@ export async function checkDisposableEmail(
 ): Promise<DisposableEmailCheckResult> {
   try {
     // Extract domain from email
-    const domain = email.toLowerCase().split("@")[1]
+    const domain = extractDomain(email)
     if (!domain) {
       return {
         isDisposable: false,
@@ -205,68 +294,22 @@ export async function checkDisposableEmail(
       }
     }
 
-    // Check if domain is in trusted list
-    if (TRUSTED_EMAIL_DOMAINS.has(domain)) {
-      return {
-        isDisposable: false,
-        domain,
-      }
-    }
-
-    // Check if domain is in blacklist
-    if (DISPOSABLE_EMAIL_DOMAINS.has(domain)) {
-      return {
-        isDisposable: true,
-        domain,
-      }
+    // Check known domains first
+    const knownResult = checkKnownDomains(domain)
+    if (knownResult) {
+      return knownResult
     }
 
     // Check cache
-    const cached = domainCheckCache.get(domain)
-    if (cached && cached.expiresAt > Date.now()) {
-      return cached.result
+    const cachedResult = getCachedResult(domain)
+    if (cachedResult) {
+      return cachedResult
     }
 
-    // Call istempmail.com API with domain only
-    const apiUrl = `https://www.istempmail.com/api/check/${ENV.TEMP_MAIL_API_KEY}/${encodeURIComponent(domain)}`
-
+    // Call external API
     try {
-      const response = await fetch(apiUrl, {
-        method: "GET",
-        headers: {
-          Accept: "application/json",
-        },
-        signal: AbortSignal.timeout(5000), // 5 second timeout
-      })
-
-      if (!response.ok) {
-        throw new Error(`API returned status ${response.status}`)
-      }
-
-      const data = (await response.json()) as TempMailApiResponse
-
-      const result: DisposableEmailCheckResult = {
-        isDisposable: data.blocked,
-        domain: data.name,
-        isUnresolvable: data.unresolvable,
-      }
-
-      // Cache the result
-      domainCheckCache.set(domain, {
-        result,
-        expiresAt: Date.now() + CACHE_DURATION_MS,
-      })
-
-      // Clean up old cache entries periodically
-      if (domainCheckCache.size > 1000) {
-        const now = Date.now()
-        for (const [key, value] of domainCheckCache.entries()) {
-          if (value.expiresAt < now) {
-            domainCheckCache.delete(key)
-          }
-        }
-      }
-
+      const result = await checkDomainViaAPI(domain)
+      cacheResult(domain, result)
       return result
     } catch (apiError) {
       // Log the error but don't block registration

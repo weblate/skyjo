@@ -5,6 +5,7 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { domAnimation, LazyMotion } from "motion/react"
 import { Toaster } from "sonner"
 import FeedbackProvider from "@/contexts/FeedbackContext"
+import { PenaltyProvider } from "@/contexts/PenaltyContext"
 import PlayerProvider from "@/contexts/PlayerContext"
 import RulesProvider from "@/contexts/RulesContext"
 import SettingsProvider from "@/contexts/SettingsContext"
@@ -22,9 +23,11 @@ const Providers = ({ children, locale }: ProvidersProps) => {
         <RulesProvider>
           <SettingsProvider locale={locale}>
             <PlayerProvider>
-              <LazyMotion strict features={domAnimation}>
-                {children}
-              </LazyMotion>
+              <PenaltyProvider>
+                <LazyMotion strict features={domAnimation}>
+                  {children}
+                </LazyMotion>
+              </PenaltyProvider>
             </PlayerProvider>
           </SettingsProvider>
         </RulesProvider>

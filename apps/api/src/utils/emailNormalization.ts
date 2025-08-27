@@ -127,23 +127,3 @@ export function areEmailsEquivalent(email1: string, email2: string): boolean {
     return false
   }
 }
-
-/**
- * Validate that an email is properly formatted before normalization
- */
-export function isValidEmailFormat(email: string): boolean {
-  if (!email || typeof email !== "string") {
-    return false
-  }
-
-  const trimmed = email.trim()
-
-  // Check for control characters (including newlines, tabs, etc.)
-  if (/[\x00-\x1F\x7F]/.test(trimmed)) {
-    return false
-  }
-
-  // Basic email regex validation
-  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
-  return emailRegex.test(trimmed)
-}

@@ -1,9 +1,13 @@
 import { Logger } from "@skymo/logger"
 import { DiscordClient } from "@/discord.js"
+import { registerAllFeatures } from "./features/index.js"
 import { ReportMessageWorker } from "./report/reportWorker.js"
 
 try {
   Logger.info("Starting Discord server...")
+
+  // Register all interaction features
+  registerAllFeatures()
 
   const discordClient = DiscordClient.getInstance()
   await discordClient.initialize()

@@ -1,10 +1,4 @@
-import {
-  type CardToJson,
-  ConnectionStatus,
-  Constants as CoreConstants,
-  type GameToJson,
-  type PlayerToJson,
-} from "@skymo/core"
+import { Constants as CoreConstants } from "@skymo/core"
 import { describe, expect, it } from "vitest"
 import {
   createMockCard,

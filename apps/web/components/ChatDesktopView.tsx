@@ -8,7 +8,9 @@ import { useTranslations } from "next-intl"
 import ChatForm from "@/components/ChatForm"
 import { ChatMessageList } from "@/components/ChatMessageList"
 import ChatNotLoggedIn from "@/components/ChatNotLoggedIn"
+import ChatRestricted from "@/components/ChatRestricted"
 import { useChat } from "@/contexts/ChatContext"
+import { usePenalty } from "@/contexts/PenaltyContext"
 import { useSettings } from "@/contexts/SettingsContext"
 import { useAuth } from "@/hooks/useAuth"
 import { cn } from "@/lib/utils"
@@ -42,6 +44,7 @@ const ChatDesktopView = ({
     settings: { chatNotificationSize },
   } = useSettings()
   const { isAuthenticated } = useAuth()
+  const { canChat } = usePenalty()
 
   return (
     <div
@@ -91,7 +94,8 @@ const ChatDesktopView = ({
           </p>
           <ChatMessageList />
           {!isAuthenticated && <ChatNotLoggedIn className="mb-2" />}
-          <ChatForm chatOpen={open} disabled={!isAuthenticated} />
+          {isAuthenticated && !canChat && <ChatRestricted className="mb-2" />}
+          <ChatForm chatOpen={open} disabled={!isAuthenticated || !canChat} />
         </m.div>
       </div>
     </div>

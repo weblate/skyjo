@@ -3,6 +3,7 @@
 import { useTranslations } from "next-intl"
 import { ChangeEvent } from "react"
 import GameLobbyButtons from "@/components/GameLobbyButtons"
+import { PenaltyCheck } from "@/components/PenaltyCheck"
 import SelectAvatar from "@/components/SelectAvatar"
 import { Input } from "@/components/ui/input"
 import { usePlayer } from "@/contexts/PlayerContext"
@@ -23,6 +24,7 @@ const IndexPage = ({ searchParams }: Props) => {
 
   return (
     <>
+      <PenaltyCheck />
       <SelectAvatar
         containerClassName="mb-4"
         value={avatarIndex}

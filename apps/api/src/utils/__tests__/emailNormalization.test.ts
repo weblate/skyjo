@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest"
 import {
   areEmailsEquivalent,
-  isValidEmailFormat,
   normalizeEmail,
   normalizeEmailWithDetails,
 } from "../emailNormalization.js"
@@ -201,37 +200,6 @@ describe("Email Normalization", () => {
       expect(
         areEmailsEquivalent("John.Doe+Test@Gmail.Com", "johndoe@gmail.com"),
       ).toBe(true)
-    })
-  })
-
-  describe("isValidEmailFormat", () => {
-    test("validates correct email formats", () => {
-      expect(isValidEmailFormat("user@example.com")).toBe(true)
-      expect(isValidEmailFormat("test.email@domain.org")).toBe(true)
-      expect(isValidEmailFormat("user+alias@subdomain.example.co.uk")).toBe(
-        true,
-      )
-      expect(isValidEmailFormat("user123@example123.com")).toBe(true)
-      expect(isValidEmailFormat("a@b.co")).toBe(true)
-    })
-
-    test("rejects invalid email formats", () => {
-      expect(isValidEmailFormat("")).toBe(false)
-      expect(isValidEmailFormat("invalid-email")).toBe(false)
-      expect(isValidEmailFormat("@example.com")).toBe(false)
-      expect(isValidEmailFormat("user@")).toBe(false)
-      expect(isValidEmailFormat("user@@example.com")).toBe(false)
-      expect(isValidEmailFormat("user@example")).toBe(false)
-      expect(isValidEmailFormat("user space@example.com")).toBe(false)
-      expect(isValidEmailFormat(null as any)).toBe(false)
-      expect(isValidEmailFormat(undefined as any)).toBe(false)
-      expect(isValidEmailFormat(123 as any)).toBe(false)
-    })
-
-    test("handles whitespace", () => {
-      expect(isValidEmailFormat("  user@example.com  ")).toBe(true)
-      expect(isValidEmailFormat("user@exam\nple.com")).toBe(false) // contains newline
-      expect(isValidEmailFormat("user@exam\tple.com")).toBe(false) // contains tab
     })
   })
 

@@ -9,6 +9,7 @@ import dynamic from "next/dynamic"
 import { useTranslations } from "next-intl"
 import { useState } from "react"
 import { toast } from "sonner"
+import { PenaltyCheck } from "@/components/PenaltyCheck"
 import { useRouter } from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { GamesList } from "./GamesList"
@@ -68,6 +69,7 @@ const SearchPageComponent = () => {
 
   return (
     <>
+      <PenaltyCheck />
       <header className="flex flex-row items-center justify-between">
         <div className="flex flex-row gap-4">
           <button

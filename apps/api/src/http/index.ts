@@ -7,6 +7,7 @@ import { authRouter } from "@/http/auth/auth.router.js"
 import { googleRouter } from "@/http/auth/google.router.js"
 import { feedbackRouter } from "@/http/feedback/feedback.router.js"
 import { gameRouter } from "@/http/game/game.router.js"
+import { penaltyRouter } from "@/http/penalty/penalty.router.js"
 import { userRouter } from "@/http/user/user.router.js"
 
 const httpApp = new Hono()
@@ -31,6 +32,7 @@ const httpApp = new Hono()
   .route("/games", gameRouter)
   .route("/feedbacks", feedbackRouter)
   .route("/users", userRouter)
+  .route("/penalties", penaltyRouter)
   .onError((error, c) => {
     if (error instanceof HTTPException) {
       handleHttpException(error)

@@ -2,6 +2,7 @@ import { ClassValue } from "clsx"
 import { MessageCircle } from "lucide-react"
 import { useTranslations } from "next-intl"
 import ChatNotLoggedIn from "@/components/ChatNotLoggedIn"
+import ChatRestricted from "@/components/ChatRestricted"
 import { Button } from "@/components/ui/button"
 import {
   Drawer,
@@ -13,6 +14,7 @@ import {
   DrawerTrigger,
 } from "@/components/ui/drawer"
 import { useChat } from "@/contexts/ChatContext"
+import { usePenalty } from "@/contexts/PenaltyContext"
 import { useAuth } from "@/hooks/useAuth"
 import { cn } from "@/lib/utils"
 import ChatForm from "./ChatForm"
@@ -32,6 +34,7 @@ const ChatMobileView = ({
   const t = useTranslations("components.Chat")
   const { hasUnreadMessage } = useChat()
   const { isAuthenticated } = useAuth()
+  const { canChat } = usePenalty()
 
   return (
     <Drawer open={open} onOpenChange={toggleOpening} repositionInputs={false}>
@@ -56,7 +59,8 @@ const ChatMobileView = ({
         </div>
         <DrawerFooter className="p-4 pt-0">
           {!isAuthenticated && <ChatNotLoggedIn />}
-          <ChatForm chatOpen={open} disabled={!isAuthenticated} />
+          {isAuthenticated && !canChat && <ChatRestricted />}
+          <ChatForm chatOpen={open} disabled={!isAuthenticated || !canChat} />
         </DrawerFooter>
       </DrawerContent>
     </Drawer>
