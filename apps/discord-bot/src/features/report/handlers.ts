@@ -232,7 +232,7 @@ const modalHandlers = {
           targetUserId: report.userId ?? undefined,
           targetGuestId: report.guestId ?? undefined,
           type: penaltyType,
-          reason: `Report #${reportId}: ${moderatorComment}`,
+          reason: moderatorComment,
           reportId: +reportId,
         }
 

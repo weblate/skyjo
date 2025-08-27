@@ -1255,16 +1255,6 @@
       "button": "Rejouer",
       "leavebusterMessage": "Terminez votre pénalité de déconnexion pour rejouer"
     },
-    "PenaltyCheck": {
-      "ban": {
-        "title": "Compte Banni",
-        "permanent": "Ce bannissement est permanent."
-      },
-      "tempban": {
-        "title": "Bannissement Temporaire",
-        "expiresAt": "Le bannissement expire le : {date}"
-      }
-    },
     "LeavebusterDialog": {
       "title": "Pénalité de Déconnexion",
       "description": "Vous avez quitté une partie publique prématurément. Terminez cette pénalité pour continuer à jouer.",
@@ -1273,6 +1263,14 @@
       "completeButton": "Terminer ({time})",
       "completedButton": "Terminé !",
       "closeButton": "Fermer"
+    },
+    "BanDialog": {
+      "title": "Compte Suspendu",
+      "suspensionMessage": "Vous êtes {isPermanent, select, true {suspendu de jouer de façon permanente} other {suspendu de jouer}} en raison de votre comportement dans le jeu.",
+      "temporary": "Vous pourrez rejouer le : {date}.",
+      "reasonLabel": "Motif :",
+      "defaultReason": "Aucun motif fourni.",
+      "understandButton": "J'ai compris"
     },
     "ChatRestrictionDialog": {
       "title": "Restriction de Chat",

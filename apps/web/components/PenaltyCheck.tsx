@@ -1,7 +1,7 @@
 "use client"
 
-import { useTranslations } from "next-intl"
 import { usePenalty } from "@/contexts/PenaltyContext"
+import { BanDialog } from "./BanDialog"
 import { ChatRestrictionDialog } from "./ChatRestrictionDialog"
 import { LeavebusterDialog } from "./LeavebusterDialog"
 
@@ -13,7 +13,6 @@ import { LeavebusterDialog } from "./LeavebusterDialog"
  * Priority: BAN > TEMPBAN > CHAT_RESTRICT > LEAVEBUSTER
  */
 export function PenaltyCheck() {
-  const t = useTranslations("components.PenaltyCheck")
   const { penalties } = usePenalty()
 
   // Find penalties by priority
@@ -21,47 +20,13 @@ export function PenaltyCheck() {
 
   // Priority 1: Permanent ban (blocks everything)
   if (activeBan) {
-    return (
-      <div className="fixed inset-0 z-[9999] bg-black/50 flex items-center justify-center">
-        <div className="bg-white dark:bg-gray-800 p-8 rounded-lg max-w-md mx-4 shadow-xl">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4 text-red-600">
-              {t("ban.title")}
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-4">
-              {activeBan.reason}
-            </p>
-            <p className="text-sm text-gray-500">{t("ban.permanent")}</p>
-          </div>
-        </div>
-      </div>
-    )
+    return <BanDialog penalty={activeBan} />
   }
 
   // Priority 2: Temporary ban (blocks everything except permanent ban)
   const activeTempban = penalties.find((penalty) => penalty.type === "tempban")
   if (activeTempban) {
-    return (
-      <div className="fixed inset-0 z-[9999] bg-black/50 flex items-center justify-center">
-        <div className="bg-white dark:bg-gray-800 p-8 rounded-lg max-w-md mx-4 shadow-xl">
-          <div className="text-center">
-            <h2 className="text-2xl font-bold mb-4 text-red-600">
-              {t("tempban.title")}
-            </h2>
-            <p className="text-gray-700 dark:text-gray-300 mb-4">
-              {activeTempban.reason}
-            </p>
-            {activeTempban.expiresAt && (
-              <p className="text-sm text-gray-500">
-                {t("tempban.expiresAt", {
-                  date: new Date(activeTempban.expiresAt).toLocaleString(),
-                })}
-              </p>
-            )}
-          </div>
-        </div>
-      </div>
-    )
+    return <BanDialog penalty={activeTempban} />
   }
 
   // Priority 3: Chat restriction (only shows if not acknowledged)

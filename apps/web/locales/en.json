@@ -1257,16 +1257,6 @@
       "button": "Play Again",
       "leavebusterMessage": "Complete your leavebuster penalty to play again"
     },
-    "PenaltyCheck": {
-      "ban": {
-        "title": "Account Banned",
-        "permanent": "This ban is permanent."
-      },
-      "tempban": {
-        "title": "Temporary Ban",
-        "expiresAt": "Ban expires: {date}"
-      }
-    },
     "LeavebusterDialog": {
       "title": "Leavebuster Penalty",
       "description": "You left a public game early. Complete this penalty to continue playing.",
@@ -1275,6 +1265,14 @@
       "completeButton": "Complete ({time})",
       "completedButton": "Completed!",
       "closeButton": "Close"
+    },
+    "BanDialog": {
+      "title": "Account Suspended",
+      "suspensionMessage": "You are {isPermanent, select, true {permanently} other {temporarily}} suspended from playing due to your behavior in the game.",
+      "temporary": "You will be able to play again on: {date}.",
+      "reasonLabel": "Reason:",
+      "defaultReason": "No reason provided.",
+      "understandButton": "I understand"
     },
     "ChatRestrictionDialog": {
       "title": "Chat Restriction",
