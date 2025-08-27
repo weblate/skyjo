@@ -177,8 +177,9 @@ describe("LobbyService", () => {
       })
       game.addPlayer(opponent)
 
-      game.bannedNames = ["playerNameXX"]
+      game.bannedUserIds = [123]
 
+      socket.user = { id: 123 } as any
       const player: CreatePlayer = {
         name: "playerNameXX",
         avatar: CoreConstants.AVATARS.BEE,

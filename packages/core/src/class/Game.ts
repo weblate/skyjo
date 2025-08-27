@@ -30,8 +30,8 @@ interface GameInterface {
   lastTurnStatus: LastTurnStatus
   roundPhase: RoundPhase
 
-  bannedPlayerIds: string[]
-  bannedNames: string[]
+  bannedUserIds: number[]
+  bannedGuestIds: string[]
 
   stateVersion: number
   createdAt: Date
@@ -63,8 +63,8 @@ export class Game implements GameInterface {
   roundNumber: number = 1
   firstToFinishPlayerId: string | null = null
 
-  bannedPlayerIds: string[] = []
-  bannedNames: string[] = []
+  bannedUserIds: number[] = []
+  bannedGuestIds: string[] = []
 
   processingAfk: boolean = false
 
@@ -101,8 +101,8 @@ export class Game implements GameInterface {
 
     this.firstToFinishPlayerId = game.firstToFinishPlayerId
 
-    this.bannedPlayerIds = game.bannedPlayerIds
-    this.bannedNames = game.bannedNames
+    this.bannedUserIds = game.bannedUserIds || []
+    this.bannedGuestIds = game.bannedGuestIds || []
 
     this.stateVersion = game.stateVersion
     this.processingAfk = game.processingAfk
@@ -220,23 +220,20 @@ export class Game implements GameInterface {
   }
 
   banPlayer(target: Player) {
-    const playerId = target.id
-    if (!this.bannedPlayerIds.includes(playerId)) {
-      this.bannedPlayerIds.push(playerId)
+    if (target.userId && !this.bannedUserIds.includes(target.userId)) {
+      this.bannedUserIds.push(target.userId)
     }
 
-    const playerName = target.name
-    if (playerName && !this.bannedNames.includes(playerName)) {
-      this.bannedNames.push(playerName)
+    if (target.guestId && !this.bannedGuestIds.includes(target.guestId)) {
+      this.bannedGuestIds.push(target.guestId)
     }
   }
 
   isPlayerBanned(player: Player) {
-    const playerId = player.id
-    if (this.bannedPlayerIds.includes(playerId)) return true
+    if (player.userId && this.bannedUserIds.includes(player.userId)) return true
 
-    const playerName = player.name
-    if (this.bannedNames.includes(playerName)) return true
+    if (player.guestId && this.bannedGuestIds.includes(player.guestId))
+      return true
 
     return false
   }
@@ -549,8 +546,8 @@ export class Game implements GameInterface {
       turnStatus: this.turnStatus,
       lastTurnStatus: this.lastTurnStatus,
       firstToFinishPlayerId: this.firstToFinishPlayerId,
-      bannedPlayerIds: this.bannedPlayerIds,
-      bannedNames: this.bannedNames,
+      bannedUserIds: this.bannedUserIds,
+      bannedGuestIds: this.bannedGuestIds,
       stateVersion: this.stateVersion,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,

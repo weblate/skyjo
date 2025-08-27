@@ -83,8 +83,8 @@ describe("Game", () => {
         drawPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         selectedCardValue: null,
         firstToFinishPlayerId: null,
-        bannedPlayerIds: [],
-        bannedNames: [],
+        bannedUserIds: [],
+        bannedGuestIds: [],
         players: [],
 
         settings: {
@@ -136,8 +136,8 @@ describe("Game", () => {
         drawPile: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
         selectedCardValue: null,
         firstToFinishPlayerId: null,
-        bannedPlayerIds: [],
-        bannedNames: [],
+        bannedUserIds: [],
+        bannedGuestIds: [],
         players: [
           {
             id: crypto.randomUUID(),
@@ -1343,8 +1343,8 @@ describe("Game", () => {
         turn: game.turn,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
-        bannedPlayerIds: game.bannedPlayerIds,
-        bannedNames: game.bannedNames,
+        bannedUserIds: game.bannedUserIds,
+        bannedGuestIds: game.bannedGuestIds,
         players: [
           {
             id: player.id,
@@ -1352,6 +1352,7 @@ describe("Game", () => {
             avatar: Constants.AVATARS.BEE,
             userId: player.userId ?? null,
             username: player.username ?? null,
+            guestId: player.guestId ?? null,
             cards: player.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,
@@ -1378,6 +1379,7 @@ describe("Game", () => {
             avatar: Constants.AVATARS.ELEPHANT,
             userId: opponent.userId ?? null,
             username: opponent.username ?? null,
+            guestId: opponent.guestId ?? null,
             cards: opponent.cards.map((column) =>
               column.map((card) => ({
                 id: card.id,
@@ -2227,11 +2229,12 @@ describe("Game", () => {
 
   // Add tests for ban feature
   describe("banPlayer", () => {
-    it("should add player id to bannedPlayerIds if not already included", () => {
+    it("should add userId to bannedUserIds if not already included", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        21312213132,
       )
       game.addPlayer(targetPlayer)
 
@@ -2239,32 +2242,36 @@ describe("Game", () => {
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedPlayerIds).toContain(targetPlayer.id)
-      expect(game.bannedPlayerIds.length).toBe(1)
+      expect(game.bannedUserIds).toContain(targetPlayer.userId)
+      expect(game.bannedUserIds.length).toBe(1)
     })
 
-    it("should not add player id to bannedPlayerIds if already included", () => {
+    it("should not add userId to bannedUserIds if already included", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        21312213132,
       )
       game.addPlayer(targetPlayer)
-      game.bannedPlayerIds.push(targetPlayer.id)
+      game.bannedUserIds.push(targetPlayer.userId!)
 
       // Execute
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedPlayerIds).toContain(targetPlayer.id)
-      expect(game.bannedPlayerIds.length).toBe(1)
+      expect(game.bannedUserIds).toContain(targetPlayer.userId!)
+      expect(game.bannedUserIds.length).toBe(1)
     })
 
-    it("should add player name to bannedNames if not already included", () => {
+    it("should add guestId to bannedGuestIds if not already included", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        123,
+        "guestId",
+        "guestId",
       )
       game.addPlayer(targetPlayer)
 
@@ -2272,25 +2279,28 @@ describe("Game", () => {
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedNames).toContain(targetPlayer.name)
-      expect(game.bannedNames.length).toBe(1)
+      expect(game.bannedGuestIds).toContain(targetPlayer.guestId!)
+      expect(game.bannedGuestIds.length).toBe(1)
     })
 
-    it("should not add player name to bannedNames if already included", () => {
+    it("should not add guestId to bannedGuestIds if already included", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        123,
+        "guestId",
+        "guestId",
       )
       game.addPlayer(targetPlayer)
-      game.bannedNames.push(targetPlayer.name)
+      game.bannedGuestIds.push(targetPlayer.guestId!)
 
       // Execute
       game.banPlayer(targetPlayer)
 
       // Verify
-      expect(game.bannedNames).toContain(targetPlayer.name)
-      expect(game.bannedNames.length).toBe(1)
+      expect(game.bannedGuestIds).toContain(targetPlayer.guestId!)
+      expect(game.bannedGuestIds.length).toBe(1)
     })
   })
 
@@ -2300,22 +2310,24 @@ describe("Game", () => {
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        21312213132,
       )
       game.addPlayer(targetPlayer)
-      game.bannedPlayerIds.push(targetPlayer.id)
+      game.bannedUserIds.push(targetPlayer.userId!)
 
       // Execute & Verify
       expect(game.isPlayerBanned(targetPlayer)).toBe(true)
     })
 
-    it("should return true if player name is in bannedNames", () => {
+    it("should return true if player userId is in bannedUserIds", () => {
       // Setup
       const targetPlayer = new Player(
         { name: "target", avatar: Constants.AVATARS.BEE },
         "targetSocketId",
+        21312213132,
       )
       game.addPlayer(targetPlayer)
-      game.bannedNames.push(targetPlayer.name)
+      game.bannedUserIds.push(targetPlayer.userId!)
 
       // Execute & Verify
       expect(game.isPlayerBanned(targetPlayer)).toBe(true)

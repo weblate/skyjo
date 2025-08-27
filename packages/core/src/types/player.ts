@@ -21,6 +21,8 @@ export type PlayerToJson = {
   turnStartTime: number | null
   cards: CardToJson[][]
   username?: string
+  userId?: number | null
+  guestId?: string | null
   forfeited: boolean
   forfeitedAt: number | null
 }

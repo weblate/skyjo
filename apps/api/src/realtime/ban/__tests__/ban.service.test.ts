@@ -36,14 +36,23 @@ describe("BanService", () => {
     player = new Player(
       { name: "player", avatar: CoreConstants.AVATARS.BEE },
       TEST_SOCKET_ID,
+      123,
+      "player",
+      "guestId-player",
     )
     opponent1 = new Player(
       { name: "opponent1", avatar: CoreConstants.AVATARS.CRAB },
       RANDOM_SOCKET_ID(),
+      123,
+      "opponent1",
+      "guestId-opponent1",
     )
     opponent2 = new Player(
       { name: "opponent2", avatar: CoreConstants.AVATARS.DOG },
       RANDOM_SOCKET_ID(),
+      123,
+      "opponent2",
+      "guestId-opponent2",
     )
 
     game = new Game({
@@ -148,15 +157,15 @@ describe("BanService", () => {
       vi.spyOn(game, "disconnectPlayer").mockResolvedValue()
 
       // Ensure ban lists are empty initially
-      expect(game.bannedPlayerIds).toHaveLength(0)
-      expect(game.bannedNames).toHaveLength(0)
+      expect(game.bannedUserIds).toHaveLength(0)
+      expect(game.bannedGuestIds).toHaveLength(0)
 
       // Execute the ban
       await service.onBanPlayer(socket, opponent2.id)
 
       // Verify ban lists were updated
-      expect(game.bannedPlayerIds).toContain(opponent2.id)
-      expect(game.bannedNames).toContain(opponent2.name)
+      expect(game.bannedUserIds).toContain(opponent2.userId!)
+      expect(game.bannedGuestIds).toContain(opponent2.guestId!)
     })
 
     it("should update the host if banned player was the host", async () => {
