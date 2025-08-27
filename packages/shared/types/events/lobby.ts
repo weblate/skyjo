@@ -15,10 +15,14 @@ export type ErrorJoinMessage = Extract<
   | "game-already-started"
   | "game-is-full"
   | "player-banned"
+  | "player-penalty-banned"
   | "player-already-connected"
 >
 
-export type ErrorCreateMessage = Extract<ThrownError, "player-banned">
+export type ErrorCreateMessage = Extract<
+  ThrownError,
+  "player-banned" | "player-penalty-banned"
+>
 
 export interface ServerToClientLobbyEvents {
   "error:join": (message: ErrorJoinMessage) => void

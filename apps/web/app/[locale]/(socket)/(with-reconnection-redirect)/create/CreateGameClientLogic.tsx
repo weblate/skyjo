@@ -50,7 +50,7 @@ const CreateGameClientLogic = () => {
       const player = getPlayer()
 
       if (!loading) {
-        createGame(player, isPrivate)
+        createGame(player, isPrivate, () => setLoading(false))
         setLoading(true)
       }
     }

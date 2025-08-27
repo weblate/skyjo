@@ -46,9 +46,19 @@ const cancelCountdownRateLimiter = new RateLimiterMemory({
 async function hasActiveBan(
   userId?: number,
   guestId?: string,
-): Promise<boolean> {
+): Promise<{ isBanned: boolean; isPenaltyBan: boolean }> {
   const penalties = await getActivePenalties(userId, guestId)
-  return penalties.some((p) => p.type === "tempban" || p.type === "ban")
+  const banPenalties = penalties.filter(
+    (p) => p.type === "tempban" || p.type === "ban",
+  )
+
+  if (banPenalties.length === 0) {
+    return { isBanned: false, isPenaltyBan: false }
+  }
+
+  // Consider it a penalty ban if there's at least one ban/tempban penalty
+  // In the future, we could add more logic here to differentiate manual vs automated bans
+  return { isBanned: true, isPenaltyBan: true }
 }
 
 const lobbyRouter = (socket: GameSocket) => {
@@ -59,16 +69,21 @@ const lobbyRouter = (socket: GameSocket) => {
         const parsedPlayer = createPlayer.parse(player)
 
         // Check if the player is banned
-        const isBanned = await hasActiveBan(socket.user?.id, socket.guestId)
-        if (isBanned) {
+        const banStatus = await hasActiveBan(socket.user?.id, socket.guestId)
+        if (banStatus.isBanned) {
+          const errorCode = banStatus.isPenaltyBan
+            ? ErrorConstants.ERROR.PLAYER_PENALTY_BANNED
+            : ErrorConstants.ERROR.PLAYER_BANNED
+
           throw new CError("Player tried to create a game but is banned.", {
-            code: ErrorConstants.ERROR.PLAYER_BANNED,
+            code: errorCode,
             level: "warn",
             meta: {
               socketId: socket.id,
               userId: socket.user?.id,
               guestId: socket.guestId,
               playerName: parsedPlayer.name,
+              isPenaltyBan: banStatus.isPenaltyBan,
             },
           })
         }
@@ -77,7 +92,8 @@ const lobbyRouter = (socket: GameSocket) => {
       } catch (error) {
         if (
           error instanceof CError &&
-          error.code === ErrorConstants.ERROR.PLAYER_BANNED
+          (error.code === ErrorConstants.ERROR.PLAYER_BANNED ||
+            error.code === ErrorConstants.ERROR.PLAYER_PENALTY_BANNED)
         ) {
           socket.emit("error:create", error.code satisfies ErrorCreateMessage)
         } else {
@@ -94,10 +110,14 @@ const lobbyRouter = (socket: GameSocket) => {
         const { gameCode, player } = joinGame.parse(data)
 
         // Check if the player is banned
-        const isBanned = await hasActiveBan(socket.user?.id, socket.guestId)
-        if (isBanned) {
+        const banStatus = await hasActiveBan(socket.user?.id, socket.guestId)
+        if (banStatus.isBanned) {
+          const errorCode = banStatus.isPenaltyBan
+            ? ErrorConstants.ERROR.PLAYER_PENALTY_BANNED
+            : ErrorConstants.ERROR.PLAYER_BANNED
+
           throw new CError("Player tried to join a game but is banned.", {
-            code: ErrorConstants.ERROR.PLAYER_BANNED,
+            code: errorCode,
             level: "warn",
             meta: {
               socketId: socket.id,
@@ -105,6 +125,7 @@ const lobbyRouter = (socket: GameSocket) => {
               guestId: socket.guestId,
               playerName: player.name,
               gameCode,
+              isPenaltyBan: banStatus.isPenaltyBan,
             },
           })
         }
@@ -117,6 +138,7 @@ const lobbyRouter = (socket: GameSocket) => {
             error.code === ErrorConstants.ERROR.GAME_ALREADY_STARTED ||
             error.code === ErrorConstants.ERROR.GAME_IS_FULL ||
             error.code === ErrorConstants.ERROR.PLAYER_BANNED ||
+            error.code === ErrorConstants.ERROR.PLAYER_PENALTY_BANNED ||
             error.code === ErrorConstants.ERROR.PLAYER_ALREADY_CONNECTED)
         ) {
           socket.emit("error:join", error.code satisfies ErrorJoinMessage)

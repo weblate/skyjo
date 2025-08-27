@@ -8,6 +8,7 @@ import {
 import { Constants as ErrorConstants } from "@skymo/error"
 import {
   ClientToServerEvents,
+  ErrorCreateMessage,
   ErrorJoinMessage,
   ErrorReconnectMessage,
   ErrorRecoverMessage,
@@ -40,7 +41,11 @@ export type GameSocket = Socket<ServerToClientEvents, ClientToServerEvents>
 
 interface SocketContext {
   socket: GameSocket | null
-  createGame: (player: CreatePlayer, isPrivate: boolean) => void
+  createGame: (
+    player: CreatePlayer,
+    isPrivate: boolean,
+    onError: () => void,
+  ) => void
   joinGame: (
     player: CreatePlayer,
     gameCode: string,
@@ -185,20 +190,39 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   }
   //#endregion
 
-  const createGame = (player: CreatePlayer, isPrivate: boolean) => {
+  const createGame = (
+    player: CreatePlayer,
+    isPrivate: boolean,
+    onError: () => void,
+  ) => {
     const socket = getSocket()
 
-    try {
-      socket.once("error:join", onJoinGameError)
-      socket.once("game:join", onJoinGameSuccess)
+    socket.once("game:join", onJoinGameSuccess)
+    socket.once("error:create", onCreateGameError)
+    socket.once("error:join", (message) => {
+      onJoinGameError(message)
+      onError()
+    })
 
+    try {
       socket.timeout(10000).emit("create", player, isPrivate)
     } catch {
       toast.error(tSocketError("timeout.description"), {
         duration: 5000,
       })
+      onError()
     }
   }
+
+  const onCreateGameError = useCallback(
+    (message: ErrorCreateMessage) => {
+      console.log("onCreateGameError", message)
+      if (message === ErrorConstants.ERROR.PLAYER_PENALTY_BANNED) {
+        router.replace("/")
+      }
+    },
+    [router],
+  )
 
   //#region join game
   const joinGame = (
@@ -249,11 +273,18 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
   const onJoinGameError = useCallback(
     (message: ErrorJoinMessage) => {
       console.log("onJoinGameError", message)
+
+      if (message === ErrorConstants.ERROR.PLAYER_PENALTY_BANNED) {
+        router.replace("/")
+        return
+      }
+
+      // Show toast for all other errors including regular player bans
       toast.error(joinErrorDescription[message], {
         duration: 5000,
       })
     },
-    [joinErrorDescription],
+    [joinErrorDescription, router],
   )
   //#endregion
 
