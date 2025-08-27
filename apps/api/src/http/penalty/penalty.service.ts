@@ -28,7 +28,7 @@ export async function createPenalty(data: CreatePenalty): Promise<PenaltyDb> {
   > = {}
 
   switch (data.type) {
-    case "leavebuster":
+    case "leavebuster": {
       const level = data.level || 1
       const config =
         LEAVEBUSTER_CONFIG[level as keyof typeof LEAVEBUSTER_CONFIG]
@@ -37,6 +37,7 @@ export async function createPenalty(data: CreatePenalty): Promise<PenaltyDb> {
       penaltyData.completionsDone = 0
       penaltyData.expiresAt = null
       break
+    }
     case "chat_restrict":
     case "tempban":
       if (!data.durationMinutes) {

@@ -2,7 +2,7 @@
 
 import type { PenaltiesResponse, PenaltyData } from "@skymo/shared/types"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
-import { createContext, PropsWithChildren, useContext } from "react"
+import { createContext, PropsWithChildren, useContext, useMemo } from "react"
 
 interface PenaltyContextType {
   penalties: PenaltyData[]
@@ -76,18 +76,29 @@ export function PenaltyProvider({ children }: PropsWithChildren) {
 
   const hasActiveLeavebuster = !!activeLeavebuster
 
+  const contextValue = useMemo(
+    () => ({
+      penalties,
+      activeLeavebuster,
+      hasActiveLeavebuster,
+      acknowledgePenalty: acknowledgePenaltyMutation.mutateAsync,
+      canPlay,
+      canChat,
+      isLoading: penaltiesLoading,
+    }),
+    [
+      penalties,
+      activeLeavebuster,
+      hasActiveLeavebuster,
+      acknowledgePenaltyMutation.mutateAsync,
+      canPlay,
+      canChat,
+      penaltiesLoading,
+    ],
+  )
+
   return (
-    <PenaltyContext.Provider
-      value={{
-        penalties,
-        activeLeavebuster,
-        hasActiveLeavebuster,
-        acknowledgePenalty: acknowledgePenaltyMutation.mutateAsync,
-        canPlay,
-        canChat,
-        isLoading: penaltiesLoading,
-      }}
-    >
+    <PenaltyContext.Provider value={contextValue}>
       {children}
     </PenaltyContext.Provider>
   )

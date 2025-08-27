@@ -6,8 +6,8 @@ import { usePenalty } from "@/contexts/PenaltyContext"
 import { Button } from "./ui/button"
 
 interface PlayAgainButtonProps {
-  onPlayAgain: () => void
-  className?: ClassValue
+  readonly onPlayAgain: () => void
+  readonly className?: ClassValue
 }
 export function PlayAgainButton({
   onPlayAgain,

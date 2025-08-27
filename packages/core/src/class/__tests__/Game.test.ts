@@ -701,31 +701,26 @@ describe("Game", () => {
       expect(initialVisibleCount).toBe(1)
       expect(player.cards[0][0].isVisible).toBe(false)
 
-      // Mock the player's checkColumnsAndDiscard method to return the matching cards when all are visible
+      // Helper function to check if column 0 cards match and are visible
+      const checkColumn0Matching = () => {
+        const allColumn0Visible = player.cards[0].every(
+          (card) => card.isVisible,
+        )
+        const allColumn0Same = player.cards[0].every((card) => card.value === 5)
+        return allColumn0Visible && allColumn0Same ? [card1, card2, card3] : []
+      }
+
+      // Mock the player's checkColumnsAndDiscard method
       const checkColumnsSpy = vi
         .spyOn(player, "checkColumnsAndDiscard")
-        .mockImplementation(() => {
-          // After revealing the card, check if all cards in column 0 are visible and matching
-          const allColumn0Visible = player.cards[0].every(
-            (card) => card.isVisible,
-          )
-          const allColumn0Same = player.cards[0].every(
-            (card) => card.value === 5,
-          )
-
-          if (allColumn0Visible && allColumn0Same) {
-            return [card1, card2, card3] // Return the actual matching cards to be discarded
-          }
-          return []
-        })
+        .mockImplementation(checkColumn0Matching)
 
       // Track discarded cards
       const discardedCards: number[] = []
+      const discardCardMock = (value: number) => discardedCards.push(value)
       const discardCardSpy = vi
         .spyOn(game, "discardCard")
-        .mockImplementation((value: number) => {
-          discardedCards.push(value)
-        })
+        .mockImplementation(discardCardMock)
 
       await game.revealCard({
         player,
@@ -1046,38 +1041,45 @@ describe("Game", () => {
           player.cards.flat().forEach((card) => card.turnVisible())
         })
 
+      // Helper function to handle column 0 card discarding
+      const handleColumn0Discard = (playerParam: Player) => {
+        if (playerParam === player) {
+          const column0Cards = [
+            player.cards[0][0],
+            player.cards[1][0],
+            player.cards[2][0],
+          ]
+          if (
+            column0Cards.every((card) => card.value === 5 && card.isVisible)
+          ) {
+            column0Cards.forEach((card) => game.discardCard(card.value))
+          }
+        }
+      }
+
+      // Mock implementation for checkCardsToDiscard
+      const checkCardsToDiscardMock = (playerParam: Player) => {
+        checkCardsToDiscardCallCount++
+        operationOrder.push(
+          `checkCardsToDiscard-${checkCardsToDiscardCallCount}`,
+        )
+
+        const allCardsVisible = playerParam.cards
+          .flat()
+          .every((card) => card.isVisible)
+
+        if (checkCardsToDiscardCallCount === 1) {
+          expect(allCardsVisible).toBe(false)
+        } else if (checkCardsToDiscardCallCount === 2) {
+          expect(allCardsVisible).toBe(true)
+          handleColumn0Discard(playerParam)
+        }
+      }
+
       const checkCardsToDiscardSpy = vi
         .spyOn(game as any, "checkCardsToDiscard")
         // @ts-ignore - test code
-        .mockImplementation((playerParam: Player) => {
-          checkCardsToDiscardCallCount++
-          operationOrder.push(
-            `checkCardsToDiscard-${checkCardsToDiscardCallCount}`,
-          )
-
-          const allCardsVisible = playerParam.cards
-            .flat()
-            .every((card) => card.isVisible)
-
-          if (checkCardsToDiscardCallCount === 1) {
-            expect(allCardsVisible).toBe(false)
-          } else if (checkCardsToDiscardCallCount === 2) {
-            expect(allCardsVisible).toBe(true)
-
-            if (playerParam === player) {
-              const column0Cards = [
-                player.cards[0][0],
-                player.cards[1][0],
-                player.cards[2][0],
-              ]
-              if (
-                column0Cards.every((card) => card.value === 5 && card.isVisible)
-              ) {
-                column0Cards.forEach((card) => game.discardCard(card.value))
-              }
-            }
-          }
-        })
+        .mockImplementation(checkCardsToDiscardMock)
 
       const shouldEndRoundSpy = vi
         .spyOn(game as any, "shouldEndRound")

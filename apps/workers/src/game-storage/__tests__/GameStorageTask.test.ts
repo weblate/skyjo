@@ -1,5 +1,4 @@
 import { Constants } from "@skymo/core"
-import type { GameStorageJobData } from "@skymo/worker-types"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { GameStorageTask } from "../GameStorageTask.js"
 

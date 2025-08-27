@@ -15,7 +15,7 @@ import {
 import { Button } from "./ui/button"
 
 interface BanDialogProps {
-  penalty: PenaltyData
+  readonly penalty: PenaltyData
 }
 
 export function BanDialog({ penalty }: BanDialogProps) {
@@ -38,7 +38,7 @@ export function BanDialog({ penalty }: BanDialogProps) {
               <>
                 {" "}
                 {t("temporary", {
-                  date: dayjs(penalty.expiresAt!).format("DD/MM/YYYY HH:mm"),
+                  date: dayjs(penalty.expiresAt).format("DD/MM/YYYY HH:mm"),
                 })}{" "}
               </>
             )}

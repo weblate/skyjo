@@ -16,7 +16,7 @@ import {
 import { usePenalty } from "@/contexts/PenaltyContext"
 
 interface ChatRestrictionDialogProps {
-  penalty: PenaltyData
+  readonly penalty: PenaltyData
 }
 
 export function ChatRestrictionDialog({ penalty }: ChatRestrictionDialogProps) {

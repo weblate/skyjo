@@ -501,12 +501,14 @@ function formatPenalty(type: string, duration: string): string {
   switch (type) {
     case "leavebuster":
       return `Leavebuster Level ${duration}`
-    case "chat_restrict":
+    case "chat_restrict": {
       const hours = Number(duration) / 60
       return `Chat restricted for ${hours} hour${hours !== 1 ? "s" : ""}`
-    case "tempban":
+    }
+    case "tempban": {
       const days = Number(duration) / 1440
       return `Banned for ${days} day${days !== 1 ? "s" : ""}`
+    }
     case "ban":
       return "Permanently banned"
     default:

@@ -164,8 +164,8 @@ describe("BanService", () => {
       await service.onBanPlayer(socket, opponent2.id)
 
       // Verify ban lists were updated
-      expect(game.bannedUserIds).toContain(opponent2.userId!)
-      expect(game.bannedGuestIds).toContain(opponent2.guestId!)
+      expect(game.bannedUserIds).toContain(opponent2.userId)
+      expect(game.bannedGuestIds).toContain(opponent2.guestId)
     })
 
     it("should update the host if banned player was the host", async () => {

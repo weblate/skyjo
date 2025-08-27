@@ -12,7 +12,7 @@ import {
 import { Button } from "./ui/button"
 
 interface LeavebusterDialogProps {
-  penalty: PenaltyData
+  readonly penalty: PenaltyData
 }
 
 function formatTime(seconds: number): string {

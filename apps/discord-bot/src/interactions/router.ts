@@ -19,7 +19,7 @@ export interface InteractionHandler {
 
 export class InteractionRouter {
   private static instance: InteractionRouter | null = null
-  private handlers: Map<string, InteractionHandler> = new Map()
+  private readonly handlers: Map<string, InteractionHandler> = new Map()
 
   private constructor() {}
 
