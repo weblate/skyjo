@@ -10,7 +10,13 @@ import PlayerProvider from "@/contexts/PlayerContext"
 import RulesProvider from "@/contexts/RulesContext"
 import SettingsProvider from "@/contexts/SettingsContext"
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+    },
+  },
+})
 
 interface ProvidersProps {
   children: React.ReactNode
