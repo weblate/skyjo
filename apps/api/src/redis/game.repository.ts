@@ -2,6 +2,7 @@ import {
   Constants as CoreConstants,
   Game,
   type GameRedisDb,
+  type GameStatus,
   type PlayerToJson,
 } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
@@ -103,6 +104,19 @@ export class GameRepository extends RedisClient {
 
     const key = this.getGameLatestStateKey(gameCode)
 
+    // First check if game status allows reconnection
+    const gameStatus = (await client.json.get(key, {
+      path: "$.status",
+    })) as [GameStatus]
+    if (
+      !gameStatus ||
+      gameStatus[0] === CoreConstants.GAME_STATUS.STOPPED ||
+      gameStatus[0] === CoreConstants.GAME_STATUS.FINISHED
+    ) {
+      return false
+    }
+
+    // Then check if player exists and has valid session
     const player = await client.json.get(key, {
       path: `$.players[?(@.id == '${playerId}' && @.connectionStatus != '${CoreConstants.CONNECTION_STATUS.DISCONNECTED}' && @.sessionId == '${sessionId}')]`,
     })
