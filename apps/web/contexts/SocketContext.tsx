@@ -263,9 +263,19 @@ const SocketProvider = ({ children }: PropsWithChildren) => {
 
       setPlayerId(playerId)
 
-      if (status === CoreConstants.GAME_STATUS.LOBBY)
-        router.replace(`/game/${gameCode}/lobby`)
-      else router.replace(`/game/${gameCode}`)
+      switch (status) {
+        case CoreConstants.GAME_STATUS.LOBBY:
+          router.replace(`/game/${gameCode}/lobby`)
+          break
+        case CoreConstants.GAME_STATUS.PLAYING:
+          router.replace(`/game/${gameCode}`)
+          break
+        case CoreConstants.GAME_STATUS.FINISHED:
+        case CoreConstants.GAME_STATUS.STOPPED:
+        default:
+          router.replace(`/game/${gameCode}/results`)
+          break
+      }
     },
     [setPlayerId, router],
   )
