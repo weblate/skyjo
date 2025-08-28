@@ -265,7 +265,7 @@ export async function getUserStats(username: string) {
     .innerJoin(userTable, eq(playerTable.userId, userTable.id))
     .where(
       and(
-        eq(userTable.username, username),
+        eq(userTable.username, username.toLowerCase()),
         sql`(${gameTable.settings}->>'private')::boolean = false`,
       ),
     )

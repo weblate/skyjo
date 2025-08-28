@@ -22,29 +22,31 @@ export async function generateMetadata(props: UserLayoutProps) {
   const { locale, username } = await props.params
   if (!routing.locales.includes(locale)) notFound()
 
+  const usernameLowercase = username.toLowerCase()
+
   const t = await getTranslations({
     locale,
     namespace: "pages.UserProfile.head",
   })
 
-  const currentUrl = getCurrentUrl(`u/${username}`, locale)
+  const currentUrl = getCurrentUrl(`u/${usernameLowercase}`, locale)
 
   const metadata: Metadata = {
-    title: t("title", { username }),
-    description: t("description", { username }),
+    title: t("title", { username: usernameLowercase }),
+    description: t("description", { username: usernameLowercase }),
     keywords: t("keywords").split(","),
     alternates: {
       canonical: currentUrl,
-      languages: generateAlternatesLanguages(`u/${username}`),
+      languages: generateAlternatesLanguages(`u/${usernameLowercase}`),
     },
     openGraph: {
-      title: t("title", { username }),
-      description: t("description", { username }),
+      title: t("title", { username: usernameLowercase }),
+      description: t("description", { username: usernameLowercase }),
       url: currentUrl,
     },
     twitter: {
-      title: t("title", { username }),
-      description: t("description", { username }),
+      title: t("title", { username: usernameLowercase }),
+      description: t("description", { username: usernameLowercase }),
     },
   }
 

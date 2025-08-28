@@ -87,7 +87,7 @@ export const userRouter = new Hono<AuthContextVariables>()
     `/:username`,
     createRateLimiterMiddleware(userGamesRateLimiter),
     async (c) => {
-      const username = c.req.param("username")
+      const username = c.req.param("username").toLowerCase()
 
       const user = await getUserByUsername(username)
       if (!user) {
