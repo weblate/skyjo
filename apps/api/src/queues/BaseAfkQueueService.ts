@@ -40,7 +40,7 @@ export abstract class BaseAfkQueueService<
       ? CoreConstants.AFK_TIMEOUT.PRIVATE
       : CoreConstants.AFK_TIMEOUT.PUBLIC
 
-    const finalTimeout = timeout + 1000 // 1 seconds grace period
+    const finalTimeout = timeout + 1000 // 1 second grace period
 
     Logger.debug(`AFK timeout for game ${game.code}: ${finalTimeout}ms`, {
       gameCode: game.code,

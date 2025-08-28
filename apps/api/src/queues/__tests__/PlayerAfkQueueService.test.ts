@@ -11,6 +11,7 @@ vi.mock("bullmq", async () => {
     Queue: vi.fn().mockImplementation(() => ({
       add: vi.fn().mockResolvedValue(undefined),
       remove: vi.fn().mockResolvedValue(undefined),
+      getJob: vi.fn().mockResolvedValue(null),
       close: vi.fn().mockResolvedValue(undefined),
       drain: vi.fn().mockResolvedValue(undefined),
     })),
@@ -209,13 +210,15 @@ describe("PlayerAfkQueueService", () => {
 
   describe("cancelTimer", () => {
     it("should remove job from queue with correct id", async () => {
-      const queueRemoveSpy = vi.spyOn(playerAfkQueueService["queue"], "remove")
+      const mockJob = { remove: vi.fn().mockResolvedValue(undefined) }
+      const getJobSpy = vi
+        .spyOn(playerAfkQueueService["queue"], "getJob")
+        .mockResolvedValue(mockJob as any)
 
       await playerAfkQueueService.cancelTimer("test-game", "player-123")
 
-      expect(queueRemoveSpy).toHaveBeenCalledWith(
-        "game:test-game:player:player-123",
-      )
+      expect(getJobSpy).toHaveBeenCalledWith("game:test-game:player:player-123")
+      expect(mockJob.remove).toHaveBeenCalled()
     })
   })
 

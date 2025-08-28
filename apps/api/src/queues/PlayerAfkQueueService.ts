@@ -31,6 +31,18 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
   }
 
   public async startTimer(game: Game, playerId: string): Promise<void> {
+    // Don't start timer if game is already processing AFK
+    if (game.processingAfk) {
+      Logger.debug(
+        `Game ${game.code} is processing AFK, skipping timer start for player ${playerId}`,
+        {
+          gameCode: game.code,
+          playerId,
+        },
+      )
+      return
+    }
+
     const timeoutDuration = this.getAfkTimeout(game)
     const jobId = this.getJobId(game.code, playerId)
 
@@ -90,13 +102,61 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       },
     )
 
-    try {
-      await this.queue.remove(jobId)
-    } catch (error) {
-      Logger.error(
-        `Failed to cancel AFK timer for player ${playerId} in game ${gameCode}`,
-        { error },
-      )
+    let retryCount = 0
+    const maxRetries = 3
+
+    while (retryCount < maxRetries) {
+      try {
+        const job = await this.queue.getJob(jobId)
+        if (job) {
+          await job.remove()
+          Logger.debug(
+            `Successfully cancelled AFK timer for player ${playerId} in game ${gameCode}`,
+            {
+              gameCode,
+              playerId,
+              jobId,
+              attempt: retryCount + 1,
+            },
+          )
+          return
+        } else {
+          Logger.debug(
+            `No AFK timer found for player ${playerId} in game ${gameCode}`,
+            {
+              gameCode,
+              playerId,
+              jobId,
+            },
+          )
+        }
+      } catch (error) {
+        retryCount++
+        if (retryCount >= maxRetries) {
+          Logger.error(
+            `Failed to cancel AFK timer for player ${playerId} in game ${gameCode} after ${maxRetries} attempts`,
+            {
+              error,
+              gameCode,
+              playerId,
+              jobId,
+              attempts: retryCount,
+            },
+          )
+        } else {
+          Logger.warn(
+            `Failed to cancel AFK timer, retrying... (${retryCount}/${maxRetries})`,
+            {
+              error,
+              gameCode,
+              playerId,
+              jobId,
+            },
+          )
+          // Wait a bit before retrying
+          await new Promise((resolve) => setTimeout(resolve, 100))
+        }
+      }
     }
   }
 
