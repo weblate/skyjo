@@ -1311,7 +1311,7 @@
       "game-ended": "Game over!"
     },
     "chat": {
-      "welcome": "Please be nice and respectful. You can {isMobile, select, true {long-press} other {right-click}} on messages to mute or report players if needed.",
+      "welcome": "Be kind and respectful in the chat. If necessary, you can mute or report a player by {isMobile, select, true {tapping} other {clicking}} on one of their messages or on them.",
       "player-joined": "{name} joined the game",
       "player-left": "{name} left the game",
       "player-forfeited": "{name} has forfeited the game",

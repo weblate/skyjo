@@ -1309,7 +1309,7 @@
       "game-ended": "Partie terminée !"
     },
     "chat": {
-      "welcome": "Soyez gentil et respectueux sur le chat. Si besoin, vous pouvez rendre muet ou signaler un joueur en {isMobile, select, true {faisant un appui long} other {faisant un clic droit}} sur leur message ou sur lui.",
+      "welcome": "Soyez gentil et respectueux sur le chat. Si besoin, vous pouvez rendre muet ou signaler un joueur en {isMobile, select, true {appuyant} other {cliquant}} sur un de ses messages ou sur lui.",
       "player-joined": "{name} a rejoint la partie",
       "player-left": "{name} a quitté la partie",
       "player-forfeited": "{name} a abandonné la partie",
