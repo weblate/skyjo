@@ -11,6 +11,7 @@ import {
 } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import { DEFAULT_GAME_SETTINGS, type Locales } from "@skymo/shared/constants"
+import { normalizeUsername } from "@skymo/shared/utils"
 import type {
   GameHistoryQuery,
   UpdateAvatar,
@@ -131,7 +132,10 @@ export async function getUserFromGoogleId(
 }
 
 export async function createUsername(name: string) {
-  const parsedUsername = name.slice(0, 15).toLowerCase()
+  // Normalize the name to remove accents and special characters
+  const normalizedName = normalizeUsername(name)
+  // Take first 15 characters of the normalized name
+  const parsedUsername = normalizedName.slice(0, 15)
 
   let username = ""
   // Generate a user tag until it's unique. Maximum of 20 retries before throwing an error

@@ -1,7 +1,7 @@
 "use client"
 
 import type { CheckUsernameError } from "@skymo/shared/types"
-import { jsonError } from "@skymo/shared/utils"
+import { jsonError, normalizeUsername } from "@skymo/shared/utils"
 import { useQuery } from "@tanstack/react-query"
 import { ClassValue } from "clsx"
 import {
@@ -97,6 +97,10 @@ export const UsernameInput = <
           autoComplete="username"
           className="pl-6"
           {...field}
+          onChange={(e) => {
+            const normalized = normalizeUsername(e.target.value)
+            field.onChange(normalized)
+          }}
         />
         <div className="absolute right-3 top-1/2 transform -translate-y-1/2">
           {getUsernameValidationIcon()}
