@@ -671,7 +671,7 @@
           "title": "1. Operaator",
           "content": "See veebisait on opereeritud:",
           "name": "Maxent Rouault",
-          "contact": "Kontakt: {email}",
+          "contact": "Kontakt: <email></email>",
           "location": "Prantsusmaa (mitteäriline üksikkasutaja)"
         },
         "eligibility": {

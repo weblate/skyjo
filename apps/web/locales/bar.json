@@ -665,7 +665,7 @@
           "title": "1. Betreiba",
           "content": "Des Webseitn wird betriem vo:",
           "name": "Maxent Rouault",
-          "contact": "Kontakt: {email}",
+          "contact": "Kontakt: <email></email>",
           "location": "Frankreich (ned-kommerzieller Einzel-Betreiber)"
         },
         "welcome": "Servus auf <b>skymo.online</b>, am Online-Multiplayer-Kartnspui vo Maxent Rouault. Wennst auf de Seitn gehsd oda de benutzd, bist mit deise Nutzungsbedingunga einverstandn. Wenn ned, deafsd de Plattform ned nutzn.",

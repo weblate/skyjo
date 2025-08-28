@@ -1120,7 +1120,7 @@
           "title": "1. Bedriever",
           "content": "Disse Websteed warrt bedreven vun:",
           "name": "Maxent Rouault",
-          "contact": "Kontakt: {email}",
+          "contact": "Kontakt: <email></email>",
           "location": "Frankriek (keen kommerziell eenzeln Bedriever)"
         },
         "eligibility": {

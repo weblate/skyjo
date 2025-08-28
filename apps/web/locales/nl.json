@@ -671,7 +671,7 @@
           "title": "1. Operator",
           "content": "Deze website wordt beheerd door:",
           "name": "Maxent Rouault",
-          "contact": "Contact: {email}",
+          "contact": "Contact: <email></email>",
           "location": "Frankrijk (niet-commerciële individuele exploitant)"
         },
         "eligibility": {

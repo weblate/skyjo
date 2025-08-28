@@ -283,7 +283,7 @@
           "title": "1. Operator",
           "content": "This website is operated by:",
           "name": "Maxent Rouault",
-          "contact": "Contact: {email}",
+          "contact": "Contact: <email></email>",
           "location": "France (non-commercial individual operator)"
         },
         "eligibility": {
@@ -320,7 +320,7 @@
               "2": "Analytics data such as gameplay behavior, session frequency, or feature usage <b>may be collected to improve the game</b>."
             }
           },
-          "storage-location": "All data is stored in the <b>European Union</b> and handled in accordance with the <link>Privacy Policy</link>."
+          "storage-location": "All data is stored in the European Union and handled in accordance with the <link>Privacy Policy</link>."
         },
         "analytics-tracking": {
           "title": "5. Analytics & Tracking",

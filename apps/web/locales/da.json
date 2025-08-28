@@ -666,7 +666,7 @@
           "title": "1. Operatør",
           "content": "Denne hjemmeside drives af:",
           "name": "Maxent Rouault",
-          "contact": "Kontakt: {email}",
+          "contact": "Kontakt: <email></email>",
           "location": "Frankrig (ikke-kommerciel individuel operatør)"
         },
         "eligibility": {

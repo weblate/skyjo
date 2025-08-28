@@ -671,7 +671,7 @@
           "title": "1. Operador",
           "content": "Este sitio web es operado por:",
           "name": "Maxent Rouault",
-          "contact": "Contacto: {email}",
+          "contact": "Contacto: <email></email>",
           "location": "Francia (operador individual no comercial)"
         },
         "eligibility": {

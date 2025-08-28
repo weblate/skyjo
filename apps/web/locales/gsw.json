@@ -666,7 +666,7 @@
           "title": "1. Betriber",
           "content": "Betriibe wird die Website vo:",
           "name": "Maxent Rouault",
-          "contact": "Kontakt: {email}",
+          "contact": "Kontakt: <email></email>",
           "location": "Frankrych (privati Person, nid-gwerbli)"
         },
         "eligibility": {

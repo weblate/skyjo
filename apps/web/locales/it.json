@@ -666,7 +666,7 @@
           "title": "1. Gestore",
           "content": "Questo sito web è gestito da:",
           "name": "Maxent Rouault",
-          "contact": "Contatto: {email}",
+          "contact": "Contatto: <email></email>",
           "location": "Francia (operatore individuale non commerciale)"
         },
         "eligibility": {

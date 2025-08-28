@@ -669,7 +669,7 @@
         "operator": {
           "title": "1. Betreiber",
           "content": "Diese Website wird betrieben von:",
-          "contact": "Kontakt: {email}",
+          "contact": "Kontakt: <email></email>",
           "name": "Maxent Rouault",
           "location": "Frankreich (nicht-kommerzieller Einzelbetreiber)"
         },

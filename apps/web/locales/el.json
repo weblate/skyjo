@@ -662,7 +662,7 @@
         },
         "operator": {
           "title": "1. Διαχειριστής",
-          "contact": "Επικοινωνία: {email}",
+          "contact": "Επικοινωνία: <email></email>",
           "content": "Αυτός ο ιστότοπος λειτουργεί από:",
           "name": "Maxent Rouault",
           "location": "Γαλλία (μη εμπορικός ιδιώτης φορέας)"

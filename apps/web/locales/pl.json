@@ -1120,7 +1120,7 @@
           "title": "1. Operator",
           "content": "Ta strona jest obsługiwana przez:",
           "name": "Maxent Rouault",
-          "contact": "Kontakt: {email}",
+          "contact": "Kontakt: <email></email>",
           "location": "Francja (niekomercyjny operator indywidualny)"
         },
         "eligibility": {

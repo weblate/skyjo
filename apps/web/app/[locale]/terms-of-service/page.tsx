@@ -70,7 +70,7 @@ const TermsOfServicePage = async ({ params }: TermsOfServicePageProps) => {
           <p>{t("operator.name")}</p>
           <p>
             {t.rich("operator.contact", {
-              email: (_chunks) => (
+              email: () => (
                 <RichEmail email={process.env.NEXT_PUBLIC_CONTACT_EMAIL!} />
               ),
             })}
@@ -194,7 +194,7 @@ const TermsOfServicePage = async ({ params }: TermsOfServicePageProps) => {
         <ul className="list-disc list-inside space-y-2 ml-4">
           <li>
             {t.rich("contact.general", {
-              email: (_chunks) => (
+              email: () => (
                 <RichEmail email={process.env.NEXT_PUBLIC_CONTACT_EMAIL!} />
               ),
             })}
