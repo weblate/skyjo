@@ -350,10 +350,10 @@ export class Game implements GameInterface {
 
     player.turnCard(column, row)
 
-    this.checkCardsToDiscard(player)
-
     if (player.hasRevealedCardCount(this.settings.initialTurnedCount)) {
       player.turnStartTime = null
+
+      this.checkCardsToDiscard(player)
 
       if (this.haveAllPlayersRevealedCards())
         await this.startRoundAfterInitialReveal()

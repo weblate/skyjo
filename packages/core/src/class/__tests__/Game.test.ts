@@ -738,6 +738,69 @@ describe("Game", () => {
       checkColumnsSpy.mockRestore()
       discardCardSpy.mockRestore()
     })
+
+    it("should only check for discards after all required cards are revealed, not after each individual reveal", async () => {
+      game.status = Constants.GAME_STATUS.PLAYING
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+      game.settings.initialTurnedCount = 2 // Need to reveal 2 cards
+      game.settings.removeIdenticalColumn = true
+
+      // Set up player cards where column 0 has matching values that should be discarded
+      // but only after all initial cards are revealed
+      player.cards = [
+        [new Card(5, false), new Card(5, false), new Card(5, false)], // Column 0: all hidden 5s - will match when all revealed
+        [new Card(1, false), new Card(2, false), new Card(3, false)], // Column 1: different values
+        [new Card(4, false), new Card(6, false), new Card(7, false)], // Column 2: different values
+        [new Card(8, false), new Card(9, false), new Card(10, false)], // Column 3: different values
+      ]
+
+      // Track when checkCardsToDiscard is called
+      const checkCardsToDiscardCalls: number[] = []
+      const originalCheckCardsToDiscard = (game as any).checkCardsToDiscard
+      const checkCardsToDiscardSpy = vi
+        .spyOn(game as any, "checkCardsToDiscard")
+        // @ts-expect-error - mockImplementation is not typed correctly
+        .mockImplementation((playerParam: Player) => {
+          const visibleCount = playerParam.cards
+            .flat()
+            .filter((card) => card.isVisible).length
+          checkCardsToDiscardCalls.push(visibleCount)
+
+          // Call original method to actually check discards
+          return originalCheckCardsToDiscard.call(game, playerParam)
+        })
+
+      // Mock haveAllPlayersRevealedCards to always return false until we're done testing
+      const haveAllPlayersRevealedSpy = vi
+        .spyOn(game as any, "haveAllPlayersRevealedCards")
+        .mockReturnValue(false)
+
+      // Reveal first card - should NOT trigger checkCardsToDiscard
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 0,
+      })
+      expect(player.cards[0][0].isVisible).toBe(true)
+      expect(checkCardsToDiscardCalls).toHaveLength(0) // Should not be called yet
+
+      // Reveal second card (completes initial requirement) - should NOW trigger checkCardsToDiscard
+      await game.revealCard({
+        player,
+        column: 0,
+        row: 1,
+      })
+      expect(player.cards[0][1].isVisible).toBe(true)
+      expect(checkCardsToDiscardCalls).toHaveLength(1) // Should be called exactly once
+      expect(checkCardsToDiscardCalls[0]).toBe(2) // Called when player had 2 visible cards
+
+      // Verify that player.turnStartTime was set to null (indicating completion)
+      expect(player.turnStartTime).toBe(null)
+
+      // Clean up spies
+      checkCardsToDiscardSpy.mockRestore()
+      haveAllPlayersRevealedSpy.mockRestore()
+    })
   })
 
   describe("drawCard", () => {
