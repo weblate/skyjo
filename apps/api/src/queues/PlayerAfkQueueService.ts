@@ -129,6 +129,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
               jobId,
             },
           )
+          return
         }
       } catch (error) {
         retryCount++
