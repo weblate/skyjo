@@ -10,6 +10,11 @@ export const getGameStatusParamsSchema = z.object({
 })
 export type GetGameStatusParams = z.infer<typeof getGameStatusParamsSchema>
 
+export const getGameStatusQuerySchema = z.object({
+  playerId: z.string().uuid().optional(),
+})
+export type GetGameStatusQuery = z.infer<typeof getGameStatusQuerySchema>
+
 export const kickPlayerBodySchema = z.object({
   playerId: z.string().uuid(),
 })

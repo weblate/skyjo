@@ -12,6 +12,7 @@ export interface GameStatusResponse {
   status: GameStatus
   connectedPlayersCount: number
   isPrivate: boolean
+  playerForfeited?: boolean
 }
 
 export interface LeaderboardEntry {

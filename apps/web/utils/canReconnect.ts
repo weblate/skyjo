@@ -26,13 +26,14 @@ export const canReconnect = async (): Promise<CanReconnectResult> => {
     }
   }
 
-  const gameStatus = await getGameStatus(lastGame.gameCode)
+  const gameStatus = await getGameStatus(lastGame.gameCode, lastGame.playerId)
 
   const gameExists = !!gameStatus
   const hasPlayers = (gameStatus?.connectedPlayersCount ?? 0) > 0
   const gameIsPlaying = gameStatus?.status === CoreConstants.GAME_STATUS.PLAYING
+  const playerForfeited = gameStatus?.playerForfeited ?? false
 
-  if (!gameExists || !hasPlayers || !gameIsPlaying) {
+  if (!gameExists || !hasPlayers || !gameIsPlaying || playerForfeited) {
     clearLastGameCookie()
     return {
       lastGame: null,

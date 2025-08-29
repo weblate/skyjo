@@ -55,6 +55,7 @@ export async function getLeaderboard(
 
 export async function getGameStatus(
   gameCode: string,
+  playerId?: string,
 ): Promise<GameStatusResponse | null> {
   try {
     const game = await gameRepository.getGameSafe(gameCode)
@@ -63,11 +64,20 @@ export async function getGameStatus(
       return null
     }
 
+    let playerForfeited = false
+    if (playerId) {
+      const player = game.getPlayerById(playerId)
+      if (player) {
+        playerForfeited = player.forfeited
+      }
+    }
+
     const response: GameStatusResponse = {
       gameCode: game.code,
       status: game.status,
       connectedPlayersCount: game.getConnectedPlayers().length,
       isPrivate: game.settings.private,
+      playerForfeited,
     }
 
     return response
