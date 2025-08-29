@@ -1,4 +1,4 @@
-import { PlayerToJson } from "@skymo/core"
+import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
 import {
   CrownIcon,
   FrownIcon,
@@ -75,7 +75,12 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
       {isCurrentUserHost && player.id !== currentPlayer.id && (
         <>
           <ContextMenuSeparator />
-          <ContextMenuItem onClick={handleTransferHost}>
+          <ContextMenuItem
+            onClick={handleTransferHost}
+            disabled={
+              player.connectionStatus !== CoreConstants.CONNECTION_STATUS.CONNECTED
+            }
+          >
             <CrownIcon className="w-4 h-4 mr-2" />
             {t("context-menu.transfer-host", { name: player.name })}
           </ContextMenuItem>
