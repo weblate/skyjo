@@ -2,6 +2,7 @@ import { zValidator } from "@hono/zod-validator"
 import { Logger } from "@skymo/logger"
 import {
   getGameStatusParamsSchema,
+  getGameStatusQuerySchema,
   getLeaderboardQuerySchema,
   getPublicGamesQuerySchema,
   kickPlayerBodySchema,
@@ -79,11 +80,13 @@ export const gameRouter = new Hono()
     "/:code/status",
     createRateLimiterMiddleware(gameStatusRateLimiter),
     zValidator("param", getGameStatusParamsSchema),
+    zValidator("query", getGameStatusQuerySchema),
     async (c) => {
       const params = c.req.valid("param")
+      const query = c.req.valid("query")
 
       try {
-        const gameStatus = await getGameStatus(params.code)
+        const gameStatus = await getGameStatus(params.code, query.playerId)
 
         if (!gameStatus) {
           return c.json({ error: "game-not-found" }, 404)
