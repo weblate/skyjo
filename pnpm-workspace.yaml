@@ -4,6 +4,7 @@ packages:
   - packages/config/*
 
 onlyBuiltDependencies:
+  - '@sentry/cli'
   - '@biomejs/biome'
   - '@tailwindcss/oxide'
   - argon2
