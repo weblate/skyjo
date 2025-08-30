@@ -1316,7 +1316,7 @@
       "player-left": "{name} left the game",
       "player-forfeited": "{name} has forfeited the game",
       "player-reconnect": "{name} reconnected to the game",
-      "host-transferred": "{name} is now the host",
+      "host-transferred": "Host role transferred to {name}",
       "argument-required": "One or more arguments are required for command: {command}",
       "player-already-muted": "{name} is already muted",
       "player-muted": "{name} is now muted",
