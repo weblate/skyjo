@@ -43,6 +43,7 @@ const SearchPageComponent = () => {
       return games
     },
     refetchInterval: 30000,
+    refetchOnWindowFocus: true,
     retryDelay: (attemptIndex) => {
       return Math.min(1000 * 2 ** attemptIndex, 30000)
     },
