@@ -156,7 +156,9 @@
       "total": "Totaal",
       "player-want-to-replay": "Spölers, do wier spöle wälle:",
       "leave-button": "t Spul ferlätje",
-      "round": "Rund {number}"
+      "round": "Rund {number}",
+      "forfeit": "Afbraken",
+      "disconnected": "Afbraken"
     },
     "PrivacyPolicy": {
       "content": {
@@ -517,7 +519,9 @@
       "recent-activity": {
         "no-activity": "Nien neie Aktivität to wiesen.",
         "game-code": "Speel #{code}",
-        "rank": "Rang #{rank}"
+        "rank": "Rang #{rank}",
+        "forfeited": "Ferloren",
+        "left": "Ferlät"
       },
       "search": {
         "placeholder": "Säik noom"
@@ -708,7 +712,7 @@
               "2": "Analytik-Doaten so as Spelgedrag, Sessie-Frekwens, of Funkschoons-Brüük **kennt sammelt wear'n, üm dat Spel to bedern**."
             }
           },
-          "storage-location": "All Daten warrt in de **Europääsche Union** opslaan un na de <link>Privacy Policy</link> behannelt."
+          "storage-location": "Alle gegevens wurde yn 'e Europeeske Uny opslein en ferwurke neffens it <link>privacybelied</link>."
         },
         "analytics-tracking": {
           "title": "5. Analytik & Tracking",
@@ -762,6 +766,10 @@
           "general": "Allgemeene Froagen: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Weer verbinnen met dien Spel",
+      "description": "Biiw, wo wi di wedder mit dien aktive Spöl verbinden..."
     }
   },
   "components": {
@@ -968,7 +976,7 @@
     },
     "ReportDialog": {
       "title": "Meld {name}",
-      "description": "Meld den Naam of en Boodschap vun {name}, wenn dat nich good is.",
+      "description": "Melde {name}, wenn sien/hör Verholn unpassend schient. Allet Speelkontext warrt vun Moderaters överkiekt.",
       "cancel": "Ofbreke",
       "submit": "Bericht",
       "toast": {
@@ -978,7 +986,18 @@
         }
       },
       "comment": "Tujus Kontekst (nich plichtich)",
-      "comment-placeholder": "Geev hier noch'n beten mehr Info to dissen Bericht..."
+      "comment-placeholder": "Geev hier noch'n beten mehr Info to dissen Bericht...",
+      "disclaimer": "⚠️ Woarskuwing: Falske meldings of misbrûk fan meldings kinne liede ta straffen foar dyn akkount.",
+      "reason-label": "Anlass för'n Bericht",
+      "reason-placeholder": "Kies en Grund",
+      "reasons": {
+        "inappropriate-username": "Unpassend Naam",
+        "toxic-behavior": "Giftig gedrag",
+        "spam-advertising": "Spam/Reklaam",
+        "cheating-exploiting": "Bedriegerij/Misbruuk",
+        "harassment": "Belästigen",
+        "other": "Ander"
+      }
     },
     "AppearanceSelect": {
       "light": "Lucht",
@@ -1122,7 +1141,8 @@
       "feedback": "Lät en Feedback tourüch",
       "discord": "Discord",
       "settings": "Instellengen",
-      "leave-game": "Speel verlaten"
+      "leave-game": "Speel verlaten",
+      "forfeit": "Afgeven"
     },
     "OpponentsMobileView": {
       "opponents-list": {
@@ -1154,7 +1174,8 @@
     "ScoreTable": {
       "name": "Noome",
       "round": "Rund",
-      "total": "Totaal"
+      "total": "Totaal",
+      "rank": "Rank"
     },
     "Avatar": {
       "context-menu": {
@@ -1164,7 +1185,8 @@
         "ban": "Ban {name}",
         "mute": "Mute {name}",
         "unmute": "Unmute {name}",
-        "transfer-host": "{name} is nu de Gastheer"
+        "transfer-host": "Host an {name} överdragen",
+        "view-profile": "{name} sien profiel bekieken"
       }
     },
     "AfkKick": {
@@ -1216,6 +1238,58 @@
       "description": "Du waars in'n Spääl, dat noch löppt. Willst du di wedder ansluten?",
       "reconnect-button": "Jo, ferbine weer",
       "dismiss-button": "Nee, wegsmieten"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Du musst inloggt ween, üm to chatten"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Spiel opgeven?",
+      "message": "Böös di seker, dat du opjiffst? Du verleet dat Speel för immer un kannst nich noch eenmal mitmaken.",
+      "confirm": "Jo, opjaan",
+      "cancel": "Afbreken"
+    },
+    "ChatRestricted": {
+      "description": "Jo meie net meitsje"
+    },
+    "PlayAgainButton": {
+      "disabled": "Spylje Opnijn",
+      "button": "Spylje Op 'e Nij",
+      "leavebusterMessage": "Folje jo leavebuster-straffing om wer te spyljen"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebuster-boete",
+      "description": "Do bist betiid út in iepenbiere wedstriid gien. Foltôgje dizze straf om fierder te spyljen.",
+      "progress": "Foarútgong: {completed}/{required}",
+      "timeRemaining": "Oerbleauwe tiid: {time}",
+      "completeButton": "Foltôge ({time})",
+      "completedButton": "Klear!",
+      "closeButton": "Ticht"
+    },
+    "BanDialog": {
+      "title": "Account Skors</translation>",
+      "suspensionMessage": "Jo binne {isPermanent, select, true {permanint} other {tijlik}} skorre út it spul fanwegen jo gedrach.",
+      "temporary": "Jo kinne wer spylje op: {date}.",
+      "reasonLabel": "Reden:",
+      "defaultReason": "Gjin reden opjûn.",
+      "understandButton": "Ik begryp it"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chatbeheining",
+      "description": "Dyn petearrjochten binne tydlik beheind. Jo kinne yn dizze perioade gjin berjochten stjoere.",
+      "detailedDescription": "Jo meie net kommunisearje fia de chat nei oanlieding fan in melding fan jo gedrach dy't troch in behearder ynsteld is. Jo kinne wer kommunisearje op:",
+      "detailedDescriptionPermanent": "It kommunisearjen fia de chat is jo ferbean nei oanlieding fan in melding oer jo gedrach dy't troch in behearder validerre is.",
+      "reason": {
+        "title": "Reden"
+      },
+      "duration": {
+        "title": "Doer",
+        "expiresAt": "Chat wurdt hersteld op: {date}"
+      },
+      "report": {
+        "title": "Besibibbelje Meldings",
+        "id": "Rapport-ID: #{reportId}"
+      },
+      "acknowledgeButton": "Ik begryp it"
     }
   },
   "utils": {
@@ -1231,8 +1305,9 @@
       "player-unmuted": "{name} is nich miehr stummschait",
       "wizz-self": "Du büst vun {initiatorName} wizz wurrn!",
       "wizz-other": "{initiatorName} hett {targetName} wizzed!",
-      "welcome": "Wees assebleef aardich un respektvol. Du kannst {isMobile, select, true {lang druken} other {rächtklikken}} op berichten om spölers to dempen of te melden, wenn dat nödig is.",
-      "host-transferred": "{name} is nu de host"
+      "welcome": "Wês freonlik en respektfol yn de chat. As it nedich is, kinne jo in spiler dempje of melde troch te {isMobile, select, true {tapppen} other {klikken}} op 1 fan harren berjochten of op har yn.",
+      "host-transferred": "Gasthearrol oerdroegen oan {name}",
+      "player-forfeited": "{name} hefft dat Speel upgeven"
     },
     "avatar": {
       "toucan": "toucan",
@@ -1278,6 +1353,13 @@
         },
         "player-already-connected": {
           "description": "Du büst al fon een annere Siet mit dit Speel ferbunden"
+        },
+        "max-players-too-low": {
+          "description": "Du kannst de maximalen Spelers nich ünner de aktuell Antal Spelers in dit Spel minner maken"
+        },
+        "not-allowed": {
+          "title": "Toorn nich erluupt",
+          "description": "Du hest keen Erlaubnis, de Speelinställungen to ännern"
         }
       }
     },
@@ -1323,8 +1405,8 @@
     },
     "ReportContext": {
       "report-against-you": {
-        "description": "Dien Naam of een van dien Narichten is meld un as unpassend beoordeeld. Versöök, dit Gedrag nich noch eenmal to wiesen.",
-        "title": "Du büst rutschmeeten {gender:word:wuuden|wuuden} weegen n Melden"
+        "description": "En Administrator hett aan Rapport juuststellt, die sik juust juun di richt. Versöök, dit Gebruuk nich noch eenmol to maken, anners könnt wiedere Sanktionen opleggt warrn.",
+        "title": "Du büst ut dat Speel rut smieten wurrn, nahdem du meld büst"
       },
       "report": {
         "title": "{playerName} is rutschmieten wuuden weegen n Mäldenge"
@@ -1434,6 +1516,36 @@
     "name-max-characters": "Di Naam mutt höchstens 20 Tekens lang ween",
     "username-min-characters": "De Gebrukernaam mutt minstens 3 Tekens lang ween",
     "username-max-characters": "De Betekenis mut nich mehr as 20 Tekens ween",
-    "username-invalid-format": "De Gebrukernaam mut alleen Bookstaven, Tallen un Unnerschrieven befatten"
+    "username-invalid-format": "De Gebrukernaam mut alleen Bookstaven, Tallen un Unnerschrieven befatten",
+    "min-players-invalid": "De minste Spölers mutt minstens 2 wees",
+    "max-players-invalid": "De maximalen Spölers schallt nich mehr as 8 ween",
+    "card-per-row-min-invalid": "Kaart per Rie mout minstens 1 ween",
+    "card-per-row-max-invalid": "Kaart per Rie mut höchstens 3 ween",
+    "card-per-column-min-invalid": "Kaart per Kolonne mutt minstens 1 ween",
+    "card-per-column-max-invalid": "Kaart per Kolonne mutt höchstens 4 ween",
+    "score-to-end-game-min-invalid": "Skoore, uum dat Spil oot to enn'n, mut noch minstens 1 ween",
+    "score-to-end-game-max-invalid": "De Punktoantal, wo dat Speel mit to Enne geiht, mutt nich mehr as 10000000 ween",
+    "first-player-flat-penalty-min-invalid": "Eerste speler platte straf moot minstens 0 ween",
+    "first-player-flat-penalty-max-invalid": "De eerste speler platte straf mut nich mehr as 10000000 ween",
+    "first-player-multiplier-penalty-min-invalid": "De eerste speler multiplikator-straf moot minstens 1 weese",
+    "first-player-multiplier-penalty-max-invalid": "De eerste speler multiplikator straf mut nich mehr as 10000000 ween",
+    "comment-max-characters": "Kommentar dröff nich mehr as 500 Tekens lang ween",
+    "password-min-characters": "Dät Woordmuster mout minstens 10 Tekens hebben",
+    "password-lowercase-required": "Dät Woorntwudde mout minnsten een lütken Bounstaf hebben",
+    "password-uppercase-required": "Dät Woord moust mindest een grooten Bauksteeve hääbe",
+    "password-number-required": "Dät Woordmoot minstens een Tahl änthooln",
+    "password-special-char-required": "Dät Woordmoot minstens een Spezjoalkoarter he$$en",
+    "passwords-dont-match": "Passwörters stimmt nich över'nanner",
+    "delete-account-confirmation-required": "Schriew DELETE, üm dat to bestätigen",
+    "current-password-required": "Aktuell Passwoort warrt bruukt",
+    "email-invalid": "Ungeltige E-Mail-Adress",
+    "token-required": "Token warrt bruukt",
+    "email-already-sent": "Ene E-Mail is al in de letzten 5 Minüüt versandt wurrn. Kiek in dien Postfach oder klick op \"Nien Code anfordern\", üm enen neen to versenden",
+    "email-already-exists": "Disse E-Mail-Adresse warrt al för en anner Konto bruukt. Bruuk en annere.",
+    "username-creation-failed": "Wiene kunn diien naam nich maken. Probeer et noch ens.",
+    "account-deletion-already-scheduled": "Din Konto-Löschung is al pland. Woarst du bitte, bit dat ferarbeid'd is.",
+    "account-deletion-schedule-failed": "Wiene künn dien Konto nich löschen. Versöök düt noch ens.",
+    "user-creation-failed": "Wi koonden dien Konto nich anläggen. Versöök et noch ens.",
+    "disposable-email-not-allowed": "Wegwerpbore oder temporäre E-Mail-Adressen sint nich tolaten. Bruuk en permanente E-Mail-Adress."
   }
 }

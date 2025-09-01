@@ -20,7 +20,1532 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti"
+      },
+      "select-language": "Nyelv kiválasztása",
+      "search-language": "Nyelv keresése",
+      "no-language-found": "Nincs nyelv megtalálva"
+    },
+    "Banner": {
+      "title": "Szükségem van <gform>a visszajelzésedre</gform>, hogy alakíthassam a Skyjo jövőjét!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Szabályok",
+        "leaderboard": "Ranglista"
+      }
+    },
+    "LoginButton": {
+      "login": "Csatlakozz a mókához!"
+    },
+    "AppearanceSelect": {
+      "light": "Világos",
+      "dark": "Sötét",
+      "system": "Rendszer"
+    },
+    "Chat": {
+      "title": "Csevegés"
+    },
+    "ChatForm": {
+      "message-input-placeholder": "Üzenet",
+      "message-too-long": {
+        "description": "Az üzenet túl hosszú (max. 200 karakter)"
+      },
+      "button-title": "Küldés",
+      "unknown-command": {
+        "description": "Ismeretlen parancs"
+      }
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Jelentés küldése"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} olvasatlan üzenet{count, plural, =1 {} other {ek}}"
+    },
+    "CopyLink": {
+      "copy": {
+        "button-title": "Hivatkozás másolása",
+        "popover": "Link másolva!"
+      },
+      "share": {
+        "title": "Csatlakozz a Skyjo játksomhoz!",
+        "text": "Gyere, játssz velem Skyjo-t online! Kattints a linkre a játékhoz való csatlakozáshoz.",
+        "button-title": "Játék megosztása",
+        "tooltip": "Kattints ide a játék megosztásához!"
+      },
+      "message": "Link másolva!"
+    },
+    "DiscardPile": {
+      "title": "Dobópino",
+      "throw": "Dobd"
+    },
+    "DrawPile": {
+      "title": "Húzó pakli"
+    },
+    "EndRoundDialog": {
+      "description": "A következő kör néhány másodpercen belül elkezdődik…",
+      "title": "A kör vége"
+    },
+    "Feedback": {
+      "title": "Visszajelzés küldése",
+      "description": "Írhatsz visszajelzést, hogy segíts nekünk fejleszteni a játékot.",
+      "toast": {
+        "success": {
+          "description": "A visszajelzéseid segítettek nekünk fejleszteni a játék weboldalát, és ezért igazán hálásak vagyunk.",
+          "title": "Köszönjük a visszajelzésed!"
+        }
+      },
+      "email-input": {
+        "label": "Az e-mail címed (nem kötelező)",
+        "placeholder": "example@example.com"
+      },
+      "message-input": {
+        "label": "Az üzeneted",
+        "placeholder": "Mondd el, mit gondolsz, mit jegyeztél fel, vagy mit szeretnél…"
+      },
+      "button-title": "Küldés"
+    },
+    "Footer": {
+      "feedback": "Visszajelzés küldése",
+      "buy-game": "Vásárold meg a játékot",
+      "rules": "Játékszabályok",
+      "home": "Főoldal",
+      "privacy-policy": "Adatvédelmi irányelvek",
+      "translations": "Fordítsd le a játékot!",
+      "disclaimer": {
+        "not-affiliated": "Ez a weboldal nem áll kapcsolatban a Skyjo alkotóival vagy forgalmazóival",
+        "rights-owned": "Minden jog a Skyjo névhez és játékmechanikához Alexander Bernhardtot és a Magilanót illeti",
+        "responsible-content": "A weboldal tulajdonosa nem felelős a felhasználók által generált tartalomért (felhasználónevek, üzenetek)"
+      },
+      "attribution": {
+        "avatars": "Avatárok a Freepik - Flaticon jóvoltából"
+      },
+      "explanation": "Mi az a Skyjo?",
+      "status": "Szerver állapota",
+      "release-notes": "Kiadási megjegyzések"
+    },
+    "GameLobbyButtons": {
+      "reconnect-game-button": "Újracsatlakozás a játékhoz",
+      "find-game-button": "Játék keresése",
+      "create-game-button": "Hozzon létre egy {type, select, private {privát} public {nyilvános} other {ismeretlen}} játékot",
+      "join-game-button": "Csatlakozz a játékhoz"
+    },
+    "ReconnectionModal": {
+      "title": "Újracsatlakozás a játékhoz",
+      "reconnect-button": "Igen, újra csatlakozom",
+      "dismiss-button": "Nem, elvetés",
+      "description": "Egy folyamatban lévő játékban voltál. Szeretnél újra csatlakozni?"
+    },
+    "GameRules": {
+      "title": "Játékszabályok",
+      "remove-identical-row": "Sor eltávolítása, ha azonos kártyák: {value, select, true {igen} false {nem} other {ismeretlen}}",
+      "card-per-row": "Sorok száma: {value}",
+      "initial-turned-count": "Kártyák száma felfordítva a játék elején: {value}",
+      "first-player-penalty-type": {
+        "label": "A büntetés típusa az első játékos számára, ha neki van a legkevesebb pontja: ",
+        "2": "Csak lapos",
+        "3": "Lapos, majd szorzó",
+        "1": "Csak szorzó",
+        "4": "Szorzó, majd fix"
+      },
+      "first-player-multiplier-penalty": "Szorzó büntetés: {value}",
+      "button-title": "Játékszabályok megjelenítése",
+      "remove-identical-column": "Oszlop eltávolítása, ha azonos kártyák vannak: {value, select, true {igen} false {nem} other {ismeretlen}}",
+      "card-per-column": "Oszlopok száma: {value}",
+      "score-to-end-game": "Pontok száma a játék végéhez: {value}",
+      "first-player-flat-penalty": "Fix büntetés: {value}"
+    },
+    "AccountDropdownMenu": {
+      "guest": "Rejtélyes játékos",
+      "profile": "Profil",
+      "appearance": "Megjelenés",
+      "language": "Nyelv",
+      "feedback": "Visszajelzés küldése",
+      "settings": "Beállítások",
+      "game-settings": "Játékbeállítások",
+      "logout": "Kijelentkezés",
+      "signup": "Fiók létrehozása",
+      "button": {
+        "aria-label": "Menü"
+      },
+      "guest-catch-phrase": "Készen állsz felfedni az identitásodat?",
+      "rules": "Szabályok",
+      "discord": "Discord",
+      "account-settings": "Fiókbeállítások",
+      "login": "Belépés"
+    },
+    "GameDropdownMenu": {
+      "button": {
+        "aria-label": "Menü"
+      },
+      "appearance": "Megjelenés",
+      "discord": "Discord",
+      "leave-game": "Játék elhagyása",
+      "rules": "Szabályok",
+      "feedback": "Visszajelzés küldése",
+      "settings": "Beállítások",
+      "forfeit": "Feladom"
+    },
+    "OpponentBoard": {
+      "disconnected": "A játékos elhagyta a játékot. Egy bot fog helyette játszani a következő néhány körben, amíg újra csatlakozik."
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Ellenfél:"
+      }
+    },
+    "PlayerBoard": {
+      "you": "Te"
+    },
+    "RulesDialog": {
+      "title": "Játékszabályok",
+      "trigger": {
+        "aria-label": "Játékszabályok megjelenítése"
+      }
+    },
+    "Rules": {
+      "game-goal": {
+        "title": "Játék célja",
+        "content": "A Skyjo játék több körön át tart, és akkor ér véget, amint valamelyik játékos eléri a 100 pontot vagy többet. A legkevesebb ponttal rendelkező játékos nyeri meg a játékot."
+      },
+      "round-preparation": {
+        "content-1": "Először minden játékos 12 kártyát kap képpel lefelé. Ezután egy kártyát a húzópakliból képpel felfelé az asztal közepére helyeznek, ezzel létrehozva a dobópaka kezdetét. A maradék kártyákat egymás mellé, képpel lefelé helyezik, ezek alkotják a húzópaklit.",
+        "content-2": "Minden játékos a 12 lapját négy oszlopban, három-három lappal maga elé fordítja lefelé. Végül minden játékos a saját választása szerint két lapot felfordít.",
+        "title": "Kör előkészítése"
+      },
+      "round-start": {
+        "title": "Kör kezdete",
+        "choice": "választás {number}",
+        "content-1": "A játékos kiválaszthatja az első felcsapott lapot a dobópakliból",
+        "content-2": "vagy a húzópakli első lefordított lapja",
+        "choice-1": {
+          "title": "1. választás:",
+          "description": "Vedd el az első lapot a dobópakliból.",
+          "content": "A játékosnak azonnal el kell cserélnie ezt a kártyát az egyik 12 lapja egyikére, és képpel felfelé kell letennie. Szabadon választhat a képpel felfelé és a képpel lefelé fordított lapok között. A rejtett lapokat csere előtt nem szabad megnézni. A kicserélt lap képpel felfelé kerül a dobópakliba."
+        },
+        "choice-2": {
+          "title": "2. választás:",
+          "description": "Vedd fel az első lapot képpel lefelé a húzópakliból.",
+          "content-1": "A játékos megnézheti a kártyát, és eldöntheti, hogy elcseréli-e az egyik (rejtett vagy látható) lapjára, vagy eldobja. Ha meg akarja tartani a húzott kártyát, akkor a fent leírt módon elcseréli az egyik lapjával a",
+          "choice-1": "1. választás",
+          "content-2": "Ha nem kívánja megtartani a húzott kártyát, a dobópakliba teszi, és fel kell fordítania az egyik saját kártyáját."
+        },
+        "end-of-turn": "A köre ezzel véget ér, és a következő játékos következik (az óramutató járásával megegyező irányban)."
+      },
+      "cards-section-title": "{number} játékkártya:",
+      "special-rule": {
+        "title": "Speciális szabály:",
+        "content": "Ha egy játékosnak 3 azonos kártyája van egy oszlopban, a játékos ezt a 3 kártyát a dobópinoz helyezve eldobja. Ha egy oszlopban lévő azonos kártyák a húzópakliból vagy a dobópakliból származó kártyával történő csere révén jönnek létre, akkor a három azonos kártyát a kicserélt kártya után mindig a dobópinoz kell elhelyezni."
+      },
+      "round-end": {
+        "title": "A kör vége",
+        "content-1": "Ha egy játékos felfedte az összes kártyáját, akkor lejátszotta az utolsó körét.",
+        "content-2": "Minden további játékos még egyszer játszik a kör befejezéséhez."
+      },
+      "scoring": {
+        "title": "Pontozás",
+        "description": "Azok a játékosok, akiknek még vannak lefordított kártyáik, felfordítják őket. Minden játékos összeszámolja a pontjait.",
+        "list": {
+          "content-1": "Ha a pontok összege pozitív, akkor azt hozzáadja az előző körök pontjaihoz.",
+          "content-2": "Ha az összeg negatív, levonódik az előző körök összesített pontjaiból."
+        },
+        "first-to-finish": {
+          "content": "Ha a játékos, aki befejezte a kört (az első, aki felfordította az összes kártyáját), nem szerezte meg szigorúan véve a legkevesebb pontot az adott körben, akkor az adott körben elért pontjainak összege megduplázódik.",
+          "note": {
+            "title": "Felhívjuk figyelmedet:",
+            "content": "ez a szabály csak a pozitív pontokra vonatkozik!"
+          }
+        },
+        "example": {
+          "title": "Példa:",
+          "content": "A játékos felfedi az összes kártyáját, és befejezi a kört. A kör végén 10 pontja van, B játékosnak 24 pontja, C játékosnak pedig szintén 10 pontja. Mivel A játékosnak nincs szigorúan a legkevesebb pontja, a pontjai megduplázódnak 20-ra."
+        }
+      },
+      "end-of-game": {
+        "title": "Játék vége",
+        "content": "Minden kör végén a játékosok pontjai hozzáadódnak az előző körökben elért összes pontszámhoz. A játék akkor ér véget, amint egy játékos eléri a 100 pontot vagy többet. A legkevesebb ponttal rendelkező játékos nyeri a játékot."
+      }
+    },
+    "Scoreboard": {
+      "button-title": "Eredménytábla mutatása"
+    },
+    "ScoreDialog": {
+      "title": "Pontszám",
+      "description": "{name} nyert {score} ponttal!"
+    },
+    "ScoreSheet": {
+      "see-scores": "Pontok megtekintése"
+    },
+    "ScoreTable": {
+      "name": "Név",
+      "round": "Kör",
+      "total": "Összesen",
+      "rank": "Rangsor"
+    },
+    "SettingsDialog": {
+      "title": "Beállítások",
+      "audio": {
+        "title": "Hang",
+        "toggle": {
+          "label": "Hang engedélyezése"
+        },
+        "volume": {
+          "label": "Hangerő ({volume}%)"
+        }
+      },
+      "chat": {
+        "title": "Csevegés",
+        "chat-visibility": "Csevegés láthatósága",
+        "chat-notification-size": {
+          "label": "Csevegés értesítés mérete",
+          "values": {
+            "small": "Kicsi",
+            "normal": "Normál",
+            "big": "Nagy"
+          }
+        }
+      },
+      "mobile": {
+        "title": "Mobil",
+        "switch-to-player-who-is-playing": "Automatikus átváltás a soron következő játékosra",
+        "show-preview-opponents-cards": "Mutasd az ellenfelek kártyáinak előnézetét az ellenfelek listájában"
+      },
+      "gameplay": {
+        "title": "Játékmenet",
+        "gameboard": {
+          "title": "Játéktábla",
+          "size": {
+            "label": "A játéktáblád mérete",
+            "big-warning": "Mobil kijelzőt ronthatja el",
+            "values": {
+              "normal": "Normál",
+              "big": "Nagy"
+            }
+          },
+          "enlarge-active-player-board": "Nagyítsd meg az éppen soron lévő játékos tábláját"
+        },
+        "timer": {
+          "title": "Időzítő",
+          "label": "Idő kijelzés mód",
+          "description": "Az intelligens mód félidőben és az utolsó 15 másodpercben jeleníti meg az időzítőt.",
+          "modes": {
+            "never": "Soha",
+            "smart": "Okos",
+            "always": "Mindig"
+          }
+        }
+      },
+      "account": {
+        "title": "Fiók",
+        "sync": {
+          "label": "Fiókbeállítások",
+          "description": "Szinkronizáld a beállításaidat minden eszközödön, amikor be vagy jelentkezve.",
+          "enabled": "Engedélyezve",
+          "disabled": "Letiltva",
+          "syncing": "Szinkronizálás...",
+          "offline": "Offline",
+          "error": "Szinkronizálás sikertelen",
+          "lastSync": "Utolsó szinkronizálás: {date}"
+        }
+      }
+    },
+    "Avatar": {
+      "context-menu": {
+        "report": "Jelentés {name}",
+        "kick": "Kirúg {name}",
+        "vote-to-kick": "Szavazz a(z) {name} eltávolítására",
+        "ban": "Ban {name}",
+        "mute": "Némítsa el {name}",
+        "unmute": "Némítás feloldása {name}",
+        "transfer-host": "Gazda átadása {name}-nek",
+        "view-profile": "Tekintsd meg {name} profilját"
+      }
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "title": "Szavazz a(z) {playerName} kirúgására",
+        "kick-button": {
+          "alt": "{playerName} kirúgása",
+          "label": "Kirúgás"
+        },
+        "ignore-button": {
+          "alt": "A szavazás figyelmen kívül hagyása a kirúgáshoz: {playerName}",
+          "label": "Mellőzés"
+        }
+      },
+      "player-has-voted": {
+        "title": "Szavazz a(z) {playerName} kirúgására",
+        "description": "Szavaztál: {vote, select, true {mellette} false {ellene} other {szavazat}}"
+      },
+      "vote-against-you": {
+        "title": "Szavazz a kirúgásod ellen",
+        "description": "Kérés érkezett, hogy kirúgjanak téged."
+      },
+      "vote-failed": {
+        "title": "A szavazás {playerName} eltávolításáról sikertelen volt",
+        "description": "Nincs elég szavazat {playerName} eltávolításához"
+      },
+      "vote-against-you-failed": {
+        "title": "Nem rúgtak ki",
+        "description": "Nincs elég szavazat ahhoz, hogy kirúgjanak"
+      },
+      "vote-succeeded": {
+        "title": "{playerName} kickelve lett",
+        "description": "A szavazás {playerName} eltávolításáról sikeres volt."
+      },
+      "vote-against-you-succeeded": {
+        "title": "Kirúgtak",
+        "description": "A játékosok megszavazták, hogy kirúgjanak a játékból."
+      },
+      "you-kick-player": {
+        "title": "Kirúgtad: {playerName}"
+      },
+      "host-kick": {
+        "title": "{playerName} kirúgta a házigazda a játékból"
+      },
+      "host-kick-you": {
+        "title": "A házigazda kirúgott a játékból"
+      }
+    },
+    "AfkKick": {
+      "warning": {
+        "title": "AFK figyelmeztetés",
+        "description": "Ha passzív maradsz, kirúgunk a játékból."
+      },
+      "kicked": {
+        "title": "Kiváltva inaktivitás miatt",
+        "description": "Túlságosan sokszor voltál AFK, ezért kirúgtunk a játékból."
+      },
+      "player-kicked": {
+        "title": "Játékos kirúgva",
+        "description": "{playerName} inaktivitás miatt kirúgva a játékból."
+      }
+    },
+    "ReportDialog": {
+      "title": "Jelentés {name}",
+      "description": "Jelentsd {name} nevű játékost, ha a viselkedése nem megfelelő. A moderátorok minden játékinformációt áttekintenek.",
+      "comment": "További kontextus (opcionális)",
+      "comment-placeholder": "Adj további kontextust ehhez a jelentéshez...",
+      "cancel": "Mégse",
+      "submit": "Jelentés",
+      "toast": {
+        "report-submitted": {
+          "title": "Jelentés elküldve",
+          "description": "Köszönjük a jelentésedet, hozzájárultál a játék minőségének javításához."
+        }
+      },
+      "disclaimer": "⚠️ Figyelmeztetés: Hamis vagy visszaélő jelentések az Ön fiókjára vonatkozó szankciókat vonhatnak maguk után.",
+      "reason-label": "A jelentés oka",
+      "reason-placeholder": "Válassz egy okot",
+      "reasons": {
+        "inappropriate-username": "Nem megfelelő felhasználónév",
+        "cheating-exploiting": "Csalás/visszaélés",
+        "toxic-behavior": "Mérgező viselkedés",
+        "other": "Más",
+        "spam-advertising": "Spam/reklám",
+        "harassment": "Zaklatás"
+      }
+    },
+    "PasswordRequirements": {
+      "passwords-match": "A jelszavak megegyeznek",
+      "minimum-characters": "Legalább 10 karakter",
+      "lowercase-letter": "Legalább egy kisbetű",
+      "capital-letter": "Legalább egy nagybetű",
+      "number": "Legalább egy szám",
+      "special-character": "Legalább egy speciális karakter"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Folytatás a Google-lal"
+    },
+    "UsernameInput": {
+      "availability": {
+        "available": "Felhasználónév elérhető",
+        "checking": "Ellenőrzés...",
+        "taken": "Már foglalt!"
+      }
+    },
+    "ChatNotLoggedIn": {
+      "description": "Bejelentkezés szükséges a csevegéshez"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Játék feladása?",
+      "message": "Biztos, hogy fel akarod adni? Végleg elhagyod a játékot, és nem csatlakozhatsz újra.",
+      "cancel": "Mégse",
+      "confirm": "Igen, Feladom"
+    },
+    "ChatRestricted": {
+      "description": "Tilos csevegni"
+    },
+    "PlayAgainButton": {
+      "disabled": "Újra játszani",
+      "button": "Újra játszani",
+      "leavebusterMessage": "Befejezd a Leavebuster büntetésedet, hogy újra játszhass"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebuster büntetés",
+      "description": "Elhagyta egy nyilvános játékot idő előtt. Végezze el ezt a büntetést a további játékhoz.",
+      "progress": "Haladás: {completed}/{required}",
+      "timeRemaining": "Hátralévő idő: {time}",
+      "completeButton": "Teljes ({time})",
+      "completedButton": "Készen áll!",
+      "closeButton": "Bezárás"
+    },
+    "BanDialog": {
+      "title": "Fiók felfüggesztve",
+      "suspensionMessage": "Játékosként Ön {isPermanent, select, true {véglegesen} other {ideiglenesen}} felfüggesztésre került a játéktól a viselkedése miatt.",
+      "temporary": "Újra tudsz játszani: {date}.",
+      "reasonLabel": "Oké",
+      "defaultReason": "Nincs megadott ok.",
+      "understandButton": "Értem"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chat bekorlátozva",
+      "description": "A csevegési jogosultságod ideiglenesen korlátozva lett. Ez idő alatt nem küldhetsz üzeneteket.",
+      "detailedDescription": "A viselkedése miatt a csevegés használatából kizártuk, ezt egy rendszergazda is megerősítette. Újra tud majd csevegni:",
+      "detailedDescriptionPermanent": "A viselkedésére vonatkozó bejelentést követően, amelyet egy rendszergazda érvényesített, korlátozva van abban, hogy a csevegésen keresztül kommunikáljon.",
+      "reason": {
+        "title": "Indok"
+      },
+      "duration": {
+        "title": "Időtartam",
+        "expiresAt": "A csevegés újraértesítése ekkor: {date}"
+      },
+      "report": {
+        "title": "Kapcsolódó jelentés",
+        "id": "Jelentés azonosítója: #{reportId}"
+      },
+      "acknowledgeButton": "Értem"
+    }
+  },
+  "head": {
+    "title": "Skymo | Játssz Skyjo kártyajátékot online ingyen",
+    "description": "Játssz Skyjo-t online ingyen a Skymo-val! Egy gyors tempójú többjátékos kártyajáték, ahol a stratégia találkozik a szórakozással. Hívj ki barátokat, fordíts fel kártyákat, és a legkisebb pontszám elérése a cél a győzelemhez!",
+    "keywords": "Skymo,Skyjo,Skyjo online,többjátékos játék,kártyajáték,játssz barátokkal,ingyenes online játékok,online kártyajátékok"
+  },
+  "pages": {
+    "Index": {
+      "name-input-placeholder": "Név",
+      "explanation": {
+        "title": "Mi az a Skyjo?",
+        "content": "A Skyjo egy izgalmas kártyajáték és egy kiváló társasjáték, amelyet a világ minden táján élveznek a játékrajongók. Ez a többjátékos kártyajáték 2-8 játékos számára készült, ahol minden játékos 12 lapot kap, kezdetben rejtve. A játék fő célja a lehető legkevesebb pont elérése. A játék akkor ér véget, amint valamelyik játékos eléri a 100 pontot. A játékszabályok egyszerűek és könnyen érthetők, így ideális választás játékestekre családtagokkal vagy barátokkal. A játékrajongókat örömmel tölti el, hogy most már ingyenesen játszhatnak Skyjo-val online!",
+        "button": "Lásd a szabályokat"
+      },
+      "faq": {
+        "title": "Gyakran ismételt kérdések (GYIK)",
+        "meaning": {
+          "title": "Mit jelent a Skyjo?",
+          "content": "A Skyjo egy 3 azonos lapból álló oszlop a játékban."
+        },
+        "pronounce": {
+          "title": "Hogyan ejted a Skyjo-t?",
+          "content": "A Skyjo szót [Szkajdzso]-nak ejtik."
+        },
+        "how-to-play": {
+          "title": "Hogyan kell játszani a Skyjo-t?",
+          "content": "A Skyjo játékhoz osszál ki 12 lapot minden játékosnak lefordítva. A cél a lehető legkevesebb pont megszerzése a lapok felfordításával és cserélésével. Minden körben húzz egy lapot a pakliból vagy a dobópakliból, majd döntsd el, hogy lecseréled-e az egyik látható lapodat. A számozott lapok a pontjaikat érnek, a különleges lapoknak pedig akciói vannak. A játék akkor ér véget, amikor egy játékos az összes lapját felfordította. A legkevesebb ponttal rendelkező játékos nyer. További információért ellenőrizheted a <rules>szabályokat</rules>."
+        },
+        "how-to-win": {
+          "title": "Hogyan nyerj a Skyjo-ban?",
+          "content": "A Skyjo megnyeréséhez elengedhetetlen a lehető legalacsonyabb pontszám elérése. Ehhez törekedj egyensúlyra a legkisebb lapok birtoklása, a lapjaid felfedése és az azonos lapokból álló oszlopok létrehozása között. Kerüld az első lapfordítást, hacsak nincs jelentős előnyöd a látható lapjaiddal. Ne feledd megtartani a már látható lapokat, hogy megpróbálj velük oszlopokat létrehozni, ahelyett, hogy egyenként optimalizálnád őket."
+        },
+        "play-classic-with-action": {
+          "title": "Játszhatsz klasszikus Skyjo-t a Skyjo Action-nel?",
+          "content": "Igen, csak el kell távolítanod az akciókártyákat. Ha az online verziót játszod, válaszd a klasszikus verziót a Skyjo játékához."
+        }
+      }
+    },
+    "Search": {
+      "head": {
+        "title": "Nyilvános Skyjo játékok keresése | Játssz Skyjo-t online",
+        "description": "Szeretnél csatlakozni egy Skyjo játékhoz? Böngéssz a rendelkezésre álló nyilvános játékok között, és azonnal kezdj el Skyjo-zni online más játékosokkal. Játssz most ingyen!",
+        "keywords": "Skymo,Skyjo,Skyjo online,játék keresése,játékhoz csatlakozás,nyilvános játékok,online többjátékos,játssz másokkal,gyors játék,ingyenes online játékok,nyitott játékok,online kártyajáték,többjátékos kártyajáték"
+      },
+      "header": {
+        "back": "Vissza a kezdőlapra",
+        "title": "Nyilvános játékok",
+        "refresh": "Frissítsd a játékok listáját",
+        "create-button": {
+          "title": "Nyilvános játék létrehozása"
+        }
+      },
+      "tags": {
+        "title": "Szűrők:",
+        "no-tags-available": "Nincsenek további elérhető címkék",
+        "tag": {
+          "classic": "Klasszikus",
+          "custom": "Egyedi",
+          "column": "Oszlop",
+          "row": "Sor",
+          "short-game": "Rövid játék",
+          "long-game": "Hosszú játék"
+        }
+      },
+      "no-games-found": "Nincsenek játékok",
+      "game-of": "{name} játéka"
+    },
+    "Create": {
+      "head": {
+        "title": "Hozzon létre egy Skymo játékot | Játssz Skyjo Online",
+        "description": "Indíts új Skyjo játékot online! Hozz létre privát vagy nyilvános szobákat, hívd meg barátaidat, és élvezzétek együtt a Skyjo szórakozását. Játssz most ingyen!",
+        "keywords": "Skymo,Skyjo,Skyjo online,játék létrehozása,játék indítása,magánjáték,nyilvános játék,játssz barátokkal,online többjátékos,ingyenes online játékok,egyéni játék"
+      },
+      "loading-text": "Játékod létrehozása…"
+    },
+    "Maintenance": {
+      "title": "Az oldal karbantartás alatt áll",
+      "description": "Éppen frissítjük az oldalt, kérlek, próbáld meg később.",
+      "github-alt": "Nézd meg a forráskódot a GitHubon"
+    },
+    "NotFound": {
+      "title": "Hiba 404",
+      "description": "A keresett oldal nem található.",
+      "go-back-to-homepage": "Vissza a kezdőlapra"
+    },
+    "Lobby": {
+      "title": "{name} játéka",
+      "leave-to-home": "Főoldalra ugrás",
+      "leave-to-public-game-list": "Vissza a nyilvános játékl李tához",
+      "go-back-to-settings": "Vissza a beállításokhoz",
+      "settings": {
+        "private": {
+          "tooltip": {
+            "on": "Ez a játék privát, csak a linkkel rendelkezők csatlakozhatnak",
+            "off": "Ez a rész nyilvános, bárki csatlakozhat a paraméterek érvényesítése után"
+          }
+        },
+        "reset-settings": "Beállítások visszaállítása",
+        "validation-warning": "A játékindítások nem módosíthatók, miután érvényesítették őket",
+        "validate-settings": "Beállítások ellenőrzése",
+        "max-players": {
+          "label": "Maximális játékosok száma",
+          "title": "Maximális játékosok száma: {number}"
+        },
+        "remove-identical-column": "Hasonló oszlopok eltávolítása",
+        "remove-identical-row": "Hasonló sorok eltávolítása",
+        "nb-columns": {
+          "label": "Oszlopok száma",
+          "title": "{number} oszlop"
+        },
+        "nb-rows": {
+          "label": "Sorok száma",
+          "title": "{number} sor"
+        },
+        "initial-turned-count": {
+          "label": "Kezdetben felfedett kártyák száma",
+          "title": "A játék kezdetén a kártyáid közül {number} lesz felfedve"
+        },
+        "show-current-score": {
+          "label": "Pontszám valós időben megjelenítése"
+        },
+        "score-to-end-game": {
+          "label": "Pontszám a játék végéhez",
+          "title": "A játék akkor ér véget, ha egy játékos eléri a {number} pontot"
+        },
+        "first-player-penalty-type": {
+          "label": "Az első játékos büntetésének típusa",
+          "description": "A büntetés akkor érvényesül, ha az első játékos, aki felfedi az összes kártyáját, nem rendelkezik a legkisebb pontszámmal (nem érvényes, ha a pontszám 0 vagy kevesebb)",
+          "placeholder": "Büntetés típusának kiválasztása",
+          "item": {
+            "multiplier-only": "Csak szorzó",
+            "flat-only": "Csak fix",
+            "flat-then-multiplier": "Lapok, majd Szorzó",
+            "multiplier-then-flat": "Szorzó, majd fix"
+          }
+        },
+        "first-player-flat-penalty": {
+          "label": "Az első játékos fix büntetést kap",
+          "title": "Az első játékos pontszámához további {number} pont kerül hozzáadásra"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Az első játékos pontszorzójának büntetési szorzója",
+          "title": "Az első játékos pontszámát megszorozzuk {number}-rel, ha az nem kisebb, mint a játék többi pontszáma"
+        }
+      },
+      "start-game-button": "Játék indítása",
+      "cancel": "Mégse",
+      "game-starting-in": "A játék {seconds} múlva indul",
+      "waiting-host-to-start": "Várakozás, hogy a házigazda elindítsa a játékot",
+      "waiting-host-to-confirm-game-settings": "Várakozás, amíg a házigazda érvényesíti a beállításokat",
+      "player-section": {
+        "title": "Játékosok: {nbPlayers}/{maxPlayers}",
+        "select": {
+          "placeholder": "Válassz játékosok számát",
+          "item": "{value} játékos"
+        }
+      },
+      "not-enough-players-modal": {
+        "title": "Nincs elég játékos",
+        "description": "A játék indításához legalább 2 játékosra van szükséged.",
+        "public-description": "Hívj meg egy barátot, vagy várj, amíg egy másik játékos csatlakozik.",
+        "private-description": "Használd a privát linket a barátaid meghívásához!",
+        "close": "Értem"
+      }
+    },
+    "ResultsPage": {
+      "title": "Játékeredmények",
+      "rank": "Rang",
+      "player": "Játékos",
+      "round": "{number}. kör",
+      "total": "Összesen",
+      "player-want-to-replay": "Újrajátszani kívánó játékosok:",
+      "replay-button": {
+        "cancel": "Ne játszd újra",
+        "replay": "Újra játszás"
+      },
+      "leave-button": "Játék elhagyása",
+      "forfeit": "Feladom",
+      "disconnected": "Leválasztva"
+    },
+    "PrivacyPolicy": {
+      "head": {
+        "title": "Adatvédelmi irányelvek | Skymo - Skyjo Online Kártyajáték",
+        "description": "Adatvédelmi irányelvek a Skymo-hoz. Tudja meg, hogyan védjük adatait, miközben élvezi Skyjo kártyajátékunkat. Átlátható gyakorlatok és biztonságos játékélmény.",
+        "keywords": "Skymo,Skyjo,Skyjo Online,adatvédelmi irányelvek,adatvédelem,online játék adatvédelem,biztonságos játék,felhasználói adatok,GDPR,CCPA,adatbiztonság"
+      },
+      "content": {
+        "back": "Vissza a kezdőlapra",
+        "title": "Adatvédelmi irányelvek",
+        "last-update": {
+          "text": "Utolsó frissítés: {date}",
+          "date-format": "NNNN. H. ÉÉÉÉ"
+        },
+        "tldr": {
+          "title": "Összefoglalva — Amit tudnod kell",
+          "minimal-data": "Minimális adatokat tárolunk, hogy játszhass, akár bejelentkeztél, akár vendégként vagy jelen.",
+          "guest-data": "A vendégadatokat (név, avatar, pontszám, csevegések) csak akkor tároljuk, ha egy bejelentkezett játékos is a játékban van.",
+          "personal-data": "Az e-mail címed, felhasználóneved és egyéb személyes adataidat csak akkor tároljuk, ha fiókot hozol létre.",
+          "chat-storage": "A csevegések ideiglenesen tárolódnak, és csak akkor kerülnek mentésre, ha jelentik őket.",
+          "privacy-compliance": "Tiszteletben tartjuk a magánéletedet, és betartjuk a GDPR-t, mindent biztonságosan tárolunk az EU-ban.",
+          "data-rights": "Adathozzáférést, javítást, exportálást vagy törlést bármikor kérhetsz.",
+          "contact": "Kérdések esetén: <email></email>"
+        },
+        "operator": {
+          "title": "1. Ki üzemelteti ezt a weboldalt?",
+          "operator-info": "Ez a weboldal egy magánszemély üzemelteti:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Nem vállalat."
+        },
+        "data-collection": {
+          "title": "2. Milyen adatokat gyűjtünk?",
+          "description": "Regisztrált és vendégjátékosoktól is gyűjtünk adatokat, de csak akkor, ha egy csatlakoztatott (bejelentkezett) felhasználó is része a játéknak.",
+          "guest-players": {
+            "title": "Vendégjátékosoknak:",
+            "items": "Megjelenítendő név (a játékba lépéskor választott);;Kiválasztott avatar;;Játék pontszám, rang és győztes státusz;;Csevegési üzenetek (ideiglenesen tárolva, hacsak nincs megjelölve)",
+            "note": "Ez az adat csak akkor kerül tárolásra, ha legalább egy játékos be van jelentkezve a játékba."
+          },
+          "logged-users": {
+            "title": "Bejelentkezett felhasználók számára (a fentieken túl):",
+            "items": "E-mail cím;;Felhasználónév / megjelenítendő név;;Avatar (előre definiált listából);;Hash-elt jelszó vagy OAuth azonosító (Google, Facebook);;Nyelvi beállítások;;E-mail ellenőrzés állapota"
+          },
+          "general": {
+            "title": "Általános (minden felhasználó számára):",
+            "items": "Játékmenet adatok (kódok, beállítások);;Munkamenet sütike (24 óra után lejár);;IP-cím (átmeneti, nem tároljuk hosszú távon);;Anonimizált használati analitika (PostHog-on keresztül, EU-ban üzemeltetve)"
+          }
+        },
+        "data-usage": {
+          "title": "3. Miért használjuk fel az adataidat?",
+          "items": "Játékosok (vendégek vagy regisztráltak) csatlakozásának és játékban való részvételének lehetővé tétele;;Avatárok, nevek, pontszámok és rangsorok megjelenítése;;Visszaélések esetén moderálás lehetővé tétele;;Visszajelzések és fiók-helyreállítás feldolgozása (bejelentkezett felhasználók számára);;Az oldal fejlesztése anonim analitikák segítségével"
+        },
+        "data-retention": {
+          "title": "4. Meddig őrizzük meg az adataidat?",
+          "retention-table": {
+            "headers": "Adattípus;;Megőrzés",
+            "rows": "Session sütik;;24 óra|||Fiókadatok (bejelentkezve);;A törlési kérelemig|||Vendégjátékos adatai;;Csak akkor, ha a csatlakoztatott játékos jelen van a játékban|||Játék adatok és pontszámok;;Tartósan tárolva|||Csevegési üzenetek;;Ideiglenesen a Redisben; mentve, ha jelentve lett|||Visszajelzés;;Tartósan|||Hitelesítési/visszaállítási tokenek;;Amíg fel nem használják vagy le nem járnak|||Fióktörlési kérelmek;;48 órás türelmi idő után törölve|||Elemzés (PostHog);;Tartósan, EU-ban üzemeltetve"
+          }
+        },
+        "legal-basis": {
+          "title": "5. Jogi háttér (GDPR)",
+          "description": "A feldolgozás alapja:",
+          "items": "Hozzájárulás (sütik, statisztikák);;Szerződés (játék biztosítása);;Jogos érdek (moderálás);;Jogi kötelezettség (kérések megválaszolása)"
+        },
+        "data-access": {
+          "title": "6. Ki láthatja az adataidat?",
+          "items": "Más játékosok látják a nyilvános nevedet, avatárodat és játéktörténetedet;;A fejlesztő (Maxent Rouault) hozzáférhet az adatokhoz moderálási célból;;Az adataid nem kerülnek értékesítésre vagy reklámcélokra felhasználásra"
+        },
+        "your-rights": {
+          "title": "7. A jogaid",
+          "items": "Hozzáférhetsz, javíthatsz vagy törölhetsz adataidhoz;;Fiókod törlése (vagy kérése);;Adatainak exportálása (kérésre);;Fellebbezés a tiltások ellen az appeal@skymo.online címen"
+        },
+        "security": {
+          "title": "8. Biztonság",
+          "items": "Jelszavak titkosítása;;Csak HTTPS kapcsolatok;;Moderálás és visszaélések észlelése;;EU-ban található szerverek (Párizs, Franciaország)"
+        },
+        "cookies-analytics": {
+          "title": "9. Sütik és elemzés",
+          "items": "Csak alapvető sütik (munkamenet, bejelentkezés);;Elemzés a PostHog segítségével, EU-ban üzemeltetett, nincs webhelyek közötti követés"
+        },
+        "contact": {
+          "title": "10. Kapcsolat",
+          "description": "Általános kérdések: <email></email>"
+        }
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Általános Szerződési Feltételek | Skymo - Skyjo Online Kártyajáték",
+        "description": "Olvassa el a Skymo, az online Skyjo kártyajáték platform Általános Szerződési Feltételeit. Ismerje meg a felhasználói kötelezettségeket, a szolgáltatás használatát és a platform irányelveit.",
+        "keywords": "Felhasználási feltételek, Skymo, Skyjo, online kártyajáték, felhasználói megállapodás, platform szabályok"
+      },
+      "content": {
+        "title": "Szolgáltatási feltételek",
+        "last-update": {
+          "text": "Utolsó frissítés: {date}",
+          "date-format": "YYYY. MMMM D. HH:mm"
+        },
+        "welcome": "Üdvözöllek a <b>skymo.online</b> oldalon, egy Maxent Rouault által üzemeltetett online, többjátékos kártyajátékban. Az oldal használatával vagy elérésével elfogadod ezeket a Felhasználási Feltételeket. Ha nem értesz egyet velük, nem használhatod a platformot.",
+        "operator": {
+          "title": "1. Üzemeltető",
+          "content": "Ez a weboldal üzemeltetője:",
+          "name": "Maxent Rouault",
+          "contact": "Kapcsolat: <email></email>",
+          "location": "Franciaország (nem kereskedelmi, magánszemély üzemeltető)"
+        },
+        "eligibility": {
+          "title": "2. Jogosultság",
+          "content": "A szolgáltatást vendégként vagy fiók regisztrálásával veheted igénybe. Ezen weboldal használatával megerősíted, hogy:",
+          "items": {
+            "1": "Legalább 13 éves vagy (vagy a hazádban meghatározott alsó korhatárt töltötted be).",
+            "2": "Ha 18 éven aluli vagy, akkor a törvényes képviselődtől engedélyt kell kapnod."
+          }
+        },
+        "account-guest-use": {
+          "title": "3. Fiók és vendéghasználat",
+          "items": {
+            "1": "A vendégjátékosok regisztráció nélkül is játszhatnak, de bizonyos funkciók korlátozottak lehetnek.",
+            "2": "A regisztrált felhasználóknak érvényes e-mail címet és felhasználónevet kell megadniuk.",
+            "3": "Felelős vagy a fiókodért és a tevékenységeidért. Nem oszthatod meg a bejelentkezési adataidat.",
+            "4": "Fiókodat bármikor törölheted. 48 óra elteltével személyes adataid anonimizálásra vagy végleges törlésre kerülnek."
+          }
+        },
+        "data-storage": {
+          "title": "4. Adattárolás",
+          "content": "A következő adatokat tároljuk, attól függően, hogyan használod:",
+          "all-players": {
+            "title": "Minden játékosnak:",
+            "items": {
+              "1": "Játékbeli megjelenítendő név, avatar, pontszám és csevegési üzenetek, **ha legalább egy játékos be van jelentkezve**.",
+              "2": "Az IP-címek ideiglenesen tárolhatók biztonsági és moderálási célból."
+            }
+          },
+          "registered-players": {
+            "title": "Regisztrált játékosoknak:",
+            "items": {
+              "1": "Email, felhasználónév, avatar, játéktörténet, és opcionálisan kapcsolt fiókok (pl. Google).",
+              "2": "Az olyan analitikai adatok, mint a játékmeneti viselkedés, a munkamenetek gyakorisága vagy a funkciók használata <b>gyűjthetők a játék fejlesztése érdekében</b>."
+            }
+          },
+          "storage-location": "Minden adat az Európai Unióban kerül tárolásra és a <link>Adatvédelmi Irányelveknek</link> megfelelően kerül feldolgozásra."
+        },
+        "analytics-tracking": {
+          "title": "5. Analitika és nyomkövetés",
+          "content": "A szolgáltatás javítása és a felhasználói élmény személyre szabása érdekében:",
+          "items": {
+            "1": "Használj <b>analitikai eszközöket</b> (pl. PostHog vagy hasonló) a használati és játékmeneti minták nyomon követésére.",
+            "2": "Elemezd a felhasználói viselkedést a hibák felderítése, a párosítás javítása vagy funkciók tervezése érdekében.",
+            "3": "A jövőben ezeket az adatokat felhasználhatjuk <b>személyre szabott tartalom vagy hirdetések megjelenítésére</b>, miközben tiszteletben tartjuk az GDPR szerinti adatvédelmi jogaidat."
+          },
+          "data-rights": "Kérhetsz adatkezelés elleni tiltakozást vagy személyes adatok törlését, ha kapcsolatba lépsz velünk."
+        },
+        "ads-monetization": {
+          "title": "6. Hirdetések és bevételszerzés",
+          "content": "A platform hirdetéseket jeleníthet meg, beleértve harmadik féltől származó vagy kontextuális hirdetéseket is. A jövőben a bejelentkezett felhasználóknak a használati adatok alapján **személyre szabott hirdetéseket** jeleníthetünk meg.",
+          "consent": "Világos tájékoztatást és hozzájárulási mechanizmusokat biztosítunk, amennyiben és amikor viselkedésalapú vagy személyre szabott hirdetéseket vezetünk be."
+        },
+        "user-conduct": {
+          "title": "7. Felhasználói magatartás",
+          "content": "Elfogadod, hogy:",
+          "items": {
+            "1": "Légy udvarias és tartsd be a fair play szabályait.",
+            "2": "Nem csalhatsz, zakLathatsz, nem személyeskedhetsz másokkal, és nem használhatsz sértő felhasználóneveket vagy avatárokat.",
+            "3": "Ne küldj spammel vagy visszaélés céljából a csevegőben vagy bármely kommunikációs funkcióban."
+          },
+          "enforcement": "Fenntartjuk a jogot, hogy kitiltsunk vagy korlátozzunk olyan felhasználókat, akik megsértik ezeket a szabályokat."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderálás és jelentés",
+          "items": {
+            "1": "A csevegési üzeneteket ideiglenesen tároljuk, és a regisztrált játékosokat érintő játékok esetén teljes egészében elmenthetjük.",
+            "2": "Megtarthatjuk az üzeneteket, ha egy játékos jelentést küld, vagy ha moderálásra van szükség.",
+            "3": "Panaszodat e-mailben teheted meg (lásd a Kapcsolatok részt).",
+            "4": "A moderálási intézkedések és a jelentések naplózásra kerülhetnek az átláthatóság és a méltányosság biztosítása érdekében."
+          }
+        },
+        "availability": {
+          "title": "9. Elérhetőség",
+          "content": "A szolgáltatást „hűen a jelenlegi állapotához” biztosítjuk. A weboldalt vagy annak funkcióit bármikor, előzetes értesítés nélkül módosíthatjuk, felfüggeszthetjük vagy megszüntethetjük."
+        },
+        "intellectual-property": {
+          "title": "10. Szellemi tulajdon",
+          "content": "Minden eredeti tartalom, grafika és kód Maxent Rouault tulajdonát képezi, eltérő rendelkezés hiányában. Engedély nélkül nem használhatod fel vagy terjesztheted újra a weboldal semelyik részét."
+        },
+        "legal": {
+          "title": "11. Jogi nyilatkozat",
+          "jurisdiction": "Ez az oldal francia törvények hatálya alá tartozik, és megfelel az Általános Adatvédelmi Rendeletnek (GDPR).",
+          "disputes": "Jogi viták esetén a francia bíróságok illetékesek."
+        },
+        "contact": {
+          "title": "12. Kapcsolat",
+          "general": "Általános tudnivalók: <email></email>"
+        }
+      }
+    },
+    "Leaderboard": {
+      "head": {
+        "title": "Ranglista | Skymo - Skyjo Online Kártyajáték",
+        "description": "Tekintsd meg a legjobb játékosokat a Skymo-n! Nézd meg a legjobb Skymo játékosokat és nyerési arányukat a ranglistánkon.",
+        "keywords": "Skymo,Skyjo,ranglista,legjobb játékosok,rangsorok,legjobb játékosok,nyerési arány,versenyképes,online kártyajáték"
+      },
+      "title": "Ranglista",
+      "subtitle": "Fedezd fel a legjobb Skyjo játékosokat, és versenyezz a legmagasabb helyekért!",
+      "lastUpdated": "Utolsó frissítés: {date}",
+      "columns": {
+        "rank": "Helyezés",
+        "player": "Játékos",
+        "wins": "Győzelmek",
+        "totalGames": "Teljes játékok",
+        "winRate": "Nyerési arány"
+      },
+      "noData": "Még nincsenek játékosok a ranglistán.",
+      "error": "A ranglista betöltése jelenleg nem lehetséges.",
+      "tryAgainLater": "Kérlek, próbáld meg később.",
+      "callToAction": {
+        "guest": {
+          "title": "Készen állsz a versenyre?",
+          "description": "Regisztrálj, hogy nyomon kövesd a fejlődésedet, és versenyezz játékosokkal szerte a világon!",
+          "signup": "Jelentkezz be most"
+        },
+        "authenticated": {
+          "title": "Készen állsz a versenyre?",
+          "description": "Indíts egy játékot, és mássz fel a ranglistán!",
+          "createGame": "Játék létrehozása",
+          "joinGame": "Játékhoz csatlakozás"
+        }
+      },
+      "errorActions": {
+        "refresh": "Frissítés",
+        "backHome": "Vissza"
+      }
+    },
+    "Rules": {
+      "head": {
+        "title": "Hogyan játssz a Skymo-val | Skyjo Kártyajáték Online",
+        "description": "Tanuld meg a Skyjo-t játszani a Skymo útmutatónk segítségével. Fedezd fel a szabályokat, stratégiákat és tippeket, hogy elsajátítsd ezt a szórakoztató online kártyajátékot. Játssz most barátaiddal!",
+        "keywords": "Skymo,Skyjo,Skyjo szabályok,hogyan kell játszani a Skyjo-t,Skyjo játék,kártyajáték szabályok,online kártyajáték,játékszabályok,játékmenet útmutató"
+      },
+      "title": "Játékszabályok",
+      "play-button": "Játssz ingyen online!"
+    },
+    "Signup": {
+      "head": {
+        "title": "Csatlakozz a Skymohoz | Játssz Skyjo-t ingyen online",
+        "description": "Játssz a Skyjo-val online barátaiddal! Hozz létre egy ingyenes Skyjo-fiókot, hogy nyomon követhesd a fejlődésedet, exkluzív tartalmakat oldhass fel, és csatlakozhass egy pezsgő közösséghez.",
+        "keywords": "skymo, játssz skyjo online, skyjo online játék, skyjo regisztráció, hozz létre skymo fiókot, csatlakozz a skymohoz, skymo skyjo, online kártyajáték, multiplayer skyjo, ingyenes skyjo játék, játssz skyjo barátokkal, skyjo haladás követése, skyjo közösség, exkluzív skyjo tartalom"
+      },
+      "title": "Regisztráció",
+      "or": "Vagy",
+      "advantages": {
+        "title": "Csatlakozz a kalandhoz",
+        "subtitle": "Hozzon létre egy fiókot, hogy lehetőségek világát nyissa meg, és javítsa a játékélményét.",
+        "features": {
+          "track-progress": {
+            "title": "Kövesd nyomon a haladásod",
+            "description": "Nézd meg, hogyan szerepelsz másokhoz képest, és figyeld a fejlődésedet idővel."
+          },
+          "personalized-experience": {
+            "title": "Személyre szabott élmény",
+            "description": "Szerezz ajánlásokat és tartalmakat, amelyek kifejezetten neked szólnak."
+          },
+          "join-community": {
+            "title": "Csatlakozz a Közösséghez",
+            "description": "Csatlakozz kalandortársaidhoz, ossz meg tippeket, és szerezz új barátokat."
+          },
+          "exclusive-content": {
+            "title": "Exkluzív tartalom",
+            "description": "Hozzáférés különleges kihívásokhoz, jutalmakhoz és korai frissítésekhez."
+          }
+        }
+      },
+      "form": {
+        "email": {
+          "label": "E-mail",
+          "button": "Folytatás emaillel"
+        }
+      },
+      "already-have-account": {
+        "description": "Már van fiókod?",
+        "link": "Belépés"
+      },
+      "terms-acceptance": {
+        "text": "Folytatással elfogadod a miénket",
+        "terms-link": "Felhasználási feltételek",
+        "and": "és",
+        "privacy-link": "Adatvédelmi irányelvek"
+      }
+    },
+    "Login": {
+      "head": {
+        "title": "Bejelentkezés | Skymo - Skyjo Online Kártyajáték",
+        "description": "Jelentkezz be a Skymo-ba, hogy játszhass Skyjo-val online. Add meg az e-mail címedet és a jelszavadat a fiókod eléréséhez, és kezdj el azonnal játszani.",
+        "keywords": "Skymo,Skyjo,belépés,online kártyajáték,Skyjo játék,kártyajáték,online játék"
+      },
+      "title": "Belépés",
+      "or": "Vagy",
+      "form": {
+        "login": {
+          "label": "Email vagy felhasználónév"
+        },
+        "password": {
+          "label": "Jelszó"
+        },
+        "submit": "Belépés"
+      },
+      "signup": {
+        "description": "Nincs fiókod?",
+        "link": "Jelentkezz most!"
+      },
+      "forgot-password": "Elfelejtetted a jelszavad?"
+    },
+    "ForgotPassword": {
+      "head": {
+        "title": "Elfelejtett jelszó | Skymo - Skyjo Online Kártyajáték",
+        "description": "Állítsd vissza a Skyjo jelszavadat, hogy hozzáférj a fiókodhoz, és folytasd a Skyjo online játékot barátaiddal.",
+        "keywords": "Skymo,Skyjo,elfelejtett jelszó,jelszó visszaállítása,fiók helyreállítása,online kártyajáték"
+      },
+      "title": "Elfelejtett jelszó",
+      "description": "Add meg az e-mail címedet, és küldünk egy linket a jelszavad visszaállításához",
+      "form": {
+        "email": {
+          "label": "Email cím"
+        },
+        "submit": "Reset link küldése",
+        "sending": "Küldés..."
+      },
+      "success": {
+        "title": "Ellenőrizd az email-edet",
+        "message": "Ha létezik ilyen e-mail címmel fiók, akkor küldtünk egy jelszó-visszaállítási linket.",
+        "back": "Vissza a bejelentkezéshez"
+      },
+      "back": "Vissza a bejelentkezéshez"
+    },
+    "ResetPassword": {
+      "head": {
+        "title": "Jelszó visszaállítása | Skymo - Skyjo Online Kártyajáték",
+        "description": "Új jelszó létrehozása Skymo-fiókodhoz a hozzáférés visszanyeréséhez és a Skyjo online játékának folytatásához.",
+        "keywords": "Skymo,Skyjo,jelszó visszaállítása,új jelszó,fiók helyreállítása,online kártyajáték"
+      },
+      "title": "Jelszó visszaállítása",
+      "description": "Írd be az új jelszavadat lent.",
+      "form": {
+        "password": {
+          "label": "Új jelszó"
+        },
+        "confirmPassword": {
+          "label": "Új jelszó megerősítése"
+        },
+        "submit": "Jelszó visszaállítása",
+        "resetting": "Visszaállítás folyamatban..."
+      },
+      "success": {
+        "title": "Jelszó sikeresen visszaállítva",
+        "message": "Jelszavad vissza lett állítva. Most már be tudsz jelentkezni az új jelszavaddal.",
+        "back": "Belépés"
+      },
+      "back": "Vissza a bejelentkezéshez"
+    },
+    "RevertEmail": {
+      "success": {
+        "title": "Az e-mail cím módosítása visszavonva",
+        "message": "Az e-mail címed módosítása sikeresen visszavonásra került, és a fiókod biztonságban van. Kérjük, ellenőrizd az e-mailjeidet a jelszó-visszaállítási utasításokért.",
+        "close": "Bezárhatod ezt az oldalt."
+      },
+      "failed": {
+        "title": "Az e-mail cím módosításának visszaállítása sikertelen"
+      },
+      "back": "Vissza a bejelentkezéshez"
+    },
+    "OAuthCallbackPage": {
+      "title": "Át lesz irányítva…"
+    },
+    "Onboarding": {
+      "head": {
+        "title": "Onboarding | Skymo - Skyjo Online Kártyajáték",
+        "description": "Töltsd ki a profilodat és merülj el a Skyjo kalandban!",
+        "keywords": "Skymo,Skyjo,onboarding,profil,kaland,online kártyajáték"
+      },
+      "loading": "A profilod betöltése...",
+      "title": "Betöltés folyamatban...",
+      "subtitle": "Töltsd ki a profilodat és merülj el a Skyjo kalandban!",
+      "form": {
+        "name": {
+          "label": "Játékos neve",
+          "placeholder": "Jeff",
+          "description": "Másoknak megmutatva a játékokban"
+        },
+        "username": {
+          "label": "Név",
+          "placeholder": "jeff",
+          "description": "Bejelentkezéshez és profilhoz"
+        },
+        "password": {
+          "label": "Jelszó létrehozása",
+          "placeholder": "Adj meg egy biztonságos jelszót"
+        },
+        "submit": "Játékra kész!"
+      },
+      "success": "Sikeresen befejezted az onboardingot! Átirányítás a kezdőlapra..."
+    },
+    "Verify": {
+      "head": {
+        "title": "Email megerősítése | Skymo - Skyjo Online Kártyajáték",
+        "description": "Erősítsd meg az e-mail címedet a Skymo fiókod beállításának befejezéséhez, és kezdj el Skyjo-zni online a barátaiddal.",
+        "keywords": "Skymo,Skyjo,email ellenőrzés,fiók ellenőrzése,online kártyajáték"
+      },
+      "loading": "Profilod betöltése...",
+      "title": "Ellenőrizd az e-mail címed",
+      "description": "6-jegyű kódot küldtünk az e-mail címedre. Kérjük, add meg alább.",
+      "resend": {
+        "countdown": "Kód újraküldése {seconds} mp múlva",
+        "prompt": "Nem kaptad meg a kódot?",
+        "button": "Új kód kérése",
+        "sending": "Küldés..."
+      },
+      "toast": {
+        "success": "Email sikeresen igazolva!",
+        "resend-success": "Új e-mailt küldtünk",
+        "email-already-sent": "Már küldtünk egy e-mailt az elmúlt 5 percben. Kérlek, ellenőrizd a beérkezett üzeneteidet, vagy kattints az \"Új kód kérése\" gombra egy új küldéséhez"
+      }
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username} profilja | Skymo - Skyjo Online Kártyajáték",
+        "description": "Nézd meg {username} profilját a Skymo-n. Tekintsd meg a játékstatisztikáit, legutóbbi tevékenységeit és Skyjo online eredményeit.",
+        "keywords": "Skymo,Skyjo,profil,játékos statisztikák,játékinformációk,legutóbbi játékok,eredmények,online kártyajáték"
+      },
+      "not-found": {
+        "title": "Felhasználó nem található",
+        "description": "A „{username}” felhasználó nem létezik, vagy megváltoztatta a felhasználónevét.",
+        "back-to-home": "Vissza a főoldalra"
+      },
+      "error": {
+        "title": "Valami hiba történt",
+        "description": "Hiba történt a profil betöltése közben. Kérlek, próbáld meg később újra.",
+        "back-to-home": "Vissza a főoldalra"
+      },
+      "stats": {
+        "total-games": "Teljes játékok",
+        "win-rate": "Nyerési arány",
+        "average-rank": "Átlagos rang",
+        "public": "Nyilvános",
+        "private": "Privát"
+      },
+      "sections": {
+        "achievements": "Eredmények",
+        "achievements-coming-soon": "Teljesítmények rendszere hamarosan!",
+        "recent-activity": "Legutóbbi tevékenység"
+      },
+      "recent-activity": {
+        "no-activity": "Nincs megjeleníthető friss tevékenység.",
+        "game-code": "Játék #{code}",
+        "rank": "#{rank}. helyezés",
+        "left": "Elhagyta",
+        "forfeited": "Visszalépett"
+      },
+      "search": {
+        "placeholder": "Felhasználónév keresése"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Fiókbeállítások | Skymo - Skyjo Online Kártyajáték",
+        "description": "Keveld a fiókbeállításaidat a Skymo-n. Változtasd meg a megjelenítendő nevedet, felhasználónevedet, e-mail címedet, jelszavadat és fiókbeállításaidat."
+      },
+      "title": "Fiókbeállítások",
+      "description": "Kezeld a fiókodat és a személyes adataidat.",
+      "Navigation": {
+        "profile": "Profil",
+        "account": "Fiók",
+        "password": "Jelszó"
+      },
+      "buttons": {
+        "save": "Változtatások mentése",
+        "saving": "Mentés...",
+        "delete-account": "Fiók törlése",
+        "confirm-delete": "Igen, Töröljem a Fiókom"
+      },
+      "messages": {
+        "save-success": "Beállítások sikeresen mentve!",
+        "save-error": "Nem sikerült menteni a beállításokat. Kérlek, próbáld újra.",
+        "delete-confirmation": "Biztos vagy benne, hogy törölni szeretnéd a fiókodat? Ez a művelet nem vonható vissza, és minden adatod véglegesen törlődik.",
+        "username-taken": "Ez a felhasználónév már foglalt.",
+        "email-taken": "Ez az e-mail cím már használatban van.",
+        "password-incorrect": "A jelenlegi jelszó helytelen.",
+        "account-deletion-scheduled": "A fiókod törlésére irányuló kérésedet figyelembe vettük, és 48 órán belül feldolgozzuk. E-mailben értesítünk a törlés megerősítéséről.",
+        "account-deletion-failed": "Hiba történt a fiókod törlése közben. Kérlek, próbáld újra."
+      }
+    },
+    "SettingsProfile": {
+      "title": "Profil",
+      "fields": {
+        "name": {
+          "label": "Megjelenítendő név",
+          "description": "A neved, amit a többi játékos lát a játékokban.",
+          "placeholder": "Add meg a neved",
+          "submit": "Név mentése"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "A profilodon megjelenített avatárod.",
+          "placeholder": "Válaszd ki az avatárodat",
+          "submit": "Avatar mentése"
+        }
+      }
+    },
+    "SettingsAccount": {
+      "title": "Fiók",
+      "fields": {
+        "username": {
+          "label": "Felhasználónév",
+          "description": "A profil URL-jéhez használt egyedi felhasználóneved.",
+          "placeholder": "Add meg a felhasználóneved",
+          "submit": "Felhasználónév mentése"
+        },
+        "email": {
+          "label": "Email cím",
+          "description": "Az e-mail címed, amit a bejelentkezéshez és fontos értesítésekhez használsz. Biztonsági okokból figyelmeztető e-mailt küldünk az aktuális címedre, amikor módosítod.",
+          "placeholder": "Add meg az e-mail címed",
+          "submit": "Email mentése"
+        },
+        "settings-sync": {
+          "label": "Beállítások szinkronizálása",
+          "description": "Szinkronizáld a beállításaidat minden eszközödön, amikor be vagy jelentkezve.",
+          "enable-sync": "Szinkronizálás engedélyezése",
+          "disable-sync": "Szinkronizálás kikapcsolása",
+          "status": {
+            "enabled": "Engedélyezve",
+            "disabled": "Letiltva",
+            "syncing": "Szinkronizálás...",
+            "offline": "Offline",
+            "error": "Szinkronizálás sikertelen"
+          },
+          "last-sync": "Utolsó szinkronizálás: {date}",
+          "sync-now": "Szinkronizálás most"
+        }
+      },
+      "delete-account": {
+        "title": "Fiókom törlése",
+        "description": "Fiókod és az összes hozzá kapcsolódó adat törlése. Ez a művelet nem vonható vissza, és minden adatod véglegesen eltávolításra kerül.",
+        "button": "Fiók törlése",
+        "confirmation": {
+          "description": "Ha megerősíted, egy 48 órás visszaszámlálás kezdődik: e-mailt fogsz kapni egy linkkel, amellyel törölheted a törlést, ha meggondolnád magad. Fiókod továbbra is elérhető lesz ebben az időszakban. 48 óra elteltével véglegesen törlődik, és visszaigazoló e-mailt fogsz kapni.",
+          "input-label": "Írd be, hogy TÖRLÉS a megerősítéshez",
+          "input-placeholder": "TÖRLÉS",
+          "cancel-button": "Mégse",
+          "delete-button": "Fiókom törlése"
+        }
+      }
+    },
+    "SettingsPassword": {
+      "title": "Jelszó változtatása",
+      "fields": {
+        "password": {
+          "label": "Jelszó",
+          "description": "Változtasd meg a fiókod jelszavát.",
+          "current-password": "Jelenlegi jelszó",
+          "new-password": "Új jelszó",
+          "confirm-password": "Új jelszó megerősítése",
+          "current-placeholder": "Add meg a jelenlegi jelszavadat",
+          "new-placeholder": "Add meg az új jelszavadat",
+          "confirm-placeholder": "Erősítsd meg az új jelszavadat",
+          "submit": "Jelszó mentése"
+        }
+      },
+      "messages": {
+        "password-incorrect": "A jelenlegi jelszó helytelen."
+      }
+    },
+    "CancelAccountDeletion": {
+      "invalid-token": "Érvénytelen token",
+      "success": {
+        "title": "A fiók törlése megszakítva",
+        "description": "Fióktörlésed sikeresen megszakítva. Fiókod biztonságban van, és nem törlődik.",
+        "secure-message": "A fiókod most biztonságos és aktív marad. Továbbra is használhatod a fiókodat a szokásos módon."
+      },
+      "failed": {
+        "title": "A törlés meghiúsult",
+        "description": "Nem tudtuk törölni a fiókod törlését. Kérlek, próbáld újra, vagy lépj kapcsolatba az ügyfélszolgálattal.",
+        "general-error": "Hiba történt a fiókod törlésének visszavonása közben. Kérlek, próbáld újra, vagy lépj kapcsolatba az ügyfélszolgálattal.",
+        "help-message": "Hiba történt a fiókod törlésének visszavonása közben. Kérlek, próbáld újra, vagy lépj kapcsolatba az ügyfélszolgálattal."
+      },
+      "expired": {
+        "title": "A törlési hivatkozás lejárt",
+        "description": "Ez a lemondási link lejárt. Ha továbbra is meg szeretnéd tartani a fiókodat, kérjük, lépj kapcsolatba az ügyfélszolgálattal.",
+        "help-message": "A 48 órás lemondási időszak lejárt. Kérjük, fordulj a támogatáshoz, ha segítségre van szükséged."
+      },
+      "actions": {
+        "return-homepage": "Vissza a főoldalra"
+      }
+    },
+    "Reconnect": {
+      "title": "Újracsatlakozás a játékhoz",
+      "description": "Kérlek, várj, amíg újra csatlakozunk az aktív játékodhoz..."
+    }
+  },
+  "utils": {
+    "skymo": {
+      "waiting": "Várja a játékosokat",
+      "waiting-opponents-to-turn-cards": "Várakozás a játékos{nbOpponents, plural, =1 {} other {okra}} {number} lapjára{number, plural, =1 {} other {k}}",
+      "turn": {
+        "chooseAPile": "Válassz egy paklit",
+        "throwOrReplace": "Csere vagy elvetés",
+        "turnACard": "Kártyát fordít",
+        "replaceACard": "Lapcsere"
+      },
+      "turn-cards": "Lapod {number} kártyá{number, plural, =1 {} other {k}}",
+      "round-over": "Kör befejeződött",
+      "game-stopped": "A játék leállt",
+      "last-turn": "Utolsó kör!",
+      "player-turn": "{playerName} következik",
+      "game-ended": "Játék vége!"
+    },
+    "chat": {
+      "welcome": "Légy kedves és tisztelettudó a csevegésben. Ha szükséges, elnémíthatsz vagy jelenthetsz egy játékost, ha {isMobile, select, true {rákoppintasz} other {rákattintasz}} az egyik üzenetére vagy rá.",
+      "player-left": "{name} elhagyta a játékot",
+      "player-joined": "{name} csatlakozott a játékhoz",
+      "wizz-other": "{initiatorName} varázsolta {targetName} -t!",
+      "player-already-muted": "{name} már némítva",
+      "player-muted": "{name} mosta cenzúrázva",
+      "argument-required": "A(z) „{command}” parancs végrehajtásához legalább egy argumentum szükséges.",
+      "host-transferred": "A házigazda szerepkör átkerült ide: {name}",
+      "wizz-sent": "Küldtél egy varázslatot {targetName}-nek!",
+      "player-unmuted": "{name} nincs többé némítva",
+      "player-reconnect": "{name} újra csatlakozott a játékhoz",
+      "wizz-self": "Rád varázsolt a(z) {initiatorName}!",
+      "player-not-muted": "{name} nincs némítva",
+      "player-forfeited": "{name} feladta a játékot"
+    },
+    "avatar": {
+      "bee": "méhecske",
+      "crab": "rák",
+      "dog": "kutya",
+      "eagle": "sas",
+      "elephant": "elefánt",
+      "fox": "róka",
+      "frog": "béka",
+      "jellyfish": "sárkány",
+      "koala": "koala",
+      "octopus": "polip",
+      "penguin": "pingvin",
+      "turtle": "teknő",
+      "toucan": "tukan",
+      "owl": "bagoly",
+      "whale": "bálna",
+      "cat": "macska"
+    },
+    "socket": {
+      "error": {
+        "cannot-reconnect": {
+          "description": "A játékhoz való újracsatlakozás már nem lehetséges, az újracsatlakozási idő lejárt."
+        },
+        "game-is-full": {
+          "description": "A játék tele van, nem tudsz csatlakozni"
+        },
+        "timeout": {
+          "description": "A szerver többet várakozik a válaszra a vártnál. Megpróbálhatja újra betölteni az oldalt és újra próbálkozni."
+        },
+        "game-not-found": {
+          "description": "A keresett játék nem létezik"
+        },
+        "game-already-started": {
+          "description": "A játék már elkezdődött"
+        },
+        "player-already-connected": {
+          "description": "Már csatlakozva vagy ehhez a játékhoz egy másik munkamenetből"
+        },
+        "player-banned": {
+          "description": "Ön ki lett tiltva a játékból"
+        },
+        "rate-limit": {
+          "title": "Túl sok kérést küldesz",
+          "description": "Kérlek várj néhány másodpercet, mielőtt újra próbálod"
+        },
+        "max-players-too-low": {
+          "description": "Nem lehet csökkenteni a maximális játékosszámot a játékban lévő játékosok jelenlegi számánál kevesebbre"
+        },
+        "not-allowed": {
+          "description": "Nincs engedélyed a játékbeállítások módosításához",
+          "title": "Engedély megtagadva"
+        }
       }
     }
+  },
+  "contexts": {
+    "BanContext": {
+      "not-allowed": {
+        "title": "Nincs jogod zárolni",
+        "description": "Nincs jogosultsága egy játékos kitiltásához"
+      },
+      "player-not-found": {
+        "description": "A megbanandó játékos nem létezik a játékban",
+        "title": "A kitiltani kívánt játékos nem létezik"
+      },
+      "player-banned": {
+        "description": "{playerName} házigazda által kitiltva",
+        "title": "{playerName} ki lett tiltva"
+      },
+      "you-were-banned": {
+        "title": "Ön ki lett tiltva",
+        "description": "A házigazda kitiltott a játékból"
+      },
+      "unexpected-error": {
+        "description": "Hiba történt a játékos kitiltása közben",
+        "title": "Váratlan hiba történt"
+      }
+    },
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "description": "A játék, amelyhez csatlakozni próbált, már nem létezik",
+          "title": "Játék nem található"
+        }
+      },
+      "reconnection": "Sikeres újra csatlakozás",
+      "connection-lost": "Kapcsolat megszakadt. Újracsatlakozás kísérlete..."
+    },
+    "ReportContext": {
+      "report": {
+        "title": "{playerName} a jelentés miatt lett eltávolítva"
+      },
+      "report-against-you": {
+        "description": "Egy adminisztrátor érvényesített egy ellened szóló jelentést. Kérlek, kerüld az ilyen viselkedést, különben további szankciók léphetnek életbe.",
+        "title": "Jelentés alapján eltávolítottak a játékból"
+      }
+    },
+    "HostTransferContext": {
+      "player-not-found": {
+        "description": "A játékos, akinek át szeretnéd adni a házigazdai jogot, nem létezik a játékban",
+        "title": "A játékos nem létezik"
+      },
+      "host-transferred": {
+        "title": "A házigazda sikeresen át lett adva",
+        "description": "{newHostName} mostanában a játék házigazdája"
+      },
+      "not-allowed": {
+        "title": "Nincs engedélyed a házigazda átadására",
+        "description": "Csak az aktuális házigazda ruházhatja át a házigazda szerepkört egy másik játékosra"
+      },
+      "player-not-connected": {
+        "title": "A játékos nincs csatlakozva",
+        "description": "A játékos, akinek át szeretnéd adni a házigazda jogot, nincs csatlakozva a játékhoz"
+      },
+      "unexpected-error": {
+        "description": "Hiba történt a gazdaküldés közben",
+        "title": "Nem várt hiba történt"
+      },
+      "you-are-now-host": {
+        "title": "Most vagy a házigazda",
+        "description": "{previousHostName} átadta neked a házigazdai szerepet"
+      }
+    }
+  },
+  "errors": {
+    "invalid-credentials": "A megadott e-mail cím vagy jelszó érvénytelen. Kérjük, próbálja meg újra.",
+    "username-min-characters": "A felhasználónévnek legalább 3 karakter hosszúnak kell lennie",
+    "name-min-characters": "A megjelenítendő névnek legalább 2 karakternek kell lennie",
+    "username-max-characters": "A felhasználónév legfeljebb 20 karakter hosszú lehet",
+    "name-max-characters": "A kijelzőnév legfeljebb 20 karakter hosszú lehet",
+    "username-invalid-format": "A felhasználónév csak betűket, számokat és aláhúzásokat tartalmazhat",
+    "logout-failed": "Nem tudtunk kiléptetni. Kérjük, zárd be a böngésződet a munkamenet befejezéséhez.",
+    "session-not-found": "A munkameneted lejárt, vagy érvénytelen. Kérlek, jelentkezz be újra.",
+    "session-token-missing": "A munkameneti token hiányzik. Jelentkezz be, hogy újat kaphass.",
+    "session-expired": "A munkameneted lejárt. Kérlek jelentkezz be újra a folytatáshoz.",
+    "password-reset-failed": "Nem tudtuk visszaállítani a jelszavadat. Kérjük, próbáld újra.",
+    "onboarding-error": "Probléma merült fel a profilod befejezésével kapcsolatban. Kérlek, próbáld újra.",
+    "session-invalid": "A munkameneted érvénytelen. Kérjük, jelentkezz be újra a folytatáshoz.",
+    "username-taken": "Ez a felhasználónév már foglalt. Kérem, válasszon másikat.",
+    "reset-token-invalid": "A megadott visszaállítási token érvénytelen. Kérjen újat.",
+    "reset-token-expired": "A jelszó-visszaállítási tokened lejárt. Kérj újat.",
+    "forgot-password-error": "Hiba történt a jelszó-visszaállítási kérés feldolgozása során. Kérjük, próbálja meg később.",
+    "reset-password-error": "Nem tudtuk visszaállítani a jelszavadat. Kérjük, próbáld meg újra.",
+    "oauth-account-creation-failed": "Nem tudtunk fiókot létrehozni a szolgáltatód adataival. Kérjük, próbálkozz újra.",
+    "oauth-restart-process": "Valami hiba történt az autentikáció során. Kérlek, próbálj újra bejelentkezni.",
+    "login-invalid-credentials": "A megadott e-mail cím vagy jelszó helytelen. Kérjük, próbálkozzon újra.",
+    "oauth-login-initiation-failed": "A bejelentkezési folyamat nem indítható el. Próbálkozzon újra néhány pillanat múlva.",
+    "oauth-id-token-missing": "Nem kaptunk ID-token-t az autentikációs szolgáltatótól. Kérem, próbálkozzon újra.",
+    "verify-session-error": "Nem tudtuk ellenőrizni a munkamenetedet. Kérlek, jelentkezz ki, majd lépj be újra.",
+    "signup-error": "A fiókod létrehozása ebben az időben nem sikerült. Próbáld meg később.",
+    "login-error": "Bejelentkezési hiba történt. Kérlek, próbáld újra.",
+    "check-username-error": "A felhasználónév ellenőrzése nem sikerült. Kérjük, próbáld újra.",
+    "unknown-auth-error": "Ismeretlen hitelesítési hiba történt. Kérlek, próbáld újra.",
+    "username-same-as-current": "Ez már a felhasználóneved.",
+    "creation-failed": "Nem tudtuk létrehozni a felhasználót. Kérjük, próbálja újra.",
+    "get-user-stats-error": "Nem tudtuk betölteni a felhasználó statisztikáit. Kérlek, frissítsd az oldalt.",
+    "logout-error": "Nem várt hiba történt a kijelentkezés során.",
+    "get-user-games-error": "Nem sikerült betölteni a felhasználó játékait. Kérjük, frissítse az oldalt.",
+    "user-not-found": "A keresett felhasználó nem található.",
+    "get-user-error": "Nem sikerült lekérni a felhasználói profilt. Kérjük, próbálja meg később.",
+    "email-taken": "Ez az e-mail cím már használatban van. Kérlek, használj másikat.",
+    "revert-email-error": "Nem tudtuk visszaállítani az e-mail cím változtatását. Kérjük, lépjen kapcsolatba az ügyfélszolgálattal.",
+    "delete-account-error": "Nem tudtuk feldolgozni a fiók törlési kérelmét. Kérjük, próbálkozzon újra.",
+    "update-password-error": "Nem tudtuk frissíteni a jelszavadat. Kérlek, próbáld újra.",
+    "update-username-error": "Nem tudtuk frissíteni a felhasználónevedet. Kérlek, próbáld újra.",
+    "cancel-delete-account-error": "Nem tudtuk törölni a fiókod törlését. Kérjük, vedd fel a kapcsolatot az ügyfélszolgálattal.",
+    "update-name-error": "Nem tudtuk frissíteni a nevedet. Kérlek, próbáld újra.",
+    "email-same-as-current": "Ez már az Ön e-mail címe.",
+    "update-avatar-error": "Nem tudtuk frissíteni az avatarodat. Kérlek, próbáld meg újra.",
+    "invalid-current-password": "Az általad megadott jelenlegi jelszó helytelen.",
+    "update-email-error": "Nem tudtuk frissíteni az e-mail címedet. Kérlek, próbáld meg újra.",
+    "unexpected-error": "Váratlan hiba történt. Kérlek, próbáld újra.",
+    "too-many-requests": "Túl sok kérést küldtél. Kérlek, várj egy pillanatot, majd próbáld újra.",
+    "send-feedback-error": "Nem tudtuk elküldeni a visszajelzésedet. Kérjük, próbáld újra.",
+    "internal-server-error": "Szerverünk hibát észlelt. Kérjük, próbálja meg később!",
+    "unauthorized": "Nincs jogosultsága ehhez a művelethez.",
+    "forbidden": "Nincs jogosultsága ehhez az erőforráshoz.",
+    "not-found": "A keresett erőforrás nem található.",
+    "ip-not-found": "Nem tudtuk azonosítani az IP-címét. Kérjük, ellenőrizze a kapcsolatát.",
+    "send-pin-error": "Nem tudtuk elküldeni az ellenőrző PIN-kódot az e-mail címedre. Kérlek, próbáld újra.",
+    "feedback-error": "Nem tudtuk elküldeni a visszajelzésedet. Kérlek, próbáld meg újra.",
+    "expired-cancellation-token": "A visszavonási token lejárt. Kérlek, próbáld meg újra.",
+    "invalid-request": "A kérésed érvénytelen volt. Kérlek, ellenőrizd az adatokat és próbáld újra.",
+    "expired-pin": "A megadott PIN-kód lejárt. Küldtünk egy újat.",
+    "invalid-pin": "A megadott PIN helytelen. Kérlek, próbáld újra.",
+    "verify-pin-error": "Nem tudtuk ellenőrizni a PIN-kódodat. Kérlek, próbáld újra.",
+    "get-public-games-error": "Nem sikerült betölteni a nyilvános játékokat. Kérlek, próbáld újra.",
+    "invalid-cancellation-token": "A megadott token érvénytelen. Kérjük, próbálja újra.",
+    "oauth-unknown-error": "Sikertelen bejelentkezés ismeretlen hiba miatt. Kérjük, próbálja újra.",
+    "cancel-account-deletion-error": "Nem tudtuk törölni a fiókod törlését. Kérlek, próbáld újra.",
+    "invalid-reversion-token": "A visszavonási token érvénytelen. Kérlek, próbáld meg újra.",
+    "expired-reversion-token": "A visszavonási token lejárt. Kérjük, próbálkozzon újra.",
+    "min-players-invalid": "A minimális játékosszám legalább 2",
+    "card-per-row-min-invalid": "A kártyák száma soronként legalább 1",
+    "max-players-invalid": "A játékosok maximális száma legfeljebb 8 lehet",
+    "card-per-row-max-invalid": "A soronkénti kártyák száma legfeljebb 3 lehet",
+    "card-per-column-max-invalid": "A kártya oszloponként legfeljebb 4 lehet",
+    "card-per-column-min-invalid": "Minden oszlopban legalább 1 lapnak kell lennie",
+    "score-to-end-game-min-invalid": "A játék befejezéséhez a pontszámnak legalább 1-nek kell lennie",
+    "score-to-end-game-max-invalid": "A játék lezárásához maximálisan 10 000 000 pont érhető el.",
+    "password-lowercase-required": "A jelszónak tartalmaznia kell legalább egy kisbetűt",
+    "password-min-characters": "A jelszónak legalább 10 karakter hosszúnak kell lennie",
+    "email-already-sent": "Már küldtünk egy e-mailt az elmúlt 5 percben. Kérjük, ellenőrizze beérkezett üzeneteit, vagy kattintson az \"Új kód kérése\" gombra egy új küldéséhez.",
+    "account-deletion-already-scheduled": "Fiókod törlése már ütemezve lett. Kérjük, várj a feldolgozásig.",
+    "disposable-email-not-allowed": "Nem engedélyezettek az egyszer használatos vagy ideiglenes e-mail címek. Kérjük, használjon állandó e-mail címet.",
+    "first-player-flat-penalty-min-invalid": "Az első játékos lapbüntetése legalább 0 lehet",
+    "first-player-flat-penalty-max-invalid": "Az első játékosra kiszabható maximális büntetés 10000000",
+    "passwords-dont-match": "A jelszavak nem egyeznek",
+    "delete-account-confirmation-required": "Írj BE a megerősítéshez",
+    "email-already-exists": "Ez az e-mail cím egy másik fiókban már használatban van. Kérjük, használjon másikat.",
+    "user-creation-failed": "Nem tudtuk létrehozni a fiókodat. Kérlek, próbáld újra.",
+    "comment-max-characters": "A megjegyzés legfeljebb 500 karakter lehet",
+    "first-player-multiplier-penalty-min-invalid": "Az első játékos szorzóbüntetésének legalább 1-nek kell lennie",
+    "first-player-multiplier-penalty-max-invalid": "Az első játékos szorzóbüntetése legfeljebb 10000000 lehet",
+    "password-special-char-required": "A jelszónak tartalmaznia kell legalább egy speciális karaktert",
+    "password-uppercase-required": "A jelszónak tartalmaznia kell legalább egy nagybetűt",
+    "password-number-required": "A jelszónak tartalmaznia kell legalább egy számot",
+    "current-password-required": "A jelenlegi jelszó kötelező",
+    "email-invalid": "Érvénytelen e-mail cím",
+    "token-required": "Token szükséges",
+    "username-creation-failed": "Nem tudtuk létrehozni a felhasználónevedet. Kérlek, próbáld újra.",
+    "account-deletion-schedule-failed": "Nem tudtuk ütemezni a fiókod törlését. Kérlek, próbáld újra."
   }
 }

@@ -20,7 +20,1532 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti"
+      },
+      "no-language-found": "Ei kieltä löytynyt",
+      "search-language": "Etsi kieli",
+      "select-language": "Valitse kieli"
+    },
+    "Banner": {
+      "title": "tarvitsen <gform>palautettasi</gform> muovatakseni Skymon tulevaisuutta!"
+    },
+    "Navbar": {
+      "links": {
+        "rules": "Säännöt",
+        "leaderboard": "Tulostaulu"
+      }
+    },
+    "AppearanceSelect": {
+      "dark": "Tumma",
+      "system": "Järjestelmä",
+      "light": "Valo"
+    },
+    "ChatForm": {
+      "message-too-long": {
+        "description": "Viesti on liian pitkä (max 200 merkkiä)"
+      },
+      "unknown-command": {
+        "description": "Tuntematon komento"
+      },
+      "message-input-placeholder": "Viesti",
+      "button-title": "Lähetä"
+    },
+    "CopyLink": {
+      "message": "Linkki kopioitu!",
+      "copy": {
+        "button-title": "Kopioi linkki",
+        "popover": "Linkki kopioitu!"
+      },
+      "share": {
+        "button-title": "Jaa peli",
+        "tooltip": "Klikkaa tästä jakaaksesi pelin!",
+        "title": "Liity Skyjo-peliini!",
+        "text": "Tule pelaamaan Skyjoa kanssani verkossa! Klikkaa linkkiä liittyäksesi peliin."
+      }
+    },
+    "EndRoundDialog": {
+      "title": "Kierroksen päättyminen",
+      "description": "Seuraava kierros alkaa muutamassa sekunnissa…"
+    },
+    "Feedback": {
+      "toast": {
+        "success": {
+          "description": "Oivalluksesi ovat auttaneet meitä parantamaan pelisivustoamme, ja olemme todella kiitollisia.",
+          "title": "Kiitos palautteestasi!"
+        }
+      },
+      "email-input": {
+        "label": "Sähköpostiosoitteesi (valinnainen)",
+        "placeholder": "example@example.com"
+      },
+      "button-title": "Lähetä",
+      "title": "Anna palautetta",
+      "message-input": {
+        "label": "Sinun viestisi",
+        "placeholder": "Kerro mitä mieltä olet, huomioitavaa tai mitä haluat…"
+      },
+      "description": "Voit antaa palautetta, jonka avulla voimme parantaa peliä."
+    },
+    "Footer": {
+      "feedback": "Anna palautetta",
+      "status": "Palvelimen tila",
+      "release-notes": "Julkaisutiedot",
+      "disclaimer": {
+        "rights-owned": "Kaikki oikeudet Skyjo-nimeen ja pelimekaniikkoihin kuuluvat Alexander Bernhardille ja Magilanolle",
+        "not-affiliated": "Tämä verkkosivusto ei ole sidoksissa Skyjon luojiin tai jakelijoihin.",
+        "responsible-content": "Tämän sivuston omistaja ei ole vastuussa mistään käyttäjien luomasta sisällöstä (käyttäjätunnukset, viestit)"
+      },
+      "home": "Koti",
+      "buy-game": "Osta peli",
+      "explanation": "Mikä on Skyjo?",
+      "rules": "Pelisäännöt",
+      "privacy-policy": "Tietosuojaseloste",
+      "attribution": {
+        "avatars": "Avatarit luoneet Freepik - Flaticon"
+      },
+      "translations": "Auta pelin kääntämisessä!"
+    },
+    "GameLobbyButtons": {
+      "join-game-button": "Liity peliin",
+      "create-game-button": "Luo {type, select, private {yksityinen} public {julkinen} other {tuntematon}} peli",
+      "find-game-button": "Etsi peli",
+      "reconnect-game-button": "Yhdistä uudelleen peliin"
+    },
+    "ReconnectionModal": {
+      "reconnect-button": "Kyllä, yhdistä uudelleen",
+      "dismiss-button": "Ei, en hyväksy",
+      "description": "Olit käynnissä olevassa pelissä. Haluatko muodostaa yhteyden uudelleen?",
+      "title": "Yhdistä peliin uudelleen"
+    },
+    "GameRules": {
+      "card-per-column": "Sarakkeiden määrä: {value}",
+      "remove-identical-row": "Poista rivi, jos kortit ovat identtiset: {value, select, true {kyllä} false {ei} other {tuntematon}}",
+      "first-player-penalty-type": {
+        "label": "Rangaistustyyppi ensimmäiselle pelaajalle, jos hänellä ei ole pienintä pistemäärää: ",
+        "2": "Vain taso",
+        "1": "Vain kerroin",
+        "3": "Litteen sitten kerroin",
+        "4": "Kerroin sitten kiinteä"
+      },
+      "first-player-multiplier-penalty": "Kertojarangaistus: {arvo}",
+      "first-player-flat-penalty": "Tasapeli: {value}",
+      "card-per-row": "Rivien määrä: {value}",
+      "button-title": "Näytä pelisäännöt",
+      "initial-turned-count": "Korttien määrä alussa: {value}",
+      "score-to-end-game": "Pisteiden määrä pelin lopettamiseksi: {value}",
+      "title": "Pelisäännöt",
+      "remove-identical-column": "Poista sarake, jos kortit ovat identtisiä: {value, select, true {kyllä} false {ei} other {tuntematon}}"
+    },
+    "AccountDropdownMenu": {
+      "button": {
+        "aria-label": "Valikko"
+      },
+      "guest": "Arvoituspelaaja",
+      "language": "Kieli",
+      "feedback": "Anna palautetta",
+      "game-settings": "Pelin asetukset",
+      "account-settings": "Asiakastilin asetukset",
+      "appearance": "Ulkoasu",
+      "guest-catch-phrase": "Valmis paljastamaan henkilöllisyytesi?",
+      "rules": "Säännöt",
+      "settings": "Asetukset",
+      "profile": "Profiili",
+      "logout": "Kirjaudu ulos",
+      "discord": "Discord",
+      "login": "Kirjaudu sisään",
+      "signup": "Luo tili"
+    },
+    "GameDropdownMenu": {
+      "button": {
+        "aria-label": "Valikko"
+      },
+      "rules": "Säännöt",
+      "leave-game": "Poistu pelistä",
+      "settings": "Asetukset",
+      "forfeit": "Luovuta",
+      "appearance": "Ulkoasu",
+      "feedback": "Anna palautetta",
+      "discord": "Discord"
+    },
+    "RulesDialog": {
+      "title": "Pelisäännöt",
+      "trigger": {
+        "aria-label": "Näytä pelisäännöt"
+      }
+    },
+    "Rules": {
+      "round-preparation": {
+        "title": "Kierroksen valmistelu",
+        "content-1": "Aluksi jokaiselle pelaajalle jaetaan 12 korttia kuvapuoli alaspäin. Seuraavaksi yksi kortti nostopakasta asetetaan kuvapuoli ylöspäin pöydän keskelle muodostaen poistopakankin alun. Loput kortit asetetaan kuvapuoli alaspäin vierekkäin muodostaen nostopakan.",
+        "content-2": "Jokainen pelaaja asettaa 12 korttiaan neljään kolmen kortin riviin itsensä eteen kuvapuoli alaspäin. Lopuksi jokainen pelaaja kääntää kaksi valitsemaansa korttia kuvapuoli ylöspäin."
+      },
+      "round-start": {
+        "content-2": "tai pelikasanasta ensimmäistä kuvapuoli alaspäin olevaa korttia",
+        "content-1": "Pelaaja voi valita ensimmäisen pöydältä käännetyn kortin poistopinosta",
+        "choice-2": {
+          "title": "Valinta 2:",
+          "description": "Ota ensimmäinen kortti kuvapuoli alaspäin nostopakasta.",
+          "content-1": "Pelaaja voi katsoa korttia ja valita, vaihtaako hän sen johonkin omista korteistaan (piilotettu tai näkyvä) vai heittääkö hän sen pois. Jos pelaaja haluaa pitää nostamansa kortin, hän vaihtaa sen johonkin omista korteistaan yllä kuvatulla tavalla.",
+          "choice-1": "Valinta 1",
+          "content-2": "Jos hän ei halua pitää nostamaansa korttia, hän asettaa sen poistopinoon ja hänen on käännettävä yksi korteistaan kuvapuoli ylöspäin."
+        },
+        "end-of-turn": "Hänen vuoronsa on sitten ohi, ja on seuraavan pelaajan vuoro (myötäpäivään).",
+        "title": "Kierros alkaa",
+        "choice-1": {
+          "content": "Pelaajan on vaihdettava tämä kortti välittömästi yhteen 12 kortistaan ja asetettava se kuvapuoli ylöspäin. Hän voi valita vapaasti kuvapuoli ylöspäin ole vien ja kuvapuoli alaspäin olevien korttien välillä. Piilotettuja kortteja ei saa nähdä ennen vaihtoa. Vaihdettu kortti asetetaan kuvapuoli ylöspäin poistopinolle.",
+          "description": "Ota ensimmäinen kortti poistopakasta.",
+          "title": "Valinta 1:"
+        },
+        "choice": "valinta {number}"
+      },
+      "special-rule": {
+        "title": "Erikoissääntö:",
+        "content": "Jos pelaajalla on 3 samanlaista korttia sarakkeessa, pelaaja hylkää nämä 3 korttia laittamalla ne poistopakkaan. Jos samankaltaisten korttien sarake muodostuu nostopakasta tai poistopakasta vaihdetulla kortilla, kolme samanlaista korttia on aina asetettava poistopakkaan vaihdetun kortin jälkeen."
+      },
+      "round-end": {
+        "content-2": "Kaikki seuraavat pelaajat pelaavat vielä yhden vuoron kierroksen loppuun saattamiseksi.",
+        "title": "Kierroksen loppu",
+        "content-1": "Kun pelaaja on paljastanut kaikki korttinsa, hän on pelannut viimeisen vuoronsa."
+      },
+      "scoring": {
+        "title": "Pisteet",
+        "first-to-finish": {
+          "content": "Jos pelaaja, joka on päättänyt kierroksen (ensimmäinen, joka on kääntänyt kaikki korttinsa auki), ei ole saanut kyseisellä kierroksella vähiten pisteitä, hänen kierroksen pisteensä tuplataan.",
+          "note": {
+            "title": "Huom!",
+            "content": "tämä sääntö koskee vain positiivisia pisteitä!"
+          }
+        },
+        "description": "Pelaajat, joilla on yhä kortteja kuvapuoli alaspäin, kääntävät ne kuvapuoli ylöspäin. Jokainen pelaaja laskee kokonaispisteensä.",
+        "list": {
+          "content-1": "Jos pistepotti on positiivinen – tai jos se on nollan arvoinen – hän lisää sen edellisten kierrosten pistepottiin.",
+          "content-2": "Jos kokonaissumma on negatiivinen, se vähennetään edellisten kierrosten kokonaispistemäärästä."
+        },
+        "example": {
+          "title": "Esimerkki:",
+          "content": "Pelaaja A paljastaa kaikki korttinsa ja lopettaa kierroksen. Kierroksen lopussa hänellä on 10 pistettä, pelaajalla B on 24 pistettä ja pelaajalla C on myös 10 pistettä. Koska pelaajalla A ei ole ehdottomasti vähiten pisteitä, hänen pisteensä tuplataan 20:een."
+        }
+      },
+      "end-of-game": {
+        "title": "Pelin päättyminen",
+        "content": "Kierroksen lopussa jokaisen pelaajan pisteet lisätään edellisillä kierroksilla saatuun kokonaispistemäärään. Peli päättyy heti, kun joku pelaaja saavuttaa 100 pistettä tai enemmän. Vähiten pisteitä kerännyt pelaaja voittaa pelin."
+      },
+      "game-goal": {
+        "content": "Skyjo-peliä pelataan useita kierroksia, ja se päättyy heti, kun pelaaja saavuttaa 100 pistettä tai enemmän. Vähiten pisteitä kerännyt pelaaja voittaa pelin.",
+        "title": "Pelin tavoite"
+      },
+      "cards-section-title": "{number} pelikorttia:"
+    },
+    "Scoreboard": {
+      "button-title": "Näytä tulostaulu"
+    },
+    "ScoreTable": {
+      "name": "Nimi",
+      "total": "Yhteensä",
+      "rank": "Ranking",
+      "round": "Kierros"
+    },
+    "ScoreSheet": {
+      "see-scores": "Katso pisteet"
+    },
+    "SettingsDialog": {
+      "audio": {
+        "title": "Äänet",
+        "toggle": {
+          "label": "Ota äänet käyttöön"
+        },
+        "volume": {
+          "label": "Äänenvoimakkuus ({volume}%)"
+        }
+      },
+      "chat": {
+        "chat-notification-size": {
+          "label": "Chat-ilmoitusten koko",
+          "values": {
+            "small": "Pieni",
+            "big": "Iso",
+            "normal": "Normaali"
+          }
+        },
+        "chat-visibility": "Chatin näkyvyys",
+        "title": "Chat"
+      },
+      "mobile": {
+        "show-preview-opponents-cards": "Näytä vastustajien korteista esikatselu vastustajaluettelossa",
+        "switch-to-player-who-is-playing": "Vaihda automaattisesti pelaajaa, joka on vuorossa",
+        "title": "Mobiili"
+      },
+      "gameplay": {
+        "gameboard": {
+          "size": {
+            "big-warning": "Voi rikkoa näytön mobiililaitteilla",
+            "values": {
+              "normal": "Normaali",
+              "big": "Iso"
+            },
+            "label": "Pelilautasi koko"
+          },
+          "enlarge-active-player-board": "Suurenna sen pelaajan lauta, jonka vuoro on",
+          "title": "Pelilauta"
+        },
+        "timer": {
+          "description": "Älytila näyttää aikalaskurin puoliajalla ja viimeiset 15 sekuntia.",
+          "label": "Ajastimen näyttötila",
+          "modes": {
+            "never": "Ei koskaan",
+            "always": "Aina",
+            "smart": "Älykäs"
+          },
+          "title": "Ajastin"
+        },
+        "title": "Pelin kulku"
+      },
+      "account": {
+        "title": "Tili",
+        "sync": {
+          "label": "Tilisi asetukset",
+          "offline": "Poissa verkosta",
+          "syncing": "Synkronoidaan...",
+          "description": "Synkronoi asetuksesi kaikille laitteillesi, kun olet kirjautuneena sisään.",
+          "enabled": "Käytössä",
+          "disabled": "Poistettu käytöstä",
+          "lastSync": "Viimeisin synkronointi: {date}",
+          "error": "Synkronointi epäonnistui"
+        }
+      },
+      "title": "Asetukset"
+    },
+    "Avatar": {
+      "context-menu": {
+        "kick": "Potki {name}",
+        "vote-to-kick": "Äänestä poistaaksesi {name}",
+        "transfer-host": "Vaihda isäntä kohteeseen {name}",
+        "view-profile": "Näytä {name}:n profiili",
+        "ban": "Estä {name}",
+        "unmute": "Poista mykistys kohteesta {name}",
+        "report": "Ilmoita {name}",
+        "mute": "Mykistä {name}"
+      }
+    },
+    "KickVote": {
+      "player-has-not-voted": {
+        "title": "Äänestä potkiaksesi {playerName}",
+        "ignore-button": {
+          "label": "Ohita",
+          "alt": "Ohita äänestys pelaajan {playerName} potkimiseksi"
+        },
+        "kick-button": {
+          "label": "Potku",
+          "alt": "Potki pelaaja {playerName}"
+        }
+      },
+      "player-has-voted": {
+        "title": "Äänestä pelaajaa potkittavaksi: {playerName}",
+        "description": "Olet äänestänyt {vote, select, true {puolesta} false {vastaan} other {ääni}}"
+      },
+      "vote-failed": {
+        "description": "Äänestys ei riitä potkimaan pelaajaa {playerName}",
+        "title": "Äänestys potkia pelaajaa {playerName} epäonnistui"
+      },
+      "vote-against-you-succeeded": {
+        "title": "Sinut on poistettu",
+        "description": "Pelaajat äänestivät sinut ulos pelistä."
+      },
+      "vote-succeeded": {
+        "description": "Äänestys pelaajan {playerName} potkimiseksi onnistui.",
+        "title": "{playerName} poistettiin"
+      },
+      "host-kick-you": {
+        "title": "Sinut potkittiin ulos pelistä isännän toimesta"
+      },
+      "vote-against-you": {
+        "title": "Äänestä potkiaksesi sinut ulos",
+        "description": "Pyytääksesi häätöä sinusta on pyydetty äänestystä."
+      },
+      "vote-against-you-failed": {
+        "title": "Et sinua potkittu",
+        "description": "Äänestys ei riitä erottamaan sinua"
+      },
+      "host-kick": {
+        "title": "{playerName} on isännän pelistä poistama"
+      },
+      "you-kick-player": {
+        "title": "Olet potkinut pelaajan {playerName}"
+      }
+    },
+    "AfkKick": {
+      "warning": {
+        "title": "AFK-varoitus",
+        "description": "Sinut potkitaan pelistä, jos pysyt toimettomana."
+      },
+      "player-kicked": {
+        "title": "Pelaaja potkittu",
+        "description": "{playerName} on poistettu pelistä toimettomuuden vuoksi."
+      },
+      "kicked": {
+        "title": "Potkittu toimettomuuden vuoksi",
+        "description": "Sinut on poistettu pelistä liian monen AFK-kierroksen vuoksi."
+      }
+    },
+    "ReportDialog": {
+      "comment-placeholder": "Anna lisätietoja tästä raportista...",
+      "cancel": "Peru",
+      "disclaimer": "⚠️ Varoitus: Vääriä tai väärinkäytettyjä ilmoituksia voidaan rangaista tililläsi.",
+      "reasons": {
+        "toxic-behavior": "Toksinen käytös",
+        "spam-advertising": "Roskapostitus/mainonta",
+        "cheating-exploiting": "Huijaaminen/hyödyntäminen",
+        "harassment": "Häirintä",
+        "inappropriate-username": "Epäasianmukainen käyttäjänimi",
+        "other": "Muu"
+      },
+      "reason-label": "Syytä ilmoitukselle",
+      "toast": {
+        "report-submitted": {
+          "title": "Ilmoitus lähetetty",
+          "description": "Kiitos ilmoituksestasi, olet osallistunut pelin laadun parantamiseen."
+        }
+      },
+      "title": "Ilmoita {name}",
+      "description": "Tee ilmoitus pelaajasta {name}, jos hänen käytöksensä vaikuttaa sopimattomalta. Moderaattorit tarkistavat kaiken pelitilanteen.",
+      "comment": "Lisäkonteksti (valinnainen)",
+      "submit": "Raportoi",
+      "reason-placeholder": "Valitse syy"
+    },
+    "GoogleOAuthButton": {
+      "button-title": "Jatka Googlen kanssa"
+    },
+    "PasswordRequirements": {
+      "passwords-match": "Salasanat täsmäävät",
+      "number": "Vähintään yksi numero",
+      "special-character": "Vähintään yksi erikoismerkki",
+      "capital-letter": "Vähintään yksi iso kirjain",
+      "minimum-characters": "Vähintään 10 merkkiä",
+      "lowercase-letter": "Vähintään yksi pieni kirjain"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Sinun täytyy olla kirjautuneena sisään chattaaksesi"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Luovuta peli?",
+      "message": "Oletko varma, että haluat luovuttaa? Poistut pelistä pysyvästi etkä voi liittyä takaisin.",
+      "cancel": "Peruutä",
+      "confirm": "Kyllä, luovuta"
+    },
+    "UsernameInput": {
+      "availability": {
+        "checking": "Tarkistetaan...",
+        "available": "Käyttäjänimi vapaa",
+        "taken": "Jo varattu!"
+      }
+    },
+    "Chat": {
+      "title": "Chat"
+    },
+    "LoginButton": {
+      "login": "Liity hauskanpitoon!"
+    },
+    "ChatMessage": {
+      "separator": ": ",
+      "context-menu": {
+        "report": "Ilmoita viesti"
+      }
+    },
+    "ChatMessageList": {
+      "unread-messages": "{count} lukematon viesti{count, plural, =1 {} other {ä}}"
+    },
+    "DrawPile": {
+      "title": "Nostokasa"
+    },
+    "DiscardPile": {
+      "throw": "Heitä",
+      "title": "Poistopino"
+    },
+    "PlayerBoard": {
+      "you": "Sinä"
+    },
+    "OpponentBoard": {
+      "disconnected": "Pelaaja on poistunut pelistä. Botti pelaa hänen puolestaan seuraavien vuorojen ajan, kunnes hän yhdistää uudelleen."
+    },
+    "OpponentsMobileView": {
+      "opponents-list": {
+        "title": "Vastustajat:"
+      }
+    },
+    "ScoreDialog": {
+      "title": "Pisteet",
+      "description": "{name} on voittanut {score} pisteellä!"
+    },
+    "ChatRestricted": {
+      "description": "Sinulla on kiellettyä keskustella"
+    },
+    "PlayAgainButton": {
+      "disabled": "Pelaa uudelleen",
+      "button": "Pelaa uudelleen",
+      "leavebusterMessage": "Suorita poistumisrangaistuksesi pelataksesi uudelleen"
+    },
+    "LeavebusterDialog": {
+      "title": "Sanktioseuraamus",
+      "description": "Poistuit julkisesta pelistä etuajassa. Suorita tämä rangaistus jatkaaksesi pelaamista.",
+      "progress": "Edistyminen: {completed}/{required}",
+      "timeRemaining": "Aikaa jäljellä: {time}",
+      "completeButton": "Valmis ({time})",
+      "completedButton": "Valmis!",
+      "closeButton": "Sulje"
+    },
+    "BanDialog": {
+      "title": "Tili jäädytetty",
+      "suspensionMessage": "Sinut on {isPermanent, select, true {pysyvästi} other {väliaikaisesti}} estetty pelaamisesta pelikäyttäytymisesi vuoksi.",
+      "temporary": "Voit pelata uudelleen: {date}.",
+      "reasonLabel": "Syy:",
+      "defaultReason": "Ei perustelua.",
+      "understandButton": "Ymmärrän"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Keskustelurajoitus",
+      "description": "Sinulta on evätty väliaikaisesti oikeus käyttää chattia. Et voi lähettää viestejä tämän ajan.",
+      "detailedDescription": "Sinulta on estetty mahdollisuus viestiä chatin kautta, koska käyttäytymistäsi koskeva raportti on validoitu ylläpitäjän toimesta. Voit viestiä chatin kautta jälleen:",
+      "detailedDescriptionPermanent": "Sinulta on evätty viestintä chatissa, koska käyttäytymistäsi koskeva ilmoitus on validoitu ylläpitäjän toimesta.",
+      "reason": {
+        "title": "Syy"
+      },
+      "duration": {
+        "title": "Kesto",
+        "expiresAt": "Chat palautetaan: {date}"
+      },
+      "report": {
+        "title": "Asiaan liittyvä ilmoitus",
+        "id": "Raporttitunnus: #{reportId}"
+      },
+      "acknowledgeButton": "Ymmärrän"
+    }
+  },
+  "head": {
+    "title": "Skymo | Pelaa Skyjo-korttipeliä verkossa ilmaiseksi",
+    "description": "Pelaa Skyjoa verkossa ilmaiseksi Skymolla! Nopeatempoinen moninpeli, jossa strategia kohtaa hauskanpidon. Haasta ystäviä, käännä kortteja ja tavoittele alinta pistemäärää voittaaksesi!",
+    "keywords": "Skymo,Skyjo,Skyjo online,moninpeli,korttipeli,pelaa ystävien kanssa,ilmaiset verkkopelit,verkkokorttipelit"
+  },
+  "pages": {
+    "Index": {
+      "name-input-placeholder": "Nimi",
+      "explanation": {
+        "title": "Mikä on Skyjo?",
+        "content": "Skyjo on jännittävä korttipeli ja erinomainen lautapeli, josta nauttivat pelien ystävät ympäri maailmaa. Tämä monen pelaajan korttipeli on suunniteltu 2–8 pelaajalle, ja jokainen pelaaja saa 12 korttia, jotka ovat aluksi piilossa. Pelin päätavoitteena on kerätä mahdollisimman vähän pisteitä. Peli päättyy heti, kun yksi pelaaja saavuttaa 100 pistettä. Pelin säännöt ovat yksinkertaiset ja helposti ymmärrettävät, mikä tekee siitä ihanteellisen valinnan peli-iltoihin perheen tai ystävien kanssa. Pelien harrastajat iloitsevat kuullessaan, että Skyjoa voi nyt pelata verkossa ilmaiseksi!",
+        "button": "Katso säännöt"
+      },
+      "faq": {
+        "title": "Usein kysytyt kysymykset (UKK)",
+        "meaning": {
+          "title": "Mitä Skyjo tarkoittaa?",
+          "content": "Skyjo on peli, jossa on 3 samanlaista korttia rivissä."
+        },
+        "pronounce": {
+          "title": "Kuinka Skyjo lausutaan?",
+          "content": "Sana Skyjo lausutaan [Skyjoe]."
+        },
+        "how-to-play": {
+          "title": "Kuinka pelata Skyjoa?",
+          "content": "Pelataksesi Skyjoa jaa jokaiselle pelaajalle 12 korttia kuvapuoli alaspäin. Tavoitteena on saada mahdollisimman vähän pisteitä kääntämällä ja vaihtamalla kortteja. Jokaisella vuorolla nosta kortti pakasta tai poistopakasta ja päätä korvata jokin näkyvissä olevista korteistasi. Numeroitut kortit ovat arvoltaan pisteidensä mukaiset, erikoiskorteilla on toimintoja. Peli päättyy, kun pelaaja on kääntänyt kaikki korttinsa. Vähiten pisteitä kerännyt pelaaja voittaa. Voit tarkistaa <rules>säännöt</rules> saadaksesi lisätietoja."
+        },
+        "how-to-win": {
+          "title": "Kuinka voittaa Skyjossa?",
+          "content": "Skyjo-pelin voittaminen edellyttää mahdollisimman alhaista pistemäärää. Tätä varten omaksu tasapainoinen strategia alhaisimpien korttien saavuttamisen, omien korttiesi paljastamisen sekä samanlaisten korteista koostuvien sarakkeiden luomisen välillä. Vältä kääntämästä kortteja ensimmäisenä, ellet ole merkittävästi edellä näkyvillä korteillasi. Muista säilyttää jo näkyvillä olevat kortit yrittääksesi luoda niillä sarakkeita sen sijaan, että optimoisit ne yksittäin."
+        },
+        "play-classic-with-action": {
+          "title": "Voitko pelata klassista Skyjoa Skyjo Actionilla?",
+          "content": "Kyllä, sinun tarvitsee vain poistaa toimintakortit. Jos pelaat verkkoversiota, valitse klassinen versio pelataksesi Skyjoa."
+        }
+      }
+    },
+    "Search": {
+      "head": {
+        "description": "Etsitkö Skyjo-peliä, johon liittyä? Selaa saatavilla olevia julkisia pelejä ja aloita Skyjon pelaaminen verkossa välittömästi muiden pelaajien kanssa. Pelaa ilmaiseksi nyt!",
+        "keywords": "Skymo,Skyjo,Skyjo online,etsi peli,liity peliin,julkiset pelit,moninpeli,pelaa muiden kanssa,pikapeli,ilmaiset verkkopelit,avoimet pelit,korttipeli verkossa,moninpeli korttipeli",
+        "title": "Etsi julkisia Skyjo-pelejä | Pelaa Skyjoa verkossa"
+      },
+      "header": {
+        "back": "Takaisin etusivulle",
+        "title": "Julkiset pelit",
+        "create-button": {
+          "title": "Luo julkinen peli"
+        },
+        "refresh": "Päivitä pelilista"
+      },
+      "tags": {
+        "no-tags-available": "Ei enempää tunnisteita saatavilla",
+        "title": "Suodattimet:",
+        "tag": {
+          "column": "Sarake",
+          "classic": "Klassinen",
+          "row": "Rivi",
+          "custom": "Mukautettu",
+          "short-game": "Lyhyt peli",
+          "long-game": "Pitkä peli"
+        }
+      },
+      "no-games-found": "Ei pelejä löytynyt",
+      "game-of": "{name}in peli"
+    },
+    "Create": {
+      "head": {
+        "title": "Luo Skyjo-peli  |  Pelaa Skyjoa verkossa",
+        "description": "Aloita uusi Skyjo-peli verkossa! Luo yksityisiä tai julkisia huoneita, kutsu ystäviäsi ja nauti Skyjon hauskuudesta yhdessä. Pelaa nyt ilmaiseksi!",
+        "keywords": "Skymo,Skyjo,Skyjo online,luo peli,aloita peli,yksityispeli,julkinen peli,pelaa ystävien kanssa,moninpeli verkossa,ilmaiset verkkopelit,mukautettu peli"
+      },
+      "loading-text": "Luodaan peliäsi…"
+    },
+    "Maintenance": {
+      "title": "Sivusto huollon alla",
+      "description": "Sivustomme on päivityksen alla, yritä uudelleen myöhemmin.",
+      "github-alt": "Katso lähdekoodi GitHubissa"
+    },
+    "NotFound": {
+      "go-back-to-homepage": "Palaa kotisivulle",
+      "description": "Sivua, jota etsit, ei ole olemassa.",
+      "title": "Virhe 404"
+    },
+    "Lobby": {
+      "leave-to-home": "Palaa etusivulle",
+      "title": "{name}in peli",
+      "leave-to-public-game-list": "Poistu julkisten pelien luettelosta",
+      "go-back-to-settings": "Palaa asetuksiin",
+      "settings": {
+        "private": {
+          "tooltip": {
+            "off": "Tämä osa on julkinen, kuka tahansa voi liittyä parametrien validoinnin jälkeen",
+            "on": "Tämä peli on yksityinen, vain linkin haltijat voivat liittyä"
+          }
+        },
+        "reset-settings": "Asetusten nollaus",
+        "validate-settings": "Asetusten vahvistus",
+        "remove-identical-column": "Poista samankaltaiset sarakkeet",
+        "validation-warning": "Peliasetuksia ei voi muokata vahvistamisen jälkeen.",
+        "max-players": {
+          "label": "Maksimimäärä pelaajia",
+          "title": "Pelaajien enimmäismäärä: {number}"
+        },
+        "nb-rows": {
+          "label": "Rivien määrä",
+          "title": "{number} riviä"
+        },
+        "nb-columns": {
+          "label": "Sarakkeiden määrä",
+          "title": "{number} saraketta"
+        },
+        "remove-identical-row": "Poista identtiset rivit",
+        "score-to-end-game": {
+          "title": "Peli päättyy, kun pelaaja saavuttaa {number} pistettä",
+          "label": "Pisteet pelin lopettamiseksi"
+        },
+        "show-current-score": {
+          "label": "Näytä pistemäärä reaaliajassa"
+        },
+        "initial-turned-count": {
+          "title": "Pelisi alussa paljastetaan {number} kortti{number, plural, =1 {} other {}} kortistasi.",
+          "label": "Paljastettujen korttien määrä alussa"
+        },
+        "first-player-penalty-type": {
+          "label": "Ensimmäisen pelaajan rangaistustyyppi",
+          "item": {
+            "multiplier-only": "Vain kerroin",
+            "flat-only": "Laakso",
+            "flat-then-multiplier": "Littele then Multiplier",
+            "multiplier-then-flat": "Kerroin sitten tasainen"
+          },
+          "placeholder": "Valitse rangaistustyyppi",
+          "description": "Rangaistus käytetään, jos ensimmäinen pelaaja, joka paljastaa kaikki korttinsa, ei saanut pienintä pistemäärää (ei koske, jos pistemäärä on 0 tai vähemmän)."
+        },
+        "first-player-flat-penalty": {
+          "title": "Ensimmäiselle pelaajalle lisätään {number} pistettä.",
+          "label": "Ensimmäisen pelaajan pisteisiin tasainen sakko"
+        },
+        "first-player-multiplier-penalty": {
+          "label": "Ensimmäisen pelaajan pistevähennyskerroin",
+          "title": "Ensimmäisen pelaajan pisteet kerrotaan {number}:lla, jos ne eivät ole vähemmän kuin muiden pelin pisteiden."
+        }
+      },
+      "start-game-button": "Aloita peli",
+      "waiting-host-to-start": "Odotetaan pelin aloittamista",
+      "game-starting-in": "Peli alkaa {seconds} kuluttua",
+      "cancel": "Peru",
+      "waiting-host-to-confirm-game-settings": "Odotetaan isännän vahvistavan asetukset",
+      "player-section": {
+        "select": {
+          "item": "{value} pelaajaa",
+          "placeholder": "Valitse pelaajien määrä"
+        },
+        "title": "Pelaajat {nbPlayers}/{maxPlayers}"
+      },
+      "not-enough-players-modal": {
+        "title": "Ei pelaajia tarpeeksi",
+        "private-description": "Kutsu ystäviä yksityisellä linkillä!",
+        "description": "Pelin aloittamiseen tarvitaan vähintään 2 pelaajaa.",
+        "close": "Ymmärrän",
+        "public-description": "Kutsu ystävä tai odota, että toinen pelaaja liittyy."
+      }
+    },
+    "ResultsPage": {
+      "title": "Pelitulokset",
+      "player-want-to-replay": "Uudelleenpeluuta haluavat pelaajat:",
+      "round": "Kierros {number}",
+      "player": "Pelaaja",
+      "rank": "Sijoitus",
+      "total": "Yhteensä",
+      "replay-button": {
+        "cancel": "Älä vastaa",
+        "replay": "Uudelleenpelaa"
+      },
+      "leave-button": "Poistu pelistä",
+      "forfeit": "Luovuta",
+      "disconnected": "Katkaistu"
+    },
+    "PrivacyPolicy": {
+      "head": {
+        "description": "Tietosuojakäytäntö Skymolle. Lue, miten suojaamme tietojasi samalla kun nautit Skyjo-korttipelistämme. Läpinäkyvät käytännöt ja turvallinen pelikokemus.",
+        "title": "Tietosuojakäytäntö | Skymo - Skyjo Online -korttipeli",
+        "keywords": "Skymo,Skyjo,Skyjo Online,tietosuojakäytäntö,tietosuoja,verkkopelin tietosuoja,turvallinen pelaaminen,käyttäjätiedot,GDPR,CCPA,tietoturva"
+      },
+      "content": {
+        "last-update": {
+          "text": "Viimeksi päivitetty: {date}",
+          "date-format": "PPPP KKKK, VVVV"
+        },
+        "title": "Tietosuojakäytäntö",
+        "back": "Takaisin kotisivulle",
+        "tldr": {
+          "minimal-data": "Tallennamme vain vähän tietoja, jotta voit pelata pelejä, olitpa sitten kirjautunut sisään tai vierailija.",
+          "title": "Lyhyesti: Mitä sinun tarvitsee tietää",
+          "guest-data": "Vierasdata (nimi, avatar, pistettä, keskustelut) tallennetaan vain, jos kirjautunut pelaaja on pelissä.",
+          "chat-storage": "Keskustelut tallennetaan väliaikaisesti ja ne tallennetaan vain, jos niistä ilmoitetaan.",
+          "personal-data": "Sähköpostisi, käyttäjänimesi ja muut henkilötietosi tallennetaan vain, jos luot tilin.",
+          "privacy-compliance": "Kunnioitamme yksityisyyttäsi ja noudatamme GDPR:ää, ja säilytämme kaiken turvallisesti EU:ssa.",
+          "data-rights": "Voit pyytää datan käyttöoikeutta, korjauksia, vientiä tai poistamista milloin vain.",
+          "contact": "Kysymyksiin: <email></email>"
+        },
+        "operator": {
+          "title": "1. Kuka ylläpitää tätä verkkosivustoa?",
+          "operator-info": "Tätä sivustoa ylläpitää yksityishenkilö:",
+          "operator-name": "Maxent Rouault",
+          "operator-type": "Ei yritys."
+        },
+        "data-collection": {
+          "description": "Keräämme tietoja sekä rekisteröityneiltä että vieraspelaajilta vain, kun pelissä on mukana yhdistetty (kirjautunut) käyttäjä.",
+          "title": "2. Mitä tietoja keräämme?",
+          "guest-players": {
+            "title": "Vieraspelaajille:",
+            "items": "Näyttönimi (valittu pelin alussa);;Valittu avatar;;Pelin pisteet, sijoitus ja voittotila;;Chat-viestit (tallennetaan väliaikaisesti, ellei niitä ole merkitty)",
+            "note": "Tämä tieto tallennetaan vain, jos vähintään yksi pelin pelaajista on kirjautuneena sisään."
+          },
+          "logged-users": {
+            "items": "Sähköpostiosoite;;Käyttäjätunnus / näyttönimi;;Avatar (esilistalta);;Tiivistetty salasana tai OAuth ID (Google, Facebook);;Kieliasetus;;Sähköpostin vahvistustila",
+            "title": "Kirjautuneille käyttäjille (yllä olevan lisäksi):"
+          },
+          "general": {
+            "title": "Yleiset (kaikille käyttäjille):",
+            "items": "Pelitiedot (koodit, asetukset);;Istuntotunniste (vanhenee 24 tunnin kuluttua);;IP-osoite (ohimenevä, ei tallenneta pitkäaikaisesti);;Anonyymi käyttötilastot (PostHogin kautta, EU-alueella isännöity)"
+          }
+        },
+        "data-usage": {
+          "items": "Jotta pelaajat (vieraat tai rekisteröityneet) voivat liittyä ja pelata pelejä;;Avatarin, nimen, pisteiden ja sijoitusten näyttäminen;;Välimiesmenettely väärinkäytöstapauksissa;;Palautteen ja tilin palautuksen käsittely (sisäänkirjautuneille käyttäjille);;Sivuston parantaminen anonyymillä analytiikalla",
+          "title": "3. Miksi tietojariasi käytetään?"
+        },
+        "data-retention": {
+          "retention-table": {
+            "headers": "Tietotyyppi;;Säilytys",
+            "rows": "Istuntoevästeet;;24 tuntia|||Tilisi tiedot (kirjautuneena);;Kunnes poistopyyntö;;Vieraspelaajan tiedot;;Vain jos yhdistetty pelaaja on pelissä läsnä|||Pelin tiedot ja pisteet;;Tallennetaan pysyvästi|||Keskusteluviestit;;Tilapäisesti Redisissä; tallennetaan, jos niistä ilmoitetaan|||Palaute;;Pysyvästi|||Varmennus-/palautustunnisteet;;Kunnes käytetty tai vanhentunut|||Tietojen poistopyynnöt;;Poistetaan 48 tunnin harkinta-ajan jälkeen|||Analytiikka (PostHog);;Pysyvästi, EU:ssa isännöity"
+          },
+          "title": "4. Kuinka kauan tietojasi säilytetään?"
+        },
+        "legal-basis": {
+          "description": "Käsittely perustuu:",
+          "title": "5. Oikeusperusta (GDPR)",
+          "items": "Suostumus (evästeet, tilastot);;Sopimus (pelin tarjoaminen);;Oikeutettu etu (moderointi);;Laillinen velvoite (pyyntöihin vastaaminen)"
+        },
+        "data-access": {
+          "title": "6. Kuka voi nähdä tietojasi?",
+          "items": "Muut pelaajat näkevät julkisen nimesi, avatarisi ja pelihistoriasi;;Kehittäjä (Maxent Rouault) voi käsitellä tietoja moderoinnin tarkoituksiin;;Tietojasi ei myydä tai käytetä mainontaan"
+        },
+        "your-rights": {
+          "title": "7. Oikeutesi",
+          "items": "Käytä, korjaa tai poista tietojasi;;Poista tilisi (tai pyydä sitä);;Vie tietosi (pyynnöstä);;Valita kielloista osoitteessa appeal@skymo.online"
+        },
+        "security": {
+          "items": "Salasanat salattuina;;Vain HTTPS-yhteydet;;Moderointi ja hyvänkäytön havaitseminen;;EU-pohjainen palvelin (Pariisi, Ranska)",
+          "title": "8. Turvallisuus"
+        },
+        "contact": {
+          "description": "Yleiset tiedustelut: <email></email>",
+          "title": "10. Yhteystiedot"
+        },
+        "cookies-analytics": {
+          "items": "Vain välttämättömät evästeet (istunto, kirjautuminen);;Analytiikka PostHogin kautta, EU-tietoisuus, ei sivustojen välillä seurantaa",
+          "title": "9. Evästeet & Analytiikka"
+        }
+      }
+    },
+    "TermsOfService": {
+      "head": {
+        "title": "Käyttöehdot | Skymo - Skyjo Online Korttipeli",
+        "description": "Lue Skymon käyttöehdot, Skyjo-korttipelin verkkopelialustan käyttöehdot. Tutustu käyttäjien velvollisuuksiin, palvelun käyttöön ja alustan käytäntöihin.",
+        "keywords": "Käyttöehdot,Skymo,Skyjo,verkkokorttipeli,käyttäjäsopimus,alustasäännöt"
+      },
+      "content": {
+        "last-update": {
+          "date-format": "KKKK P, VVVV klo HH:mm",
+          "text": "Viimeksi päivitetty: {date}"
+        },
+        "title": "Käyttöehdot",
+        "operator": {
+          "title": "1. Operaattori",
+          "contact": "Ota yhteyttä: <email></email>",
+          "content": "Tätä sivustoa ylläpitää:",
+          "name": "Maxent Rouault",
+          "location": "Ranska (ei-kaupallinen yksityinen operaattori)"
+        },
+        "welcome": "Tervetuloa <b>skymo.online</b>-sivustolle, Maxent Rouaultin ylläpitämään monen pelaajan korttipeliin. Käyttämällä tätä verkkosivustoa hyväksyt nämä palveluehdot. Jos et hyväksy niitä, et saa käyttää alustaa.",
+        "eligibility": {
+          "items": {
+            "1": "Olet vähintään 13-vuotias (tai maassasi vaadittu vähimmäisikä).",
+            "2": "Jos olet alle 18-vuotias, sinulla on laillisen huoltajan lupa."
+          },
+          "content": "Voit käyttää palvelua vieraana tai rekisteröimällä tilin. Käyttämällä tätä verkkosivustoa vahvistat, että:",
+          "title": "2. Kelpoisuus"
+        },
+        "account-guest-use": {
+          "items": {
+            "3": "Olet vastuussa tilistäsi ja toiminnastasi. Et saa jakaa kirjautumistietojasi.",
+            "1": "Vieras pelaajat voivat pelata ilman rekisteröintiä, mutta jotkin ominaisuudet voivat olla rajoitettuja.",
+            "2": "Rekisteröityneiden käyttäjien on annettava kelvollinen sähköpostiosoite ja käyttäjänimi.",
+            "4": "Voit poistaa tilisi milloin tahansa. 48 tunnin kuluttua henkilötietosi anonymisoidaan tai poistetaan pysyvästi."
+          },
+          "title": "3. Tili ja vieraskäyttö"
+        },
+        "data-storage": {
+          "all-players": {
+            "items": {
+              "1": "Pelissä näkyvä nimi, avatar, pisteet ja chat-viestit, **jos ainakin yksi pelaaja on kirjautuneena sisään**.",
+              "2": "IP-osoitteita voidaan tallentaa väliaikaisesti turvallisuus- ja moderointitarkoituksiin."
+            },
+            "title": "Kaikille Pelaajille:"
+          },
+          "title": "4. Tietojen tallennus",
+          "content": "Tallennamme seuraavia tietoja käyttämäsi mukaan:",
+          "registered-players": {
+            "title": "Rekisteröityneille pelaajille:",
+            "items": {
+              "1": "Sähköposti, käyttäjätunnus, avatar kuva, pelitilastot ja valinnaisesti linkitetyt tilit (esim. Google).",
+              "2": "Analytiikkatietoja, kuten pelikäyttäytymistä, käyttökertojen tiheyttä tai ominaisuuksien käyttöä, **voidaan kerätä pelin parantamiseksi**."
+            }
+          },
+          "storage-location": "Kaikki tiedot tallennetaan Euroopan unionin alueelle ja käsitellään <link>tietosuojakäytännön</link> mukaisesti."
+        },
+        "analytics-tracking": {
+          "title": "5. Analytiikka & seuranta",
+          "content": "Parantaaksemme palvelua ja personoidaksemme käyttäjäkokemusta voimme:",
+          "items": {
+            "2": "Analysoi käyttäjäkäyttäytymistä bugien havaitsemiseksi, pariliitoksen parantamiseksi tai ominaisuuksien suunnittelemiseksi.",
+            "3": "Tulevaisuudessa voimme käyttää näitä tietoja <b>mukautetun sisällön tai mainosten tarjoamiseen</b> GDPR:n mukaisten yksityisyydensuojaoikeuksiesi mukaisesti.",
+            "1": "Käytä **analytiikkatyökaluja** (esim. PostHog tai vastaavia) käytön ja pelikuvaioiden seuraamiseen."
+          },
+          "data-rights": "Voit vastustaa seurantaa tai pyytää henkilötietojen poistamista ottamalla meihin yhteyttä."
+        },
+        "ads-monetization": {
+          "title": "6. Mainokset ja kaupallistaminen",
+          "content": "Alusta saattaa näyttää mainoksia, mukaan lukien kolmansien osapuolten tai kontekstuaalisia mainoksia. Tulevaisuudessa kirjautuneille käyttäjille saatetaan näyttää **personoituja mainoksia** käyttödatan perusteella.",
+          "consent": "Tarjoamme selkeät ilmoitus- ja suostumusmekanismit, jos ja kun käyttäytymiseen perustuvia tai yksilöllisiä mainoksia otetaan käyttöön."
+        },
+        "user-conduct": {
+          "title": "7. Käyttäytyminen",
+          "content": "Hyväksyt:",
+          "items": {
+            "3": "Älä spämmää tai käytä väärin chatia tai muita viestintäominaisuuksia.",
+            "1": "Ole kunnioittava ja noudata reilun pelin sääntöjä.",
+            "2": "Älä huijaa, häiritse, esiinny muidenä tai käytä loukkaavia käyttäjänimiä tai avatareja."
+          },
+          "enforcement": "Pidätämme oikeuden kieltää tai rajoittaa käyttäjiä, jotka rikkovat näitä sääntöjä."
+        },
+        "moderation-reporting": {
+          "title": "8. Moderointi & Ilmoittaminen",
+          "items": {
+            "3": "Voit ilmoittaa väärinkäytöksistä sähköpostitse (katso yhteydenottokohdasta).",
+            "4": "Moderointitoimet ja raportit saatetaan kirjata läpinäkyvyyden ja oikeudenmukaisuuden varmistamiseksi.",
+            "1": "Keskusteluviestit tallennetaan väliaikaisesti ja ne voidaan tallentaa kokonaisuudessaan peleissä, joissa on rekisteröityneitä pelaajia.",
+            "2": "Voimme säilyttää viestejä, kun pelaaja tekee ilmoituksen tai jos moderointi on tarpeen."
+          }
+        },
+        "availability": {
+          "title": "9. Saatavuus",
+          "content": "Palvelua tarjotaan \"sellaisena kuin se on\". Voimme muokata, keskeyttää tai lopettaa verkkosivuston tai ominaisuuksia milloin tahansa ilman erillistä ilmoitusta."
+        },
+        "intellectual-property": {
+          "title": "10. Immateriaalioikeudet",
+          "content": "Kaikki alkuperäinen sisältö, taide ja koodi kuuluvat Maxent Rouaultille, ellei toisin mainita. Et saa käyttää uudelleen tai jakaa mitään sivuston osaa ilman lupaa."
+        },
+        "contact": {
+          "title": "12. Yhteystiedot",
+          "general": "Yleiset tiedustelut: <email></email>"
+        },
+        "legal": {
+          "disputes": "Oikeudelliset kiistat käsitellään Ranskan tuomioistuimissa.",
+          "title": "11. Lakiasiat",
+          "jurisdiction": "Tätä sivustoa hallitsee Ranskan laki ja se noudattaa yleistä tietosuoja-asetusta (GDPR)."
+        }
+      }
+    },
+    "Leaderboard": {
+      "title": "Tulostaulu",
+      "head": {
+        "keywords": "Skymo,Skyjo,tulostaulukko,huippupelaajat,sijoitukset,parhaat pelaajat,voittoprosentti,kilpailullinen,verkkokorttipeli",
+        "title": "Tulostaulu | Skymo - Skyjo Online -korttipeli",
+        "description": "Katso Skymon parhaat pelaajat! Tutustu Skymon parhaisiin pelaajiin ja heidän voittoprosentteihinsa kilpailullisessa tulostaulukossamme."
+      },
+      "columns": {
+        "player": "Pelaaja",
+        "wins": "Voitot",
+        "totalGames": "Kaiket pelit",
+        "winRate": "Voittoprosentti",
+        "rank": "Sijoitus"
+      },
+      "error": "Tulostaulun lataaminen ei onnistunut tällä hetkellä.",
+      "callToAction": {
+        "guest": {
+          "title": "Valmis kilpailemaan?",
+          "description": "Rekisteröidy seurataksesi edistymistäsi ja kilpaillaksesi pelaajien kanssa ympäri maailmaa!",
+          "signup": "Rekisteröidy nyt"
+        },
+        "authenticated": {
+          "joinGame": "Liity peliin",
+          "description": "Sukella peliin ja kiipeä tulostaulukolla!",
+          "title": "Valmis kilpailemaan?",
+          "createGame": "Luo peli"
+        }
+      },
+      "errorActions": {
+        "backHome": "Takaisin etusivulle",
+        "refresh": "Päivitä"
+      },
+      "tryAgainLater": "Ole hyvä ja yritä uudelleen myöhemmin.",
+      "noData": "Ei pelaajia löytynyt vielä tulostaululta.",
+      "lastUpdated": "Viimeksi päivitetty: {date}",
+      "subtitle": "Löydä parhaat Skyjo-pelaajat ja kilpaile kärkisijoista!"
+    },
+    "Rules": {
+      "head": {
+        "title": "Kuinka pelata Skymo | Skyjo korttipeli verkossa",
+        "keywords": "Skymo,Skyjo,Skyjo-säännöt,Kuinka pelata Skyjoa,Skyjo-peli,korttipelin säännöt,online-korttipeli,peliohjeet,peliohje",
+        "description": "Opi pelaamaan Skyjoa Skymo-oppaamme avulla. Tutustu sääntöihin, strategioihin ja vinkkeihin tämän hauskan verkkokorttipelin hallitsemiseksi. Pelaa ystävien kanssa nyt!"
+      },
+      "play-button": "Pelaa verkossa ilmaiseksi!",
+      "title": "Pelisäännöt"
+    },
+    "Signup": {
+      "head": {
+        "description": "Pelaa Skyjoa verkossa ystävien kanssa! Luo ilmainen Skyjo-tili seurataksesi edistymistäsi, avataksesi eksklusiivista sisältöä ja liittyäksesi vilkkaaseen yhteisöön.",
+        "title": "Liity Skymoon | Pelaa Skyjoa verkossa ilmaiseksi",
+        "keywords": "skymo,pelaa skyjoa verkossa,skyjo verkossa,rekisteröidy skyjoon,luo skymo-tili,liity skymoon,skymo skyjo,verkkokorttipeli,moninpeli skyjo,ilmainen skyjo-peli,pelaa skyjoa ystävien kanssa,skyjo-edistymisen seuranta, skyjo-yhteisö,exklusiivinen skyjo-sisältö"
+      },
+      "or": "Tai",
+      "advantages": {
+        "title": "Liity seikkailuun",
+        "features": {
+          "personalized-experience": {
+            "title": "Yksilöity kokemus",
+            "description": "Hanki juuri sinulle räätälöityjä suosituksia ja sisältöä."
+          },
+          "exclusive-content": {
+            "description": "Saat käyttöösi erikoishaasteita, palkintoja ja ennakkopäivityksiä.",
+            "title": "Ainutlaatuista sisältöä"
+          },
+          "join-community": {
+            "description": "Yhdisty muiden seikkailijoiden kanssa, jaa vinkkejä ja hanki uusia ystäviä.",
+            "title": "Liity yhteisöön"
+          },
+          "track-progress": {
+            "description": "Katso sijoituksesi muihin pelaajiin nähden ja seuraa kehitystäsi ajan myötä.",
+            "title": "Seuraa edistymistäsi"
+          }
+        },
+        "subtitle": "Luo tili avataksesi maailman mahdollisuuksia ja parantaaksesi kokemustasi."
+      },
+      "form": {
+        "email": {
+          "label": "Sähköposti",
+          "button": "Jatka sähköpostilla"
+        }
+      },
+      "terms-acceptance": {
+        "terms-link": "Palveluehdot",
+        "text": "Jatkamalla hyväksyt käyttöehtomme",
+        "privacy-link": "Tietosuojakäytäntö",
+        "and": "ja"
+      },
+      "title": "Rekisteröidy",
+      "already-have-account": {
+        "description": "Onko sinulla jo tili?",
+        "link": "Kirjaudu sisään"
+      }
+    },
+    "Login": {
+      "head": {
+        "description": "Kirjaudu Skymoon, pelataksesi Skyjoa verkossa. Syötä sähköpostiosoitteesi ja salasanasi päästäksesi tilillesi ja aloittaaksesi pelaamisen välittömästi.",
+        "keywords": "Skymo,Skyjo,login,verkkokorttipeli,Skyjo-peli,korttipeli,verkkopeli",
+        "title": "Kirjaudu sisään | Skymo - Skyjo Online Card Game"
+      },
+      "title": "Kirjaudu sisään",
+      "form": {
+        "password": {
+          "label": "Salasana"
+        },
+        "submit": "Kirjaudu sisään",
+        "login": {
+          "label": "Sähköposti tai käyttäjätunnus"
+        }
+      },
+      "signup": {
+        "description": "Ei tiliä?",
+        "link": "Rekisteröidy nyt!"
+      },
+      "forgot-password": "Unohtuiko salasanasi?",
+      "or": "Tai"
+    },
+    "ForgotPassword": {
+      "head": {
+        "description": "Nollaa Skyjo-salasanasi palauttaaksesi pääsyn tiliisi ja jatkaaksesi Skyjo online -pelin pelaamista ystävien kanssa.",
+        "title": "Unohditko salasanasi | Skymo - Skyjo Online -korttipeli",
+        "keywords": "Skymo,Skyjo,unohdin salasanani,nollaa salasana,tilin palautus,verkkopelattava korttipeli"
+      },
+      "form": {
+        "submit": "Lähetä nollauslinkki",
+        "email": {
+          "label": "Sähköpostiosoite"
+        },
+        "sending": "Lähetetään..."
+      },
+      "success": {
+        "back": "Takaisin kirjautumiseen",
+        "title": "Tarkista sähköpostisi",
+        "message": "Jos sähköpostiosoitteella on tili, salasanan palautuslinkki on lähetetty."
+      },
+      "back": "Takaisin kirjautumiseen",
+      "title": "Salasanan unohtunut",
+      "description": "Syötä sähköpostiosoitteesi, niin lähetämme sinulle linkin salasanan vaihtamiseksi"
+    },
+    "ResetPassword": {
+      "description": "Syötä uusi salasanasi alla.",
+      "form": {
+        "password": {
+          "label": "Uusi salasana"
+        },
+        "resetting": "Nollataan...",
+        "submit": "Salasanan vaihtaminen",
+        "confirmPassword": {
+          "label": "Vahvista uusi salasana"
+        }
+      },
+      "success": {
+        "title": "Salasanan Palautus Onnistui",
+        "message": "Salasanasi on vaihdettu. Voit nyt kirjautua sisään uudella salasanallasi.",
+        "back": "Kirjaudu sisään"
+      },
+      "title": "Salasanan nollaus",
+      "head": {
+        "title": "Salasanan vaihto | Skymo - Skyjo Online Card Game",
+        "keywords": "Skymo,Skyjo,salasanan vaihto,uusi salasana,tilin palautus,online-korttipeli",
+        "description": "Luo uusi salasana Skymo-tilillesi saadaksesi pääsyn takaisin ja jatkaaksesi Skyjo-pelin pelaamista verkossa."
+      },
+      "back": "Takaisin kirjautumiseen"
+    },
+    "RevertEmail": {
+      "success": {
+        "message": "Sähköpostisi on palautettu onnistuneesti ja tilisi on turvattu. Tarkista sähköpostisi salasanojen vaihtoa koskevia ohjeita varten.",
+        "title": "Sähköpostin vaihto peruutettu",
+        "close": "Voit nyt sulkea tämän sivun."
+      },
+      "back": "Takaisin kirjautumiseen",
+      "failed": {
+        "title": "Sähköpostin vaihdon peruutus epäonnistui"
+      }
+    },
+    "OAuthCallbackPage": {
+      "title": "Uudelleenohjaus käynnissä…"
+    },
+    "Onboarding": {
+      "head": {
+        "description": "Täydennä profiilisi ja sukella Skymon seikkailuun!",
+        "title": "Onboarding | Skymo - Skyjo Online Card Game",
+        "keywords": "Skymo,Skyjo,perehdytys,profiili,seikkailu,verkkokorttipeli"
+      },
+      "subtitle": "Täydennä profiilisi ja sukella Skymo-seikkailuun!",
+      "title": "Aloitus käynnissä...",
+      "form": {
+        "username": {
+          "label": "Nimi",
+          "placeholder": "jeff",
+          "description": "Kirjautumiseen ja profiiliin"
+        },
+        "submit": "Valmis pelaamaan!",
+        "name": {
+          "label": "Pelaajan nimi",
+          "description": "Näytetään muille pelaajille peleissä",
+          "placeholder": "Jeff"
+        },
+        "password": {
+          "placeholder": "Syötä turvallinen salasana",
+          "label": "Luo salasana"
+        }
+      },
+      "success": "Onboarding suoritettu onnistuneesti! Uudelleenohjataan kotisivulle...",
+      "loading": "Ladataan profiiliasi..."
+    },
+    "Verify": {
+      "loading": "Profiilin lataus...",
+      "title": "Vahvista sähköpostisi",
+      "resend": {
+        "button": "Pyydä uusi koodi",
+        "sending": "Lähetetään...",
+        "countdown": "Lähetä koodi uudelleen {seconds}s kuluttua",
+        "prompt": "Etkö saanut koodia?"
+      },
+      "head": {
+        "title": "Vahvista sähköposti | Skymo - Skyjo Online -korttipeli",
+        "keywords": "Skymo,Skyjo,sähköpostivahvistus,vahvista tili,verkkokorttipeli",
+        "description": "Vahvista sähköpostiosoitteesi viimeistelläksesi Skymo-tilisi luonnin ja aloittaaksesi Skyjon pelaamisen verkossa ystäviesi kanssa."
+      },
+      "toast": {
+        "resend-success": "Uusi sähköposti on lähetetty",
+        "success": "Sähköposti vahvistettu onnistuneesti!",
+        "email-already-sent": "Sähköposti lähetettiin jo viimeisten 5 minuutin aikana. Tarkista sähköpostisi tai napsauta \"Pyydä uusi koodi\" lähettääksesi uuden."
+      },
+      "description": "Olemme lähettäneet 6-numeroisen koodin sähköpostiosoitteeseesi. Kirjoita se alle."
+    },
+    "UserProfile": {
+      "head": {
+        "title": "{username}n Profiili | Skymo - Skyjo Online Korttipeli",
+        "description": "Näytä {username}n profiili Skymossa. Tarkista hänen pelitilastonsa, viimeaikainen toimintansa ja Skyjo online -saavutuksensa.",
+        "keywords": "Skymo,Skyjo,käyttäjäprofiili,pelaajatilastot,pelitilastot,viimeisimmät pelit,saavutukset,verkkokorttipeli"
+      },
+      "error": {
+        "title": "Tapahtui virhe",
+        "description": "Tapahtui virhe profiilin latauksessa. Yritä uudelleen myöhemmin.",
+        "back-to-home": "Takaisin etusivulle"
+      },
+      "not-found": {
+        "back-to-home": "Takaisin etusivulle",
+        "description": "Käyttäjää \"{username}\" ei ole olemassa tai hän on saattanut muuttaa käyttäjänimeään.",
+        "title": "Käyttäjää ei löytynyt"
+      },
+      "stats": {
+        "win-rate": "Voittoprosentti",
+        "average-rank": "Keskiarvo",
+        "public": "Julkinen",
+        "total-games": "Kokonaispelit",
+        "private": "Yksityinen"
+      },
+      "sections": {
+        "achievements-coming-soon": "Saavutukset-järjestelmä tulossa pian!",
+        "recent-activity": "Viimeaikainen toiminta",
+        "achievements": "Saavutukset"
+      },
+      "search": {
+        "placeholder": "Etsi käyttäjänimi"
+      },
+      "recent-activity": {
+        "forfeited": "Luovutti",
+        "no-activity": "Ei uutta aktiviteettia näytettäväksi.",
+        "game-code": "Peli #{code}",
+        "rank": "Sija #{rank}",
+        "left": "Poistui"
+      }
+    },
+    "Settings": {
+      "head": {
+        "title": "Tilin asetukset | Skymo - Skyjo Online Card Game",
+        "description": "Hallitse tiliasetuksiasi Skymossa. Vaihda näyttönimesi, käyttäjätunnuksesi, sähköpostisi, salasanasi ja tiliasetuksesi."
+      },
+      "Navigation": {
+        "profile": "Profili",
+        "account": "Tili",
+        "password": "Salasana"
+      },
+      "buttons": {
+        "delete-account": "Poista tili",
+        "confirm-delete": "Kyllä, poista tilini",
+        "save": "Tallenna muutokset",
+        "saving": "Tallennetaan..."
+      },
+      "messages": {
+        "username-taken": "Tämä käyttäjänimi on jo käytössä.",
+        "email-taken": "Tämä sähköpostiosoite on jo käytössä.",
+        "account-deletion-scheduled": "Tilisi poistopyyntö on otettu huomioon ja käsitellään 48 tunnin kuluessa. Saat sähköpostin, joka vah vistaa poiston.",
+        "save-success": "Asetukset tallennettu onnistuneesti!",
+        "save-error": "Asetusten tallennus epäonnistui. Yritä uudelleen.",
+        "delete-confirmation": "Oletko varma, että haluat poistaa tilisi? Tätä toimintoa ei voi peruuttaa ja kaikki tietosi poistetaan pysyvästi.",
+        "password-incorrect": "Nykyinen salasana on virheellinen.",
+        "account-deletion-failed": "Tapahtui virhe poistettaessa tiliäsi. Yritä uudelleen."
+      },
+      "title": "Tilin asetukset",
+      "description": "Hallinnoi tiliäsi ja henkilökohtaisia tietojasi."
+    },
+    "SettingsProfile": {
+      "fields": {
+        "name": {
+          "label": "Näyttönimi",
+          "submit": "Tallenna nimi",
+          "description": "Nimesi, joka näytetään muille pelaajille peleissä.",
+          "placeholder": "Syötä nimesi"
+        },
+        "avatar": {
+          "label": "Avatar",
+          "description": "Oma profiilissasi näkyvä avatarisi.",
+          "placeholder": "Valitse avatarisi",
+          "submit": "Tallenna avatar"
+        }
+      },
+      "title": "Profiili"
+    },
+    "SettingsAccount": {
+      "fields": {
+        "username": {
+          "label": "Käyttäjänimi",
+          "description": "Ainutlaatuinen käyttäjänimesi, jota käytetään profiilisi URL-osoitteessa.",
+          "placeholder": "Syötä käyttäjätunnuksesi",
+          "submit": "Tallenna käyttäjänimi"
+        },
+        "email": {
+          "description": "Sähköpostiosoitteesi, jota käytetään kirjautumiseen ja tärkeisiin ilmoituksiin. Turvallisuussyistä nykyiseen osoitteeseesi lähetetään varoitus sähköpostitse, kun muutat sitä.",
+          "placeholder": "Anna sähköpostisi",
+          "label": "Sähköpostiosoite",
+          "submit": "Tallenna sähköposti"
+        },
+        "settings-sync": {
+          "enable-sync": "Ota asetusten synkronointi käyttöön",
+          "disable-sync": "Poista asetusten synkronointi käytöstä",
+          "status": {
+            "error": "Synkronointi epäonnistui",
+            "offline": "Offline",
+            "syncing": "Synkronoidaan...",
+            "enabled": "Käytössä",
+            "disabled": "Poistettu käytöstä"
+          },
+          "last-sync": "Viimeisin synkronointi: {date}",
+          "description": "Synkronoi asetuksesi kaikille laitteillesi, kun olet kirjautuneena.",
+          "sync-now": "Synkronoi nyt",
+          "label": "Asetusten synkronointi"
+        }
+      },
+      "delete-account": {
+        "confirmation": {
+          "input-label": "Kirjoita POISTA vahvistaaksesi",
+          "description": "Vahvistamalla alkaa 48 tunnin laskuri: saat sähköpostin, jossa on linkki peruutusta varten, jos muutat mielesi. Tilisi pysyy käytettävissä tämän jakson aikana. 48 tunnin kuluttua se poistetaan pysyvästi ja saat vahvistussähköpostin.",
+          "cancel-button": "Peru",
+          "delete-button": "Poista tilini",
+          "input-placeholder": "POISTA"
+        },
+        "description": "Poista tilisi ja kaikki siihen liittyvät tiedot. Tätä toimintoa ei voi peruuttaa, ja kaikki tietosi poistetaan pysyvästi.",
+        "button": "Poista tili",
+        "title": "Poista tilini"
+      },
+      "title": "Tili"
+    },
+    "SettingsPassword": {
+      "fields": {
+        "password": {
+          "current-password": "Nykyinen Salasana",
+          "new-password": "Uusi salasana",
+          "submit": "Tallenna salasana",
+          "confirm-placeholder": "Vahvista uusi salasanasi",
+          "label": "Salasana",
+          "description": "Vaihda tilisi salasana.",
+          "confirm-password": "Vahvista uusi salasana",
+          "new-placeholder": "Anna uusi salasanasi",
+          "current-placeholder": "Anna nykyinen salasanasi"
+        }
+      },
+      "title": "Vaihda salasana",
+      "messages": {
+        "password-incorrect": "Nykyinen salasana on virheellinen."
+      }
+    },
+    "CancelAccountDeletion": {
+      "failed": {
+        "title": "Peruutus epäonnistui",
+        "help-message": "Jokin meni vikaan yrittäessäsi peruuttaa tilisi poiston. Yritä uudelleen tai ota yhteyttä tukeen.",
+        "general-error": "Tilin poistamisen peruuttaminen epäonnistui. Yritä myöhemmin uudelleen tai ota yhteyttä tukeen.",
+        "description": "Emme voineet peruuttaa tilisi poistoa. Yritä uudelleen tai ota yhteyttä tukeen."
+      },
+      "success": {
+        "secure-message": "Tilisi on nyt turvattu ja pysyy aktiivisena. Voit jatkaa tilisi normaalia käyttöä.",
+        "description": "Tilisi poiston peruutus onnistui. Tilisi on turvassa, eikä sitä poisteta.",
+        "title": "Tilin poisto peruttu"
+      },
+      "expired": {
+        "help-message": "48 tunnin peruutusaika on umpeutunut. Ota yhteyttä tukeen, jos tarvitset apua.",
+        "title": "Peruutuksen linkki vanhentunut",
+        "description": "Tämä peruutuslinkki on vanhentunut. Jos haluat edelleen pitää tilisi, ota yhteyttä asiakastukeen."
+      },
+      "invalid-token": "Virheellinen token",
+      "actions": {
+        "return-homepage": "Takaisin kotisivulle"
+      }
+    },
+    "Reconnect": {
+      "description": "Odota, kunnes yhdistämme sinut uudelleen aktiiviseen peliisi...",
+      "title": "Yhdistetään peliin uudelleen"
+    }
+  },
+  "utils": {
+    "skymo": {
+      "turn-cards": "Käännä {number} kortti{number, plural, =1 {} other {a}}",
+      "waiting": "Odotellaan pelaajia",
+      "turn": {
+        "turnACard": "Kortin kääntäminen",
+        "replaceACard": "Vaihda kortti",
+        "throwOrReplace": "Vaihda tai hylkää",
+        "chooseAPile": "Valitse pino"
+      },
+      "round-over": "Kierros valmis",
+      "game-ended": "Peli päättyi!",
+      "game-stopped": "Peli pysäytetty",
+      "last-turn": "Viimeinen vuoro!",
+      "player-turn": "Vuoro on pelaajalla {playerName}",
+      "waiting-opponents-to-turn-cards": "Odotetaan vastustaja{nbOpponents, plural, =1 {} other {a}} kääntämään {number} kortti{number, plural, =1 {} other {a}}"
+    },
+    "chat": {
+      "welcome": "Ole ystävällinen ja kunnioittava chatissa. Tarvittaessa pelaajan voi mykistää tai raportoida {isMobile, select, true {napauttamalla} other {napsauttamalla}} heidän viestiään tai heitä itseään.",
+      "player-joined": "{name} liittyi peliin",
+      "player-not-muted": "{name} ei ole mykistetty",
+      "player-unmuted": "{name} ei ole enää mykistetty",
+      "wizz-self": "Sinut on \"taikuroitu\" {initiatorName}!",
+      "player-forfeited": "{name} on luovuttanut pelin",
+      "player-reconnect": "{name} yhdisti uudelleen peliin",
+      "host-transferred": "Host-rooli siirretty kohteelle {name}",
+      "wizz-sent": "Olet lähettänyt \"wizz\"-viestin pelaajalle {targetName}!",
+      "player-left": "{name} poistui pelistä",
+      "argument-required": "Komennolle ”{command}” vaaditaan yksi tai useampi argumentti.",
+      "player-already-muted": "{name} on jo mykistetty",
+      "wizz-other": "{initiatorName} on lumonnut {targetName}!",
+      "player-muted": "{name} on nyt mykistetty"
+    },
+    "avatar": {
+      "crab": "rapu",
+      "bee": "mehiläinen",
+      "fox": "kettu",
+      "frog": "sammakko",
+      "toucan": "tukaani",
+      "penguin": "pingviini",
+      "cat": "kissa",
+      "dog": "koira",
+      "koala": "koala",
+      "jellyfish": "meduusa",
+      "owl": "pöllö",
+      "turtle": "kilpikonna",
+      "eagle": "kotka",
+      "whale": "valas",
+      "elephant": "elefantti",
+      "octopus": "musta"
+    },
+    "socket": {
+      "error": {
+        "timeout": {
+          "description": "Palvelin vastaa odotettua hitaammin. Voit kokeilla sivun lataamista uudelleen ja yrittää uudestaan."
+        },
+        "game-already-started": {
+          "description": "Peli on jo alkanut"
+        },
+        "player-already-connected": {
+          "description": "Olet jo yhteydessä tähän peliin toisesta istunnosta."
+        },
+        "max-players-too-low": {
+          "description": "Ei voi pienentää pelaajien enimmäismäärää alle pelissä olevien pelaajien määrän"
+        },
+        "player-banned": {
+          "description": "Sinut on estetty tästä pelistä"
+        },
+        "game-not-found": {
+          "description": "Peliä, jota etsit, ei ole olemassa"
+        },
+        "game-is-full": {
+          "description": "Peli on täynnä, et voi liittyä"
+        },
+        "cannot-reconnect": {
+          "description": "Peliin ei voi enää yhdistää uudelleen, yhdistämisaika on päättynyt"
+        },
+        "rate-limit": {
+          "title": "Lähetät liian monta pyyntöä",
+          "description": "Ole hyvä ja odella muutama sekunti ennen kuin yrität uudelleen"
+        },
+        "not-allowed": {
+          "description": "Sinulla ei ole lupaa muuttaa pelin asetuksia",
+          "title": "Käyttö estetty"
+        }
       }
     }
+  },
+  "contexts": {
+    "SocketContext": {
+      "recover-error": {
+        "game-not-found": {
+          "title": "Peliä ei löydy",
+          "description": "Peli, johon yritit yhdistää uudelleen, ei ole enää olemassa"
+        }
+      },
+      "reconnection": "Uudelleenyhdistäminen onnistui",
+      "connection-lost": "Yhteys katkesi. Yritetään uudelleen..."
+    },
+    "BanContext": {
+      "player-not-found": {
+        "title": "Pelaajaa, jonka haluat estää, ei ole olemassa",
+        "description": "Pelaajaa, jonka haluat bannata, ei ole pelissä"
+      },
+      "not-allowed": {
+        "description": "Sinulla ei ole lupaa antaa pelaajalle kieltoa",
+        "title": "Sinulla ei ole oikeutta poistaa pelaajia käytöstä"
+      },
+      "you-were-banned": {
+        "title": "Sinut on estetty",
+        "description": "Sinut on estetty pelistä isännän toimesta"
+      },
+      "unexpected-error": {
+        "description": "Pelaajan bannauksessa tapahtui odottamaton virhe",
+        "title": "Tapahtui odottamaton virhe"
+      },
+      "player-banned": {
+        "title": "{playerName} on kielletty",
+        "description": "{playerName}:lla pelinjohtaja on antanut porttikiellon"
+      }
+    },
+    "ReportContext": {
+      "report-against-you": {
+        "title": "Sinut on poistettu pelistä ilmoitettaessa",
+        "description": "Ylläpitäjä on vahvistanut sinua koskevan ilmoituksen. Vältä tämän käyttäytymisen toistamista, tai saatetaan soveltaa lisätoimenpiteitä."
+      },
+      "report": {
+        "title": "{playerName} on poistettu raportin vuoksi"
+      }
+    },
+    "HostTransferContext": {
+      "player-not-found": {
+        "description": "Pelaajaa, jolle yrität siirtää isännyyttä, ei löydy pelistä",
+        "title": "Pelaajaa ei löydy"
+      },
+      "player-not-connected": {
+        "title": "Pelaaja ei ole yhteydessä",
+        "description": "Pelaaja, jolle yrität siirtää isännyyttä, ei ole tällä hetkellä yhteydessä peliin"
+      },
+      "you-are-now-host": {
+        "title": "Olet nyt isäntä",
+        "description": "{previousHostName} on siirtänyt isännän roolin sinulle"
+      },
+      "host-transferred": {
+        "title": "Isäntä siirretty onnistuneesti",
+        "description": "{newHostName} on nyt pelin isäntä"
+      },
+      "not-allowed": {
+        "description": "Vain nykyinen isäntä voi siirtää isännän roolin toiselle pelaajalle",
+        "title": "Sinulla ei ole oikeutta siirtää isännöintiä"
+      },
+      "unexpected-error": {
+        "description": "Odottamaton virhe tapahtui isännän siirron aikana",
+        "title": "Tapahtui odottamaton virhe"
+      }
+    }
+  },
+  "errors": {
+    "name-max-characters": "Näytettävän nimen enimmäispituus on 20 merkkiä",
+    "username-min-characters": "Käyttäjänimen on oltava vähintään 3 merkkiä pitkä",
+    "session-not-found": "Istuntosi on vanhentunut tai virheellinen. Kirjaudu sisään uudelleen.",
+    "logout-failed": "Emme voineet kirjautua ulos. Sulje selaimesi lopettaaksesi istunto.",
+    "onboarding-error": "Profiilin täydentämisessä oli ongelma. Yritä uudelleen.",
+    "username-taken": "Tämä käyttäjätunnus on jo käytössä. Valitse toinen.",
+    "forgot-password-error": "Salasanan vaihtopyyntösi käsittelyssä tapahtui virhe. Yritä uudelleen myöhemmin.",
+    "reset-password-error": "Salasanasi nollaaminen epäonnistui. Yritä uudelleen.",
+    "oauth-login-initiation-failed": "Emme voineet aloittaa kirjautumisprosessia. Yritä uudelleen hetken kuluttua.",
+    "verify-session-error": "Istuntoasi ei voitu vahvistaa. Kirjaudu ulos ja kirjaudu takaisin sisään.",
+    "logout-error": "Odottamaton virhe kirjautumisessa ulos.",
+    "check-username-error": "Emme voineet tarkistaa, onko käyttäjänimi vapaa. Yritä uudelleen.",
+    "user-not-found": "Etsimääsi käyttäjää ei löydy.",
+    "get-user-games-error": "Käyttäjän pelejä ei voitu ladata. Päivitä sivun.",
+    "email-same-as-current": "Tämä on jo sähköpostiosoitteesi.",
+    "update-name-error": "Emme voineet päivittää nimeäsi. Yritä uudelleen.",
+    "revert-email-error": "Emme pystyneet palauttamaan sähköpostimuutostasi. Ota yhteyttä tukeen.",
+    "update-avatar-error": "Emme voineet päivittää avataariasi. Yritä uudelleen.",
+    "internal-server-error": "Palvelimellamme ilmeni ongelma. Yritä myöhemmin uudelleen.",
+    "unexpected-error": "Tapahtui odottamaton virhe. Yritä uudelleen.",
+    "ip-not-found": "Emme pystyneet tunnistamaan IP-osoitettasi. Tarkista yhteytesi.",
+    "too-many-requests": "Olet lähettänyt liian monta pyyntöä. Ole hyvä ja odota hetki ja yritä uudelleen.",
+    "verify-pin-error": "PIN-koodiasi varmistaminen epäonnistui. Yritä uudelleen.",
+    "invalid-pin": "Antamasi PIN-koodi on virheellinen. Yritä uudelleen.",
+    "invalid-cancellation-token": "Peruutus-token on virheellinen. Yritä uudelleen.",
+    "expired-cancellation-token": "Peruutustunnus on vanhentunut. Yritä uudelleen.",
+    "expired-reversion-token": "Uudelleensyöttötunnus on vanhentunut. Yritä uudelleen.",
+    "min-players-invalid": "Vähintään pelaajia on oltava 2",
+    "card-per-row-max-invalid": "Kortteja riviä kohden enintään 3",
+    "card-per-column-min-invalid": "Kortteja per sarake on oltava vähintään 1",
+    "first-player-flat-penalty-min-invalid": "Ensimmäisen pelaajan tasasakon on oltava vähintään 0",
+    "first-player-flat-penalty-max-invalid": "Ensimmäisen pelaajan tasainen sakko saa olla enintään 10000000",
+    "password-min-characters": "Salasanan tulee olla vähintään 10 merkkiä pitkä",
+    "password-lowercase-required": "Salasanan on sisällettävä vähintään yksi pieni kirjain",
+    "passwords-dont-match": "Salasanat eivät täsmää",
+    "email-invalid": "Virheellinen sähköpostiosoite",
+    "email-already-exists": "Tämä sähköpostiosoite on jo käytössä toisella tilillä. Käytä toista osoitetta.",
+    "account-deletion-already-scheduled": "Tilisi poistaminen on jo aikataulutettu. Odota sen käsittelyä.",
+    "user-creation-failed": "Tilin luominen epäonnistui. Yritä uudelleen.",
+    "name-min-characters": "Näytettävän nimen täytyy olla vähintään 2 merkkiä pitkä",
+    "get-user-stats-error": "Emme saaneet ladattua käyttäjän tilastoja. Päivitä sivu.",
+    "invalid-current-password": "Nykyinen antamasi salasana on virheellinen.",
+    "update-password-error": "Emme pystyneet päivittämään salasanaasi. Yritä uudelleen.",
+    "disposable-email-not-allowed": "Tilapäisiä sähköpostiosoitteita ei sallita. Käytä pysyvää sähköpostiosoitetta.",
+    "forbidden": "Sinulla ei ole lupaa käyttää tätä resurssia.",
+    "delete-account-confirmation-required": "Kirjoita POISTA vahvistaaksesi",
+    "email-already-sent": "Sähköposti lähetettiin jo viimeisen 5 minuutin aikana. Tarkista sähköpostisi tai paina \"Pyydä uusi koodi\" lähettääksesi sen uudelleen.",
+    "get-user-error": "Käyttäjäprofiilin hakeminen epäonnistui. Yritä uudelleen myöhemmin.",
+    "username-max-characters": "Käyttäjänimi saa olla enintään 20 merkkiä pitkä",
+    "username-invalid-format": "Käyttäjänimi voi sisältää vain kirjaimia, numeroita ja alaviivoja.",
+    "session-expired": "Istuntosi on vanhentunut. Kirjaudu sisään uudelleen jatkaaksesi.",
+    "session-invalid": "Istuntosi on virheellinen. Kirjaudu uudelleen jatkaaksesi.",
+    "password-reset-failed": "Emme voineet nollata salasanaasi. Yritä uudelleen.",
+    "reset-token-invalid": "Antamasi nollaus-token lyötyi. Pyydä uusi.",
+    "session-token-missing": "Istuntosi tunnistetta puuttuu. Kirjaudu sisään saadaksesi uuden.",
+    "reset-token-expired": "Salasanan vaihtotunnuksesi on vanhentunut. Pyydä uusi tunnus.",
+    "invalid-credentials": "Antamasi sähköpostiosoite tai salasana on virheellinen. Yritä uudelleen.",
+    "oauth-restart-process": "Kautta aikojen jotain meni pieleen todennuksessa. Yritä kirjautua uudelleen.",
+    "oauth-id-token-missing": "Emme saaneet tunnistetunnusta tunnistautumispalvelusta. Yritä uudelleen.",
+    "oauth-account-creation-failed": "Tilin luominen epäonnistui palveluntarjoajasi tietojen perusteella. Yritä uudelleen.",
+    "login-error": "Kirjautumisessa tapahtui virhe. Ole hyvä ja yritä uudelleen.",
+    "signup-error": "Tilisi luominen epäonnistui tällä kertaa. Yritä uudelleen myöhemmin.",
+    "username-same-as-current": "Tämä on jo käyttäjänimesi.",
+    "creation-failed": "Käyttäjää ei voitu luoda tällä hetkellä. Yritä uudelleen.",
+    "email-taken": "Tämä sähköpostiosoite on jo käytössä. Käytä toista.",
+    "update-email-error": "Sähköpostiosoitteesi päivitys epäonnistui. Yritä uudelleen.",
+    "login-invalid-credentials": "Antamasi sähköpostiosoite tai salasana on virheellinen. Yritä uudelleen.",
+    "update-username-error": "Emme voineet päivittää käyttäjänimeäsi. Yritä uudelleen.",
+    "unknown-auth-error": "Tuntematon todennusvirhe ilmeni. Yritä uudelleen.",
+    "delete-account-error": "Pyydystä tilisi poistopyyntöäsi ei voitu käsitellä. Yritä uudelleen.",
+    "unauthorized": "Sinulla ei ole oikeutta suorittaa tätä toimintoa.",
+    "send-feedback-error": "Palautettasi ei voitu lähettää. Yritä uudelleen.",
+    "cancel-account-deletion-error": "Emme voineet peruuttaa tilisi poistoa. Yritä uudelleen.",
+    "expired-pin": "Syöttämäsi PIN-koodi on vanhentunut. Olemme lähettäneet sinulle uuden.",
+    "get-public-games-error": "Julkisia pelejä ei voitu ladata. Yritä uudelleen.",
+    "feedback-error": "Palautettasi ei voitu lähettää. Yritä uudelleen.",
+    "not-found": "Etsimääsi resurssia ei löytynyt.",
+    "invalid-request": "Pyytämäsi pyyntö oli virheellinen. Tarkista tiedot ja yritä uudelleen.",
+    "send-pin-error": "Emme voineet lähettää varmistus PIN-koodia sähköpostiisi. Ole hyvä ja yritä uudelleen.",
+    "cancel-delete-account-error": "Et voitu peruuttaa tilisi poisto. Ota yhteyttä tukeen.",
+    "invalid-reversion-token": "Palautusmerkki on virheellinen. Yritä uudelleen.",
+    "oauth-unknown-error": "Kirjautumisessa tapahtui tuntematon virhe. Yritä uudelleen.",
+    "first-player-multiplier-penalty-min-invalid": "Ensimmäisen pelaajan kerroinrangaistuksen on oltava vähintään 1",
+    "max-players-invalid": "Maksimipelaajamäärä saa olla enintään 8",
+    "card-per-row-min-invalid": "Kortteja riviä kohti on oltava vähintään 1",
+    "card-per-column-max-invalid": "Kortteja saraketta kohden saa olla enintään 4",
+    "score-to-end-game-min-invalid": "Piste pelin lopettamiseksi on oltava vähintään 1",
+    "score-to-end-game-max-invalid": "Pelin lopetusarvo saa olla enintään 10000000",
+    "password-uppercase-required": "Salasanan on sisällettävä vähintään yksi iso kirjain",
+    "username-creation-failed": "Käyttäjänimen luominen epäonnistui. Yritä uudelleen.",
+    "password-special-char-required": "Salasanan on sisällettävä vähintään yksi erikoismerkki",
+    "first-player-multiplier-penalty-max-invalid": "Ensimmäisen pelaajan kerroinrangaistus saa olla korkeintaan 10000000",
+    "password-number-required": "Salasanan on sisällettävä vähintään yksi numero",
+    "current-password-required": "Nykyinen salasana vaaditaan",
+    "token-required": "Tarvitaan tunnus",
+    "comment-max-characters": "Kommentti saa olla enintään 500 merkkiä",
+    "account-deletion-schedule-failed": "Tilin poistamisen ajoittaminen epäonnistui. Yritä uudelleen."
   }
 }

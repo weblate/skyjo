@@ -283,7 +283,7 @@
           "title": "1. Exploitant",
           "content": "Ce site web est exploité par :",
           "name": "Maxent Rouault",
-          "contact": "Contact : <email></email>",
+          "contact": "Contact : <email></email>",
           "location": "France (particulier non commercial)"
         },
         "eligibility": {
@@ -320,7 +320,7 @@
               "2": "Les données d'analyse comme le comportement de jeu, la fréquence des sessions, ou l'utilisation des fonctionnalités <b>peuvent être collectées pour améliorer le jeu</b>."
             }
           },
-          "storage-location": "Toutes les données sont stockées dans l'<b>Union européenne</b> et traitées conformément à la <link>Politique de confidentialité</link>."
+          "storage-location": "Toutes les données sont stockées dans l'Union Européenne et traitées conformément à la <link>Politique de Confidentialité</link>."
         },
         "analytics-tracking": {
           "title": "5. Analyse et suivi",
@@ -1133,7 +1133,8 @@
         "ban": "Bannir {name}",
         "mute": "Mettre {name} en sourdine",
         "unmute": "Réactiver le son de {name}",
-        "transfer-host": "Transférer l'hôte à {name}"
+        "transfer-host": "Transférer l'hôte à {name}",
+        "view-profile": "Voir le profil de {name}"
       }
     },
     "KickVote": {
@@ -1373,7 +1374,8 @@
           "description": "Vous ne pouvez pas réduire le nombre de joueurs maximum en dessous du nombre de joueurs connectés à la partie"
         },
         "not-allowed": {
-          "description": "Vous n'avez pas la permission de changer les paramètres de la partie"
+          "description": "Vous n'avez pas la permission de changer les paramètres de la partie",
+          "title": "Accès refusé"
         }
       }
     }
@@ -1515,6 +1517,35 @@
     "cancel-account-deletion-error": "Nous n'avons pas pu annuler votre suppression de compte. Veuillez réessayer.",
     "oauth-unknown-error": "Une erreur inconnue s'est produite lors de la connexion. Veuillez réessayer.",
     "invalid-reversion-token": "Le token de retour est invalide. Veuillez réessayer.",
-    "expired-reversion-token": "Le token de retour a expiré. Veuillez réessayer."
+    "expired-reversion-token": "Le token de retour a expiré. Veuillez réessayer.",
+    "min-players-invalid": "Le nombre minimum de joueurs doit être d'au moins 2",
+    "max-players-invalid": "Le nombre maximum de joueurs doit être de 8 au maximum",
+    "card-per-row-min-invalid": "Chaque carte par ligne doit être au moins de 1",
+    "card-per-row-max-invalid": "La carte par ligne doit être au maximum de 3",
+    "card-per-column-min-invalid": "Chaque carte par colonne doit être au moins de 1",
+    "card-per-column-max-invalid": "La carte par colonne doit être au maximum de 4",
+    "score-to-end-game-min-invalid": "Le score pour terminer la partie doit être d'au moins 1",
+    "score-to-end-game-max-invalid": "Le score pour terminer la partie doit être au maximum de 10000000",
+    "first-player-flat-penalty-min-invalid": "La pénalité fixe du premier joueur doit être d'au moins 0",
+    "first-player-flat-penalty-max-invalid": "La pénalité fixe du premier joueur ne doit pas dépasser 10000000",
+    "first-player-multiplier-penalty-min-invalid": "La pénalité du multiplicateur du premier joueur doit être d'au moins 1",
+    "first-player-multiplier-penalty-max-invalid": "La pénalité du multiplicateur du premier joueur ne doit pas dépasser 10000000",
+    "comment-max-characters": "Le commentaire doit faire au maximum 500 caractères",
+    "password-min-characters": "Le mot de passe doit contenir au moins 10 caractères",
+    "password-lowercase-required": "Le mot de passe doit contenir au moins une lettre minuscule",
+    "password-uppercase-required": "Le mot de passe doit contenir au moins une lettre majuscule",
+    "password-number-required": "Le mot de passe doit contenir au moins un chiffre",
+    "password-special-char-required": "Le mot de passe doit contenir au moins un caractère spécial",
+    "passwords-dont-match": "Les mots de passe ne correspondent pas",
+    "delete-account-confirmation-required": "Veuillez taper SUPPRIMER pour confirmer",
+    "current-password-required": "Le mot de passe actuel est requis",
+    "email-invalid": "Adresse e-mail invalide",
+    "token-required": "Le jeton est requis",
+    "email-already-sent": "Un e-mail a déjà été envoyé dans les 5 dernières minutes. Veuillez vérifier votre boîte de réception ou cliquer sur \"Demander un nouveau code\" pour en envoyer un nouveau",
+    "email-already-exists": "Cette adresse e-mail est déjà utilisée sur un autre compte. Veuillez en utiliser une différente.",
+    "username-creation-failed": "Impossible de créer ton nom d'utilisateur. Veuillez réessayer.",
+    "account-deletion-already-scheduled": "La suppression de ton compte a déjà été planifiée. Merci de patienter pendant son traitement.",
+    "account-deletion-schedule-failed": "Nous n'avons pas pu planifier la suppression de ton compte. Veuillez réessayer.",
+    "user-creation-failed": "Impossible de créer ton compte. Veuillez réessayer."
   }
 }

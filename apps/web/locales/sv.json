@@ -253,7 +253,9 @@
         "replay": "Spela upp igen"
       },
       "leave-button": "Lämna spelet",
-      "round": "Omgång {number}"
+      "round": "Omgång {number}",
+      "forfeit": "Avstå",
+      "disconnected": "Frånkopplad"
     },
     "Rules": {
       "head": {
@@ -512,7 +514,9 @@
       "recent-activity": {
         "no-activity": "Ingen ny aktivitet att visa.",
         "game-code": "Spel #{code}",
-        "rank": "Rankning #{rank}"
+        "rank": "Rankning #{rank}",
+        "forfeited": "Avstått",
+        "left": "Vänster"
       },
       "search": {
         "placeholder": "Sök användarnamn"
@@ -703,7 +707,7 @@
               "2": "Analysdata såsom spelbeteende, sessionsfrekvens eller funktionsanvändning <b>kan samlas in för att förbättra spelet</b>."
             }
           },
-          "storage-location": "All data lagras inom <b>Europeiska Unionen</b> och hanteras i enlighet med <link>integritetspolicyn</link>."
+          "storage-location": "All data lagras inom Europeiska Unionen och hanteras i enlighet med <link>integritetspolicyn</link>."
         },
         "analytics-tracking": {
           "title": "5. Analys & spårning",
@@ -757,6 +761,10 @@
           "general": "Allmänna frågor: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Återansluter till ditt spel",
+      "description": "Vänligen vänta medan vi återansluter dig till ditt aktiva spel..."
     }
   },
   "components": {
@@ -1063,7 +1071,8 @@
       "feedback": "Lämna feedback",
       "discord": "Discord",
       "settings": "Inställningar",
-      "leave-game": "Lämna spelet"
+      "leave-game": "Lämna spelet",
+      "forfeit": "Avstå"
     },
     "OpponentBoard": {
       "disconnected": "Spelaren har lämnat spelet. En bot kommer att spela för dem under de närmaste omgångarna tills de återansluter."
@@ -1089,7 +1098,8 @@
     "ScoreTable": {
       "name": "Namn",
       "round": "Runda",
-      "total": "Totalt"
+      "total": "Totalt",
+      "rank": "Rang"
     },
     "Avatar": {
       "context-menu": {
@@ -1099,7 +1109,8 @@
         "ban": "Banna {name}",
         "mute": "Tysta {name}",
         "unmute": "Avstängning av ljud för {name}",
-        "transfer-host": "{name} är nu värd"
+        "transfer-host": "Överför värdskap till {name}",
+        "view-profile": "Visa {name}s profil"
       }
     },
     "KickVote": {
@@ -1164,7 +1175,7 @@
     },
     "ReportDialog": {
       "title": "Rapportera {name}",
-      "description": "Anmäl namnet eller ett meddelande från {name} om det verkar olämpligt.",
+      "description": "Anmäl {name} om deras beteende verkar olämpligt. All spelkontext kommer att granskas av moderatorer.",
       "cancel": "Avbryt",
       "submit": "Rapport",
       "toast": {
@@ -1174,7 +1185,18 @@
         }
       },
       "comment": "Ytterligare kontext (valfritt)",
-      "comment-placeholder": "Ge ytterligare kontext om den här rapporten..."
+      "comment-placeholder": "Ge ytterligare kontext om den här rapporten...",
+      "disclaimer": "⚠️ Varning: Falska anmälningar eller missbruk av anmälningsfunktionen kan leda till påföljder för ditt konto.",
+      "reason-label": "Anledning till rapport",
+      "reason-placeholder": "Välj en anledning",
+      "reasons": {
+        "inappropriate-username": "Olämpligt användarnamn",
+        "toxic-behavior": "Giftigt beteende",
+        "spam-advertising": "Spam/reklam",
+        "cheating-exploiting": "Fusk/utnyttjande",
+        "harassment": "Trakasserier",
+        "other": "Annat"
+      }
     },
     "Banner": {
       "title": "Jag behöver  <gform>din feedback</gform>  för att forma framtiden för Skyjo!"
@@ -1211,13 +1233,65 @@
       "description": "Du var i ett spel som pågår. Vill du återansluta?",
       "reconnect-button": "Ja, återanslut",
       "dismiss-button": "Nej, avfärda"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Du måste vara inloggad för att chatta"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Avbryta spelet?",
+      "message": "Är du säker på att du vill ge upp? Du kommer att lämna spelet permanent och kan inte återansluta.",
+      "confirm": "Ja, ge upp",
+      "cancel": "Avbryt"
+    },
+    "ChatRestricted": {
+      "description": "Du är förbjuden att chatta"
+    },
+    "PlayAgainButton": {
+      "disabled": "Spela igen",
+      "button": "Spela igen",
+      "leavebusterMessage": "Slutför din leavebuster-straffavgift för att spela igen"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebuster-straff",
+      "description": "Du lämnade ett offentligt spel tidigt. Slutför denna straff för att fortsätta spela.",
+      "progress": "Framsteg: {completed}/{required}",
+      "timeRemaining": "Tid kvar: {time}",
+      "completeButton": "Färdig ({time})",
+      "completedButton": "Klart!",
+      "closeButton": "Stäng"
+    },
+    "BanDialog": {
+      "title": "Konto avstängt",
+      "suspensionMessage": "Du är {isPermanent, select, true {permanent avstängd} other {tillfälligt avstängd}} dari att spela på grund av ditt beteende i spelet.",
+      "temporary": "Du kan spela igen den: {date}.",
+      "reasonLabel": "Anledning:",
+      "defaultReason": "Inget skäl angivet.",
+      "understandButton": "Jag förstår"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chat-begränsning",
+      "description": "Dina chattprivilegier har temporärt begränsats. Du kan inte skicka meddelanden under denna tid.",
+      "detailedDescription": "Du är spärrad från att kommunicera via chatt efter en anmälan om ditt beteende som har validerats av en administratör. Du kommer att kunna chatta igen den:",
+      "detailedDescriptionPermanent": "Du är blockerad från att kommunicera via chatt efter en anmälan om ditt beteende som har granskats av en administratör.",
+      "reason": {
+        "title": "Orsak"
+      },
+      "duration": {
+        "title": "Varaktighet",
+        "expiresAt": "Chat återställs den: {date}"
+      },
+      "report": {
+        "title": "Relaterad rapport",
+        "id": "Rapport-ID: #{reportId}"
+      },
+      "acknowledgeButton": "Jag förstår"
     }
   },
   "contexts": {
     "ReportContext": {
       "report-against-you": {
-        "title": "Du har blivit utsparkad på grund av en anmälan",
-        "description": "Ditt namn eller ett av dina meddelanden har rapporterats och bedömts som olämpligt. Vänligen upprepa inte detta beteende."
+        "title": "Du har tagits bort från spelet efter en anmälan",
+        "description": "En administratör har godkänt en anmälan mot dig. Undvik att upprepa detta beteende, annars kan ytterligare åtgärder vidtas."
       },
       "report": {
         "title": "{playerName} har blivit kickad på grund av en anmälan"
@@ -1316,8 +1390,9 @@
       "wizz-sent": "Du har skickat en vizz till {targetName}!",
       "wizz-self": "Du har blivit vizzad av {initiatorName}!",
       "wizz-other": "{initiatorName} har wizzat {targetName}!",
-      "welcome": "Var snäll och visa respekt. Du kan {isMobile, select, true {långtrycka} other {högerklicka}} på meddelanden för att stänga av eller anmäla spelare vid behov.",
-      "host-transferred": "{name} är nu värd"
+      "welcome": "Var snäll och visa respekt i chatten. Vid behov kan du tysta eller anmäla en spelare genom att {isMobile, select, true {trycka} other {klicka}} på ett av deras meddelanden eller på dem.",
+      "host-transferred": "Värdens roll överförd till {name}",
+      "player-forfeited": "{name} har avstått från spelet"
     },
     "avatar": {
       "bee": "bi",
@@ -1363,6 +1438,13 @@
         },
         "player-already-connected": {
           "description": "Du är redan ansluten till det här spelet från en annan session"
+        },
+        "max-players-too-low": {
+          "description": "Kan inte minska max antal spelare under det nuvarande antalet spelare i spelet"
+        },
+        "not-allowed": {
+          "title": "Åtkomst nekad",
+          "description": "Du har inte behörighet att ändra spelinställningar"
         }
       }
     }
@@ -1434,6 +1516,36 @@
     "name-max-characters": "Visningsnamnet får vara högst 20 tecken långt",
     "username-min-characters": "Användarnamnet måste vara minst 3 tecken långt",
     "username-max-characters": "Användarnamnet får vara högst 20 tecken långt",
-    "username-invalid-format": "Användarnamnet får endast innehålla bokstäver, siffror och understreck"
+    "username-invalid-format": "Användarnamnet får endast innehålla bokstäver, siffror och understreck",
+    "min-players-invalid": "Minimumspelare måste vara minst 2",
+    "max-players-invalid": "Maximalt antal spelare får vara högst 8",
+    "card-per-row-min-invalid": "Kort per rad måste vara minst 1",
+    "card-per-row-max-invalid": "Kort per rad får vara högst 3",
+    "card-per-column-min-invalid": "Kort per kolumn måste vara minst 1",
+    "card-per-column-max-invalid": "Kort per kolumn får vara högst 4",
+    "score-to-end-game-min-invalid": "Poängen för att avsluta spelet måste vara minst 1",
+    "score-to-end-game-max-invalid": "Poäng för att avsluta spelet måste vara högst 10000000",
+    "first-player-flat-penalty-min-invalid": "Första spelarens fasta straff måste vara minst 0",
+    "first-player-flat-penalty-max-invalid": "Första spelarens fasta straff får vara högst 10000000",
+    "first-player-multiplier-penalty-min-invalid": "Multiplikatorstraffet för första spelaren måste vara minst 1",
+    "first-player-multiplier-penalty-max-invalid": "Multiplikatorstraffet för första spelaren får högst vara 10000000",
+    "comment-max-characters": "Kommentaren får vara högst 500 tecken",
+    "password-min-characters": "Lösenordet måste vara minst 10 tecken långt",
+    "password-lowercase-required": "Lösenordet måste innehålla minst en gemen bokstav",
+    "password-uppercase-required": "Lösenordet måste innehålla minst en stor bokstav",
+    "password-number-required": "Lösenordet måste innehålla minst en siffra",
+    "password-special-char-required": "Lösenordet måste innehålla minst ett specialtecken",
+    "passwords-dont-match": "Lösenorden stämmer inte",
+    "delete-account-confirmation-required": "Skriv DELETE för att bekräfta",
+    "current-password-required": "Nuvarande lösenord krävs",
+    "email-invalid": "Ogiltig e-postadress",
+    "token-required": "Token krävs",
+    "email-already-sent": "Ett mejl skickades redan under de senaste 5 minuterna. Kontrollera din inkorg eller klicka på \"Begär ny kod\" för att skicka en ny",
+    "email-already-exists": "Den här e-postadressen används redan på ett annat konto. Vänligen använd en annan.",
+    "username-creation-failed": "Vi kunde inte skapa ditt användarnamn. Försök igen.",
+    "account-deletion-already-scheduled": "Din kontoborttagning har redan schemalagts. Vänligen vänta på att den behandlas.",
+    "account-deletion-schedule-failed": "Vi kunde inte schemalägga din kontoborttagning. Försök igen.",
+    "user-creation-failed": "Vi kunde inte skapa ditt konto. Försök igen.",
+    "disposable-email-not-allowed": "Engångs- eller temporära e-postadresser är inte tillåtna. Använd en permanent e-postadress."
   }
 }

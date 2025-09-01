@@ -258,7 +258,9 @@
       "title": "Spielergebnis",
       "rank": "Rang/Stufe",
       "player": "Spieler",
-      "round": "Runde {number}"
+      "round": "Runde {number}",
+      "forfeit": "Aufgeben",
+      "disconnected": "Getrennt"
     },
     "Rules": {
       "head": {
@@ -517,7 +519,9 @@
       "recent-activity": {
         "game-code": "Spiel #{code}",
         "no-activity": "Keine aktuellen Aktivitäten anzuzeigen.",
-        "rank": "Rang #{rank}"
+        "rank": "Rang #{rank}",
+        "forfeited": "Aufgegeben",
+        "left": "Verlassen"
       },
       "search": {
         "placeholder": "Benutzernamen suchen"
@@ -708,7 +712,7 @@
               "2": "Analysedaten wie Spielverhalten, Sitzungsfrequenz oder Funktionsnutzung **können gesammelt werden, um das Spiel zu verbessern**."
             }
           },
-          "storage-location": "Alle Daten werden in der <b>Europäischen Union</b> gespeichert und gemäß der <link>Datenschutzrichtlinie</link> verarbeitet."
+          "storage-location": "Alle Daten werden in der Europäischen Union gespeichert und gemäß der <link>Datenschutzrichtlinie</link> verarbeitet."
         },
         "analytics-tracking": {
           "title": "5. Analyse & Tracking",
@@ -762,6 +766,10 @@
           "general": "Allgemeine Anfragen: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Wiederverbindung mit deinem Spiel",
+      "description": "Bitte warte, während wir dich mit deinem aktiven Spiel verbinden..."
     }
   },
   "contexts": {
@@ -789,8 +797,8 @@
     },
     "ReportContext": {
       "report-against-you": {
-        "description": "Dein Name oder eine deiner Nachrichten wurde gemeldet und als unangemessen eingestuft. Bitte wiederhole dieses Verhalten nicht.",
-        "title": "Du wurdest aufgrund einer Meldung aus dem Spiel entfernt"
+        "description": "Ein Administrator hat eine Meldung gegen Dich validiert. Bitte vermeide es, dieses Verhalten zu wiederholen, da sonst weitere Sanktionen verhängt werden könnten.",
+        "title": "Du wurdest nach einer Meldung aus dem Spiel entfernt"
       },
       "report": {
         "title": "{playerName} wurde aufgrund einer Meldung aus dem Spiel entfernt"
@@ -1109,13 +1117,14 @@
     },
     "Avatar": {
       "context-menu": {
-        "report": "Bericht {name}",
+        "report": "Melde {name}",
         "kick": "{name} kicken",
         "mute": "{name} stummschalten",
         "ban": "{name} sperren",
         "unmute": "{name} stummschalten",
         "vote-to-kick": "Per Abstimmung kicken {name}",
-        "transfer-host": "{name} ist jetzt der Host"
+        "transfer-host": "Host an {name} übertragen",
+        "view-profile": "Profil von {name} anzeigen"
       }
     },
     "OpponentsMobileView": {
@@ -1151,7 +1160,8 @@
       "feedback": "Gib uns Feedback",
       "discord": "Discord",
       "settings": "Einstellungen",
-      "leave-game": "Spiel verlassen"
+      "leave-game": "Spiel verlassen",
+      "forfeit": "Aufgeben"
     },
     "RulesDialog": {
       "trigger": {
@@ -1162,7 +1172,8 @@
     "ScoreTable": {
       "round": "Runde",
       "name": "Name",
-      "total": "Gesamt"
+      "total": "Gesamt",
+      "rank": "Rang"
     },
     "Scoreboard": {
       "button-title": "Punktestand anzeigen"
@@ -1239,10 +1250,21 @@
           "description": "Vielen Dank für deinen Bericht, du hast dazu beigetragen, die Qualität des Spiels zu verbessern."
         }
       },
-      "title": "Bericht {name}",
-      "description": "Melde den Namen oder eine Nachricht von {name}, wenn sie unangemessen erscheint.",
+      "title": "Melde {name}",
+      "description": "Melde {name}, wenn sein Verhalten unangemessen erscheint. Der gesamte Spielkontext wird von Moderatoren überprüft.",
       "comment": "Zusätzlicher Kontext (optional)",
-      "comment-placeholder": "Gib zusätzlichen Kontext zu diesem Bericht an..."
+      "comment-placeholder": "Gib zusätzlichen Kontext zu diesem Bericht an...",
+      "disclaimer": "⚠️ Achtung: Falsche Meldungen oder Meldungsmissbrauch können zu Strafen für Dein Konto führen.",
+      "reason-label": "Grund für Meldung",
+      "reason-placeholder": "Wähle einen Grund",
+      "reasons": {
+        "inappropriate-username": "Unangemessener Benutzername",
+        "toxic-behavior": "Toxisches Verhalten",
+        "spam-advertising": "Spam/Werbung",
+        "cheating-exploiting": "Betrug/Ausnutzung",
+        "harassment": "Belästigung",
+        "other": "Sonstiges"
+      }
     },
     "PlayerBoard": {
       "you": "Du"
@@ -1285,6 +1307,58 @@
       "description": "Du warst in einem Spiel, das gerade läuft. Möchtest du dich wieder verbinden?",
       "dismiss-button": "Nein, abbrechen",
       "reconnect-button": "Ja, wieder verbinden"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Du musst angemeldet sein, um chatten zu können"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Spiel aufgeben?",
+      "message": "Bist du sicher, dass du aufgeben möchtest? Du wirst das Spiel dauerhaft verlassen und kannst nicht wieder beitreten.",
+      "confirm": "Ja, aufgeben",
+      "cancel": "Abbrechen"
+    },
+    "ChatRestricted": {
+      "description": "Chatten ist verboten"
+    },
+    "PlayAgainButton": {
+      "disabled": "Erneut spielen",
+      "button": "Erneut spielen",
+      "leavebusterMessage": "Schließe deine Zwangspause-Strafe ab, um wieder spielen zu können"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebuster-Strafe",
+      "description": "Du hast ein öffentliches Spiel vorzeitig verlassen. Schließe diese Strafe ab, um weiterspielen zu können.",
+      "progress": "Fortschritt: {completed}/{required}",
+      "timeRemaining": "Verbleibende Zeit: {time}",
+      "completeButton": "Erledigt ({time})",
+      "completedButton": "Abgeschlossen!",
+      "closeButton": "Schließen"
+    },
+    "BanDialog": {
+      "title": "Konto gesperrt",
+      "suspensionMessage": "Du bist {isPermanent, select, true {permanent} other {vorübergehend}} vom Spielen wegen deines Verhaltens im Spiel gesperrt.",
+      "temporary": "Du kannst wieder spielen am: {date}.",
+      "reasonLabel": "Grund:",
+      "defaultReason": "Kein Grund angegeben.",
+      "understandButton": "Ich verstehe"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chat-Sperre",
+      "description": "Ihre Chatberechtigungen wurden vorübergehend eingeschränkt. Sie können während dieser Zeit keine Nachrichten senden.",
+      "detailedDescription": "Sie sind vom Chat ausgeschlossen, da Ihr Verhalten nach einer Meldung von einem Administrator als nicht regelkonform eingestuft wurde. Sie können wieder chatten ab dem:",
+      "detailedDescriptionPermanent": "Sie sind von der Chat-Kommunikation ausgeschlossen, da Ihr Verhalten gemeldet und von einem Administrator bestätigt wurde.",
+      "reason": {
+        "title": "Grund"
+      },
+      "duration": {
+        "title": "Dauer",
+        "expiresAt": "Chat wird wiederhergestellt am: {date}"
+      },
+      "report": {
+        "title": "Zugehöriger Bericht",
+        "id": "Meldungs-ID: #{reportId}"
+      },
+      "acknowledgeButton": "Ich verstehe"
     }
   },
   "utils": {
@@ -1334,8 +1408,9 @@
       "wizz-other": "{initiatorName} hat {targetName} angeblinkt!",
       "wizz-sent": "Du hast {targetName} einen Wizz geschickt!",
       "player-reconnect": "{name} hat sich wieder mit dem Spiel verbunden",
-      "welcome": "Bitte sei nett und respektvoll. Du kannst auf Nachrichten {isMobile, select, true {lang tippen} other {mit der rechten Maustaste klicken}} , um Spieler bei Bedarf stummzuschalten oder zu melden.",
-      "host-transferred": "{name} ist jetzt der Host"
+      "welcome": "Sei im Chat freundlich und respektvoll. Bei Bedarf kannst du einen Spieler stumm schalten oder melden, indem du auf eine seiner Nachrichten oder ihn {isMobile, select, true {tippst} other {klickst}}.",
+      "host-transferred": "Host-Rolle an {name} übertragen",
+      "player-forfeited": "{name} hat das Spiel aufgegeben"
     },
     "socket": {
       "error": {
@@ -1363,6 +1438,13 @@
         },
         "player-already-connected": {
           "description": "Du bist bereits von einer anderen Sitzung mit diesem Spiel verbunden"
+        },
+        "max-players-too-low": {
+          "description": "Die maximale Spielerzahl kann nicht unter die aktuelle Anzahl der Spieler im Spiel reduziert werden"
+        },
+        "not-allowed": {
+          "title": "Zugriff verweigert",
+          "description": "Du hast keine Berechtigung, die Spieleinstellungen zu ändern"
         }
       }
     }
@@ -1434,6 +1516,36 @@
     "name-min-characters": "Der Anzeigename muss mindestens 2 Zeichen lang sein",
     "name-max-characters": "Der Anzeigename darf höchstens 20 Zeichen lang sein",
     "username-min-characters": "Der Benutzername muss mindestens 3 Zeichen lang sein",
-    "username-invalid-format": "Der Benutzername darf nur Buchstaben, Zahlen und Unterstriche enthalten"
+    "username-invalid-format": "Der Benutzername darf nur Buchstaben, Zahlen und Unterstriche enthalten",
+    "min-players-invalid": "Die Mindestanzahl an Spielern muss mindestens 2 sein",
+    "max-players-invalid": "Die maximale Spieleranzahl darf höchstens 8 betragen",
+    "card-per-row-min-invalid": "Karte pro Reihe muss mindestens 1 sein",
+    "card-per-row-max-invalid": "Karte pro Reihe darf höchstens 3 sein",
+    "card-per-column-min-invalid": "Karte pro Spalte muss mindestens 1 sein",
+    "card-per-column-max-invalid": "Karte pro Spalte muss höchstens 4 sein",
+    "score-to-end-game-min-invalid": "Der Punktestand zum Beenden des Spiels muss mindestens 1 sein",
+    "score-to-end-game-max-invalid": "Der Punktestand zum Beenden des Spiels darf höchstens 10000000 betragen",
+    "first-player-flat-penalty-min-invalid": "Die erste Spielerpauschale muss mindestens 0 betragen",
+    "first-player-flat-penalty-max-invalid": "Die erste Spieler-Pauschalstrafe darf höchstens 10000000 betragen",
+    "first-player-multiplier-penalty-min-invalid": "Der Malus für den ersten Spieler muss mindestens 1 betragen",
+    "first-player-multiplier-penalty-max-invalid": "Der Multiplikatorabzug für den ersten Spieler darf höchstens 10000000 betragen",
+    "comment-max-characters": "Der Kommentar darf höchstens 500 Zeichen lang sein",
+    "password-min-characters": "Das Passwort muss mindestens 10 Zeichen lang sein",
+    "password-lowercase-required": "Das Passwort muss mindestens einen Kleinbuchstaben enthalten",
+    "password-uppercase-required": "Das Passwort muss mindestens einen Großbuchstaben enthalten",
+    "password-number-required": "Das Passwort muss mindestens eine Zahl enthalten",
+    "password-special-char-required": "Das Passwort muss mindestens ein Sonderzeichen enthalten",
+    "passwords-dont-match": "Passwörter stimmen nicht überein",
+    "delete-account-confirmation-required": "Bitte tippe DELETE zur Bestätigung",
+    "current-password-required": "Das aktuelle Passwort wird benötigt",
+    "email-invalid": "Ungültige E-Mail-Adresse",
+    "token-required": "Token wird benötigt",
+    "email-already-sent": "Eine E-Mail wurde in den letzten 5 Minuten bereits gesendet. Bitte überprüfe deinen Posteingang oder klicke auf \"Neuen Code anfordern\", um einen neuen zu senden",
+    "email-already-exists": "Diese E-Mail-Adresse wird bereits für ein anderes Konto verwendet. Bitte verwende eine andere.",
+    "username-creation-failed": "Wir konnten deinen Benutzernamen nicht erstellen. Bitte versuche es erneut.",
+    "account-deletion-already-scheduled": "Deine Account-Löschung wurde bereits geplant. Bitte warte auf die Bearbeitung.",
+    "account-deletion-schedule-failed": "Wir konnten die Löschung deines Kontos nicht planen. Bitte versuche es erneut.",
+    "user-creation-failed": "Wir konnten dein Konto nicht erstellen. Bitte versuche es erneut.",
+    "disposable-email-not-allowed": "Wegwerf- oder temporäre E-Mail-Adressen sind nicht erlaubt. Bitte benutze eine permanente E-Mail-Adresse."
   }
 }

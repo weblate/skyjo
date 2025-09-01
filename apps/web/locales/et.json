@@ -169,7 +169,9 @@
       "player": "Mängija",
       "total": "Kokku",
       "player-want-to-replay": "Mängijad, kes soovivad uuesti mängida:",
-      "round": "Voor {number}"
+      "round": "Voor {number}",
+      "forfeit": "Loobun",
+      "disconnected": "Katkestatud"
     },
     "PrivacyPolicy": {
       "head": {
@@ -517,7 +519,9 @@
       "recent-activity": {
         "no-activity": "Pole hiljutist tegevust, mida näidata.",
         "game-code": "Mäng #{code}",
-        "rank": "Järjekoht #{rank}"
+        "rank": "Järjekoht #{rank}",
+        "forfeited": "Loobusid",
+        "left": "Lahkunud"
       },
       "search": {
         "placeholder": "Otsi kasutajanime"
@@ -708,7 +712,7 @@
               "2": "Analüüsianalüüsid, nagu mängukäitumine, sessioonide sagedus või funktsioonide kasutamine, **võidakse koguda mängu täiustamiseks**."
             }
           },
-          "storage-location": "Kõik andmed salvestatakse <b>Euroopa Liidus</b> ja neid käsitletakse vastavalt <link>privaatsuspoliitikale</link>."
+          "storage-location": "Kõik andmed salvestatakse Euroopa Liidus ja neid käsitletakse vastavalt <link>privaatsuspoliitikale</link>."
         },
         "analytics-tracking": {
           "title": "5. Analüüs ja jälgimine",
@@ -762,6 +766,10 @@
           "general": "Üldised küsimused: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Uuesti ühendumine sinu mänguga",
+      "description": "Palun oota, kuni ühendame sind sinu aktiivse mänguga..."
     }
   },
   "components": {
@@ -850,7 +858,8 @@
       "feedback": "Anna tagasisidet",
       "discord": "Discord",
       "settings": "Sätted",
-      "leave-game": "Lahku mängust"
+      "leave-game": "Lahku mängust",
+      "forfeit": "Loobun"
     },
     "PlayerBoard": {
       "you": "Teie"
@@ -1000,7 +1009,8 @@
         "ban": "Keela {name}",
         "unmute": "Tühista vaigistus {name}",
         "mute": "Vaigista {name}",
-        "transfer-host": "{name} on nüüd host"
+        "transfer-host": "Edasta võõrustaja {name}-le",
+        "view-profile": "Vaata {name}'i profiili"
       }
     },
     "KickVote": {
@@ -1064,7 +1074,7 @@
       }
     },
     "ReportDialog": {
-      "description": "Teata nimest või sõnumist {name}, kui see tundub sobimatu.",
+      "description": "Teata {name}, kui tema käitumine tundub sobimatu. Moderaatorid vaatavad läbi kogu mängu konteksti.",
       "title": "Teata {name}",
       "cancel": "Tühista",
       "submit": "Aruanne",
@@ -1075,7 +1085,18 @@
         }
       },
       "comment": "Lisakontekst (valikuline)",
-      "comment-placeholder": "Anna lisakonteksti selle aruande kohta..."
+      "comment-placeholder": "Anna lisakonteksti selle aruande kohta...",
+      "disclaimer": "⚠️ Hoiatus: Valeraportid või raportite kuritarvitamine võib põhjustada sinu kontole karistusi.",
+      "reason-label": "Raporteerimise põhjus",
+      "reason-placeholder": "Vali põhjus",
+      "reasons": {
+        "inappropriate-username": "Sobimatu kasutajanimi",
+        "toxic-behavior": "Mürgine käitumine",
+        "spam-advertising": "Rämpspostitus/reklaam",
+        "cheating-exploiting": "Petmine/ärakasutamine",
+        "harassment": "Ahistamine",
+        "other": "Muu"
+      }
     },
     "AppearanceSelect": {
       "light": "Hele",
@@ -1179,7 +1200,8 @@
     "ScoreTable": {
       "name": "Nimi",
       "round": "Ümar",
-      "total": "Kokku"
+      "total": "Kokku",
+      "rank": "Järk"
     },
     "Banner": {
       "title": "Vajan <gform>sinu tagasisidet</gform>, et kujundada Skyjo tulevikku!"
@@ -1216,6 +1238,58 @@
       "description": "Oled mängus, mis on pooleli. Kas soovid uuesti ühendust võtta?",
       "reconnect-button": "Jah, ühenda uuesti",
       "dismiss-button": "Ei, tühista"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Sa pead olema sisse logitud, et vestelda"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Loobud mängust?",
+      "message": "Oled sa kindel, et soovid loobuda? Sa lahkud mängust alatiseks ja ei saa enam liituda.",
+      "confirm": "Jah, loobun",
+      "cancel": "Tühista"
+    },
+    "ChatRestricted": {
+      "description": "Teil on keelatud vestelda"
+    },
+    "PlayAgainButton": {
+      "disabled": "Mängi uuesti",
+      "button": "Mängi uuesti",
+      "leavebusterMessage": "Lõpeta oma leavebusteri karistus, et uuesti mängida"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebusteri karistus",
+      "description": "Lahkusite avalikust mängust enneaegselt. Lõpetage see karistus, et jätkata mängimist.",
+      "progress": "Edusammud: {completed}/{required}",
+      "timeRemaining": "Aeg jäänud: {time}",
+      "completeButton": "Täielik ({time})",
+      "completedButton": "Valmis!",
+      "closeButton": "Sulge"
+    },
+    "BanDialog": {
+      "title": "Konto peatatud",
+      "suspensionMessage": "Oled mängust {isPermanent, select, true {püsivalt} other {ajutiselt}} eemaldatud mängus olnud käitumise tõttu.",
+      "temporary": "Saab uuesti mängida: {date}.",
+      "reasonLabel": "Põhjus:",
+      "defaultReason": "Põhjust pole toodud.",
+      "understandButton": "Mõistan"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Vestluse piirang",
+      "description": "Teie vestluse õigused on ajutiselt piiratud. Sel ajal ei saa te sõnumeid saata.",
+      "detailedDescription": "Teil on keelatud kasutada vestlust pärast seda, kui teie käitumise kohta esitatud aruanne on administraatori poolt kinnitatud. Vestelda saate uuesti:",
+      "detailedDescriptionPermanent": "Teie suhtlemine vestluses on piiratud pärast teie käitumise kohta esitatud ja administraatori poolt kinnitatud aruannet.",
+      "reason": {
+        "title": "Põhjus"
+      },
+      "duration": {
+        "title": "Kestus",
+        "expiresAt": "Chat taastatakse: {date}"
+      },
+      "report": {
+        "title": "Seotud raport",
+        "id": "Raporti ID: #{reportId}"
+      },
+      "acknowledgeButton": "Mõistan"
     }
   },
   "utils": {
@@ -1231,8 +1305,9 @@
       "wizz-sent": "Sa saatsid vihje {targetName}!",
       "wizz-self": "{initiatorName} saatis sulle vihje!",
       "wizz-other": "{initiatorName} tegi {targetName} pihta piiksu!",
-      "welcome": "Palun ole viisakas ja lugupidav. Sa saad {isMobile, select, true {pikka vajutust} other {paremklõpsu}} teha sõnumitele, et mängijaid vajadusel vaigistada või neist teatada.",
-      "host-transferred": "{name} on nüüd host"
+      "welcome": "Olge vestluses lahked ja lugupidavad. Vajadusel saate mängija vaigistada või teda raporteerida, kui {isMobile, select, true {puudutate} other {klõpsate}} ühte tema sõnumitest või tema peal.",
+      "host-transferred": "Hosti roll anti üle mängijale {name}",
+      "player-forfeited": "{name} loobus mängust"
     },
     "avatar": {
       "penguin": "pingviin",
@@ -1278,6 +1353,13 @@
         },
         "player-already-connected": {
           "description": "Sa oled juba teisest seansist selle mänguga ühendatud"
+        },
+        "max-players-too-low": {
+          "description": "Mängijate arvu ei saa vähendada alla praeguse mängijate arvu"
+        },
+        "not-allowed": {
+          "title": "Luba keelatud",
+          "description": "Sul pole luba mänguseadeid muuta"
         }
       }
     },
@@ -1336,8 +1418,8 @@
         "title": "{playerName} on teate tõttu välja visatud"
       },
       "report-against-you": {
-        "title": "Teid on teate tõttu välja visatud",
-        "description": "Sinu nimi või üks sinu sõnumitest on teatatud ja tunnistatud sobimatuks. Palun ära korda seda käitumist."
+        "title": "Sind eemaldati mängust pärast teadet",
+        "description": "Administraator on sinu vastu esitatud aruande kinnitanud. Palun väldi sellise käitumise kordamist, vastasel juhul võidakse rakendada täiendavaid sanktsioone."
       }
     },
     "HostTransferContext": {
@@ -1434,6 +1516,36 @@
     "name-max-characters": "Kuvatav nimi võib olla maksimaalselt 20 tähemärki pikk",
     "username-min-characters": "Kasutajanimi peab olema vähemalt 3 tähemärki pikk",
     "username-max-characters": "Kasutajanimi võib olla kuni 20 tähemärki pikk",
-    "username-invalid-format": "Kasutajanimi võib sisaldada ainult tähti, numbreid ja allkriipsusid"
+    "username-invalid-format": "Kasutajanimi võib sisaldada ainult tähti, numbreid ja allkriipsusid",
+    "min-players-invalid": "Minimaalselt peab olema vähemalt 2 mängijat",
+    "max-players-invalid": "Maksimaalne mängijate arv võib olla kuni 8",
+    "card-per-row-min-invalid": "Kaart rea kohta peab olema vähemalt 1",
+    "card-per-row-max-invalid": "Kaartide arv reas võib olla maksimaalselt 3",
+    "card-per-column-min-invalid": "Kaartide arv igas veerus peab olema vähemalt 1",
+    "card-per-column-max-invalid": "Kaartide arv veerus võib olla maksimaalselt 4",
+    "score-to-end-game-min-invalid": "Skoor mängu lõpetamiseks peab olema vähemalt 1",
+    "score-to-end-game-max-invalid": "Skoor mängu lõpetamiseks peab olema maksimaalselt 10000000",
+    "first-player-flat-penalty-min-invalid": "Esimene mängija trahv peab olema vähemalt 0",
+    "first-player-flat-penalty-max-invalid": "Esimene mängija trahv peab olema maksimaalselt 10000000",
+    "first-player-multiplier-penalty-min-invalid": "Esimene mängija kordaja karistus peab olema vähemalt 1",
+    "first-player-multiplier-penalty-max-invalid": "Esimene mängija kordaja trahv ei tohi ületada 10000000",
+    "comment-max-characters": "Kommentaar võib olla maksimaalselt 500 tähemärki",
+    "password-min-characters": "Parool peab olema vähemalt 10 tähemärki pikk",
+    "password-lowercase-required": "Parool peab sisaldama vähemalt ühte väiketähte",
+    "password-uppercase-required": "Parool peab sisaldama vähemalt ühte suurtähte",
+    "password-number-required": "Parool peab sisaldama vähemalt ühte numbrit",
+    "password-special-char-required": "Parool peab sisaldama vähemalt ühte erimärki",
+    "passwords-dont-match": "Paroolid ei ühti",
+    "delete-account-confirmation-required": "Sisesta palun DELETE kinnitamiseks",
+    "current-password-required": "Praegune salasõna on nõutav",
+    "email-invalid": "Vigane e-posti aadress",
+    "token-required": "Token on vajalik",
+    "email-already-sent": "Viimase 5 minuti jooksul saadeti juba e-kiri. Palun kontrolli oma postkasti või klõpsa \"Saada uus kood\", et saata uus",
+    "email-already-exists": "See e-posti aadress on juba teisel kontol kasutusel. Palun kasuta teist.",
+    "username-creation-failed": "Me ei saanud sinu kasutajanime luua. Proovi uuesti.",
+    "account-deletion-already-scheduled": "Sinu konto kustutamine on juba ajastatud. Palun oota selle töötlemist.",
+    "account-deletion-schedule-failed": "Me ei saanud sinu konto kustutamist ajastada. Proovi uuesti.",
+    "user-creation-failed": "Me ei saanud sinu kontot luua. Palun proovi uuesti.",
+    "disposable-email-not-allowed": "Mittepüsivaid või ajutisi e-posti aadresseid ei lubata. Palun kasuta püsivat e-posti aadressi."
   }
 }

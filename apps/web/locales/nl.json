@@ -174,7 +174,9 @@
       },
       "leave-button": "Verlaat het spel",
       "player": "Speler",
-      "round": "Ronde {number}"
+      "round": "Ronde {number}",
+      "forfeit": "Opgeven",
+      "disconnected": "Verbroken"
     },
     "PrivacyPolicy": {
       "head": {
@@ -517,7 +519,9 @@
       "recent-activity": {
         "no-activity": "Geen recente activiteit om weer te geven.",
         "game-code": "Spel #{code}",
-        "rank": "Rang #{rank}"
+        "rank": "Rang #{rank}",
+        "forfeited": "Verbeurd",
+        "left": "Verlaten"
       },
       "search": {
         "placeholder": "Zoek gebruikersnaam"
@@ -708,7 +712,7 @@
               "2": "Analysedata zoals gameplaygedrag, sessiefrequentie of functiegebruik <b>kunnen worden verzameld om het spel te verbeteren</b>."
             }
           },
-          "storage-location": "Alle gegevens worden opgeslagen in de <b>Europese Unie</b> en verwerkt in overeenstemming met het <link>Privacybeleid</link>."
+          "storage-location": "Alle gegevens worden opgeslagen in de Europese Unie en verwerkt in overeenstemming met het <link>Privacybeleid</link>."
         },
         "analytics-tracking": {
           "title": "5. Analyse & Tracking",
@@ -762,6 +766,10 @@
           "general": "Algemene vragen: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Opnieuw verbinding maken met je spel",
+      "description": "Wacht alstublieft terwijl we je opnieuw verbinden met je actieve spel..."
     }
   },
   "components": {
@@ -932,7 +940,8 @@
       "feedback": "Geef feedback",
       "discord": "Discord",
       "settings": "Instellingen",
-      "leave-game": "Spel verlaten"
+      "leave-game": "Spel verlaten",
+      "forfeit": "Opgeven"
     },
     "OpponentsMobileView": {
       "opponents-list": {
@@ -1027,7 +1036,8 @@
     "ScoreTable": {
       "name": "Naam",
       "total": "Totaal",
-      "round": "Rond"
+      "round": "Rond",
+      "rank": "Rang"
     },
     "SettingsDialog": {
       "title": "Instellingen",
@@ -1104,7 +1114,8 @@
         "ban": "Ban {name}",
         "mute": "Mute {name}",
         "unmute": "Demute {name}",
-        "transfer-host": "{name} is nu de host"
+        "transfer-host": "Gastheer overzetten naar {name}",
+        "view-profile": "Bekijk profiel van {name}"
       }
     },
     "KickVote": {
@@ -1169,7 +1180,7 @@
     },
     "ReportDialog": {
       "title": "Meld {name}",
-      "description": "Meld de naam of een bericht van {name} als dit ongepast lijkt.",
+      "description": "Meld {name} als hun gedrag ongepast lijkt. Alle spelcontext wordt beoordeeld door moderators.",
       "cancel": "Annuleren",
       "submit": "Rapport",
       "toast": {
@@ -1179,7 +1190,18 @@
         }
       },
       "comment": "Extra context (optioneel)",
-      "comment-placeholder": "Geef extra context over dit rapport..."
+      "comment-placeholder": "Geef extra context over dit rapport...",
+      "disclaimer": "⚠️ Waarschuwing: Valse meldingen of misbruik van meldingen kunnen leiden tot sancties voor je account.",
+      "reason-label": "Reden voor melding",
+      "reason-placeholder": "Selecteer een reden",
+      "reasons": {
+        "inappropriate-username": "Ongeldige gebruikersnaam",
+        "toxic-behavior": "Giftig gedrag",
+        "spam-advertising": "Spam/reclame",
+        "cheating-exploiting": "Valsspelen/uitbuiten",
+        "harassment": "Pesterijen",
+        "other": "Overig"
+      }
     },
     "Banner": {
       "title": "Ik heb <gform>jouw feedback</gform> nodig om de toekomst van Skyjo vorm te geven!"
@@ -1216,6 +1238,58 @@
       "description": "Je zat in een spel dat bezig is. Wil je opnieuw verbinden?",
       "reconnect-button": "Ja, opnieuw verbinden",
       "dismiss-button": "Nee, sluiten"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Je moet ingelogd zijn om te chatten"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Spel opgeven?",
+      "message": "Weet je zeker dat je wilt opgeven? Je verlaat het spel permanent en kunt niet meer meedoen.",
+      "confirm": "Ja, Opgeven",
+      "cancel": "Annuleren"
+    },
+    "ChatRestricted": {
+      "description": "Chat is verboden"
+    },
+    "PlayAgainButton": {
+      "disabled": "Opnieuw spelen",
+      "button": "Opnieuw spelen",
+      "leavebusterMessage": "Voltooi je leavebuster-straf om opnieuw te kunnen spelen"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebuster-boete",
+      "description": "Je hebt vroegtijdig een openbare game verlaten. Voltooi deze straf om verder te kunnen spelen.",
+      "progress": "Voortgang: {completed}/{required}",
+      "timeRemaining": "Resterende tijd: {time}",
+      "completeButton": "Voltooid ({time})",
+      "completedButton": "Voltooid!",
+      "closeButton": "Sluiten"
+    },
+    "BanDialog": {
+      "title": "Account Geschorst",
+      "suspensionMessage": "Je bent {isPermanent, select, true {permanent} other {tijdelijk}} geschorst van het spelen vanwege je gedrag in het spel.",
+      "temporary": "Je kunt weer spelen op: {date}.",
+      "reasonLabel": "Reden:",
+      "defaultReason": "Geen reden opgegeven.",
+      "understandButton": "Ik begrijp het"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chatbeperking",
+      "description": "Uw chatprivileges zijn tijdelijk beperkt. U kunt gedurende deze tijd geen berichten verzenden.",
+      "detailedDescription": "U bent geblokkeerd voor communicatie via chat na een melding van uw gedrag die is gevalideerd door een beheerder. U kunt weer chatten op:",
+      "detailedDescriptionPermanent": "De communicatiemogelijkheid via de chat is voor u geblokkeerd na een gevalideerde melding van uw gedrag door een beheerder.",
+      "reason": {
+        "title": "Reden"
+      },
+      "duration": {
+        "title": "Duur",
+        "expiresAt": "Chat wordt hersteld op: {date}"
+      },
+      "report": {
+        "title": "Gerelateerd rapport",
+        "id": "Meldings-ID: #{reportId}"
+      },
+      "acknowledgeButton": "Ik begrijp het"
     }
   },
   "utils": {
@@ -1247,8 +1321,9 @@
       "wizz-sent": "Je hebt een wizz gestuurd naar {targetName}!",
       "wizz-self": "Je bent gewizzed door {initiatorName}!",
       "wizz-other": "{initiatorName} heeft {targetName} gewizzed!",
-      "welcome": "Wees alsjeblieft aardig en respectvol. Je kunt {isMobile, select, true {lang indrukken} other {met de rechtermuisknop klikken}} op berichten om spelers indien nodig het zwijgen op te leggen of te rapporteren.",
-      "host-transferred": "{name} is nu de host"
+      "welcome": "Wees aardig en respectvol in de chat. Indien nodig kun je een speler dempen of rapporteren door op een van hun berichten of op hen te {isMobile, select, true {tikken} other {klikken}}.",
+      "host-transferred": "Gastheerrol overgedragen aan {name}",
+      "player-forfeited": "{name} heeft het spel opgegeven"
     },
     "avatar": {
       "bee": "bij",
@@ -1294,6 +1369,13 @@
         },
         "player-already-connected": {
           "description": "Je bent al verbonden met dit spel vanuit een andere sessie"
+        },
+        "max-players-too-low": {
+          "description": "Kan het maximum aantal spelers niet verlagen tot onder het huidige aantal spelers in het spel"
+        },
+        "not-allowed": {
+          "title": "Toegang geweigerd",
+          "description": "Je hebt geen toestemming om de spelinstellingen te wijzigen"
         }
       }
     }
@@ -1336,8 +1418,8 @@
         "title": "{playerName} is gekickt wegens een melding"
       },
       "report-against-you": {
-        "title": "Je bent gekickt vanwege een melding",
-        "description": "Je naam of een van je berichten is gemeld en als ongepast beoordeeld. Gelieve dit gedrag niet te herhalen."
+        "title": "Je bent uit het spel verwijderd na een melding",
+        "description": "Een beheerder heeft een melding tegen je gevalideerd. Vermijd dit gedrag te herhalen, anders kunnen er verdere sancties worden opgelegd."
       }
     },
     "HostTransferContext": {
@@ -1434,6 +1516,36 @@
     "name-max-characters": "Weergavenaam mag maximaal 20 tekens lang zijn",
     "username-min-characters": "Gebruikersnaam moet minimaal 3 tekens lang zijn",
     "username-max-characters": "Gebruikersnaam mag maximaal 20 tekens bevatten",
-    "username-invalid-format": "Gebruikersnaam mag alleen letters, cijfers en underscores bevatten"
+    "username-invalid-format": "Gebruikersnaam mag alleen letters, cijfers en underscores bevatten",
+    "min-players-invalid": "Het minimum aantal spelers moet minstens 2 zijn",
+    "max-players-invalid": "Maximaal aantal spelers mag niet meer dan 8 zijn",
+    "card-per-row-min-invalid": "Kaart per rij moet minimaal 1 zijn",
+    "card-per-row-max-invalid": "Kaart per rij mag maximaal 3 zijn",
+    "card-per-column-min-invalid": "Elke kaart per kolom moet minimaal 1 zijn",
+    "card-per-column-max-invalid": "Kaart per kolom mag maximaal 4 zijn",
+    "score-to-end-game-min-invalid": "Score om het spel te beëindigen moet minimaal 1 zijn",
+    "score-to-end-game-max-invalid": "Score om het spel te beëindigen mag niet hoger zijn dan 10000000",
+    "first-player-flat-penalty-min-invalid": "De eerste speler platte straf moet minimaal 0 zijn",
+    "first-player-flat-penalty-max-invalid": "De eerste speler platte straf mag maximaal 10000000 zijn",
+    "first-player-multiplier-penalty-min-invalid": "De multiplier-straf voor de eerste speler moet minimaal 1 zijn",
+    "first-player-multiplier-penalty-max-invalid": "De multiplier penalty voor de eerste speler mag niet hoger zijn dan 10000000",
+    "comment-max-characters": "Commentaar mag maximaal 500 tekens bevatten",
+    "password-min-characters": "Wachtwoord moet minimaal 10 tekens lang zijn",
+    "password-lowercase-required": "Wachtwoord moet minstens één kleine letter bevatten",
+    "password-uppercase-required": "Wachtwoord moet minstens één hoofdletter bevatten",
+    "password-number-required": "Wachtwoord moet minstens één cijfer bevatten",
+    "password-special-char-required": "Wachtwoord moet minstens één speciaal teken bevatten",
+    "passwords-dont-match": "Wachtwoorden komen niet overeen",
+    "delete-account-confirmation-required": "Typ DELETE om te bevestigen",
+    "current-password-required": "Huidig wachtwoord is vereist",
+    "email-invalid": "Ongeldig e-mailadres",
+    "token-required": "Token is vereist",
+    "email-already-sent": "Er is al een e-mail verzonden in de afgelopen 5 minuten. Controleer je inbox of klik op \"Nieuwe code aanvragen\" om een nieuwe te verzenden",
+    "email-already-exists": "Dit e-mailadres is al in gebruik bij een ander account. Gebruik alstublieft een ander adres.",
+    "username-creation-failed": "We konden je gebruikersnaam niet aanmaken. Probeer het opnieuw.",
+    "account-deletion-already-scheduled": "Je accountverwijdering is al gepland. Wacht alsjeblieft tot deze is verwerkt.",
+    "account-deletion-schedule-failed": "We konden je accountverwijdering niet plannen. Probeer het opnieuw.",
+    "user-creation-failed": "We konden je account niet aanmaken. Probeer het opnieuw.",
+    "disposable-email-not-allowed": "Wegwerp- of tijdelijke e-mailadressen zijn niet toegestaan. Gebruik een permanent e-mailadres."
   }
 }

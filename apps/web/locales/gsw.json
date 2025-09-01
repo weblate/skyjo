@@ -151,7 +151,9 @@
         "replay": "Wiederhole"
       },
       "leave-button": "S Spiel verlah",
-      "round": "Rundi {number}"
+      "round": "Rundi {number}",
+      "forfeit": "Ufgä",
+      "disconnected": "Disconncted"
     },
     "PrivacyPolicy": {
       "content": {
@@ -512,7 +514,9 @@
       "recent-activity": {
         "no-activity": "Keini letschti Aktivität zum zeige.",
         "game-code": "Spiel-Code #{code}",
-        "rank": "Rang #{rank}"
+        "rank": "Rang #{rank}",
+        "forfeited": "Verzichtet",
+        "left": "Verlah"
       },
       "search": {
         "placeholder": "Benutzername sueche"
@@ -703,7 +707,7 @@
               "2": "Analytics-Date, wie z.B. Spielverhalte, Sitzungsfrequenz oder Funktionsnutzig, **chönd gsammelet wärde zum Spiel z'verbessere**."
             }
           },
-          "storage-location": "All Datea werdet i de <b>Europäische Union</b> gspeichret und gmäss de <link>Datenschutzrichtlinie</link> behandelt."
+          "storage-location": "All Datea werde i dr Europäischi Union glägeret und ghandlet gnau nach dr <link>Schutzbestimmige</link>."
         },
         "analytics-tracking": {
           "title": "5. Analytics & Tracking",
@@ -757,6 +761,10 @@
           "general": "Allgmeini Froge: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Wiederverbinde mit dim Spiel",
+      "description": "Bitte warte, während mir dich mit dim aktive Spiel verbinde..."
     }
   },
   "components": {
@@ -905,7 +913,8 @@
       "feedback": "Gib es Feedback",
       "discord": "Discord",
       "settings": "Istellige",
-      "leave-game": "Spiel verloh"
+      "leave-game": "Spiel verloh",
+      "forfeit": "Ufgä"
     },
     "OpponentBoard": {
       "disconnected": "De Spiiler het s Spiel verlah. E Bot wird für ihn spiele i de nöchste Runde, bis er wieder verbunde isch."
@@ -1048,7 +1057,8 @@
         "vote-to-kick": "Abstimmig zum Usewärfe vo {name}",
         "mute": "Mute {name}",
         "unmute": "Unmute {name}",
-        "transfer-host": "{name} isch jetzt de Host"
+        "transfer-host": "Host übercho zu {name}",
+        "view-profile": "{name}s Profil aaluege"
       }
     },
     "AppearanceSelect": {
@@ -1160,11 +1170,12 @@
     "ScoreTable": {
       "name": "Name",
       "round": "Rund",
-      "total": "Total"
+      "total": "Total",
+      "rank": "Rang"
     },
     "ReportDialog": {
       "title": "Meldä {name}",
-      "description": "Melde de Name oder e Nachricht vo {name}, wänn's unpassend isch.",
+      "description": "Melde {name}, wenn sich das Verhalten unpassend isch. Alli Spiel-Kontext werded vo de Moderatore überpruäfet.",
       "cancel": "Abbräche",
       "submit": "Rapport",
       "toast": {
@@ -1174,7 +1185,18 @@
         }
       },
       "comment": "Zuesätzliche Info (optional)",
-      "comment-placeholder": "Gib meh meh Info zu dem Bericht..."
+      "comment-placeholder": "Gib meh meh Info zu dem Bericht...",
+      "disclaimer": "⚠️ Ufpass: Falschi Meldige oder Missbruuch vo Meldige chönd zu Strofä für dini Account führä.",
+      "reason-label": "Grund für Meldig",
+      "reason-placeholder": "Wähl en Grund",
+      "reasons": {
+        "inappropriate-username": "Unpassender Benützername",
+        "toxic-behavior": "Giftigs Verhalte",
+        "spam-advertising": "Spam/Werbig",
+        "cheating-exploiting": "Schummlä/Usnutze",
+        "harassment": "Belästigung",
+        "other": "Anderi"
+      }
     },
     "Banner": {
       "title": "Ich bruuche <gform>Dini Rückmeldig</gform>, zum d Zuekunft vo Skyjo z'gestalte!"
@@ -1211,6 +1233,58 @@
       "description": "Du bisch i öppere Spiel gsi, wo grad am Laufe isch. Wotsch wieder verbinde?",
       "reconnect-button": "Ja, verbinde neu",
       "dismiss-button": "Nei, schliesse"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Du musst igloggt sii zum chatte"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Spiel abbreche?",
+      "message": "Bisch sicher, dass du ufgeh willsch? Du verlosch s'Spiel für immer und chasch nöd meh drbi sii.",
+      "confirm": "Ja, verzichte",
+      "cancel": "Abbreche"
+    },
+    "ChatRestricted": {
+      "description": "Du derfscht nöd schriibe"
+    },
+    "PlayAgainButton": {
+      "disabled": "Noo spiele",
+      "button": "Noomaloo",
+      "leavebusterMessage": "Schtoos dini Lehwerbuster-Strofe ab, zum weder z'spile"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebuster Straff",
+      "description": "Du bisch us eme öffentliche Spiel ussgange. Schüss die Straaf ab, zum wyter z'spile.",
+      "progress": "Fortschritt: {completed}/{required}",
+      "timeRemaining": "Ziit verbliebe: {time}",
+      "completeButton": "Uusgschlosse ({time})",
+      "completedButton": "Fertig!",
+      "closeButton": "Schliisse"
+    },
+    "BanDialog": {
+      "title": "Konto gschperrt",
+      "suspensionMessage": "Du bisch {isPermanent, select, true {permanent}} other {zytig}} vom Spiele usgschlosse, wil din Verhalte im Spiel nid korrekt gsi isch.",
+      "temporary": "Du chaasch wieder spile am: {date}.",
+      "reasonLabel": "Grund:",
+      "defaultReason": "Kei Grund aagäh.",
+      "understandButton": "Ich verstahni"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chat-Beschränkig",
+      "description": "Dïi Chat-Rächt häi mir vorwiilig sperrt. Dïi chasch in dere Zyt kei Nöiigkätte schecke.",
+      "detailedDescription": "Sie dörfed nöd meh per Chat kommuniziere, wil Ihri Verhaltigswiis nach ere Meldig dur en Administrator bestetiget worde isch. Sie chönd wieder chatte am:",
+      "detailedDescriptionPermanent": "Du bisch vom Chat usgschlosse worde, wil zhäregleit iine Maut us sim Vahalde, wo e Administrator gvalidiert het.",
+      "reason": {
+        "title": "Grund"
+      },
+      "duration": {
+        "title": "Düüri",
+        "expiresAt": "Chat wird wiederhergestellt am: {date}"
+      },
+      "report": {
+        "title": "Zemeldete Bericht",
+        "id": "Mäldig ID: #{reportId}"
+      },
+      "acknowledgeButton": "Ich verstahns"
     }
   },
   "utils": {
@@ -1226,8 +1300,9 @@
       "wizz-sent": "Du hesch em {targetName} en Wizz gschickt!",
       "wizz-self": "Du bisch vom {initiatorName} wizzed worde!",
       "wizz-other": "{initiatorName} het {targetName} wizzed!",
-      "welcome": "Bitte sii nett und respektvoll. Du chasch (uf Mobilgerätschafte: lang drüücke, susch: mit dr rechta Maustast) drüücke üf Nachrichte, zum Spieler stummschalte oder melde, falls nötig.",
-      "host-transferred": "{name} isch jetzt de Host"
+      "welcome": "Seid freindlech und respektvoll im Chat. Falls nötig, chöit ihr en Spieler stumm schalte oder melde, indem ihr uf äini vo sine Botschafte oder uf en druff {isMobile, select, true {tippet} other {klickt}}.",
+      "host-transferred": "Host Roll isch überträit worde an {name}",
+      "player-forfeited": "{name} hät s' Spiel abbroche"
     },
     "skymo": {
       "turn": {
@@ -1289,6 +1364,13 @@
         },
         "player-already-connected": {
           "description": "Du bisch scho vo öppem andere Session mit däm Spiel verbunde"
+        },
+        "max-players-too-low": {
+          "description": "Du chasch d maximali Spielerzahl nöd unders de aktuelli Spielerzahl im Spiel verringere"
+        },
+        "not-allowed": {
+          "title": "Dörfsch nöd",
+          "description": "Du hesch kei Erlaubnis zum Spiel-Einstellungen z'ändere"
         }
       }
     }
@@ -1331,8 +1413,8 @@
         "title": "De {playerName} isch usegschmisse worde uf Grund vo nere Meldig"
       },
       "report-against-you": {
-        "title": "Du bisch usegschmisse worde wägemene Rapport",
-        "description": "Dini Name oder öpis vo dine Nachrichte isch meldet worde und als unpassend bewertet worde. Bitte mach das nöd wieder."
+        "title": "Du wurdesch us em Spiel entfernt, will es Meldig geege dich gäbe het",
+        "description": "En Administrator isch en Rappert gege dich am Validierä. Bitte vermiid dis Verhalde, susch chönti witeri Sanktione gälte."
       }
     },
     "HostTransferContext": {
@@ -1434,6 +1516,36 @@
     "name-max-characters": "Dini Anzeige-Name darf maximal 20 Zeiche lang sii",
     "username-min-characters": "D Name muess mindeschtens 3 Zeiche lang sii",
     "username-max-characters": "Dini Username darf maximal 20 Zeiche lang sii",
-    "username-invalid-format": "Dini Username darf nume Buachstabe, Zahlä und Unterstrichä enthalte"
+    "username-invalid-format": "Dini Username darf nume Buachstabe, Zahlä und Unterstrichä enthalte",
+    "min-players-invalid": "D Mindeschtenspieler müend mindestens 2 sii",
+    "max-players-invalid": "D maximali Spielerzahl darf nöd meh als 8 sii",
+    "card-per-row-min-invalid": "Pro Reie muess mindestens 1 Karte sii",
+    "card-per-row-max-invalid": "Pro Reie dörfsch maximal 3 Karte ha",
+    "card-per-column-min-invalid": "Pro Spalte muss mindestens 1 Karte erlaubt sie",
+    "card-per-column-max-invalid": "Pro Spalte dürfe maximal 4 Chärtä sii",
+    "score-to-end-game-min-invalid": "D Punktzahl zum Spieländ müend mindeschtens 1 sii",
+    "score-to-end-game-max-invalid": "D Punktzahl zum Spieläände muess höchschtens 10000000 sii",
+    "first-player-flat-penalty-min-invalid": "D'Straf für de erscht Spieler muess mindestens 0 sii",
+    "first-player-flat-penalty-max-invalid": "D'Straf für de erscht Spieler darf höchstens 10000000 sii",
+    "first-player-multiplier-penalty-min-invalid": "D'Straf für de erscht Spieler-Multiplikator muess mindeschtens 1 sii",
+    "first-player-multiplier-penalty-max-invalid": "D'Straf für de erscht Spieler-Multiplikator derf maximal 10'000'000 sie",
+    "comment-max-characters": "D Kommentär darf maximal 500 Zeiche lang sii",
+    "password-min-characters": "Passwort muess mindestens 10 Zeiche lang sii",
+    "password-lowercase-required": "S'Passwort muess mindeschtens ä chliiini Buechstabe ha",
+    "password-uppercase-required": "D'Passwort muess mindeschtens ein grosser Buechstabe haa",
+    "password-number-required": "Passwort muesch mindeschtens ei Zahl ha",
+    "password-special-char-required": "S'Passwort mues mindestens es Sonderzeiche ha",
+    "passwords-dont-match": "Passwörter stimmed nöd überei",
+    "delete-account-confirmation-required": "Tipp DELETE zum Bestätige",
+    "current-password-required": "D'aktuells Passwoert isch erforderlich",
+    "email-invalid": "Ungültigi E-Mail-Adress",
+    "token-required": "Token wird benötigt",
+    "email-already-sent": "E-Mail isch scho i de letschte 5 Minute gschickt worde. Bitte lueg i dim Postfach oder klick uf \"Neui Code aaforderä\", zum no eini z'schicke",
+    "email-already-exists": "Dä E-Mail-Adrässe isch scho bi aim andere Konto verbunde. Bitte bruchsch e anderi.",
+    "username-creation-failed": "Mir chönd de Username nöd erstelle. Bitte probiers nomal.",
+    "account-deletion-already-scheduled": "Dini Account-Löschig isch scho plant. Bitte warte, bis sie verarbetet isch.",
+    "account-deletion-schedule-failed": "Mir hend din Account-Löschig nöd chönne plane. Bitte versuechs nomal.",
+    "user-creation-failed": "Mir hend din Account nöd chönne erstelle. Bitte probiers nomal.",
+    "disposable-email-not-allowed": "Wegwerf- oder temporäri E-Mail-Adressä sind nid erlaubt. Bitte bruchsch e permanent E-Mail-Adress."
   }
 }

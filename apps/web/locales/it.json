@@ -245,7 +245,9 @@
       "rank": "Classifica",
       "player": "Giocatore",
       "title": "Risultati della partita",
-      "round": "Round {number}"
+      "round": "Round {number}",
+      "forfeit": "Arrenditi",
+      "disconnected": "Disconnesso"
     },
     "Create": {
       "head": {
@@ -512,7 +514,9 @@
       "recent-activity": {
         "no-activity": "Nessuna attività recente da mostrare.",
         "game-code": "Partita #{code}",
-        "rank": "Classifica #{rank}"
+        "rank": "Classifica #{rank}",
+        "forfeited": "Rinunciato",
+        "left": "Ha abbandonato"
       },
       "search": {
         "placeholder": "Cerca nome utente"
@@ -703,7 +707,7 @@
               "2": "I dati analitici come il comportamento di gioco, la frequenza delle sessioni o l'utilizzo delle funzionalità **possono essere raccolti per migliorare il gioco**."
             }
           },
-          "storage-location": "Tutti i dati sono archiviati nell'<b>Unione Europea</b> e gestiti in conformità con la <link>Normativa sulla Privacy</link>."
+          "storage-location": "Tutti i dati sono archiviati nell'Unione Europea e gestiti in conformità con le <link>Normative sulla Privacy</link>."
         },
         "analytics-tracking": {
           "title": "5. Analisi e monitoraggio",
@@ -757,6 +761,10 @@
           "content": "Tutti i contenuti originali, le illustrazioni e il codice appartengono a Maxent Rouault, salvo diversa indicazione. Non puoi riutilizzare o ridistribuire alcuna parte del sito web senza permesso."
         }
       }
+    },
+    "Reconnect": {
+      "title": "Riconnessione alla tua partita",
+      "description": "Attendi mentre ti riconnettiamo alla tua partita attiva..."
     }
   },
   "components": {
@@ -1076,7 +1084,8 @@
         "unmute": "Riattiva l'audio di {name}",
         "ban": "Banna {name}",
         "mute": "Silenzia {name}",
-        "transfer-host": "{name} è ora l'host"
+        "transfer-host": "Trasferisci l'host a {name}",
+        "view-profile": "Visualizza il profilo di {name}"
       }
     },
     "Chat": {
@@ -1088,7 +1097,8 @@
     "ScoreTable": {
       "total": "Totale",
       "name": "Nome",
-      "round": "Giro"
+      "round": "Giro",
+      "rank": "Classifica"
     },
     "RulesDialog": {
       "trigger": {
@@ -1151,10 +1161,11 @@
       "feedback": "Lascia un feedback",
       "discord": "Discord",
       "settings": "Impostazioni",
-      "leave-game": "Abbandona partita"
+      "leave-game": "Abbandona partita",
+      "forfeit": "Rinuncia"
     },
     "ReportDialog": {
-      "description": "Segnala il nome o un messaggio di {name} se sembra inappropriato.",
+      "description": "Segnala {name} se il suo comportamento ti sembra inappropriato. Tutto il contesto di gioco verrà esaminato dai moderatori.",
       "toast": {
         "report-submitted": {
           "description": "Grazie per la tua segnalazione, hai contribuito a migliorare la qualità del gioco.",
@@ -1165,7 +1176,18 @@
       "cancel": "Annulla",
       "submit": "Rapporto",
       "comment": "Contesto aggiuntivo (facoltativo)",
-      "comment-placeholder": "Fornisci un contesto aggiuntivo per questo report..."
+      "comment-placeholder": "Fornisci un contesto aggiuntivo per questo report...",
+      "disclaimer": "⚠️ Attenzione: segnalazioni false o abuso delle segnalazioni potrebbero comportare penalità per il tuo account.",
+      "reason-label": "Motivo della segnalazione",
+      "reason-placeholder": "Seleziona un motivo",
+      "reasons": {
+        "inappropriate-username": "Nome utente non appropriato",
+        "toxic-behavior": "Comportamento tossico",
+        "spam-advertising": "Spam/pubblicità",
+        "cheating-exploiting": "Barare/sfruttare",
+        "harassment": "Molestie",
+        "other": "Altro"
+      }
     },
     "OpponentBoard": {
       "disconnected": "Il giocatore ha abbandonato la partita. Un bot giocherà al suo posto per i prossimi turni finché non si ricollegherà."
@@ -1211,6 +1233,58 @@
       "dismiss-button": "No, ignora",
       "description": "Ti sei disconnesso da una partita in corso. Vuoi riconnetterti?",
       "reconnect-button": "Sì, riconnetti"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Devi essere loggato per chattare"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Abbandonare partita?",
+      "message": "Sei sicuro di voler abbandonare? Lascerai la partita permanentemente e non potrai più rientrare.",
+      "confirm": "Sì, Rinuncia",
+      "cancel": "Annulla"
+    },
+    "ChatRestricted": {
+      "description": "È vietato chattare"
+    },
+    "PlayAgainButton": {
+      "disabled": "Gioca ancora",
+      "button": "Gioca di nuovo",
+      "leavebusterMessage": "Completa la tua penalità leavebuster per giocare di nuovo"
+    },
+    "LeavebusterDialog": {
+      "title": "Penalità Leavebuster",
+      "description": "Hai abbandonato una partita pubblica in anticipo. Completa questa penalità per continuare a giocare.",
+      "progress": "Progresso: {completed}/{required}",
+      "timeRemaining": "Tempo rimanente: {time}",
+      "completeButton": "Completa ({time})",
+      "completedButton": "Completato!",
+      "closeButton": "Chiudi"
+    },
+    "BanDialog": {
+      "title": "Account Sospeso",
+      "suspensionMessage": "Sei sospeso {isPermanent, select, true {permanentemente} other {temporaneamente}} dal gioco a causa del tuo comportamento.",
+      "temporary": "Potrai giocare di nuovo il: {date}.",
+      "reasonLabel": "Motivo:",
+      "defaultReason": "Nessun motivo fornito.",
+      "understandButton": "Capisco"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Restrizione chat",
+      "description": "I tuoi privilegi di chat sono stati temporaneamente limitati. Non puoi inviare messaggi durante questo periodo.",
+      "detailedDescription": "Ti è stato vietato di comunicare tramite chat in seguito a una segnalazione del tuo comportamento, validata da un amministratore. Potrai chattare di nuovo il:",
+      "detailedDescriptionPermanent": "La tua comunicazione tramite chat è stata limitata a seguito di una segnalazione del tuo comportamento, convalidata da un amministratore.",
+      "reason": {
+        "title": "Motivo"
+      },
+      "duration": {
+        "title": "Durata",
+        "expiresAt": "Chat verrà ripristinata il: {date}"
+      },
+      "report": {
+        "title": "Segnala Correlato",
+        "id": "ID segnalazione: #{reportId}"
+      },
+      "acknowledgeButton": "Ho capito"
     }
   },
   "utils": {
@@ -1244,8 +1318,9 @@
       "argument-required": "Uno o più argomenti sono richiesti per il comando: {command}",
       "player-already-muted": "{name} è già muto",
       "player-not-muted": "{name} non è disattivato",
-      "host-transferred": "{name} è ora l'host",
-      "welcome": "Sii gentile e rispettoso. Puoi {isMobile, select, true {tenere premuto a lungo} other {fare clic con il tasto destro}} sui messaggi per silenziare o segnalare i giocatori, se necessario."
+      "host-transferred": "Ruolo di host trasferito a {name}",
+      "welcome": "Sii gentile e rispettoso nella chat. Se necessario, puoi silenziare o segnalare un giocatore {isMobile, select, true {toccando} other {facendo clic}} su uno dei suoi messaggi o su di lui.",
+      "player-forfeited": "{name} ha abbandonato la partita"
     },
     "socket": {
       "error": {
@@ -1273,6 +1348,13 @@
         },
         "player-already-connected": {
           "description": "Sei già connesso a questa partita da un'altra sessione"
+        },
+        "max-players-too-low": {
+          "description": "Impossibile ridurre il numero massimo di giocatori al di sotto del numero attuale di giocatori nella partita"
+        },
+        "not-allowed": {
+          "title": "Accesso negato",
+          "description": "Non hai il permesso di cambiare le impostazioni di gioco"
         }
       }
     },
@@ -1323,8 +1405,8 @@
     },
     "ReportContext": {
       "report-against-you": {
-        "description": "Il tuo nome o uno dei tuoi messaggi è stato segnalato ed è stato ritenuto inappropriato. Ti preghiamo di non ripetere questo comportamento.",
-        "title": "Sei stato espulso a causa di una segnalazione"
+        "description": "Un amministratore ha convalidato una segnalazione nei tuoi confronti. Ti preghiamo di evitare di ripetere questo comportamento, altrimenti potrebbero essere applicate ulteriori sanzioni.",
+        "title": "Sei stato rimosso dal gioco a seguito di una segnalazione"
       },
       "report": {
         "title": "{playerName} è stato espulso a causa di una segnalazione"
@@ -1434,6 +1516,36 @@
     "name-min-characters": "Il nome visualizzato deve essere lungo almeno 2 caratteri",
     "name-max-characters": "Il nome visualizzato deve essere di massimo 20 caratteri",
     "username-max-characters": "Il nome utente deve essere di massimo 20 caratteri",
-    "username-invalid-format": "Il nome utente può contenere solo lettere, numeri e trattini bassi"
+    "username-invalid-format": "Il nome utente può contenere solo lettere, numeri e trattini bassi",
+    "min-players-invalid": "Il numero minimo di giocatori deve essere almeno 2",
+    "max-players-invalid": "Il numero massimo di giocatori deve essere al massimo 8",
+    "card-per-row-min-invalid": "La carta per riga deve essere almeno 1",
+    "card-per-row-max-invalid": "La carta per riga deve essere al massimo 3",
+    "card-per-column-min-invalid": "La carta per colonna deve essere almeno 1",
+    "card-per-column-max-invalid": "La carta per colonna deve essere al massimo 4",
+    "score-to-end-game-min-invalid": "Il punteggio per terminare la partita deve essere almeno 1",
+    "score-to-end-game-max-invalid": "Il punteggio per terminare la partita deve essere al massimo 10000000",
+    "first-player-flat-penalty-min-invalid": "Il bonus iniziale del primo giocatore deve essere almeno 0",
+    "first-player-flat-penalty-max-invalid": "La penalità fissa del primo giocatore deve essere al massimo 10000000",
+    "first-player-multiplier-penalty-min-invalid": "La penalità del moltiplicatore del primo giocatore deve essere almeno 1",
+    "first-player-multiplier-penalty-max-invalid": "Il moltiplicatore del primo giocatore non può superare 10000000",
+    "comment-max-characters": "Il commento deve essere di massimo 500 caratteri",
+    "password-min-characters": "La password deve contenere almeno 10 caratteri",
+    "password-lowercase-required": "La password deve contenere almeno una lettera minuscola",
+    "password-uppercase-required": "La password deve contenere almeno una lettera maiuscola",
+    "password-number-required": "La password deve contenere almeno un numero",
+    "password-special-char-required": "La password deve contenere almeno un carattere speciale",
+    "passwords-dont-match": "Le password non corrispondono",
+    "delete-account-confirmation-required": "Digita ELIMINA per confermare",
+    "current-password-required": "La password attuale è obbligatoria",
+    "email-invalid": "Indirizzo email non valido",
+    "token-required": "È necessario un token",
+    "email-already-sent": "È già stata inviata un'email negli ultimi 5 minuti. Controlla la tua casella di posta o fai clic su \"Richiedi nuovo codice\" per inviarne uno nuovo",
+    "email-already-exists": "Questo indirizzo email è già in uso su un altro account. Usane uno diverso.",
+    "username-creation-failed": "Non siamo riusciti a creare il tuo nome utente. Riprova.",
+    "account-deletion-already-scheduled": "La cancellazione del tuo account è già stata programmata. Attendi che venga elaborata.",
+    "account-deletion-schedule-failed": "Impossibile pianificare l'eliminazione del tuo account. Riprova.",
+    "user-creation-failed": "Impossibile creare il tuo account. Riprova.",
+    "disposable-email-not-allowed": "Gli indirizzi email usa e getta o temporanei non sono ammessi. Per favore, usa un indirizzo email permanente."
   }
 }

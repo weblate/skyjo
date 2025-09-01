@@ -174,7 +174,9 @@
       },
       "title": "Disoc'hoù ar c'hoari",
       "leave-button": "Kuitaat ar c'hoariadenn",
-      "round": "Troennad {number}"
+      "round": "Troennad {number}",
+      "forfeit": "Goulenn",
+      "disconnected": "Dizaskell"
     },
     "PrivacyPolicy": {
       "head": {
@@ -517,7 +519,9 @@
       "recent-activity": {
         "no-activity": "N'eus ket a obererezh nevez da ziskouez.",
         "game-code": "C'hoari #{code}",
-        "rank": "Renk #{rank}"
+        "rank": "Renk #{rank}",
+        "forfeited": "Dilezet",
+        "left": "Kuitaet"
       },
       "search": {
         "placeholder": "Klask anv implijer"
@@ -708,7 +712,7 @@
               "2": "Gall an titouroù analitik evel emzalc’h ar c’hoari, aliesañ ar seizoù pe implij an arc’hwelioù **kaout dastumad evit gwellaat ar c’hoari**."
             }
           },
-          "storage-location": "An holl roadennoù a vez miret en <b>Unvaniezh Europa</b> hag int kaset da-benn hervez ar <link>Politikerezh prevezded</link>."
+          "storage-location": "An holl roadennoù a zo miret en Unvaniezh Europa hag o labourat a-drugarez d'ar <link>Gwir-Digarez</link>."
         },
         "analytics-tracking": {
           "title": "5. Analiñ & Heñchañ",
@@ -762,6 +766,10 @@
           "title": "12. Darev"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Oc'h adkengregiñ ouzh da c'hoari",
+      "description": "Mar plij gortoz e-pad ma adkavomp ouzh da c'hoari a-vremañ..."
     }
   },
   "components": {
@@ -944,7 +952,8 @@
     "ScoreTable": {
       "round": "Troiad",
       "name": "Anv",
-      "total": "Hollad"
+      "total": "Hollad",
+      "rank": "Renk"
     },
     "AppearanceSelect": {
       "light": "Sklaer",
@@ -1084,7 +1093,8 @@
       "feedback": "Roit un distro-komz",
       "discord": "Discord",
       "settings": "Arventennoù",
-      "leave-game": "Kuitaat ar c'hoari"
+      "leave-game": "Kuitaat ar c'hoari",
+      "forfeit": "Goulenn"
     },
     "OpponentsMobileView": {
       "opponents-list": {
@@ -1118,7 +1128,8 @@
         "report": "Dañvad {name}",
         "vote-to-kick": "Votiñ da skarzhañ {name}",
         "ban": "Gwareziñ {name}",
-        "transfer-host": "{name} eo an ost a-vremañ"
+        "transfer-host": "Kas an aotrouniezh da {name}",
+        "view-profile": "Gwelet profile {name}"
       }
     },
     "EndRoundDialog": {
@@ -1151,7 +1162,7 @@
       }
     },
     "ReportDialog": {
-      "description": "Disputit anv pe ur c'hemmad digant {name} mar seblant didalvez.",
+      "description": "Diskouez {name} ma ne seblant ket mat o emzalc'h. An hollad istor ar c'hoari a vo sellet outañ gant ar re a reoù.",
       "toast": {
         "report-submitted": {
           "title": "Danevell a zo bet kaset",
@@ -1162,7 +1173,18 @@
       "title": "Disput {name}",
       "cancel": "Nullañ",
       "comment": "Kontekst ouzhpenn (diret)",
-      "comment-placeholder": "Ro un dachennad ouzhpenn d'an notenn-mañ..."
+      "comment-placeholder": "Ro un dachennad ouzhpenn d'an notenn-mañ...",
+      "disclaimer": "⚠️ Diwallit: Gall ar fazioù er c'heladennoù pe an abafuzadur anezho degas kastizoù evit da gont.",
+      "reason-label": "Abeg an notenn",
+      "reason-placeholder": "Dibab ur meneg",
+      "reasons": {
+        "inappropriate-username": "An anv implijet zo dic'houls",
+        "toxic-behavior": "Emzalc'husted fall",
+        "spam-advertising": "Spam/brud",
+        "cheating-exploiting": "Tromplerezh/arvererezh",
+        "harassment": "Ensevelled",
+        "other": "All"
+      }
     },
     "OpponentBoard": {
       "disconnected": "Kuitaet eo bet ar c'hoari gant ar c'hoarier. Ur bot a c'hoario en o lec'h e-pad an troioù kentañ betek ma vo adkevreet."
@@ -1216,6 +1238,58 @@
       "description": "Emaout e-barzh ur c'hoari a-vremañ. Fellout a ra dit adkengregiñ?",
       "reconnect-button": "Ya, adkendañ",
       "dismiss-button": "Nann, dilezel"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Ret eo dit bezañ kevreet evit kaozeal"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Goulenn da reiñ da c'houzout?",
+      "message": "Ha sur oc'h e fell deoc'h dilezel? Kuitaat a reot ar c'hoari da vat ha n'ho po ket an tu da zont en-dro.",
+      "confirm": "Ya, dilezel",
+      "cancel": "Nullañ"
+    },
+    "ChatRestricted": {
+      "description": "Debarret eo deoc'h kaozeal"
+    },
+    "PlayAgainButton": {
+      "disabled": "C'hoari en-dro",
+      "button": "C'hoari en-dro",
+      "leavebusterMessage": "Peñsumit eo da gas da benn hoc'hARC penalty evit c'hoari a-nevez"
+    },
+    "LeavebusterDialog": {
+      "title": "Levezaduradur Leavebuster",
+      "description": "Emaoc'h aet kuit a-raok eus ur c'hoari foran. Peitit ouzh bezañ rediet evit kenderc'hel da c'hoari.",
+      "progress": "Trezalc'h: {completed}/{required}",
+      "timeRemaining": "Amzer o chom: {time}",
+      "completeButton": "Peleuniet an hollad ({time})",
+      "completedButton": "Pebeget!",
+      "closeButton": "Serriñ"
+    },
+    "BanDialog": {
+      "title": "Kont sañset",
+      "suspensionMessage": "Eskas eo bet hoc'h ouzhoc'h evit c'hoari {isPermanent, select, true {per Bloch} other {da bell amzer}} abalamour d'ho emzalc'hadur er c'hoari.",
+      "temporary": "C'hoari a c'hallfec'h adarre d'an deiz-mañ: {date}.",
+      "reasonLabel": "Abeg",
+      "defaultReason": "N'eus ket bet roet abeg ebet.",
+      "understandButton": "Kompreñset em eus"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Mandadenn ar c'hae",
+      "description": "Harc'hiz eo aet da ober berroc'h hoc'h gwirioù kaozeal. N'hallit ket kas kemenadennoù e-pad an amzer-mañ.",
+      "detailedDescription": "Emaout difennet ouzh komz dre ar c'hae dre ur report war hoc'h emzalc'h bet gwiriekaet gant un noterellour. Gallout a reot komz a-nevez d'ar:",
+      "detailedDescriptionPermanent": "Dalc'het eo hoc'h an aloubadur dre an hiniadur e-barzh ar c'hennadadeg goude ur rentadenn eus hoc'h emzalc'had a zo bet gwiriet gant un ardoer.",
+      "reason": {
+        "title": "Reson"
+      },
+      "duration": {
+        "title": "Pad",
+        "expiresAt": "Kuzhadell a vo adsavet d'an : {date}"
+      },
+      "report": {
+        "title": "Kaelletañ a reer",
+        "id": "Niverenn ar raport: #{reportId}"
+      },
+      "acknowledgeButton": "Komprenet eo"
     }
   },
   "utils": {
@@ -1249,8 +1323,9 @@
       "wizz-sent": "Kaset ho peus ur wizz da {targetName}!",
       "wizz-self": "Wizzet hoc'h bet gant {initiatorName}!",
       "wizz-other": "{initiatorName} en/he deus wizzet {targetName}!",
-      "welcome": "Mar plij, bezit donezon ha doujañ. Gallout a rez {isMobile, select, true {gwaskañ hir} other {klikañ a-zehou}} war ar c'hemennadennoù evit mud-dallat pe kas ur c'helaouadenn war-benn c'hoarierien ma vez ezhomm.",
-      "host-transferred": "{name} eo an ost a-vremañ"
+      "welcome": "Bez'it gentan hag anavezet mat er chat. Mar dle, gallit mudat pe kas un den-c'hoarier dre {isMobile, select, true {tapout} other {klikañ}} war unan eus o c'henavooù pe warzo.",
+      "host-transferred": "Perzh an ostiz a zo bet kaset da {name}",
+      "player-forfeited": "{name} en deus dilezet ar c'hoari"
     },
     "socket": {
       "error": {
@@ -1278,6 +1353,13 @@
         },
         "player-already-connected": {
           "description": "Emaout c'hinniget dija d'ar c'hoari-mañ eus un abadenn all"
+        },
+        "max-players-too-low": {
+          "description": "Ne c'hall ket diskresañ an niver a c'hoarierien d'an izeloc'h eget an niver a c'hoarierien a-vremañ er c'hoari"
+        },
+        "not-allowed": {
+          "title": "Aotre nac'het",
+          "description": "N'eus ket aotreet da cheñch ar reoladoù-c'hoari"
         }
       }
     },
@@ -1333,8 +1415,8 @@
     },
     "ReportContext": {
       "report-against-you": {
-        "description": "D'anv pe unan eus da gemenadennoù a zo bet droukvesket ha kavet eo bet didal. Mar plij, n'ad ket an emzalc'h-se.",
-        "title": "Skoet oc'h bet er-maez abalamour d'un danevell"
+        "description": "An aozer en deus gwiriet ur report a-enep dit. Evit mat, n'ad ket an hevelep doare-ober, pe e vo kastizet ouzhpenn.",
+        "title": "Dileket out eus ar c'hoari goude ur report"
       },
       "report": {
         "title": "{playerName} zo bet skoet er-maez abalamour d'un danevell"
@@ -1434,6 +1516,36 @@
     "name-max-characters": "An anv diskouez a rank bezañ 20 arouezenn d'ar muiañ",
     "username-min-characters": "An anv implij a rank bezañ 3 arouezenn d'an nebeutañ",
     "username-max-characters": "An anv implij a rank bezañ 20 al lizherenn d'ar muiañ",
-    "username-invalid-format": "An anv implijer ne c'hell kaout nemet lizherennoù, sifroù ha islinennoù"
+    "username-invalid-format": "An anv implijer ne c'hell kaout nemet lizherennoù, sifroù ha islinennoù",
+    "min-players-invalid": "An nebeutañ a c'hoarierien a rank bezañ 2 da nebeutañ",
+    "max-players-invalid": "An niver a c'hoarierien a rank bezañ 8 d'ar muiañ",
+    "card-per-row-min-invalid": "Ar c'hartennoù dre rummad a rank bezañ unan d'an nebeutañ",
+    "card-per-row-max-invalid": "Ar c'hartennoù dre rummad a rank bezañ 3 d'ar muiañ",
+    "card-per-column-min-invalid": "Ar c'hartenenn dre golonenn a rank bezañ ur memes 1",
+    "card-per-column-max-invalid": "Ar c'hartennoù dre golonenn a rank bezañ 4 d'ar muiañ",
+    "score-to-end-game-min-invalid": "Ar skor evit fin ar c'hoari a rank bezañ 1 d'an nebeutañ",
+    "score-to-end-game-max-invalid": "Al lore evit fin ar c'hoari a rank bezañ nebeutoc'h eget 10000000",
+    "first-player-flat-penalty-min-invalid": "Ar c'hwitell digenvez kentañ evit an c'hoarier kentañ a rank bezañ d'an nebeutañ 0",
+    "first-player-flat-penalty-max-invalid": "Ar c'hwitell digresk kentañ evit an c'hoarier kentañ ne c'hell ket bezañ ouzhpenn 10000000",
+    "first-player-multiplier-penalty-min-invalid": "Ar c'hastiz a liester kentañ c'hoarier a rank bezañ da nebeutañ 1",
+    "first-player-multiplier-penalty-max-invalid": "Ar c'hastiz liesteradur ar c'hentañ c'hoarier a rank bezañ nebeutoc'h eget 10000000",
+    "comment-max-characters": "Ar c'homment ne c'hall ket bezañ ouzhpenn 500 merkad",
+    "password-min-characters": "eo ret d'ar ger-tremen da vihanañ 10 lizherenn",
+    "password-lowercase-required": "Koulz lavaret, un lizherenn vihan zo ret en deus da vezañ en deus an tremen-ger",
+    "password-uppercase-required": "a rank bezañ ennañ un lizherenn vras d'an nebeutañ",
+    "password-number-required": "Emañ an ger-tremen a-drugarez d'ur niverenn",
+    "password-special-char-required": "Emañ ar ger-tremen ret dezhañ un arouezenn arbennik da nebeutañ",
+    "passwords-dont-match": "Ne glot ket ar gerioù-tremen",
+    "delete-account-confirmation-required": "Trugarez da skrivañ DELETE evit kadarnaat",
+    "current-password-required": "Ret eo lakaat an alc'hwez a-vremañ",
+    "email-invalid": "Chomlec'h postel direizh",
+    "token-required": "Token zo ret",
+    "email-already-sent": "Kinniget eo bet un e-bost dija er 5 munutenn ziwezhañ. Chetil da voutel pe klikit war \"Goulenn kod nevez\" evit kas unan all",
+    "email-already-exists": "Ar chomlec'h postel-mañ zo implijet dija war ur c'hont unan all. Mar plij implij unan all.",
+    "username-creation-failed": "N'hon eus bet tu ebet da grouiñ da anv-implijer. Klask a-nevez, mar plij.",
+    "account-deletion-already-scheduled": "Da var ouzh da gontoñ eo bet prientet da vezañ dilamet. Mar plij gortoz e brosezadur.",
+    "account-deletion-schedule-failed": "N'hon eus bet tu ebet da glokañ dilezadenn da gontoù. Klask a-nevez, mar plij.",
+    "user-creation-failed": "N'hon eus bet tu da grouiñ da gont. Klask a-nevez, mar plij.",
+    "disposable-email-not-allowed": "N'eo ket aotreet ar soken-post dispennus pe daeshour. Mar plij, implij ur chomlec'h post-skrid padus."
   }
 }

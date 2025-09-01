@@ -262,7 +262,9 @@
         "replay": "Noamoi afgspuit"
       },
       "leave-button": "S Spui valassn",
-      "round": "Rundn {number}"
+      "round": "Rundn {number}",
+      "forfeit": "Aufgets",
+      "disconnected": "Abbrocha"
     },
     "Leaderboard": {
       "head": {
@@ -512,7 +514,9 @@
       "recent-activity": {
         "game-code": "Spui-Numma #{code}",
         "no-activity": "Koana neia Aktivität zum zoagn.",
-        "rank": "Rang #{rank}"
+        "rank": "Rang #{rank}",
+        "forfeited": "Kapituliert",
+        "left": "Valossn"
       },
       "search": {
         "placeholder": "Suach an Spitznam"
@@ -703,7 +707,7 @@
               "2": "Da Spui-Vahoidn, wia oft gspuit werd, oda wos ma im Spui mocht, ko gsammejt wern, damit ma des Spui besser macha kenna."
             }
           },
-          "storage-location": "Ois Daten wean in da **Europäischen Union** gspeichat und noch da <link>Datenschutzrichtlinie</link> behondlt."
+          "storage-location": "Olle Datn wearn in da Eiropäischen Union gspeichad und gemäß da <link>Datenschutzrichtlinie</link> behondlt."
         },
         "analytics-tracking": {
           "title": "5. Analytics & Tracking",
@@ -757,6 +761,10 @@
           "general": "Allgemeine Frogn: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "description": "Bittschen warte, während mia di wieda mit deim aktiven Spui vabindn...",
+      "title": "Wiadavuagbindung zu deim Spui"
     }
   },
   "components": {
@@ -946,7 +954,8 @@
       "feedback": "Gib a Rückmeldung",
       "discord": "Discord",
       "settings": "Eistellunga",
-      "leave-game": "S Spui valassn"
+      "leave-game": "S Spui valassn",
+      "forfeit": "Aufgebn"
     },
     "OpponentBoard": {
       "disconnected": "Da Spieler hods Spui valossn. A Bot spuit fia eam de nächstn Rundn, bis a wieda do is."
@@ -978,9 +987,20 @@
         }
       },
       "title": "Bericht {name}",
-      "description": "Meld den Namn oda a Botschaft vom {name}, wenn's unpassend erscheint.",
+      "description": "Melde den Spieler {name}, wenn sein Verhalten unpassend erscheint. Der gesamte Spielkontext wird von den Moderatoren überprüft.",
       "comment": "Zuasätzlicher Kontext (freiwillig)",
-      "comment-placeholder": "Gib ma no a paar Infos zu dem Bericht..."
+      "comment-placeholder": "Gib ma no a paar Infos zu dem Bericht...",
+      "disclaimer": "⚠️ Warnung: Falsche Meldungen oder Meldungsmissbrauch sei'n hiermit zu Strafen fia dein Konto berechtigt.",
+      "reasons": {
+        "toxic-behavior": "Giftigs Va'haltn",
+        "inappropriate-username": "Unangemessana Nam",
+        "other": "Andere",
+        "cheating-exploiting": "Oftbetrug/Ausnutzn",
+        "spam-advertising": "Spam/Werbung",
+        "harassment": "Belästigung"
+      },
+      "reason-label": "Grund für Meldung",
+      "reason-placeholder": "A Grund auswähln"
     },
     "Chat": {
       "title": "Ratsch"
@@ -1096,7 +1116,8 @@
     "ScoreTable": {
       "name": "Nama",
       "round": "Rund",
-      "total": "Gsamtleng"
+      "total": "Gsamtleng",
+      "rank": "Rang"
     },
     "SettingsDialog": {
       "title": "Eihstellunga",
@@ -1173,7 +1194,8 @@
         "ban": "Ban {name}",
         "mute": "Stumm schaltn {name}",
         "unmute": "Entstumm {name}",
-        "transfer-host": "Da {name} is jetzt da Host"
+        "transfer-host": "Host an den {name} übergeb",
+        "view-profile": "Profil vom {name} oschaung"
       }
     },
     "Navbar": {
@@ -1211,6 +1233,58 @@
       "description": "Du woast in am Spui, des grad lafft. Wuißt da wieda nei?",
       "reconnect-button": "Jo, wieda nei geh",
       "dismiss-button": "Na, ob's des is"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Du muasst eigloggt sei, um z'redn"
+    },
+    "ForfeitConfirmDialog": {
+      "confirm": "Jo, aufgib",
+      "message": "Bist ma sicher, dassd aufgibst? Du vvaschd des Spui endgöjtig und koasd nia wieda bei.",
+      "title": "Spiel aufgeben?",
+      "cancel": "Abbrecha"
+    },
+    "ChatRestricted": {
+      "description": "Du deafst ned redn"
+    },
+    "PlayAgainButton": {
+      "disabled": "Noamal spuin",
+      "button": "Nochmal spuin",
+      "leavebusterMessage": "Vollständige deine \"Leavebuster\"-Strafe, um weiterspielen zu können"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebuster Strafe",
+      "description": "Du host a öffentliche Partie zua früh valossn. Schloß dis Strafe ob, um weida spuin z'kenna.",
+      "progress": "Fortschritt: {completed}/{required}",
+      "timeRemaining": "Zeit übrig: {time}",
+      "completeButton": "Vollendet ({time})",
+      "completedButton": "O'gfäddig!",
+      "closeButton": "Zua"
+    },
+    "BanDialog": {
+      "title": "Account g'sperrt",
+      "suspensionMessage": "Du bist {isPermanent, select, true {dauerhaft} other {vorübergehend}} vom Spielen ausgeschlossen wegen deines Verhaltens im Spiel.",
+      "temporary": "Du konnst wieda spuin am: {date}.",
+      "reasonLabel": "Grund:",
+      "defaultReason": "Koan Grund oongemee.",
+      "understandButton": "I vasteh"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chat Sperre",
+      "description": "Deine Chat-Privilegien san vorübergehend eigschränkt worn. Du kannst in der Zeit koa Nochrichtn schickn.",
+      "detailedDescription": "Du bist vo da Kommuniskation per Chat aussaglossd, weil dei Vahoidn noch ana Meldung, de vo am Administrator bestätigd worn is, grenzd worn is. Du koasd wieda chatn am:",
+      "detailedDescriptionPermanent": "Dä Woid, dassd koana schnälla koasch im Chat, nach am Bericht üba dei Vahoidn, wos a Administrator gwesticht hot.",
+      "reason": {
+        "title": "Grund"
+      },
+      "duration": {
+        "title": "Dauer",
+        "expiresAt": "Chat wird wiederhergestellt am: {date}"
+      },
+      "report": {
+        "title": "Meldundegn",
+        "id": "Meldung ID: #{reportId}"
+      },
+      "acknowledgeButton": "I vasteh"
     }
   },
   "utils": {
@@ -1226,8 +1300,9 @@
       "player-unmuted": "Da {name} is nimma stumm gschoidt",
       "wizz-other": "{initiatorName} hod an Wizz auf {targetName} gmocht!",
       "player-muted": "Da {name} is jetzt stumm gschalt",
-      "welcome": "Seid's gütig und respektvoll. Ihr kenna {isMobile, select, true {lång drucka} other {rechtsklicka}} auf de Nachrichten, um Spila zum stumm schaltn oder zum meldn, wenn's braucht wird.",
-      "host-transferred": "Da {name} is jetz da Host"
+      "welcome": "Seid nett und respektvoll im Chat. Bei Bedarf könnts an Spieler stumm schalten oder melden, in dem ihr {isMobile, select, true {drauf tippt} other {drauf klickt}} auf eine seiner Nachrichten oder auf ihn.",
+      "host-transferred": "Host-Roinn geht an {name}",
+      "player-forfeited": "{name} hod si obosgt"
     },
     "socket": {
       "error": {
@@ -1255,6 +1330,13 @@
         },
         "player-already-connected": {
           "description": "Du bist scho vo ana andan Sitzung mit dem Spui vabundn"
+        },
+        "not-allowed": {
+          "title": "Vabha a'dud",
+          "description": "Du host koa Erlaubnis, de Spieleeinstellungen z'ändan."
+        },
+        "max-players-too-low": {
+          "description": "Dei maximale Spuilegatte konn ned unta da aktuoin Zoi vo de Spuilegatta im Spui gnidat wean"
         }
       }
     },
@@ -1309,8 +1391,8 @@
         "title": "Da {playerName} is wega ana Meldung aussagflong"
       },
       "report-against-you": {
-        "title": "Du bist wega am Bericht aussagworfa worn",
-        "description": "Dei Nam oda oana vo deina Nachrichtn is gmeldet worn und is ois unpassend eigstuft worn. Bitte mach des ned wieda."
+        "title": "Du woast vom Spui ausgschmissn, nach am Melda",
+        "description": "A Administrator hot an Bericht gengan di gon natürlich bestätigt. Bitte vameid di selbe Verhaltensweisen wieda, sundst kinnt ma weidare Sanktionen eiletunga."
       }
     },
     "BanContext": {
@@ -1434,6 +1516,36 @@
     "name-max-characters": "Da Nam deaf ned mehra wia 20 Zeiche ham",
     "username-min-characters": "Da Nickname muaß mindestens 3 Zeacha ham",
     "username-max-characters": "De Username deaf ned mehra wia 20 Zeiche ham",
-    "username-invalid-format": "Da Benutzanam deaf grod Buachstobn, Ziffan und Unterstrichal ham"
+    "username-invalid-format": "Da Benutzanam deaf grod Buachstobn, Ziffan und Unterstrichal ham",
+    "min-players-invalid": "Mindestspuia muass mindestens 2 sei",
+    "card-per-row-min-invalid": "A Kart pro Reih mua mindestens 1 sei",
+    "card-per-row-max-invalid": "Koartn pro Reih deaf hi max 3 sei",
+    "max-players-invalid": "De maximaln Spuia deafad ned mehra ois 8 sei",
+    "card-per-column-min-invalid": "Doa pro Spoit muass mindestens 1 Kartn sei",
+    "first-player-multiplier-penalty-max-invalid": "Da easchte Spuiara-Multiplikator-Strof deaf maximal 10.000.000 sei",
+    "score-to-end-game-max-invalid": "Punktzahl zum Beenden vom Spiel muss höchstens 10000000 sein",
+    "score-to-end-game-min-invalid": "Punkt, um des Spiel zu beenden, muss mindestens 1 sein",
+    "first-player-multiplier-penalty-min-invalid": "Da Erstspuila-Multiplikator-Strof mua mindestens 1 sei",
+    "first-player-flat-penalty-min-invalid": "Da Oatste spuiada Flat-Strof muaß mindestens 0 sei",
+    "card-per-column-max-invalid": "Kartn pro Spalte dürfn ned mehr wia 4 sei",
+    "first-player-flat-penalty-max-invalid": "Erster Spieler flach Strafnuss darf höchstens 10000000 sein",
+    "password-min-characters": "Passwòrt muass mindestens 10 Zeicbn ham",
+    "comment-max-characters": "Kommentar darf höchstens 500 Zeichen lang sein",
+    "password-lowercase-required": "Passwort mua mindestens an kloana Buchstabn enthoidn",
+    "password-special-char-required": "Passwort mua mindestens a Sonderzeichn enthaltn",
+    "delete-account-confirmation-required": "Bitte tippe LÖSCHN zum Bestätigen",
+    "password-number-required": "Passwoud mua mindestens a Zahl enhoitn",
+    "current-password-required": "Aktu's Passwort braucht ma",
+    "passwords-dont-match": "Passwörter stimmen ned überei",
+    "password-uppercase-required": "Passwòrt muass mindestens an großn Buachstàbn enthàltn",
+    "email-invalid": "Ungültige E-Mail-Adress",
+    "email-already-sent": "A E-Mail is schoa in de letztn 5 Minutn vaschickt worn. Bitte schaug in dei E-Mail-Postfach oder klick auf \"Code neianfrogn\", um an neichan z' vaschicka",
+    "token-required": "Token wird benötigt",
+    "account-deletion-schedule-failed": "Mia kenna dei Kontn ned löschen. Probier's no amoi.",
+    "account-deletion-already-scheduled": "Dei Kontolöschung is scho plant. Biddschee wart, bis se obg'schlossn is.",
+    "username-creation-failed": "Mia ham dei Benutza namn nedd erschaffa kenna. Probiers bitte noamal.",
+    "email-already-exists": "Deana E-Mail-Adress is schoa gfressn bei am andan Konto. Bitte nimm a andane her.",
+    "disposable-email-not-allowed": "Wegwerf- oda temporäre E-Mail-Adressn san ned erlaubt. Bitt schee, nimm a dauerhafte E-Mail-Adress.",
+    "user-creation-failed": "Mir homan dei Kont ned erstn könna. Biddscheen nuamoi probiern."
   }
 }

@@ -258,7 +258,9 @@
         "replay": "Přehrát znovu"
       },
       "leave-button": "Opustit hru",
-      "round": "Kolo {number}"
+      "round": "Kolo {number}",
+      "forfeit": "Vzdat se",
+      "disconnected": "Odpojeno"
     },
     "Rules": {
       "head": {
@@ -517,7 +519,9 @@
       "recent-activity": {
         "no-activity": "Žádná nedávná aktivita k zobrazení.",
         "game-code": "Hra #{code}",
-        "rank": "Pořadí #{rank}"
+        "rank": "Pořadí #{rank}",
+        "forfeited": "Vzdal ses",
+        "left": "Odešel"
       },
       "search": {
         "placeholder": "Hledat uživatelské jméno"
@@ -708,7 +712,7 @@
               "2": "Analytická data, jako je herní chování, frekvence relací nebo používání funkcí, **mohou být shromažďována za účelem vylepšení hry**."
             }
           },
-          "storage-location": "Všechna data jsou uložena v <b>Evropské unii</b> a zpracovávána v souladu s <link>zásadami ochrany osobních údajů</link>."
+          "storage-location": "Všechna data jsou uložena v Evropské unii a zpracovávána v souladu s <link>zásadami ochrany osobních údajů</link>."
         },
         "analytics-tracking": {
           "title": "5. Analytika a sledování",
@@ -762,6 +766,10 @@
           "general": "Obecné dotazy: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Připojuji se zpět do tvé hry",
+      "description": "Prosím, počkej, zatímco tě znovu připojíme k tvé aktivní hře..."
     }
   },
   "components": {
@@ -1115,7 +1123,8 @@
       "feedback": "Zanechte zpětnou vazbu",
       "discord": "Discord",
       "settings": "Nastavení",
-      "leave-game": "Opustit hru"
+      "leave-game": "Opustit hru",
+      "forfeit": "Vzdat"
     },
     "OpponentBoard": {
       "disconnected": "Hráč opustil hru. Po následující tahy za něj bude hrát bot, dokud se znovu nepřipojí."
@@ -1140,7 +1149,8 @@
     "ScoreTable": {
       "name": "Jméno",
       "round": "Kolo",
-      "total": "Celkem"
+      "total": "Celkem",
+      "rank": "Pořadí"
     },
     "Avatar": {
       "context-menu": {
@@ -1150,7 +1160,8 @@
         "ban": "Zabanovat {name}",
         "mute": "Ztlumit {name}",
         "unmute": "Zrušit ztlumení {name}",
-        "transfer-host": "{name} je nyní hostitel"
+        "transfer-host": "Přenést hostitele na {name}",
+        "view-profile": "Zobrazit profil {name}"
       }
     },
     "AfkKick": {
@@ -1169,7 +1180,7 @@
     },
     "ReportDialog": {
       "title": "Nahlásit {name}",
-      "description": "Nahlásit jméno nebo zprávu od {name}, pokud se zdá nevhodná.",
+      "description": "Nahlás {name}, pokud se ti jeho chování zdá nevhodné. Všechny herní kontexty zkontrolují moderátoři.",
       "cancel": "Zrušit",
       "submit": "Nahlásit",
       "toast": {
@@ -1179,7 +1190,18 @@
         }
       },
       "comment": "Další kontext (volitelné)",
-      "comment-placeholder": "Poskytni další kontext k tomuto hlášení..."
+      "comment-placeholder": "Poskytni další kontext k tomuto hlášení...",
+      "disclaimer": "⚠️ Varování: Falešná nahlášení nebo zneužití funkce nahlášení mohou vést k postihům vašeho účtu.",
+      "reason-label": "Důvod nahlášení",
+      "reason-placeholder": "Vyberte důvod",
+      "reasons": {
+        "inappropriate-username": "Nevhodné uživatelské jméno",
+        "toxic-behavior": "Toxické chování",
+        "spam-advertising": "Spam/reklama",
+        "cheating-exploiting": "Podvádění/zneužívání",
+        "harassment": "Obtěžování",
+        "other": "Jiné"
+      }
     },
     "Banner": {
       "title": "Potřebuji <gform>vaši zpětnou vazbu</gform>, abych mohl/a formovat budoucnost Skyjo!"
@@ -1216,6 +1238,58 @@
       "description": "Byl jsi ve hře, která probíhá. Chceš se znovu připojit?",
       "reconnect-button": "Ano, znovu se připojit",
       "dismiss-button": "Ne, zavřít"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Musíš být přihlášený, abys mohl chatovat"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Vzdat hru?",
+      "message": "Jsi si jistý, že chceš vzdát? Hru opustíš natrvalo a nemůžeš se znovu připojit.",
+      "confirm": "Ano, vzdát se",
+      "cancel": "Zrušit"
+    },
+    "ChatRestricted": {
+      "description": "Je vám zakázáno chatovat"
+    },
+    "PlayAgainButton": {
+      "disabled": "Hrát znovu",
+      "button": "Znovu hrát",
+      "leavebusterMessage": "Dokončete svůj trest Leavebuster, abyste mohli znovu hrát"
+    },
+    "LeavebusterDialog": {
+      "title": "Postih od Leavebusteru",
+      "description": "Zápas jste opustili předčasně. Dokončete tento trest, abyste mohli pokračovat ve hře.",
+      "progress": "Pokrok: {completed}/{required}",
+      "timeRemaining": "Zbývající čas: {time}",
+      "completeButton": "Dokončeno ({time})",
+      "completedButton": "Hotovo!",
+      "closeButton": "Zavřít"
+    },
+    "BanDialog": {
+      "title": "Účet pozastaven",
+      "suspensionMessage": "Jste {isPermanent, select, true {trvale} other {dočasně}} pozastaveni z hraní kvůli vašemu chování ve hře.",
+      "temporary": "Znovu budete moci hrát: {date}.",
+      "reasonLabel": "Důvod:",
+      "defaultReason": "Nebyl poskytnut žádný důvod.",
+      "understandButton": "Rozumím"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Omezení chatu",
+      "description": "Vaše chatovací oprávnění byla dočasně omezena. Během této doby nemůžete odesílat zprávy.",
+      "detailedDescription": "Komunikace prostřednictvím chatu je vám zakázána po nahlášení vašeho chování, které bylo ověřeno administrátorem. Opět budete moci chatovat:",
+      "detailedDescriptionPermanent": "Jste vyloučeni z komunikace přes chat po nahlášení vašeho chování, které bylo potvrzeno administrátorem.",
+      "reason": {
+        "title": "Důvod"
+      },
+      "duration": {
+        "title": "Čas",
+        "expiresAt": "Chat bude obnoven: {date}"
+      },
+      "report": {
+        "title": "Související hlášení",
+        "id": "ID hlášení: #{reportId}"
+      },
+      "acknowledgeButton": "Rozumím"
     }
   },
   "utils": {
@@ -1231,8 +1305,9 @@
       "player-not-muted": "{name} není ztlumený",
       "wizz-sent": "Poslal jsi wizz na {targetName}!",
       "wizz-other": "{initiatorName} poslal(a) wizz na {targetName}!",
-      "welcome": "Prosím, buďte milí a ohleduplní. Pokud je to nutné, můžeš {isMobile, select, true {dlouze podržet} other {kliknout pravým tlačítkem}} na zprávy a ztlumit nebo nahlásit hráče.",
-      "host-transferred": "{name} je nyní hostitel"
+      "welcome": "V chatu buďte laskaví a ohleduplní. V případě potřeby můžete hráče ztlumit nebo nahlásit {isMobile, select, true {klepnutím} other {kliknutím}} na jednu z jeho zpráv nebo na něj.",
+      "host-transferred": "Role hosta byla převedena na {name}",
+      "player-forfeited": "{name} vzdal hru"
     },
     "avatar": {
       "bee": "včela",
@@ -1294,6 +1369,13 @@
         },
         "player-already-connected": {
           "description": "Už jsi připojený k této hře z jiné relace"
+        },
+        "max-players-too-low": {
+          "description": "Nelze snížit maximální počet hráčů pod aktuální počet hráčů ve hře"
+        },
+        "not-allowed": {
+          "title": "Přístup odepřen",
+          "description": "Nemáš oprávnění měnit nastavení hry"
         }
       }
     }
@@ -1304,8 +1386,8 @@
         "title": "Hráč {playerName} byl vyloučen z důvodu nahlášení"
       },
       "report-against-you": {
-        "description": "Tvoje jméno nebo jedna z tvých zpráv byla nahlášena a shledána nevhodnou. Prosím, toto chování neopakuj.",
-        "title": "Byli jste vykopnuti na základě nahlášení"
+        "description": "Správce ověřil hlášení proti tobě. Vyhni se opakování tohoto chování, jinak ti mohou být uděleny další sankce.",
+        "title": "Byl jsi ze hry odebrán na základě nahlášení"
       }
     },
     "SocketContext": {
@@ -1434,6 +1516,36 @@
     "name-max-characters": "Zobrazované jméno může mít maximálně 20 znaků",
     "username-min-characters": "Uživatelské jméno musí mít alespoň 3 znaky",
     "username-max-characters": "Uživatelské jméno může mít maximálně 20 znaků",
-    "username-invalid-format": "Uživatelské jméno může obsahovat pouze písmena, čísla a podtržítka"
+    "username-invalid-format": "Uživatelské jméno může obsahovat pouze písmena, čísla a podtržítka",
+    "min-players-invalid": "Minimální počet hráčů musí být alespoň 2",
+    "max-players-invalid": "Maximální počet hráčů nesmí být vyšší než 8",
+    "card-per-row-min-invalid": "Počet karet na řádek musí být alespoň 1",
+    "card-per-row-max-invalid": "Počet karet na řádek nesmí být větší než 3",
+    "card-per-column-min-invalid": "Počet karet na sloupec musí být alespoň 1",
+    "card-per-column-max-invalid": "Počet karet na sloupec nesmí být větší než 4",
+    "score-to-end-game-min-invalid": "Skóre pro ukončení hry musí být alespoň 1",
+    "score-to-end-game-max-invalid": "Skóre pro ukončení hry musí být maximálně 10000000",
+    "first-player-flat-penalty-min-invalid": "První hráč musí mít minimální plochý postih alespoň 0",
+    "first-player-flat-penalty-max-invalid": "První hráč – paušální pokuta musí být maximálně 10000000",
+    "first-player-multiplier-penalty-min-invalid": "Pokuta za násobitel prvního hráče musí být alespoň 1",
+    "first-player-multiplier-penalty-max-invalid": "Pokuta za násobitel prvního hráče nesmí být vyšší než 10000000",
+    "comment-max-characters": "Komentář může mít maximálně 500 znaků",
+    "password-min-characters": "Heslo musí mít alespoň 10 znaků",
+    "password-lowercase-required": "Heslo musí obsahovat alespoň jedno malé písmeno",
+    "password-uppercase-required": "Heslo musí obsahovat alespoň jedno velké písmeno",
+    "password-number-required": "Heslo musí obsahovat alespoň jedno číslo",
+    "password-special-char-required": "Heslo musí obsahovat alespoň jeden speciální znak",
+    "passwords-dont-match": "Hesla se neshodují",
+    "delete-account-confirmation-required": "Napiš DELETE pro potvrzení",
+    "current-password-required": "Aktuální heslo je povinné",
+    "email-invalid": "Neplatná e-mailová adresa",
+    "token-required": "Token je vyžadován",
+    "email-already-sent": "E-mail už byl odeslán během posledních 5 minut. Zkontroluj si schránku nebo klikni na „Vyžádat nový kód“ a odešli nový",
+    "email-already-exists": "Tato e-mailová adresa je již používána na jiném účtu. Použijte prosím jinou.",
+    "username-creation-failed": "Nepodařilo se vytvořit tvé uživatelské jméno. Zkus to znovu.",
+    "account-deletion-already-scheduled": "Tvoje smazání účtu již bylo naplánováno. Počkej, prosím, na jeho zpracování.",
+    "account-deletion-schedule-failed": "Nepodařilo se naplánovat smazání tvého účtu. Zkus to prosím znovu.",
+    "user-creation-failed": "Nemohli jsme vytvořit tvůj účet. Zkus to prosím znovu.",
+    "disposable-email-not-allowed": "Jednorázové nebo dočasné e-mailové adresy nejsou povoleny. Použijte prosím trvalou e-mailovou adresu."
   }
 }

@@ -253,7 +253,9 @@
         "cancel": "Afspil ikke igen",
         "replay": "Spil igen"
       },
-      "round": "Runde {number}"
+      "round": "Runde {number}",
+      "forfeit": "Giv op",
+      "disconnected": "Afbrudt"
     },
     "Rules": {
       "head": {
@@ -512,7 +514,9 @@
       "recent-activity": {
         "no-activity": "Ingen nylig aktivitet at vise.",
         "game-code": "Spil #{code}",
-        "rank": "Rang #{rank}"
+        "rank": "Rang #{rank}",
+        "forfeited": "Forbrudt",
+        "left": "Forladt"
       },
       "search": {
         "placeholder": "Søg brugernavn"
@@ -703,7 +707,7 @@
               "2": "Analytiske data såsom spilleadfærd, sessionsfrekvens eller funktionsbrug <b>kan indsamles for at forbedre spillet</b>."
             }
           },
-          "storage-location": "Alle data gemmes i **EU** og behandles i overensstemmelse med <link>privatlivspolitikken</link>."
+          "storage-location": "Alle data er gemt i EU og behandles i overensstemmelse med <link>privatlivspolitikken</link>."
         },
         "analytics-tracking": {
           "title": "5. Analyse og sporing",
@@ -757,6 +761,10 @@
           "general": "Generelle henvendelser: <email></email>"
         }
       }
+    },
+    "Reconnect": {
+      "title": "Genopretter forbindelse til dit spil",
+      "description": "Vent venligst, mens vi forbinder dig til dit aktive spil..."
     }
   },
   "components": {
@@ -893,7 +901,7 @@
     },
     "ReportDialog": {
       "title": "Anmeld {name}",
-      "description": "Anmeld navnet eller en besked fra {name}, hvis det virker upassende.",
+      "description": "Anmeld {name}, hvis deres adfærd virker upassende. Al spilkontekst vil blive gennemgået af moderatorer.",
       "cancel": "Annuller",
       "submit": "Rapportér",
       "toast": {
@@ -903,7 +911,18 @@
         }
       },
       "comment": "Yderligere kontekst (valgfrit)",
-      "comment-placeholder": "Giv yderligere kontekst til denne rapport..."
+      "comment-placeholder": "Giv yderligere kontekst til denne rapport...",
+      "disclaimer": "⚠️ Advarsel: Falske rapporter eller misbrug af rapportering kan medføre sanktioner på din konto.",
+      "reason-label": "Årsag til rapport",
+      "reason-placeholder": "Vælg en årsag",
+      "reasons": {
+        "inappropriate-username": "Upassende brugernavn",
+        "toxic-behavior": "Giftig adfærd",
+        "spam-advertising": "Spam/reklame",
+        "cheating-exploiting": "Snyd/udnyttelse",
+        "harassment": "Chikane",
+        "other": "Andet"
+      }
     },
     "AppearanceSelect": {
       "light": "Lys",
@@ -1018,7 +1037,8 @@
       "feedback": "Giv feedback",
       "discord": "Discord",
       "settings": "Indstillinger",
-      "leave-game": "Forlad spillet"
+      "leave-game": "Forlad spillet",
+      "forfeit": "Opgive"
     },
     "OpponentBoard": {
       "disconnected": "Spilleren har forladt spillet. En bot vil spille for dem i de næste par omgange, indtil de genopretter forbindelsen."
@@ -1050,7 +1070,8 @@
     "ScoreTable": {
       "name": "Navn",
       "round": "Rund",
-      "total": "Total"
+      "total": "Total",
+      "rank": "Rang"
     },
     "SettingsDialog": {
       "title": "Indstillinger",
@@ -1127,7 +1148,8 @@
         "ban": "Ban {name}",
         "mute": "Slå {name} fra",
         "unmute": "Fjern lyd fra {name}",
-        "transfer-host": "{name} er nu vært"
+        "transfer-host": "Overfør vært til {name}",
+        "view-profile": "Vis {name}s profil"
       }
     },
     "KickVote": {
@@ -1211,6 +1233,58 @@
       "description": "Du var i et spil, der er i gang. Vil du genoprette forbindelsen?",
       "reconnect-button": "Ja, genopret forbindelse",
       "dismiss-button": "Nej, afvis"
+    },
+    "ChatNotLoggedIn": {
+      "description": "Du skal være logget ind for at chatte"
+    },
+    "ForfeitConfirmDialog": {
+      "title": "Afbryd spil?",
+      "message": "Er du sikker på, at du vil opgive? Du forlader spillet permanent og kan ikke deltage igen.",
+      "confirm": "Ja, Afstå",
+      "cancel": "Annuller"
+    },
+    "ChatRestricted": {
+      "description": "Du må ikke chatte"
+    },
+    "PlayAgainButton": {
+      "disabled": "Spil igen",
+      "button": "Spil igen",
+      "leavebusterMessage": "Gennemfør dit Leavebuster-straff for at spille igen"
+    },
+    "LeavebusterDialog": {
+      "title": "Leavebuster-straf",
+      "description": "Du forlod et offentligt spil tidligt. Gennemfør denne straf for at fortsætte med at spille.",
+      "progress": "Fremskridt: {completed}/{required}",
+      "timeRemaining": "Tid tilbage: {time}",
+      "completeButton": "Færdig ({time})",
+      "completedButton": "Færdig!",
+      "closeButton": "Luk"
+    },
+    "BanDialog": {
+      "title": "Konto suspenderet",
+      "suspensionMessage": "Du er {isPermanent, select, true {permanent} other {midlertidigt}} udelukket fra at spille på grund af din opførsel i spillet.",
+      "temporary": "Du kan spille igen den: {date}.",
+      "reasonLabel": "Årsag:",
+      "defaultReason": "Ingen begrundelse angivet.",
+      "understandButton": "Jeg forstår"
+    },
+    "ChatRestrictionDialog": {
+      "title": "Chat-restriktion",
+      "description": "Dine chatrettigheder er blevet midlertidigt begrænset. Du kan ikke sende beskeder i denne periode.",
+      "detailedDescription": "Du er udelukket fra at kommunikere via chat efter en anmeldelse af din opførsel, der er blevet valideret af en administrator. Du kan chatte igen den:",
+      "detailedDescriptionPermanent": "Du er forhindret i at kommunikere via chat efter en rapport om din adfærd, der er blevet valideret af en administrator.",
+      "reason": {
+        "title": "Årsag"
+      },
+      "duration": {
+        "title": "Varighed",
+        "expiresAt": "Chat gendannes: {date}"
+      },
+      "report": {
+        "title": "Relateret rapport",
+        "id": "Rapport-ID: #{reportId}"
+      },
+      "acknowledgeButton": "Jeg forstår"
     }
   },
   "utils": {
@@ -1260,8 +1334,9 @@
       "wizz-sent": "Du har sendt en wizz til {targetName}!",
       "wizz-self": "Du er blevet viftet med af {initiatorName}!",
       "wizz-other": "{initiatorName} har wizzet {targetName}!",
-      "welcome": "Vær venlig og respektfuld. Du kan {isMobile, select, true {trykke og holde nede} other {højreklikke}} på beskeder for at slå spillere fra eller anmelde dem, hvis nødvendigt.",
-      "host-transferred": "{name} er nu vært"
+      "welcome": "Vær venlig og respektfuld i chatten. Om nødvendigt kan du slå en spiller fra eller rapportere dem ved at `{isMobile, select, true {trykke} other {klikke}} på en af deres beskeder eller på dem.",
+      "host-transferred": "Værtrolle overført til {name}",
+      "player-forfeited": "{name} har opgivet spillet"
     },
     "socket": {
       "error": {
@@ -1289,6 +1364,13 @@
         },
         "player-already-connected": {
           "description": "Du er allerede forbundet til dette spil fra en anden session"
+        },
+        "max-players-too-low": {
+          "description": "Kan ikke reducere maksimalt antal spillere til under det nuværende antal spillere i spillet"
+        },
+        "not-allowed": {
+          "title": "Tilladelse nægtet",
+          "description": "Du har ikke tilladelse til at ændre spilindstillinger"
         }
       }
     }
@@ -1296,8 +1378,8 @@
   "contexts": {
     "ReportContext": {
       "report-against-you": {
-        "description": "Dit navn eller en af dine beskeder er blevet rapporteret og fundet upassende. Lad være med at gentage denne adfærd.",
-        "title": "Du er blevet smidt ud på grund af en rapport"
+        "description": "En administrator har godkendt en rapport mod dig. Undgå venligst at gentage denne adfærd, ellers kan der blive iværksat yderligere sanktioner.",
+        "title": "Du er blevet fjernet fra spillet efter en anmeldelse"
       },
       "report": {
         "title": "{playerName} er blevet smidt ud på grund af en indberetning"
@@ -1434,6 +1516,36 @@
     "name-max-characters": "Visningsnavn må højst være 20 tegn",
     "username-min-characters": "Brugernavn skal være mindst 3 tegn",
     "username-max-characters": "Brugernavn må højst være 20 tegn",
-    "username-invalid-format": "Brugernavn må kun indeholde bogstaver, tal og understregninger"
+    "username-invalid-format": "Brugernavn må kun indeholde bogstaver, tal og understregninger",
+    "min-players-invalid": "Minimum spillere skal være mindst 2",
+    "max-players-invalid": "Maksimum antal spillere må højst være 8",
+    "card-per-row-min-invalid": "Kort pr. række skal være mindst 1",
+    "card-per-row-max-invalid": "Kort pr. række må højst være 3",
+    "card-per-column-min-invalid": "Kort pr. kolonne skal være mindst 1",
+    "card-per-column-max-invalid": "Kort per kolonne må højst være 4",
+    "score-to-end-game-min-invalid": "Score for at afslutte spillet skal være mindst 1",
+    "score-to-end-game-max-invalid": "Score for at afslutte spillet må højst være 10000000",
+    "first-player-flat-penalty-min-invalid": "Første spillers faste straf skal være mindst 0",
+    "first-player-flat-penalty-max-invalid": "Første spillers faste straf må højst være 10000000",
+    "first-player-multiplier-penalty-min-invalid": "Første spillers multiplikatorstraf skal være mindst 1",
+    "first-player-multiplier-penalty-max-invalid": "Første spillers multiplikatorstraf må højst være 10000000",
+    "comment-max-characters": "Kommentar må højst være 500 tegn",
+    "password-min-characters": "Adgangskoden skal være mindst 10 tegn lang",
+    "password-lowercase-required": "Adgangskoden skal indeholde mindst ét lille bogstav",
+    "password-uppercase-required": "Adgangskoden skal indeholde mindst ét stort bogstav",
+    "password-number-required": "Adgangskoden skal indeholde mindst ét tal",
+    "password-special-char-required": "Adgangskoden skal indeholde mindst ét specialtegn",
+    "passwords-dont-match": "Adgangskoder stemmer ikke overens",
+    "delete-account-confirmation-required": "Skriv DELETE for at bekræfte",
+    "current-password-required": "Nuværende adgangskode er påkrævet",
+    "email-invalid": "Ugyldig e-mailadresse",
+    "token-required": "Token er påkrævet",
+    "email-already-sent": "En e-mail blev allerede sendt inden for de sidste 5 minutter. Tjek din indbakke eller klik på \"Anmod om ny kode\" for at sende en ny",
+    "email-already-exists": "Denne e-mailadresse er allerede i brug på en anden konto. Brug venligst en anden.",
+    "username-creation-failed": "Vi kunne ikke oprette dit brugernavn. Prøv venligst igen.",
+    "account-deletion-already-scheduled": "Din kontoanmodning om sletning er allerede planlagt. Vent venligst på, at den bliver behandlet.",
+    "account-deletion-schedule-failed": "Vi kunne ikke planlægge sletningen af din konto. Prøv venligst igen.",
+    "user-creation-failed": "Vi kunne ikke oprette din konto. Prøv venligst igen.",
+    "disposable-email-not-allowed": "Midlertidige eller engangs-e-mailadresser er ikke tilladt. Brug venligst en permanent e-mailadresse."
   }
 }
