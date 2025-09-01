@@ -181,3 +181,7 @@ This is a TypeScript monorepo using pnpm workspaces and Turborepo for build orch
 - **XSS Protection**: React's built-in escaping, Content Security Policy
 
 This architecture ensures scalability, maintainability, and real-time performance for thousands of concurrent games.
+
+## Best Practices
+
+- to use environment variables in @apps/api/, write import { ENV } from "@env" and use ENV.VARIABLE_NAME

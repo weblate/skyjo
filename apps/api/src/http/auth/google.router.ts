@@ -13,7 +13,7 @@ export const googleRouter = new Hono()
 
       const cookieOptions: CookieOptions = {
         path: "/",
-        secure: process.env.NODE_ENV === "production",
+        secure: ENV.NODE_ENV === "production",
         httpOnly: true,
         maxAge: 60 * 10, // 10 minutes
         sameSite: "Lax",

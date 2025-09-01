@@ -1,3 +1,4 @@
+import { ENV } from "@env"
 import { GUEST_ID_COOKIE_NAME } from "@skymo/shared/constants"
 import type { Context } from "hono"
 import { getCookie, setCookie } from "hono/cookie"
@@ -18,9 +19,10 @@ export function getOrCreateGuestId(c: Context): string {
   setCookie(c, GUEST_ID_COOKIE_NAME, newGuestId, {
     path: "/",
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: ENV.NODE_ENV === "production",
     sameSite: "Strict",
     maxAge: 60 * 60 * 24 * 365, // 1 year
+    domain: ENV.GUEST_COOKIE_DOMAIN,
   })
 
   return newGuestId

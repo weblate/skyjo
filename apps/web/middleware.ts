@@ -17,6 +17,7 @@ export function middleware(request: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "strict",
       maxAge: 60 * 60 * 24 * 365, // 1 year
+      domain: process.env.GUEST_COOKIE_DOMAIN,
     })
   }
 

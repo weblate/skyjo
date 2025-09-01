@@ -32,6 +32,8 @@ export const envSchema = z.object({
   TEMP_MAIL_API_KEY: z.string({
     message: "TEMP_MAIL_API_KEY must be set in .env file",
   }),
+
+  GUEST_COOKIE_DOMAIN: z.string().optional(),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

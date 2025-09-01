@@ -1,3 +1,4 @@
+import { ENV } from "@env"
 import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import type { Context } from "hono"
 import { setCookie } from "hono/cookie"
@@ -10,7 +11,7 @@ export function setSessionTokenCookie(
   setCookie(c, SESSION_COOKIE_NAME, token, {
     path: "/",
     httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
+    secure: ENV.NODE_ENV === "production",
     sameSite: "Strict",
     expires: expiresAt,
   })
