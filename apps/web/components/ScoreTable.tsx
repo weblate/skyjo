@@ -104,7 +104,7 @@ const ScoreTable = ({ players, scrollToEnd = false }: ScoreTableProps) => {
             <TableCell className="sticky left-0 z-10 text-center w-fit">
               {ranks[player.id]}
             </TableCell>
-            <TableCell className="sticky left-12 z-10">
+            <TableCell className="sticky left-12 z-10 text-nowrap">
               {player.name}{" "}
               {nbRounds > 0 && player.score === winningScore && "🏆"}
             </TableCell>
