@@ -58,6 +58,11 @@ function createReportEmbed(reportData: ReportJobData): EmbedBuilder {
   const fields = [
     { name: "🎮 Game", value: reportData.gameCode, inline: false },
     {
+      name: "🌍 Game Type",
+      value: reportData.isPrivateGame ? "Private" : "Public",
+      inline: false,
+    },
+    {
       name: "🧑‍⚖️ Reporter",
       value: reportData.reporterName,
       inline: false,

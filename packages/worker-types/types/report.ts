@@ -29,6 +29,7 @@ export type ReportJobData = {
   targetUserId?: number
   targetGuestId?: string
   comment?: string
+  isPrivateGame: boolean
   gameContext: {
     players: ReportJobGameContextPlayer[]
     messages: ReportJobGameContextMessage[]

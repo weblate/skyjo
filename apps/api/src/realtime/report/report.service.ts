@@ -75,6 +75,7 @@ export class ReportService extends BaseService {
       targetUserId: target.userId,
       targetGuestId: target.guestId,
       comment: report.comment,
+      isPrivateGame: game.settings.private,
       gameContext,
     })
   }
