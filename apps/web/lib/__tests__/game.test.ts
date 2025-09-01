@@ -14,7 +14,6 @@ import {
   getHost,
   getNextPlayerIndex,
   getOpponents,
-  hasRevealedCardCount,
   isCurrentUserTurn,
   isGameFinished,
   isGameLobby,
@@ -222,6 +221,7 @@ describe("isCurrentUserTurn", () => {
       "player1",
       CoreConstants.CONNECTION_STATUS.CONNECTED,
       cards,
+      { hasRevealedCardCount: false },
     )
     const game = createMockGame({
       status: CoreConstants.GAME_STATUS.PLAYING,
@@ -240,13 +240,14 @@ describe("isCurrentUserTurn", () => {
       "player1",
       CoreConstants.CONNECTION_STATUS.CONNECTED,
       cards,
+      { hasRevealedCardCount: true },
     )
     const game = createMockGame({
       status: CoreConstants.GAME_STATUS.PLAYING,
       roundPhase: CoreConstants.ROUND_PHASE.REVEAL_CARDS,
       players: [player],
     })
-    expect(isCurrentUserTurn(game, player)).toBe(false)
+    expect(isCurrentUserTurn(game, player)).toBe(true)
   })
 
   it("should return false when game is not playing", () => {
@@ -270,43 +271,6 @@ describe("isCurrentUserTurn", () => {
     expect(isCurrentUserTurn(undefined, createMockPlayer("player1"))).toBe(
       false,
     )
-  })
-})
-
-describe("hasRevealedCardCount", () => {
-  it("should return true when revealed card count matches", () => {
-    const cards = [
-      [createMockCard("1", 1, true), createMockCard("2", 2, true)],
-      [createMockCard("3", 3, false), createMockCard("4", 4, false)],
-    ]
-    const player = createMockPlayer(
-      "player1",
-      CoreConstants.CONNECTION_STATUS.CONNECTED,
-      cards,
-    )
-    expect(hasRevealedCardCount(player, 2)).toBe(true)
-  })
-
-  it("should return false when revealed card count doesn't match", () => {
-    const cards = [
-      [createMockCard("1", 1, true), createMockCard("2", 2, false)],
-      [createMockCard("3", 3, false), createMockCard("4", 4, false)],
-    ]
-    const player = createMockPlayer(
-      "player1",
-      CoreConstants.CONNECTION_STATUS.CONNECTED,
-      cards,
-    )
-    expect(hasRevealedCardCount(player, 2)).toBe(false)
-  })
-
-  it("should handle empty cards array", () => {
-    const player = createMockPlayer(
-      "player1",
-      CoreConstants.CONNECTION_STATUS.CONNECTED,
-      [],
-    )
-    expect(hasRevealedCardCount(player, 0)).toBe(true)
   })
 })
 

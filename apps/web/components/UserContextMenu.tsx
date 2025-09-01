@@ -78,7 +78,8 @@ const UserContextMenu = ({ player, reportMessageId }: UserContextMenuProps) => {
           <ContextMenuItem
             onClick={handleTransferHost}
             disabled={
-              player.connectionStatus !== CoreConstants.CONNECTION_STATUS.CONNECTED
+              player.connectionStatus !==
+              CoreConstants.CONNECTION_STATUS.CONNECTED
             }
           >
             <CrownIcon className="w-4 h-4 mr-2" />

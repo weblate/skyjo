@@ -11,6 +11,7 @@ export const createMockPlayer = (
   connectionStatus: ConnectionStatus = CoreConstants.CONNECTION_STATUS
     .CONNECTED,
   cards: CardToJson[][] = [],
+  overrides: Partial<PlayerToJson> = {},
 ): PlayerToJson => ({
   id,
   name: `Player ${id}`,
@@ -24,6 +25,8 @@ export const createMockPlayer = (
   cards,
   forfeited: false,
   forfeitedAt: null,
+  hasRevealedCardCount: false,
+  ...overrides,
 })
 
 export const createMockCard = (

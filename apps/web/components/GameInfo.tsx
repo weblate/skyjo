@@ -3,7 +3,7 @@
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
 import { useGame } from "@/contexts/GameContext"
-import { hasRevealedCardCount, isCurrentUserTurn } from "@/lib/game"
+import { isCurrentUserTurn } from "@/lib/game"
 import { cn } from "@/lib/utils"
 
 const GameInfo = () => {
@@ -15,7 +15,7 @@ const GameInfo = () => {
     if (!player || !game) return t("waiting")
 
     if (gameStatus.isPlaying && roundPhase.isRevealCards) {
-      if (hasRevealedCardCount(player, game.settings.initialTurnedCount)) {
+      if (player.hasRevealedCardCount) {
         return t("waiting-opponents-to-turn-cards", {
           nbOpponents: opponents.flat().length,
           number: game.settings.initialTurnedCount,

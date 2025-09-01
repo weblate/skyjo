@@ -74,7 +74,7 @@ export const getOpponents = (
 export const isCurrentUserTurn = (game?: GameToJson, player?: PlayerToJson) => {
   if (!player || !game) return false
   if (isRoundRevealCards(game.roundPhase) && isGamePlaying(game.status)) {
-    return !hasRevealedCardCount(player, game.settings.initialTurnedCount)
+    return true
   }
 
   if (!isGamePlaying(game.status) || isRoundOver(game.roundPhase)) {
@@ -82,14 +82,6 @@ export const isCurrentUserTurn = (game?: GameToJson, player?: PlayerToJson) => {
   }
 
   return game.players[game.turn]?.id === player.id
-}
-
-export const hasRevealedCardCount = (player: PlayerToJson, count: number) => {
-  const currentCount = player.cards
-    .flat()
-    .filter((card) => card.isVisible).length
-
-  return currentCount === count
 }
 
 export const getCurrentWhoHasToPlay = (game: GameToJson) => {

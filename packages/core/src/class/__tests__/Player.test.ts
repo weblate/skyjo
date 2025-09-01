@@ -177,20 +177,20 @@ describe("Player", () => {
     )
   })
 
-  describe("has revealed card count", () => {
+  describe("check revealed card count", () => {
     it("should return false if the count is different", () => {
-      expect(player.hasRevealedCardCount(2)).toBeFalsy()
+      expect(player.checkRevealedCardCount(2)).toBeFalsy()
 
       player.turnCard(0, 0)
 
-      expect(player.hasRevealedCardCount(2)).toBeFalsy()
+      expect(player.checkRevealedCardCount(2)).toBeFalsy()
     })
 
     it("should return true if the count is the same", () => {
       player.turnCard(0, 0)
       player.turnCard(0, 1)
 
-      expect(player.hasRevealedCardCount(2)).toBeTruthy()
+      expect(player.checkRevealedCardCount(2)).toBeTruthy()
     })
   })
 
@@ -423,6 +423,7 @@ describe("Player", () => {
         username: undefined,
         forfeited: false,
         forfeitedAt: null,
+        hasRevealedCardCount: false,
       })
     })
   })

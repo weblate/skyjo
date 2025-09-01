@@ -340,7 +340,7 @@ export class Game implements GameInterface {
     if (
       !this.isPlaying() ||
       !this.isRoundRevealCards() ||
-      player.hasRevealedCardCount(this.settings.initialTurnedCount)
+      player.hasRevealedCardCount
     )
       return
 
@@ -350,9 +350,9 @@ export class Game implements GameInterface {
 
     player.turnCard(column, row)
 
-    if (player.hasRevealedCardCount(this.settings.initialTurnedCount)) {
+    if (player.checkRevealedCardCount(this.settings.initialTurnedCount)) {
       player.turnStartTime = null
-
+      player.hasRevealedCardCount = true
       this.checkCardsToDiscard(player)
 
       if (this.haveAllPlayersRevealedCards())
@@ -513,6 +513,7 @@ export class Game implements GameInterface {
         sessionId: player.getSessionId(),
         forfeited: player.forfeited,
         forfeitedAt: player.forfeitedAt,
+        hasRevealedCardCount: player.hasRevealedCardCount,
         cards: player.cards.map((column) =>
           column.map((card) => ({
             id: card.id,
@@ -696,14 +697,18 @@ export class Game implements GameInterface {
   }
 
   private haveAllPlayersRevealedCards() {
-    return this.getConnectedPlayers().every((player) =>
-      player.hasRevealedCardCount(this.settings.initialTurnedCount),
+    return this.getConnectedPlayers().every(
+      (player) => player.hasRevealedCardCount,
     )
   }
 
   private async startRoundAfterInitialReveal() {
     await this.operationManager.cancelRevealCardsAfkTimer(this.code)
+
     this.roundPhase = Constants.ROUND_PHASE.MAIN
+    this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
+    this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
+
     await this.setFirstPlayerToStart()
   }
 
@@ -720,14 +725,14 @@ export class Game implements GameInterface {
     }
 
     if (cardsToDiscard.length > 0) {
-      cardsToDiscard.forEach((card) => this.discardCard(card.value))
+      cardsToDiscard.forEach((card) => this.discardSelectedCard(card.value))
 
       this.checkCardsToDiscard(player, maxDepth - 1)
     }
   }
 
   private hasPlayerFinished(player: Player) {
-    return player.hasRevealedCardCount(player.cards.flat().length)
+    return player.checkRevealedCardCount(player.cards.flat().length)
   }
 
   private shouldSetFirstPlayerToFinish(player: Player) {

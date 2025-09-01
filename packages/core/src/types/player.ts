@@ -25,6 +25,7 @@ export type PlayerToJson = {
   guestId?: string | null
   forfeited: boolean
   forfeitedAt: number | null
+  hasRevealedCardCount: boolean
 }
 
 export type PlayerRedisDb = {
@@ -47,4 +48,5 @@ export type PlayerRedisDb = {
   cards: CardRedisDb[][]
   forfeited: boolean
   forfeitedAt: number | null
+  hasRevealedCardCount: boolean
 }

@@ -132,18 +132,16 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
         },
       )
 
-      const initialTurnedCount = game.settings.initialTurnedCount
-
       for (const player of connectedPlayers) {
-        if (player.hasRevealedCardCount(initialTurnedCount)) {
+        if (player.hasRevealedCardCount) {
           Logger.debug(
             `Player ${player.id} (${player.name}) already revealed required cards in game ${gameCode}`,
             {
               gameCode,
               playerId: player.id,
               playerName: player.name,
-              revealedCount: initialTurnedCount,
-              requiredCount: initialTurnedCount,
+              revealedCount: player.hasRevealedCardCount,
+              requiredCount: game.settings.initialTurnedCount,
             },
           )
           continue
@@ -179,15 +177,12 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
   }
 
   private async performAfkMove(game: Game, player: Player) {
-    const initialTurnedCount = game.settings.initialTurnedCount
-
     Logger.info(
       `Performing AFK reveal for player ${player.id} (${player.name}) in game ${game.code}`,
       {
         gameCode: game.code,
         playerId: player.id,
         playerName: player.name,
-        targetRevealedCount: initialTurnedCount,
       },
     )
 
@@ -195,10 +190,7 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
     let attempts = 0
     const attemptedCards = new Set<string>()
 
-    while (
-      !player.hasRevealedCardCount(initialTurnedCount) &&
-      attempts < maxAttempts
-    ) {
+    while (!player.hasRevealedCardCount && attempts < maxAttempts) {
       const cardToRevealCoords = player.getFirstCardNotVisible()
       if (!cardToRevealCoords) break
 

@@ -144,7 +144,7 @@ describe("RevealCardsAfkQueueService", () => {
       socketId: "socket-123",
       afkCount: 0,
       consecutiveAfkCount: 0,
-      hasRevealedCardCount: vi.fn().mockReturnValue(false),
+      hasRevealedCardCount: false,
       getFirstCardNotVisible: vi.fn().mockReturnValue({ column: 0, row: 0 }),
     } as unknown as Player
 
@@ -299,7 +299,7 @@ describe("RevealCardsAfkQueueService", () => {
       mockGame.isRoundRevealCards = vi.fn().mockReturnValue(true)
 
       // Set up a player who has not revealed enough cards
-      mockPlayer.hasRevealedCardCount = vi.fn().mockReturnValue(false)
+      mockPlayer.hasRevealedCardCount = false
       mockGame.getConnectedPlayers = vi.fn().mockReturnValue([mockPlayer])
 
       // Mock the increaseAfkCount method to return false (no disconnect)
@@ -320,9 +320,6 @@ describe("RevealCardsAfkQueueService", () => {
       expect(mockGame.isPlaying).toHaveBeenCalled()
       expect(mockGame.isRoundRevealCards).toHaveBeenCalled()
       expect(mockGame.getConnectedPlayers).toHaveBeenCalled()
-      expect(mockPlayer.hasRevealedCardCount).toHaveBeenCalledWith(
-        mockGame.settings.initialTurnedCount,
-      )
       expect(increaseAfkCountSpy).toHaveBeenCalledWith(mockGame, mockPlayer)
       expect(mockGame.revealCard).toHaveBeenCalledWith({
         player: mockPlayer,
@@ -342,7 +339,7 @@ describe("RevealCardsAfkQueueService", () => {
       queueService["redis"].getGameSafe = vi.fn().mockResolvedValue(mockGame)
 
       // Set up a player who has revealed enough cards
-      mockPlayer.hasRevealedCardCount = vi.fn().mockReturnValue(true)
+      mockPlayer.hasRevealedCardCount = true
       mockGame.getConnectedPlayers = vi.fn().mockReturnValue([mockPlayer])
 
       // Mock the increaseAfkCount method
@@ -353,9 +350,6 @@ describe("RevealCardsAfkQueueService", () => {
 
       await queueService.processJob(mockJob)
 
-      expect(mockPlayer.hasRevealedCardCount).toHaveBeenCalledWith(
-        mockGame.settings.initialTurnedCount,
-      )
       expect(increaseAfkCountSpy).not.toHaveBeenCalled()
       expect(mockGame.revealCard).not.toHaveBeenCalled()
     })
@@ -365,7 +359,7 @@ describe("RevealCardsAfkQueueService", () => {
       queueService["redis"].getGameSafe = vi.fn().mockResolvedValue(mockGame)
 
       // Set up a player who has not revealed enough cards
-      mockPlayer.hasRevealedCardCount = vi.fn().mockReturnValue(false)
+      mockPlayer.hasRevealedCardCount = false
       mockGame.getConnectedPlayers = vi.fn().mockReturnValue([mockPlayer])
 
       // Mock the increaseAfkCount method to return true (disconnect)
@@ -386,7 +380,7 @@ describe("RevealCardsAfkQueueService", () => {
       queueService["redis"].getGameSafe = vi.fn().mockResolvedValue(mockGame)
 
       // Set up a player who has not revealed enough cards
-      mockPlayer.hasRevealedCardCount = vi.fn().mockReturnValue(false)
+      mockPlayer.hasRevealedCardCount = false
       mockGame.getConnectedPlayers = vi.fn().mockReturnValue([mockPlayer])
 
       // Mock the increaseAfkCount method to throw a player not found error
@@ -411,7 +405,7 @@ describe("RevealCardsAfkQueueService", () => {
       queueService["redis"].getGameSafe = vi.fn().mockResolvedValue(mockGame)
 
       // Set up a player who has not revealed enough cards
-      mockPlayer.hasRevealedCardCount = vi.fn().mockReturnValue(false)
+      mockPlayer.hasRevealedCardCount = false
       mockGame.getConnectedPlayers = vi.fn().mockReturnValue([mockPlayer])
 
       // Mock the increaseAfkCount method to throw a generic error
@@ -439,9 +433,6 @@ describe("RevealCardsAfkQueueService", () => {
 
       // Create a more controlled implementation of hasRevealedCardCount
       let revealedCardCount = 0
-      mockPlayer.hasRevealedCardCount = vi.fn().mockImplementation((target) => {
-        return revealedCardCount >= target
-      })
 
       // Mock the getFirstCardNotVisible method
       mockPlayer.getFirstCardNotVisible = vi
@@ -459,13 +450,15 @@ describe("RevealCardsAfkQueueService", () => {
       // Mock the revealCard method to increment the revealedCardCount
       mockGame.revealCard = vi.fn().mockImplementation(async () => {
         revealedCardCount++
+        if (revealedCardCount >= mockGame.settings.initialTurnedCount) {
+          mockPlayer.hasRevealedCardCount = true
+        }
         return Promise.resolve()
       })
 
       await queueService.processJob(mockJob)
 
       // Check that the mocks were called the expected number of times
-      expect(mockPlayer.hasRevealedCardCount).toHaveBeenCalledTimes(4)
       expect(mockPlayer.getFirstCardNotVisible).toHaveBeenCalledTimes(2)
       expect(mockGame.revealCard).toHaveBeenCalledTimes(2)
 
@@ -490,7 +483,7 @@ describe("RevealCardsAfkQueueService", () => {
       queueService["redis"].getGameSafe = vi.fn().mockResolvedValue(mockGame)
 
       // Set up a player who has not revealed enough cards
-      mockPlayer.hasRevealedCardCount = vi.fn().mockReturnValue(false)
+      mockPlayer.hasRevealedCardCount = false
       mockPlayer.getFirstCardNotVisible = vi
         .fn()
         .mockReturnValue({ column: 0, row: 0 })
@@ -510,7 +503,6 @@ describe("RevealCardsAfkQueueService", () => {
 
       await queueService.processJob(mockJob)
 
-      expect(mockPlayer.hasRevealedCardCount).toHaveBeenCalled()
       expect(mockPlayer.getFirstCardNotVisible).toHaveBeenCalled()
       expect(mockGame.revealCard).toHaveBeenCalledWith({
         player: mockPlayer,
@@ -528,7 +520,7 @@ describe("RevealCardsAfkQueueService", () => {
       queueService["redis"].getGameSafe = vi.fn().mockResolvedValue(mockGame)
 
       // Set up a player who never reaches the target
-      mockPlayer.hasRevealedCardCount = vi.fn().mockReturnValue(false)
+      mockPlayer.hasRevealedCardCount = false
       mockPlayer.getFirstCardNotVisible = vi
         .fn()
         .mockReturnValue({ column: 0, row: 0 })
@@ -552,7 +544,7 @@ describe("RevealCardsAfkQueueService", () => {
       queueService["redis"].getGameSafe = vi.fn().mockResolvedValue(mockGame)
 
       // Set up a player who has no more cards to reveal
-      mockPlayer.hasRevealedCardCount = vi.fn().mockReturnValue(false)
+      mockPlayer.hasRevealedCardCount = false
       mockPlayer.getFirstCardNotVisible = vi.fn().mockReturnValue(null)
       mockGame.getConnectedPlayers = vi.fn().mockReturnValue([mockPlayer])
 
@@ -565,7 +557,6 @@ describe("RevealCardsAfkQueueService", () => {
 
       await queueService.processJob(mockJob)
 
-      expect(mockPlayer.hasRevealedCardCount).toHaveBeenCalled()
       expect(mockPlayer.getFirstCardNotVisible).toHaveBeenCalled()
       expect(mockGame.revealCard).not.toHaveBeenCalled()
     })

@@ -161,6 +161,7 @@ describe("Game", () => {
             sessionId: crypto.randomUUID(),
             forfeited: false,
             forfeitedAt: null,
+            hasRevealedCardCount: false,
           },
         ],
 
@@ -555,6 +556,7 @@ describe("Game", () => {
 
       player.cards[0][0].turnVisible()
       player.cards[0][1].turnVisible()
+      player.hasRevealedCardCount = true
 
       await game.revealCard({
         player,
@@ -719,7 +721,7 @@ describe("Game", () => {
       const discardedCards: number[] = []
       const discardCardMock = (value: number) => discardedCards.push(value)
       const discardCardSpy = vi
-        .spyOn(game, "discardCard")
+        .spyOn(game, "discardSelectedCard")
         .mockImplementation(discardCardMock)
 
       await game.revealCard({
@@ -1437,6 +1439,7 @@ describe("Game", () => {
             sessionId: player.getSessionId(),
             forfeited: player.forfeited,
             forfeitedAt: player.forfeitedAt,
+            hasRevealedCardCount: player.hasRevealedCardCount,
           },
           {
             id: opponent.id,
@@ -1464,6 +1467,7 @@ describe("Game", () => {
             sessionId: opponent.getSessionId(),
             forfeited: opponent.forfeited,
             forfeitedAt: opponent.forfeitedAt,
+            hasRevealedCardCount: opponent.hasRevealedCardCount,
           },
         ],
         settings: {
@@ -1832,7 +1836,7 @@ describe("Game", () => {
 
       // Mock the discardCard method
       const discardCardSpy = vi
-        .spyOn(game, "discardCard")
+        .spyOn(game, "discardSelectedCard")
         .mockImplementation(() => {})
 
       // Don't mock the checkCardsToDiscard method itself
@@ -1859,7 +1863,7 @@ describe("Game", () => {
 
       // Mock the discardCard method
       const discardCardSpy = vi
-        .spyOn(game, "discardCard")
+        .spyOn(game, "discardSelectedCard")
         .mockImplementation(() => {})
 
       // Don't mock the checkCardsToDiscard method itself
@@ -1888,7 +1892,7 @@ describe("Game", () => {
 
       // Mock the discardCard method
       const discardCardSpy = vi
-        .spyOn(game, "discardCard")
+        .spyOn(game, "discardSelectedCard")
         .mockImplementation(() => {})
 
       // Don't mock the checkCardsToDiscard method itself
@@ -1906,7 +1910,7 @@ describe("Game", () => {
       vi.spyOn(player, "checkColumnsAndDiscard").mockReturnValue([])
       vi.spyOn(player, "checkRowsAndDiscard").mockReturnValue([])
 
-      const discardCardSpy = vi.spyOn(game, "discardCard")
+      const discardCardSpy = vi.spyOn(game, "discardSelectedCard")
 
       game["checkCardsToDiscard"](player)
 
@@ -1925,7 +1929,7 @@ describe("Game", () => {
         .mockReturnValue([])
 
       // Mock the discardCard method
-      vi.spyOn(game, "discardCard").mockImplementation(() => {})
+      vi.spyOn(game, "discardSelectedCard").mockImplementation(() => {})
 
       // Spy on the checkCardsToDiscard method to verify it's called recursively
       const checkCardsToDiscardSpy = vi.spyOn(
@@ -1944,15 +1948,8 @@ describe("Game", () => {
     it("should return true when all players have revealed the required number of cards", () => {
       game.settings.initialTurnedCount = 2
 
-      player.cards = [
-        [new Card(1, true), new Card(2, true), new Card(3, false)],
-        [new Card(4, false), new Card(5, false), new Card(6, false)],
-      ]
-
-      opponent.cards = [
-        [new Card(7, true), new Card(8, true), new Card(9, false)],
-        [new Card(10, false), new Card(11, false), new Card(12, false)],
-      ]
+      player.hasRevealedCardCount = true
+      opponent.hasRevealedCardCount = true
 
       const result = game["haveAllPlayersRevealedCards"]()
 

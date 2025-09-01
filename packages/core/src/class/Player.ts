@@ -29,7 +29,7 @@ interface PlayerInterface {
   setCards(cardsValue: number[], cardSettings: Settings): void
   turnCard(column: number, row: number): void
   replaceCard(column: number, row: number, value: number): void
-  hasRevealedCardCount(count: number): boolean
+  checkRevealedCardCount(count: number): boolean
   checkColumnsAndDiscard(): Card[]
   checkRowsAndDiscard(): Card[]
   currentScoreArray(): number[]
@@ -60,6 +60,7 @@ export class Player implements PlayerInterface {
   username?: string
   guestId?: string
   private sessionId: string = crypto.randomUUID()
+  hasRevealedCardCount: boolean = false
 
   constructor(
     playerToCreate: CreatePlayer = {
@@ -98,6 +99,7 @@ export class Player implements PlayerInterface {
     this.sessionId = player.sessionId
     this.forfeited = player.forfeited ?? false
     this.forfeitedAt = player.forfeitedAt ?? null
+    this.hasRevealedCardCount = player.hasRevealedCardCount ?? false
 
     if (player.cards.length > 0) {
       this.cards = player.cards.map((column) =>
@@ -144,7 +146,7 @@ export class Player implements PlayerInterface {
     card.value = value
   }
 
-  hasRevealedCardCount(count: number) {
+  checkRevealedCardCount(count: number) {
     const currentCount = this.cards
       .flat()
       .filter((card) => card.isVisible).length
@@ -283,6 +285,7 @@ export class Player implements PlayerInterface {
       cards: this.cards.map((column) => column.map((card) => card.toJson())),
       forfeited: this.forfeited,
       forfeitedAt: this.forfeitedAt,
+      hasRevealedCardCount: this.hasRevealedCardCount,
     }
   }
 

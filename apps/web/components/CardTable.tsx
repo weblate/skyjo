@@ -5,11 +5,7 @@ import { AnimatePresence, m } from "motion/react"
 import { useCallback, useEffect, useState } from "react"
 import { GameCard } from "@/components/Card/GameCard"
 import { useGame } from "@/contexts/GameContext"
-import {
-  hasRevealedCardCount,
-  isCurrentUserTurn,
-  isRoundRevealCards,
-} from "@/lib/game"
+import { isCurrentUserTurn, isRoundRevealCards } from "@/lib/game"
 import { cn } from "@/lib/utils"
 
 const cardTableVariants = cva("inline-grid grid-flow-col duration-100 w-fit", {
@@ -53,7 +49,6 @@ const CardTable = ({
     gameStatus,
     roundPhase,
     turnStatus,
-    lastTurnStatus,
   } = useGame()
 
   const [style, setStyle] = useState<React.CSSProperties>(
@@ -63,12 +58,12 @@ const CardTable = ({
   const canRevealCards =
     gameStatus.isPlaying &&
     roundPhase.isRevealCards &&
-    !hasRevealedCardCount(player, game.settings.initialTurnedCount)
+    !player.hasRevealedCardCount
 
   const canReplaceCard =
     turnStatus.isThrowOrReplace || turnStatus.isReplaceACard
 
-  const canTurnCard = turnStatus.isTurnACard
+  const canTurnCard = !roundPhase.isRevealCards && turnStatus.isTurnACard
 
   const handleCardClick = (column: number, row: number) => {
     const isUserTurn = isCurrentUserTurn(game, player)
@@ -101,6 +96,7 @@ const CardTable = ({
       <AnimatePresence onExitComplete={handleAnimationComplete}>
         {cards.map((column, columnIndex) => {
           return column.map((card, rowIndex) => {
+            console.log(canTurnCard)
             const canBeSelected =
               ((canRevealCards || canTurnCard) && !card.isVisible) ||
               canReplaceCard
@@ -118,8 +114,14 @@ const CardTable = ({
                 }
                 size={size}
                 disabled={cardDisabled || !canBeSelected}
-                showFlipAnimation={lastTurnStatus.isTurn}
-                showExitAnimation={roundPhase.isMain || roundPhase.isLastLap}
+                showFlipAnimation={
+                  canRevealCards || canTurnCard || canReplaceCard
+                }
+                showExitAnimation={
+                  roundPhase.isRevealCards ||
+                  roundPhase.isMain ||
+                  roundPhase.isLastLap
+                }
                 playerCount={nbConnectedPlayers}
               />
             )

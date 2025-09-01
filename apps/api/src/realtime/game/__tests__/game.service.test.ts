@@ -320,21 +320,35 @@ describe("GameService", () => {
       )
       game.addPlayer(opponent)
       await game.start()
-      player.turnCard(0, 0)
-      player.turnCard(0, 1)
 
       socket.data.gameCode = game.code
       socket.data.playerId = player.id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
+      // Default settings so player has to reveal 2 cards
+      await service.onRevealCard(
+        socket,
+        {
+          column: 0,
+          row: 0,
+        },
+        game.stateVersion,
+      )
+      await service.onRevealCard(
+        socket,
+        { column: 0, row: 1 },
+        game.stateVersion,
+      )
+
+      // This should not reveal the card
       await service.onRevealCard(
         socket,
         { column: 0, row: 2 },
         game.stateVersion,
       )
 
-      expect(player.hasRevealedCardCount(2)).toBeTruthy()
+      expect(player.checkRevealedCardCount(2)).toBeTruthy()
       expect(game.isPlaying()).toBeTruthy()
       expect(game.isRoundRevealCards()).toBeTruthy()
     })
@@ -370,7 +384,7 @@ describe("GameService", () => {
         game.stateVersion,
       )
 
-      expect(player.hasRevealedCardCount(2)).toBeTruthy()
+      expect(player.checkRevealedCardCount(2)).toBeTruthy()
       expect(game.isPlaying()).toBeTruthy()
       expect(game.isRoundRevealCards()).toBeTruthy()
     })
