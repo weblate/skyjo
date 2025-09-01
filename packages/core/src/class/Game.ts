@@ -628,6 +628,11 @@ export class Game implements GameInterface {
       await this.finishTurn({ wasAfk: false })
     } else {
       this.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+      // Set turnStartTime for all players during reveal phase
+      const revealStartTime = Date.now()
+      this.getConnectedPlayers().forEach((player) => {
+        player.startTurn(revealStartTime)
+      })
       await this.operationManager.startRevealCardsAfkTimer(this)
     }
   }
@@ -704,6 +709,11 @@ export class Game implements GameInterface {
 
   private async startRoundAfterInitialReveal() {
     await this.operationManager.cancelRevealCardsAfkTimer(this.code)
+
+    // Clear turnStartTime from all players as reveal phase ends
+    this.getConnectedPlayers().forEach((player) => {
+      player.turnStartTime = null
+    })
 
     this.roundPhase = Constants.ROUND_PHASE.MAIN
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN

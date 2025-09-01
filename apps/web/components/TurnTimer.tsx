@@ -3,6 +3,7 @@
 import { Constants as CoreConstants } from "@skymo/core"
 import { TimerDisplayMode } from "@skymo/shared/constants"
 import { cva } from "class-variance-authority"
+import { ClassValue } from "clsx"
 import dayjs from "dayjs"
 import { AnimatePresence, m } from "motion/react"
 import { useEffect, useRef, useState } from "react"
@@ -20,7 +21,7 @@ const turnTimerTextVariants = cva("text-sm", {
 })
 
 interface TurnTimerProps {
-  className?: string
+  className?: ClassValue
   turnStartTime: number | null
 }
 const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
@@ -39,9 +40,9 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   useEffect(() => {
     if (intervalRef.current) clearInterval(intervalRef.current)
 
-    if (!turnStartTime || timerDisplayMode === TimerDisplayMode.NEVER) {
-      return
-    }
+    if (timerDisplayMode === TimerDisplayMode.NEVER) return
+
+    if (!turnStartTime) return
 
     const now = dayjs()
     const elapsedTime = now.diff(turnStartTime, "ms")
@@ -66,13 +67,13 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   const timeLeftVariant = timeLeft <= 10000 ? "danger" : "normal"
 
   const shouldShowTimer = () => {
-    if (
-      timerDisplayMode === TimerDisplayMode.NEVER ||
-      !gameStatus.isPlaying ||
-      !turnStartTime
-    ) {
+    if (timerDisplayMode === TimerDisplayMode.NEVER || !gameStatus.isPlaying) {
       return false
     }
+
+    // For regular turns, need turnStartTime
+    if (!turnStartTime) return false
+
     if (timerDisplayMode === TimerDisplayMode.ALWAYS) return true
 
     // Smart mode logic
