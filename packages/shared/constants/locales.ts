@@ -18,6 +18,8 @@ export const locales = [
   "gsw",
   "frs",
   "nds",
+  "fi",
+  "hu",
 ] as const
 export type Locales = (typeof locales)[number]
 
@@ -56,4 +58,6 @@ export const hreflangMapping: Record<Locales, string> = {
   sv: "sv",
   ta: "ta",
   uk: "uk",
+  fi: "fi",
+  hu: "hu",
 }

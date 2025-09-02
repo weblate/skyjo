@@ -934,7 +934,9 @@
         "nl": "Nederlands",
         "pl": "Polski",
         "sv": "Svenska",
-        "uk": ""
+        "uk": "українська мова",
+        "fi": "Suomi",
+        "hu": "Magyar"
       }
     },
     "AccountDropdownMenu": {
