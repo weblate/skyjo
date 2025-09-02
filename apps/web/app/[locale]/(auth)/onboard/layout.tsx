@@ -1,5 +1,5 @@
 import { Locales } from "@skymo/shared/constants"
-import { Metadata } from "next"
+import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 import { generateAlternatesLanguages, routing } from "@/i18n/routing"

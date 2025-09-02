@@ -1,5 +1,6 @@
 "use client"
 
+import { captureException } from "@sentry/nextjs"
 import { Avatar } from "@skymo/core"
 import { LogoutError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
@@ -86,7 +87,16 @@ export const useAuth = () => {
           username: result.user.username ?? undefined,
         }
       } catch (error) {
-        console.error(error)
+        captureException(error, {
+          tags: {
+            section: "auth",
+            action: "session_verification",
+          },
+          extra: {
+            pathname,
+            apiUrl: process.env.NEXT_PUBLIC_API_URL,
+          },
+        })
         return null
       }
     },

@@ -1,12 +1,12 @@
 import "server-only"
 
+import { captureException } from "@sentry/nextjs"
 import { Avatar } from "@skymo/core"
 import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import type { VerifyError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
-import { cache } from "react"
 
 export interface SessionData {
   id: number
@@ -34,7 +34,6 @@ export const verifySession = async (): Promise<SessionData | null> => {
         Cookie: `${SESSION_COOKIE_NAME}=${sessionCookie.value}`,
         "Content-Type": "application/json",
       },
-      next: { revalidate: 300 }, // 5 minute cache
     })
 
     if (!response.ok) {
@@ -45,6 +44,25 @@ export const verifySession = async (): Promise<SessionData | null> => {
         error,
         url,
       })
+
+      if (response.status >= 500) {
+        captureException(
+          new Error(`Session verification server error: ${response.status}`),
+          {
+            tags: {
+              section: "auth",
+              action: "server_session_verification",
+            },
+            extra: {
+              status: response.status,
+              statusText: response.statusText,
+              error,
+              url,
+            },
+          },
+        )
+      }
+
       return null
     }
 
@@ -53,15 +71,25 @@ export const verifySession = async (): Promise<SessionData | null> => {
     if (!data?.user) return null
 
     return data.user
-  } catch {
+  } catch (error) {
+    console.error("verifySession: Network error", error)
+    captureException(error, {
+      tags: {
+        section: "auth",
+        action: "server_session_verification_network_error",
+      },
+      extra: {
+        url: `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`,
+      },
+    })
     return null
   }
 }
 
-export const getUser = cache(async (): Promise<SessionData> => {
+export const getUser = async (): Promise<SessionData> => {
   const session = await verifySession()
 
   if (!session) redirect("/login")
 
   return session
-})
+}
