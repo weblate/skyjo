@@ -1,5 +1,5 @@
 import { Logger } from "@skymo/logger"
-import { createAdapter } from "@socket.io/redis-streams-adapter"
+import { createAdapter } from "@socket.io/redis-adapter"
 import { Server as HttpServer } from "http"
 import { createClient } from "redis"
 import { Server } from "socket.io"
@@ -30,8 +30,8 @@ vi.mock("socket.io", () => {
   }
 })
 
-vi.mock("@socket.io/redis-streams-adapter", () => ({
-  createAdapter: vi.fn(),
+vi.mock("@socket.io/redis-adapter", () => ({
+  createAdapter: vi.fn().mockReturnValue({}),
 }))
 
 vi.mock("@skymo/logger", () => ({
@@ -75,7 +75,8 @@ const createMockGameData = () => ({
 describe("SocketManager", () => {
   let socketManager: SocketManager
   let mockHttpServer: HttpServer
-  let mockRedisClient: any
+  let mockPubClient: any
+  let mockSubClient: any
   let mockSocket: GameSocket
   let mockSocketsMap: Map<string, GameSocket>
 
@@ -89,12 +90,20 @@ describe("SocketManager", () => {
     socketManager = SocketManager.getInstance()
     mockHttpServer = new HttpServer()
 
-    mockRedisClient = {
+    mockPubClient = {
       connect: vi.fn().mockResolvedValue(undefined),
-      quit: vi.fn().mockResolvedValue(undefined),
-      destroy: vi.fn().mockResolvedValue(undefined),
+      disconnect: vi.fn().mockResolvedValue(undefined),
+      duplicate: vi.fn(),
       on: vi.fn(),
     }
+
+    mockSubClient = {
+      connect: vi.fn().mockResolvedValue(undefined),
+      disconnect: vi.fn().mockResolvedValue(undefined),
+      on: vi.fn(),
+    }
+
+    mockPubClient.duplicate.mockReturnValue(mockSubClient)
 
     mockSocket = {
       id: "player-123",
@@ -109,7 +118,7 @@ describe("SocketManager", () => {
     mockSocketsMap.clear()
 
     // Mock implementation
-    vi.mocked(createClient).mockReturnValue(mockRedisClient)
+    vi.mocked(createClient).mockReturnValue(mockPubClient)
   })
 
   describe("getInstance", () => {
@@ -126,9 +135,11 @@ describe("SocketManager", () => {
       await socketManager.setIO(mockHttpServer)
 
       expect(createClient).toHaveBeenCalledTimes(1)
-      expect(mockRedisClient.connect).toHaveBeenCalledTimes(1)
+      expect(mockPubClient.duplicate).toHaveBeenCalledTimes(1)
+      expect(mockPubClient.connect).toHaveBeenCalledTimes(1)
+      expect(mockSubClient.connect).toHaveBeenCalledTimes(1)
       expect(Server).toHaveBeenCalledTimes(1)
-      expect(createAdapter).toHaveBeenCalledWith(mockRedisClient)
+      expect(createAdapter).toHaveBeenCalledWith(mockPubClient, mockSubClient)
       expect(socketManager.isInitialized()).toBe(true)
     })
 
@@ -141,13 +152,13 @@ describe("SocketManager", () => {
 
     it("should handle Redis connection errors", async () => {
       const connectionError = new Error("Connection failed")
-      mockRedisClient.connect.mockRejectedValueOnce(connectionError)
+      mockPubClient.connect.mockRejectedValueOnce(connectionError)
 
       await expect(socketManager.setIO(mockHttpServer)).rejects.toThrow(
         connectionError,
       )
 
-      expect(mockRedisClient.destroy).toHaveBeenCalledTimes(1)
+      expect(mockPubClient.disconnect).toHaveBeenCalledTimes(1)
       expect(socketManager.isInitialized()).toBe(false)
     })
 
@@ -162,34 +173,28 @@ describe("SocketManager", () => {
       expect(reconnectStrategyFn(1)).toBe(100) // 1 retry -> 100ms
       expect(reconnectStrategyFn(5)).toBe(500) // 5 retries -> 500ms
       expect(() => reconnectStrategyFn(6)).toThrow(
-        "Redis client connection failed after 5 retries",
+        "Redis Pub client connection failed after 5 retries",
       )
     })
 
-    it("should register error handlers for Redis client", async () => {
+    it("should register error handlers for Redis clients", async () => {
       await socketManager.setIO(mockHttpServer)
 
-      expect(mockRedisClient.on).toHaveBeenCalledWith(
+      expect(mockPubClient.on).toHaveBeenCalledWith(
         "error",
         expect.any(Function),
       )
-      expect(mockRedisClient.on).toHaveBeenCalledWith(
-        "connect",
-        expect.any(Function),
-      )
-      expect(mockRedisClient.on).toHaveBeenCalledWith(
-        "disconnect",
+      expect(mockSubClient.on).toHaveBeenCalledWith(
+        "error",
         expect.any(Function),
       )
 
-      // Trigger error handler
-      const errorHandler = mockRedisClient.on.mock.calls.find(
-        (call: any[]) => call[0] === "error",
-      )[1]
+      // Trigger error handlers
+      const errorHandler = mockPubClient.on.mock.calls[0][1]
       errorHandler(new Error("Redis error"))
 
       expect(Logger.error).toHaveBeenCalledWith(
-        "Redis Client Error",
+        "Redis Pub Client Error",
         expect.any(Object),
       )
     })
@@ -310,7 +315,8 @@ describe("SocketManager", () => {
       expect(io.fetchSockets).toHaveBeenCalled()
       expect(io.disconnectSockets).toHaveBeenCalledWith(true)
       expect(io.close).toHaveBeenCalled()
-      expect(mockRedisClient.destroy).toHaveBeenCalled()
+      expect(mockPubClient.disconnect).toHaveBeenCalled()
+      expect(mockSubClient.disconnect).toHaveBeenCalled()
       expect(socketManager.isInitialized()).toBe(false)
     })
 
@@ -331,19 +337,20 @@ describe("SocketManager", () => {
           error: closeError,
         }),
       )
-      expect(mockRedisClient.destroy).toHaveBeenCalled()
+      expect(mockPubClient.disconnect).toHaveBeenCalled()
+      expect(mockSubClient.disconnect).toHaveBeenCalled()
     })
 
     it("should handle errors during Redis client disconnect", async () => {
       await socketManager.setIO(mockHttpServer)
 
       const disconnectError = new Error("Disconnect failed")
-      mockRedisClient.destroy.mockRejectedValueOnce(disconnectError)
+      mockPubClient.disconnect.mockRejectedValueOnce(disconnectError)
 
       await socketManager.cleanup()
 
       expect(Logger.error).toHaveBeenCalledWith(
-        "Error disconnecting Redis client",
+        "Error disconnecting Redis pub client",
         expect.objectContaining({
           error: disconnectError,
         }),
@@ -353,7 +360,7 @@ describe("SocketManager", () => {
     it("should do nothing if not initialized", async () => {
       await socketManager.cleanup()
 
-      expect(mockRedisClient.destroy).not.toHaveBeenCalled()
+      expect(mockPubClient.disconnect).not.toHaveBeenCalled()
     })
   })
 })

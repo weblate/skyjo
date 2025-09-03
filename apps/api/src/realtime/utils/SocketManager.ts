@@ -5,7 +5,7 @@ import type {
   ClientToServerEvents,
   ServerToClientEvents,
 } from "@skymo/shared/types"
-import { createAdapter } from "@socket.io/redis-streams-adapter"
+import { createAdapter } from "@socket.io/redis-adapter"
 import dayjs from "dayjs"
 import { Server as HttpServer } from "http"
 import { createClient } from "redis"
@@ -16,7 +16,8 @@ import type { GameSocket } from "@/realtime/types/gameSocket.js"
 export class SocketManager {
   private static instance: SocketManager
   private io: Server<ClientToServerEvents, ServerToClientEvents> | null = null
-  private redisClient: ReturnType<typeof createClient> | null = null
+  private pubClient: ReturnType<typeof createClient> | null = null
+  private subClient: ReturnType<typeof createClient> | null = null
   private initialized = false
 
   private constructor() {}
@@ -34,33 +35,33 @@ export class SocketManager {
     try {
       Logger.info("Initializing Redis clients for Socket.IO adapter")
 
-      this.redisClient = createClient({
+      this.pubClient = createClient({
         url: ENV.REDIS_URL,
         socket: {
           reconnectStrategy: (retries) => {
-            Logger.info(`Redis client reconnect attempt ${retries}`)
+            Logger.info(`Redis Pub client reconnect attempt ${retries}`)
             if (retries > 5) {
-              throw new Error("Redis client connection failed after 5 retries")
+              throw new Error(
+                "Redis Pub client connection failed after 5 retries",
+              )
             }
             return Math.min(retries * 100, 3000)
           },
         },
       })
 
-      this.redisClient.on("error", (error) => {
-        Logger.error("Redis Client Error", { error })
+      this.subClient = this.pubClient.duplicate()
+
+      this.pubClient.on("error", (err) => {
+        Logger.error("Redis Pub Client Error", { error: err })
       })
 
-      this.redisClient.on("connect", () => {
-        Logger.info("Redis client connected")
+      this.subClient.on("error", (err) => {
+        Logger.error("Redis Sub Client Error", { error: err })
       })
 
-      this.redisClient.on("disconnect", () => {
-        Logger.info("Redis client disconnected")
-      })
-
-      await this.redisClient.connect()
-      Logger.info("Redis client connected for Socket.IO adapter")
+      await Promise.all([this.pubClient.connect(), this.subClient.connect()])
+      Logger.info("Redis clients connected for Socket.IO adapter")
 
       const io = new Server<ClientToServerEvents, ServerToClientEvents>(
         server,
@@ -83,7 +84,7 @@ export class SocketManager {
             sameSite: "strict",
             expires: dayjs().add(1, "day").toDate(),
           },
-          adapter: createAdapter(this.redisClient),
+          adapter: createAdapter(this.pubClient, this.subClient),
         },
       )
 
@@ -148,14 +149,25 @@ export class SocketManager {
   private async cleanupRedisClients(): Promise<void> {
     Logger.info("Cleaning up Redis adapter clients")
 
-    if (this.redisClient) {
+    if (this.pubClient) {
       try {
-        await this.redisClient.destroy()
-        Logger.info("Redis client disconnected")
+        await this.pubClient.disconnect()
+        Logger.info("Redis pub client disconnected")
       } catch (error) {
-        Logger.error("Error disconnecting Redis client", { error })
+        Logger.error("Error disconnecting Redis pub client", { error })
       } finally {
-        this.redisClient = null
+        this.pubClient = null
+      }
+    }
+
+    if (this.subClient) {
+      try {
+        await this.subClient.disconnect()
+        Logger.info("Redis sub client disconnected")
+      } catch (error) {
+        Logger.error("Error disconnecting Redis sub client", { error })
+      } finally {
+        this.subClient = null
       }
     }
   }

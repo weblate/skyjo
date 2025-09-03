@@ -24,7 +24,7 @@
     "@skymo/logger": "workspace:*",
     "@skymo/shared": "workspace:*",
     "@skymo/state-operations": "workspace:*",
-    "@socket.io/redis-streams-adapter": "^0.2.2",
+    "@socket.io/redis-adapter": "^8.3.0",
     "arctic": "^3.7.0",
     "argon2": "^0.43.0",
     "bullmq": "^5.56.1",
