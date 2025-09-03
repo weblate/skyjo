@@ -9,6 +9,9 @@ export function middleware(request: NextRequest) {
   // Create guestId cookie if it doesn't exist
   const response = nextIntlMiddleware(request)
 
+  // Add pathname to headers for server components
+  response.headers.set("x-pathname", request.nextUrl.pathname)
+
   if (!request.cookies.has(GUEST_ID_COOKIE_NAME)) {
     const guestId = crypto.randomUUID()
     response.cookies.set(GUEST_ID_COOKIE_NAME, guestId, {
