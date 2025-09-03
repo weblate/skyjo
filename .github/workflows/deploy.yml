@@ -7,8 +7,34 @@ on:
   workflow_dispatch:
 
 jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    permissions:
+      contents: read
+      pull-requests: write
+
+    steps:
+      - uses: actions/checkout@v4
+      - name: "Install Node"
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.3.0
+
+      - uses: pnpm/action-setup@v4
+        name: Install pnpm
+        with:
+          version: 10.12.4
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Test
+        run: pnpm test -- --run
+
   deploy-to-vps:
     runs-on: ubuntu-latest
+    needs: test
     steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
