@@ -264,6 +264,7 @@ export class Player implements PlayerInterface {
     this.cards = []
     this.hasPlayedLastTurn = false
     this.turnStartTime = null
+    this.hasRevealedCardCount = false
   }
 
   startTurn(serverTimestamp?: number) {

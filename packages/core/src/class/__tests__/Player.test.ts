@@ -52,6 +52,7 @@ describe("Player", () => {
       cards: [],
       forfeited: false,
       forfeitedAt: null,
+      hasRevealedCardCount: false,
     }
 
     const player = new Player().populate(dbPlayer)
@@ -88,6 +89,7 @@ describe("Player", () => {
       ],
       forfeited: false,
       forfeitedAt: null,
+      hasRevealedCardCount: false,
     }
 
     const player = new Player().populate(dbPlayer)
@@ -401,6 +403,15 @@ describe("Player", () => {
     expect(player.scores).toStrictEqual([10, 20, 30])
     expect(player.score).toBe(60)
     expect(player.cards).toStrictEqual([])
+  })
+
+  it("should reset hasRevealedCardCount to false when resetting round", () => {
+    // Set hasRevealedCardCount to true (as it would be during/after reveal phase)
+    player.hasRevealedCardCount = true
+
+    player.resetRound()
+
+    expect(player.hasRevealedCardCount).toBe(false)
   })
 
   describe("toJson", () => {
