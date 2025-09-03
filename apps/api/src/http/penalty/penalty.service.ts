@@ -3,7 +3,7 @@ import { type PenaltyDb, penaltyTable } from "@skymo/database/schema"
 import { Logger } from "@skymo/logger"
 import type { CreatePenalty } from "@skymo/shared/validations"
 import dayjs from "dayjs"
-import { and, eq, gte, isNull, lt, ne, or, sql } from "drizzle-orm"
+import { and, eq, gte, isNull, ne, or, sql } from "drizzle-orm"
 import { HTTPException } from "hono/http-exception"
 import { db } from "@/db/index.js"
 
@@ -98,10 +98,10 @@ export async function getActivePenalties(
       and(
         or(...conditions),
         or(
-          // Leavebuster: active if completions not done
+          // Leavebuster: active if completions not done (with NULL safety)
           and(
             eq(penaltyTable.type, "leavebuster"),
-            lt(penaltyTable.completionsDone, penaltyTable.completionsRequired),
+            sql`COALESCE(${penaltyTable.completionsDone}, 0) < COALESCE(${penaltyTable.completionsRequired}, 1)`,
           ),
           // Other penalties: active if not expired
           and(
