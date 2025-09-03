@@ -45,12 +45,12 @@ const getAvatarNameFromIndex = (index: number) => {
 }
 
 const OnboardingPage = () => {
-  const router = useRouter()
   const t = useTranslations("pages.Onboarding")
   const tErrors = useTranslations("errors")
   const { getAvatar, avatarIndex } = usePlayer()
   const { user, refetch } = useAuth()
   const queryClient = useQueryClient()
+  const router = useRouter()
   const form = useForm({
     resolver: zodResolver(
       user?.hasOAuth ? onboardingSchema : onboardingWithPasswordSchema,
@@ -73,11 +73,6 @@ const OnboardingPage = () => {
   const { usernameAvailability } = useUsernameValidation(watchedUsername)
 
   useEffect(() => {
-    if (user?.onboardingCompleted) {
-      router.replace("/")
-      return
-    }
-
     if (!user || user?.hasOAuth) {
       setShowPassword(false)
     } else {
@@ -126,9 +121,9 @@ const OnboardingPage = () => {
       }
 
       toast.success(t("success"))
-      // Refetch will redirect to home page
       queryClient.invalidateQueries({ queryKey: ["authenticated-user"] })
       await refetch()
+      router.replace("/")
     },
     onError: (error) => {
       console.error(error)
@@ -201,7 +196,7 @@ const OnboardingPage = () => {
             <FormField
               control={form.control}
               name="name"
-              render={({ field, fieldState }) => (
+              render={({ field }) => (
                 <FormItem>
                   <Label htmlFor="name">{t("form.name.label")}</Label>
                   <FormDescription>

@@ -2,7 +2,8 @@ import { Locales } from "@skymo/shared/constants"
 import { type Metadata } from "next"
 import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
-import { generateAlternatesLanguages, routing } from "@/i18n/routing"
+import { generateAlternatesLanguages, redirect, routing } from "@/i18n/routing"
+import { verifySession } from "@/lib/dal"
 import { getCurrentUrl } from "@/lib/utils"
 
 interface OnboardParams {
@@ -48,7 +49,20 @@ export async function generateMetadata(props: OnboardProps) {
 
 export default async function OnboardLayout({
   children,
-  params: _params,
+  params,
 }: Readonly<OnboardProps>) {
+  const { locale } = await params
+  const session = await verifySession()
+
+  if (!session) {
+    redirect({ href: "/login", locale })
+    return null
+  }
+
+  if (session.onboardingCompleted) {
+    redirect({ href: "/", locale })
+    return null
+  }
+
   return children
 }
