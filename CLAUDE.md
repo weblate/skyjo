@@ -2,6 +2,8 @@
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
+IMPORTANT: You MUST strive for elegant, minimal solutions that eliminate complexity and bugs. Remove all backward compatibility and legacy code. YOU MUST prioritize simple, readable code with minimal abstraction—avoid premature optimization.
+
 ## Common Development Commands
 
 ### Build Commands
@@ -185,3 +187,5 @@ This architecture ensures scalability, maintainability, and real-time performanc
 ## Best Practices
 
 - to use environment variables in @apps/api/, write import { ENV } from "@env" and use ENV.VARIABLE_NAME
+- do not build every time
+- Never remove or add package like this. use pnpm remove and pnpm add
