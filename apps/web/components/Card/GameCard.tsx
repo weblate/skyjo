@@ -42,6 +42,8 @@ export const GameCard = ({
   className,
 }: GameCardProps) => {
   const [displayedValue, setDisplayedValue] = useState(card.value)
+  const [delayedShowFlipAnimation, setDelayedShowFlipAnimation] =
+    useState(showFlipAnimation)
   const prevIsVisible = useRef(card.isVisible)
 
   useEffect(() => {
@@ -50,6 +52,20 @@ export const GameCard = ({
       prevIsVisible.current = card.isVisible
     }
   }, [card.value, card.isVisible])
+
+  useEffect(() => {
+    if (showFlipAnimation) {
+      // Immediately enable animation when showFlipAnimation becomes true
+      setDelayedShowFlipAnimation(true)
+    } else {
+      // Delay disabling animation to allow flip to complete
+      const timer = setTimeout(() => {
+        setDelayedShowFlipAnimation(false)
+      }, 320)
+
+      return () => clearTimeout(timer)
+    }
+  }, [showFlipAnimation])
 
   const handleClick = () => {
     onClick?.()
@@ -92,11 +108,12 @@ export const GameCard = ({
       <div
         className={cn(
           "relative w-full h-full card-preserve-3d",
-          showFlipAnimation && "transition-transform duration-[320ms] ease-out",
+          delayedShowFlipAnimation &&
+            "transition-transform duration-[320ms] ease-out",
           card.isVisible ? "card-rotate-y-180" : "card-rotate-y-0",
         )}
         style={{
-          willChange: showFlipAnimation ? "transform" : "auto",
+          willChange: delayedShowFlipAnimation ? "transform" : "auto",
         }}
       >
         <Card

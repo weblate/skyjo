@@ -41,24 +41,14 @@ const CardTable = ({
   showSelectionAnimation = false,
   size = GameBoardSize.NORMAL,
 }: CardTableProps) => {
-  const {
-    game,
-    player,
-    nbConnectedPlayers,
-    actions,
-    gameStatus,
-    roundPhase,
-    turnStatus,
-  } = useGame()
+  const { game, player, nbConnectedPlayers, actions, roundPhase, turnStatus } =
+    useGame()
 
   const [style, setStyle] = useState<React.CSSProperties>(
     getGridTemplate(cards),
   )
 
-  const canRevealCards =
-    gameStatus.isPlaying &&
-    roundPhase.isRevealCards &&
-    !player.hasRevealedCardCount
+  const canRevealCards = !player.hasRevealedCardCount
 
   const canReplaceCard =
     turnStatus.isThrowOrReplace || turnStatus.isReplaceACard
@@ -96,7 +86,6 @@ const CardTable = ({
       <AnimatePresence onExitComplete={handleAnimationComplete}>
         {cards.map((column, columnIndex) => {
           return column.map((card, rowIndex) => {
-            console.log(canTurnCard)
             const canBeSelected =
               ((canRevealCards || canTurnCard) && !card.isVisible) ||
               canReplaceCard
