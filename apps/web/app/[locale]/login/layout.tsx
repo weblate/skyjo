@@ -4,7 +4,8 @@ import { notFound } from "next/navigation"
 import { getTranslations } from "next-intl/server"
 import Footer from "@/components/Footer"
 import Navbar from "@/components/Navbar"
-import { generateAlternatesLanguages, routing } from "@/i18n/routing"
+import { generateAlternatesLanguages, redirect, routing } from "@/i18n/routing"
+import { verifySession } from "@/lib/dal"
 import { getCurrentUrl } from "@/lib/utils"
 
 interface LoginParams {
@@ -47,8 +48,23 @@ export async function generateMetadata(props: LoginProps) {
 
 export default async function LoginLayout({
   children,
-  params: _params,
+  params,
 }: Readonly<LoginProps>) {
+  const { locale } = await params
+  const session = await verifySession()
+
+  // If user has a valid session, redirect based on onboarding status
+  if (session) {
+    if (!session.onboardingCompleted) {
+      redirect({ href: "/onboard", locale })
+      return null
+    } else {
+      redirect({ href: "/", locale })
+      return null
+    }
+  }
+
+  // No session - show login page
   return (
     <>
       <Navbar />

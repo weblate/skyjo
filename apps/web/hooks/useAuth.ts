@@ -111,7 +111,7 @@ export const useAuth = () => {
 
     // Skip client-side redirects for auth flow pages to prevent infinite loops
     // These redirects are handled by server-side layouts
-    const isAuthFlowPage = pathname === "/onboard"
+    const isAuthFlowPage = pathname === "/onboard" || pathname === "/login"
     if (isAuthFlowPage) return
 
     if (!user.onboardingCompleted) {
