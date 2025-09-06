@@ -30,6 +30,8 @@ const TRUSTED_EMAIL_DOMAINS = new Set([
   "laposte.net",
   "bbox.fr",
   "live.fr",
+  "duck.com",
+  "tutanota.com",
 ])
 
 /**
