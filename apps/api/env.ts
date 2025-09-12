@@ -34,6 +34,7 @@ export const envSchema = z.object({
   }),
 
   GUEST_COOKIE_DOMAIN: z.string().optional(),
+  SESSION_COOKIE_DOMAIN: z.string().optional(),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

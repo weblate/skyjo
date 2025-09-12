@@ -12,7 +12,8 @@ export function setSessionTokenCookie(
     path: "/",
     httpOnly: true,
     secure: ENV.NODE_ENV === "production",
-    sameSite: "Lax",
+    sameSite: "Strict",
+    domain: ENV.SESSION_COOKIE_DOMAIN,
     expires: expiresAt,
   })
 }
