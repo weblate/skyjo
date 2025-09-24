@@ -202,12 +202,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       if (!game?.status) return
 
       const inGame = game?.status === CoreConstants.GAME_STATUS.PLAYING
-      if (inGame) {
-        event.preventDefault()
-        // For public games, disconnect properly to trigger forfeit
-        const isPublic = !game?.settings.private
-        if (isPublic) socket?.disconnect()
-      } else clearLastGameCookie()
+      if (!inGame) clearLastGameCookie()
     }
 
     window.addEventListener("beforeunload", onUnload)
@@ -227,7 +222,7 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
         lastHiddenAt.current = Date.now()
       } else if (
         lastHiddenAt.current &&
-        Date.now() - lastHiddenAt.current >= 30000
+        Date.now() - lastHiddenAt.current >= 10000
       ) {
         socket?.emit("get", game?.stateVersion)
         lastHiddenAt.current = null
