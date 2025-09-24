@@ -240,15 +240,15 @@ export class KickService extends BaseService {
 
     const operationManager = new GameStateTracker(game)
 
+    await game.disconnectPlayer(playerToKick)
+
+    await this.updateAndSendGame(game, operationManager)
+
     this.socketManager.sendToRoom({
       room: game.code,
       event: "kick:vote-success",
       data: [playerToKick.id],
     })
-
-    await game.disconnectPlayer(playerToKick)
-
-    await this.updateAndSendGame(game, operationManager)
   }
   //#endregion
 }

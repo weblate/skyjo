@@ -12,6 +12,7 @@ import { useSocket } from "@/contexts/SocketContext"
 import { useKickToasts } from "@/hooks/useKickToasts"
 import { useRouter } from "@/i18n/routing"
 import { isHost } from "@/lib/game"
+import { clearLastGameCookie } from "@/utils/gameCookie"
 
 interface KickContext {
   actions: {
@@ -98,6 +99,7 @@ export const KickProvider = ({ children }: PropsWithChildren) => {
     const isPlayerToKick = playerToKickId === player.id
     if (isPlayerToKick) {
       showVoteAgainstYouSucceeded()
+      clearLastGameCookie()
       router.replace("/")
     }
   }
