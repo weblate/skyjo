@@ -4,7 +4,7 @@ import { Constants as CoreConstants, PlayerToJson } from "@skymo/core"
 import { CheckCircle2Icon, XCircleIcon } from "lucide-react"
 import { AnimatePresence, m } from "motion/react"
 import { useTranslations } from "next-intl"
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { UserAvatar } from "@/components/UserAvatar"
 import { UserContextMenu } from "@/components/UserContextMenu"
 import { Button } from "@/components/ui/button"
@@ -24,37 +24,45 @@ import {
 import { useGame } from "@/contexts/GameContext"
 import { useRouter } from "@/i18n/routing"
 import { formatScoreDisplay } from "@/lib/penalty-utils"
+import { calculatePlayerRanks, PlayerWithRank } from "@/lib/ranking"
 import { cn, getRedirectionUrl } from "@/lib/utils"
 
 const ResultsPage = () => {
   const { player: currentPlayer, game, actions } = useGame()
   const router = useRouter()
   const t = useTranslations("pages.ResultsPage")
-  const [visibleRows, setVisibleRows] = useState<PlayerToJson[]>([])
+  const [visibleRows, setVisibleRows] = useState<PlayerWithRank[]>([])
 
-  // Players who are connected
-  const connectedPlayers = game.players.filter(
-    (player) =>
-      player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED,
+  const playersWithRanks = useMemo(
+    () => calculatePlayerRanks(game.players).sort((a, b) => a.rank - b.rank),
+    [game.players],
   )
 
-  // Players who are not disconnected (connected, leave, lost)
-  const sortedNotDisconnectedPlayers = game.players
-    .filter(
+  const {
+    connectedPlayers,
+    sortedNotDisconnectedPlayers,
+    sortedDisconnectedPlayers,
+  } = useMemo(() => {
+    const connected = game.players.filter(
+      (player) =>
+        player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED,
+    )
+    const notDisconnected = playersWithRanks.filter(
       (player) =>
         player.connectionStatus !==
         CoreConstants.CONNECTION_STATUS.DISCONNECTED,
     )
-    .sort((a, b) => b.score - a.score)
-
-  // Players who are disconnected
-  const sortedDisconnectedPlayers = game.players
-    .filter(
+    const disconnected = playersWithRanks.filter(
       (player) =>
         player.connectionStatus ===
         CoreConstants.CONNECTION_STATUS.DISCONNECTED,
     )
-    .sort((a, b) => b.score - a.score)
+    return {
+      connectedPlayers: connected,
+      sortedNotDisconnectedPlayers: notDisconnected,
+      sortedDisconnectedPlayers: disconnected,
+    }
+  }, [game.players, playersWithRanks])
 
   const allRowsVisible =
     visibleRows.length >= sortedNotDisconnectedPlayers.length
@@ -76,7 +84,11 @@ const ResultsPage = () => {
     }
 
     return () => clearInterval(interval)
-  }, [visibleRows.length])
+  }, [
+    visibleRows.length,
+    sortedNotDisconnectedPlayers,
+    sortedDisconnectedPlayers,
+  ])
 
   useEffect(() => {
     router.replace(getRedirectionUrl(game.code, game.status))
@@ -120,7 +132,7 @@ const ResultsPage = () => {
               </MotionTableHeader>
             )}
             <TableBody>
-              {visibleRows.map((player, index) => {
+              {visibleRows.map((player) => {
                 const isConnected =
                   player.connectionStatus !==
                   CoreConstants.CONNECTION_STATUS.DISCONNECTED
@@ -135,7 +147,7 @@ const ResultsPage = () => {
                   >
                     <TableCell className="w-8">
                       {isConnected ? (
-                        allRowsVisible && index + 1
+                        allRowsVisible && player.rank
                       ) : player.forfeited ? (
                         <span className="text-gray-500">{t("forfeit")}</span>
                       ) : (
