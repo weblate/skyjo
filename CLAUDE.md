@@ -189,3 +189,4 @@ This architecture ensures scalability, maintainability, and real-time performanc
 - to use environment variables in @apps/api/, write import { ENV } from "@env" and use ENV.VARIABLE_NAME
 - do not build every time
 - Never remove or add package like this. use pnpm remove and pnpm add
+- When you are following a file plan, please update it at the end to your current progression
