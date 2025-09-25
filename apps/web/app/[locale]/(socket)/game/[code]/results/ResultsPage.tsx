@@ -34,7 +34,7 @@ const ResultsPage = () => {
   const [visibleRows, setVisibleRows] = useState<PlayerWithRank[]>([])
 
   const playersWithRanks = useMemo(
-    () => calculatePlayerRanks(game.players).sort((a, b) => a.rank - b.rank),
+    () => calculatePlayerRanks(game.players),
     [game.players],
   )
 

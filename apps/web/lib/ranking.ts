@@ -52,5 +52,5 @@ export function calculatePlayerRanks(
     playersWithRanks.push({ ...player, rank: totalPlayers })
   })
 
-  return playersWithRanks
+  return playersWithRanks.reverse()
 }
