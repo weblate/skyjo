@@ -1,7 +1,7 @@
 {
   "name": "@skymo/workers",
   "description": "Workers for Skymo",
-  "version": "1.63.0",
+  "version": "1.64.0",
   "private": true,
   "type": "module",
   "scripts": {
