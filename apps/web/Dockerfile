@@ -47,8 +47,9 @@ COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/.next/static ./apps/web/.next/static
 COPY --from=builder --chown=nextjs:nodejs /app/apps/web/public ./apps/web/public
 
-# Create cache directory with proper permissions
-RUN mkdir -p /app/apps/web/.next/cache && \
+# Create cache directories with proper permissions
+RUN mkdir -p /app/apps/web/.next/cache/fetch-cache && \
+    mkdir -p /app/apps/web/.next/cache/images && \
     chown -R nextjs:nodejs /app/apps/web/.next
 
 USER nextjs
