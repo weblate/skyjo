@@ -96,3 +96,9 @@ compose*.yml
 uptime-kuma-data
 TASKS
 TASKS.md
+
+# Backups and data directories
+backups
+**/backups
+data
+**/data
