@@ -149,6 +149,7 @@ const KickVote = () => {
                       <Button
                         variant="small"
                         color="destructive"
+                        className="border-2"
                         shadow={false}
                         aria-label={t("player-has-not-voted.kick-button.alt", {
                           playerName: playerToKick?.name ?? "",
