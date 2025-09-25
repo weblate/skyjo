@@ -145,6 +145,16 @@
         "first-player-multiplier-penalty": {
           "label": "Multiplicateur de pénalité pour le score du premier joueur",
           "title": "Le score du premier joueur sera multiplié par {number} si il n'est pas strictement inférieur aux autres scores de la partie"
+        },
+        "player-rearrangement": {
+          "label": "Réarrangement des joueurs",
+          "description": "Choisissez quand les joueurs doivent être mélangés pour changer l'ordre de jeu",
+          "placeholder": "Sélectionner quand mélanger les joueurs",
+          "item": {
+            "never": "Jamais",
+            "every-round": "Chaque manche",
+            "every-game": "Chaque partie"
+          }
         }
       },
       "start-game-button": "Lancer la partie",

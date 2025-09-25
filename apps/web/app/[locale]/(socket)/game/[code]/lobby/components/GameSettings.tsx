@@ -263,6 +263,47 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
           </Select>
         </div>
         <div className="flex flex-col gap-1">
+          <Label htmlFor="player-rearrangement">
+            {t("settings.player-rearrangement.label")}
+          </Label>
+          <p className="text-sm text-gray-500 dark:text-gray-400">
+            {t("settings.player-rearrangement.description")}
+          </p>
+          <Select
+            value={game.settings.playerRearrangement.toString()}
+            onValueChange={(value) =>
+              actions.updateSingleSettings(
+                "playerRearrangement",
+                +value as typeof CoreConstants.PLAYER_REARRANGEMENT[keyof typeof CoreConstants.PLAYER_REARRANGEMENT],
+              )
+            }
+            disabled={disableInput}
+          >
+            <SelectTrigger className="mt-2 w-fit">
+              <SelectValue
+                placeholder={t("settings.player-rearrangement.placeholder")}
+              />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem
+                value={CoreConstants.PLAYER_REARRANGEMENT.NEVER.toString()}
+              >
+                {t("settings.player-rearrangement.item.never")}
+              </SelectItem>
+              <SelectItem
+                value={CoreConstants.PLAYER_REARRANGEMENT.EVERY_ROUND.toString()}
+              >
+                {t("settings.player-rearrangement.item.every-round")}
+              </SelectItem>
+              <SelectItem
+                value={CoreConstants.PLAYER_REARRANGEMENT.EVERY_GAME.toString()}
+              >
+                {t("settings.player-rearrangement.item.every-game")}
+              </SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+        <div className="flex flex-col gap-1">
           <Label htmlFor="first-player-multiplier-penalty">
             {t("settings.first-player-multiplier-penalty.label")}
           </Label>

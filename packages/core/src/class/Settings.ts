@@ -1,5 +1,5 @@
 import type { SettingsRedisDb, SettingsToJson } from "@/types/settings.js"
-import { Constants, type FirstPlayerPenaltyType } from "../constants.js"
+import { Constants, type FirstPlayerPenaltyType, type PlayerRearrangementType } from "../constants.js"
 import { isGameClassicSettings } from "../utils/settings.js"
 
 interface UpdateSettings {
@@ -14,6 +14,7 @@ interface UpdateSettings {
   firstPlayerFlatPenalty?: number
   firstPlayerPenaltyType?: FirstPlayerPenaltyType
   showCurrentScore?: boolean
+  playerRearrangement?: PlayerRearrangementType
 }
 
 export interface SettingsInterface {
@@ -50,6 +51,8 @@ export class Settings implements SettingsInterface {
   firstPlayerPenaltyType: FirstPlayerPenaltyType =
     Constants.DEFAULT_GAME_SETTINGS.FIRST_PLAYER_PENALTY_TYPE
   showCurrentScore: boolean = Constants.DEFAULT_GAME_SETTINGS.SHOW_CURRENT_SCORE
+  playerRearrangement: PlayerRearrangementType =
+    Constants.DEFAULT_GAME_SETTINGS.PLAYER_REARRANGEMENT
 
   constructor(isPrivate: boolean = false, maxPlayers?: number) {
     this.private = isPrivate
@@ -71,6 +74,7 @@ export class Settings implements SettingsInterface {
     this.firstPlayerFlatPenalty = settings.firstPlayerFlatPenalty
     this.firstPlayerPenaltyType = settings.firstPlayerPenaltyType
     this.showCurrentScore = settings.showCurrentScore
+    this.playerRearrangement = settings.playerRearrangement
 
     return this
   }
@@ -94,6 +98,7 @@ export class Settings implements SettingsInterface {
     this.firstPlayerPenaltyType =
       settings.firstPlayerPenaltyType ?? this.firstPlayerPenaltyType
     this.showCurrentScore = settings.showCurrentScore ?? this.showCurrentScore
+    this.playerRearrangement = settings.playerRearrangement ?? this.playerRearrangement
 
     this.preventInvalidSettings()
   }
@@ -131,6 +136,7 @@ export class Settings implements SettingsInterface {
       firstPlayerFlatPenalty: this.firstPlayerFlatPenalty,
       firstPlayerPenaltyType: this.firstPlayerPenaltyType,
       showCurrentScore: this.showCurrentScore,
+      playerRearrangement: this.playerRearrangement,
     } satisfies SettingsToJson
   }
 }

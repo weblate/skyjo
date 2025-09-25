@@ -145,6 +145,16 @@
         "first-player-multiplier-penalty": {
           "label": "First player score penalty multiplier",
           "title": "The score of the first player will be multiplied by {number} if it is not strictly inferior to the other scores of the game"
+        },
+        "player-rearrangement": {
+          "label": "Player rearrangement",
+          "description": "Choose when players should be shuffled to change play order",
+          "placeholder": "Select when to shuffle players",
+          "item": {
+            "never": "Never",
+            "every-round": "Every round",
+            "every-game": "Every game"
+          }
         }
       },
       "start-game-button": "Start the game",

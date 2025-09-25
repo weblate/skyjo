@@ -323,7 +323,7 @@ export class Game implements GameInterface {
       )
     }
 
-    await this.resetRound()
+    await this.resetGame()
   }
 
   async revealCard({
@@ -540,6 +540,7 @@ export class Game implements GameInterface {
         firstPlayerPenaltyType: this.settings.firstPlayerPenaltyType,
         firstPlayerFlatPenalty: this.settings.firstPlayerFlatPenalty,
         showCurrentScore: this.settings.showCurrentScore,
+        playerRearrangement: this.settings.playerRearrangement,
       },
       selectedCardValue: this.selectedCardValue,
       roundNumber: this.roundNumber,
@@ -557,6 +558,32 @@ export class Game implements GameInterface {
   }
 
   //#region private methods
+
+  private shufflePlayers(): void {
+    const connectedPlayers = this.getConnectedPlayers()
+
+    // Skip shuffle if 2 or fewer connected players - no strategic benefit
+    if (connectedPlayers.length <= 2) return
+
+    // Get ORIGINAL indices of connected players in the main players array
+    const connectedIndices = this.players
+      .map((player, index) => ({ player, index }))
+      .filter(({ player }) => player.connectionStatus !== Constants.CONNECTION_STATUS.DISCONNECTED)
+      .map(({ index }) => index)
+
+    // Fisher-Yates shuffle algorithm for connected players only
+    const playersToShuffle = [...connectedPlayers]
+    for (let i = playersToShuffle.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1))
+      ;[playersToShuffle[i], playersToShuffle[j]] = [playersToShuffle[j], playersToShuffle[i]]
+    }
+
+    // Place shuffled connected players back into their connected positions
+    // Disconnected players remain in their original positions
+    connectedIndices.forEach((index, i) => {
+      this.players[index] = playersToShuffle[i]
+    })
+  }
 
   private shufflePile(pile: number[], times = 3): number[] {
     const shuffledArray = [...pile]
@@ -597,9 +624,9 @@ export class Game implements GameInterface {
     this.discardPile = []
   }
 
-  private resetRoundPlayers() {
+  private resetGamePlayers() {
     this.getConnectedPlayers().forEach((player) => {
-      player.resetRound()
+      player.resetGame()
     })
   }
 
@@ -617,7 +644,7 @@ export class Game implements GameInterface {
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
     this.status = Constants.GAME_STATUS.PLAYING
     this.initializeCardPiles()
-    this.resetRoundPlayers()
+    this.resetGamePlayers()
 
     this.givePlayersCards()
     // Turn first card from faceoff pile to discard pile
@@ -643,9 +670,17 @@ export class Game implements GameInterface {
     this.getConnectedPlayers().forEach((player) => player.reset())
   }
 
-  private async resetRound() {
+  private async resetGame() {
     this.roundNumber = 1
     this.resetPlayers()
+
+    if (
+      this.settings.playerRearrangement ===
+      Constants.PLAYER_REARRANGEMENT.EVERY_GAME
+    ) {
+      this.shufflePlayers()
+    }
+
     await this.initializeRound()
   }
 
@@ -936,6 +971,14 @@ export class Game implements GameInterface {
 
   private async startNewRound() {
     this.roundNumber++
+
+    if (
+      this.settings.playerRearrangement ===
+      Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
+    ) {
+      this.shufflePlayers()
+    }
+
     await this.initializeRound()
   }
 
@@ -958,7 +1001,7 @@ export class Game implements GameInterface {
 
     await this.operationManager.cancelRevealCardsAfkTimer(this.code)
 
-    await this.resetRound()
+    await this.resetGame()
     this.status = Constants.GAME_STATUS.LOBBY
     this.stateVersion = 0
     this.createdAt = new Date()

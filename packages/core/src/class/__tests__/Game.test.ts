@@ -102,6 +102,7 @@ describe("Game", () => {
             Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
           firstPlayerFlatPenalty: 0,
           showCurrentScore: false,
+          playerRearrangement: Constants.PLAYER_REARRANGEMENT.NEVER,
         },
 
         stateVersion: 0,
@@ -180,6 +181,7 @@ describe("Game", () => {
             Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
           firstPlayerFlatPenalty: 0,
           showCurrentScore: false,
+          playerRearrangement: Constants.PLAYER_REARRANGEMENT.NEVER,
         },
 
         stateVersion: 0,
@@ -1348,7 +1350,7 @@ describe("Game", () => {
     })
   })
 
-  describe("resetRound", () => {
+  describe("resetGame", () => {
     it("should reset the round of the game", () => {
       game.roundNumber = 10
       game.players.forEach((player) => {
@@ -1357,7 +1359,7 @@ describe("Game", () => {
         player.wantsReplay = true
       })
 
-      game["resetRound"]()
+      game["resetGame"]()
 
       expect(game.roundNumber).toBe(1)
       game.players.forEach((player) => {
@@ -1485,6 +1487,7 @@ describe("Game", () => {
             Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
           firstPlayerFlatPenalty: 0,
           showCurrentScore: false,
+          playerRearrangement: Constants.PLAYER_REARRANGEMENT.NEVER,
         },
         stateVersion: game.stateVersion,
         processingAfk: game.processingAfk,
@@ -2492,6 +2495,326 @@ describe("Game", () => {
 
         // Restore the mock
         initializeRoundSpy.mockRestore()
+      })
+    })
+
+    describe("player rearrangement", () => {
+      describe("shufflePlayers", () => {
+        it("should not shuffle when there is only 1 connected player", () => {
+          // Create fresh game to avoid test contamination
+          const freshGame = new Game({ hostId: player.id })
+          freshGame.setOperationManager(operationManager)
+
+          freshGame.addPlayer(player)
+
+          const originalOrder = freshGame.players.map(p => p.id)
+          freshGame['shufflePlayers']()
+          const newOrder = freshGame.players.map(p => p.id)
+
+          expect(newOrder).toEqual(originalOrder)
+        })
+
+        it("should not shuffle when there are only 2 connected players", () => {
+          // Create fresh game to avoid test contamination
+          const freshGame = new Game({ hostId: player.id })
+          freshGame.setOperationManager(operationManager)
+
+          const player2 = new Player(
+            { name: "player2", avatar: Constants.AVATARS.CAT },
+            "socket2",
+            2,
+            "username2"
+          )
+
+          freshGame.addPlayer(player)
+          freshGame.addPlayer(player2)
+
+          const originalOrder = freshGame.players.map(p => p.id)
+          freshGame['shufflePlayers']()
+          const newOrder = freshGame.players.map(p => p.id)
+
+          expect(newOrder).toEqual(originalOrder)
+        })
+
+        it("should shuffle when there are 3+ connected players", () => {
+          // Create fresh game to avoid test contamination
+          const freshGame = new Game({ hostId: player.id })
+          freshGame.setOperationManager(operationManager)
+
+          const player2 = new Player(
+            { name: "player2", avatar: Constants.AVATARS.CAT },
+            "socket2",
+            2,
+            "username2"
+          )
+          const player3 = new Player(
+            { name: "player3", avatar: Constants.AVATARS.DOG },
+            "socket3",
+            3,
+            "username3"
+          )
+
+          freshGame.addPlayer(player)
+          freshGame.addPlayer(player2)
+          freshGame.addPlayer(player3)
+
+          const originalOrder = freshGame.players.map(p => p.id)
+          const originalIds = new Set(originalOrder)
+
+          freshGame['shufflePlayers']()
+
+          const newOrder = freshGame.players.map(p => p.id)
+          const newIds = new Set(newOrder)
+
+          expect(newOrder).toHaveLength(originalOrder.length)
+          expect(newIds).toEqual(originalIds)
+        })
+
+        it("should not shuffle disconnected players - keep them in place", () => {
+          // Create fresh game to avoid test contamination
+          const freshGame = new Game({ hostId: player.id })
+          freshGame.setOperationManager(operationManager)
+
+          const player2 = new Player(
+            { name: "player2", avatar: Constants.AVATARS.CAT },
+            "socket2",
+            2,
+            "username2"
+          )
+          const player3 = new Player(
+            { name: "player3", avatar: Constants.AVATARS.DOG },
+            "socket3",
+            3,
+            "username3"
+          )
+          const player4 = new Player(
+            { name: "player4", avatar: Constants.AVATARS.ELEPHANT },
+            "socket4",
+            4,
+            "username4"
+          )
+
+          // Set up: 2 connected players + 2 disconnected players
+          player2.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+          player4.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+          freshGame.addPlayer(player) // connected - index 0
+          freshGame.addPlayer(player2) // disconnected - index 1
+          freshGame.addPlayer(player3) // connected - index 2
+          freshGame.addPlayer(player4) // disconnected - index 3
+
+          const originalOrder = freshGame.players.map(p => p.id)
+
+          // Should not shuffle because only 2 connected players
+          freshGame['shufflePlayers']()
+
+          const newOrder = freshGame.players.map(p => p.id)
+
+          // All players should be in same positions (no shuffle with 2 connected)
+          expect(newOrder).toEqual(originalOrder)
+
+          // Disconnected players should definitely be in same positions
+          expect(newOrder[1]).toBe(player2.id) // disconnected at index 1
+          expect(newOrder[3]).toBe(player4.id) // disconnected at index 3
+        })
+
+        it("should shuffle only connected players with disconnected players mixed in", () => {
+          // Create fresh game to avoid test contamination
+          const freshGame = new Game({ hostId: player.id })
+          freshGame.setOperationManager(operationManager)
+
+          const player2 = new Player(
+            { name: "player2", avatar: Constants.AVATARS.CAT },
+            "socket2",
+            2,
+            "username2"
+          )
+          const player3 = new Player(
+            { name: "player3", avatar: Constants.AVATARS.DOG },
+            "socket3",
+            3,
+            "username3"
+          )
+          const player4 = new Player(
+            { name: "player4", avatar: Constants.AVATARS.ELEPHANT },
+            "socket4",
+            4,
+            "username4"
+          )
+          const player5 = new Player(
+            { name: "player5", avatar: Constants.AVATARS.FOX },
+            "socket5",
+            5,
+            "username5"
+          )
+
+          // Set up: 3 connected + 2 disconnected
+          player2.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+          player4.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+          freshGame.addPlayer(player) // connected - index 0
+          freshGame.addPlayer(player2) // disconnected - index 1
+          freshGame.addPlayer(player3) // connected - index 2
+          freshGame.addPlayer(player4) // disconnected - index 3
+          freshGame.addPlayer(player5) // connected - index 4
+
+          const originalOrder = freshGame.players.map(p => p.id)
+
+          freshGame['shufflePlayers']()
+
+          const newOrder = freshGame.players.map(p => p.id)
+
+          // Array length should be unchanged
+          expect(newOrder).toHaveLength(originalOrder.length)
+
+          // Disconnected players should be in exact same positions
+          expect(newOrder[1]).toBe(player2.id)
+          expect(newOrder[3]).toBe(player4.id)
+
+          // Connected players should still be present but potentially shuffled
+          const connectedPositions = [0, 2, 4]
+          const connectedPlayersInNewOrder = connectedPositions.map(i => newOrder[i])
+
+          // All connected players should still be present
+          expect(connectedPlayersInNewOrder).toContain(player.id)
+          expect(connectedPlayersInNewOrder).toContain(player3.id)
+          expect(connectedPlayersInNewOrder).toContain(player5.id)
+        })
+
+        it("should not shuffle if all players are disconnected", () => {
+          // Create fresh game to avoid test contamination
+          const freshGame = new Game({ hostId: player.id })
+          freshGame.setOperationManager(operationManager)
+
+          const player2 = new Player(
+            { name: "player2", avatar: Constants.AVATARS.CAT },
+            "socket2",
+            2,
+            "username2"
+          )
+
+          player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+          player2.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+          freshGame.addPlayer(player)
+          freshGame.addPlayer(player2)
+
+          const originalOrder = freshGame.players.map(p => p.id)
+          freshGame['shufflePlayers']()
+          const newOrder = freshGame.players.map(p => p.id)
+
+          expect(newOrder).toEqual(originalOrder)
+        })
+      })
+
+      describe("resetGame with EVERY_GAME rearrangement", () => {
+        it("should shuffle players when playerRearrangement is EVERY_GAME", async () => {
+          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_GAME
+
+          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
+          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+            .mockImplementation(() => Promise.resolve())
+
+          await game['resetGame']()
+
+          expect(shufflePlayersSpy).toHaveBeenCalled()
+          expect(initializeRoundSpy).toHaveBeenCalled()
+
+          shufflePlayersSpy.mockRestore()
+          initializeRoundSpy.mockRestore()
+        })
+
+        it("should not shuffle players when playerRearrangement is NEVER", async () => {
+          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.NEVER
+
+          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
+          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+            .mockImplementation(() => Promise.resolve())
+
+          await game['resetGame']()
+
+          expect(shufflePlayersSpy).not.toHaveBeenCalled()
+          expect(initializeRoundSpy).toHaveBeenCalled()
+
+          shufflePlayersSpy.mockRestore()
+          initializeRoundSpy.mockRestore()
+        })
+
+        it("should not shuffle players when playerRearrangement is EVERY_ROUND", async () => {
+          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
+
+          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
+          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+            .mockImplementation(() => Promise.resolve())
+
+          await game['resetGame']()
+
+          expect(shufflePlayersSpy).not.toHaveBeenCalled()
+          expect(initializeRoundSpy).toHaveBeenCalled()
+
+          shufflePlayersSpy.mockRestore()
+          initializeRoundSpy.mockRestore()
+        })
+      })
+
+      describe("startNewRound with EVERY_ROUND rearrangement", () => {
+        it("should shuffle players when playerRearrangement is EVERY_ROUND", async () => {
+          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
+
+          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
+          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+            .mockImplementation(() => Promise.resolve())
+
+          await game['startNewRound']()
+
+          expect(shufflePlayersSpy).toHaveBeenCalled()
+          expect(initializeRoundSpy).toHaveBeenCalled()
+
+          shufflePlayersSpy.mockRestore()
+          initializeRoundSpy.mockRestore()
+        })
+
+        it("should not shuffle players when playerRearrangement is NEVER", async () => {
+          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.NEVER
+
+          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
+          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+            .mockImplementation(() => Promise.resolve())
+
+          await game['startNewRound']()
+
+          expect(shufflePlayersSpy).not.toHaveBeenCalled()
+          expect(initializeRoundSpy).toHaveBeenCalled()
+
+          shufflePlayersSpy.mockRestore()
+          initializeRoundSpy.mockRestore()
+        })
+
+        it("should not shuffle players when playerRearrangement is EVERY_GAME", async () => {
+          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_GAME
+
+          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
+          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+            .mockImplementation(() => Promise.resolve())
+
+          await game['startNewRound']()
+
+          expect(shufflePlayersSpy).not.toHaveBeenCalled()
+          expect(initializeRoundSpy).toHaveBeenCalled()
+
+          shufflePlayersSpy.mockRestore()
+          initializeRoundSpy.mockRestore()
+        })
+      })
+
+      describe("serialize with playerRearrangement", () => {
+        it("should include playerRearrangement in serialized settings", () => {
+          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
+
+          const serialized = game.serialize()
+
+          expect(serialized.settings.playerRearrangement).toBe(Constants.PLAYER_REARRANGEMENT.EVERY_ROUND)
+        })
       })
     })
   })

@@ -1,4 +1,4 @@
-import type { FirstPlayerPenaltyType } from "@/constants.js"
+import type { FirstPlayerPenaltyType, PlayerRearrangementType } from "@/constants.js"
 
 export type SettingsToJson = {
   isConfirmed: boolean
@@ -15,6 +15,7 @@ export type SettingsToJson = {
   firstPlayerFlatPenalty: number
   firstPlayerPenaltyType: FirstPlayerPenaltyType
   showCurrentScore: boolean
+  playerRearrangement: PlayerRearrangementType
 }
 
 export interface SettingsRedisDb {
@@ -31,6 +32,7 @@ export interface SettingsRedisDb {
   firstPlayerPenaltyType: FirstPlayerPenaltyType
   firstPlayerFlatPenalty: number
   showCurrentScore: boolean
+  playerRearrangement: PlayerRearrangementType
 }
 
 export type PublicGameTag =

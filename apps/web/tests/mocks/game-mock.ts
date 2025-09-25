@@ -62,6 +62,7 @@ export const createMockGame = (
     firstPlayerPenaltyType:
       CoreConstants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
     showCurrentScore: true,
+    playerRearrangement: CoreConstants.PLAYER_REARRANGEMENT.NEVER,
   },
   selectedCardValue: null,
   roundPhase: CoreConstants.ROUND_PHASE.REVEAL_CARDS,

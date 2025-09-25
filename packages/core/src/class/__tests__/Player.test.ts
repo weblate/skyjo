@@ -398,7 +398,7 @@ describe("Player", () => {
     player.turnAllCards()
     player.finalRoundScore()
 
-    player.resetRound()
+    player.resetGame()
 
     expect(player.scores).toStrictEqual([10, 20, 30])
     expect(player.score).toBe(60)
@@ -409,7 +409,7 @@ describe("Player", () => {
     // Set hasRevealedCardCount to true (as it would be during/after reveal phase)
     player.hasRevealedCardCount = true
 
-    player.resetRound()
+    player.resetGame()
 
     expect(player.hasRevealedCardCount).toBe(false)
   })

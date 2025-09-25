@@ -11,4 +11,5 @@ export type GameOperation = {
   addPlayers?: PlayerToJson[]
   updatePlayers?: PlayerUpdate[]
   removePlayers?: string[]
+  reorderPlayers?: string[]
 }

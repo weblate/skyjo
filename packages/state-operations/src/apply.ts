@@ -11,6 +11,7 @@ const actions: Record<
   addPlayers: (game, data) => addPlayers(game, data as PlayerToJson[]),
   updatePlayers: (game, data) => updatePlayers(game, data as PlayerUpdate[]),
   removePlayers: (game, data) => removePlayers(game, data as string[]),
+  reorderPlayers: (game, data) => reorderPlayers(game, data as string[]),
 }
 
 export const applyStateOperations = (
@@ -60,4 +61,12 @@ const updatePlayers = (game: GameToJson, operations: PlayerUpdate[]) => {
 
 const removePlayers = (game: GameToJson, playerIds: string[]) => {
   game.players = game.players.filter((player) => !playerIds.includes(player.id))
+}
+
+const reorderPlayers = (game: GameToJson, playerIds: string[]) => {
+  const reorderedPlayers = playerIds
+    .map((playerId) => game.players.find((player) => player.id === playerId))
+    .filter((player): player is PlayerToJson => player !== undefined)
+
+  game.players = reorderedPlayers
 }

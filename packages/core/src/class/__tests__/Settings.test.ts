@@ -36,6 +36,9 @@ describe("Settings", () => {
     expect(defaultSettings.showCurrentScore).toBe(
       Constants.DEFAULT_GAME_SETTINGS.SHOW_CURRENT_SCORE,
     )
+    expect(defaultSettings.playerRearrangement).toBe(
+      Constants.DEFAULT_GAME_SETTINGS.PLAYER_REARRANGEMENT,
+    )
   })
 
   it("should have the settings validation to true by default for private game", () => {
@@ -60,6 +63,7 @@ describe("Settings", () => {
       maxPlayers: 2,
       private: true,
       showCurrentScore: true,
+      playerRearrangement: Constants.PLAYER_REARRANGEMENT.NEVER,
     }
 
     const settings = new Settings(false).populate(dbGameSettings)
@@ -79,6 +83,7 @@ describe("Settings", () => {
       scoreToEndGame: 100,
       firstPlayerMultiplierPenalty: 2,
       showCurrentScore: true,
+      playerRearrangement: Constants.PLAYER_REARRANGEMENT.EVERY_ROUND,
     }
 
     settings.updateSettings(newSettings)
@@ -91,6 +96,7 @@ describe("Settings", () => {
     expect(settings.scoreToEndGame).toBe(100)
     expect(settings.firstPlayerMultiplierPenalty).toBe(2)
     expect(settings.showCurrentScore).toBeTruthy()
+    expect(settings.playerRearrangement).toBe(Constants.PLAYER_REARRANGEMENT.EVERY_ROUND)
   })
 
   describe("preventInvalidSettings", () => {
@@ -162,6 +168,7 @@ describe("Settings", () => {
         Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
       firstPlayerFlatPenalty: 0,
       showCurrentScore: false,
+      playerRearrangement: Constants.PLAYER_REARRANGEMENT.NEVER,
     })
   })
 

@@ -53,6 +53,9 @@ export const updateGameSettingsSchema = z.object({
     .nativeEnum(CoreConstants.FIRST_PLAYER_PENALTY_TYPE)
     .optional(),
   showCurrentScore: z.boolean().optional(),
+  playerRearrangement: z
+    .nativeEnum(CoreConstants.PLAYER_REARRANGEMENT)
+    .optional(),
 })
 
 export type UpdateGameSettings = z.input<typeof updateGameSettingsSchema>

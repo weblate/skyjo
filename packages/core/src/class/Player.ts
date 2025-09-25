@@ -252,7 +252,7 @@ export class Player implements PlayerInterface {
   }
 
   reset() {
-    this.resetRound()
+    this.resetGame()
     this.wantsReplay = false
     this.scores = []
     this.score = 0
@@ -260,7 +260,7 @@ export class Player implements PlayerInterface {
     this.consecutiveAfkCount = 0
   }
 
-  resetRound() {
+  resetGame() {
     this.cards = []
     this.hasPlayedLastTurn = false
     this.turnStartTime = null

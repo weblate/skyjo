@@ -6,6 +6,12 @@ export class Constants {
     MULTIPLIER_THEN_FLAT: 4,
   } as const
 
+  static readonly PLAYER_REARRANGEMENT = {
+    NEVER: 0,
+    EVERY_ROUND: 1,
+    EVERY_GAME: 2,
+  } as const
+
   static readonly DEFAULT_GAME_SETTINGS = {
     MIN_PLAYERS: 2,
     MAX_PLAYERS: 8,
@@ -17,6 +23,7 @@ export class Constants {
     FIRST_PLAYER_PENALTY_TYPE:
       Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY,
     SHOW_CURRENT_SCORE: false,
+    PLAYER_REARRANGEMENT: Constants.PLAYER_REARRANGEMENT.NEVER,
     CARDS: {
       PER_ROW: 3,
       PER_COLUMN: 4,
@@ -134,3 +141,6 @@ export type ServerMessageType =
 
 export type FirstPlayerPenaltyType =
   (typeof Constants.FIRST_PLAYER_PENALTY_TYPE)[keyof typeof Constants.FIRST_PLAYER_PENALTY_TYPE]
+
+export type PlayerRearrangementType =
+  (typeof Constants.PLAYER_REARRANGEMENT)[keyof typeof Constants.PLAYER_REARRANGEMENT]

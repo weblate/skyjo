@@ -86,25 +86,50 @@ const createPlayerOperations = (
 ): Omit<GameOperation, "game" | "settings"> | undefined => {
   const ops: Omit<GameOperation, "game" | "settings"> = {}
 
-  oldState.players.forEach((oldPlayer) => {
-    const newPlayer = newState.players.find((p) => p.id === oldPlayer.id)
-    if (!newPlayer) {
-      ops.removePlayers ??= []
-      ops.removePlayers.push(oldPlayer.id)
-      return
-    }
-    const playerChanges = comparePlayer(oldPlayer, newPlayer)
+  // Check if players were reordered (same players, different order)
+  const oldPlayerIds = oldState.players.map((p) => p.id)
+  const newPlayerIds = newState.players.map((p) => p.id)
 
-    if (playerChanges) {
-      ops.updatePlayers ??= []
-      ops.updatePlayers.push(playerChanges)
-    }
-  })
+  const samePlayerCount = oldPlayerIds.length === newPlayerIds.length
+  const samePlayerSet = oldPlayerIds.every((id) => newPlayerIds.includes(id)) &&
+                        newPlayerIds.every((id) => oldPlayerIds.includes(id))
+  const differentOrder = !oldPlayerIds.every((id, index) => id === newPlayerIds[index])
 
-  newState.players.slice(oldState.players.length).forEach((newPlayer) => {
-    ops.addPlayers ??= []
-    ops.addPlayers.push(newPlayer)
-  })
+  if (samePlayerCount && samePlayerSet && differentOrder) {
+    ops.reorderPlayers = newPlayerIds
+    // Still check for individual player updates
+    oldState.players.forEach((oldPlayer) => {
+      const newPlayer = newState.players.find((p) => p.id === oldPlayer.id)
+      if (newPlayer) {
+        const playerChanges = comparePlayer(oldPlayer, newPlayer)
+        if (playerChanges) {
+          ops.updatePlayers ??= []
+          ops.updatePlayers.push(playerChanges)
+        }
+      }
+    })
+  } else {
+    // Handle normal add/remove/update operations
+    oldState.players.forEach((oldPlayer) => {
+      const newPlayer = newState.players.find((p) => p.id === oldPlayer.id)
+      if (!newPlayer) {
+        ops.removePlayers ??= []
+        ops.removePlayers.push(oldPlayer.id)
+        return
+      }
+      const playerChanges = comparePlayer(oldPlayer, newPlayer)
+
+      if (playerChanges) {
+        ops.updatePlayers ??= []
+        ops.updatePlayers.push(playerChanges)
+      }
+    })
+
+    newState.players.slice(oldState.players.length).forEach((newPlayer) => {
+      ops.addPlayers ??= []
+      ops.addPlayers.push(newPlayer)
+    })
+  }
 
   if (Object.keys(ops).length > 0) return ops
 }
