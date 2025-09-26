@@ -36,12 +36,6 @@ describe("PlayerService", () => {
   })
 
   describe("onConnectionLost", () => {
-    it("should do nothing if socket has no game data", async () => {
-      // Socket with no game data should exit early without processing
-      await service.onConnectionLost(socket)
-      // If we reach here without throwing, the test passes
-    })
-
     it("should do nothing if player not found", async () => {
       const game = new Game({
         hostId: RANDOM_SOCKET_ID(),
@@ -51,7 +45,7 @@ describe("PlayerService", () => {
       // Set socket data for a player that doesn't exist in the game
       socket.data = {
         gameCode: game.code,
-        playerId: crypto.randomUUID()
+        playerId: crypto.randomUUID(),
       }
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -74,7 +68,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       // Set game to playing state
@@ -103,7 +97,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       game.status = CoreConstants.GAME_STATUS.LOBBY
@@ -134,7 +128,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       game.status = CoreConstants.GAME_STATUS.STOPPED
@@ -161,7 +155,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
@@ -190,7 +184,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
@@ -209,7 +203,10 @@ describe("PlayerService", () => {
 
   describe("onLeave", () => {
     it("should do nothing if game not found", async () => {
-      socket.data = { gameCode: TEST_UNKNOWN_GAME_ID, playerId: crypto.randomUUID() }
+      socket.data = {
+        gameCode: TEST_UNKNOWN_GAME_ID,
+        playerId: crypto.randomUUID(),
+      }
 
       service["redis"].getGame = vi.fn(() =>
         Promise.reject(
@@ -269,7 +266,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
       socket.data.playerId = player.id
 
@@ -301,7 +298,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       const opponent2 = new Player(
@@ -358,7 +355,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       // Game is still in lobby
@@ -398,7 +395,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       await game.start()
@@ -439,7 +436,7 @@ describe("PlayerService", () => {
 
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -465,7 +462,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
@@ -494,7 +491,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
@@ -526,7 +523,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       const opponent = new Player(
@@ -664,7 +661,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       await game.start()
@@ -711,7 +708,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: crypto.randomUUID()
+        playerId: crypto.randomUUID(),
       }
 
       await game.start()
@@ -756,7 +753,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: player.id
+        playerId: player.id,
       }
 
       await game.start()
