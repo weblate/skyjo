@@ -15,8 +15,11 @@
     }
   },
   "scripts": {
-    "build": "tsc",
-    "biome:check": "pnpm biome check --write ."
+    "build": "tsc --project tsconfig.prod.json",
+    "biome:check": "pnpm biome check --write .",
+    "test": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "test:ui": "vitest --ui --coverage.enabled=true"
   },
   "dependencies": {
     "@skymo/core": "workspace:*"
@@ -24,6 +27,10 @@
   "devDependencies": {
     "@skymo/ts-config": "workspace:*",
     "@types/node": "^24.0.10",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "@vitest/coverage-istanbul": "^3.2.4",
+    "@vitest/ui": "^3.2.4",
+    "vite-tsconfig-paths": "^5.1.4",
+    "vitest": "^3.2.4"
   }
 }
