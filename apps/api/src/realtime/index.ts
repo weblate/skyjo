@@ -11,7 +11,7 @@ import { hostTransferRouter } from "./hostTransfer/hostTransfer.router.js"
 import { kickRouter } from "./kick/kick.router.js"
 import { lobbyRouter } from "./lobby/lobby.router.js"
 import { playerRouter } from "./player/player.router.js"
-import type { GameSocket } from "./types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "./types/gameSocket.js"
 import { SocketManager } from "./utils/SocketManager.js"
 
 export const initializeSocketServer = async (server: ServerType) => {
@@ -32,7 +32,7 @@ export const initializeSocketServer = async (server: ServerType) => {
 
     io.use(guestMiddleware)
     io.use(userMiddleware)
-    io.on("connection", (socket: GameSocket) => {
+    io.on("connection", (socket: AuthenticatedGameSocket) => {
       Logger.debug(`New socket connection: ${socket.id}`)
       lobbyRouter(socket)
       playerRouter(socket)

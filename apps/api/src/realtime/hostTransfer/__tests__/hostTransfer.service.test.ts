@@ -9,7 +9,7 @@ import {
 } from "@tests/_mock.js"
 import { RANDOM_SOCKET_ID, TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { HostTransferService } from "../hostTransfer.service.js"
 import "@skymo/error/test/expect-extend"
@@ -19,10 +19,10 @@ describe("HostTransferService", () => {
   let game: Game
 
   let hostPlayer: Player
-  let hostSocket: GameSocket
+  let hostSocket: AuthenticatedGameSocket
 
   let targetPlayer: Player
-  let targetSocket: GameSocket
+  let targetSocket: AuthenticatedGameSocket
 
   let observer: Player
 

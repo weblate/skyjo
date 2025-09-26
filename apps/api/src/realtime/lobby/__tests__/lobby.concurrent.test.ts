@@ -1,13 +1,13 @@
 import { Constants as CoreConstants, Game, Player, Settings } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { LobbyService } from "../lobby.service.js"
 
 describe("LobbyService - Concurrent Join Protection", () => {
   let service: LobbyService
-  let socket1: GameSocket
-  let socket2: GameSocket
+  let socket1: AuthenticatedGameSocket
+  let socket2: AuthenticatedGameSocket
   let mockRedis: any
   let mockSocketManager: any
 

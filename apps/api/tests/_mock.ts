@@ -2,7 +2,7 @@ import type { Game } from "@skymo/core"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { vi } from "vitest"
 import type { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 
 export const mockSocket = (id: string = TEST_SOCKET_ID) => {
   return {
@@ -19,7 +19,7 @@ export const mockSocket = (id: string = TEST_SOCKET_ID) => {
     volatile: {
       emit: vi.fn(),
     },
-  } as unknown as GameSocket
+  } as unknown as AuthenticatedGameSocket
 }
 
 export const mockRedisInService = (service: BaseService) => {
@@ -44,11 +44,7 @@ export const mockSocketManagerInService = (service: BaseService) => {
   service["socketManager"].getIO = vi.fn().mockReturnValue({
     ...mockSocket(),
   })
-  service["socketManager"].getSocket = vi.fn().mockReturnValue({
-    volatile: {
-      emit: vi.fn(),
-    },
-  })
+  service["socketManager"].getSocket = vi.fn().mockReturnValue(mockSocket())
   service["socketManager"].isInitialized = vi.fn().mockReturnValue(true)
   service["socketManager"].sendGameToSocket = vi.fn()
   service["socketManager"].sendToRoom = vi.fn()

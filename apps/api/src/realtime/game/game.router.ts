@@ -10,6 +10,7 @@ import {
   stateVersionSchema,
 } from "@skymo/core"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import { validateSocketData } from "@/realtime/middleware/socketDataValidation.js"
 import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
 import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
@@ -38,6 +39,7 @@ const gameRouter = (socket: GameSocket) => {
     "get",
     socketErrorWrapper(
       async (clientStateVersion: number, firstTime: boolean = false) => {
+        validateSocketData(socket)
         await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
         const stateVersion = stateVersionSchema
@@ -53,6 +55,7 @@ const gameRouter = (socket: GameSocket) => {
     "play:reveal-card",
     socketErrorWrapper(
       async (data: PlayRevealCard, clientStateVersion: number) => {
+        validateSocketData(socket)
         await consumeSocketRateLimiter(revealCardRateLimiter)(socket)
 
         const turnCardData = playRevealCard.parse(data)
@@ -67,6 +70,7 @@ const gameRouter = (socket: GameSocket) => {
     "play:pick-card",
     socketErrorWrapper(
       async (data: PlayPickCard, clientStateVersion: number) => {
+        validateSocketData(socket)
         await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
         const playData = playPickCard.parse(data)
@@ -81,6 +85,7 @@ const gameRouter = (socket: GameSocket) => {
     "play:replace-card",
     socketErrorWrapper(
       async (data: PlayReplaceCard, clientStateVersion: number) => {
+        validateSocketData(socket)
         await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
         const playData = playReplaceCard.parse(data)
@@ -94,6 +99,7 @@ const gameRouter = (socket: GameSocket) => {
   socket.on(
     "play:discard-selected-card",
     socketErrorWrapper(async (clientStateVersion: number) => {
+      validateSocketData(socket)
       await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
       const stateVersion = stateVersionSchema.parse(clientStateVersion)
@@ -106,6 +112,7 @@ const gameRouter = (socket: GameSocket) => {
     "play:turn-card",
     socketErrorWrapper(
       async (data: PlayTurnCard, clientStateVersion: number) => {
+        validateSocketData(socket)
         await consumeSocketRateLimiter(gameRateLimiter)(socket)
 
         const playData = playTurnCard.parse(data)
@@ -119,6 +126,7 @@ const gameRouter = (socket: GameSocket) => {
   socket.on(
     "replay",
     socketErrorWrapper(async (clientStateVersion: number) => {
+      validateSocketData(socket)
       await consumeSocketRateLimiter(replayRateLimiter)(socket)
 
       await instance.onReplay(socket, clientStateVersion)

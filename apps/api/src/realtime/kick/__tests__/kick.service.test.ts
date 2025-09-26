@@ -16,7 +16,7 @@ import {
 } from "@tests/_mock.js"
 import { RANDOM_SOCKET_ID, TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { KickService } from "../../../realtime/kick/kick.service.js"
 
 describe("KickService", () => {
@@ -24,10 +24,10 @@ describe("KickService", () => {
   let game: Game
 
   let player: Player
-  let socket: GameSocket
+  let socket: AuthenticatedGameSocket
 
   let opponent1: Player
-  let opponent1Socket: GameSocket
+  let opponent1Socket: AuthenticatedGameSocket
 
   let opponent2: Player
   let kickVotes: Map<string, KickVote>
@@ -537,6 +537,30 @@ describe("KickService", () => {
 
       // Restore original method
       service["checkKickVoteStatus"] = originalCheckKickVoteStatus
+    })
+
+    it("should clean up socket data when kicking a player", async () => {
+      game = new Game({
+        hostId: player.id,
+        settings: new Settings(true), // private game for host kick
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(player)
+      game.addPlayer(opponent1)
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      const targetSocket = mockSocket(opponent1.socketId)
+      targetSocket.data = { gameCode: game.code, playerId: opponent1.id }
+
+      service["socketManager"].getSocket = vi.fn().mockReturnValue(targetSocket)
+
+      // Host kicks opponent1
+      await service.onInitiateKickVote(socket, opponent1.id)
+
+      // Verify socket was cleaned up
+      expect(targetSocket.leave).toHaveBeenCalledWith(game.code)
+      expect(targetSocket.data).toBe(null)
     })
   })
 })

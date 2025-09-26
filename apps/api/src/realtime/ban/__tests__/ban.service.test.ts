@@ -9,7 +9,7 @@ import {
 } from "@tests/_mock.js"
 import { RANDOM_SOCKET_ID, TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { BanService } from "../ban.service.js"
 import "@skymo/error/test/expect-extend"
@@ -19,10 +19,10 @@ describe("BanService", () => {
   let game: Game
 
   let player: Player
-  let socket: GameSocket
+  let socket: AuthenticatedGameSocket
 
   let opponent1: Player
-  let opponent1Socket: GameSocket
+  let opponent1Socket: AuthenticatedGameSocket
 
   let opponent2: Player
 

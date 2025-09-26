@@ -6,12 +6,12 @@ import type { ReportJobData } from "@skymo/worker-types"
 import { db } from "@/db/index.js"
 import { DiscordQueueService } from "@/queues/DiscordQueueService.js"
 import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 
 export class ReportService extends BaseService {
   private readonly discordQueue = DiscordQueueService.getInstance()
 
-  async onReport(socket: GameSocket, report: Report) {
+  async onReport(socket: AuthenticatedGameSocket, report: Report) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)

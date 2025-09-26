@@ -3,7 +3,10 @@ import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type { UpdateGameSettings } from "@skymo/shared/validations"
 import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type {
+  AuthenticatedGameSocket,
+  GameSocket,
+} from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 
 export class LobbyService extends BaseService {
@@ -74,7 +77,7 @@ export class LobbyService extends BaseService {
     await this.joinGame(socket, game, player)
   }
 
-  async onResetSettings(socket: GameSocket) {
+  async onResetSettings(socket: AuthenticatedGameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const stateManager = new GameStateTracker(game)
 
@@ -113,7 +116,10 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onUpdateMaxPlayers(socket: GameSocket, maxPlayers: number) {
+  async onUpdateMaxPlayers(
+    socket: AuthenticatedGameSocket,
+    maxPlayers: number,
+  ) {
     const game = await this.getGame(socket.data.gameCode)
     if (!game.isHost(socket.data.playerId)) {
       throw new CError(
@@ -160,7 +166,10 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onUpdateSettings(socket: GameSocket, settings: UpdateGameSettings) {
+  async onUpdateSettings(
+    socket: AuthenticatedGameSocket,
+    settings: UpdateGameSettings,
+  ) {
     const game = await this.getGame(socket.data.gameCode)
     if (!game.isHost(socket.data.playerId)) {
       throw new CError(
@@ -196,7 +205,7 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onToggleSettingsValidation(socket: GameSocket) {
+  async onToggleSettingsValidation(socket: AuthenticatedGameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     if (game.settings.private) return
 
@@ -208,7 +217,7 @@ export class LobbyService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onStartCountdown(socket: GameSocket) {
+  async onStartCountdown(socket: AuthenticatedGameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     if (!game.isHost(socket.data.playerId)) {
       throw new CError(`Player tried to start countdown but is not the host.`, {
@@ -233,7 +242,7 @@ export class LobbyService extends BaseService {
     await this.countdownQueue.startCountdown(game.code)
   }
 
-  async onCancelCountdown(socket: GameSocket) {
+  async onCancelCountdown(socket: AuthenticatedGameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     if (!game.isHost(socket.data.playerId)) {
       throw new CError(
@@ -302,7 +311,6 @@ export class LobbyService extends BaseService {
                 game: game.serialize(),
                 socketId: socket.id,
                 gameCode: game.code,
-                playerId: socket.data.playerId,
               },
             },
           )

@@ -8,12 +8,12 @@ import {
 } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 
 export class GameService extends BaseService {
   async onGet(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     clientStateVersion: number | null,
     firstTime: boolean = false,
   ) {
@@ -35,7 +35,7 @@ export class GameService extends BaseService {
   }
 
   async onRevealCard(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     turnData: PlayRevealCard,
     clientStateVersion: number,
   ) {
@@ -79,7 +79,7 @@ export class GameService extends BaseService {
   }
 
   async onPickCard(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     { pile }: PlayPickCard,
     clientStateVersion: number,
   ) {
@@ -97,7 +97,7 @@ export class GameService extends BaseService {
   }
 
   async onReplaceCard(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     { column, row }: PlayReplaceCard,
     clientStateVersion: number,
   ) {
@@ -114,7 +114,7 @@ export class GameService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onDiscardCard(socket: GameSocket, clientStateVersion: number) {
+  async onDiscardCard(socket: AuthenticatedGameSocket, clientStateVersion: number) {
     await this.checkStateVersion(socket, clientStateVersion)
 
     const { game } = await this.checkPlayAuthorization(socket, [
@@ -138,7 +138,7 @@ export class GameService extends BaseService {
   }
 
   async onTurnCard(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     { column, row }: PlayTurnCard,
     clientStateVersion: number,
   ) {
@@ -154,7 +154,7 @@ export class GameService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onReplay(socket: GameSocket, clientStateVersion: number) {
+  async onReplay(socket: AuthenticatedGameSocket, clientStateVersion: number) {
     await this.checkStateVersion(socket, clientStateVersion)
 
     const game = await this.getGame(socket.data.gameCode)
@@ -177,7 +177,7 @@ export class GameService extends BaseService {
    * @returns true if the client state version is the same as the game state version
    */
   private async checkStateVersion(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     clientStateVersion: number | null,
     firstTime: boolean = false,
     allowNonBlocking: boolean = false,
@@ -254,7 +254,7 @@ export class GameService extends BaseService {
   }
 
   private async checkPlayAuthorization(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     allowedStates: TurnStatus[],
   ) {
     const game = await this.getGame(socket.data.gameCode)

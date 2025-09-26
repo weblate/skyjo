@@ -3,10 +3,10 @@ import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type { UserChatMessage } from "@skymo/shared/types"
 import { canChat } from "@/http/penalty/penalty.service.js"
 import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 
 export class ChatService extends BaseService {
-  async onMessage(socket: GameSocket, { message }: { message: string }) {
+  async onMessage(socket: AuthenticatedGameSocket, { message }: { message: string }) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
@@ -47,7 +47,7 @@ export class ChatService extends BaseService {
     socket.volatile.emit("message", newMessage)
   }
 
-  async onWizz(socket: GameSocket, targetName: string) {
+  async onWizz(socket: AuthenticatedGameSocket, targetName: string) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)

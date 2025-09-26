@@ -3,13 +3,13 @@ import { Constants as ErrorConstants } from "@skymo/error"
 import { mockSocket } from "@tests/_mock.js"
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { ChatService } from "../../../realtime/chat/chat.service.js"
 import "@skymo/error/test/expect-extend"
 
 describe("ChatService", () => {
   let service: ChatService
-  let socket: GameSocket
+  let socket: AuthenticatedGameSocket
 
   beforeEach(() => {
     service = new ChatService()

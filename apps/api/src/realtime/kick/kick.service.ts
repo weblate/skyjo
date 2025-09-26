@@ -2,16 +2,17 @@ import { type Game, KickVote } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import { clearSocketData } from "@/realtime/middleware/socketDataValidation.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 
 export class KickService extends BaseService {
-  async onInitiateKickVote(socket: GameSocket, targetId: string) {
+  async onInitiateKickVote(socket: AuthenticatedGameSocket, targetId: string) {
     const game = await this.getGame(socket.data.gameCode)
     await this.initiateKickVote(socket, game, targetId)
   }
 
-  async onVoteToKick(socket: GameSocket, vote: boolean) {
+  async onVoteToKick(socket: AuthenticatedGameSocket, vote: boolean) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
@@ -69,7 +70,7 @@ export class KickService extends BaseService {
 
   //#region private methods
   private async initiateKickVote(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     game: Game,
     targetId: string,
   ) {
@@ -119,6 +120,14 @@ export class KickService extends BaseService {
       })
 
       await game.disconnectPlayer(target)
+
+      // Clean up kicked player's socket
+      const targetSocket = this.socketManager.getSocket(target.socketId)
+      if (targetSocket) {
+        await targetSocket.leave(game.code)
+        clearSocketData(targetSocket as AuthenticatedGameSocket)
+      }
+
       await this.updateAndSendGame(game, operationManager)
       return
     }
@@ -247,6 +256,13 @@ export class KickService extends BaseService {
     })
 
     await game.disconnectPlayer(playerToKick)
+
+    // Clean up kicked player's socket
+    const targetSocket = this.socketManager.getSocket(playerToKick.socketId)
+    if (targetSocket) {
+      await targetSocket.leave(game.code)
+      clearSocketData(targetSocket as AuthenticatedGameSocket)
+    }
 
     await this.updateAndSendGame(game, operationManager)
   }

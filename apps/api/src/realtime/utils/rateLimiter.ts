@@ -14,8 +14,8 @@ const consumeSocketRateLimiter = (rateLimiter: RateLimiterMemory) => {
         level: "info",
         meta: {
           socketId: socket.id,
-          gameCode: socket.data.gameCode,
-          playerId: socket.data.playerId,
+          gameCode: socket.data?.gameCode,
+          playerId: socket.data?.playerId,
         },
       })
     }

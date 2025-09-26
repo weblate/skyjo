@@ -21,11 +21,11 @@ import {
 } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { PlayerService } from "@/realtime/player/player.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 
 describe("PlayerService", () => {
   let service: PlayerService
-  let socket: GameSocket
+  let socket: AuthenticatedGameSocket
 
   beforeEach(() => {
     service = new PlayerService()
@@ -36,11 +36,23 @@ describe("PlayerService", () => {
   })
 
   describe("onConnectionLost", () => {
+    it("should do nothing if socket has no game data", async () => {
+      // Socket with no game data should exit early without processing
+      await service.onConnectionLost(socket)
+      // If we reach here without throwing, the test passes
+    })
+
     it("should do nothing if player not found", async () => {
       const game = new Game({
         hostId: RANDOM_SOCKET_ID(),
         settings: new Settings(false),
       })
+
+      // Set socket data for a player that doesn't exist in the game
+      socket.data = {
+        gameCode: game.code,
+        playerId: crypto.randomUUID()
+      }
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -60,8 +72,10 @@ describe("PlayerService", () => {
       })
 
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       // Set game to playing state
       game.status = CoreConstants.GAME_STATUS.PLAYING
@@ -87,8 +101,10 @@ describe("PlayerService", () => {
       mockGameOperationManager(game)
 
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
@@ -116,8 +132,10 @@ describe("PlayerService", () => {
       mockGameOperationManager(game)
 
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       game.status = CoreConstants.GAME_STATUS.STOPPED
 
@@ -141,8 +159,10 @@ describe("PlayerService", () => {
       })
       mockGameOperationManager(game)
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -168,8 +188,10 @@ describe("PlayerService", () => {
       })
       mockGameOperationManager(game)
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -187,7 +209,7 @@ describe("PlayerService", () => {
 
   describe("onLeave", () => {
     it("should do nothing if game not found", async () => {
-      socket.data.gameCode = TEST_UNKNOWN_GAME_ID
+      socket.data = { gameCode: TEST_UNKNOWN_GAME_ID, playerId: crypto.randomUUID() }
 
       service["redis"].getGame = vi.fn(() =>
         Promise.reject(
@@ -211,7 +233,7 @@ describe("PlayerService", () => {
       })
       game.addPlayer(opponent)
 
-      socket.data.gameCode = game.code
+      socket.data = { gameCode: game.code, playerId: crypto.randomUUID() }
 
       const opponent2 = new Player(
         { name: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
@@ -245,8 +267,10 @@ describe("PlayerService", () => {
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
       socket.data.playerId = player.id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -275,8 +299,10 @@ describe("PlayerService", () => {
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       const opponent2 = new Player(
         { name: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
@@ -330,8 +356,10 @@ describe("PlayerService", () => {
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       // Game is still in lobby
       expect(game.isInLobby()).toBeTruthy()
@@ -368,8 +396,10 @@ describe("PlayerService", () => {
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       await game.start()
 
@@ -407,8 +437,10 @@ describe("PlayerService", () => {
 
       game.addPlayer(player)
 
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
       const removeGameSpy = vi.spyOn(game["operationManager"], "removeGame")
@@ -431,8 +463,10 @@ describe("PlayerService", () => {
       })
       mockGameOperationManager(game)
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -458,8 +492,10 @@ describe("PlayerService", () => {
       })
       mockGameOperationManager(game)
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
       game.status = CoreConstants.GAME_STATUS.LOBBY
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -488,8 +524,10 @@ describe("PlayerService", () => {
       mockGameOperationManager(game)
 
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       const opponent = new Player(
         { name: "player2", avatar: CoreConstants.AVATARS.ELEPHANT },
@@ -624,8 +662,10 @@ describe("PlayerService", () => {
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       await game.start()
 
@@ -669,8 +709,10 @@ describe("PlayerService", () => {
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = crypto.randomUUID()
+      socket.data = {
+        gameCode: game.code,
+        playerId: crypto.randomUUID()
+      }
 
       await game.start()
 
@@ -712,8 +754,10 @@ describe("PlayerService", () => {
         TEST_SOCKET_ID,
       )
       game.addPlayer(player)
-      socket.data.gameCode = game.code
-      socket.data.playerId = player.id
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id
+      }
 
       await game.start()
 

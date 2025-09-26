@@ -3,13 +3,17 @@ import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type { LastGame } from "@skymo/shared/validations"
 import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import { clearSocketData } from "@/realtime/middleware/socketDataValidation.js"
+import type {
+  AuthenticatedGameSocket,
+  GameSocket,
+} from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 
 export class PlayerService extends BaseService {
   private readonly countdownQueue = GameStartCountdownQueueService.getInstance()
 
-  async onConnectionLost(socket: GameSocket) {
+  async onConnectionLost(socket: AuthenticatedGameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -46,7 +50,7 @@ export class PlayerService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onLeave(socket: GameSocket) {
+  async onLeave(socket: AuthenticatedGameSocket) {
     try {
       const game = await this.getGame(socket.data.gameCode)
       const stateManager = new GameStateTracker(game)
@@ -89,6 +93,9 @@ export class PlayerService extends BaseService {
       }
 
       await socket.leave(game.code)
+
+      // Clear socket data to prevent stale data from affecting future disconnections
+      clearSocketData(socket)
     } catch (error) {
       if (
         error instanceof CError &&
@@ -145,7 +152,7 @@ export class PlayerService extends BaseService {
     await this.joinGame(socket, game, player, true)
   }
 
-  async onRecover(socket: GameSocket) {
+  async onRecover(socket: AuthenticatedGameSocket) {
     const game = await this.getGame(socket.data.gameCode)
     const player = game.getPlayerById(socket.data.playerId)
     if (!player) {
@@ -168,7 +175,7 @@ export class PlayerService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onIntentionalDisconnect(socket: GameSocket) {
+  async onIntentionalDisconnect(socket: AuthenticatedGameSocket) {
     try {
       const game = await this.getGame(socket.data.gameCode)
 
@@ -190,7 +197,7 @@ export class PlayerService extends BaseService {
     }
   }
 
-  async onForfeit(socket: GameSocket) {
+  async onForfeit(socket: AuthenticatedGameSocket) {
     try {
       const game = await this.getGame(socket.data.gameCode)
       const stateManager = new GameStateTracker(game)
@@ -230,6 +237,7 @@ export class PlayerService extends BaseService {
       }
 
       await socket.leave(game.code)
+      clearSocketData(socket)
     } catch (error) {
       if (
         error instanceof CError &&

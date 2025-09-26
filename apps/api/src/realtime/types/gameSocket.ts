@@ -14,9 +14,11 @@ export type GameSocket = Socket<
   ClientToServerEvents,
   ServerToClientEvents,
   Record<string, unknown>,
-  SocketData
+  SocketData | null
 > & {
   user?: UserDb
   session?: SessionDb
   guestId?: string
 }
+
+export type AuthenticatedGameSocket = GameSocket & { data: SocketData }

@@ -1,11 +1,11 @@
 import { Constants as CoreConstants } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { BaseService } from "@/realtime/base/base.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 
 export class HostTransferService extends BaseService {
-  async onTransferHost(socket: GameSocket, newHostId: string) {
+  async onTransferHost(socket: AuthenticatedGameSocket, newHostId: string) {
     const game = await this.getGame(socket.data.gameCode)
 
     // Verify current player is the host

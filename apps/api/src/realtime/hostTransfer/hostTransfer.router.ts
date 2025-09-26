@@ -4,6 +4,7 @@ import {
   type TransferHost,
   transferHostSchema,
 } from "@skymo/shared/validations"
+import { validateSocketData } from "@/realtime/middleware/socketDataValidation.js"
 import type { GameSocket } from "@/realtime/types/gameSocket.js"
 import { HostTransferService } from "./hostTransfer.service.js"
 
@@ -12,6 +13,7 @@ export const hostTransferRouter = (socket: GameSocket) => {
 
   socket.on("host:transfer", async (data: TransferHost) => {
     try {
+      validateSocketData(socket)
       const { newHostId } = transferHostSchema.parse(data)
 
       await hostTransferService.onTransferHost(socket, newHostId)

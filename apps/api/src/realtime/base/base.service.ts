@@ -14,7 +14,7 @@ import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { KickVoteRepository } from "@/redis/kickVote.repository.js"
 import { MessageRepository } from "@/redis/message.repository.js"
-import type { GameSocket } from "../types/gameSocket.js"
+import type { AuthenticatedGameSocket, GameSocket, SocketData } from "../types/gameSocket.js"
 
 export abstract class BaseService {
   protected redis = new GameRepository()
@@ -31,7 +31,7 @@ export abstract class BaseService {
   protected messageRepository = new MessageRepository()
 
   protected async sendMissingStatesToSocket(
-    socket: GameSocket,
+    socket: AuthenticatedGameSocket,
     game: Game,
     clientStateVersion: number,
   ) {
@@ -82,7 +82,7 @@ export abstract class BaseService {
     socket.data = {
       gameCode: game.code,
       playerId: player.id,
-    }
+    } as SocketData
 
     this.socketManager.sendToSocket(socket, {
       event: "game:join",

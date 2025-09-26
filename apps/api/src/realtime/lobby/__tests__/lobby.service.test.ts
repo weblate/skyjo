@@ -15,11 +15,11 @@ import {
 import { TEST_SOCKET_ID } from "@tests/constants-test.js"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { LobbyService } from "@/realtime/lobby/lobby.service.js"
-import type { GameSocket } from "@/realtime/types/gameSocket.js"
+import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 
 describe("LobbyService", () => {
   let service: LobbyService
-  let socket: GameSocket
+  let socket: AuthenticatedGameSocket
 
   beforeEach(() => {
     service = new LobbyService()

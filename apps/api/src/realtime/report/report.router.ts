@@ -1,5 +1,6 @@
 import { type Report } from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import { validateSocketData } from "@/realtime/middleware/socketDataValidation.js"
 import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
 import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
@@ -18,6 +19,7 @@ const reportRouter = (socket: GameSocket) => {
   socket.on(
     "report",
     socketErrorWrapper(async (data: Report) => {
+      validateSocketData(socket)
       await consumeSocketRateLimiter(rateLimiterReport)(socket)
 
       await instance.onReport(socket, data)

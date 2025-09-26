@@ -3,6 +3,7 @@ import { Logger } from "@skymo/logger"
 import type { ErrorReconnectMessage } from "@skymo/shared/types"
 import { type LastGame, reconnect } from "@skymo/shared/validations"
 import type { DisconnectReason } from "socket.io"
+import { validateSocketData } from "@/realtime/middleware/socketDataValidation.js"
 import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
 import { PlayerService } from "./player.service.js"
@@ -12,6 +13,7 @@ const instance = new PlayerService()
 const playerRouter = (socket: GameSocket) => {
   if (socket.recovered) {
     socketErrorWrapper(async () => {
+      validateSocketData(socket)
       await instance.onRecover(socket)
     })
   }
@@ -19,6 +21,7 @@ const playerRouter = (socket: GameSocket) => {
   socket.on(
     "leave",
     socketErrorWrapper(async () => {
+      validateSocketData(socket)
       await instance.onLeave(socket)
       socket.emit("leave:success")
     }),
@@ -27,6 +30,7 @@ const playerRouter = (socket: GameSocket) => {
   socket.on(
     "forfeit",
     socketErrorWrapper(async () => {
+      validateSocketData(socket)
       await instance.onForfeit(socket)
       socket.emit("forfeit:success")
     }),
@@ -35,6 +39,7 @@ const playerRouter = (socket: GameSocket) => {
   socket.on(
     "disconnect",
     socketErrorWrapper(async (reason: DisconnectReason) => {
+      validateSocketData(socket)
       Logger.info(`Socket ${socket.id} disconnected for reason ${reason}`)
 
       if (reason === "client namespace disconnect") {
@@ -75,6 +80,7 @@ const playerRouter = (socket: GameSocket) => {
   socket.on(
     "recover",
     socketErrorWrapper(async () => {
+      validateSocketData(socket)
       await instance.onRecover(socket)
     }),
   )

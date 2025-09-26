@@ -18,6 +18,7 @@ import {
 } from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
 import { getActivePenalties } from "@/http/penalty/penalty.service.js"
+import { validateSocketData } from "@/realtime/middleware/socketDataValidation.js"
 import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
 import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
 import type { GameSocket } from "../types/gameSocket.js"
@@ -153,6 +154,7 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:reset-settings",
     socketErrorWrapper(async () => {
+      validateSocketData(socket)
       await consumeSocketRateLimiter(settingsRateLimiter)(socket)
 
       await instance.onResetSettings(socket)
@@ -161,6 +163,7 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:update-max-players",
     socketErrorWrapper(async (data: UpdateMaxPlayers) => {
+      validateSocketData(socket)
       try {
         await consumeSocketRateLimiter(settingsRateLimiter)(socket)
 
@@ -185,6 +188,7 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:update-settings",
     socketErrorWrapper(async (data: UpdateGameSettings) => {
+      validateSocketData(socket)
       await consumeSocketRateLimiter(settingsRateLimiter)(socket)
 
       const settings = updateGameSettingsSchema.parse(data)
@@ -194,6 +198,7 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:settings:toggle-validation",
     socketErrorWrapper(async () => {
+      validateSocketData(socket)
       await instance.onToggleSettingsValidation(socket)
     }),
   )
@@ -202,6 +207,7 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:start-countdown",
     socketErrorWrapper(async () => {
+      validateSocketData(socket)
       await consumeSocketRateLimiter(startCountdownRateLimiter)(socket)
 
       await instance.onStartCountdown(socket)
@@ -211,6 +217,7 @@ const lobbyRouter = (socket: GameSocket) => {
   socket.on(
     "game:cancel-countdown",
     socketErrorWrapper(async () => {
+      validateSocketData(socket)
       await consumeSocketRateLimiter(cancelCountdownRateLimiter)(socket)
 
       await instance.onCancelCountdown(socket)

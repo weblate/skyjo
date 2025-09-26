@@ -5,6 +5,7 @@ import {
   wizzPlayerName,
 } from "@skymo/shared/validations"
 import { RateLimiterMemory } from "rate-limiter-flexible"
+import { validateSocketData } from "@/realtime/middleware/socketDataValidation.js"
 import { isAuthenticated } from "@/realtime/utils/authz.middleware.js"
 import { consumeSocketRateLimiter } from "@/realtime/utils/rateLimiter.js"
 import { socketErrorWrapper } from "@/realtime/utils/socketErrorWrapper.js"
@@ -31,6 +32,7 @@ const chatRouter = (socket: GameSocket) => {
   socket.on(
     "message",
     socketErrorWrapper(async (data: SendChatMessage) => {
+      validateSocketData(socket)
       isAuthenticated(socket)
       await consumeSocketRateLimiter(rateLimiter)(socket)
 
@@ -42,6 +44,7 @@ const chatRouter = (socket: GameSocket) => {
   socket.on(
     "wizz",
     socketErrorWrapper(async (data: WizzPlayerName) => {
+      validateSocketData(socket)
       isAuthenticated(socket)
       await consumeSocketRateLimiter(rateLimiterWizz)(socket)
 
