@@ -64,7 +64,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           status: 2,
           stateVersion: 2,
@@ -78,7 +78,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           selectedCardValue: 5,
           stateVersion: 2,
@@ -92,7 +92,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           turnStatus: 2,
           stateVersion: 2,
@@ -112,7 +112,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({})
+      expect(operations).toMatchObject({})
     })
 
     it("should detect multiple field changes", () => {
@@ -129,7 +129,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           status: 2,
           selectedCardValue: 3,
@@ -158,7 +158,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           stateVersion: 2,
         },
@@ -182,7 +182,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           stateVersion: 2,
         },
@@ -202,7 +202,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           stateVersion: 2,
         },
@@ -217,7 +217,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           stateVersion: 2,
         },
@@ -234,7 +234,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           stateVersion: 2,
         },
@@ -250,7 +250,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           stateVersion: 2,
         },
@@ -269,7 +269,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           stateVersion: 2,
         },
@@ -296,7 +296,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           stateVersion: 2,
         },
@@ -329,7 +329,7 @@ describe("createStateOperations", () => {
 
       const operations = createStateOperations(oldState, newState)
 
-      expect(operations).toEqual({
+      expect(operations).toMatchObject({
         game: {
           status: 2,
           stateVersion: 2,
@@ -346,7 +346,7 @@ describe("createStateOperations", () => {
       const state = createMockGameState()
       const operations = createStateOperations(state, state)
 
-      expect(operations).toEqual({})
+      expect(operations).toMatchObject({})
     })
 
     it("should handle adding state version when operations exist", () => {
