@@ -1,8 +1,7 @@
 services:
   web:
-    build:
-      context: .
-      dockerfile: ./apps/web/Dockerfile
+    image: ${WEB_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/web:${IMAGE_TAG:-trunk}}
+    pull_policy: always
     ports:
       - "3000:3000"
     networks:
@@ -23,9 +22,8 @@ services:
       - /var/tmp
 
   api:
-    build:
-      context: .
-      dockerfile: ./apps/api/Dockerfile
+    image: ${API_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/api:${IMAGE_TAG:-trunk}}
+    pull_policy: always
     ports:
       - "3001:3001"
     networks:
@@ -47,9 +45,8 @@ services:
       - /var/tmp
 
   workers:
-    build:
-      context: .
-      dockerfile: ./apps/workers/Dockerfile
+    image: ${WORKERS_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/workers:${IMAGE_TAG:-trunk}}
+    pull_policy: always
     networks:
       - internal
     env_file:
@@ -68,9 +65,8 @@ services:
       - /var/tmp
 
   discord-bot:
-    build:
-      context: .
-      dockerfile: ./apps/discord-bot/Dockerfile
+    image: ${DISCORD_BOT_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/discord-bot:${IMAGE_TAG:-trunk}}
+    pull_policy: always
     networks:
       - internal
       - external

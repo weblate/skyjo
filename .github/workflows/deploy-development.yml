@@ -2,6 +2,32 @@ name: Deploy Development
 
 on:
   workflow_dispatch:
+    inputs:
+      image_tag:
+        description: 'Image tag to deploy (default: trunk)'
+        required: false
+        type: string
+        default: 'trunk'
+      deploy_api:
+        description: 'Deploy API'
+        required: false
+        type: boolean
+        default: true
+      deploy_web:
+        description: 'Deploy Web'
+        required: false
+        type: boolean
+        default: true
+      deploy_workers:
+        description: 'Deploy Workers'
+        required: false
+        type: boolean
+        default: true
+      deploy_discord_bot:
+        description: 'Deploy Discord Bot'
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   test:
@@ -32,6 +58,9 @@ jobs:
   deploy-to-vps:
     runs-on: ubuntu-latest
     needs: test
+    env:
+      DEV_IMAGE_TAG: ${{ inputs.image_tag || 'trunk' }}
+      GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
     steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
@@ -39,6 +68,7 @@ jobs:
           host: ${{ secrets.VPS_HOST }}
           username: ${{ secrets.VPS_USERNAME }}
           key: ${{ secrets.VPS_SSH_KEY }}
+          envs: DEV_IMAGE_TAG,GITHUB_REPOSITORY_OWNER
           script: |
             export NVM_DIR=~/.nvm
             source ~/.nvm/nvm.sh
@@ -46,9 +76,28 @@ jobs:
             cd dev/skymo
             git pull
 
-            COMPOSE_BAKE=true docker compose -f compose.dev.yml build --no-cache --parallel dev-api dev-workers dev-web
+            # Login to GitHub Container Registry
+            echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
 
+            # Set environment variables for image tags
+            export DEV_IMAGE_TAG="${DEV_IMAGE_TAG}"
+            export GITHUB_REPOSITORY_OWNER="${GITHUB_REPOSITORY_OWNER}"
+
+            echo "Deploying with DEV_IMAGE_TAG: ${DEV_IMAGE_TAG}"
+
+            # Build list of services to deploy
+            SERVICES=""
+            ${{ inputs.deploy_api == true }} && SERVICES="$SERVICES dev-api"
+            ${{ inputs.deploy_web == true }} && SERVICES="$SERVICES dev-web"
+            ${{ inputs.deploy_workers == true }} && SERVICES="$SERVICES dev-workers"
+            ${{ inputs.deploy_discord_bot == true }} && SERVICES="$SERVICES dev-discord-bot"
+
+            # Pull images from registry
+            docker compose -f compose.dev.yml pull $SERVICES
+
+            # Run database migrations
             pnpm i
             pnpm db:migrate
 
-            docker compose -f compose.dev.yml up -d dev-api dev-workers dev-web
+            # Restart services
+            docker compose -f compose.dev.yml up -d $SERVICES

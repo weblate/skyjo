@@ -1,10 +1,7 @@
 services:
   dev-web:
-    build:
-      context: .
-      dockerfile: ./apps/web/Dockerfile
-      args:
-        - NODE_ENV=development
+    image: ${DEV_WEB_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/web:${DEV_IMAGE_TAG:-trunk}}
+    pull_policy: always
     ports:
       - "2000:3000"
     networks:
@@ -25,11 +22,8 @@ services:
       - /var/tmp
 
   dev-api:
-    build:
-      context: .
-      dockerfile: ./apps/api/Dockerfile
-      args:
-        - NODE_ENV=development
+    image: ${DEV_API_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/api:${DEV_IMAGE_TAG:-trunk}}
+    pull_policy: always
     depends_on:
       - dev-redis
     ports:
@@ -53,11 +47,8 @@ services:
       - /var/tmp
 
   dev-workers:
-    build:
-      context: .
-      dockerfile: ./apps/workers/Dockerfile
-      args:
-        - NODE_ENV=development
+    image: ${DEV_WORKERS_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/workers:${DEV_IMAGE_TAG:-trunk}}
+    pull_policy: always
     depends_on:
       - dev-redis
     networks:
@@ -78,11 +69,8 @@ services:
       - /var/tmp
 
   dev-discord-bot:
-    build:
-      context: .
-      dockerfile: ./apps/discord-bot/Dockerfile
-      cache_from:
-        - type=inline
+    image: ${DEV_DISCORD_BOT_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/discord-bot:${DEV_IMAGE_TAG:-trunk}}
+    pull_policy: always
     networks:
       - dev-internal
       - dev-external
