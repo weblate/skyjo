@@ -19,7 +19,8 @@
         "sv": "Svenska",
         "cs": "Čeština",
         "br": "Brezhoneg",
-        "et": "Eesti"
+        "et": "Eesti",
+        "uk": "українська мова"
       },
       "select-language": "Nyelv kiválasztása",
       "search-language": "Nyelv keresése",
