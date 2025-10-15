@@ -119,6 +119,16 @@
         "first-player-multiplier-penalty": {
           "label": "Eerste Speler Sien Straaf-Multiplikator",
           "title": "De Punktetaal fon dän eerste Spieler wäd mäd {number} multiplisierd, wan ju nit strikt minner is as do uur Punktetaale fon dät Spil"
+        },
+        "player-rearrangement": {
+          "label": "Spilers weromsette",
+          "description": "Kies wann spilers skoefele wurde om de spylfolchoarder te feroarjen",
+          "placeholder": "Selektearje wannear't spilers skodde wurde",
+          "item": {
+            "never": "Nea",
+            "every-round": "Alle rûnen",
+            "every-game": "Elke spultsje"
+          }
         }
       },
       "cancel": "Ofbreke",
@@ -1111,7 +1121,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finsk",
+        "hu": "Hongaarsk"
       }
     },
     "AccountDropdownMenu": {
