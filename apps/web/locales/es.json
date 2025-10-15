@@ -100,6 +100,16 @@
         },
         "show-current-score": {
           "label": "Mostrar puntuación en tiempo real"
+        },
+        "player-rearrangement": {
+          "label": "Reordenación de jugadores",
+          "description": "Elige cuándo se barajarán los jugadores para cambiar el orden de juego",
+          "placeholder": "Seleccionar cuándo barajar jugadores",
+          "item": {
+            "never": "Nunca",
+            "every-round": "Cada ronda",
+            "every-game": "Cada partida"
+          }
         }
       },
       "start-game-button": "Iniciar juego",
@@ -796,7 +806,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finlandés",
+        "hu": "Húngaro"
       }
     },
     "AccountDropdownMenu": {
