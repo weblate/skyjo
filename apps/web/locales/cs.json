@@ -127,6 +127,16 @@
         "first-player-multiplier-penalty": {
           "label": "Násobitel penalizace skóre prvního hráče",
           "title": "Skóre prvního hráče bude vynásobeno {number}, pokud není striktně nižší než ostatní skóre ve hře"
+        },
+        "player-rearrangement": {
+          "label": "Přeskládání hráčů",
+          "description": "Vyberte, kdy se mají hráči náhodně zamíchat, aby se změnilo pořadí hry",
+          "placeholder": "Vybrat, kdy zamíchat hráče",
+          "item": {
+            "never": "Nikdy",
+            "every-round": "Každé kolo",
+            "every-game": "Každá hra"
+          }
         }
       },
       "player-section": {
@@ -840,7 +850,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finský",
+        "hu": "Maďarsky"
       }
     },
     "Rules": {
