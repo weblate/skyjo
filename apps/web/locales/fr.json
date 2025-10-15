@@ -933,7 +933,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finnois",
+        "hu": "Hongrois"
       }
     },
     "AccountDropdownMenu": {
