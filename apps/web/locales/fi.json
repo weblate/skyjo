@@ -20,7 +20,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Suomi",
+        "hu": "Unkari"
       },
       "no-language-found": "Ei kieltä löytynyt",
       "search-language": "Etsi kieli",
@@ -662,6 +664,16 @@
         "first-player-multiplier-penalty": {
           "label": "Ensimmäisen pelaajan pistevähennyskerroin",
           "title": "Ensimmäisen pelaajan pisteet kerrotaan {number}:lla, jos ne eivät ole vähemmän kuin muiden pelin pisteiden."
+        },
+        "player-rearrangement": {
+          "label": "Pelaajien uudelleenjärjestely",
+          "description": "Valitse milloin pelaajien pelijärjestystä tulisi sekoittaa",
+          "placeholder": "Valitse, milloin pelaajat sekoitetaan",
+          "item": {
+            "never": "Ei koskaan",
+            "every-round": "Joka kierros",
+            "every-game": "Joka peli"
+          }
         }
       },
       "start-game-button": "Aloita peli",
