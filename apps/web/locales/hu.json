@@ -20,7 +20,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finnország",
+        "hu": "Magyar"
       },
       "select-language": "Nyelv kiválasztása",
       "search-language": "Nyelv keresése",
@@ -662,6 +664,16 @@
         "first-player-multiplier-penalty": {
           "label": "Az első játékos pontszorzójának büntetési szorzója",
           "title": "Az első játékos pontszámát megszorozzuk {number}-rel, ha az nem kisebb, mint a játék többi pontszáma"
+        },
+        "player-rearrangement": {
+          "label": "Játékosrendezés",
+          "description": "Válaszd ki, mikor legyenek a játékosok összekeverve a játéksorrend megváltoztatásához",
+          "placeholder": "Válassza ki, mikor keverje meg a játékosokat",
+          "item": {
+            "never": "Soha",
+            "every-round": "Minden körben",
+            "every-game": "Minden játék"
+          }
         }
       },
       "start-game-button": "Játék indítása",
