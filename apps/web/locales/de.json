@@ -120,6 +120,16 @@
         "first-player-multiplier-penalty": {
           "title": "Die Punktzahl des ersten Spielers wird mit {number} multipliziert, wenn sie strikt niedriger ist als die anderen Punktzahlen des Spiels",
           "label": "Strafmultiplikator für den Punktestand des ersten Spielers"
+        },
+        "player-rearrangement": {
+          "label": "Spielerumbildung",
+          "description": "Wähle, wann Spieler gemischt werden sollen, um die Spielreihenfolge zu ändern",
+          "placeholder": "Wählen Sie aus, wann Spieler gemischt werden sollen",
+          "item": {
+            "never": "Nie",
+            "every-round": "Jede Runde",
+            "every-game": "Jedes Spiel"
+          }
         }
       },
       "title": "{name}'s Spiel",
@@ -884,7 +894,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finnisch",
+        "hu": "Ungarisch"
       }
     },
     "Footer": {
