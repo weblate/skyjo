@@ -221,7 +221,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finland",
+        "hu": "Węgierski"
       }
     },
     "AccountDropdownMenu": {
@@ -756,6 +758,16 @@
         "first-player-multiplier-penalty": {
           "title": "Wynik pierwszego gracza zostanie pomnożony przez {number}, jeśli nie jest on ściśle niższy od pozostałych wyników w grze",
           "label": "Mnożnik kary punktowej pierwszego gracza"
+        },
+        "player-rearrangement": {
+          "label": "Zmiana kolejności graczy",
+          "description": "Wybierz, kiedy gracze powinni być tasowani, aby zmienić kolejność gry",
+          "placeholder": "Wybierz, kiedy tasować graczy",
+          "item": {
+            "never": "Nigdy",
+            "every-round": "Każda runda",
+            "every-game": "Każda gra"
+          }
         }
       },
       "start-game-button": "Rozpocznij grę",
