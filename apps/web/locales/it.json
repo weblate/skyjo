@@ -83,6 +83,16 @@
         "nb-columns": {
           "label": "Numero di colonne",
           "title": "{number} colonne"
+        },
+        "player-rearrangement": {
+          "label": "Riorganizzazione giocatori",
+          "description": "Scegli quando i giocatori devono essere mescolati per cambiare l'ordine di gioco",
+          "placeholder": "Seleziona quando mischiare i giocatori",
+          "item": {
+            "never": "Mai",
+            "every-round": "Ogni round",
+            "every-game": "Ogni partita"
+          }
         }
       },
       "player-section": {
@@ -968,7 +978,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finlandese",
+        "hu": "Ungherese"
       }
     },
     "GameRules": {
