@@ -54,7 +54,17 @@
           "label": "Strof-Multiplikator vom easchtn Spuier",
           "title": "Da Punktestand vom easchtn Spieler wird mit {number} multipliziert, wenn er ned strikt niedriger is ois de andern Punkteständ vom Spui"
         },
-        "validation-warning": "D'Spieleinstellungen kenna nimma g'ändert wern, wanns amoi bstätigt worn san"
+        "validation-warning": "D'Spieleinstellungen kenna nimma g'ändert wern, wanns amoi bstätigt worn san",
+        "player-rearrangement": {
+          "label": "Spieler neu sortieren",
+          "description": "Wähl, wann de Spia' aufgschoffelt wern soid, dass de Spijreihenfoig gändert werd",
+          "placeholder": "Wäu, wann de Spuier g'mischt wearn",
+          "item": {
+            "never": "Nia",
+            "every-round": "Jede Rund",
+            "every-game": "Jeds Spiel"
+          }
+        }
       },
       "title": "{name} sei Spui",
       "leave-to-home": "Zruck zur Startseitn",
@@ -924,7 +934,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finnisch",
+        "hu": "Ungarisch"
       }
     },
     "AccountDropdownMenu": {
