@@ -54,6 +54,16 @@
         "first-player-flat-penalty": {
           "label": "De erst Spiler het e Pauschalstrof uf de Punktestand",
           "title": "De Score vom erste Spieler wird um zuesätzliche {number} Pünkt erhööht"
+        },
+        "player-rearrangement": {
+          "label": "Spielerverschiebig",
+          "description": "Wän d Lüüt söllid gmischlet werde, zum d Spielreihenfolg z veränderä",
+          "placeholder": "Wänn d'Spieler gmischt wärde söllid, chasch du wähle",
+          "item": {
+            "never": "Nie",
+            "every-round": "Jedi Rund",
+            "every-game": "Jedes Spiel"
+          }
         }
       },
       "not-enough-players-modal": {
@@ -883,7 +893,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finnisch",
+        "hu": "Ungarisch"
       }
     },
     "AccountDropdownMenu": {
