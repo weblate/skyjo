@@ -140,6 +140,16 @@
         "remove-identical-column": "Dilemel ar bannigoù heñvel",
         "show-current-score": {
           "label": "Diskouez ar skor en amzer gwir"
+        },
+        "player-rearrangement": {
+          "label": "Aozadur ar c'hoarierien",
+          "description": "Dibab an eurvezh ma vo kemmesket ar c'hoarierien evit cheñch urzh an taolioù",
+          "placeholder": "Dibabordañs pa vourc'hel an dud",
+          "item": {
+            "never": "Biken",
+            "every-round": "Pep rapid",
+            "every-game": "Pep bloavezh"
+          }
         }
       },
       "player-section": {
@@ -1063,7 +1073,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finneg",
+        "hu": "Hungareg"
       }
     },
     "AccountDropdownMenu": {
