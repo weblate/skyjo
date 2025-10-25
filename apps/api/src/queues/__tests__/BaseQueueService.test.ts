@@ -19,6 +19,8 @@ vi.mock("bullmq", () => {
       remove: mockQueueRemove,
       close: mockQueueClose,
       drain: mockQueueDrain,
+      getJob: vi.fn().mockResolvedValue(null),
+      on: vi.fn(),
     })),
     Worker: vi.fn().mockImplementation(() => ({
       on: mockWorkerOn,

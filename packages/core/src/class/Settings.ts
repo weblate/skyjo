@@ -1,5 +1,9 @@
 import type { SettingsRedisDb, SettingsToJson } from "@/types/settings.js"
-import { Constants, type FirstPlayerPenaltyType, type PlayerRearrangementType } from "../constants.js"
+import {
+  Constants,
+  type FirstPlayerPenaltyType,
+  type PlayerRearrangementType,
+} from "../constants.js"
 import { isGameClassicSettings } from "../utils/settings.js"
 
 interface UpdateSettings {
@@ -98,7 +102,8 @@ export class Settings implements SettingsInterface {
     this.firstPlayerPenaltyType =
       settings.firstPlayerPenaltyType ?? this.firstPlayerPenaltyType
     this.showCurrentScore = settings.showCurrentScore ?? this.showCurrentScore
-    this.playerRearrangement = settings.playerRearrangement ?? this.playerRearrangement
+    this.playerRearrangement =
+      settings.playerRearrangement ?? this.playerRearrangement
 
     this.preventInvalidSettings()
   }

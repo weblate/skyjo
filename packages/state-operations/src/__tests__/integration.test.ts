@@ -46,8 +46,14 @@ const createMockPlayer = (overrides?: Partial<PlayerToJson>): PlayerToJson => ({
   scores: [],
   turnStartTime: null,
   cards: [
-    [{ id: "c1", isVisible: false }, { id: "c2", isVisible: false }],
-    [{ id: "c3", isVisible: false }, { id: "c4", isVisible: false }],
+    [
+      { id: "c1", isVisible: false },
+      { id: "c2", isVisible: false },
+    ],
+    [
+      { id: "c3", isVisible: false },
+      { id: "c4", isVisible: false },
+    ],
   ],
   userId: null,
   guestId: null,
@@ -61,11 +67,11 @@ describe("State Operations Integration", () => {
   it("should create and apply operations correctly - simple case", () => {
     const originalState = createMockGameState({
       status: 1, // LOBBY
-      stateVersion: 1
+      stateVersion: 1,
     })
     const targetState = createMockGameState({
       status: 2, // PLAYING
-      stateVersion: 2
+      stateVersion: 2,
     })
 
     // Create operations from the diff
@@ -74,7 +80,7 @@ describe("State Operations Integration", () => {
     // Apply operations to original state
     const resultState = applyStateOperations(
       JSON.parse(JSON.stringify(originalState)), // Deep copy to avoid mutation
-      operations
+      operations,
     )
 
     expect(resultState.status).toBe(targetState.status)
@@ -82,18 +88,34 @@ describe("State Operations Integration", () => {
   })
 
   it("should create and apply operations correctly - complex case with added player", () => {
-    const player1 = createMockPlayer({ id: "player-1", score: 0, wantsReplay: false })
-    const player2 = createMockPlayer({ id: "player-2", score: 5, wantsReplay: true })
+    const player1 = createMockPlayer({
+      id: "player-1",
+      score: 0,
+      wantsReplay: false,
+    })
+    const player2 = createMockPlayer({
+      id: "player-2",
+      score: 5,
+      wantsReplay: true,
+    })
 
     const originalState = createMockGameState({
       status: 1, // LOBBY
       players: [player1, player2],
       settings: { ...createMockGameState().settings, maxPlayers: 8 },
-      stateVersion: 1
+      stateVersion: 1,
     })
 
-    const updatedPlayer1 = createMockPlayer({ id: "player-1", score: 10, wantsReplay: true })
-    const newPlayer3 = createMockPlayer({ id: "player-3", score: 0, wantsReplay: false })
+    const updatedPlayer1 = createMockPlayer({
+      id: "player-1",
+      score: 10,
+      wantsReplay: true,
+    })
+    const newPlayer3 = createMockPlayer({
+      id: "player-3",
+      score: 0,
+      wantsReplay: false,
+    })
 
     const targetState = createMockGameState({
       status: 2, // PLAYING
@@ -101,7 +123,7 @@ describe("State Operations Integration", () => {
       // More players than original (will use addPlayers for extra ones)
       players: [updatedPlayer1, player2, newPlayer3], // player1 updated, player2 unchanged, player3 added
       settings: { ...createMockGameState().settings, maxPlayers: 6 },
-      stateVersion: 2
+      stateVersion: 2,
     })
 
     // Create operations from the diff
@@ -110,7 +132,7 @@ describe("State Operations Integration", () => {
     // Apply operations to original state
     const resultState = applyStateOperations(
       JSON.parse(JSON.stringify(originalState)), // Deep copy to avoid mutation
-      operations
+      operations,
     )
 
     expect(resultState.status).toBe(2)
@@ -132,14 +154,14 @@ describe("State Operations Integration", () => {
 
     const originalState = createMockGameState({
       players: [player1, player2, player3],
-      stateVersion: 1
+      stateVersion: 1,
     })
 
     // Reorder players and update player1's score
     const updatedPlayer1 = createMockPlayer({ id: "player-1", score: 15 })
     const targetState = createMockGameState({
       players: [player3, updatedPlayer1, player2], // reordered + updated
-      stateVersion: 2
+      stateVersion: 2,
     })
 
     // Create operations from the diff
@@ -148,7 +170,7 @@ describe("State Operations Integration", () => {
     // Apply operations to original state
     const resultState = applyStateOperations(
       JSON.parse(JSON.stringify(originalState)), // Deep copy to avoid mutation
-      operations
+      operations,
     )
 
     expect(resultState.players).toHaveLength(3)
@@ -161,25 +183,43 @@ describe("State Operations Integration", () => {
 
   it("should handle card updates correctly", () => {
     const originalCards = [
-      [{ id: "c1", isVisible: false }, { id: "c2", isVisible: false }],
-      [{ id: "c3", isVisible: false }, { id: "c4", isVisible: false }],
+      [
+        { id: "c1", isVisible: false },
+        { id: "c2", isVisible: false },
+      ],
+      [
+        { id: "c3", isVisible: false },
+        { id: "c4", isVisible: false },
+      ],
     ]
 
     const updatedCards = [
-      [{ id: "c1", value: 1, isVisible: true }, { id: "c2", isVisible: false }],
-      [{ id: "c3", isVisible: false }, { id: "c4", value: 2, isVisible: true }],
+      [
+        { id: "c1", value: 1, isVisible: true },
+        { id: "c2", isVisible: false },
+      ],
+      [
+        { id: "c3", isVisible: false },
+        { id: "c4", value: 2, isVisible: true },
+      ],
     ]
 
-    const originalPlayer = createMockPlayer({ id: "player-1", cards: originalCards })
+    const originalPlayer = createMockPlayer({
+      id: "player-1",
+      cards: originalCards,
+    })
     const originalState = createMockGameState({
       players: [originalPlayer],
-      stateVersion: 1
+      stateVersion: 1,
     })
 
-    const updatedPlayer = createMockPlayer({ id: "player-1", cards: updatedCards })
+    const updatedPlayer = createMockPlayer({
+      id: "player-1",
+      cards: updatedCards,
+    })
     const targetState = createMockGameState({
       players: [updatedPlayer],
-      stateVersion: 2
+      stateVersion: 2,
     })
 
     // Create operations from the diff
@@ -188,7 +228,7 @@ describe("State Operations Integration", () => {
     // Apply operations to original state
     const resultState = applyStateOperations(
       JSON.parse(JSON.stringify(originalState)), // Deep copy to avoid mutation
-      operations
+      operations,
     )
 
     expect(resultState.players[0].cards).toEqual(updatedCards)
@@ -198,7 +238,7 @@ describe("State Operations Integration", () => {
   it("should be idempotent - applying no changes should result in same state", () => {
     const state = createMockGameState({
       status: 2, // PLAYING
-      stateVersion: 5
+      stateVersion: 5,
     })
 
     // Create operations from the same state (should be empty)
@@ -207,7 +247,7 @@ describe("State Operations Integration", () => {
     // Apply operations
     const resultState = applyStateOperations(
       JSON.parse(JSON.stringify(state)), // Deep copy to avoid mutation
-      operations
+      operations,
     )
 
     // Convert updatedAt back to Date for comparison since JSON.parse converts Date to string
@@ -223,7 +263,7 @@ describe("State Operations Integration", () => {
       status: 1, // LOBBY
       selectedCardValue: null,
       players: [createMockPlayer({ id: "player-1", score: 0 })],
-      stateVersion: 1
+      stateVersion: 1,
     })
 
     // Simulate receiving a remote state
@@ -232,9 +272,9 @@ describe("State Operations Integration", () => {
       selectedCardValue: 3,
       players: [
         createMockPlayer({ id: "player-1", score: 5 }),
-        createMockPlayer({ id: "player-2", score: 0 })
+        createMockPlayer({ id: "player-2", score: 0 }),
       ],
-      stateVersion: 3
+      stateVersion: 3,
     })
 
     // Create operations to sync local with remote
@@ -243,7 +283,7 @@ describe("State Operations Integration", () => {
     // Apply operations to local state
     const syncedState = applyStateOperations(
       JSON.parse(JSON.stringify(localState)), // Deep copy to avoid mutation
-      operations
+      operations,
     )
 
     expect(syncedState.status).toBe(2)

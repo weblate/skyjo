@@ -114,7 +114,10 @@ export class GameService extends BaseService {
     await this.updateAndSendGame(game, stateManager)
   }
 
-  async onDiscardCard(socket: AuthenticatedGameSocket, clientStateVersion: number) {
+  async onDiscardCard(
+    socket: AuthenticatedGameSocket,
+    clientStateVersion: number,
+  ) {
     await this.checkStateVersion(socket, clientStateVersion)
 
     const { game } = await this.checkPlayAuthorization(socket, [

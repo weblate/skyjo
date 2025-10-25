@@ -568,14 +568,20 @@ export class Game implements GameInterface {
     // Get ORIGINAL indices of connected players in the main players array
     const connectedIndices = this.players
       .map((player, index) => ({ player, index }))
-      .filter(({ player }) => player.connectionStatus !== Constants.CONNECTION_STATUS.DISCONNECTED)
+      .filter(
+        ({ player }) =>
+          player.connectionStatus !== Constants.CONNECTION_STATUS.DISCONNECTED,
+      )
       .map(({ index }) => index)
 
     // Fisher-Yates shuffle algorithm for connected players only
     const playersToShuffle = [...connectedPlayers]
     for (let i = playersToShuffle.length - 1; i > 0; i--) {
       const j = Math.floor(Math.random() * (i + 1))
-      ;[playersToShuffle[i], playersToShuffle[j]] = [playersToShuffle[j], playersToShuffle[i]]
+      ;[playersToShuffle[i], playersToShuffle[j]] = [
+        playersToShuffle[j],
+        playersToShuffle[i],
+      ]
     }
 
     // Place shuffled connected players back into their connected positions

@@ -57,7 +57,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     )
 
     try {
-      await this.queue.add(
+      const job = await this.queue.add(
         jobId,
         {
           gameCode: game.code,
@@ -71,11 +71,17 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
         },
       )
 
+      if (!job) {
+        throw new Error("Failed to create AFK timer job")
+      }
+
       Logger.info(
         `AFK timer started for player ${playerId} in game ${game.code}`,
         {
           gameCode: game.code,
           playerId,
+          jobId: job.id,
+          scheduledFor: job.timestamp + timeoutDuration,
         },
       )
     } catch (error) {
@@ -87,6 +93,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
           error,
         },
       )
+      throw error
     }
   }
 
@@ -174,7 +181,19 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     )
 
     const game = await this.redis.getGameSafe(gameCode)
-    if (!game) return
+    if (!game) {
+      Logger.warn(
+        `Game ${gameCode} not found in Redis, skipping AFK job for player ${playerId}`,
+        {
+          gameCode,
+          playerId,
+          jobId: job.id,
+        },
+      )
+      return
+    }
+
+    let lockAcquired = false
 
     try {
       game.setOperationManager(GameOperationManager.getInstance())
@@ -193,10 +212,11 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       }
 
       await this.lockGame(game)
+      lockAcquired = true
 
       const player = game.getPlayerById(playerId)
       if (!player) {
-        Logger.debug(`Player ${playerId} not found in game ${gameCode}`, {
+        Logger.warn(`Player ${playerId} not found in game ${gameCode}`, {
           gameCode,
           playerId,
           jobId: job.id,
@@ -206,13 +226,43 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       const currentPlayer = game.getCurrentPlayer()
 
       if (currentPlayer?.id === playerId) {
+        Logger.info(
+          `Player ${playerId} is current player, performing AFK action`,
+          {
+            gameCode,
+            playerId,
+            jobId: job.id,
+          },
+        )
+
         const disconnect = await this.increaseAfkCount(game, player)
 
         if (!disconnect) {
           await this.performAfkMove(game)
         }
+      } else {
+        Logger.debug(
+          `Player ${playerId} is not current player, skipping AFK action`,
+          {
+            gameCode,
+            playerId,
+            currentPlayerId: currentPlayer?.id,
+            jobId: job.id,
+          },
+        )
       }
     } catch (error) {
+      Logger.error(
+        `Error processing AFK job for player ${playerId} in game ${gameCode}`,
+        {
+          gameCode,
+          playerId,
+          jobId: job.id,
+          error: error instanceof Error ? error.message : String(error),
+          errorStack: error instanceof Error ? error.stack : undefined,
+        },
+      )
+
       if (
         error instanceof CError &&
         error.code === ErrorConstants.ERROR.PLAYER_NOT_FOUND
@@ -220,12 +270,30 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
         return
       }
 
+      if (
+        error instanceof CError &&
+        error.code === ErrorConstants.ERROR.GAME_ALREADY_PROCESSING_AFK
+      ) {
+        Logger.warn(
+          `Game ${gameCode} is already processing AFK, skipping duplicate job`,
+          {
+            gameCode,
+            playerId,
+            jobId: job.id,
+          },
+        )
+        return
+      }
+
       await job.moveToFailed(
         error instanceof Error ? error : new Error(String(error)),
         job?.token ?? "failed",
       )
+      throw error
     } finally {
-      await this.unlockGame(game)
+      if (lockAcquired) {
+        await this.unlockGame(game)
+      }
     }
   }
 

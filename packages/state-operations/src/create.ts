@@ -91,9 +91,12 @@ const createPlayerOperations = (
   const newPlayerIds = newState.players.map((p) => p.id)
 
   const samePlayerCount = oldPlayerIds.length === newPlayerIds.length
-  const samePlayerSet = oldPlayerIds.every((id) => newPlayerIds.includes(id)) &&
-                        newPlayerIds.every((id) => oldPlayerIds.includes(id))
-  const differentOrder = !oldPlayerIds.every((id, index) => id === newPlayerIds[index])
+  const samePlayerSet =
+    oldPlayerIds.every((id) => newPlayerIds.includes(id)) &&
+    newPlayerIds.every((id) => oldPlayerIds.includes(id))
+  const differentOrder = !oldPlayerIds.every(
+    (id, index) => id === newPlayerIds[index],
+  )
 
   if (samePlayerCount && samePlayerSet && differentOrder) {
     ops.reorderPlayers = newPlayerIds

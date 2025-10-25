@@ -45,10 +45,17 @@ vi.mock("bullmq", async () => {
   return {
     ...actual,
     Queue: vi.fn().mockImplementation(() => ({
-      add: vi.fn().mockResolvedValue(undefined),
+      add: vi.fn().mockResolvedValue({
+        id: "test-job-id",
+        timestamp: Date.now(),
+        data: {},
+        opts: {},
+      }),
       remove: vi.fn().mockResolvedValue(undefined),
       close: vi.fn().mockResolvedValue(undefined),
       drain: vi.fn().mockResolvedValue(undefined),
+      getJob: vi.fn().mockResolvedValue(null),
+      on: vi.fn(),
     })),
     Worker: vi.fn().mockImplementation(() => ({
       on: vi.fn().mockReturnThis(),
@@ -210,7 +217,9 @@ describe("RevealCardsAfkQueueService", () => {
         .fn()
         .mockRejectedValue(new Error("Test error"))
 
-      await queueService.startTimer(mockGame)
+      await expect(queueService.startTimer(mockGame)).rejects.toThrow(
+        "Test error",
+      )
 
       expect(queueService["queue"].add).toHaveBeenCalled()
     })
@@ -218,22 +227,28 @@ describe("RevealCardsAfkQueueService", () => {
 
   describe("cancelTimer", () => {
     it("should remove the job from the queue with correct id", async () => {
+      const mockJob = {
+        remove: vi.fn().mockResolvedValue(undefined),
+      }
+      queueService["queue"].getJob = vi.fn().mockResolvedValue(mockJob)
+
       await queueService.cancelTimer(mockGame.code)
 
-      expect(queueService["queue"].remove).toHaveBeenCalledWith(
+      expect(queueService["queue"].getJob).toHaveBeenCalledWith(
         `game:${mockGame.code}`,
       )
+      expect(mockJob.remove).toHaveBeenCalled()
     })
 
     it("should handle errors", async () => {
       // Set up the queue to throw an error
-      queueService["queue"].remove = vi
+      queueService["queue"].getJob = vi
         .fn()
         .mockRejectedValue(new Error("Test error"))
 
       await queueService.cancelTimer(mockGame.code)
 
-      expect(queueService["queue"].remove).toHaveBeenCalled()
+      expect(queueService["queue"].getJob).toHaveBeenCalled()
     })
   })
 
@@ -415,7 +430,9 @@ describe("RevealCardsAfkQueueService", () => {
       )
       increaseAfkCountSpy.mockRejectedValue(new Error("Generic error"))
 
-      await queueService.processJob(mockJob)
+      await expect(queueService.processJob(mockJob)).rejects.toThrow(
+        "Generic error",
+      )
 
       expect(increaseAfkCountSpy).toHaveBeenCalledWith(mockGame, mockPlayer)
       expect(mockJob.moveToFailed).toHaveBeenCalledWith(

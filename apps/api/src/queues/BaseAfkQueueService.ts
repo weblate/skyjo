@@ -194,11 +194,18 @@ export abstract class BaseAfkQueueService<
       throw new CError("Game is already processing afk", {
         level: "error",
         code: ErrorConstants.ERROR.GAME_ALREADY_PROCESSING_AFK,
+        meta: {
+          gameCode: game.code,
+        },
       })
     }
 
     game.processingAfk = true
     await this.redis.updateGame(game)
+
+    Logger.debug(`Game ${game.code} locked successfully`, {
+      gameCode: game.code,
+    })
   }
 
   protected async unlockGame(game: Game) {
@@ -206,7 +213,19 @@ export abstract class BaseAfkQueueService<
       gameCode: game.code,
     })
 
-    game.processingAfk = false
-    await this.redis.updateGame(game)
+    try {
+      game.processingAfk = false
+      await this.redis.updateGame(game)
+
+      Logger.debug(`Game ${game.code} unlocked successfully`, {
+        gameCode: game.code,
+      })
+    } catch (error) {
+      Logger.error(`Failed to unlock game ${game.code}`, {
+        gameCode: game.code,
+        error: error instanceof Error ? error.message : String(error),
+      })
+      throw error
+    }
   }
 }

@@ -23,12 +23,14 @@ export abstract class BaseQueueService<T> {
       connection: {
         url: ENV.REDIS_URL,
         enableOfflineQueue: true,
+        maxRetriesPerRequest: 3,
       },
       ...options,
     })
 
+    this.setupQueueListeners()
     this.worker = this.createWorker()
-    this.setupListeners()
+    this.setupWorkerListeners()
 
     Logger.info(`Queue service initialized: ${this.queueName}`)
   }
@@ -94,8 +96,33 @@ export abstract class BaseQueueService<T> {
     )
   }
 
-  private setupListeners(): void {
-    Logger.info(`Setting up listeners for queue: ${this.queueName}`)
+  private setupQueueListeners(): void {
+    Logger.info(`Setting up queue listeners for: ${this.queueName}`)
+
+    this.queue.on("error", (err) => {
+      Logger.error(`Queue error in ${this.queueName}`, {
+        queueError: err,
+        queueName: this.queueName,
+      })
+    })
+
+    this.queue.on("waiting", (job) => {
+      Logger.debug(`Job ${job.id} is waiting in queue ${this.queueName}`, {
+        jobId: job.id,
+        queueName: this.queueName,
+      })
+    })
+
+    this.queue.on("removed", (job) => {
+      Logger.debug(`Job ${job.id} removed from queue ${this.queueName}`, {
+        jobId: job.id,
+        queueName: this.queueName,
+      })
+    })
+  }
+
+  private setupWorkerListeners(): void {
+    Logger.info(`Setting up worker listeners for queue: ${this.queueName}`)
 
     this.worker.on("active", (job) => {
       Logger.info(
@@ -103,6 +130,7 @@ export abstract class BaseQueueService<T> {
         {
           jobId: job.id,
           queueName: this.queueName,
+          jobData: job.data,
         },
       )
     })
@@ -146,10 +174,21 @@ export abstract class BaseQueueService<T> {
     })
 
     this.worker.on("stalled", (jobId) => {
-      Logger.warn(`Job ${jobId} in queue ${this.queueName} has stalled`, {
+      Logger.error(`Job ${jobId} in queue ${this.queueName} has stalled`, {
         jobId,
         queueName: this.queueName,
       })
+    })
+
+    this.worker.on("progress", (job, progress) => {
+      Logger.debug(
+        `Job ${job.id} in queue ${this.queueName} progress: ${progress}`,
+        {
+          jobId: job.id,
+          queueName: this.queueName,
+          progress,
+        },
+      )
     })
 
     this.worker.on("error", (err) => {

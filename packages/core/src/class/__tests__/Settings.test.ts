@@ -96,7 +96,9 @@ describe("Settings", () => {
     expect(settings.scoreToEndGame).toBe(100)
     expect(settings.firstPlayerMultiplierPenalty).toBe(2)
     expect(settings.showCurrentScore).toBeTruthy()
-    expect(settings.playerRearrangement).toBe(Constants.PLAYER_REARRANGEMENT.EVERY_ROUND)
+    expect(settings.playerRearrangement).toBe(
+      Constants.PLAYER_REARRANGEMENT.EVERY_ROUND,
+    )
   })
 
   describe("preventInvalidSettings", () => {

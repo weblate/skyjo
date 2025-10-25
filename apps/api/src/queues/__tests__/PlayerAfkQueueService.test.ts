@@ -9,11 +9,17 @@ vi.mock("bullmq", async () => {
   return {
     ...actual,
     Queue: vi.fn().mockImplementation(() => ({
-      add: vi.fn().mockResolvedValue(undefined),
+      add: vi.fn().mockResolvedValue({
+        id: "test-job-id",
+        timestamp: Date.now(),
+        data: {},
+        opts: {},
+      }),
       remove: vi.fn().mockResolvedValue(undefined),
       getJob: vi.fn().mockResolvedValue(null),
       close: vi.fn().mockResolvedValue(undefined),
       drain: vi.fn().mockResolvedValue(undefined),
+      on: vi.fn(),
     })),
     Worker: vi.fn().mockImplementation(() => ({
       on: vi.fn().mockReturnThis(),

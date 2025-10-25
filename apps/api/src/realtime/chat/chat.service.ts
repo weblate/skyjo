@@ -6,7 +6,10 @@ import { BaseService } from "@/realtime/base/base.service.js"
 import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 
 export class ChatService extends BaseService {
-  async onMessage(socket: AuthenticatedGameSocket, { message }: { message: string }) {
+  async onMessage(
+    socket: AuthenticatedGameSocket,
+    { message }: { message: string },
+  ) {
     const game = await this.getGame(socket.data.gameCode)
 
     const player = game.getPlayerById(socket.data.playerId)
