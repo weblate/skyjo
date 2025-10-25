@@ -542,6 +542,8 @@ export class Game implements GameInterface {
         hasPlayedLastTurn: player.hasPlayedLastTurn,
         afkCount: player.afkCount,
         consecutiveAfkCount: player.consecutiveAfkCount,
+        disconnectedAfkCount: player.disconnectedAfkCount,
+        disconnectionsThisTurn: player.disconnectionsThisTurn,
         turnStartTime: player.turnStartTime,
         userId: player.userId ?? null,
         sessionId: player.getSessionId(),

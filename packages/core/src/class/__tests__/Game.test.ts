@@ -1173,6 +1173,26 @@ describe("Game", () => {
       shouldEndRoundSpy.mockRestore()
       endRoundSpy.mockRestore()
     })
+
+    it("should reset disconnectionsThisTurn for all players", async () => {
+      game.settings.initialTurnedCount = 0
+      await game.start()
+      game.turn = 0
+
+      // Set disconnectionsThisTurn for all players
+      player.disconnectionsThisTurn = 3
+      opponent.disconnectionsThisTurn = 2
+
+      game.turnStatus = Constants.TURN_STATUS.REPLACE_A_CARD
+      game.lastTurnStatus = Constants.LAST_TURN_STATUS.REPLACE
+      game.selectedCardValue = null
+
+      await game.finishTurn({ wasAfk: false })
+
+      // Verify disconnectionsThisTurn is reset to 0 for all players
+      expect(player.disconnectionsThisTurn).toBe(0)
+      expect(opponent.disconnectionsThisTurn).toBe(0)
+    })
   })
 
   describe("togglePlayerReplay", () => {
@@ -2833,6 +2853,71 @@ describe("Game", () => {
           )
         })
       })
+    })
+  })
+
+  describe("getPlayerTimeout", () => {
+    it("should return DISCONNECTED timeout for disconnected players", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      player.disconnectionsThisTurn = 0
+
+      const timeout = game.getPlayerTimeout(player)
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
+    })
+
+    it("should return DISCONNECTED timeout for players with LOST connection", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.LOST
+      player.disconnectionsThisTurn = 0
+
+      const timeout = game.getPlayerTimeout(player)
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
+    })
+
+    it("should return CONNECTED timeout for connected players with no disconnections", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      player.disconnectionsThisTurn = 0
+
+      const timeout = game.getPlayerTimeout(player)
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.CONNECTED)
+    })
+
+    it("should return FIRST_RECONNECTION timeout after 1 disconnection", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      player.disconnectionsThisTurn = 1
+
+      const timeout = game.getPlayerTimeout(player)
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.FIRST_RECONNECTION)
+    })
+
+    it("should return SECOND_RECONNECTION timeout after 2 disconnections", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      player.disconnectionsThisTurn = 2
+
+      const timeout = game.getPlayerTimeout(player)
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.SECOND_RECONNECTION)
+    })
+
+    it("should return SECOND_RECONNECTION timeout after 3+ disconnections", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      player.disconnectionsThisTurn = 5
+
+      const timeout = game.getPlayerTimeout(player)
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.SECOND_RECONNECTION)
+    })
+
+    it("should always return DISCONNECTED timeout even if player has disconnection history", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      player.disconnectionsThisTurn = 3
+
+      const timeout = game.getPlayerTimeout(player)
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
     })
   })
 })

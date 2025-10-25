@@ -295,6 +295,7 @@ export class Player implements PlayerInterface {
       forfeited: this.forfeited,
       forfeitedAt: this.forfeitedAt,
       hasRevealedCardCount: this.hasRevealedCardCount,
+      disconnectionsThisTurn: this.disconnectionsThisTurn,
     }
   }
 

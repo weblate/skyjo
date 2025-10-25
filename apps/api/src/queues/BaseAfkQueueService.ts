@@ -36,34 +36,19 @@ export abstract class BaseAfkQueueService<
   }
 
   protected getAfkTimeout(game: Game, player?: Player): number {
-    // If a specific player is provided, use the dynamic timeout based on their status
-    if (player) {
-      const timeout = game.getPlayerTimeout(player)
-      const finalTimeout = timeout + 1000 // 1 second grace period
-
-      Logger.debug(`AFK timeout for player ${player.id} in game ${game.code}: ${finalTimeout}ms`, {
-        gameCode: game.code,
-        playerId: player.id,
-        playerName: player.name,
-        connectionStatus: player.connectionStatus,
-        disconnectionsThisTurn: player.disconnectionsThisTurn,
-        baseTimeout: timeout,
-        finalTimeout,
-      })
-
-      return finalTimeout
+    if (!player) {
+      throw new Error("Player is required for getAfkTimeout")
     }
 
-    // Fallback for backward compatibility (e.g., reveal cards phase)
-    const timeout = game.settings.private
-      ? CoreConstants.TURN_TIMEOUT.CONNECTED * 3 // 120 seconds
-      : CoreConstants.TURN_TIMEOUT.CONNECTED * 1.5 // 60 seconds
-
+    const timeout = game.getPlayerTimeout(player)
     const finalTimeout = timeout + 1000 // 1 second grace period
 
-    Logger.debug(`AFK timeout for game ${game.code}: ${finalTimeout}ms`, {
+    Logger.debug(`AFK timeout for player ${player.id} in game ${game.code}: ${finalTimeout}ms`, {
       gameCode: game.code,
-      isPrivate: game.settings.private,
+      playerId: player.id,
+      playerName: player.name,
+      connectionStatus: player.connectionStatus,
+      disconnectionsThisTurn: player.disconnectionsThisTurn,
       baseTimeout: timeout,
       finalTimeout,
     })

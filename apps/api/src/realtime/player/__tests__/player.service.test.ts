@@ -771,5 +771,174 @@ describe("PlayerService", () => {
         CoreConstants.CONNECTION_STATUS.CONNECTED,
       )
     })
+
+    it("should reset timer for current player after first disconnection (disconnectionsThisTurn = 1)", async () => {
+      const opponent = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+      )
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(opponent)
+
+      const player = new Player(
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      game.addPlayer(player)
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id,
+      }
+
+      game.settings.initialTurnedCount = 0
+      await game.start()
+
+      // Set player as current player
+      game.turn = 1
+
+      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+      player.disconnectionsThisTurn = 1
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      const cancelTimerSpy = vi.spyOn(game.operationManager, "cancelPlayerAfkTimer")
+      const startTimerSpy = vi.spyOn(game.operationManager, "startPlayerAfkTimer")
+
+      await service.onRecover(socket)
+
+      expect(player.connectionStatus).toBe(CoreConstants.CONNECTION_STATUS.CONNECTED)
+      expect(player.disconnectedAfkCount).toBe(0)
+      expect(cancelTimerSpy).toHaveBeenCalledWith(game.code, player.id)
+      expect(startTimerSpy).toHaveBeenCalledWith(game, player.id)
+    })
+
+    it("should NOT reset timer after second disconnection (Two Strikes Rule, disconnectionsThisTurn >= 2)", async () => {
+      const opponent = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+      )
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(opponent)
+
+      const player = new Player(
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      game.addPlayer(player)
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id,
+      }
+
+      game.settings.initialTurnedCount = 0
+      await game.start()
+
+      // Set player as current player
+      game.turn = 1
+
+      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+      player.disconnectionsThisTurn = 2
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      const cancelTimerSpy = vi.spyOn(game.operationManager, "cancelPlayerAfkTimer")
+      const startTimerSpy = vi.spyOn(game.operationManager, "startPlayerAfkTimer")
+
+      await service.onRecover(socket)
+
+      expect(player.connectionStatus).toBe(CoreConstants.CONNECTION_STATUS.CONNECTED)
+      expect(player.disconnectedAfkCount).toBe(0)
+      // Timer should NOT be reset due to Two Strikes Rule
+      expect(cancelTimerSpy).not.toHaveBeenCalled()
+      expect(startTimerSpy).not.toHaveBeenCalled()
+    })
+
+    it("should NOT reset timer when player is not the current player", async () => {
+      const opponent = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+      )
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(opponent)
+
+      const player = new Player(
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      game.addPlayer(player)
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id,
+      }
+
+      game.settings.initialTurnedCount = 0
+      await game.start()
+
+      // Set opponent as current player (not the recovering player)
+      game.turn = 0
+
+      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+      player.disconnectionsThisTurn = 0
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      const cancelTimerSpy = vi.spyOn(game.operationManager, "cancelPlayerAfkTimer")
+      const startTimerSpy = vi.spyOn(game.operationManager, "startPlayerAfkTimer")
+
+      await service.onRecover(socket)
+
+      expect(player.connectionStatus).toBe(CoreConstants.CONNECTION_STATUS.CONNECTED)
+      expect(player.disconnectedAfkCount).toBe(0)
+      // Timer should NOT be reset because it's not their turn
+      expect(cancelTimerSpy).not.toHaveBeenCalled()
+      expect(startTimerSpy).not.toHaveBeenCalled()
+    })
+
+    it("should reset disconnectedAfkCount when player reconnects", async () => {
+      const opponent = new Player(
+        { name: "player1", avatar: CoreConstants.AVATARS.ELEPHANT },
+        "socket456",
+      )
+      const game = new Game({
+        hostId: opponent.id,
+        settings: new Settings(false),
+      })
+      mockGameOperationManager(game)
+      game.addPlayer(opponent)
+
+      const player = new Player(
+        { name: "player2", avatar: CoreConstants.AVATARS.PENGUIN },
+        TEST_SOCKET_ID,
+      )
+      game.addPlayer(player)
+      socket.data = {
+        gameCode: game.code,
+        playerId: player.id,
+      }
+
+      await game.start()
+
+      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+      player.disconnectedAfkCount = 3
+
+      service["redis"].getGame = vi.fn(() => Promise.resolve(game))
+
+      await service.onRecover(socket)
+
+      expect(player.connectionStatus).toBe(CoreConstants.CONNECTION_STATUS.CONNECTED)
+      expect(player.disconnectedAfkCount).toBe(0)
+    })
   })
 })

@@ -26,6 +26,7 @@ export type PlayerToJson = {
   forfeited: boolean
   forfeitedAt: number | null
   hasRevealedCardCount: boolean
+  disconnectionsThisTurn: number
 }
 
 export type PlayerRedisDb = {

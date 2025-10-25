@@ -133,6 +133,7 @@ describe("PlayerAfkQueueService", () => {
         if (id === "player-123") return mockPlayer
         return undefined
       }),
+      getPlayerTimeout: vi.fn().mockReturnValue(CoreConstants.TURN_TIMEOUT.CONNECTED),
       turnStatus: CoreConstants.TURN_STATUS.CHOOSE_A_PILE,
       drawCard: vi.fn(),
       turnCard: vi.fn().mockResolvedValue(undefined),

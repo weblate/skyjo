@@ -435,6 +435,7 @@ describe("Player", () => {
         forfeited: false,
         forfeitedAt: null,
         hasRevealedCardCount: false,
+        disconnectionsThisTurn: 0,
       })
     })
   })
