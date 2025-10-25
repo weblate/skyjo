@@ -31,9 +31,32 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   } = useSettings()
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  const turnTime = game.settings.private
-    ? CoreConstants.AFK_TIMEOUT.PRIVATE
-    : CoreConstants.AFK_TIMEOUT.PUBLIC
+  // Get the current player's dynamic timeout
+  const getCurrentPlayerTimeout = () => {
+    const currentPlayer = game.players[game.turn]
+    if (!currentPlayer) {
+      // Fallback to old behavior for reveal cards phase
+      return game.settings.private
+        ? CoreConstants.TURN_TIMEOUT.CONNECTED * 3 // 120 seconds
+        : CoreConstants.TURN_TIMEOUT.CONNECTED * 1.5 // 60 seconds
+    }
+
+    const isDisconnected =
+      currentPlayer.connectionStatus === CoreConstants.CONNECTION_STATUS.DISCONNECTED ||
+      currentPlayer.connectionStatus === CoreConstants.CONNECTION_STATUS.LOST
+
+    // If disconnected, always use the short timeout
+    if (isDisconnected) {
+      return CoreConstants.TURN_TIMEOUT.DISCONNECTED
+    }
+
+    // If connected, use the connected timeout
+    // Note: We would need disconnectionsThisTurn in PlayerToJson to fully implement
+    // the reconnection penalty logic, but for display purposes, the connected timeout is sufficient
+    return CoreConstants.TURN_TIMEOUT.CONNECTED
+  }
+
+  const turnTime = getCurrentPlayerTimeout()
 
   const [timeLeft, setTimeLeft] = useState<number>(turnTime)
 

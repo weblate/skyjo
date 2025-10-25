@@ -169,6 +169,9 @@ export const playerTable = pgTable("players", {
   connectionStatus: smallint("connection_status").notNull().default(1),
   forfeited: boolean("forfeited").notNull().default(false),
   forfeitedAt: timestamp("forfeited_at", { mode: "date" }),
+  afkCount: smallint("afk_count").notNull().default(0),
+  consecutiveAfkCount: smallint("consecutive_afk_count").notNull().default(0),
+  disconnectedAfkCount: smallint("disconnected_afk_count").notNull().default(0),
 })
 export type PlayerDb = InferSelectModel<typeof playerTable>
 

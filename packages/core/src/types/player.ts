@@ -42,6 +42,8 @@ export type PlayerRedisDb = {
   hasPlayedLastTurn: boolean
   afkCount: number
   consecutiveAfkCount: number
+  disconnectedAfkCount: number
+  disconnectionsThisTurn: number
   turnStartTime: number | null
   userId: number | null
   sessionId: string

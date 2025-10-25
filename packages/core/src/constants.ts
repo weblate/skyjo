@@ -112,11 +112,17 @@ export class Constants {
 
   static readonly KICK_VOTE_EXPIRATION_TIME = 30000 // 30 seconds
 
+  static readonly TURN_TIMEOUT = {
+    CONNECTED: 40000, // 40 seconds for connected players
+    DISCONNECTED: 10000, // 10 seconds for disconnected players
+    FIRST_RECONNECTION: 20000, // 20 seconds after first reconnection
+    SECOND_RECONNECTION: 10000, // 10 seconds after second+ reconnection
+  } as const
+
   static readonly AFK_TIMEOUT = {
-    PUBLIC: 60000,
-    PRIVATE: 120000,
-    MAX_CONSECUTIVE: 2,
-    MAX_TOTAL: 4,
+    CONNECTED: 3, // 3 total AFK turns for connected players
+    DISCONNECTED_PUBLIC: 4, // 4 consecutive AFK turns for disconnected in public games
+    DISCONNECTED_PRIVATE: 6, // 6 consecutive AFK turns for disconnected in private games
   } as const
 }
 

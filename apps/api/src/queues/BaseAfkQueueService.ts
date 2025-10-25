@@ -35,10 +35,29 @@ export abstract class BaseAfkQueueService<
     Logger.info(`BaseAfkQueueService initialized: ${queueName}`)
   }
 
-  protected getAfkTimeout(game: Game): number {
+  protected getAfkTimeout(game: Game, player?: Player): number {
+    // If a specific player is provided, use the dynamic timeout based on their status
+    if (player) {
+      const timeout = game.getPlayerTimeout(player)
+      const finalTimeout = timeout + 1000 // 1 second grace period
+
+      Logger.debug(`AFK timeout for player ${player.id} in game ${game.code}: ${finalTimeout}ms`, {
+        gameCode: game.code,
+        playerId: player.id,
+        playerName: player.name,
+        connectionStatus: player.connectionStatus,
+        disconnectionsThisTurn: player.disconnectionsThisTurn,
+        baseTimeout: timeout,
+        finalTimeout,
+      })
+
+      return finalTimeout
+    }
+
+    // Fallback for backward compatibility (e.g., reveal cards phase)
     const timeout = game.settings.private
-      ? CoreConstants.AFK_TIMEOUT.PRIVATE
-      : CoreConstants.AFK_TIMEOUT.PUBLIC
+      ? CoreConstants.TURN_TIMEOUT.CONNECTED * 3 // 120 seconds
+      : CoreConstants.TURN_TIMEOUT.CONNECTED * 1.5 // 60 seconds
 
     const finalTimeout = timeout + 1000 // 1 second grace period
 
@@ -52,16 +71,34 @@ export abstract class BaseAfkQueueService<
     return finalTimeout
   }
 
-  protected isAfk(player: Player) {
-    return (
-      player.consecutiveAfkCount >= CoreConstants.AFK_TIMEOUT.MAX_CONSECUTIVE ||
-      player.afkCount >= CoreConstants.AFK_TIMEOUT.MAX_TOTAL
-    )
+  protected isAfk(player: Player, game: Game) {
+    const isConnected =
+      player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED
+
+    if (isConnected) {
+      // For connected players: 3 total AFK turns
+      return player.afkCount >= CoreConstants.AFK_TIMEOUT.CONNECTED
+    }
+
+    // For disconnected players: different limits based on game type
+    const disconnectedLimit = game.settings.private
+      ? CoreConstants.AFK_TIMEOUT.DISCONNECTED_PRIVATE
+      : CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC
+
+    return player.disconnectedAfkCount >= disconnectedLimit
   }
 
   protected async increaseAfkCount(game: Game, player: Player) {
+    const isConnected =
+      player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED
+
     player.afkCount++
     player.consecutiveAfkCount++
+
+    // Also increment disconnectedAfkCount if player is disconnected
+    if (!isConnected) {
+      player.disconnectedAfkCount++
+    }
 
     Logger.debug(
       `Increased AFK count for player ${player.id} (${player.name})`,
@@ -69,12 +106,14 @@ export abstract class BaseAfkQueueService<
         gameCode: game.code,
         playerId: player.id,
         playerName: player.name,
+        connectionStatus: player.connectionStatus,
         consecutiveAfkCount: player.consecutiveAfkCount,
         totalAfkCount: player.afkCount,
+        disconnectedAfkCount: player.disconnectedAfkCount,
       },
     )
 
-    if (this.isAfk(player)) {
+    if (this.isAfk(player, game)) {
       Logger.info(
         `Player ${player.id} (${player.name}) exceeded AFK limits, disconnecting`,
         {

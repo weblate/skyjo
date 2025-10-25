@@ -20,6 +20,8 @@ interface PlayerInterface {
   connectionStatus: ConnectionStatus
   afkCount: number
   consecutiveAfkCount: number
+  disconnectedAfkCount: number
+  disconnectionsThisTurn: number
   score: number
   wantsReplay: boolean
   hasPlayedLastTurn: boolean
@@ -48,6 +50,8 @@ export class Player implements PlayerInterface {
   connectionStatus: ConnectionStatus = Constants.CONNECTION_STATUS.CONNECTED
   afkCount: number = 0
   consecutiveAfkCount: number = 0 // Consecutive timeouts
+  disconnectedAfkCount: number = 0 // Consecutive AFK turns while disconnected
+  disconnectionsThisTurn: number = 0 // Number of disconnections during current turn
   forfeited: boolean = false
   forfeitedAt: number | null = null
   cards: Card[][] = []
@@ -93,6 +97,8 @@ export class Player implements PlayerInterface {
     this.hasPlayedLastTurn = player.hasPlayedLastTurn
     this.afkCount = player.afkCount
     this.consecutiveAfkCount = player.consecutiveAfkCount
+    this.disconnectedAfkCount = player.disconnectedAfkCount ?? 0
+    this.disconnectionsThisTurn = player.disconnectionsThisTurn ?? 0
     this.turnStartTime = player.turnStartTime
     this.userId = player?.userId ?? undefined
     this.guestId = player?.guestId ?? undefined
@@ -258,6 +264,8 @@ export class Player implements PlayerInterface {
     this.score = 0
     this.afkCount = 0
     this.consecutiveAfkCount = 0
+    this.disconnectedAfkCount = 0
+    this.disconnectionsThisTurn = 0
   }
 
   resetGame() {
