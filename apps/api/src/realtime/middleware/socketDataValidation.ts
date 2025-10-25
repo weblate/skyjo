@@ -1,5 +1,9 @@
 import { CError, Constants as ErrorConstants } from "@skymo/error"
-import type { AuthenticatedGameSocket, GameSocket, SocketData } from "@/realtime/types/gameSocket.js"
+import type {
+  AuthenticatedGameSocket,
+  GameSocket,
+  SocketData,
+} from "@/realtime/types/gameSocket.js"
 
 /**
  * Type guard to check if socket has valid game data

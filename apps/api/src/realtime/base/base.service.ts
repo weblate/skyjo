@@ -14,7 +14,11 @@ import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { KickVoteRepository } from "@/redis/kickVote.repository.js"
 import { MessageRepository } from "@/redis/message.repository.js"
-import type { AuthenticatedGameSocket, GameSocket, SocketData } from "../types/gameSocket.js"
+import type {
+  AuthenticatedGameSocket,
+  GameSocket,
+  SocketData,
+} from "../types/gameSocket.js"
 
 export abstract class BaseService {
   protected redis = new GameRepository()
