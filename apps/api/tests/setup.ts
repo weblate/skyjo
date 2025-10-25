@@ -33,9 +33,16 @@ vi.mock("@/db/index.ts", () => {
 vi.mock("bullmq", () => {
   return {
     Queue: vi.fn().mockImplementation(() => ({
-      add: vi.fn().mockResolvedValue(undefined),
+      add: vi.fn().mockResolvedValue({
+        id: "test-job-id",
+        timestamp: Date.now(),
+        data: {},
+        opts: {},
+      }),
       remove: vi.fn().mockResolvedValue(undefined),
       close: vi.fn().mockResolvedValue(undefined),
+      getJob: vi.fn().mockResolvedValue(null),
+      on: vi.fn(),
       emit: vi.fn(),
     })),
     Worker: vi.fn().mockImplementation(() => ({

@@ -46,8 +46,14 @@ const createMockPlayer = (overrides?: Partial<PlayerToJson>): PlayerToJson => ({
   scores: [],
   turnStartTime: null,
   cards: [
-    [{ id: "c1", isVisible: false }, { id: "c2", isVisible: false }],
-    [{ id: "c3", isVisible: false }, { id: "c4", isVisible: false }],
+    [
+      { id: "c1", isVisible: false },
+      { id: "c2", isVisible: false },
+    ],
+    [
+      { id: "c3", isVisible: false },
+      { id: "c4", isVisible: false },
+    ],
   ],
   userId: null,
   guestId: null,
@@ -81,7 +87,7 @@ describe("applyStateOperations", () => {
         status: 1, // LOBBY
         turnStatus: 1, // CHOOSE_A_PILE
         selectedCardValue: null,
-        stateVersion: 1
+        stateVersion: 1,
       })
       const operations: GameOperation = {
         game: {
@@ -170,8 +176,16 @@ describe("applyStateOperations", () => {
     })
 
     it("should update players", () => {
-      const player1 = createMockPlayer({ id: "player-1", score: 0, wantsReplay: false })
-      const player2 = createMockPlayer({ id: "player-2", score: 5, wantsReplay: true })
+      const player1 = createMockPlayer({
+        id: "player-1",
+        score: 0,
+        wantsReplay: false,
+      })
+      const player2 = createMockPlayer({
+        id: "player-2",
+        score: 5,
+        wantsReplay: true,
+      })
       const game = createMockGameState({ players: [player1, player2] })
 
       const operations: GameOperation = {
@@ -196,9 +210,7 @@ describe("applyStateOperations", () => {
       const game = createMockGameState({ players: [player1] })
 
       const operations: GameOperation = {
-        updatePlayers: [
-          { id: "non-existent", score: 10 },
-        ],
+        updatePlayers: [{ id: "non-existent", score: 10 }],
       }
 
       const result = applyStateOperations(game, operations)
@@ -277,7 +289,11 @@ describe("applyStateOperations", () => {
       const player = createMockPlayer({
         id: "player-1",
         cards: [
-          [{ id: "c1", value: 1, isVisible: true }, undefined as any, { id: "c2", value: 2, isVisible: true }],
+          [
+            { id: "c1", value: 1, isVisible: true },
+            undefined as any,
+            { id: "c2", value: 2, isVisible: true },
+          ],
           [undefined as any, { id: "c3", isVisible: false }],
           [{ id: "c4", value: 3, isVisible: true }, undefined as any],
         ],
@@ -290,7 +306,10 @@ describe("applyStateOperations", () => {
 
       // The filter operation removes undefined values, which changes array lengths
       expect(result.players[0].cards).toEqual([
-        [{ id: "c1", value: 1, isVisible: true }, { id: "c2", value: 2, isVisible: true }],
+        [
+          { id: "c1", value: 1, isVisible: true },
+          { id: "c2", value: 2, isVisible: true },
+        ],
         [{ id: "c3", isVisible: false }],
         [{ id: "c4", value: 3, isVisible: true }],
       ])
@@ -326,7 +345,7 @@ describe("applyStateOperations", () => {
       const game = createMockGameState({
         status: 1, // LOBBY
         players: [player1, player2],
-        stateVersion: 1
+        stateVersion: 1,
       })
 
       const newPlayer = createMockPlayer({ id: "player-3", score: 0 })
@@ -339,9 +358,7 @@ describe("applyStateOperations", () => {
         settings: {
           maxPlayers: 6,
         },
-        updatePlayers: [
-          { id: "player-1", score: 10 },
-        ],
+        updatePlayers: [{ id: "player-1", score: 10 }],
         removePlayers: ["player-2"],
         addPlayers: [newPlayer],
       }

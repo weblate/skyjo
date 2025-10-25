@@ -45,8 +45,14 @@ const createMockPlayer = (overrides?: Partial<PlayerToJson>): PlayerToJson => ({
   scores: [],
   turnStartTime: null,
   cards: [
-    [{ id: "c1", isVisible: false }, { id: "c2", isVisible: false }],
-    [{ id: "c3", isVisible: false }, { id: "c4", isVisible: false }],
+    [
+      { id: "c1", isVisible: false },
+      { id: "c2", isVisible: false },
+    ],
+    [
+      { id: "c3", isVisible: false },
+      { id: "c4", isVisible: false },
+    ],
   ],
   userId: null,
   guestId: null,
@@ -73,8 +79,14 @@ describe("createStateOperations", () => {
     })
 
     it("should detect selected card value changes", () => {
-      const oldState = createMockGameState({ selectedCardValue: null, stateVersion: 1 })
-      const newState = createMockGameState({ selectedCardValue: 5, stateVersion: 2 })
+      const oldState = createMockGameState({
+        selectedCardValue: null,
+        stateVersion: 1,
+      })
+      const newState = createMockGameState({
+        selectedCardValue: 5,
+        stateVersion: 2,
+      })
 
       const operations = createStateOperations(oldState, newState)
 
@@ -103,11 +115,11 @@ describe("createStateOperations", () => {
     it("should ignore updatedAt only changes", () => {
       const oldState = createMockGameState({
         updatedAt: new Date("2023-01-01T00:00:00Z"),
-        stateVersion: 1
+        stateVersion: 1,
       })
       const newState = createMockGameState({
         updatedAt: new Date("2023-01-01T01:00:00Z"),
-        stateVersion: 1
+        stateVersion: 1,
       })
 
       const operations = createStateOperations(oldState, newState)
@@ -119,12 +131,12 @@ describe("createStateOperations", () => {
       const oldState = createMockGameState({
         status: 1, // LOBBY
         selectedCardValue: null,
-        stateVersion: 1
+        stateVersion: 1,
       })
       const newState = createMockGameState({
         status: 2, // PLAYING
         selectedCardValue: 3,
-        stateVersion: 2
+        stateVersion: 2,
       })
 
       const operations = createStateOperations(oldState, newState)
@@ -144,16 +156,16 @@ describe("createStateOperations", () => {
       const oldState = createMockGameState({
         settings: {
           ...createMockGameState().settings,
-          maxPlayers: 8
+          maxPlayers: 8,
         },
-        stateVersion: 1
+        stateVersion: 1,
       })
       const newState = createMockGameState({
         settings: {
           ...createMockGameState().settings,
-          maxPlayers: 6
+          maxPlayers: 6,
         },
-        stateVersion: 2
+        stateVersion: 2,
       })
 
       const operations = createStateOperations(oldState, newState)
@@ -170,14 +182,17 @@ describe("createStateOperations", () => {
 
     it("should detect multiple settings changes", () => {
       const oldSettings = createMockGameState().settings
-      const oldState = createMockGameState({ settings: oldSettings, stateVersion: 1 })
+      const oldState = createMockGameState({
+        settings: oldSettings,
+        stateVersion: 1,
+      })
       const newState = createMockGameState({
         settings: {
           ...oldSettings,
           maxPlayers: 6,
-          scoreToEndGame: 50
+          scoreToEndGame: 50,
         },
-        stateVersion: 2
+        stateVersion: 2,
       })
 
       const operations = createStateOperations(oldState, newState)
@@ -198,7 +213,10 @@ describe("createStateOperations", () => {
     it("should detect added players", () => {
       const oldState = createMockGameState({ players: [], stateVersion: 1 })
       const newPlayer = createMockPlayer({ id: "player-1" })
-      const newState = createMockGameState({ players: [newPlayer], stateVersion: 2 })
+      const newState = createMockGameState({
+        players: [newPlayer],
+        stateVersion: 2,
+      })
 
       const operations = createStateOperations(oldState, newState)
 
@@ -212,7 +230,10 @@ describe("createStateOperations", () => {
 
     it("should detect removed players", () => {
       const player = createMockPlayer({ id: "player-1" })
-      const oldState = createMockGameState({ players: [player], stateVersion: 1 })
+      const oldState = createMockGameState({
+        players: [player],
+        stateVersion: 1,
+      })
       const newState = createMockGameState({ players: [], stateVersion: 2 })
 
       const operations = createStateOperations(oldState, newState)
@@ -227,10 +248,16 @@ describe("createStateOperations", () => {
 
     it("should detect updated players", () => {
       const oldPlayer = createMockPlayer({ id: "player-1", score: 0 })
-      const oldState = createMockGameState({ players: [oldPlayer], stateVersion: 1 })
+      const oldState = createMockGameState({
+        players: [oldPlayer],
+        stateVersion: 1,
+      })
 
       const newPlayer = createMockPlayer({ id: "player-1", score: 10 })
-      const newState = createMockGameState({ players: [newPlayer], stateVersion: 2 })
+      const newState = createMockGameState({
+        players: [newPlayer],
+        stateVersion: 2,
+      })
 
       const operations = createStateOperations(oldState, newState)
 
@@ -245,8 +272,14 @@ describe("createStateOperations", () => {
     it("should detect player reordering", () => {
       const player1 = createMockPlayer({ id: "player-1" })
       const player2 = createMockPlayer({ id: "player-2" })
-      const oldState = createMockGameState({ players: [player1, player2], stateVersion: 1 })
-      const newState = createMockGameState({ players: [player2, player1], stateVersion: 2 })
+      const oldState = createMockGameState({
+        players: [player1, player2],
+        stateVersion: 1,
+      })
+      const newState = createMockGameState({
+        players: [player2, player1],
+        stateVersion: 2,
+      })
 
       const operations = createStateOperations(oldState, newState)
 
@@ -261,11 +294,17 @@ describe("createStateOperations", () => {
     it("should detect player reordering with updates", () => {
       const player1 = createMockPlayer({ id: "player-1", score: 0 })
       const player2 = createMockPlayer({ id: "player-2", score: 0 })
-      const oldState = createMockGameState({ players: [player1, player2], stateVersion: 1 })
+      const oldState = createMockGameState({
+        players: [player1, player2],
+        stateVersion: 1,
+      })
 
       const newPlayer1 = createMockPlayer({ id: "player-1", score: 5 })
       const newPlayer2 = createMockPlayer({ id: "player-2", score: 0 })
-      const newState = createMockGameState({ players: [newPlayer2, newPlayer1], stateVersion: 2 })
+      const newState = createMockGameState({
+        players: [newPlayer2, newPlayer1],
+        stateVersion: 2,
+      })
 
       const operations = createStateOperations(oldState, newState)
 
@@ -280,19 +319,37 @@ describe("createStateOperations", () => {
 
     it("should detect complex card changes", () => {
       const oldCards = [
-        [{ id: "c1", isVisible: false }, { id: "c2", isVisible: false }],
-        [{ id: "c3", isVisible: false }, { id: "c4", isVisible: false }],
+        [
+          { id: "c1", isVisible: false },
+          { id: "c2", isVisible: false },
+        ],
+        [
+          { id: "c3", isVisible: false },
+          { id: "c4", isVisible: false },
+        ],
       ]
       const newCards = [
-        [{ id: "c1", value: 1, isVisible: true }, { id: "c2", isVisible: false }],
-        [{ id: "c3", isVisible: false }, { id: "c4", value: 2, isVisible: true }],
+        [
+          { id: "c1", value: 1, isVisible: true },
+          { id: "c2", isVisible: false },
+        ],
+        [
+          { id: "c3", isVisible: false },
+          { id: "c4", value: 2, isVisible: true },
+        ],
       ]
 
       const oldPlayer = createMockPlayer({ id: "player-1", cards: oldCards })
-      const oldState = createMockGameState({ players: [oldPlayer], stateVersion: 1 })
+      const oldState = createMockGameState({
+        players: [oldPlayer],
+        stateVersion: 1,
+      })
 
       const newPlayer = createMockPlayer({ id: "player-1", cards: newCards })
-      const newState = createMockGameState({ players: [newPlayer], stateVersion: 2 })
+      const newState = createMockGameState({
+        players: [newPlayer],
+        stateVersion: 2,
+      })
 
       const operations = createStateOperations(oldState, newState)
 
@@ -313,7 +370,7 @@ describe("createStateOperations", () => {
         status: 1, // LOBBY
         players: [oldPlayer1, oldPlayer2],
         settings: { ...createMockGameState().settings, maxPlayers: 8 },
-        stateVersion: 1
+        stateVersion: 1,
       })
 
       // Note: the algorithm only adds players at positions beyond the old count
@@ -324,7 +381,7 @@ describe("createStateOperations", () => {
         status: 2, // PLAYING
         players: [newPlayer1, newPlayer3], // player-2 removed, player-3 added at end position
         settings: { ...createMockGameState().settings, maxPlayers: 6 },
-        stateVersion: 2
+        stateVersion: 2,
       })
 
       const operations = createStateOperations(oldState, newState)
@@ -350,8 +407,14 @@ describe("createStateOperations", () => {
     })
 
     it("should handle adding state version when operations exist", () => {
-      const oldState = createMockGameState({ status: "WAITING", stateVersion: 1 })
-      const newState = createMockGameState({ status: "PLAYING", stateVersion: 3 })
+      const oldState = createMockGameState({
+        status: "WAITING",
+        stateVersion: 1,
+      })
+      const newState = createMockGameState({
+        status: "PLAYING",
+        stateVersion: 3,
+      })
 
       const operations = createStateOperations(oldState, newState)
 

@@ -1,4 +1,7 @@
-import type { FirstPlayerPenaltyType, PlayerRearrangementType } from "@/constants.js"
+import type {
+  FirstPlayerPenaltyType,
+  PlayerRearrangementType,
+} from "@/constants.js"
 
 export type SettingsToJson = {
   isConfirmed: boolean

@@ -274,7 +274,7 @@ export const GameSettings = ({ className }: GameSettingsProps) => {
             onValueChange={(value) =>
               actions.updateSingleSettings(
                 "playerRearrangement",
-                +value as typeof CoreConstants.PLAYER_REARRANGEMENT[keyof typeof CoreConstants.PLAYER_REARRANGEMENT],
+                +value as (typeof CoreConstants.PLAYER_REARRANGEMENT)[keyof typeof CoreConstants.PLAYER_REARRANGEMENT],
               )
             }
             disabled={disableInput}

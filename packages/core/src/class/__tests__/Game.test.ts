@@ -2507,9 +2507,9 @@ describe("Game", () => {
 
           freshGame.addPlayer(player)
 
-          const originalOrder = freshGame.players.map(p => p.id)
-          freshGame['shufflePlayers']()
-          const newOrder = freshGame.players.map(p => p.id)
+          const originalOrder = freshGame.players.map((p) => p.id)
+          freshGame["shufflePlayers"]()
+          const newOrder = freshGame.players.map((p) => p.id)
 
           expect(newOrder).toEqual(originalOrder)
         })
@@ -2523,15 +2523,15 @@ describe("Game", () => {
             { name: "player2", avatar: Constants.AVATARS.CAT },
             "socket2",
             2,
-            "username2"
+            "username2",
           )
 
           freshGame.addPlayer(player)
           freshGame.addPlayer(player2)
 
-          const originalOrder = freshGame.players.map(p => p.id)
-          freshGame['shufflePlayers']()
-          const newOrder = freshGame.players.map(p => p.id)
+          const originalOrder = freshGame.players.map((p) => p.id)
+          freshGame["shufflePlayers"]()
+          const newOrder = freshGame.players.map((p) => p.id)
 
           expect(newOrder).toEqual(originalOrder)
         })
@@ -2545,25 +2545,25 @@ describe("Game", () => {
             { name: "player2", avatar: Constants.AVATARS.CAT },
             "socket2",
             2,
-            "username2"
+            "username2",
           )
           const player3 = new Player(
             { name: "player3", avatar: Constants.AVATARS.DOG },
             "socket3",
             3,
-            "username3"
+            "username3",
           )
 
           freshGame.addPlayer(player)
           freshGame.addPlayer(player2)
           freshGame.addPlayer(player3)
 
-          const originalOrder = freshGame.players.map(p => p.id)
+          const originalOrder = freshGame.players.map((p) => p.id)
           const originalIds = new Set(originalOrder)
 
-          freshGame['shufflePlayers']()
+          freshGame["shufflePlayers"]()
 
-          const newOrder = freshGame.players.map(p => p.id)
+          const newOrder = freshGame.players.map((p) => p.id)
           const newIds = new Set(newOrder)
 
           expect(newOrder).toHaveLength(originalOrder.length)
@@ -2579,19 +2579,19 @@ describe("Game", () => {
             { name: "player2", avatar: Constants.AVATARS.CAT },
             "socket2",
             2,
-            "username2"
+            "username2",
           )
           const player3 = new Player(
             { name: "player3", avatar: Constants.AVATARS.DOG },
             "socket3",
             3,
-            "username3"
+            "username3",
           )
           const player4 = new Player(
             { name: "player4", avatar: Constants.AVATARS.ELEPHANT },
             "socket4",
             4,
-            "username4"
+            "username4",
           )
 
           // Set up: 2 connected players + 2 disconnected players
@@ -2603,12 +2603,12 @@ describe("Game", () => {
           freshGame.addPlayer(player3) // connected - index 2
           freshGame.addPlayer(player4) // disconnected - index 3
 
-          const originalOrder = freshGame.players.map(p => p.id)
+          const originalOrder = freshGame.players.map((p) => p.id)
 
           // Should not shuffle because only 2 connected players
-          freshGame['shufflePlayers']()
+          freshGame["shufflePlayers"]()
 
-          const newOrder = freshGame.players.map(p => p.id)
+          const newOrder = freshGame.players.map((p) => p.id)
 
           // All players should be in same positions (no shuffle with 2 connected)
           expect(newOrder).toEqual(originalOrder)
@@ -2627,25 +2627,25 @@ describe("Game", () => {
             { name: "player2", avatar: Constants.AVATARS.CAT },
             "socket2",
             2,
-            "username2"
+            "username2",
           )
           const player3 = new Player(
             { name: "player3", avatar: Constants.AVATARS.DOG },
             "socket3",
             3,
-            "username3"
+            "username3",
           )
           const player4 = new Player(
             { name: "player4", avatar: Constants.AVATARS.ELEPHANT },
             "socket4",
             4,
-            "username4"
+            "username4",
           )
           const player5 = new Player(
             { name: "player5", avatar: Constants.AVATARS.FOX },
             "socket5",
             5,
-            "username5"
+            "username5",
           )
 
           // Set up: 3 connected + 2 disconnected
@@ -2658,11 +2658,11 @@ describe("Game", () => {
           freshGame.addPlayer(player4) // disconnected - index 3
           freshGame.addPlayer(player5) // connected - index 4
 
-          const originalOrder = freshGame.players.map(p => p.id)
+          const originalOrder = freshGame.players.map((p) => p.id)
 
-          freshGame['shufflePlayers']()
+          freshGame["shufflePlayers"]()
 
-          const newOrder = freshGame.players.map(p => p.id)
+          const newOrder = freshGame.players.map((p) => p.id)
 
           // Array length should be unchanged
           expect(newOrder).toHaveLength(originalOrder.length)
@@ -2673,7 +2673,9 @@ describe("Game", () => {
 
           // Connected players should still be present but potentially shuffled
           const connectedPositions = [0, 2, 4]
-          const connectedPlayersInNewOrder = connectedPositions.map(i => newOrder[i])
+          const connectedPlayersInNewOrder = connectedPositions.map(
+            (i) => newOrder[i],
+          )
 
           // All connected players should still be present
           expect(connectedPlayersInNewOrder).toContain(player.id)
@@ -2690,7 +2692,7 @@ describe("Game", () => {
             { name: "player2", avatar: Constants.AVATARS.CAT },
             "socket2",
             2,
-            "username2"
+            "username2",
           )
 
           player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
@@ -2699,9 +2701,9 @@ describe("Game", () => {
           freshGame.addPlayer(player)
           freshGame.addPlayer(player2)
 
-          const originalOrder = freshGame.players.map(p => p.id)
-          freshGame['shufflePlayers']()
-          const newOrder = freshGame.players.map(p => p.id)
+          const originalOrder = freshGame.players.map((p) => p.id)
+          freshGame["shufflePlayers"]()
+          const newOrder = freshGame.players.map((p) => p.id)
 
           expect(newOrder).toEqual(originalOrder)
         })
@@ -2709,13 +2711,15 @@ describe("Game", () => {
 
       describe("resetGame with EVERY_GAME rearrangement", () => {
         it("should shuffle players when playerRearrangement is EVERY_GAME", async () => {
-          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_GAME
+          game.settings.playerRearrangement =
+            Constants.PLAYER_REARRANGEMENT.EVERY_GAME
 
-          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
-          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+          const shufflePlayersSpy = vi.spyOn(game as any, "shufflePlayers")
+          const initializeRoundSpy = vi
+            .spyOn(game as any, "initializeRound")
             .mockImplementation(() => Promise.resolve())
 
-          await game['resetGame']()
+          await game["resetGame"]()
 
           expect(shufflePlayersSpy).toHaveBeenCalled()
           expect(initializeRoundSpy).toHaveBeenCalled()
@@ -2725,13 +2729,15 @@ describe("Game", () => {
         })
 
         it("should not shuffle players when playerRearrangement is NEVER", async () => {
-          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.NEVER
+          game.settings.playerRearrangement =
+            Constants.PLAYER_REARRANGEMENT.NEVER
 
-          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
-          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+          const shufflePlayersSpy = vi.spyOn(game as any, "shufflePlayers")
+          const initializeRoundSpy = vi
+            .spyOn(game as any, "initializeRound")
             .mockImplementation(() => Promise.resolve())
 
-          await game['resetGame']()
+          await game["resetGame"]()
 
           expect(shufflePlayersSpy).not.toHaveBeenCalled()
           expect(initializeRoundSpy).toHaveBeenCalled()
@@ -2741,13 +2747,15 @@ describe("Game", () => {
         })
 
         it("should not shuffle players when playerRearrangement is EVERY_ROUND", async () => {
-          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
+          game.settings.playerRearrangement =
+            Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
 
-          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
-          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+          const shufflePlayersSpy = vi.spyOn(game as any, "shufflePlayers")
+          const initializeRoundSpy = vi
+            .spyOn(game as any, "initializeRound")
             .mockImplementation(() => Promise.resolve())
 
-          await game['resetGame']()
+          await game["resetGame"]()
 
           expect(shufflePlayersSpy).not.toHaveBeenCalled()
           expect(initializeRoundSpy).toHaveBeenCalled()
@@ -2759,13 +2767,15 @@ describe("Game", () => {
 
       describe("startNewRound with EVERY_ROUND rearrangement", () => {
         it("should shuffle players when playerRearrangement is EVERY_ROUND", async () => {
-          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
+          game.settings.playerRearrangement =
+            Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
 
-          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
-          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+          const shufflePlayersSpy = vi.spyOn(game as any, "shufflePlayers")
+          const initializeRoundSpy = vi
+            .spyOn(game as any, "initializeRound")
             .mockImplementation(() => Promise.resolve())
 
-          await game['startNewRound']()
+          await game["startNewRound"]()
 
           expect(shufflePlayersSpy).toHaveBeenCalled()
           expect(initializeRoundSpy).toHaveBeenCalled()
@@ -2775,13 +2785,15 @@ describe("Game", () => {
         })
 
         it("should not shuffle players when playerRearrangement is NEVER", async () => {
-          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.NEVER
+          game.settings.playerRearrangement =
+            Constants.PLAYER_REARRANGEMENT.NEVER
 
-          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
-          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+          const shufflePlayersSpy = vi.spyOn(game as any, "shufflePlayers")
+          const initializeRoundSpy = vi
+            .spyOn(game as any, "initializeRound")
             .mockImplementation(() => Promise.resolve())
 
-          await game['startNewRound']()
+          await game["startNewRound"]()
 
           expect(shufflePlayersSpy).not.toHaveBeenCalled()
           expect(initializeRoundSpy).toHaveBeenCalled()
@@ -2791,13 +2803,15 @@ describe("Game", () => {
         })
 
         it("should not shuffle players when playerRearrangement is EVERY_GAME", async () => {
-          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_GAME
+          game.settings.playerRearrangement =
+            Constants.PLAYER_REARRANGEMENT.EVERY_GAME
 
-          const shufflePlayersSpy = vi.spyOn(game as any, 'shufflePlayers')
-          const initializeRoundSpy = vi.spyOn(game as any, 'initializeRound')
+          const shufflePlayersSpy = vi.spyOn(game as any, "shufflePlayers")
+          const initializeRoundSpy = vi
+            .spyOn(game as any, "initializeRound")
             .mockImplementation(() => Promise.resolve())
 
-          await game['startNewRound']()
+          await game["startNewRound"]()
 
           expect(shufflePlayersSpy).not.toHaveBeenCalled()
           expect(initializeRoundSpy).toHaveBeenCalled()
@@ -2809,11 +2823,14 @@ describe("Game", () => {
 
       describe("serialize with playerRearrangement", () => {
         it("should include playerRearrangement in serialized settings", () => {
-          game.settings.playerRearrangement = Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
+          game.settings.playerRearrangement =
+            Constants.PLAYER_REARRANGEMENT.EVERY_ROUND
 
           const serialized = game.serialize()
 
-          expect(serialized.settings.playerRearrangement).toBe(Constants.PLAYER_REARRANGEMENT.EVERY_ROUND)
+          expect(serialized.settings.playerRearrangement).toBe(
+            Constants.PLAYER_REARRANGEMENT.EVERY_ROUND,
+          )
         })
       })
     })
