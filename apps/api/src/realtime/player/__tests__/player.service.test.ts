@@ -805,12 +805,20 @@ describe("PlayerService", () => {
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
-      const cancelTimerSpy = vi.spyOn(game.operationManager, "cancelPlayerAfkTimer")
-      const startTimerSpy = vi.spyOn(game.operationManager, "startPlayerAfkTimer")
+      const cancelTimerSpy = vi.spyOn(
+        game.operationManager,
+        "cancelPlayerAfkTimer",
+      )
+      const startTimerSpy = vi.spyOn(
+        game.operationManager,
+        "startPlayerAfkTimer",
+      )
 
       await service.onRecover(socket)
 
-      expect(player.connectionStatus).toBe(CoreConstants.CONNECTION_STATUS.CONNECTED)
+      expect(player.connectionStatus).toBe(
+        CoreConstants.CONNECTION_STATUS.CONNECTED,
+      )
       expect(player.disconnectedAfkCount).toBe(0)
       expect(cancelTimerSpy).toHaveBeenCalledWith(game.code, player.id)
       expect(startTimerSpy).toHaveBeenCalledWith(game, player.id)
@@ -849,12 +857,20 @@ describe("PlayerService", () => {
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
-      const cancelTimerSpy = vi.spyOn(game.operationManager, "cancelPlayerAfkTimer")
-      const startTimerSpy = vi.spyOn(game.operationManager, "startPlayerAfkTimer")
+      const cancelTimerSpy = vi.spyOn(
+        game.operationManager,
+        "cancelPlayerAfkTimer",
+      )
+      const startTimerSpy = vi.spyOn(
+        game.operationManager,
+        "startPlayerAfkTimer",
+      )
 
       await service.onRecover(socket)
 
-      expect(player.connectionStatus).toBe(CoreConstants.CONNECTION_STATUS.CONNECTED)
+      expect(player.connectionStatus).toBe(
+        CoreConstants.CONNECTION_STATUS.CONNECTED,
+      )
       expect(player.disconnectedAfkCount).toBe(0)
       // Timer should NOT be reset due to Two Strikes Rule
       expect(cancelTimerSpy).not.toHaveBeenCalled()
@@ -894,12 +910,20 @@ describe("PlayerService", () => {
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
-      const cancelTimerSpy = vi.spyOn(game.operationManager, "cancelPlayerAfkTimer")
-      const startTimerSpy = vi.spyOn(game.operationManager, "startPlayerAfkTimer")
+      const cancelTimerSpy = vi.spyOn(
+        game.operationManager,
+        "cancelPlayerAfkTimer",
+      )
+      const startTimerSpy = vi.spyOn(
+        game.operationManager,
+        "startPlayerAfkTimer",
+      )
 
       await service.onRecover(socket)
 
-      expect(player.connectionStatus).toBe(CoreConstants.CONNECTION_STATUS.CONNECTED)
+      expect(player.connectionStatus).toBe(
+        CoreConstants.CONNECTION_STATUS.CONNECTED,
+      )
       expect(player.disconnectedAfkCount).toBe(0)
       // Timer should NOT be reset because it's not their turn
       expect(cancelTimerSpy).not.toHaveBeenCalled()
@@ -937,7 +961,9 @@ describe("PlayerService", () => {
 
       await service.onRecover(socket)
 
-      expect(player.connectionStatus).toBe(CoreConstants.CONNECTION_STATUS.CONNECTED)
+      expect(player.connectionStatus).toBe(
+        CoreConstants.CONNECTION_STATUS.CONNECTED,
+      )
       expect(player.disconnectedAfkCount).toBe(0)
     })
   })

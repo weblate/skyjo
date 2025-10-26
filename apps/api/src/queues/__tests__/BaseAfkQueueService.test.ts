@@ -228,10 +228,10 @@ describe("BaseAfkQueueService", () => {
       settings: {
         private: false,
       },
+      roundPhase: CoreConstants.ROUND_PHASE.MAIN,
       processingAfk: false,
       disconnectPlayer: vi.fn().mockResolvedValue(undefined),
       setOperationManager: vi.fn(),
-      getPlayerTimeout: vi.fn().mockReturnValue(CoreConstants.TURN_TIMEOUT.CONNECTED),
     } as unknown as Game
 
     mockPlayer = {
@@ -242,6 +242,7 @@ describe("BaseAfkQueueService", () => {
       consecutiveAfkCount: 0,
       disconnectedAfkCount: 0,
       connectionStatus: CoreConstants.CONNECTION_STATUS.CONNECTED,
+      getTimeout: vi.fn().mockReturnValue(CoreConstants.TURN_TIMEOUT.CONNECTED),
     } as unknown as Player
 
     vi.clearAllMocks()
@@ -259,13 +260,13 @@ describe("BaseAfkQueueService", () => {
     it("should return timeout based on player status", () => {
       const timeout = queueService.getAfkTimeoutPublic(mockGame, mockPlayer)
 
-      expect(mockGame.getPlayerTimeout).toHaveBeenCalledWith(mockPlayer)
+      expect(mockPlayer.getTimeout).toHaveBeenCalled()
       expect(timeout).toBe(CoreConstants.TURN_TIMEOUT.CONNECTED + 1000)
     })
 
     it("should throw error when no player is provided", () => {
       expect(() => queueService.getAfkTimeoutPublic(mockGame)).toThrow(
-        "Player is required for getAfkTimeout"
+        "Player is required for getAfkTimeout",
       )
     })
   })
@@ -286,21 +287,24 @@ describe("BaseAfkQueueService", () => {
     it("should return true when disconnected player reaches public game limit", () => {
       mockGame.settings.private = false
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
-      mockPlayer.disconnectedAfkCount = CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC
+      mockPlayer.disconnectedAfkCount =
+        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC
       expect(queueService.isAfkPublic(mockPlayer, mockGame)).toBe(true)
     })
 
     it("should return true when disconnected player reaches private game limit", () => {
       mockGame.settings.private = true
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
-      mockPlayer.disconnectedAfkCount = CoreConstants.AFK_TIMEOUT.DISCONNECTED_PRIVATE
+      mockPlayer.disconnectedAfkCount =
+        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PRIVATE
       expect(queueService.isAfkPublic(mockPlayer, mockGame)).toBe(true)
     })
 
     it("should return false when disconnected player is below limit", () => {
       mockGame.settings.private = false
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
-      mockPlayer.disconnectedAfkCount = CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC - 1
+      mockPlayer.disconnectedAfkCount =
+        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC - 1
       expect(queueService.isAfkPublic(mockPlayer, mockGame)).toBe(false)
     })
   })
@@ -351,7 +355,8 @@ describe("BaseAfkQueueService", () => {
     it("should disconnect disconnected player when public game limit is reached", async () => {
       mockGame.settings.private = false
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
-      mockPlayer.disconnectedAfkCount = CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC - 1
+      mockPlayer.disconnectedAfkCount =
+        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC - 1
 
       const result = await queueService.increaseAfkCountPublic(
         mockGame,

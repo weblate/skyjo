@@ -31,19 +31,13 @@ export class PlayerService extends BaseService {
 
     const stateManager = new GameStateTracker(game)
 
-    if (
-      game.isInLobby() &&
-      (await this.countdownQueue.coundownExists(game.code))
-    ) {
+    const hasToCancelCountdown =
+      game.isInLobby() && (await this.countdownQueue.coundownExists(game.code))
+    if (hasToCancelCountdown) {
       await this.countdownQueue.cancelCountdown(game.code)
     }
 
-    if (!game.isPlaying()) {
-      await game.disconnectPlayer(player)
-
-      const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
-      await this.sendServerMessage(game.code, player.name, messageType)
-    } else {
+    if (game.isPlaying()) {
       player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
 
       // Track disconnection during turn
@@ -51,10 +45,16 @@ export class PlayerService extends BaseService {
 
       // Reset the AFK timer with the new disconnected timeout if it's this player's turn
       const currentPlayer = game.getCurrentPlayer()
-      if (currentPlayer?.id === player.id) {
+      const currentPlayerTurn = currentPlayer?.id === player.id
+      if (currentPlayerTurn || game.isRoundRevealCards()) {
         await game.operationManager.cancelPlayerAfkTimer(game.code, player.id)
         await game.operationManager.startPlayerAfkTimer(game, player.id)
       }
+    } else {
+      await game.disconnectPlayer(player)
+
+      const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
+      await this.sendServerMessage(game.code, player.name, messageType)
     }
 
     await this.updateAndSendGame(game, stateManager)

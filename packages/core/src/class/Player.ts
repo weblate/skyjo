@@ -38,6 +38,7 @@ interface PlayerInterface {
   turnAllCards(): void
   recalculateScore(): void
   finalRoundScore(): void
+  getTimeout(): number
   toJson(): PlayerToJson
   getSessionId(): string
   rotateSession(): string
@@ -279,6 +280,34 @@ export class Player implements PlayerInterface {
     this.turnStartTime = serverTimestamp ?? Date.now()
   }
 
+  /**
+   * Get the timeout duration for this player's turn based on their connection status
+   * and reconnection history during the current turn.
+   */
+  getTimeout(): number {
+    const isConnected =
+      this.connectionStatus === Constants.CONNECTION_STATUS.CONNECTED
+
+    // If disconnected, always use the short timeout
+    if (!isConnected) {
+      return Constants.TURN_TIMEOUT.DISCONNECTED
+    }
+
+    // If connected, check reconnection history for this turn
+    if (this.disconnectionsThisTurn === 0) {
+      // Normal connected player with no disconnections this turn
+      return Constants.TURN_TIMEOUT.CONNECTED
+    }
+
+    if (this.disconnectionsThisTurn === 1) {
+      // First reconnection - give them a one-time penalty
+      return Constants.TURN_TIMEOUT.FIRST_RECONNECTION
+    }
+
+    // Second or more reconnections - they've lost their timer reset privilege
+    return Constants.TURN_TIMEOUT.SECOND_RECONNECTION
+  }
+
   toJson(): PlayerToJson {
     return {
       id: this.id,
@@ -290,12 +319,12 @@ export class Player implements PlayerInterface {
       connectionStatus: this.connectionStatus,
       scores: this.scores,
       turnStartTime: this.turnStartTime,
+      timeout: this.getTimeout(),
       username: this.username,
       cards: this.cards.map((column) => column.map((card) => card.toJson())),
       forfeited: this.forfeited,
       forfeitedAt: this.forfeitedAt,
       hasRevealedCardCount: this.hasRevealedCardCount,
-      disconnectionsThisTurn: this.disconnectionsThisTurn,
     }
   }
 

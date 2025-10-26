@@ -44,7 +44,7 @@ export interface GameConstructorParams {
 }
 
 export class Game implements GameInterface {
-  private operationManager: GameOperationManagerInterface =
+  operationManager: GameOperationManagerInterface =
     new DefaultGameOperationManager()
   id: string = crypto.randomUUID()
   code: string = Math.random().toString(36).substring(2, 10)
@@ -426,35 +426,6 @@ export class Game implements GameInterface {
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
 
     await this.finishTurn({ wasAfk })
-  }
-
-  /**
-   * Get the timeout duration for a player's turn based on their connection status
-   * and reconnection history during the current turn.
-   */
-  getPlayerTimeout(player: Player): number {
-    const isDisconnected =
-      player.connectionStatus === Constants.CONNECTION_STATUS.DISCONNECTED ||
-      player.connectionStatus === Constants.CONNECTION_STATUS.LOST
-
-    // If disconnected, always use the short timeout
-    if (isDisconnected) {
-      return Constants.TURN_TIMEOUT.DISCONNECTED
-    }
-
-    // If connected, check reconnection history for this turn
-    if (player.disconnectionsThisTurn === 0) {
-      // Normal connected player with no disconnections this turn
-      return Constants.TURN_TIMEOUT.CONNECTED
-    }
-
-    if (player.disconnectionsThisTurn === 1) {
-      // First reconnection - give them a one-time penalty
-      return Constants.TURN_TIMEOUT.FIRST_RECONNECTION
-    }
-
-    // Second or more reconnections - they've lost their timer reset privilege
-    return Constants.TURN_TIMEOUT.SECOND_RECONNECTION
   }
 
   async finishTurn({ wasAfk = false }: { wasAfk?: boolean }) {

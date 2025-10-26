@@ -19,6 +19,7 @@ export type PlayerToJson = {
   connectionStatus: ConnectionStatus
   scores: PlayerScore[]
   turnStartTime: number | null
+  timeout: number
   cards: CardToJson[][]
   username?: string
   userId?: number | null
@@ -26,7 +27,6 @@ export type PlayerToJson = {
   forfeited: boolean
   forfeitedAt: number | null
   hasRevealedCardCount: boolean
-  disconnectionsThisTurn: number
 }
 
 export type PlayerRedisDb = {

@@ -163,6 +163,8 @@ describe("Game", () => {
             forfeited: false,
             forfeitedAt: null,
             hasRevealedCardCount: false,
+            disconnectionsThisTurn: 0,
+            disconnectedAfkCount: 0,
           },
         ],
 
@@ -1462,6 +1464,8 @@ describe("Game", () => {
             forfeited: player.forfeited,
             forfeitedAt: player.forfeitedAt,
             hasRevealedCardCount: player.hasRevealedCardCount,
+            disconnectionsThisTurn: player.disconnectionsThisTurn,
+            disconnectedAfkCount: player.disconnectedAfkCount,
           },
           {
             id: opponent.id,
@@ -1490,6 +1494,8 @@ describe("Game", () => {
             forfeited: opponent.forfeited,
             forfeitedAt: opponent.forfeitedAt,
             hasRevealedCardCount: opponent.hasRevealedCardCount,
+            disconnectionsThisTurn: opponent.disconnectionsThisTurn,
+            disconnectedAfkCount: opponent.disconnectedAfkCount,
           },
         ],
         settings: {
@@ -1723,6 +1729,41 @@ describe("Game", () => {
       expect(player.scores[0]).toMatchObject({
         score: 25,
         penalty: 15, // 2 multiplier and then 5 flat
+        originalScore: 10,
+      })
+    })
+
+    it("should handle when first player already has object score", () => {
+      // Setup: first player already has a penalty score object
+      player.scores = [{ score: 10, penalty: 0, originalScore: 10 }]
+      opponent.scores = [5]
+      game.settings.firstPlayerPenaltyType =
+        Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY
+      game.settings.firstPlayerMultiplierPenalty = 2
+
+      game["checkFirstPlayerPenalty"]()
+
+      expect(player.scores[0]).toMatchObject({
+        score: 20,
+        penalty: 10,
+        originalScore: 10,
+      })
+    })
+
+    it("should handle when other player has object score", () => {
+      // Setup: opponent has a penalty score object
+      player.scores = [10]
+      opponent.scores = [{ score: 5, penalty: 2, originalScore: 3 }]
+      game.settings.firstPlayerPenaltyType =
+        Constants.FIRST_PLAYER_PENALTY_TYPE.MULTIPLIER_ONLY
+      game.settings.firstPlayerMultiplierPenalty = 2
+
+      game["checkFirstPlayerPenalty"]()
+
+      // Should apply penalty because opponent's score (5) is still lower than player's (10)
+      expect(player.scores[0]).toMatchObject({
+        score: 20,
+        penalty: 10,
         originalScore: 10,
       })
     })
@@ -2310,6 +2351,44 @@ describe("Game", () => {
 
       hasMinPlayersSpy.mockRestore()
     })
+
+    it("should start round after initial reveal when all players have revealed cards", async () => {
+      // Setup
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+      const player3 = new Player(
+        { name: "Player3", avatar: Constants.AVATARS.BEE },
+        "socket3",
+      )
+
+      game.players = [player1, player2, player3]
+      game.status = Constants.GAME_STATUS.PLAYING
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+
+      // Mark two players as having revealed cards
+      player1.hasRevealedCardCount = true
+      player2.hasRevealedCardCount = true
+      player3.hasRevealedCardCount = false
+
+      const startRoundSpy = vi.spyOn(
+        game as any,
+        "startRoundAfterInitialReveal",
+      )
+
+      // Execute - disconnect player3
+      await game.disconnectPlayer(player3)
+
+      // Verify - should call startRoundAfterInitialReveal since now all remaining connected players have revealed
+      expect(startRoundSpy).toHaveBeenCalled()
+
+      startRoundSpy.mockClear()
+    })
   })
 
   // Add tests for ban feature
@@ -2413,6 +2492,22 @@ describe("Game", () => {
       )
       game.addPlayer(targetPlayer)
       game.bannedUserIds.push(targetPlayer.userId!)
+
+      // Execute & Verify
+      expect(game.isPlayerBanned(targetPlayer)).toBe(true)
+    })
+
+    it("should return true if player guestId is in bannedGuestIds", () => {
+      // Setup
+      const targetPlayer = new Player(
+        { name: "target", avatar: Constants.AVATARS.BEE },
+        "targetSocketId",
+        undefined,
+        undefined,
+        "guest-123",
+      )
+      game.addPlayer(targetPlayer)
+      game.bannedGuestIds.push(targetPlayer.guestId!)
 
       // Execute & Verify
       expect(game.isPlayerBanned(targetPlayer)).toBe(true)
@@ -2853,71 +2948,6 @@ describe("Game", () => {
           )
         })
       })
-    })
-  })
-
-  describe("getPlayerTimeout", () => {
-    it("should return DISCONNECTED timeout for disconnected players", () => {
-      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
-      player.disconnectionsThisTurn = 0
-
-      const timeout = game.getPlayerTimeout(player)
-
-      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
-    })
-
-    it("should return DISCONNECTED timeout for players with LOST connection", () => {
-      player.connectionStatus = Constants.CONNECTION_STATUS.LOST
-      player.disconnectionsThisTurn = 0
-
-      const timeout = game.getPlayerTimeout(player)
-
-      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
-    })
-
-    it("should return CONNECTED timeout for connected players with no disconnections", () => {
-      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
-      player.disconnectionsThisTurn = 0
-
-      const timeout = game.getPlayerTimeout(player)
-
-      expect(timeout).toBe(Constants.TURN_TIMEOUT.CONNECTED)
-    })
-
-    it("should return FIRST_RECONNECTION timeout after 1 disconnection", () => {
-      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
-      player.disconnectionsThisTurn = 1
-
-      const timeout = game.getPlayerTimeout(player)
-
-      expect(timeout).toBe(Constants.TURN_TIMEOUT.FIRST_RECONNECTION)
-    })
-
-    it("should return SECOND_RECONNECTION timeout after 2 disconnections", () => {
-      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
-      player.disconnectionsThisTurn = 2
-
-      const timeout = game.getPlayerTimeout(player)
-
-      expect(timeout).toBe(Constants.TURN_TIMEOUT.SECOND_RECONNECTION)
-    })
-
-    it("should return SECOND_RECONNECTION timeout after 3+ disconnections", () => {
-      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
-      player.disconnectionsThisTurn = 5
-
-      const timeout = game.getPlayerTimeout(player)
-
-      expect(timeout).toBe(Constants.TURN_TIMEOUT.SECOND_RECONNECTION)
-    })
-
-    it("should always return DISCONNECTED timeout even if player has disconnection history", () => {
-      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
-      player.disconnectionsThisTurn = 3
-
-      const timeout = game.getPlayerTimeout(player)
-
-      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
     })
   })
 })

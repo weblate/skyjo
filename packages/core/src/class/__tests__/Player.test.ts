@@ -53,6 +53,8 @@ describe("Player", () => {
       forfeited: false,
       forfeitedAt: null,
       hasRevealedCardCount: false,
+      disconnectionsThisTurn: 0,
+      disconnectedAfkCount: 0,
     }
 
     const player = new Player().populate(dbPlayer)
@@ -90,6 +92,8 @@ describe("Player", () => {
       forfeited: false,
       forfeitedAt: null,
       hasRevealedCardCount: false,
+      disconnectionsThisTurn: 0,
+      disconnectedAfkCount: 0,
     }
 
     const player = new Player().populate(dbPlayer)
@@ -427,6 +431,7 @@ describe("Player", () => {
           column.map((card) => card.toJson()),
         ),
         turnStartTime: null,
+        timeout: Constants.TURN_TIMEOUT.CONNECTED,
         score: 0,
         scores: [],
         wantsReplay: false,
@@ -435,7 +440,6 @@ describe("Player", () => {
         forfeited: false,
         forfeitedAt: null,
         hasRevealedCardCount: false,
-        disconnectionsThisTurn: 0,
       })
     })
   })
@@ -461,6 +465,92 @@ describe("Player", () => {
       const result = player.getFirstCardNotVisible()
 
       expect(result).toBeUndefined()
+    })
+  })
+
+  describe("getTimeout", () => {
+    it("should return DISCONNECTED timeout for disconnected players", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      player.disconnectionsThisTurn = 0
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
+    })
+
+    it("should return DISCONNECTED timeout for players with LOST connection", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.LOST
+      player.disconnectionsThisTurn = 0
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
+    })
+
+    it("should return CONNECTED timeout for connected players with no disconnections", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      player.disconnectionsThisTurn = 0
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.CONNECTED)
+    })
+
+    it("should return FIRST_RECONNECTION timeout after 1 disconnection", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      player.disconnectionsThisTurn = 1
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.FIRST_RECONNECTION)
+    })
+
+    it("should return SECOND_RECONNECTION timeout after 2 disconnections", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      player.disconnectionsThisTurn = 2
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.SECOND_RECONNECTION)
+    })
+
+    it("should return SECOND_RECONNECTION timeout after 3+ disconnections", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+      player.disconnectionsThisTurn = 5
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.SECOND_RECONNECTION)
+    })
+
+    it("should always return DISCONNECTED timeout even if player has disconnection history", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      player.disconnectionsThisTurn = 3
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
+    })
+  })
+
+  describe("getSessionId", () => {
+    it("should return the current session ID", () => {
+      const sessionId = player.getSessionId()
+
+      expect(sessionId).toBeDefined()
+      expect(typeof sessionId).toBe("string")
+    })
+  })
+
+  describe("rotateSession", () => {
+    it("should generate a new session ID and return it", () => {
+      const oldSessionId = player.getSessionId()
+      const newSessionId = player.rotateSession()
+
+      expect(newSessionId).toBeDefined()
+      expect(typeof newSessionId).toBe("string")
+      expect(newSessionId).not.toBe(oldSessionId)
+      expect(player.getSessionId()).toBe(newSessionId)
     })
   })
 

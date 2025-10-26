@@ -40,18 +40,21 @@ export abstract class BaseAfkQueueService<
       throw new Error("Player is required for getAfkTimeout")
     }
 
-    const timeout = game.getPlayerTimeout(player)
+    const timeout = player.getTimeout()
     const finalTimeout = timeout + 1000 // 1 second grace period
 
-    Logger.debug(`AFK timeout for player ${player.id} in game ${game.code}: ${finalTimeout}ms`, {
-      gameCode: game.code,
-      playerId: player.id,
-      playerName: player.name,
-      connectionStatus: player.connectionStatus,
-      disconnectionsThisTurn: player.disconnectionsThisTurn,
-      baseTimeout: timeout,
-      finalTimeout,
-    })
+    Logger.debug(
+      `AFK timeout for player ${player.id} in game ${game.code}: ${finalTimeout}ms`,
+      {
+        gameCode: game.code,
+        playerId: player.id,
+        playerName: player.name,
+        connectionStatus: player.connectionStatus,
+        disconnectionsThisTurn: player.disconnectionsThisTurn,
+        baseTimeout: timeout,
+        finalTimeout,
+      },
+    )
 
     return finalTimeout
   }

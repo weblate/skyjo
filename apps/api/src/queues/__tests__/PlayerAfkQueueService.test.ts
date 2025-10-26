@@ -109,6 +109,7 @@ describe("PlayerAfkQueueService", () => {
       afkCount: 0,
       consecutiveAfkCount: 0,
       getFirstCardNotVisible: vi.fn().mockReturnValue({ column: 0, row: 0 }),
+      getTimeout: vi.fn().mockReturnValue(CoreConstants.TURN_TIMEOUT.CONNECTED),
     } as unknown as Player
 
     mockPlayer = {
@@ -117,6 +118,7 @@ describe("PlayerAfkQueueService", () => {
       socketId: "socket-123",
       afkCount: 0,
       consecutiveAfkCount: 0,
+      getTimeout: vi.fn().mockReturnValue(CoreConstants.TURN_TIMEOUT.CONNECTED),
     } as unknown as Player
 
     mockGame = {
@@ -124,6 +126,7 @@ describe("PlayerAfkQueueService", () => {
       settings: {
         private: false,
       },
+      roundPhase: CoreConstants.ROUND_PHASE.MAIN,
       processingAfk: false,
       isPlaying: vi.fn().mockReturnValue(true),
       isRoundMain: vi.fn().mockReturnValue(true),
@@ -133,7 +136,6 @@ describe("PlayerAfkQueueService", () => {
         if (id === "player-123") return mockPlayer
         return undefined
       }),
-      getPlayerTimeout: vi.fn().mockReturnValue(CoreConstants.TURN_TIMEOUT.CONNECTED),
       turnStatus: CoreConstants.TURN_STATUS.CHOOSE_A_PILE,
       drawCard: vi.fn(),
       turnCard: vi.fn().mockResolvedValue(undefined),
