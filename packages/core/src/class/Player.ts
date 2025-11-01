@@ -21,11 +21,11 @@ interface PlayerInterface {
   afkCount: number
   consecutiveAfkCount: number
   disconnectedAfkCount: number
-  disconnectionsThisTurn: number
   score: number
   wantsReplay: boolean
   hasPlayedLastTurn: boolean
   turnStartTime: number | null
+  timeout: number | null
 
   toggleReplay(): void
   setCards(cardsValue: number[], cardSettings: Settings): void
@@ -52,7 +52,6 @@ export class Player implements PlayerInterface {
   afkCount: number = 0
   consecutiveAfkCount: number = 0 // Consecutive timeouts
   disconnectedAfkCount: number = 0 // Consecutive AFK turns while disconnected
-  disconnectionsThisTurn: number = 0 // Number of disconnections during current turn
   forfeited: boolean = false
   forfeitedAt: number | null = null
   cards: Card[][] = []
@@ -61,6 +60,7 @@ export class Player implements PlayerInterface {
   hasPlayedLastTurn = false
   wantsReplay: boolean = false
   turnStartTime: number | null = null
+  timeout: number | null = null
   userId?: number
   username?: string
   guestId?: string
@@ -99,8 +99,8 @@ export class Player implements PlayerInterface {
     this.afkCount = player.afkCount
     this.consecutiveAfkCount = player.consecutiveAfkCount
     this.disconnectedAfkCount = player.disconnectedAfkCount ?? 0
-    this.disconnectionsThisTurn = player.disconnectionsThisTurn ?? 0
     this.turnStartTime = player.turnStartTime
+    this.timeout = player.timeout ?? null
     this.userId = player?.userId ?? undefined
     this.guestId = player?.guestId ?? undefined
     this.sessionId = player.sessionId
@@ -266,46 +266,48 @@ export class Player implements PlayerInterface {
     this.afkCount = 0
     this.consecutiveAfkCount = 0
     this.disconnectedAfkCount = 0
-    this.disconnectionsThisTurn = 0
   }
 
   resetGame() {
     this.cards = []
     this.hasPlayedLastTurn = false
     this.turnStartTime = null
+    this.timeout = null
     this.hasRevealedCardCount = false
   }
 
   startTurn(serverTimestamp?: number) {
     this.turnStartTime = serverTimestamp ?? Date.now()
-  }
 
-  /**
-   * Get the timeout duration for this player's turn based on their connection status
-   * and reconnection history during the current turn.
-   */
-  getTimeout(): number {
+    // Lock timeout based on connection status AT THIS MOMENT (turn start)
+    // This prevents timeout from changing if player disconnects/reconnects mid-turn
+    // We calculate directly instead of using getTimeout() to ignore any previously locked value
     const isConnected =
       this.connectionStatus === Constants.CONNECTION_STATUS.CONNECTED
 
-    // If disconnected, always use the short timeout
-    if (!isConnected) {
-      return Constants.TURN_TIMEOUT.DISCONNECTED
+    this.timeout = isConnected
+      ? Constants.TURN_TIMEOUT.CONNECTED
+      : Constants.TURN_TIMEOUT.DISCONNECTED
+  }
+
+  /**
+   * Get the timeout duration for this player's turn.
+   * If a timeout is locked (set at turn start), use that.
+   * Otherwise, calculate based on current connection status.
+   */
+  getTimeout(): number {
+    // If timeout is locked (set at turn start), use it
+    if (this.timeout !== null) {
+      return this.timeout
     }
 
-    // If connected, check reconnection history for this turn
-    if (this.disconnectionsThisTurn === 0) {
-      // Normal connected player with no disconnections this turn
-      return Constants.TURN_TIMEOUT.CONNECTED
-    }
+    // Otherwise, calculate based on current connection status
+    const isConnected =
+      this.connectionStatus === Constants.CONNECTION_STATUS.CONNECTED
 
-    if (this.disconnectionsThisTurn === 1) {
-      // First reconnection - give them a one-time penalty
-      return Constants.TURN_TIMEOUT.FIRST_RECONNECTION
-    }
-
-    // Second or more reconnections - they've lost their timer reset privilege
-    return Constants.TURN_TIMEOUT.SECOND_RECONNECTION
+    return isConnected
+      ? Constants.TURN_TIMEOUT.CONNECTED
+      : Constants.TURN_TIMEOUT.DISCONNECTED
   }
 
   toJson(): PlayerToJson {

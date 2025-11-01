@@ -134,16 +134,24 @@ class TestAfkQueueService extends BaseAfkQueueService<TestAfkJobData> {
   // Override with test implementations
   protected override isAfk(player: Player, game: Game): boolean {
     // Use the actual implementation from base class for testing
+    const totalLimit = game.settings.private
+      ? CoreConstants.AFK_LIMIT.GAME_TOTAL.PRIVATE
+      : CoreConstants.AFK_LIMIT.GAME_TOTAL.PUBLIC
+
+    if (player.afkCount >= totalLimit) {
+      return true
+    }
+
     const isConnected =
       player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED
 
     if (isConnected) {
-      return player.afkCount >= CoreConstants.AFK_TIMEOUT.CONNECTED
+      return player.afkCount >= CoreConstants.AFK_LIMIT.CONNECTED
     }
 
     const disconnectedLimit = game.settings.private
-      ? CoreConstants.AFK_TIMEOUT.DISCONNECTED_PRIVATE
-      : CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC
+      ? CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PRIVATE
+      : CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PUBLIC
 
     return player.disconnectedAfkCount >= disconnectedLimit
   }
@@ -274,13 +282,13 @@ describe("BaseAfkQueueService", () => {
   describe("isAfk", () => {
     it("should return true when connected player reaches AFK limit", () => {
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
-      mockPlayer.afkCount = CoreConstants.AFK_TIMEOUT.CONNECTED
+      mockPlayer.afkCount = CoreConstants.AFK_LIMIT.CONNECTED
       expect(queueService.isAfkPublic(mockPlayer, mockGame)).toBe(true)
     })
 
     it("should return false when connected player is below AFK limit", () => {
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
-      mockPlayer.afkCount = CoreConstants.AFK_TIMEOUT.CONNECTED - 1
+      mockPlayer.afkCount = CoreConstants.AFK_LIMIT.CONNECTED - 1
       expect(queueService.isAfkPublic(mockPlayer, mockGame)).toBe(false)
     })
 
@@ -288,7 +296,7 @@ describe("BaseAfkQueueService", () => {
       mockGame.settings.private = false
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
       mockPlayer.disconnectedAfkCount =
-        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC
+        CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PUBLIC
       expect(queueService.isAfkPublic(mockPlayer, mockGame)).toBe(true)
     })
 
@@ -296,7 +304,7 @@ describe("BaseAfkQueueService", () => {
       mockGame.settings.private = true
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
       mockPlayer.disconnectedAfkCount =
-        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PRIVATE
+        CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PRIVATE
       expect(queueService.isAfkPublic(mockPlayer, mockGame)).toBe(true)
     })
 
@@ -304,7 +312,7 @@ describe("BaseAfkQueueService", () => {
       mockGame.settings.private = false
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
       mockPlayer.disconnectedAfkCount =
-        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC - 1
+        CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PUBLIC - 1
       expect(queueService.isAfkPublic(mockPlayer, mockGame)).toBe(false)
     })
   })
@@ -338,14 +346,14 @@ describe("BaseAfkQueueService", () => {
 
     it("should disconnect connected player when AFK limit is reached", async () => {
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
-      mockPlayer.afkCount = CoreConstants.AFK_TIMEOUT.CONNECTED - 1
+      mockPlayer.afkCount = CoreConstants.AFK_LIMIT.CONNECTED - 1
 
       const result = await queueService.increaseAfkCountPublic(
         mockGame,
         mockPlayer,
       )
 
-      expect(mockPlayer.afkCount).toBe(CoreConstants.AFK_TIMEOUT.CONNECTED)
+      expect(mockPlayer.afkCount).toBe(CoreConstants.AFK_LIMIT.CONNECTED)
       expect(queueService.disconnectPlayerCalled).toBe(true)
       expect(queueService.disconnectPlayerArgs[0]).toBe(mockGame)
       expect(queueService.disconnectPlayerArgs[1]).toBe(mockPlayer)
@@ -356,7 +364,7 @@ describe("BaseAfkQueueService", () => {
       mockGame.settings.private = false
       mockPlayer.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
       mockPlayer.disconnectedAfkCount =
-        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC - 1
+        CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PUBLIC - 1
 
       const result = await queueService.increaseAfkCountPublic(
         mockGame,
@@ -364,7 +372,7 @@ describe("BaseAfkQueueService", () => {
       )
 
       expect(mockPlayer.disconnectedAfkCount).toBe(
-        CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC,
+        CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PUBLIC,
       )
       expect(queueService.disconnectPlayerCalled).toBe(true)
       expect(result).toBe(true)

@@ -438,11 +438,6 @@ export class Game implements GameInterface {
 
     if (!wasAfk) currentPlayer.consecutiveAfkCount = 0
 
-    // Reset disconnectionsThisTurn counter for all players at the end of each turn
-    this.players.forEach((player) => {
-      player.disconnectionsThisTurn = 0
-    })
-
     await this.nextTurn()
 
     if (this.shouldStartNewRound()) {
@@ -456,7 +451,8 @@ export class Game implements GameInterface {
       const newCurrentPlayer = this.getCurrentPlayer()
 
       if (newCurrentPlayer) {
-        newCurrentPlayer.turnStartTime = Date.now()
+        newCurrentPlayer.startTurn()
+
         await this.operationManager.startPlayerAfkTimer(
           this,
           newCurrentPlayer.id,
@@ -514,8 +510,8 @@ export class Game implements GameInterface {
         afkCount: player.afkCount,
         consecutiveAfkCount: player.consecutiveAfkCount,
         disconnectedAfkCount: player.disconnectedAfkCount,
-        disconnectionsThisTurn: player.disconnectionsThisTurn,
         turnStartTime: player.turnStartTime,
+        timeout: player.timeout,
         userId: player.userId ?? null,
         sessionId: player.getSessionId(),
         forfeited: player.forfeited,
@@ -744,7 +740,8 @@ export class Game implements GameInterface {
     const currentPlayer = this.getCurrentPlayer()
 
     if (currentPlayer) {
-      currentPlayer.turnStartTime = Date.now()
+      currentPlayer.startTurn()
+
       await this.operationManager.startPlayerAfkTimer(this, currentPlayer.id)
     }
   }

@@ -44,8 +44,8 @@ export type PlayerRedisDb = {
   afkCount: number
   consecutiveAfkCount: number
   disconnectedAfkCount: number
-  disconnectionsThisTurn: number
   turnStartTime: number | null
+  timeout: number | null
   userId: number | null
   sessionId: string
   cards: CardRedisDb[][]

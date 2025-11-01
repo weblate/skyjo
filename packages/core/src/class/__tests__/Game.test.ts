@@ -163,8 +163,8 @@ describe("Game", () => {
             forfeited: false,
             forfeitedAt: null,
             hasRevealedCardCount: false,
-            disconnectionsThisTurn: 0,
             disconnectedAfkCount: 0,
+            timeout: Constants.TURN_TIMEOUT.CONNECTED,
           },
         ],
 
@@ -1175,26 +1175,6 @@ describe("Game", () => {
       shouldEndRoundSpy.mockRestore()
       endRoundSpy.mockRestore()
     })
-
-    it("should reset disconnectionsThisTurn for all players", async () => {
-      game.settings.initialTurnedCount = 0
-      await game.start()
-      game.turn = 0
-
-      // Set disconnectionsThisTurn for all players
-      player.disconnectionsThisTurn = 3
-      opponent.disconnectionsThisTurn = 2
-
-      game.turnStatus = Constants.TURN_STATUS.REPLACE_A_CARD
-      game.lastTurnStatus = Constants.LAST_TURN_STATUS.REPLACE
-      game.selectedCardValue = null
-
-      await game.finishTurn({ wasAfk: false })
-
-      // Verify disconnectionsThisTurn is reset to 0 for all players
-      expect(player.disconnectionsThisTurn).toBe(0)
-      expect(opponent.disconnectionsThisTurn).toBe(0)
-    })
   })
 
   describe("togglePlayerReplay", () => {
@@ -1464,8 +1444,8 @@ describe("Game", () => {
             forfeited: player.forfeited,
             forfeitedAt: player.forfeitedAt,
             hasRevealedCardCount: player.hasRevealedCardCount,
-            disconnectionsThisTurn: player.disconnectionsThisTurn,
             disconnectedAfkCount: player.disconnectedAfkCount,
+            timeout: player.timeout,
           },
           {
             id: opponent.id,
@@ -1494,8 +1474,8 @@ describe("Game", () => {
             forfeited: opponent.forfeited,
             forfeitedAt: opponent.forfeitedAt,
             hasRevealedCardCount: opponent.hasRevealedCardCount,
-            disconnectionsThisTurn: opponent.disconnectionsThisTurn,
             disconnectedAfkCount: opponent.disconnectedAfkCount,
+            timeout: opponent.timeout,
           },
         ],
         settings: {

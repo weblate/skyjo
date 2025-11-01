@@ -50,7 +50,6 @@ export abstract class BaseAfkQueueService<
         playerId: player.id,
         playerName: player.name,
         connectionStatus: player.connectionStatus,
-        disconnectionsThisTurn: player.disconnectionsThisTurn,
         baseTimeout: timeout,
         finalTimeout,
       },
@@ -60,18 +59,25 @@ export abstract class BaseAfkQueueService<
   }
 
   protected isAfk(player: Player, game: Game) {
+    const totalLimit = game.settings.private
+      ? CoreConstants.AFK_LIMIT.GAME_TOTAL.PRIVATE
+      : CoreConstants.AFK_LIMIT.GAME_TOTAL.PUBLIC
+
+    if (player.afkCount >= totalLimit) {
+      return true
+    }
+
     const isConnected =
       player.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED
 
     if (isConnected) {
-      // For connected players: 3 total AFK turns
-      return player.afkCount >= CoreConstants.AFK_TIMEOUT.CONNECTED
+      return player.afkCount >= CoreConstants.AFK_LIMIT.CONNECTED
     }
 
     // For disconnected players: different limits based on game type
     const disconnectedLimit = game.settings.private
-      ? CoreConstants.AFK_TIMEOUT.DISCONNECTED_PRIVATE
-      : CoreConstants.AFK_TIMEOUT.DISCONNECTED_PUBLIC
+      ? CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PRIVATE
+      : CoreConstants.AFK_LIMIT.DISCONNECTED_CONSECUTIVE.PUBLIC
 
     return player.disconnectedAfkCount >= disconnectedLimit
   }

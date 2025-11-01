@@ -39,17 +39,6 @@ export class PlayerService extends BaseService {
 
     if (game.isPlaying()) {
       player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
-
-      // Track disconnection during turn
-      player.disconnectionsThisTurn++
-
-      // Reset the AFK timer with the new disconnected timeout if it's this player's turn
-      const currentPlayer = game.getCurrentPlayer()
-      const currentPlayerTurn = currentPlayer?.id === player.id
-      if (currentPlayerTurn || game.isRoundRevealCards()) {
-        await game.operationManager.cancelPlayerAfkTimer(game.code, player.id)
-        await game.operationManager.startPlayerAfkTimer(game, player.id)
-      }
     } else {
       await game.disconnectPlayer(player)
 
@@ -184,14 +173,6 @@ export class PlayerService extends BaseService {
 
     // Reset disconnectedAfkCount when player reconnects
     player.disconnectedAfkCount = 0
-
-    // Reset the AFK timer if it's this player's turn and they haven't exceeded the "two strikes" limit
-    const currentPlayer = game.getCurrentPlayer()
-    if (currentPlayer?.id === player.id && player.disconnectionsThisTurn < 2) {
-      // Only reset timer if player has 0 or 1 disconnections this turn
-      await game.operationManager.cancelPlayerAfkTimer(game.code, player.id)
-      await game.operationManager.startPlayerAfkTimer(game, player.id)
-    }
 
     await this.updateAndSendGame(game, stateManager)
   }
