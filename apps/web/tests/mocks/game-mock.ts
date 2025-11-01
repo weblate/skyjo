@@ -26,6 +26,7 @@ export const createMockPlayer = (
   forfeited: false,
   forfeitedAt: null,
   hasRevealedCardCount: false,
+  timeout: CoreConstants.TURN_TIMEOUT.CONNECTED,
   ...overrides,
 })
 

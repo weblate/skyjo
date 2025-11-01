@@ -31,20 +31,19 @@ export class PlayerService extends BaseService {
 
     const stateManager = new GameStateTracker(game)
 
-    if (
-      game.isInLobby() &&
-      (await this.countdownQueue.coundownExists(game.code))
-    ) {
+    const hasToCancelCountdown =
+      game.isInLobby() && (await this.countdownQueue.coundownExists(game.code))
+    if (hasToCancelCountdown) {
       await this.countdownQueue.cancelCountdown(game.code)
     }
 
-    if (!game.isPlaying()) {
+    if (game.isPlaying()) {
+      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
+    } else {
       await game.disconnectPlayer(player)
 
       const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
       await this.sendServerMessage(game.code, player.name, messageType)
-    } else {
-      player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
     }
 
     await this.updateAndSendGame(game, stateManager)
@@ -171,6 +170,9 @@ export class PlayerService extends BaseService {
     const stateManager = new GameStateTracker(game)
 
     player.connectionStatus = CoreConstants.CONNECTION_STATUS.CONNECTED
+
+    // Reset disconnectedAfkCount when player reconnects
+    player.disconnectedAfkCount = 0
 
     await this.updateAndSendGame(game, stateManager)
   }

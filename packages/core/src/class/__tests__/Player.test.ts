@@ -53,6 +53,8 @@ describe("Player", () => {
       forfeited: false,
       forfeitedAt: null,
       hasRevealedCardCount: false,
+      disconnectedAfkCount: 0,
+      timeout: Constants.TURN_TIMEOUT.CONNECTED,
     }
 
     const player = new Player().populate(dbPlayer)
@@ -90,6 +92,8 @@ describe("Player", () => {
       forfeited: false,
       forfeitedAt: null,
       hasRevealedCardCount: false,
+      disconnectedAfkCount: 0,
+      timeout: Constants.TURN_TIMEOUT.CONNECTED,
     }
 
     const player = new Player().populate(dbPlayer)
@@ -427,6 +431,7 @@ describe("Player", () => {
           column.map((card) => card.toJson()),
         ),
         turnStartTime: null,
+        timeout: Constants.TURN_TIMEOUT.CONNECTED,
         score: 0,
         scores: [],
         wantsReplay: false,
@@ -460,6 +465,61 @@ describe("Player", () => {
       const result = player.getFirstCardNotVisible()
 
       expect(result).toBeUndefined()
+    })
+  })
+
+  describe("getTimeout", () => {
+    it("should return DISCONNECTED timeout for disconnected players", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
+    })
+
+    it("should return DISCONNECTED timeout for players with LOST connection", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.LOST
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
+    })
+
+    it("should return CONNECTED timeout for connected players with no disconnections", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.CONNECTED
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.CONNECTED)
+    })
+
+    it("should always return DISCONNECTED timeout for disconnected players", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      const timeout = player.getTimeout()
+
+      expect(timeout).toBe(Constants.TURN_TIMEOUT.DISCONNECTED)
+    })
+  })
+
+  describe("getSessionId", () => {
+    it("should return the current session ID", () => {
+      const sessionId = player.getSessionId()
+
+      expect(sessionId).toBeDefined()
+      expect(typeof sessionId).toBe("string")
+    })
+  })
+
+  describe("rotateSession", () => {
+    it("should generate a new session ID and return it", () => {
+      const oldSessionId = player.getSessionId()
+      const newSessionId = player.rotateSession()
+
+      expect(newSessionId).toBeDefined()
+      expect(typeof newSessionId).toBe("string")
+      expect(newSessionId).not.toBe(oldSessionId)
+      expect(player.getSessionId()).toBe(newSessionId)
     })
   })
 

@@ -1,4 +1,4 @@
-import type { Game, Player } from "@skymo/core"
+import { Constants as CoreConstants, type Game, type Player } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import type { Job } from "bullmq"
@@ -29,7 +29,9 @@ export class RevealCardsAfkQueueService extends BaseAfkQueueService<RevealCardsA
   }
 
   public async startTimer(game: Game): Promise<void> {
-    const timeoutDuration = this.getAfkTimeout(game)
+    // Use CONNECTED timeout for reveal cards phase (same for all players)
+    const timeout = CoreConstants.TURN_TIMEOUT.CONNECTED
+    const timeoutDuration = timeout + 1000 // 1 second grace period
     const jobId = this.getJobId(game.code)
 
     Logger.info(`Starting reveal cards AFK timer for game ${game.code}`, {

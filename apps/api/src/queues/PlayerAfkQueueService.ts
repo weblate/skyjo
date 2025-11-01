@@ -43,7 +43,19 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       return
     }
 
-    const timeoutDuration = this.getAfkTimeout(game)
+    const player = game.getPlayerById(playerId)
+    if (!player) {
+      Logger.warn(
+        `Player ${playerId} not found in game ${game.code}, skipping timer start`,
+        {
+          gameCode: game.code,
+          playerId,
+        },
+      )
+      return
+    }
+
+    const timeoutDuration = this.getAfkTimeout(game, player)
     const jobId = this.getJobId(game.code, playerId)
 
     Logger.info(

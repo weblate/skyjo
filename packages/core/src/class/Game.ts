@@ -44,7 +44,7 @@ export interface GameConstructorParams {
 }
 
 export class Game implements GameInterface {
-  private operationManager: GameOperationManagerInterface =
+  operationManager: GameOperationManagerInterface =
     new DefaultGameOperationManager()
   id: string = crypto.randomUUID()
   code: string = Math.random().toString(36).substring(2, 10)
@@ -451,7 +451,8 @@ export class Game implements GameInterface {
       const newCurrentPlayer = this.getCurrentPlayer()
 
       if (newCurrentPlayer) {
-        newCurrentPlayer.turnStartTime = Date.now()
+        newCurrentPlayer.startTurn()
+
         await this.operationManager.startPlayerAfkTimer(
           this,
           newCurrentPlayer.id,
@@ -508,7 +509,9 @@ export class Game implements GameInterface {
         hasPlayedLastTurn: player.hasPlayedLastTurn,
         afkCount: player.afkCount,
         consecutiveAfkCount: player.consecutiveAfkCount,
+        disconnectedAfkCount: player.disconnectedAfkCount,
         turnStartTime: player.turnStartTime,
+        timeout: player.timeout,
         userId: player.userId ?? null,
         sessionId: player.getSessionId(),
         forfeited: player.forfeited,
@@ -737,7 +740,8 @@ export class Game implements GameInterface {
     const currentPlayer = this.getCurrentPlayer()
 
     if (currentPlayer) {
-      currentPlayer.turnStartTime = Date.now()
+      currentPlayer.startTurn()
+
       await this.operationManager.startPlayerAfkTimer(this, currentPlayer.id)
     }
   }

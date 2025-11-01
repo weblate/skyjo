@@ -31,9 +31,9 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   } = useSettings()
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  const turnTime = game.settings.private
-    ? CoreConstants.AFK_TIMEOUT.PRIVATE
-    : CoreConstants.AFK_TIMEOUT.PUBLIC
+  const currentPlayer = game.players[game.turn]
+  const turnTime =
+    currentPlayer?.timeout ?? CoreConstants.TURN_TIMEOUT.CONNECTED
 
   const [timeLeft, setTimeLeft] = useState<number>(turnTime)
 
