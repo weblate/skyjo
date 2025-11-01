@@ -79,7 +79,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(10, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("pick-discard")
@@ -96,7 +96,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(10, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("pick-draw")
@@ -113,7 +113,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(10, true), new Card(8, true), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("pick-draw")
@@ -131,7 +131,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(10, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -154,7 +154,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(10, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(2)
       expect(actions[0].type).toBe("discard")
@@ -177,7 +177,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(5, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -199,7 +199,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(5, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(2)
       expect(actions[0].type).toBe("discard")
@@ -219,7 +219,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(9, true), new Card(8, true), new Card(7, true)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -248,7 +248,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(3, true), new Card(7, true), new Card(2, true)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -274,7 +274,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(20, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(2)
       expect(actions[0].type).toBe("discard")
@@ -294,7 +294,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(5, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("turn")
@@ -312,7 +312,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(5, true), new Card(8, true), new Card(7, true)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("turn")
@@ -330,7 +330,7 @@ describe("Bot - Easy Difficulty", () => {
         [new Card(10, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")

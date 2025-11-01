@@ -114,18 +114,18 @@ export class Constants {
 
   static readonly TURN_TIMEOUT = {
     CONNECTED: 40000,
-    DISCONNECTED: 10000,
+    DISCONNECTED: 1000,
   } as const
 
   static readonly AFK_LIMIT = {
-    CONNECTED: 2, // Total AFK turns while connected
+    CONNECTED: 2,
     DISCONNECTED_CONSECUTIVE: {
-      PUBLIC: 4, // Consecutive AFK turns per disconnection session (public games)
-      PRIVATE: 6, // Consecutive AFK turns per disconnection session (private games)
+      PUBLIC: 4,
+      PRIVATE: 6,
     },
     GAME_TOTAL: {
-      PUBLIC: 8, // Total AFK turns across entire game (public games)
-      PRIVATE: 12, // Total AFK turns across entire game (private games)
+      PUBLIC: 8,
+      PRIVATE: 12,
     },
   } as const
 }

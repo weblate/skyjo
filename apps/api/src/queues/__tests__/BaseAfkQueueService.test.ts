@@ -6,14 +6,6 @@ import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { type AfkJobData, BaseAfkQueueService } from "../BaseAfkQueueService.js"
 
 // Mock other queue services to prevent initialization
-vi.mock("../RevealCardsAfkQueueService.js", () => ({
-  RevealCardsAfkQueueService: {
-    getInstance: vi.fn(),
-    exists: vi.fn().mockReturnValue(false),
-    instance: undefined,
-  },
-}))
-
 vi.mock("../PlayerAfkQueueService.js", () => ({
   PlayerAfkQueueService: {
     getInstance: vi.fn(),

@@ -7,7 +7,6 @@ import {
 import type { ServerChatMessage } from "@skymo/shared/types"
 import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
-import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { GameOperationManager } from "@/realtime/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { SocketManager } from "@/realtime/utils/SocketManager.js"
@@ -27,8 +26,6 @@ export abstract class BaseService {
 
   protected afkQueue: PlayerAfkQueueService =
     PlayerAfkQueueService.getInstance()
-  protected revealCardsAfkQueue: RevealCardsAfkQueueService =
-    RevealCardsAfkQueueService.getInstance()
   protected kickVoteExpirationQueue: KickVoteExpirationQueueService =
     KickVoteExpirationQueueService.getInstance()
 

@@ -43,7 +43,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(10), new Card(11), new Card(12)],
       ]
 
-      const actions = bot.playInitialReveal(game.toJson(), botPlayer.id, 2)
+      const actions = bot.playInitialReveal(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(2)
       expect(actions[0].type).toBe("reveal")
@@ -55,6 +55,8 @@ describe("Bot - Hard Difficulty", () => {
     })
 
     it("should spread across columns for better information", () => {
+      game.settings.initialTurnedCount = 3
+
       botPlayer.cards = [
         [new Card(1), new Card(2), new Card(3)],
         [new Card(4), new Card(5), new Card(6)],
@@ -62,7 +64,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(10), new Card(11), new Card(12)],
       ]
 
-      const actions = bot.playInitialReveal(game.toJson(), botPlayer.id, 3)
+      const actions = bot.playInitialReveal(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(3)
 
@@ -86,7 +88,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(5, true), new Card(7, true), new Card(2, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("pick-discard")
@@ -104,7 +106,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(8, true), new Card(8, true), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -126,7 +128,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(5, true), new Card(7, true), new Card(2, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -148,7 +150,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(10, true), new Card(7, true), new Card(3, true)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -167,7 +169,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(10, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("pick-discard")
@@ -184,7 +186,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(5, true), new Card(3, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("pick-draw")
@@ -207,7 +209,7 @@ describe("Bot - Hard Difficulty", () => {
 
       opponent.cards = [[new Card(20, true)]]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(2)
       expect(actions[0].type).toBe("discard")
@@ -232,7 +234,7 @@ describe("Bot - Hard Difficulty", () => {
       // Opponent has higher score (bot winning)
       opponent.cards = [[new Card(15, true)]]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       // Should still reveal (only option)
       expect(actions).toHaveLength(1)
@@ -254,7 +256,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(11, true), new Card(9, true), new Card(8, true)], // No opportunity
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -277,7 +279,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(12, true), new Card(8, true), new Card(7, true)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -299,7 +301,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(5, true), new Card(7, true), new Card(2, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("pick-discard")
@@ -316,7 +318,7 @@ describe("Bot - Hard Difficulty", () => {
         [new Card(3, true), new Card(7, true), new Card(2, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       // Should NOT take it (5 is not ≤4 and column is not low-value)
       expect(actions).toHaveLength(1)

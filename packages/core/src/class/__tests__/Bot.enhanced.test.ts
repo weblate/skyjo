@@ -45,7 +45,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(10, true), new Card(8, false), new Card(7, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-discard")
@@ -62,7 +62,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(5, true), new Card(8, false), new Card(7, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("replace")
@@ -79,7 +79,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(12, true), new Card(8, true), new Card(3, true)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("replace")
@@ -100,7 +100,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(10, true), new Card(8, false), new Card(7, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-discard")
@@ -121,7 +121,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(4, true), new Card(4, true), new Card(8, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("replace")
@@ -146,7 +146,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(2, true), new Card(0, true), new Card(9, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         // Should discard the 4 in endgame (only keep ≤2, no column opportunity)
         expect(actions).toHaveLength(2)
@@ -174,7 +174,7 @@ describe("Bot - Enhanced Intelligence", () => {
         // Opponent winning: 3 visible points (bot losing by 17 points)
         opponent.cards = [[new Card(3, true), new Card(8, false)]]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-discard")
@@ -195,7 +195,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(10, true), new Card(10, true), new Card(7, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-draw")
@@ -215,7 +215,7 @@ describe("Bot - Enhanced Intelligence", () => {
 
         opponent.cards = [[new Card(5, true), new Card(8, false)]]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("replace")
@@ -234,7 +234,7 @@ describe("Bot - Enhanced Intelligence", () => {
         botPlayer.cards = [[new Card(10, true), new Card(8, false)]]
         opponent.cards = [[new Card(12, true), new Card(8, false)]]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("replace")
@@ -253,7 +253,7 @@ describe("Bot - Enhanced Intelligence", () => {
         ]
         opponent.cards = [[new Card(20, true), new Card(8, false)]]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-draw")
@@ -278,7 +278,7 @@ describe("Bot - Enhanced Intelligence", () => {
         ]
         opponent.cards = [[new Card(15, true), new Card(12, true)]]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("replace") // Should keep 4 when winning
@@ -301,7 +301,7 @@ describe("Bot - Enhanced Intelligence", () => {
         ]
         opponent.cards = [[new Card(2, true), new Card(3, true)]]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("replace") // Should keep 5 when losing
@@ -362,7 +362,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(9, true), new Card(6, false), new Card(5, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-draw") // Should NOT take 4
@@ -380,7 +380,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(10, true), new Card(8, false), new Card(7, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-discard") // Should take ≤3 always
@@ -399,7 +399,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(8, true), new Card(9, true), new Card(7, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-discard")
@@ -419,7 +419,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(11, true), new Card(7, true), new Card(4, false)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("pick-discard") // Should take 4 in endgame
@@ -441,7 +441,7 @@ describe("Bot - Enhanced Intelligence", () => {
           [new Card(8, true), new Card(3, true), new Card(7, true)],
         ]
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions).toHaveLength(1)
         expect(actions[0].type).toBe("replace")

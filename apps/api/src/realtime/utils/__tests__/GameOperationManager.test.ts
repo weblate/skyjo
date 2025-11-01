@@ -20,15 +20,6 @@ vi.mock("@/queues/PlayerAfkQueueService.js", () => ({
   },
 }))
 
-vi.mock("@/queues/RevealCardsAfkQueueService.js", () => ({
-  RevealCardsAfkQueueService: {
-    getInstance: vi.fn().mockReturnValue({
-      startTimer: vi.fn().mockResolvedValue(undefined),
-      cancelTimer: vi.fn().mockResolvedValue(undefined),
-    }),
-  },
-}))
-
 vi.mock("@/realtime/utils/SocketManager.js", () => ({
   SocketManager: {
     getInstance: vi.fn().mockReturnValue({
@@ -116,21 +107,24 @@ describe("GameOperationManager", () => {
   })
 
   describe("startRevealCardsAfkTimer", () => {
-    it("should call revealCardsAfkQueue.startTimer with the game", async () => {
+    it("should call playerAfkQueue.startTimer with the game and player id", async () => {
       const mockGame = { id: "game-id" } as any
-      await gameOperationManager.startRevealCardsAfkTimer(mockGame)
+      await gameOperationManager.startRevealCardsAfkTimer(mockGame, "player-id")
       expect(
-        gameOperationManager["revealCardsAfkQueue"]?.startTimer,
-      ).toHaveBeenCalledWith(mockGame)
+        gameOperationManager["playerAfkQueue"]?.startTimer,
+      ).toHaveBeenCalledWith(mockGame, "player-id")
     })
   })
 
   describe("cancelRevealCardsAfkTimer", () => {
-    it("should call revealCardsAfkQueue.cancelTimer with the game code", async () => {
-      await gameOperationManager.cancelRevealCardsAfkTimer("TEST123")
+    it("should call playerAfkQueue.cancelTimer with the game code and player id", async () => {
+      await gameOperationManager.cancelRevealCardsAfkTimer(
+        "TEST123",
+        "player-id",
+      )
       expect(
-        gameOperationManager["revealCardsAfkQueue"]?.cancelTimer,
-      ).toHaveBeenCalledWith("TEST123")
+        gameOperationManager["playerAfkQueue"]?.cancelTimer,
+      ).toHaveBeenCalledWith("TEST123", "player-id")
     })
   })
 

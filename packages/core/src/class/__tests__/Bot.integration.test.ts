@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import { Constants } from "../../constants.js"
 import { Bot } from "../Bot.js"
 import { Card } from "../Card.js"
@@ -45,7 +45,7 @@ describe("Bot Integration Tests", () => {
       ]
 
       // First action: choose pile
-      const actions1 = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions1 = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions1).toHaveLength(1)
       expect(actions1[0].type).toBe("pick-discard")
@@ -73,7 +73,7 @@ describe("Bot Integration Tests", () => {
       opponent.cards = [[new Card(20, true)]]
 
       // First: choose to draw
-      const actions1 = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions1 = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions1).toHaveLength(1)
       expect(actions1[0].type).toBe("pick-draw")
@@ -83,7 +83,7 @@ describe("Bot Integration Tests", () => {
       game.turnStatus = Constants.TURN_STATUS.THROW_OR_REPLACE
 
       // Second: decide to discard and reveal
-      const actions2 = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions2 = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions2).toHaveLength(2)
       expect(actions2[0].type).toBe("discard")
@@ -105,7 +105,7 @@ describe("Bot Integration Tests", () => {
         [new Card(4, true), new Card(4, true), new Card(4, true)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -128,7 +128,7 @@ describe("Bot Integration Tests", () => {
         [new Card(8, true), new Card(8, true), new Card(8, true)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -160,7 +160,7 @@ describe("Bot Integration Tests", () => {
       opponent.cards = [[new Card(5, true)]]
       opponent2.cards = [[new Card(3, true)]]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       // Should make a decision based on multiple opponents
       expect(actions.length).toBeGreaterThan(0)
@@ -180,10 +180,126 @@ describe("Bot Integration Tests", () => {
         [new Card(5, true), new Card(8, true), new Card(7, true)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("turn")
+    })
+
+    it("should handle error when selectedCardValue is null in THROW_OR_REPLACE", () => {
+      const bot = new Bot("medium")
+
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+      game.turn = game.players.findIndex((p) => p.id === botPlayer.id)
+      game.turnStatus = Constants.TURN_STATUS.THROW_OR_REPLACE
+      game.selectedCardValue = null
+
+      botPlayer.cards = [
+        [new Card(5, true), new Card(8, false), new Card(7, false)],
+      ]
+
+      expect(() => bot.playMove(game.toJson(), botPlayer.id)).toThrow(
+        "selectedCardValue is null in THROW_OR_REPLACE state",
+      )
+    })
+
+    it("should handle error when selectedCardValue is null in REPLACE_A_CARD", () => {
+      const bot = new Bot("medium")
+
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+      game.turn = game.players.findIndex((p) => p.id === botPlayer.id)
+      game.turnStatus = Constants.TURN_STATUS.REPLACE_A_CARD
+      game.selectedCardValue = null
+
+      botPlayer.cards = [
+        [new Card(5, true), new Card(8, false), new Card(7, false)],
+      ]
+
+      expect(() => bot.playMove(game.toJson(), botPlayer.id)).toThrow(
+        "selectedCardValue is null in REPLACE_A_CARD state",
+      )
+    })
+
+    it("should handle error when lastDiscardCardValue is undefined when trying to pick discard", () => {
+      const bot = new Bot("medium")
+
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+      game.turn = game.players.findIndex((p) => p.id === botPlayer.id)
+      game.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
+      game.discardPile = []
+      game.getLastDiscardCardValue = vi.fn().mockReturnValue(undefined)
+
+      // Force shouldTakeDiscardCard to return true (this shouldn't happen normally)
+      botPlayer.cards = [
+        [new Card(-2, true), new Card(8, false), new Card(7, false)],
+      ]
+
+      // Should not take discard if lastDiscardCardValue is undefined
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
+      expect(actions).toHaveLength(1)
+      expect(actions[0].type).toBe("pick-draw")
+    })
+
+    it("should handle multiple opponents with same visible score", () => {
+      const bot = new Bot("medium")
+      const opponent2 = new Player(
+        { name: "Opp2", avatar: Constants.AVATARS.BEE },
+        "opp2-socket",
+      )
+      game.addPlayer(opponent2)
+
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+      game.turn = game.players.findIndex((p) => p.id === botPlayer.id)
+      game.turnStatus = Constants.TURN_STATUS.THROW_OR_REPLACE
+      game.selectedCardValue = 5
+
+      // All players have same visible score
+      botPlayer.cards = [[new Card(10, true), new Card(8, false)]]
+      opponent.cards = [[new Card(10, true), new Card(8, false)]]
+      opponent2.cards = [[new Card(10, true), new Card(8, false)]]
+
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
+
+      // Should still make a valid decision
+      expect(actions.length).toBeGreaterThan(0)
+      expect(actions[0].type).toBeDefined()
+    })
+
+    it("should handle single column scenario", () => {
+      const bot = new Bot("medium")
+      const smallSettings = new Settings()
+      smallSettings.cardPerColumn = 1
+      smallSettings.cardPerRow = 12
+      smallSettings.removeIdenticalColumn = false
+      game.settings = smallSettings
+
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+      game.turn = game.players.findIndex((p) => p.id === botPlayer.id)
+      game.turnStatus = Constants.TURN_STATUS.THROW_OR_REPLACE
+      game.selectedCardValue = 3
+
+      botPlayer.cards = [
+        [
+          new Card(10, true),
+          new Card(8, false),
+          new Card(7, false),
+          new Card(6, false),
+          new Card(5, false),
+          new Card(4, false),
+          new Card(3, false),
+          new Card(2, false),
+          new Card(1, false),
+          new Card(0, false),
+          new Card(-1, false),
+          new Card(-2, false),
+        ],
+      ]
+
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
+
+      expect(actions).toHaveLength(1)
+      expect(actions[0].type).toBe("replace")
+      expect(actions[0].position.col).toBe(0)
     })
 
     it("should handle game with only hidden cards", () => {
@@ -197,7 +313,7 @@ describe("Bot Integration Tests", () => {
         [new Card(5, false), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("turn")
@@ -216,7 +332,7 @@ describe("Bot Integration Tests", () => {
         [new Card(10, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("pick-draw")
@@ -241,7 +357,7 @@ describe("Bot Integration Tests", () => {
         [new Card(10, true), new Card(8, false), new Card(7, false)],
       ]
 
-      const actions = bot.playTurn(game.toJson(), botPlayer.id)
+      const actions = bot.playMove(game.toJson(), botPlayer.id)
 
       expect(actions).toHaveLength(1)
       expect(actions[0].type).toBe("replace")
@@ -262,25 +378,16 @@ describe("Bot Integration Tests", () => {
         [new Card(10), new Card(11), new Card(12)],
       ]
 
-      const easyActions = easyBot.playInitialReveal(
-        game.toJson(),
-        botPlayer.id,
-        2,
-      )
+      const easyActions = easyBot.playInitialReveal(game.toJson(), botPlayer.id)
       const mediumActions = mediumBot.playInitialReveal(
         game.toJson(),
         botPlayer.id,
-        2,
       )
-      const hardActions = hardBot.playInitialReveal(
-        game.toJson(),
-        botPlayer.id,
-        2,
-      )
+      const hardActions = hardBot.playInitialReveal(game.toJson(), botPlayer.id)
 
-      expect(easyActions).toHaveLength(2)
-      expect(mediumActions).toHaveLength(2)
-      expect(hardActions).toHaveLength(2)
+      expect(easyActions).toHaveLength(game.settings.initialTurnedCount)
+      expect(mediumActions).toHaveLength(game.settings.initialTurnedCount)
+      expect(hardActions).toHaveLength(game.settings.initialTurnedCount)
 
       // All should be reveal actions
       easyActions.forEach((a) => expect(a.type).toBe("reveal"))
@@ -336,7 +443,7 @@ describe("Bot Integration Tests", () => {
           game.selectedCardValue = scenario.selectedCard || null
         }
 
-        const actions = bot.playTurn(game.toJson(), botPlayer.id)
+        const actions = bot.playMove(game.toJson(), botPlayer.id)
 
         expect(actions.length).toBeGreaterThan(0)
         expect(actions[0].type).toBeDefined()

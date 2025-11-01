@@ -6,7 +6,6 @@ import { httpApp } from "@/http/index.js"
 import { GameStartCountdownQueueService } from "@/queues/GameStartCountdownQueueService.js"
 import { KickVoteExpirationQueueService } from "@/queues/KickVoteExpirationQueueService.js"
 import { PlayerAfkQueueService } from "@/queues/PlayerAfkQueueService.js"
-import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { initializeSocketServer } from "@/realtime/index.js"
 import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { RedisClient } from "@/redis/client.js"
@@ -48,14 +47,6 @@ const gracefulShutdown = async (signal: string) => {
       const playerAfkQueueService = PlayerAfkQueueService.getInstance()
 
       await playerAfkQueueService.cleanup()
-    }
-
-    if (RevealCardsAfkQueueService.exists()) {
-      Logger.info("Cleaning up RevealCardsAfkQueueService...")
-      const revealCardsAfkQueueService =
-        RevealCardsAfkQueueService.getInstance()
-
-      await revealCardsAfkQueueService.cleanup()
     }
 
     if (KickVoteExpirationQueueService.exists()) {
@@ -133,7 +124,6 @@ const startServer = async () => {
     app.route("/", httpApp)
 
     PlayerAfkQueueService.getInstance()
-    RevealCardsAfkQueueService.getInstance()
     KickVoteExpirationQueueService.getInstance()
     GameStartCountdownQueueService.getInstance()
 

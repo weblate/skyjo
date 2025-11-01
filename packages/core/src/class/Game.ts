@@ -353,6 +353,13 @@ export class Game implements GameInterface {
     if (player.checkRevealedCardCount(this.settings.initialTurnedCount)) {
       player.turnStartTime = null
       player.hasRevealedCardCount = true
+
+      // Cancel individual player's AFK timer when they complete reveals
+      await this.operationManager.cancelRevealCardsAfkTimer(
+        this.code,
+        player.id,
+      )
+
       this.checkCardsToDiscard(player)
 
       if (this.haveAllPlayersRevealedCards())
@@ -664,12 +671,13 @@ export class Game implements GameInterface {
       await this.finishTurn({ wasAfk: false })
     } else {
       this.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
-      // Set turnStartTime for all players during reveal phase
+      // Set turnStartTime and start individual AFK timers for all connected players during reveal phase
       const revealStartTime = Date.now()
-      this.getConnectedPlayers().forEach((player) => {
+      const connectedPlayers = this.getConnectedPlayers()
+      for (const player of connectedPlayers) {
         player.startTurn(revealStartTime)
-      })
-      await this.operationManager.startRevealCardsAfkTimer(this)
+        await this.operationManager.startRevealCardsAfkTimer(this, player.id)
+      }
     }
   }
 
@@ -753,10 +761,20 @@ export class Game implements GameInterface {
   }
 
   private async startRoundAfterInitialReveal() {
-    await this.operationManager.cancelRevealCardsAfkTimer(this.code)
+    // Cancel individual AFK timers for any players who haven't completed yet
+    // (players who completed already had their timers cancelled in revealCard)
+    const connectedPlayers = this.getConnectedPlayers()
+    for (const player of connectedPlayers) {
+      if (!player.hasRevealedCardCount) {
+        await this.operationManager.cancelRevealCardsAfkTimer(
+          this.code,
+          player.id,
+        )
+      }
+    }
 
     // Clear turnStartTime from all players as reveal phase ends
-    this.getConnectedPlayers().forEach((player) => {
+    connectedPlayers.forEach((player) => {
       player.turnStartTime = null
     })
 
@@ -1007,9 +1025,11 @@ export class Game implements GameInterface {
   private async startNewGame() {
     for (const player of this.players) {
       await this.operationManager.cancelPlayerAfkTimer(this.code, player.id)
+      await this.operationManager.cancelRevealCardsAfkTimer(
+        this.code,
+        player.id,
+      )
     }
-
-    await this.operationManager.cancelRevealCardsAfkTimer(this.code)
 
     await this.resetGame()
     this.status = Constants.GAME_STATUS.LOBBY

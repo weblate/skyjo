@@ -5,7 +5,6 @@ import {
 } from "@skymo/core"
 import type { Socket } from "socket.io"
 import { GameStorageQueueService } from "@/queues/GameStorageQueueService.js"
-import { RevealCardsAfkQueueService } from "@/queues/RevealCardsAfkQueueService.js"
 import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { PlayerAfkQueueService } from "../../queues/PlayerAfkQueueService.js"
@@ -16,14 +15,12 @@ export class GameOperationManager implements GameOperationManagerInterface {
 
   private readonly redis?: GameRepository
   private readonly playerAfkQueue?: PlayerAfkQueueService
-  private readonly revealCardsAfkQueue?: RevealCardsAfkQueueService
   private readonly gameStorageQueue?: GameStorageQueueService
   private readonly socketManager?: SocketManager
 
   constructor() {
     this.redis = new GameRepository()
     this.playerAfkQueue = PlayerAfkQueueService.getInstance()
-    this.revealCardsAfkQueue = RevealCardsAfkQueueService.getInstance()
     this.gameStorageQueue = GameStorageQueueService.getInstance()
     this.socketManager = SocketManager.getInstance()
   }
@@ -59,12 +56,15 @@ export class GameOperationManager implements GameOperationManagerInterface {
   //#endregion
 
   //#region afk timer actions
-  async startRevealCardsAfkTimer(game: Game): Promise<void> {
-    await this.revealCardsAfkQueue?.startTimer(game)
+  async startRevealCardsAfkTimer(game: Game, playerId: string): Promise<void> {
+    await this.playerAfkQueue?.startTimer(game, playerId)
   }
 
-  async cancelRevealCardsAfkTimer(gameCode: string): Promise<void> {
-    await this.revealCardsAfkQueue?.cancelTimer(gameCode)
+  async cancelRevealCardsAfkTimer(
+    gameCode: string,
+    playerId: string,
+  ): Promise<void> {
+    await this.playerAfkQueue?.cancelTimer(gameCode, playerId)
   }
 
   async startPlayerAfkTimer(game: Game, playerId: string): Promise<void> {

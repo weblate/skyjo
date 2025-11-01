@@ -2559,9 +2559,10 @@ describe("Game", () => {
         expect(mockOperationManager.cancelPlayerAfkTimer).toHaveBeenCalledTimes(
           2,
         )
+        // cancelRevealCardsAfkTimer should be called for each player (2 times)
         expect(
           mockOperationManager.cancelRevealCardsAfkTimer,
-        ).toHaveBeenCalledWith(game.code)
+        ).toHaveBeenCalledTimes(2)
         expect(game.status).toBe(Constants.GAME_STATUS.LOBBY)
         expect(game.stateVersion).toBe(0)
         expect(game.turn).toBe(0)

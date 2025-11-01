@@ -70,15 +70,35 @@ export class Bot {
 
   /**
    * Play the initial reveal phase
-   * Returns array of reveal actions
+   *
+   * During the initial reveal phase, each player reveals a set number of cards
+   * face-up. The bot's strategy varies by difficulty:
+   * - Easy: Prefers corner and edge positions (statistically lower card values)
+   * - Medium: Spreads reveals across columns to find patterns for column completion
+   * - Hard: Prioritizes corners first, then spreads across columns for maximum information
+   *
+   * @param gameJson - The current game state as JSON
+   * @param botPlayerId - The ID of the bot player
+   * @param count - Number of cards to reveal (typically matches initialTurnedCount setting)
+   * @returns Array of reveal actions indicating which positions to reveal
+   * @throws Error if bot player is not found in game
    */
-  playInitialReveal(
-    gameJson: GameToJson,
-    botPlayerId: string,
-    count: number,
-  ): BotAction[] {
+  playInitialReveal(gameJson: GameToJson, botPlayerId: string): BotAction[] {
     const botPlayer = this.getBotPlayer(gameJson, botPlayerId)
     const hiddenPositions = this.getHiddenCardPositions(botPlayer)
+
+    const alreadyRevealedCount = botPlayer.cards
+      .flat()
+      .filter((card) => card.isVisible).length
+    const nbCardsToReveal = Math.min(
+      gameJson.settings.initialTurnedCount - alreadyRevealedCount,
+      hiddenPositions.length,
+    )
+
+    // Return empty array if no cards need to be revealed
+    if (nbCardsToReveal <= 0 || hiddenPositions.length === 0) {
+      return []
+    }
 
     if (this.difficulty === "easy") {
       // Easy: Prefer corners and edges (statistically lower cards)
@@ -98,7 +118,7 @@ export class Bot {
       // Mix: Some corners/edges, some random
       const selected: Position[] = []
       const preferredCount = Math.min(
-        Math.ceil(count * Bot.EASY_CORNER_EDGE_PREFERENCE),
+        Math.ceil(nbCardsToReveal * Bot.EASY_CORNER_EDGE_PREFERENCE),
         cornerAndEdgePositions.length,
       )
 
@@ -114,7 +134,7 @@ export class Bot {
       const remaining = hiddenPositions.filter(
         (pos) => !selectedSet.has(`${pos.row},${pos.col}`),
       )
-      const remainingCount = count - selected.length
+      const remainingCount = nbCardsToReveal - selected.length
       if (remainingCount > 0) {
         selected.push(...this.selectRandomPositions(remaining, remainingCount))
       }
@@ -130,7 +150,7 @@ export class Bot {
       return this.selectStrategicRevealPositions(
         botPlayer,
         gameJson.settings,
-        count,
+        nbCardsToReveal,
       ).map((position) => ({
         type: "reveal",
         position,
@@ -141,7 +161,7 @@ export class Bot {
     return this.selectHardRevealPositions(
       botPlayer,
       gameJson.settings,
-      count,
+      nbCardsToReveal,
     ).map((position) => ({
       type: "reveal",
       position,
@@ -149,79 +169,156 @@ export class Bot {
   }
 
   /**
-   * Play a complete turn
-   * Returns array of actions to perform
+   * Get the next move/actions based on the current game state
+   *
+   * Returns actions for a single move based on the current turn status.
+   * This method does NOT play a complete turn - it only returns actions
+   * for the current game state. The caller must execute these actions
+   * and continue calling this method until the turn is complete.
+   *
+   * Handles all possible turn statuses:
+   * - CHOOSE_A_PILE: Decide whether to pick from discard or draw pile
+   * - THROW_OR_REPLACE: Decide to keep or discard the drawn card
+   * - REPLACE_A_CARD: Must replace a card (after picking from discard)
+   * - TURN_A_CARD: Must reveal a hidden card
+   *
+   * The bot's decision-making varies significantly by difficulty level,
+   * with harder difficulties using more sophisticated game state assessment,
+   * column completion strategies, and expected value calculations.
+   *
+   * @param gameJson - The current game state as JSON
+   * @param botPlayerId - The ID of the bot player whose turn it is
+   * @returns Array of actions to perform in sequence for this move
+   * @throws Error if bot player not found, invalid game state, or required values are missing
    */
-  playTurn(gameJson: GameToJson, botPlayerId: string): BotAction[] {
+  playMove(gameJson: GameToJson, botPlayerId: string): BotAction[] {
     const botPlayer = this.getBotPlayer(gameJson, botPlayerId)
-    const actions: BotAction[] = []
 
-    // Handle different turn statuses
-    if (gameJson.turnStatus === Constants.TURN_STATUS.CHOOSE_A_PILE) {
-      // Decide whether to pick from discard or draw
-      if (this.shouldTakeDiscardCard(gameJson, botPlayer)) {
-        const replaceAt = this.chooseBestReplacement(
-          gameJson,
-          botPlayer,
-          gameJson.lastDiscardCardValue!,
-          gameJson.settings,
-        )
-        actions.push({
-          type: "pick-discard",
-          replaceAt,
-        })
-      } else {
-        actions.push({ type: "pick-draw" })
-      }
-    } else if (gameJson.turnStatus === Constants.TURN_STATUS.THROW_OR_REPLACE) {
-      // We drew a card, decide to keep or discard
-      const drawnCard = gameJson.selectedCardValue!
+    switch (gameJson.turnStatus) {
+      case Constants.TURN_STATUS.CHOOSE_A_PILE:
+        return this.handleChoosePile(gameJson, botPlayer)
+      case Constants.TURN_STATUS.THROW_OR_REPLACE:
+        return this.handleThrowOrReplace(gameJson, botPlayer)
+      case Constants.TURN_STATUS.REPLACE_A_CARD:
+        return this.handleReplaceCard(gameJson, botPlayer)
+      case Constants.TURN_STATUS.TURN_A_CARD:
+        return this.handleTurnCard(botPlayer, gameJson.settings)
+      default:
+        return []
+    }
+  }
 
-      if (this.shouldKeepDrawnCard(gameJson, botPlayer, drawnCard)) {
-        const replaceAt = this.chooseBestReplacement(
-          gameJson,
-          botPlayer,
-          drawnCard,
-          gameJson.settings,
+  /**
+   * Handle CHOOSE_A_PILE turn status: decide whether to pick from discard or draw
+   */
+  private handleChoosePile(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+  ): BotAction[] {
+    if (this.shouldTakeDiscardCard(gameJson, botPlayer)) {
+      const discardValue = gameJson.lastDiscardCardValue
+      if (discardValue === undefined) {
+        throw new Error(
+          `Cannot pick from discard: lastDiscardCardValue is undefined`,
         )
-        actions.push({
-          type: "replace",
-          position: replaceAt,
-        })
-      } else {
-        actions.push({ type: "discard" })
-        // After discarding, must reveal a card
-        const turnPosition = this.chooseCardToReveal(
-          botPlayer,
-          gameJson.settings,
-        )
-        actions.push({
-          type: "turn",
-          position: turnPosition,
-        })
       }
-    } else if (gameJson.turnStatus === Constants.TURN_STATUS.REPLACE_A_CARD) {
-      // Picked from discard, must replace
       const replaceAt = this.chooseBestReplacement(
         gameJson,
         botPlayer,
-        gameJson.selectedCardValue!,
+        discardValue,
         gameJson.settings,
       )
-      actions.push({
-        type: "replace",
-        position: replaceAt,
-      })
-    } else if (gameJson.turnStatus === Constants.TURN_STATUS.TURN_A_CARD) {
-      // Must reveal a card
-      const turnPosition = this.chooseCardToReveal(botPlayer, gameJson.settings)
-      actions.push({
-        type: "turn",
-        position: turnPosition,
-      })
+      return [
+        {
+          type: "pick-discard",
+          replaceAt,
+        },
+      ]
+    }
+    return [{ type: "pick-draw" }]
+  }
+
+  /**
+   * Handle THROW_OR_REPLACE turn status: decide to keep or discard drawn card
+   */
+  private handleThrowOrReplace(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+  ): BotAction[] {
+    const drawnCard = gameJson.selectedCardValue
+    if (drawnCard === null) {
+      throw new Error(
+        `Cannot process turn: selectedCardValue is null in THROW_OR_REPLACE state`,
+      )
     }
 
-    return actions
+    if (this.shouldKeepDrawnCard(gameJson, botPlayer, drawnCard)) {
+      const replaceAt = this.chooseBestReplacement(
+        gameJson,
+        botPlayer,
+        drawnCard,
+        gameJson.settings,
+      )
+      return [
+        {
+          type: "replace",
+          position: replaceAt,
+        },
+      ]
+    }
+
+    // After discarding, must reveal a card
+    const turnPosition = this.chooseCardToReveal(botPlayer, gameJson.settings)
+    return [
+      { type: "discard" },
+      {
+        type: "turn",
+        position: turnPosition,
+      },
+    ]
+  }
+
+  /**
+   * Handle REPLACE_A_CARD turn status: must replace the picked discard card
+   */
+  private handleReplaceCard(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+  ): BotAction[] {
+    const selectedValue = gameJson.selectedCardValue
+    if (selectedValue === null) {
+      throw new Error(
+        `Cannot replace card: selectedCardValue is null in REPLACE_A_CARD state`,
+      )
+    }
+    const replaceAt = this.chooseBestReplacement(
+      gameJson,
+      botPlayer,
+      selectedValue,
+      gameJson.settings,
+    )
+    return [
+      {
+        type: "replace",
+        position: replaceAt,
+      },
+    ]
+  }
+
+  /**
+   * Handle TURN_A_CARD turn status: must reveal a card
+   */
+  private handleTurnCard(
+    botPlayer: PlayerToJson,
+    settings: SettingsToJson,
+  ): BotAction[] {
+    const turnPosition = this.chooseCardToReveal(botPlayer, settings)
+    return [
+      {
+        type: "turn",
+        position: turnPosition,
+      },
+    ]
   }
 
   //#region Analysis Functions
@@ -239,7 +336,20 @@ export class Bot {
 
   /**
    * Calculate expected value of an unknown card based on game state
-   * Returns a weighted average based on difficulty level
+   *
+   * Different difficulty levels use different strategies:
+   * - Easy: Simple heuristic (average card value ≈ 6)
+   * - Medium: Slightly pessimistic assumption (≈ 5.5)
+   * - Hard: Calculates based on visible cards across all players and discard pile
+   *   Uses statistical inference: if many low cards are visible, remaining cards
+   *   are likely higher value (since players preferentially take low cards)
+   *
+   * Skyjo deck composition: -2(5x), -1(10x), 0-12(10x each) = 150 cards total
+   * Average deck value ≈ 5.5 (accounting for negative cards)
+   *
+   * @param gameJson - The current game state
+   * @param botPlayerId - Bot player ID (for context, not directly used)
+   * @returns Expected value of an unknown card (used for decision-making)
    */
   private calculateExpectedCardValue(
     gameJson: GameToJson,
@@ -291,11 +401,22 @@ export class Bot {
 
   /**
    * Assess current game state to determine strategy
-   * Returns 'winning', 'losing', or 'close'
    *
-   * Enhanced to consider hidden card counts (publicly visible information):
-   * - More hidden cards = more uncertainty about final score
-   * - Adjust thresholds based on uncertainty to make better strategic decisions
+   * Compares bot's estimated total score against the best opponent's estimated score.
+   * Uses visible scores + (hidden cards × expected card value) for estimation.
+   *
+   * Returns:
+   * - 'winning': Bot is ahead by at least 5 points (adjusted for uncertainty)
+   * - 'losing': Bot is behind by at least 5 points (adjusted for uncertainty)
+   * - 'close': Score difference is within the threshold range
+   *
+   * Uncertainty adjustment: More hidden cards = wider "close" range.
+   * This prevents overconfidence when many cards are still unknown.
+   * Base thresholds: -5 (winning) and +5 (losing), adjusted by ±0.5 per hidden card.
+   *
+   * @param gameJson - The current game state
+   * @param botPlayerId - The bot player's ID
+   * @returns 'winning', 'losing', or 'close' based on estimated score comparison
    */
   private assessGameState(
     gameJson: GameToJson,
@@ -394,6 +515,21 @@ export class Bot {
     return this.getHiddenCardPositions(player).length
   }
 
+  /**
+   * Find columns that could be completed with matching cards
+   *
+   * A column opportunity exists when:
+   * - removeIdenticalColumn setting is enabled
+   * - Column has at least 1 visible card and at least 1 hidden card
+   * - All visible cards in the column have the same value
+   *
+   * This helps the bot identify strategic opportunities to complete columns,
+   * which removes all cards in that column from the score (huge benefit).
+   *
+   * @param player - The player's card grid
+   * @param settings - Game settings (checks removeIdenticalColumn)
+   * @returns Array of column opportunities with matching value and hidden positions
+   */
   private findColumnOpportunities(
     player: PlayerToJson,
     settings: SettingsToJson,
@@ -410,8 +546,12 @@ export class Bot {
       if (visibleCards.length === 0 || hiddenCards.length === 0) return
 
       // Check if visible cards match
-      const firstValue = visibleCards[0].value!
-      const allMatch = visibleCards.every((card) => card.value === firstValue)
+      const firstCard = visibleCards[0]
+      if (firstCard.value === undefined) return
+      const firstValue = firstCard.value
+      const allMatch = visibleCards.every(
+        (card) => card.value !== undefined && card.value === firstValue,
+      )
 
       if (allMatch && visibleCards.length >= 1) {
         // Fixed bug: properly map hidden card positions by finding their actual row indices
@@ -449,50 +589,79 @@ export class Bot {
     if (this.countHiddenCards(botPlayer) <= Bot.LAST_CARD_THRESHOLD)
       return false
 
-    if (this.difficulty === "easy") {
-      // Easy: Take if ≤4, or negative values, or ≤5 when losing badly
-      if (discardValue <= Bot.EASY_DISCARD_THRESHOLD) return true
-      if (discardValue < 0) return true // Always take negative values
-
-      // If losing badly, take ≤5
-      const gameState = this.assessGameState(gameJson, botPlayer.id)
-      if (
-        gameState === "losing" &&
-        discardValue <= Bot.EASY_DISCARD_LOSING_THRESHOLD
-      )
-        return true
-
-      return false
-    }
-
-    if (this.difficulty === "medium") {
-      // Medium: Take if ≤4, negative, OR helps complete a good column
-      if (discardValue <= Bot.MEDIUM_DISCARD_THRESHOLD) return true
-      if (discardValue < 0) return true
-
-      const opportunities = this.findColumnOpportunities(
-        botPlayer,
-        gameJson.settings,
-      )
-
-      // Only take for column if it's a reasonable value (≤7) or game state requires it
-      const matchingOpp = opportunities.find(
-        (opp) => opp.matchingValue === discardValue,
-      )
-      if (matchingOpp) {
-        // Take if column value is reasonable or we're desperate
-        if (discardValue <= Bot.MEDIUM_COLUMN_THRESHOLD) return true
-
-        const gameState = this.assessGameState(gameJson, botPlayer.id)
-        return gameState === "losing"
-      }
-
-      return false
-    }
-
-    // Hard: Take if ≤3, negative, OR helps complete low-value column (≤4)
-    if (discardValue <= Bot.HARD_DISCARD_THRESHOLD) return true
+    // Always take negative values (common across all difficulties)
     if (discardValue < 0) return true
+
+    switch (this.difficulty) {
+      case "easy":
+        return this.shouldTakeDiscardCardEasy(gameJson, botPlayer, discardValue)
+      case "medium":
+        return this.shouldTakeDiscardCardMedium(
+          gameJson,
+          botPlayer,
+          discardValue,
+        )
+      case "hard":
+        return this.shouldTakeDiscardCardHard(gameJson, botPlayer, discardValue)
+      default:
+        return false
+    }
+  }
+
+  private shouldTakeDiscardCardEasy(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+    discardValue: number,
+  ): boolean {
+    // Easy: Take if ≤4, or ≤5 when losing badly
+    if (discardValue <= Bot.EASY_DISCARD_THRESHOLD) return true
+
+    // If losing badly, take ≤5
+    const gameState = this.assessGameState(gameJson, botPlayer.id)
+    if (
+      gameState === "losing" &&
+      discardValue <= Bot.EASY_DISCARD_LOSING_THRESHOLD
+    )
+      return true
+
+    return false
+  }
+
+  private shouldTakeDiscardCardMedium(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+    discardValue: number,
+  ): boolean {
+    // Medium: Take if ≤4, OR helps complete a good column
+    if (discardValue <= Bot.MEDIUM_DISCARD_THRESHOLD) return true
+
+    const opportunities = this.findColumnOpportunities(
+      botPlayer,
+      gameJson.settings,
+    )
+
+    // Only take for column if it's a reasonable value (≤7) or game state requires it
+    const matchingOpp = opportunities.find(
+      (opp) => opp.matchingValue === discardValue,
+    )
+    if (matchingOpp) {
+      // Take if column value is reasonable or we're desperate
+      if (discardValue <= Bot.MEDIUM_COLUMN_THRESHOLD) return true
+
+      const gameState = this.assessGameState(gameJson, botPlayer.id)
+      return gameState === "losing"
+    }
+
+    return false
+  }
+
+  private shouldTakeDiscardCardHard(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+    discardValue: number,
+  ): boolean {
+    // Hard: Take if ≤3, OR helps complete low-value column (≤4)
+    if (discardValue <= Bot.HARD_DISCARD_THRESHOLD) return true
 
     const opportunities = this.findColumnOpportunities(
       botPlayer,
@@ -524,63 +693,82 @@ export class Bot {
     botPlayer: PlayerToJson,
     drawnCard: number,
   ): boolean {
-    if (this.difficulty === "easy") {
-      // Easy: Keep if ≤4, negative values, or decent card when losing
-      if (drawnCard <= Bot.EASY_DISCARD_THRESHOLD) return true
-      if (drawnCard < 0) return true // Always keep negative values
+    // Always keep negative values (common across all difficulties)
+    if (drawnCard < 0) return true
 
+    switch (this.difficulty) {
+      case "easy":
+        return this.shouldKeepDrawnCardEasy(gameJson, botPlayer, drawnCard)
+      case "medium":
+        return this.shouldKeepDrawnCardMedium(gameJson, botPlayer, drawnCard)
+      case "hard":
+        return this.shouldKeepDrawnCardHard(gameJson, botPlayer, drawnCard)
+      default:
+        return false
+    }
+  }
+
+  private shouldKeepDrawnCardEasy(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+    drawnCard: number,
+  ): boolean {
+    // Easy: Keep if ≤4, or decent card when losing
+    if (drawnCard <= Bot.EASY_DISCARD_THRESHOLD) return true
+
+    const gameState = this.assessGameState(gameJson, botPlayer.id)
+
+    // If losing, keep mediocre cards (≤7)
+    if (gameState === "losing" && drawnCard <= Bot.EASY_DRAWN_LOSING_THRESHOLD)
+      return true
+
+    // If close or winning, only keep good cards (≤5)
+    if (gameState === "close" && drawnCard <= Bot.EASY_DRAWN_CLOSE_THRESHOLD)
+      return true
+
+    return false
+  }
+
+  private shouldKeepDrawnCardMedium(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+    drawnCard: number,
+  ): boolean {
+    // Medium: Keep if ≤4, OR helps build a reasonable column
+    if (drawnCard <= Bot.MEDIUM_DRAWN_THRESHOLD) return true
+
+    const opportunities = this.findColumnOpportunities(
+      botPlayer,
+      gameJson.settings,
+    )
+
+    const matchingOpp = opportunities.find(
+      (opp) => opp.matchingValue === drawnCard,
+    )
+    if (matchingOpp) {
+      // Keep for column only if value is reasonable (≤7)
+      if (drawnCard <= Bot.MEDIUM_COLUMN_THRESHOLD) return true
+
+      // Or if we're losing badly
       const gameState = this.assessGameState(gameJson, botPlayer.id)
-
-      // If losing, keep mediocre cards (≤7)
-      if (
-        gameState === "losing" &&
-        drawnCard <= Bot.EASY_DRAWN_LOSING_THRESHOLD
-      )
-        return true
-
-      // If close or winning, only keep good cards (≤5)
-      if (gameState === "close" && drawnCard <= Bot.EASY_DRAWN_CLOSE_THRESHOLD)
-        return true
-
-      return false
+      return gameState === "losing"
     }
 
-    if (this.difficulty === "medium") {
-      // Medium: Keep if ≤4, negative, OR helps build a reasonable column
-      if (drawnCard <= Bot.MEDIUM_DRAWN_THRESHOLD) return true
-      if (drawnCard < 0) return true
+    // Keep decent cards (≤6) if we're in a close game
+    const gameState = this.assessGameState(gameJson, botPlayer.id)
+    if (gameState === "close" && drawnCard <= Bot.MEDIUM_DRAWN_CLOSE_THRESHOLD)
+      return true
 
-      const opportunities = this.findColumnOpportunities(
-        botPlayer,
-        gameJson.settings,
-      )
+    return false
+  }
 
-      const matchingOpp = opportunities.find(
-        (opp) => opp.matchingValue === drawnCard,
-      )
-      if (matchingOpp) {
-        // Keep for column only if value is reasonable (≤7)
-        if (drawnCard <= Bot.MEDIUM_COLUMN_THRESHOLD) return true
-
-        // Or if we're losing badly
-        const gameState = this.assessGameState(gameJson, botPlayer.id)
-        return gameState === "losing"
-      }
-
-      // Keep decent cards (≤6) if we're in a close game
-      const gameState = this.assessGameState(gameJson, botPlayer.id)
-      if (
-        gameState === "close" &&
-        drawnCard <= Bot.MEDIUM_DRAWN_CLOSE_THRESHOLD
-      )
-        return true
-
-      return false
-    }
-
+  private shouldKeepDrawnCardHard(
+    gameJson: GameToJson,
+    botPlayer: PlayerToJson,
+    drawnCard: number,
+  ): boolean {
     // Hard: Advanced decision-making with probability and game state
     if (drawnCard <= Bot.HARD_DRAWN_THRESHOLD) return true
-    if (drawnCard < 0) return true // Always keep negatives
 
     const opportunities = this.findColumnOpportunities(
       botPlayer,
@@ -607,7 +795,7 @@ export class Bot {
 
     // If winning, be conservative (only keep ≤4)
     if (gameState === "winning") {
-      return drawnCard === Bot.HARD_COLUMN_LOW_VALUE_THRESHOLD
+      return drawnCard <= Bot.HARD_COLUMN_LOW_VALUE_THRESHOLD
     }
 
     // If losing, be more aggressive (keep ≤5)
@@ -655,6 +843,11 @@ export class Bot {
         ...visiblePositions.map((v) => v.pos),
         ...hiddenPositions,
       ]
+      if (allPositions.length === 0) {
+        throw new Error(
+          `No valid positions available for replacement in bot player ${botPlayer.id}`,
+        )
+      }
       return allPositions[Math.floor(Math.random() * allPositions.length)]
     }
 
@@ -662,6 +855,7 @@ export class Bot {
     let bestPosition: Position | null = null
     let bestScore = -Number.MAX_SAFE_INTEGER
 
+    let hasValidPosition = false
     botPlayer.cards.forEach((column, col) => {
       column.forEach((card, row) => {
         const position = { row, col }
@@ -676,11 +870,18 @@ export class Bot {
         if (score > bestScore) {
           bestScore = score
           bestPosition = position
+          hasValidPosition = true
         }
       })
     })
 
-    return bestPosition || { row: 0, col: 0 }
+    if (!hasValidPosition || bestPosition === null) {
+      throw new Error(
+        `No valid position found for replacement in bot player ${botPlayer.id}`,
+      )
+    }
+
+    return bestPosition
   }
 
   private evaluateReplacement(
@@ -692,13 +893,21 @@ export class Bot {
   ): number {
     let score = 0
 
-    const currentCard = botPlayer.cards[position.col][position.row]
+    // Validate position exists
+    const column = botPlayer.cards[position.col]
+    if (!column || position.row >= column.length) {
+      throw new Error(
+        `Invalid position: column ${position.col}, row ${position.row} does not exist`,
+      )
+    }
+
+    const currentCard = column[position.row]
     const expectedValue = this.calculateExpectedCardValue(
       gameJson,
       botPlayer.id,
     )
     const currentValue = currentCard.isVisible
-      ? currentCard.value!
+      ? (currentCard.value ?? expectedValue)
       : expectedValue
 
     // Base score: improvement in card value
@@ -706,7 +915,6 @@ export class Bot {
 
     // Bonus for column completion
     if (settings.removeIdenticalColumn) {
-      const column = botPlayer.cards[position.col]
       const visibleInColumn = column.filter(
         (c, r) => c.isVisible || r === position.row,
       )
@@ -714,7 +922,8 @@ export class Bot {
       if (visibleInColumn.length === column.length) {
         // Would complete column
         const allMatch = visibleInColumn.every((c, r) => {
-          const value = r === position.row ? newCardValue : c.value!
+          const value =
+            r === position.row ? newCardValue : (c.value ?? expectedValue)
           return value === newCardValue
         })
 
@@ -747,6 +956,7 @@ export class Bot {
       if (
         thisColumnOpp &&
         currentCard.isVisible &&
+        currentCard.value !== undefined &&
         currentCard.value === thisColumnOpp.matchingValue &&
         newCardValue !== thisColumnOpp.matchingValue
       ) {
@@ -764,8 +974,28 @@ export class Bot {
     const hiddenPositions = this.getHiddenCardPositions(botPlayer)
 
     if (hiddenPositions.length === 0) {
-      // No hidden cards, return any position
-      return { row: 0, col: 0 }
+      // No hidden cards available - this should not happen in normal gameplay
+      // but if it does, we need to validate the player has cards
+      if (
+        botPlayer.cards.length === 0 ||
+        botPlayer.cards.every((col) => col.length === 0)
+      ) {
+        throw new Error(
+          `Bot player ${botPlayer.id} has no cards to reveal or choose from`,
+        )
+      }
+      // All cards are visible - this is an edge case where bot must reveal something
+      // Return first available position (should be handled by game logic)
+      for (let col = 0; col < botPlayer.cards.length; col++) {
+        const column = botPlayer.cards[col]
+        if (!column) continue
+        for (let row = 0; row < column.length; row++) {
+          return { row, col }
+        }
+      }
+      throw new Error(
+        `Bot player ${botPlayer.id} has no valid positions for card reveal`,
+      )
     }
 
     // Check endgame protection
@@ -809,7 +1039,14 @@ export class Bot {
 
   /**
    * Shuffle array using Fisher-Yates algorithm and return first `count` elements
-   * More uniform and efficient than sort-based shuffling
+   *
+   * Fisher-Yates shuffle is O(n) and produces uniform random distribution.
+   * Only shuffles as many elements as needed (not the entire array), optimizing
+   * for cases where count << array.length.
+   *
+   * @param positions - Array of positions to shuffle
+   * @param count - Number of elements to return
+   * @returns Array of randomly selected positions
    */
   private selectRandomPositions(
     positions: Position[],
@@ -831,6 +1068,18 @@ export class Bot {
     return shuffled.slice(0, limit)
   }
 
+  /**
+   * Select strategic positions for initial reveal (Medium difficulty)
+   *
+   * Strategy: Reveal one card from as many different columns as possible.
+   * This maximizes information gain about card values across the grid,
+   * helping identify potential column completion opportunities early.
+   *
+   * @param botPlayer - The bot player's card grid
+   * @param settings - Game settings
+   * @param count - Number of cards to reveal
+   * @returns Array of positions to reveal
+   */
   private selectStrategicRevealPositions(
     botPlayer: PlayerToJson,
     settings: SettingsToJson,
@@ -851,20 +1100,33 @@ export class Bot {
       }
     }
 
-    // Second pass: Fill remaining randomly - use Set for O(1) lookup
+    // Second pass: Fill remaining randomly
     const selectedSet = new Set(selected.map((p) => `${p.row},${p.col}`))
     const remaining = hiddenPositions.filter(
       (pos) => !selectedSet.has(`${pos.row},${pos.col}`),
     )
-    while (selected.length < count && remaining.length > 0) {
-      const index = Math.floor(Math.random() * remaining.length)
-      selected.push(remaining[index])
-      remaining.splice(index, 1)
+    // Use selectRandomPositions to avoid O(n) splice operations
+    if (remaining.length > 0 && selected.length < count) {
+      const needed = count - selected.length
+      const randomSelection = this.selectRandomPositions(remaining, needed)
+      selected.push(...randomSelection)
     }
 
     return selected
   }
 
+  /**
+   * Select strategic positions for initial reveal (Hard difficulty)
+   *
+   * Strategy: Prioritize corner positions (statistically lower card values),
+   * then spread across columns to maximize information gain.
+   * Combines statistical advantage (corners/edges) with strategic information gathering.
+   *
+   * @param botPlayer - The bot player's card grid
+   * @param settings - Game settings (for grid dimensions)
+   * @param count - Number of cards to reveal
+   * @returns Array of positions to reveal
+   */
   private selectHardRevealPositions(
     botPlayer: PlayerToJson,
     settings: SettingsToJson,
@@ -915,10 +1177,11 @@ export class Bot {
     const remaining = hiddenPositions.filter(
       (pos) => !selectedSet.has(`${pos.row},${pos.col}`),
     )
-    while (selected.length < count && remaining.length > 0) {
-      const index = Math.floor(Math.random() * remaining.length)
-      selected.push(remaining[index])
-      remaining.splice(index, 1)
+    // Use selectRandomPositions to avoid O(n) splice operations
+    if (remaining.length > 0 && selected.length < count) {
+      const needed = count - selected.length
+      const randomSelection = this.selectRandomPositions(remaining, needed)
+      selected.push(...randomSelection)
     }
 
     return selected

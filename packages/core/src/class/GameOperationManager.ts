@@ -12,8 +12,8 @@ export interface GameOperationManagerInterface {
   updateGame(game: Game): Promise<void>
   removeGame(gameCode: string): Promise<void>
 
-  startRevealCardsAfkTimer(game: Game): Promise<void>
-  cancelRevealCardsAfkTimer(gameCode: string): Promise<void>
+  startRevealCardsAfkTimer(game: Game, playerId: string): Promise<void>
+  cancelRevealCardsAfkTimer(gameCode: string, playerId: string): Promise<void>
   startPlayerAfkTimer(game: Game, playerId: string): Promise<void>
   cancelPlayerAfkTimer(gameCode: string, playerId: string): Promise<void>
 
