@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto"
 import type { Game, Player } from "@skymo/core"
 import { Constants as CoreConstants } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
@@ -5,6 +6,7 @@ import { Logger } from "@skymo/logger"
 import { GameOperationManager } from "@/realtime/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { SocketManager } from "@/realtime/utils/SocketManager.js"
+import { RedisClient } from "@/redis/client.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { BaseQueueService } from "./BaseQueueService.js"
 
@@ -218,47 +220,105 @@ export abstract class BaseAfkQueueService<
     })
   }
 
-  protected async lockGame(game: Game) {
-    Logger.info(`Locking game ${game.code} for AFK processing`, {
-      gameCode: game.code,
-    })
+  /**
+   * Acquire Redis distributed lock for reveal phase AFK processing
+   * Polls for lock availability up to the specified timeout
+   */
+  protected async acquireLockWithPolling(
+    gameCode: string,
+    timeoutMs: number,
+  ): Promise<string> {
+    const lockKey = `game:${gameCode}:reveal-afk-lock`
+    const startTime = Date.now()
 
-    if (game.processingAfk) {
-      throw new CError("Game is already processing afk", {
-        level: "error",
-        code: ErrorConstants.ERROR.GAME_ALREADY_PROCESSING_AFK,
-        meta: {
-          gameCode: game.code,
-        },
-      })
+    while (Date.now() - startTime < timeoutMs) {
+      const lockToken = randomUUID()
+      const client = await RedisClient["getClient"]()
+
+      try {
+        const result = await client.set(lockKey, lockToken, {
+          NX: true,
+          EX: 30,
+        })
+
+        if (result === "OK") {
+          Logger.debug(
+            `Acquired reveal AFK lock for game ${gameCode} (token: ${lockToken})`,
+            {
+              gameCode,
+              lockToken,
+              lockKey,
+            },
+          )
+          return lockToken
+        }
+      } catch (error) {
+        Logger.warn(`Error attempting to acquire lock for game ${gameCode}`, {
+          gameCode,
+          error: error instanceof Error ? error.message : String(error),
+        })
+      }
+
+      await new Promise((resolve) => setTimeout(resolve, 100))
     }
 
-    game.processingAfk = true
-    await this.redis.updateGame(game)
-
-    Logger.debug(`Game ${game.code} locked successfully`, {
-      gameCode: game.code,
+    throw new CError(`Timeout acquiring reveal AFK lock for game ${gameCode}`, {
+      code: ErrorConstants.ERROR.GAME_LOCK_TIMEOUT,
+      level: "error",
+      meta: { gameCode, timeoutMs },
     })
   }
 
-  protected async unlockGame(game: Game) {
-    Logger.info(`Unlocking game ${game.code} from AFK processing`, {
-      gameCode: game.code,
-    })
+  /**
+   * Release Redis distributed lock with token validation
+   */
+  protected async releaseLock(
+    gameCode: string,
+    lockToken: string,
+  ): Promise<void> {
+    const lockKey = `game:${gameCode}:reveal-afk-lock`
+    const client = await RedisClient["getClient"]()
 
     try {
-      game.processingAfk = false
-      await this.redis.updateGame(game)
+      // Only delete if the token matches (prevents releasing someone else's lock)
+      const currentToken = await client.get(lockKey)
 
-      Logger.debug(`Game ${game.code} unlocked successfully`, {
-        gameCode: game.code,
-      })
+      if (currentToken === lockToken) {
+        await client.del(lockKey)
+        Logger.debug(
+          `Released reveal AFK lock for game ${gameCode} (token: ${lockToken})`,
+          {
+            gameCode,
+            lockToken,
+            lockKey,
+          },
+        )
+      } else if (currentToken === null) {
+        Logger.debug(
+          `Lock already expired for game ${gameCode} (token: ${lockToken})`,
+          {
+            gameCode,
+            lockToken,
+            lockKey,
+          },
+        )
+      } else {
+        Logger.warn(
+          `Lock token mismatch for game ${gameCode} - not releasing`,
+          {
+            gameCode,
+            expectedToken: lockToken,
+            actualToken: currentToken,
+            lockKey,
+          },
+        )
+      }
     } catch (error) {
-      Logger.error(`Failed to unlock game ${game.code}`, {
-        gameCode: game.code,
+      Logger.error(`Error releasing lock for game ${gameCode}`, {
+        gameCode,
+        lockToken,
         error: error instanceof Error ? error.message : String(error),
       })
-      throw error
     }
   }
 }

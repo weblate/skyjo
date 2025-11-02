@@ -114,7 +114,7 @@ export class Constants {
 
   static readonly TURN_TIMEOUT = {
     CONNECTED: 40000,
-    DISCONNECTED: 1000,
+    DISCONNECTED: 10000,
   } as const
 
   static readonly AFK_LIMIT = {

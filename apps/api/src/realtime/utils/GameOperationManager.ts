@@ -57,25 +57,25 @@ export class GameOperationManager implements GameOperationManagerInterface {
 
   //#region afk timer actions
   async startRevealCardsAfkTimer(game: Game, playerId: string): Promise<void> {
-    await this.playerAfkQueue?.startTimer(game, playerId)
+    await this.playerAfkQueue?.startTimer(game, playerId, "reveal")
   }
 
   async cancelRevealCardsAfkTimer(
     gameCode: string,
     playerId: string,
   ): Promise<void> {
-    await this.playerAfkQueue?.cancelTimer(gameCode, playerId)
+    await this.playerAfkQueue?.cancelTimer(gameCode, playerId, "reveal")
   }
 
   async startPlayerAfkTimer(game: Game, playerId: string): Promise<void> {
-    await this.playerAfkQueue?.startTimer(game, playerId)
+    await this.playerAfkQueue?.startTimer(game, playerId, "turn")
   }
 
   async cancelPlayerAfkTimer(
     gameCode: string,
     playerId: string,
   ): Promise<void> {
-    await this.playerAfkQueue?.cancelTimer(gameCode, playerId)
+    await this.playerAfkQueue?.cancelTimer(gameCode, playerId, "turn")
   }
 
   //#endregion

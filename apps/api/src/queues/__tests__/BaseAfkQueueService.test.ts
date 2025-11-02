@@ -1,5 +1,4 @@
 import { Constants as CoreConstants, type Game, type Player } from "@skymo/core"
-import { CError } from "@skymo/error"
 import { Job } from "bullmq"
 import { afterEach, beforeEach, describe, expect, it, vi } from "vitest"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
@@ -194,14 +193,6 @@ class TestAfkQueueService extends BaseAfkQueueService<TestAfkJobData> {
     stateManager: GameStateTracker,
   ): Promise<void> {
     return this.updateAndSendGame(game, stateManager)
-  }
-
-  public async lockGamePublic(game: Game): Promise<void> {
-    return this.lockGame(game)
-  }
-
-  public async unlockGamePublic(game: Game): Promise<void> {
-    return this.unlockGame(game)
   }
 
   // Expose protected properties for testing
@@ -464,32 +455,6 @@ describe("BaseAfkQueueService", () => {
       expect(updateGameMock).toHaveBeenCalledWith(mockGame, {
         test: "operations",
       })
-    })
-  })
-
-  describe("lockGame and unlockGame", () => {
-    it("should lock game for processing", async () => {
-      await queueService.lockGamePublic(mockGame)
-
-      expect(mockGame.processingAfk).toBe(true)
-      expect(queueService.getRedis().updateGame).toHaveBeenCalledWith(mockGame)
-    })
-
-    it("should throw error when game is already processing", async () => {
-      mockGame.processingAfk = true
-
-      await expect(queueService.lockGamePublic(mockGame)).rejects.toThrow(
-        CError,
-      )
-    })
-
-    it("should unlock game after processing", async () => {
-      mockGame.processingAfk = true
-
-      await queueService.unlockGamePublic(mockGame)
-
-      expect(mockGame.processingAfk).toBe(false)
-      expect(queueService.getRedis().updateGame).toHaveBeenCalledWith(mockGame)
     })
   })
 })

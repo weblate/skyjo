@@ -14,13 +14,12 @@ export interface PlayerAfkJobData {
 
 export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData> {
   private static instance: PlayerAfkQueueService
-  private readonly bot: Bot
+  private readonly bot = new Bot()
 
   private readonly timeoutBetweenActions = 800
 
   private constructor() {
     super("player-afk-timer")
-    this.bot = new Bot("medium")
   }
 
   public static getInstance(): PlayerAfkQueueService {
@@ -33,19 +32,11 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     return PlayerAfkQueueService.instance !== null
   }
 
-  public async startTimer(game: Game, playerId: string): Promise<void> {
-    // Don't start timer if game is already processing AFK
-    if (game.processingAfk) {
-      Logger.debug(
-        `Game ${game.code} is processing AFK, skipping timer start for player ${playerId}`,
-        {
-          gameCode: game.code,
-          playerId,
-        },
-      )
-      return
-    }
-
+  public async startTimer(
+    game: Game,
+    playerId: string,
+    timerType: "reveal" | "turn",
+  ): Promise<void> {
     const player = game.getPlayerById(playerId)
     if (!player) {
       Logger.warn(
@@ -59,7 +50,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     }
 
     const timeoutDuration = this.getAfkTimeout(game, player)
-    const jobId = this.getJobId(game.code, playerId)
+    const jobId = this.getJobId(game.code, playerId, timerType)
 
     Logger.info(
       `Starting AFK timer for player ${playerId} in game ${game.code}`,
@@ -112,8 +103,12 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     }
   }
 
-  public async cancelTimer(gameCode: string, playerId: string): Promise<void> {
-    const jobId = this.getJobId(gameCode, playerId)
+  public async cancelTimer(
+    gameCode: string,
+    playerId: string,
+    timerType: "reveal" | "turn",
+  ): Promise<void> {
+    const jobId = this.getJobId(gameCode, playerId, timerType)
 
     Logger.info(
       `Cancelling AFK timer for player ${playerId} in game ${gameCode}`,
@@ -124,61 +119,55 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       },
     )
 
-    let retryCount = 0
-    const maxRetries = 3
-
-    while (retryCount < maxRetries) {
-      try {
-        const job = await this.queue.getJob(jobId)
-        if (job) {
-          await job.remove()
-          Logger.debug(
-            `Successfully cancelled AFK timer for player ${playerId} in game ${gameCode}`,
-            {
-              gameCode,
-              playerId,
-              jobId,
-              attempt: retryCount + 1,
-            },
-          )
-          return
-        } else {
-          Logger.debug(
-            `No AFK timer found for player ${playerId} in game ${gameCode}`,
-            {
-              gameCode,
-              playerId,
-              jobId,
-            },
-          )
-          return
-        }
-      } catch (error) {
-        retryCount++
-        if (retryCount >= maxRetries) {
-          Logger.error(
-            `Failed to cancel AFK timer for player ${playerId} in game ${gameCode} after ${maxRetries} attempts`,
-            {
-              error,
-              gameCode,
-              playerId,
-              jobId,
-              attempts: retryCount,
-            },
-          )
-        } else {
-          Logger.warn(
-            `Failed to cancel AFK timer, retrying... (${retryCount}/${maxRetries})`,
-            {
-              error,
-              gameCode,
-              playerId,
-              jobId,
-            },
-          )
-          // Wait a bit before retrying
-          await new Promise((resolve) => setTimeout(resolve, 200))
-        }
+    try {
+      const job = await this.queue.getJob(jobId)
+      if (job) {
+        await job.remove()
+        Logger.debug(
+          `Successfully cancelled AFK timer for player ${playerId} in game ${gameCode}`,
+          {
+            gameCode,
+            playerId,
+            jobId,
+          },
+        )
+      } else {
+        Logger.debug(
+          `No AFK timer found for player ${playerId} in game ${gameCode}`,
+          {
+            gameCode,
+            playerId,
+            jobId,
+          },
+        )
+      }
+    } catch (error) {
+      // Job already completed or removed is not an error condition
+      const errorMessage =
+        error instanceof Error ? error.message : String(error)
+      if (
+        errorMessage.includes("Missing key") ||
+        errorMessage.includes("Job not found") ||
+        errorMessage.includes("does not exist")
+      ) {
+        Logger.debug(
+          `AFK timer already completed or removed for player ${playerId} in game ${gameCode}`,
+          {
+            gameCode,
+            playerId,
+            jobId,
+          },
+        )
+      } else {
+        Logger.warn(
+          `Failed to cancel AFK timer for player ${playerId} in game ${gameCode}`,
+          {
+            error,
+            gameCode,
+            playerId,
+            jobId,
+          },
+        )
       }
     }
   }
@@ -208,13 +197,13 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       return
     }
 
-    let lockAcquired = false
-
     try {
       game.setOperationManager(GameOperationManager.getInstance())
       if (
         !game.isPlaying() ||
-        (!game.isRoundMain() && !game.isRoundRevealCards())
+        (!game.isRoundMain() &&
+          !game.isRoundRevealCards() &&
+          !game.isRoundLastLap())
       ) {
         Logger.debug(
           `Game ${gameCode} is not in playing state or not in valid round, skipping AFK job`,
@@ -225,13 +214,11 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
             isPlaying: game.isPlaying(),
             isRoundMain: game.isRoundMain(),
             isRoundRevealCards: game.isRoundRevealCards(),
+            isRoundLastLap: game.isRoundLastLap(),
           },
         )
         return
       }
-
-      await this.lockGame(game)
-      lockAcquired = true
 
       const player = game.getPlayerById(playerId)
       if (!player) {
@@ -243,6 +230,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
         return
       }
 
+      // Reveal phase: use Redis lock to prevent concurrent reveals
       if (game.isRoundRevealCards()) {
         if (player.hasRevealedCardCount) {
           Logger.debug(
@@ -259,7 +247,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
         }
 
         Logger.info(
-          `Player ${playerId} has not completed reveals, performing AFK reveal action`,
+          `Player ${playerId} needs to reveal cards, acquiring lock for game ${gameCode}`,
           {
             gameCode,
             playerId,
@@ -267,30 +255,56 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
           },
         )
 
-        const disconnect = await this.increaseAfkCount(game, player)
-        if (!disconnect) {
-          await this.performAfkReveal(game, player)
+        const lockToken = await this.acquireLockWithPolling(gameCode, 10000)
+        try {
+          // Re-fetch game after acquiring lock to get latest state
+          const freshGame = await this.redis.getGameSafe(gameCode)
+          if (!freshGame) {
+            Logger.warn(`Game ${gameCode} disappeared after lock acquisition`, {
+              gameCode,
+              playerId,
+              jobId: job.id,
+            })
+            return
+          }
+
+          freshGame.setOperationManager(GameOperationManager.getInstance())
+          const freshPlayer = freshGame.getPlayerById(playerId)
+          if (!freshPlayer) {
+            Logger.warn(`Player ${playerId} not found after lock acquisition`, {
+              gameCode,
+              playerId,
+              jobId: job.id,
+            })
+            return
+          }
+
+          // Check again if player still needs to reveal
+          if (freshPlayer.hasRevealedCardCount) {
+            Logger.debug(
+              `Player ${playerId} already revealed (checked after lock)`,
+              {
+                gameCode,
+                playerId,
+                jobId: job.id,
+              },
+            )
+            return
+          }
+
+          const disconnect = await this.increaseAfkCount(freshGame, freshPlayer)
+          if (!disconnect) {
+            await this.performAfkReveal(freshGame, freshPlayer)
+          }
+        } finally {
+          await this.releaseLock(gameCode, lockToken)
         }
         return
       }
 
+      // Main phase: no lock needed, only current player can act
       const currentPlayer = game.getCurrentPlayer()
-      if (currentPlayer?.id === playerId) {
-        Logger.info(
-          `Player ${playerId} is current player, performing AFK action`,
-          {
-            gameCode,
-            playerId,
-            jobId: job.id,
-          },
-        )
-
-        const disconnect = await this.increaseAfkCount(game, player)
-
-        if (!disconnect) {
-          await this.performAfkMove(game)
-        }
-      } else {
+      if (currentPlayer?.id !== playerId) {
         Logger.debug(
           `Player ${playerId} is not current player, skipping AFK action`,
           {
@@ -300,6 +314,21 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
             jobId: job.id,
           },
         )
+        return
+      }
+
+      Logger.info(
+        `Player ${playerId} is current player, performing AFK action`,
+        {
+          gameCode,
+          playerId,
+          jobId: job.id,
+        },
+      )
+
+      const disconnect = await this.increaseAfkCount(game, player)
+      if (!disconnect) {
+        await this.performAfkMove(game)
       }
     } catch (error) {
       Logger.error(
@@ -320,37 +349,22 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
         return
       }
 
-      if (
-        error instanceof CError &&
-        error.code === ErrorConstants.ERROR.GAME_ALREADY_PROCESSING_AFK
-      ) {
-        Logger.warn(
-          `Game ${gameCode} is already processing AFK, skipping duplicate job`,
-          {
-            gameCode,
-            playerId,
-            jobId: job.id,
-          },
-        )
-        return
-      }
-
       await job.moveToFailed(
         error instanceof Error ? error : new Error(String(error)),
         job?.token ?? "failed",
       )
       throw error
-    } finally {
-      if (lockAcquired) {
-        await this.unlockGame(game)
-      }
     }
   }
 
   //#region private methods
 
-  private getJobId(gameCode: string, playerId: string): string {
-    return `game:${gameCode}:player:${playerId}`
+  private getJobId(
+    gameCode: string,
+    playerId: string,
+    timerType: "reveal" | "turn",
+  ): string {
+    return `game:${gameCode}:player:${playerId}:${timerType}`
   }
 
   private async performAfkMove(game: Game) {
@@ -388,25 +402,22 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
           break
         }
 
-        if (!game.isPlaying() || !game.isRoundMain()) {
+        if (
+          !game.isPlaying() ||
+          (!game.isRoundMain() && !game.isRoundLastLap())
+        ) {
           Logger.debug(`Game state changed, stopping AFK moves`, {
             gameCode: game.code,
             playerId: initialPlayerId,
             isPlaying: game.isPlaying(),
             isRoundMain: game.isRoundMain(),
+            isRoundLastLap: game.isRoundLastLap(),
           })
           break
         }
 
-        const botActions = this.bot.playMove(game.toJson(), initialPlayerId)
-        if (botActions.length === 0) {
-          Logger.warn(`Bot returned no actions, turn may be complete`, {
-            gameCode: game.code,
-            playerId: initialPlayerId,
-            turnStatus: game.turnStatus,
-          })
-          break
-        }
+        const botAction = this.bot.playMove(game.toJson(), initialPlayerId)
+        const botActions = [botAction]
 
         await this.executeBotActions(
           game,

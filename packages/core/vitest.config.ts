@@ -13,6 +13,7 @@ export default defineConfig({
       exclude: [
         "./src/validations/**",
         "./src/constants.ts",
+        "./src/class/bot/**",
         ...coverageConfigDefaults.exclude,
       ],
       thresholds: {

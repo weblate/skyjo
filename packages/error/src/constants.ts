@@ -22,6 +22,7 @@ export class Constants {
     VERSION_MISMATCH: "version-mismatch",
     TOO_MANY_REQUESTS: "too-many-requests",
     GAME_ALREADY_PROCESSING_AFK: "game-already-processing-afk",
+    GAME_LOCK_TIMEOUT: "game-lock-timeout",
     PLAYER_ALREADY_CONNECTED: "player-already-connected",
     MAX_PLAYERS_TOO_LOW: "max-players-too-low",
     UNEXPECTED_ERROR: "unexpected-error",

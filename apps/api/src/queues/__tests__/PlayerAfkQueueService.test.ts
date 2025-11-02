@@ -154,6 +154,7 @@ describe("PlayerAfkQueueService", () => {
       isPlaying: vi.fn().mockReturnValue(true),
       isRoundMain: vi.fn().mockReturnValue(true),
       isRoundRevealCards: vi.fn().mockReturnValue(false),
+      isRoundLastLap: vi.fn().mockReturnValue(false),
       getCurrentPlayer: vi.fn().mockReturnValue(mockCurrentPlayer),
       getPlayerById: vi.fn().mockImplementation((id) => {
         if (id === "current-player-123") return mockCurrentPlayer
@@ -266,17 +267,17 @@ describe("PlayerAfkQueueService", () => {
     it("should add job to queue with correct parameters", async () => {
       const queueAddSpy = vi.spyOn(playerAfkQueueService["queue"], "add")
 
-      await playerAfkQueueService.startTimer(mockGame, "player-123")
+      await playerAfkQueueService.startTimer(mockGame, "player-123", "turn")
 
       expect(queueAddSpy).toHaveBeenCalledWith(
-        "game:test-game:player:player-123",
+        "game:test-game:player:player-123:turn",
         {
           gameCode: "test-game",
           playerId: "player-123",
         },
         expect.objectContaining({
           delay: expect.any(Number),
-          jobId: "game:test-game:player:player-123",
+          jobId: "game:test-game:player:player-123:turn",
           removeOnComplete: true,
         }),
       )
@@ -290,9 +291,11 @@ describe("PlayerAfkQueueService", () => {
         .spyOn(playerAfkQueueService["queue"], "getJob")
         .mockResolvedValue(mockJob as any)
 
-      await playerAfkQueueService.cancelTimer("test-game", "player-123")
+      await playerAfkQueueService.cancelTimer("test-game", "player-123", "turn")
 
-      expect(getJobSpy).toHaveBeenCalledWith("game:test-game:player:player-123")
+      expect(getJobSpy).toHaveBeenCalledWith(
+        "game:test-game:player:player-123:turn",
+      )
       expect(mockJob.remove).toHaveBeenCalled()
     })
   })
@@ -335,11 +338,9 @@ describe("PlayerAfkQueueService", () => {
     })
 
     it("should perform AFK move using bot in CHOOSE_A_PILE state", async () => {
-      const lockGameSpy = vi.spyOn(playerAfkQueueService as any, "lockGame")
       const increaseAfkCountSpy = vi
         .spyOn(playerAfkQueueService as any, "increaseAfkCount")
         .mockResolvedValue(false) // Not disconnecting
-      const unlockGameSpy = vi.spyOn(playerAfkQueueService as any, "unlockGame")
 
       mockGame.turnStatus = CoreConstants.TURN_STATUS.CHOOSE_A_PILE
       mockGame.selectedCardValue = null
@@ -388,15 +389,12 @@ describe("PlayerAfkQueueService", () => {
         updatedAt: new Date(),
       }))
 
-      // Mock bot to return pick-draw action, then discard+turn, then empty (turn complete)
+      // Mock bot to return pick-draw action, then discard+turn, then playMove changes current player
       const mockBot = playerAfkQueueService["bot"] as Bot
       vi.spyOn(mockBot, "playMove")
-        .mockReturnValueOnce([{ type: "pick-draw" }])
-        .mockReturnValueOnce([
-          { type: "discard" },
-          { type: "turn", position: { col: 0, row: 0 } },
-        ])
-        .mockReturnValue([]) // Turn complete - no more actions
+        .mockReturnValueOnce({ type: "pick-draw" })
+        .mockReturnValueOnce({ type: "discard" })
+        .mockReturnValueOnce({ type: "turn", position: { col: 0, row: 0 } })
 
       // Mock discardCard to update state
       mockGame.discardCard = vi.fn().mockImplementation(() => {
@@ -412,12 +410,11 @@ describe("PlayerAfkQueueService", () => {
 
       await playerAfkQueueService["processJob"](mockJob)
 
-      expect(lockGameSpy).toHaveBeenCalled()
       expect(increaseAfkCountSpy).toHaveBeenCalledWith(
         mockGame,
         mockCurrentPlayer,
       )
-      expect(mockBot.playMove).toHaveBeenCalledTimes(2)
+      expect(mockBot.playMove).toHaveBeenCalledTimes(3)
       expect(mockGame.drawCard).toHaveBeenCalled()
       expect(mockGame.discardCard).toHaveBeenCalledWith(10)
       expect(mockGame.turnCard).toHaveBeenCalledWith(
@@ -428,26 +425,22 @@ describe("PlayerAfkQueueService", () => {
           wasAfk: true,
         }),
       )
-      expect(unlockGameSpy).toHaveBeenCalled()
     })
 
     it("should perform AFK move using bot in THROW_OR_REPLACE state", async () => {
-      const lockGameSpy = vi.spyOn(playerAfkQueueService as any, "lockGame")
       const increaseAfkCountSpy = vi
         .spyOn(playerAfkQueueService as any, "increaseAfkCount")
         .mockResolvedValue(false) // Not disconnecting
-      const unlockGameSpy = vi.spyOn(playerAfkQueueService as any, "unlockGame")
 
       mockGame.turnStatus = CoreConstants.TURN_STATUS.THROW_OR_REPLACE
       mockGame.selectedCardValue = 10
 
-      // Mock bot to return replace action, then empty (turn complete)
+      // Mock bot to return replace action
       const mockBot = playerAfkQueueService["bot"] as Bot
-      vi.spyOn(mockBot, "playMove")
-        .mockReturnValueOnce([
-          { type: "replace", position: { col: 0, row: 0 } },
-        ])
-        .mockReturnValue([]) // Turn complete - no more actions
+      vi.spyOn(mockBot, "playMove").mockReturnValueOnce({
+        type: "replace",
+        position: { col: 0, row: 0 },
+      })
 
       // Mock replaceCard to change current player (turn complete)
       mockGame.replaceCard = vi.fn().mockImplementation(async () => {
@@ -457,7 +450,6 @@ describe("PlayerAfkQueueService", () => {
 
       await playerAfkQueueService["processJob"](mockJob)
 
-      expect(lockGameSpy).toHaveBeenCalled()
       expect(increaseAfkCountSpy).toHaveBeenCalledWith(
         mockGame,
         mockCurrentPlayer,
@@ -471,39 +463,51 @@ describe("PlayerAfkQueueService", () => {
           wasAfk: true,
         }),
       )
-      expect(unlockGameSpy).toHaveBeenCalled()
     })
 
-    it("should stop when bot returns no actions", async () => {
-      const lockGameSpy = vi.spyOn(playerAfkQueueService as any, "lockGame")
+    it("should stop when bot returns an action that ends turn", async () => {
       const increaseAfkCountSpy = vi
         .spyOn(playerAfkQueueService as any, "increaseAfkCount")
         .mockResolvedValue(false) // Not disconnecting
-      const unlockGameSpy = vi.spyOn(playerAfkQueueService as any, "unlockGame")
 
       mockGame.turnStatus = CoreConstants.TURN_STATUS.CHOOSE_A_PILE
 
-      // Mock bot to return no actions (turn may be complete or invalid state)
+      // Mock bot to return pick-draw, then turn card which ends the turn
       const mockBot = playerAfkQueueService["bot"] as Bot
-      vi.spyOn(mockBot, "playMove").mockReturnValue([])
+      vi.spyOn(mockBot, "playMove")
+        .mockReturnValueOnce({ type: "pick-draw" })
+        .mockReturnValueOnce({ type: "discard" })
+        .mockReturnValueOnce({ type: "turn", position: { col: 0, row: 0 } })
+
+      mockGame.drawCard = vi.fn().mockImplementation(() => {
+        mockGame.selectedCardValue = 10
+        mockGame.turnStatus = CoreConstants.TURN_STATUS.THROW_OR_REPLACE
+      })
+
+      mockGame.discardCard = vi.fn().mockImplementation(() => {
+        mockGame.selectedCardValue = null
+        mockGame.turnStatus = CoreConstants.TURN_STATUS.TURN_A_CARD
+      })
+
+      mockGame.turnCard = vi.fn().mockImplementation(async () => {
+        // Change to different player - turn complete
+        mockGame.getCurrentPlayer = vi.fn().mockReturnValue(mockPlayer)
+      })
 
       await playerAfkQueueService["processJob"](mockJob)
 
-      expect(lockGameSpy).toHaveBeenCalled()
       expect(increaseAfkCountSpy).toHaveBeenCalledWith(
         mockGame,
         mockCurrentPlayer,
       )
       expect(mockBot.playMove).toHaveBeenCalled()
-      expect(unlockGameSpy).toHaveBeenCalled()
+      expect(mockGame.turnCard).toHaveBeenCalled()
     })
 
     it("should throw error when bot throws error", async () => {
-      const lockGameSpy = vi.spyOn(playerAfkQueueService as any, "lockGame")
       const increaseAfkCountSpy = vi
         .spyOn(playerAfkQueueService as any, "increaseAfkCount")
         .mockResolvedValue(false) // Not disconnecting
-      const unlockGameSpy = vi.spyOn(playerAfkQueueService as any, "unlockGame")
 
       mockGame.turnStatus = CoreConstants.TURN_STATUS.CHOOSE_A_PILE
 
@@ -517,32 +521,27 @@ describe("PlayerAfkQueueService", () => {
         playerAfkQueueService["processJob"](mockJob),
       ).rejects.toThrow("Bot error")
 
-      expect(lockGameSpy).toHaveBeenCalled()
       expect(increaseAfkCountSpy).toHaveBeenCalledWith(
         mockGame,
         mockCurrentPlayer,
       )
       expect(mockBot.playMove).toHaveBeenCalled()
-      expect(unlockGameSpy).toHaveBeenCalled()
     })
 
     it("should handle pick-discard bot action", async () => {
-      const lockGameSpy = vi.spyOn(playerAfkQueueService as any, "lockGame")
       const increaseAfkCountSpy = vi
         .spyOn(playerAfkQueueService as any, "increaseAfkCount")
         .mockResolvedValue(false) // Not disconnecting
-      const unlockGameSpy = vi.spyOn(playerAfkQueueService as any, "unlockGame")
 
       mockGame.turnStatus = CoreConstants.TURN_STATUS.CHOOSE_A_PILE
       mockGame.getLastDiscardCardValue = vi.fn().mockReturnValue(5)
 
-      // Mock bot to return pick-discard action, then empty (turn complete)
+      // Mock bot to return pick-discard action
       const mockBot = playerAfkQueueService["bot"] as Bot
-      vi.spyOn(mockBot, "playMove")
-        .mockReturnValueOnce([
-          { type: "pick-discard", replaceAt: { col: 0, row: 1 } },
-        ])
-        .mockReturnValue([]) // Turn complete - no more actions
+      vi.spyOn(mockBot, "playMove").mockReturnValueOnce({
+        type: "pick-discard",
+        replaceAt: { col: 0, row: 1 },
+      })
 
       // Mock replaceCard to change current player (turn complete)
       mockGame.replaceCard = vi.fn().mockImplementation(async () => {
@@ -552,7 +551,6 @@ describe("PlayerAfkQueueService", () => {
 
       await playerAfkQueueService["processJob"](mockJob)
 
-      expect(lockGameSpy).toHaveBeenCalled()
       expect(increaseAfkCountSpy).toHaveBeenCalledWith(
         mockGame,
         mockCurrentPlayer,
@@ -566,26 +564,24 @@ describe("PlayerAfkQueueService", () => {
           wasAfk: true,
         }),
       )
-      expect(unlockGameSpy).toHaveBeenCalled()
     })
 
     it("should not perform AFK move if player is disconnected", async () => {
-      const lockGameSpy = vi.spyOn(playerAfkQueueService as any, "lockGame")
       const increaseAfkCountSpy = vi
         .spyOn(playerAfkQueueService as any, "increaseAfkCount")
         .mockResolvedValue(true) // Player disconnected
-      const unlockGameSpy = vi.spyOn(playerAfkQueueService as any, "unlockGame")
+
+      const mockBot = playerAfkQueueService["bot"] as Bot
+      const botSpy = vi.spyOn(mockBot, "playMove")
 
       await playerAfkQueueService["processJob"](mockJob)
 
-      expect(lockGameSpy).toHaveBeenCalled()
       expect(increaseAfkCountSpy).toHaveBeenCalledWith(
         mockGame,
         mockCurrentPlayer,
       )
       expect(mockGame.drawCard).not.toHaveBeenCalled()
-      expect(mockCurrentPlayer.getFirstCardNotVisible).not.toHaveBeenCalled()
-      expect(unlockGameSpy).toHaveBeenCalled()
+      expect(botSpy).not.toHaveBeenCalled()
     })
   })
 })

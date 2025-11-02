@@ -19,3 +19,17 @@ export type ColumnOpportunity = {
   matchCount: number
   hiddenPositions: Position[]
 }
+
+export type RowOpportunity = {
+  rowIndex: number
+  matchingValue: number
+  matchCount: number
+  hiddenPositions: Position[]
+}
+
+export type PatternMatch = {
+  type: "column" | "row"
+  index: number
+  value: number
+  hiddenPosition: Position
+}

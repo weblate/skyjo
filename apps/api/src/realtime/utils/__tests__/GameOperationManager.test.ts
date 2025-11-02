@@ -112,7 +112,7 @@ describe("GameOperationManager", () => {
       await gameOperationManager.startRevealCardsAfkTimer(mockGame, "player-id")
       expect(
         gameOperationManager["playerAfkQueue"]?.startTimer,
-      ).toHaveBeenCalledWith(mockGame, "player-id")
+      ).toHaveBeenCalledWith(mockGame, "player-id", "reveal")
     })
   })
 
@@ -124,7 +124,7 @@ describe("GameOperationManager", () => {
       )
       expect(
         gameOperationManager["playerAfkQueue"]?.cancelTimer,
-      ).toHaveBeenCalledWith("TEST123", "player-id")
+      ).toHaveBeenCalledWith("TEST123", "player-id", "reveal")
     })
   })
 
@@ -134,7 +134,7 @@ describe("GameOperationManager", () => {
       await gameOperationManager.startPlayerAfkTimer(mockGame, "player-id")
       expect(
         gameOperationManager["playerAfkQueue"]?.startTimer,
-      ).toHaveBeenCalledWith(mockGame, "player-id")
+      ).toHaveBeenCalledWith(mockGame, "player-id", "turn")
     })
   })
 
@@ -143,7 +143,7 @@ describe("GameOperationManager", () => {
       await gameOperationManager.cancelPlayerAfkTimer("TEST123", "player-id")
       expect(
         gameOperationManager["playerAfkQueue"]?.cancelTimer,
-      ).toHaveBeenCalledWith("TEST123", "player-id")
+      ).toHaveBeenCalledWith("TEST123", "player-id", "turn")
     })
   })
 
