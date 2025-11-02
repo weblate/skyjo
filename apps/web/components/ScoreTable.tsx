@@ -37,7 +37,8 @@ const ScoreTable = ({ players, scrollToEnd = false }: ScoreTableProps) => {
     const bRank = playerRanks[b.id]
     if (aRank === "-" && bRank !== "-") return 1
     if (aRank !== "-" && bRank === "-") return -1
-    return a.name.localeCompare(b.name)
+    if (aRank === "-" && bRank === "-") return a.name.localeCompare(b.name)
+    return Number(aRank) - Number(bRank)
   })
 
   return (
