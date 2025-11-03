@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        package: [skymo-api, skymo-web, skymo-workers, skymo-discord-bot]
+        package: [api, web, workers, discord-bot]
     steps:
       - name: Delete old versions of ${{ matrix.package }}
         uses: actions/delete-package-versions@v5
