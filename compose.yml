@@ -1,6 +1,6 @@
 services:
   web:
-    image: ${WEB_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/web:${IMAGE_TAG:-trunk}}
+    image: ${WEB_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-maxentr}/web:${IMAGE_TAG:-trunk}}
     pull_policy: always
     ports:
       - "3000:3000"
@@ -22,7 +22,7 @@ services:
       - /var/tmp
 
   api:
-    image: ${API_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/api:${IMAGE_TAG:-trunk}}
+    image: ${API_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-maxentr}/api:${IMAGE_TAG:-trunk}}
     pull_policy: always
     ports:
       - "3001:3001"
@@ -45,7 +45,7 @@ services:
       - /var/tmp
 
   workers:
-    image: ${WORKERS_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/workers:${IMAGE_TAG:-trunk}}
+    image: ${WORKERS_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-maxentr}/workers:${IMAGE_TAG:-trunk}}
     pull_policy: always
     networks:
       - internal
@@ -65,7 +65,7 @@ services:
       - /var/tmp
 
   discord-bot:
-    image: ${DISCORD_BOT_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/discord-bot:${IMAGE_TAG:-trunk}}
+    image: ${DISCORD_BOT_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-maxentr}/discord-bot:${IMAGE_TAG:-trunk}}
     pull_policy: always
     networks:
       - internal
