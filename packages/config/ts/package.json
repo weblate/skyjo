@@ -1,7 +1,7 @@
 {
   "name": "@skymo/ts-config",
   "description": "Typescript configuration for the project",
-  "version": "1.64.1",
+  "version": "1.65.0",
   "type": "module",
   "files": ["base-package.json"]
 }
