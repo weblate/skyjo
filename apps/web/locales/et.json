@@ -132,6 +132,16 @@
         "score-to-end-game": {
           "label": "Tulemus mängu lõpetamiseks",
           "title": "Mäng lõpeb, kui mängija saavutab {number} punkti"
+        },
+        "player-rearrangement": {
+          "label": "Mängijate ümberkorraldus",
+          "description": "Vali, millal mängijad segatakse mängujärjekorra muutmiseks",
+          "placeholder": "Vali, millal mängijad segada",
+          "item": {
+            "never": "Mitte kunagi",
+            "every-round": "Iga voor",
+            "every-game": "Iga mäng"
+          }
         }
       },
       "player-section": {
@@ -1178,7 +1188,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Soome",
+        "hu": "Ungari"
       }
     },
     "OpponentBoard": {

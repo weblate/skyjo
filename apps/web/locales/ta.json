@@ -54,7 +54,17 @@
           "label": "உண்மையான நேரத்தில் மதிப்பெண்"
         },
         "remove-identical-column": "ஒத்த நெடுவரிசைகளை அகற்று",
-        "remove-identical-row": "ஒத்த வரிசைகளை அகற்று"
+        "remove-identical-row": "ஒத்த வரிசைகளை அகற்று",
+        "player-rearrangement": {
+          "label": "வீரர் மறுசீரமைப்பு",
+          "description": "விளையாட்டு வரிசையை மாற்றுவதற்கு வீரர்களை எப்போது கலக்க வேண்டும் என்பதைத் தேர்வுசெய்யவும்",
+          "placeholder": "வீரர்களை எப்போது கலக்க வேண்டும் என்பதைத் தேர்ந்தெடுக்கவும்",
+          "item": {
+            "never": "ஒருபோதும்",
+            "every-round": "ஒவ்வொரு சுற்றும்",
+            "every-game": "ஒவ்வொரு ஆட்டமும்"
+          }
+        }
       },
       "player-section": {
         "title": "வீரர்கள் {nbPlayers}/{maxPlayers}",
@@ -880,7 +890,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "ஃபின்னிஷ்",
+        "hu": "Hungarian"
       }
     },
     "AccountDropdownMenu": {

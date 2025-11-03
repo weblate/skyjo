@@ -141,6 +141,16 @@
         "first-player-multiplier-penalty": {
           "title": "De score van de eerste speler wordt vermenigvuldigd met {number} als deze niet strikt lager is dan de andere scores van het spel",
           "label": "Eerste speler score strafvermenigvuldiger"
+        },
+        "player-rearrangement": {
+          "label": "Herordening speler",
+          "description": "Kies wanneer spelers door elkaar worden geschud om de speelvolgorde te wijzigen",
+          "placeholder": "Selecteer wanneer spelers geschud moeten worden",
+          "item": {
+            "never": "Nooit",
+            "every-round": "Elke ronde",
+            "every-game": "Elk spel"
+          }
         }
       },
       "game-starting-in": "Spel start over {seconds}",
@@ -910,7 +920,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Fins",
+        "hu": "Hongaars"
       }
     },
     "AccountDropdownMenu": {

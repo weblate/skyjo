@@ -220,6 +220,16 @@
         "first-player-multiplier-penalty": {
           "label": "Første spillers strafmultiplikator for score",
           "title": "Den første spillers score vil blive ganget med {number}, hvis den ikke er strengt lavere end de andre scores i spillet"
+        },
+        "player-rearrangement": {
+          "label": "Omordning af spillere",
+          "description": "Vælg, hvornår spillere skal blandes for at ændre spillerrækkefølgen",
+          "placeholder": "Vælg, hvornår spillere skal blandes",
+          "item": {
+            "never": "Aldrig",
+            "every-round": "Hver runde",
+            "every-game": "Hvert spil"
+          }
         }
       },
       "start-game-button": "Start spillet",
@@ -820,7 +830,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finsk",
+        "hu": "Ungarsk"
       }
     },
     "Rules": {

@@ -108,7 +108,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finnisch",
+        "hu": "Ungarisch"
       }
     },
     "RulesDialog": {
@@ -604,6 +606,16 @@
         "first-player-multiplier-penalty": {
           "label": "Eerste Speler Straaf-Multiplikater-Score",
           "title": "De Punktetall vun den eersten Speler warrt mit {number} multiplizeert, wenn se nich strikt lütter is as de annern Punktetallen vun dat Speel"
+        },
+        "player-rearrangement": {
+          "label": "Spieler-Neuanordnung",
+          "description": "Wähle aus, wann Spieler gemischt werden sollen, um die Spielreihenfolge zu ändern",
+          "placeholder": "Wählen Sie, wann Spieler gemischt werden sollen",
+          "item": {
+            "never": "Nien",
+            "every-round": "Jede Runde",
+            "every-game": "Elke Spel"
+          }
         }
       },
       "title": "{name} sien Speel",

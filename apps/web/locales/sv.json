@@ -85,6 +85,16 @@
         "first-player-multiplier-penalty": {
           "label": "Straffmultiplikator för första spelares poäng",
           "title": "Den första spelarens poäng kommer att multipliceras med {number} om den inte är strikt lägre än spelets andra poäng"
+        },
+        "player-rearrangement": {
+          "label": "Omorganisera spelare",
+          "description": "Välj när spelare ska blandas för att ändra spelordningen",
+          "placeholder": "Välj när spelarna ska blandas",
+          "item": {
+            "never": "Aldrig",
+            "every-round": "Varje runda",
+            "every-game": "Varje spel"
+          }
         }
       },
       "title": "{name}s spel",
@@ -816,7 +826,9 @@
         "cs": "Čeština",
         "br": "Brezhoneg",
         "et": "Eesti",
-        "uk": "українська мова"
+        "uk": "українська мова",
+        "fi": "Finska",
+        "hu": "Ungerska"
       }
     },
     "RulesDialog": {
