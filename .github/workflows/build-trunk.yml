@@ -129,7 +129,7 @@ jobs:
 
       - name: Install dependencies
         if: matrix.changed == 'true' || matrix.force == true
-        run: pnpm install --frozen-lockfile
+        run: pnpm install --frozen-lockfile --ignore-scripts
 
       - name: Run tests
         if: matrix.changed == 'true' || matrix.force == true

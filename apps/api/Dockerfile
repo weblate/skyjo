@@ -22,14 +22,14 @@ COPY --from=deps /app/out/json/ .
 COPY --from=deps /app/out/pnpm-lock.yaml* ./
 
 # Use pnpm for consistency with your project
-RUN npm install -g pnpm@10.12.4 && \
-    pnpm install --frozen-lockfile
+RUN npm install -g pnpm@10.12.4 --ignore-scripts && \
+    pnpm install --frozen-lockfile --ignore-scripts
 
 # Copy the full pruned source
 COPY --from=deps /app/out/full/ .
 
 # Install tsx globally for production runtime
-RUN npm install -g tsx
+RUN npm install -g tsx --ignore-scripts
 
 # Build the project (only if needed for packages)
 RUN pnpm turbo build --filter=@skymo/api
@@ -41,7 +41,7 @@ WORKDIR /app
 # Install only runtime essentials and create non-root user
 RUN apk update && \
     apk add --no-cache libc6-compat && \
-    npm install -g pnpm@10.12.4 tsx && \
+    npm install -g pnpm@10.12.4 --ignore-scripts tsx && \
     rm -rf /var/cache/apk/* && \
     addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nodejs

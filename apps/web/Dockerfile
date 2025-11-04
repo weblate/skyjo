@@ -5,7 +5,7 @@ FROM node:24.3-alpine AS base
 # Pruner stage - extract only needed files
 FROM base AS pruner
 ARG PROJECT
-RUN npm install -g turbo
+RUN npm install -g turbo --ignore-scripts
 WORKDIR /app
 COPY . .
 RUN turbo prune --scope=${PROJECT} --docker
@@ -41,7 +41,7 @@ ENV NEXT_PUBLIC_RELEASE_NOTES_URL=${NEXT_PUBLIC_RELEASE_NOTES_URL}
 ENV NEXT_PUBLIC_WEBLATE_URL=${NEXT_PUBLIC_WEBLATE_URL}
 
 RUN apk add --no-cache libc6-compat && \
-    npm install -g pnpm@10.12.4
+    npm install -g pnpm@10.12.4 --ignore-scripts
 WORKDIR /app
 
 # Copy lockfile and package.json files
@@ -50,7 +50,7 @@ COPY --from=pruner /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
 
 # Install ALL dependencies (dev + prod)
 RUN --mount=type=cache,target=/root/.local/share/pnpm/store \
-    pnpm install --frozen-lockfile
+    pnpm install --frozen-lockfile --ignore-scripts
 
 # Copy source code
 COPY --from=pruner /app/out/full/ .
