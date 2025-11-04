@@ -183,10 +183,10 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
 
   useEffect(() => {
     socket!.on("leave:success", onLeave)
-    socket!.on("forfeit:success", onForfeitSuccess)
+    socket!.on("forfeit:success", onLeave)
     return () => {
       socket!.off("leave:success", onLeave)
-      socket!.off("forfeit:success", onForfeitSuccess)
+      socket!.off("forfeit:success", onLeave)
     }
   }, [game?.settings.private])
 
@@ -205,13 +205,13 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
       if (!inGame) clearLastGameCookie()
     }
 
-    window.addEventListener("beforeunload", onUnload)
+    globalThis.addEventListener("beforeunload", onUnload)
 
     socket!.on("disconnect", onDisconnect)
 
     return () => {
       socket!.off("disconnect", onDisconnect)
-      window.removeEventListener("beforeunload", onUnload)
+      globalThis.removeEventListener("beforeunload", onUnload)
     }
   }, [game?.status, game?.settings.private])
 
@@ -271,12 +271,6 @@ const GameProvider = ({ children, gameCode }: GameProviderProps) => {
   }
 
   const onLeave = () => {
-    setGame(undefined)
-    if (game?.settings.private) router.replace("/")
-    else router.replace("/search")
-  }
-
-  const onForfeitSuccess = () => {
     setGame(undefined)
     if (game?.settings.private) router.replace("/")
     else router.replace("/search")

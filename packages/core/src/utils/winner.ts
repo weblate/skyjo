@@ -58,9 +58,9 @@ export const getPlayerRanks = (
   const ranks: Record<string, number | string> = {}
   if (nbRounds === 0) {
     // First round: show "-" instead of ranks
-    sortedPlayers.forEach((player) => {
+    for (const player of sortedPlayers) {
       ranks[player.id] = "-"
-    })
+    }
   } else {
     // After first round: calculate actual ranks
     let rank = 1

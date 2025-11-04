@@ -11,6 +11,22 @@ import {
 } from "@/components/ui/table"
 import { formatScoreDisplay, getScoreValue } from "@/lib/penalty-utils"
 
+const getSortedPlayers = (
+  players: PlayerToJson[],
+  playerRanks: Record<string, number | string>,
+) => {
+  const sortedPlayers = players.toSorted((a, b) => {
+    const aRank = playerRanks[a.id]
+    const bRank = playerRanks[b.id]
+    if (aRank === "-" && bRank !== "-") return 1
+    if (aRank !== "-" && bRank === "-") return -1
+    if (aRank === "-" && bRank === "-") return a.name.localeCompare(b.name)
+    return Number(aRank) - Number(bRank)
+  })
+
+  return sortedPlayers
+}
+
 interface ScoreTableProps {
   players: PlayerToJson[]
   scrollToEnd?: boolean
@@ -32,14 +48,7 @@ const ScoreTable = ({ players, scrollToEnd = false }: ScoreTableProps) => {
   }, [scrollToEnd])
 
   const playerRanks = getPlayerRanks(players)
-  const sortedPlayers = players.sort((a, b) => {
-    const aRank = playerRanks[a.id]
-    const bRank = playerRanks[b.id]
-    if (aRank === "-" && bRank !== "-") return 1
-    if (aRank !== "-" && bRank === "-") return -1
-    if (aRank === "-" && bRank === "-") return a.name.localeCompare(b.name)
-    return Number(aRank) - Number(bRank)
-  })
+  const sortedPlayers = getSortedPlayers(players, playerRanks)
 
   return (
     <Table id="end-round-table" className="bg-container">

@@ -59,12 +59,11 @@ const SettingsProvider = ({ children, locale }: SettingsProviderProps) => {
   useEffect(() => {
     if (!settings) return
 
-    Object.keys(DEFAULT_GAME_SETTINGS).forEach((defaultKey) => {
-      const k = defaultKey as keyof UserSettings
+    for (const [key, value] of Object.entries(DEFAULT_GAME_SETTINGS)) {
+      const k = key as keyof UserSettings
 
-      if (settings[k] === undefined)
-        setSettings({ ...settings, [k]: DEFAULT_GAME_SETTINGS[k] })
-    })
+      if (settings[k] === undefined) setSettings({ ...settings, [k]: value })
+    }
   }, [settings])
 
   useEffect(() => {

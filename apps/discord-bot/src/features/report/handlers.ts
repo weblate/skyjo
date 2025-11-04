@@ -249,14 +249,17 @@ const modalHandlers = {
       }
 
       // Update Discord embed
+      const penaltyDisplay =
+        penaltyType === "none"
+          ? null
+          : formatPenalty(penaltyType, duration || "0")
+
       await updateOriginalMessage(
         interaction,
         reportId,
         true,
         moderatorComment,
-        penaltyType !== "none"
-          ? formatPenalty(penaltyType, duration || "0")
-          : null,
+        penaltyDisplay,
       )
 
       Logger.info(`Report ${reportId} validated with penalty`, {
@@ -503,11 +506,11 @@ function formatPenalty(type: string, duration: string): string {
       return `Leavebuster Level ${duration}`
     case "chat_restrict": {
       const hours = Number(duration) / 60
-      return `Chat restricted for ${hours} hour${hours !== 1 ? "s" : ""}`
+      return `Chat restricted for ${hours} hour${hours === 1 ? "" : "s"}`
     }
     case "tempban": {
       const days = Number(duration) / 1440
-      return `Banned for ${days} day${days !== 1 ? "s" : ""}`
+      return `Banned for ${days} day${days === 1 ? "" : "s"}`
     }
     case "ban":
       return "Permanently banned"

@@ -6,14 +6,18 @@ import { Link } from "@/i18n/routing"
 
 const LAST_PAGE_UPDATED_DATE = dayjs("2025-07-21 12:00:00")
 
-const RichEmail = ({ email }: { email: string }) => (
-  <a
-    href={`mailto:${email}`}
-    className="text-blue-600 hover:text-blue-700 underline underline-offset-2"
-  >
-    {email}
-  </a>
-)
+const RichEmail = ({ email }: { email: string | undefined }) => {
+  if (!email) return null
+
+  return (
+    <a
+      href={`mailto:${email}`}
+      className="text-blue-600 hover:text-blue-700 underline underline-offset-2"
+    >
+      {email}
+    </a>
+  )
+}
 
 const PrivacyPolicyLink = (chunk: React.ReactNode) => (
   <Link
@@ -71,7 +75,7 @@ const TermsOfServicePage = async ({ params }: TermsOfServicePageProps) => {
           <p>
             {t.rich("operator.contact", {
               email: () => (
-                <RichEmail email={process.env.NEXT_PUBLIC_CONTACT_EMAIL!} />
+                <RichEmail email={process.env.NEXT_PUBLIC_CONTACT_EMAIL} />
               ),
             })}
           </p>
@@ -195,7 +199,7 @@ const TermsOfServicePage = async ({ params }: TermsOfServicePageProps) => {
           <li>
             {t.rich("contact.general", {
               email: () => (
-                <RichEmail email={process.env.NEXT_PUBLIC_CONTACT_EMAIL!} />
+                <RichEmail email={process.env.NEXT_PUBLIC_CONTACT_EMAIL} />
               ),
             })}
           </li>

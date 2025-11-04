@@ -71,7 +71,6 @@ class TestQueueService extends BaseQueueService<TestJobData> {
 
   protected async processJob(_job: Job<TestJobData>): Promise<void> {
     this.processJobCalled = true
-    return Promise.resolve()
   }
 
   // Expose methods for testing

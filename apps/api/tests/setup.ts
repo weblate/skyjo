@@ -94,17 +94,13 @@ vi.mock("@/redis/client.ts", () => {
         return mockClient
       }
 
-      static async disconnect() {
-        return Promise.resolve()
-      }
+      static async disconnect() {}
 
       static async createConnection() {
         return mockClient
       }
 
-      static async cleanupClient() {
-        return Promise.resolve()
-      }
+      static async cleanupClient() {}
     },
   }
 })

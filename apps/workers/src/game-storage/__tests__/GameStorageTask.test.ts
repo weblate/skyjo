@@ -1,4 +1,4 @@
-import { Constants } from "@skymo/core"
+import { Constants, PlayerRedisDb } from "@skymo/core"
 import { beforeEach, describe, expect, it, vi } from "vitest"
 import { GameStorageTask } from "../GameStorageTask.js"
 
@@ -32,13 +32,11 @@ vi.mock("drizzle-orm", () => ({
 }))
 
 describe("GameStorageTask", () => {
-  let mockTransaction: any
-
   beforeEach(() => {
     vi.clearAllMocks()
 
     // Mock transaction
-    mockTransaction = vi.fn().mockImplementation(async (callback) => {
+    vi.fn().mockImplementation(async (callback) => {
       const mockTx = {
         insert: vi.fn().mockReturnValue({
           values: vi.fn().mockReturnValue({
@@ -60,7 +58,7 @@ describe("GameStorageTask", () => {
     const calculatePlayerRanks = GameStorageTask["calculatePlayerRanks"]
 
     it("should rank connected players first, then disconnected players", () => {
-      const players = [
+      const players: PlayerRedisDb[] = [
         {
           id: "player1",
           name: "Maxent",
@@ -79,6 +77,9 @@ describe("GameStorageTask", () => {
           scores: [10, 10],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player2",
@@ -98,6 +99,9 @@ describe("GameStorageTask", () => {
           scores: [11, 11],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player3",
@@ -117,6 +121,9 @@ describe("GameStorageTask", () => {
           scores: [1],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
       ]
 
@@ -135,7 +142,7 @@ describe("GameStorageTask", () => {
     })
 
     it("should handle multiple disconnected players with different scores", () => {
-      const players = [
+      const players: PlayerRedisDb[] = [
         {
           id: "player1",
           name: "Connected1",
@@ -154,6 +161,9 @@ describe("GameStorageTask", () => {
           scores: [25, 25],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player2",
@@ -173,6 +183,9 @@ describe("GameStorageTask", () => {
           scores: [5],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player3",
@@ -192,6 +205,9 @@ describe("GameStorageTask", () => {
           scores: [10],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
       ]
 
@@ -211,7 +227,7 @@ describe("GameStorageTask", () => {
     })
 
     it("should handle all connected players", () => {
-      const players = [
+      const players: PlayerRedisDb[] = [
         {
           id: "player1",
           name: "Player1",
@@ -230,6 +246,9 @@ describe("GameStorageTask", () => {
           scores: [5, 5],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player2",
@@ -249,6 +268,9 @@ describe("GameStorageTask", () => {
           scores: [5],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
       ]
 
@@ -262,7 +284,7 @@ describe("GameStorageTask", () => {
     })
 
     it("should handle all disconnected players", () => {
-      const players = [
+      const players: PlayerRedisDb[] = [
         {
           id: "player1",
           name: "Disconnected1",
@@ -281,6 +303,9 @@ describe("GameStorageTask", () => {
           scores: [10, 10],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player2",
@@ -300,6 +325,9 @@ describe("GameStorageTask", () => {
           scores: [15],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
       ]
 
@@ -317,7 +345,7 @@ describe("GameStorageTask", () => {
     })
 
     it("should handle players with same scores", () => {
-      const players = [
+      const players: PlayerRedisDb[] = [
         {
           id: "player1",
           name: "Connected1",
@@ -336,6 +364,9 @@ describe("GameStorageTask", () => {
           scores: [5, 5],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player2",
@@ -355,6 +386,9 @@ describe("GameStorageTask", () => {
           scores: [5, 5],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player3",
@@ -374,6 +408,9 @@ describe("GameStorageTask", () => {
           scores: [5, 5],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
       ]
 
@@ -393,7 +430,7 @@ describe("GameStorageTask", () => {
     })
 
     it("should rank players in 3-tier system: connected > forfeited > disconnected", () => {
-      const players = [
+      const players: PlayerRedisDb[] = [
         {
           id: "player1",
           name: "Connected1",
@@ -412,6 +449,9 @@ describe("GameStorageTask", () => {
           scores: [15, 15],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player2",
@@ -431,6 +471,9 @@ describe("GameStorageTask", () => {
           scores: [5],
           forfeited: true,
           forfeitedAt: 1000,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player3",
@@ -450,6 +493,9 @@ describe("GameStorageTask", () => {
           scores: [1],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
       ]
 
@@ -470,7 +516,7 @@ describe("GameStorageTask", () => {
     })
 
     it("should rank multiple forfeited players by forfeit time (later forfeit = better rank)", () => {
-      const players = [
+      const players: PlayerRedisDb[] = [
         {
           id: "player1",
           name: "Connected1",
@@ -489,6 +535,9 @@ describe("GameStorageTask", () => {
           scores: [25, 25],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player2",
@@ -508,6 +557,9 @@ describe("GameStorageTask", () => {
           scores: [5, 5],
           forfeited: true,
           forfeitedAt: 1000,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player3",
@@ -527,6 +579,9 @@ describe("GameStorageTask", () => {
           scores: [10, 10],
           forfeited: true,
           forfeitedAt: 2000,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player4",
@@ -546,6 +601,9 @@ describe("GameStorageTask", () => {
           scores: [5],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
       ]
 
@@ -565,7 +623,7 @@ describe("GameStorageTask", () => {
     })
 
     it("should handle mixed scenario with all three player types", () => {
-      const players = [
+      const players: PlayerRedisDb[] = [
         {
           id: "player1",
           name: "Connected1",
@@ -584,6 +642,9 @@ describe("GameStorageTask", () => {
           scores: [20, 20],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player2",
@@ -603,6 +664,9 @@ describe("GameStorageTask", () => {
           scores: [5, 5],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player3",
@@ -622,6 +686,9 @@ describe("GameStorageTask", () => {
           scores: [5],
           forfeited: true,
           forfeitedAt: 1500,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player4",
@@ -641,6 +708,9 @@ describe("GameStorageTask", () => {
           scores: [15, 15],
           forfeited: true,
           forfeitedAt: 1000,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
         {
           id: "player5",
@@ -660,6 +730,9 @@ describe("GameStorageTask", () => {
           scores: [1],
           forfeited: false,
           forfeitedAt: null,
+          disconnectedAfkCount: 0,
+          timeout: null,
+          hasRevealedCardCount: false,
         },
       ]
 

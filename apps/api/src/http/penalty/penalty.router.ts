@@ -68,7 +68,7 @@ app.post(
 
     const penalty = await getPenaltyById(penaltyId)
 
-    if (!penalty || penalty.type !== "leavebuster") {
+    if (penalty?.type !== "leavebuster") {
       return c.json({ error: "penalty-not-found" }, 404)
     }
 

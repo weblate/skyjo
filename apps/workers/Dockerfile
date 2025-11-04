@@ -38,14 +38,12 @@ RUN pnpm turbo build --filter=@skymo/workers
 FROM base AS runner
 WORKDIR /app
 
-# Install only runtime essentials
+# Install only runtime essentials and create non-root user
 RUN apk update && \
     apk add --no-cache libc6-compat && \
     npm install -g pnpm@10.12.4 tsx && \
-    rm -rf /var/cache/apk/*
-
-# Create non-root user
-RUN addgroup --system --gid 1001 nodejs && \
+    rm -rf /var/cache/apk/* && \
+    addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nodejs
 
 # Copy application from installer

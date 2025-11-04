@@ -522,25 +522,25 @@ describe("Player", () => {
       expect(player.getSessionId()).toBe(newSessionId)
     })
   })
-
-  //#region function helpers
-  function removeIdFromCards(cards: Card[] | Card[][]) {
-    const flattenedCards = cards.flat()
-
-    return flattenedCards.map((card) => {
-      return {
-        value: card.value,
-        isVisible: card.isVisible,
-      }
-    })
-  }
-
-  function deepCloneArray<T extends any[][]>(array: T) {
-    return array.map((row) => {
-      return row.map((card) => {
-        return new Card(card.value, card.isVisible)
-      })
-    })
-  }
-  //#endregion
 })
+
+//#region function helpers
+function removeIdFromCards(cards: Card[] | Card[][]) {
+  const flattenedCards = cards.flat()
+
+  return flattenedCards.map((card) => {
+    return {
+      value: card.value,
+      isVisible: card.isVisible,
+    }
+  })
+}
+
+function deepCloneArray<T extends any[][]>(array: T) {
+  return array.map((row) => {
+    return row.map((card) => {
+      return new Card(card.value, card.isVisible)
+    })
+  })
+}
+//#endregion

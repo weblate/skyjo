@@ -138,7 +138,9 @@ const startServer = async () => {
   }
 }
 
-startServer().catch((error) => {
+try {
+  await startServer()
+} catch (error) {
   Logger.error("Error during server startup:", { error })
   process.exit(1)
-})
+}

@@ -55,7 +55,6 @@ describe("KickService", () => {
           )
         }
         kickVotes.set(gameCode, kickVote)
-        return Promise.resolve()
       }),
       addVote: vi.fn((gameCode: string, playerId: string, vote: boolean) => {
         const kickVote = kickVotes.get(gameCode)
@@ -74,7 +73,6 @@ describe("KickService", () => {
       }),
       deleteKickVote: vi.fn((gameCode: string) => {
         kickVotes.delete(gameCode)
-        return Promise.resolve()
       }),
       updateKickVote: vi.fn(),
     }

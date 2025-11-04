@@ -1,6 +1,6 @@
+import { randomInt } from "node:crypto"
 import { userVerificationTable } from "@skymo/database/schema"
 import { type Locales } from "@skymo/shared/constants"
-import { randomInt } from "crypto"
 import dayjs from "dayjs"
 import { eq } from "drizzle-orm"
 import { HTTPException } from "hono/http-exception"
@@ -71,7 +71,7 @@ export async function verifyPin(email: string, pin: string) {
     .where(eq(userVerificationTable.email, email))
     .limit(1)
 
-  if (!verificationResult || verificationResult.pin !== pin) {
+  if (verificationResult?.pin !== pin) {
     throw new HTTPException(400, {
       message: "invalid-pin",
     })

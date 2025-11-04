@@ -13,17 +13,15 @@ export default async function AuthLayout(props: Readonly<AuthLayoutProps>) {
   const { locale } = await props.params
   const session = await verifySession()
 
-  // If no session, redirect to login
   if (!session) {
     redirect({ href: "/login", locale })
     return null
   }
 
-  // If user hasn't completed onboarding, redirect to onboard page
-  if (!session.onboardingCompleted) {
-    redirect({ href: "/onboard", locale })
-    return null
+  if (session.onboardingCompleted) {
+    return props.children
   }
 
-  return <>{props.children}</>
+  redirect({ href: "/onboard", locale })
+  return null
 }

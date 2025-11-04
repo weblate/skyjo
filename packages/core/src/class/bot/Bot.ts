@@ -818,12 +818,12 @@ export class Bot {
     let bestPosition: Position | null = null
     let bestValue = -Infinity
 
-    context.botPlayer.cards.forEach((column, col) => {
-      column.forEach((card, row) => {
-        if (!card.isVisible) return
-        if (card.value === undefined) return
+    for (const [col, column] of context.botPlayer.cards.entries()) {
+      for (const [row, card] of column.entries()) {
+        if (!card.isVisible) continue
+        if (card.value === undefined) continue
         // Skip the excluded position
-        if (col === excludePosition.col && row === excludePosition.row) return
+        if (col === excludePosition.col && row === excludePosition.row) continue
 
         // Exclude positions in 2-card matches (same logic as findHighestVisibleCard)
         const patterns = BotAnalytics.find2CardMatches(
@@ -845,14 +845,14 @@ export class Bot {
           }
           return false
         })
-        if (isInMatch) return
+        if (isInMatch) continue
 
         if (card.value > bestValue) {
           bestValue = card.value
           bestPosition = { row, col }
         }
-      })
-    })
+      }
+    }
 
     return bestPosition
   }
@@ -893,19 +893,19 @@ export class Bot {
       // Find visible cards in this pattern
       if (pattern.type === "column") {
         const column = context.botPlayer.cards[pattern.index]
-        column.forEach((card, row) => {
+        for (const [row, card] of column.entries()) {
           if (card.isVisible && card.value === pattern.value) {
             matchPositions.add(`${pattern.index},${row}`)
           }
-        })
+        }
       } else {
         // row pattern
-        context.botPlayer.cards.forEach((column, col) => {
+        for (const [col, column] of context.botPlayer.cards.entries()) {
           const card = column[pattern.index]
           if (card.isVisible && card.value === pattern.value) {
             matchPositions.add(`${col},${pattern.index}`)
           }
-        })
+        }
       }
     }
 
@@ -1053,35 +1053,36 @@ export class Bot {
       for (const pattern of patterns) {
         if (pattern.type === "column") {
           const column = context.botPlayer.cards[pattern.index]
-          column.forEach((card, row) => {
+          for (const [row, card] of column.entries()) {
             if (card.isVisible && card.value === pattern.value) {
               excludePositions.add(`${pattern.index},${row}`)
             }
-          })
+          }
         } else {
-          context.botPlayer.cards.forEach((column, col) => {
+          for (const [col, column] of context.botPlayer.cards.entries()) {
             const card = column[pattern.index]
             if (card.isVisible && card.value === pattern.value) {
               excludePositions.add(`${col},${pattern.index}`)
             }
-          })
+          }
         }
       }
     }
 
     // Find highest visible card
-    context.botPlayer.cards.forEach((column, col) => {
-      column.forEach((card, row) => {
-        if (!card.isVisible) return
-        if (card.value === undefined) return
-        if (exclude2CardMatches && excludePositions.has(`${col},${row}`)) return
+    for (const [col, column] of context.botPlayer.cards.entries()) {
+      for (const [row, card] of column.entries()) {
+        if (!card.isVisible) continue
+        if (card.value === undefined) continue
+        if (exclude2CardMatches && excludePositions.has(`${col},${row}`))
+          continue
 
         if (card.value > highestValue) {
           highestValue = card.value
           highestPosition = { row, col }
         }
-      })
-    })
+      }
+    }
 
     // Fallback: if no visible cards (or all excluded), return first position
     if (highestPosition === null) {

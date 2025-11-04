@@ -266,8 +266,8 @@ describe("isCurrentUserTurn", () => {
   })
 
   it("should return false when player or game is undefined", () => {
-    expect(isCurrentUserTurn(undefined, undefined)).toBe(false)
-    expect(isCurrentUserTurn(createMockGame(), undefined)).toBe(false)
+    expect(isCurrentUserTurn()).toBe(false)
+    expect(isCurrentUserTurn(createMockGame())).toBe(false)
     expect(isCurrentUserTurn(undefined, createMockPlayer("player1"))).toBe(
       false,
     )
@@ -378,7 +378,7 @@ describe("isHost", () => {
 
   it("should return false when playerId is undefined", () => {
     const game = createMockGame()
-    expect(isHost(game, undefined)).toBe(false)
+    expect(isHost(game)).toBe(false)
   })
 })
 
@@ -390,7 +390,7 @@ describe("getHost", () => {
   })
 
   it("should return undefined when game is undefined", () => {
-    expect(getHost(undefined)).toBeUndefined()
+    expect(getHost()).toBeUndefined()
   })
 
   it("should return undefined when host is not in players list", () => {
@@ -455,25 +455,25 @@ describe("Round phase checks", () => {
       true,
     )
     expect(isRoundRevealCards(CoreConstants.ROUND_PHASE.MAIN)).toBe(false)
-    expect(isRoundRevealCards(undefined)).toBe(false)
+    expect(isRoundRevealCards()).toBe(false)
   })
 
   it("isRoundMain should work correctly", () => {
     expect(isRoundMain(CoreConstants.ROUND_PHASE.MAIN)).toBe(true)
     expect(isRoundMain(CoreConstants.ROUND_PHASE.REVEAL_CARDS)).toBe(false)
-    expect(isRoundMain(undefined)).toBe(false)
+    expect(isRoundMain()).toBe(false)
   })
 
   it("isRoundLastLap should work correctly", () => {
     expect(isRoundLastLap(CoreConstants.ROUND_PHASE.LAST_LAP)).toBe(true)
     expect(isRoundLastLap(CoreConstants.ROUND_PHASE.MAIN)).toBe(false)
-    expect(isRoundLastLap(undefined)).toBe(false)
+    expect(isRoundLastLap()).toBe(false)
   })
 
   it("isRoundOver should work correctly", () => {
     expect(isRoundOver(CoreConstants.ROUND_PHASE.OVER)).toBe(true)
     expect(isRoundOver(CoreConstants.ROUND_PHASE.MAIN)).toBe(false)
-    expect(isRoundOver(undefined)).toBe(false)
+    expect(isRoundOver()).toBe(false)
   })
 })
 
@@ -481,25 +481,25 @@ describe("Game status checks", () => {
   it("isGameLobby should work correctly", () => {
     expect(isGameLobby(CoreConstants.GAME_STATUS.LOBBY)).toBe(true)
     expect(isGameLobby(CoreConstants.GAME_STATUS.PLAYING)).toBe(false)
-    expect(isGameLobby(undefined)).toBe(false)
+    expect(isGameLobby()).toBe(false)
   })
 
   it("isGamePlaying should work correctly", () => {
     expect(isGamePlaying(CoreConstants.GAME_STATUS.PLAYING)).toBe(true)
     expect(isGamePlaying(CoreConstants.GAME_STATUS.LOBBY)).toBe(false)
-    expect(isGamePlaying(undefined)).toBe(false)
+    expect(isGamePlaying()).toBe(false)
   })
 
   it("isGameFinished should work correctly", () => {
     expect(isGameFinished(CoreConstants.GAME_STATUS.FINISHED)).toBe(true)
     expect(isGameFinished(CoreConstants.GAME_STATUS.PLAYING)).toBe(false)
-    expect(isGameFinished(undefined)).toBe(false)
+    expect(isGameFinished()).toBe(false)
   })
 
   it("isGameStopped should work correctly", () => {
     expect(isGameStopped(CoreConstants.GAME_STATUS.STOPPED)).toBe(true)
     expect(isGameStopped(CoreConstants.GAME_STATUS.PLAYING)).toBe(false)
-    expect(isGameStopped(undefined)).toBe(false)
+    expect(isGameStopped()).toBe(false)
   })
 })
 
@@ -511,7 +511,7 @@ describe("Turn status checks", () => {
     expect(isTurnChooseAPile(CoreConstants.TURN_STATUS.THROW_OR_REPLACE)).toBe(
       false,
     )
-    expect(isTurnChooseAPile(undefined)).toBe(false)
+    expect(isTurnChooseAPile()).toBe(false)
   })
 
   it("isTurnThrowOrReplace should work correctly", () => {
@@ -521,13 +521,13 @@ describe("Turn status checks", () => {
     expect(isTurnThrowOrReplace(CoreConstants.TURN_STATUS.CHOOSE_A_PILE)).toBe(
       false,
     )
-    expect(isTurnThrowOrReplace(undefined)).toBe(false)
+    expect(isTurnThrowOrReplace()).toBe(false)
   })
 
   it("isTurnTurnACard should work correctly", () => {
     expect(isTurnTurnACard(CoreConstants.TURN_STATUS.TURN_A_CARD)).toBe(true)
     expect(isTurnTurnACard(CoreConstants.TURN_STATUS.CHOOSE_A_PILE)).toBe(false)
-    expect(isTurnTurnACard(undefined)).toBe(false)
+    expect(isTurnTurnACard()).toBe(false)
   })
 
   it("isTurnReplaceACard should work correctly", () => {
@@ -537,7 +537,7 @@ describe("Turn status checks", () => {
     expect(isTurnReplaceACard(CoreConstants.TURN_STATUS.CHOOSE_A_PILE)).toBe(
       false,
     )
-    expect(isTurnReplaceACard(undefined)).toBe(false)
+    expect(isTurnReplaceACard()).toBe(false)
   })
 })
 
@@ -551,7 +551,7 @@ describe("Last turn status checks", () => {
     expect(
       isLastTurnPickFromDrawPile(CoreConstants.LAST_TURN_STATUS.THROW),
     ).toBe(false)
-    expect(isLastTurnPickFromDrawPile(undefined)).toBe(false)
+    expect(isLastTurnPickFromDrawPile()).toBe(false)
   })
 
   it("isLastTurnPickFromDiscardPile should work correctly", () => {
@@ -563,25 +563,25 @@ describe("Last turn status checks", () => {
     expect(
       isLastTurnPickFromDiscardPile(CoreConstants.LAST_TURN_STATUS.THROW),
     ).toBe(false)
-    expect(isLastTurnPickFromDiscardPile(undefined)).toBe(false)
+    expect(isLastTurnPickFromDiscardPile()).toBe(false)
   })
 
   it("isLastTurnThrow should work correctly", () => {
     expect(isLastTurnThrow(CoreConstants.LAST_TURN_STATUS.THROW)).toBe(true)
     expect(isLastTurnThrow(CoreConstants.LAST_TURN_STATUS.REPLACE)).toBe(false)
-    expect(isLastTurnThrow(undefined)).toBe(false)
+    expect(isLastTurnThrow()).toBe(false)
   })
 
   it("isLastTurnReplace should work correctly", () => {
     expect(isLastTurnReplace(CoreConstants.LAST_TURN_STATUS.REPLACE)).toBe(true)
     expect(isLastTurnReplace(CoreConstants.LAST_TURN_STATUS.THROW)).toBe(false)
-    expect(isLastTurnReplace(undefined)).toBe(false)
+    expect(isLastTurnReplace()).toBe(false)
   })
 
   it("isLastTurnTurn should work correctly", () => {
     expect(isLastTurnTurn(CoreConstants.LAST_TURN_STATUS.TURN)).toBe(true)
     expect(isLastTurnTurn(CoreConstants.LAST_TURN_STATUS.THROW)).toBe(false)
-    expect(isLastTurnTurn(undefined)).toBe(false)
+    expect(isLastTurnTurn()).toBe(false)
   })
 })
 

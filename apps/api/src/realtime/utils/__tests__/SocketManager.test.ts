@@ -1,6 +1,6 @@
+import { Server as HttpServer } from "node:http"
 import { Logger } from "@skymo/logger"
 import { createAdapter } from "@socket.io/redis-adapter"
-import { Server as HttpServer } from "http"
 import { createClient } from "redis"
 import { Server } from "socket.io"
 import { beforeEach, describe, expect, it, vi } from "vitest"

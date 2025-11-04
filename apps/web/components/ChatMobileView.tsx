@@ -23,7 +23,6 @@ import { ChatMessageList } from "./ChatMessageList"
 interface ChatDrawerProps {
   open: boolean
   toggleOpening: () => void
-  disabled?: boolean
   className?: ClassValue
 }
 const ChatMobileView = ({

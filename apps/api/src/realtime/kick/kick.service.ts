@@ -125,7 +125,7 @@ export class KickService extends BaseService {
       const targetSocket = this.socketManager.getSocket(target.socketId)
       if (targetSocket) {
         await targetSocket.leave(game.code)
-        clearSocketData(targetSocket as AuthenticatedGameSocket)
+        clearSocketData(targetSocket)
       }
 
       await this.updateAndSendGame(game, operationManager)
@@ -261,7 +261,7 @@ export class KickService extends BaseService {
     const targetSocket = this.socketManager.getSocket(playerToKick.socketId)
     if (targetSocket) {
       await targetSocket.leave(game.code)
-      clearSocketData(targetSocket as AuthenticatedGameSocket)
+      clearSocketData(targetSocket)
     }
 
     await this.updateAndSendGame(game, operationManager)

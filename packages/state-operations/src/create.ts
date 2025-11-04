@@ -128,10 +128,11 @@ const createPlayerOperations = (
       }
     })
 
-    newState.players.slice(oldState.players.length).forEach((newPlayer) => {
+    const newPlayers = newState.players.slice(oldState.players.length)
+    for (const newPlayer of newPlayers) {
       ops.addPlayers ??= []
       ops.addPlayers.push(newPlayer)
-    })
+    }
   }
 
   if (Object.keys(ops).length > 0) return ops
@@ -145,7 +146,7 @@ const comparePlayer = (
   let playerChanges: Partial<PlayerToJson> = {}
 
   const keys = Object.keys(oldPlayer) as Array<keyof PlayerToJson>
-  keys.forEach((key) => {
+  for (const key of keys) {
     if (
       newPlayer[key] !== undefined &&
       !isDeepStrictEqual(oldPlayer[key], newPlayer[key])
@@ -155,7 +156,7 @@ const comparePlayer = (
         [key]: newPlayer[key],
       }
     }
-  })
+  }
 
   if (Object.keys(playerChanges).length > 0) {
     return { ...playerChanges, id: playerId }

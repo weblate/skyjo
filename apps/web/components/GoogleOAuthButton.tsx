@@ -29,7 +29,7 @@ const GoogleOAuthButton = () => {
 
       const data = await response.json()
       if (data.redirectUrl) {
-        window.location.href = data.redirectUrl
+        globalThis.location.href = data.redirectUrl
       }
     } catch (error) {
       console.error(error)

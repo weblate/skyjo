@@ -30,7 +30,7 @@ export const generateAlternatesLanguages = (
   alternates[defaultHreflang] = `${baseUrl}${path}`
 
   // Add other locales (with prefix)
-  routing.locales.forEach((locale) => {
+  for (const locale of routing.locales) {
     if (locale !== routing.defaultLocale) {
       const hreflangCode = hreflangMapping[locale]
 
@@ -40,7 +40,7 @@ export const generateAlternatesLanguages = (
         alternates[hreflangCode] = `${baseUrl}/${locale}${path}`
       }
     }
-  })
+  }
 
   alternates["x-default"] = alternates[defaultHreflang]
 

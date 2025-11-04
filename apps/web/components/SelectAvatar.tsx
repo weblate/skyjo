@@ -56,7 +56,7 @@ const SelectAvatar = ({
         >
           {avatar ? (
             <Image
-              src={`/avatars/${avatar}.svg`}
+              src={`/avatars/${avatar.toString()}.svg`}
               width={100}
               height={100}
               alt={tAvatar(avatar)}

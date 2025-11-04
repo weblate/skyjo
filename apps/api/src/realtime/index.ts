@@ -1,6 +1,6 @@
+import { Server as HttpServer } from "node:http"
 import type { ServerType } from "@hono/node-server"
 import { Logger } from "@skymo/logger"
-import { Server as HttpServer } from "http"
 import { reportRouter } from "@/realtime/report/report.router.js"
 import { guestMiddleware } from "@/realtime/utils/guestMiddleware.js"
 import { userMiddleware } from "@/realtime/utils/userMiddleware.js"

@@ -119,7 +119,6 @@ class TestAfkQueueService extends BaseAfkQueueService<TestAfkJobData> {
 
   async processJob(_job: Job<TestAfkJobData>): Promise<void> {
     // Implementation for testing
-    return Promise.resolve()
   }
 
   // Override with test implementations
@@ -154,7 +153,6 @@ class TestAfkQueueService extends BaseAfkQueueService<TestAfkJobData> {
   ): Promise<void> {
     this.disconnectPlayerCalled = true
     this.disconnectPlayerArgs = [game, player]
-    return Promise.resolve()
   }
 
   // Expose protected methods for testing
@@ -404,9 +402,7 @@ describe("BaseAfkQueueService", () => {
           super("special-test-queue")
         }
 
-        async processJob(_job: Job<TestAfkJobData>): Promise<void> {
-          return Promise.resolve()
-        }
+        async processJob(_job: Job<TestAfkJobData>): Promise<void> {}
 
         // Expose method for testing
         public async testDisconnectPlayer(

@@ -23,6 +23,14 @@ import { useLocalStorage } from "react-use"
 import { toast } from "sonner"
 import { useAuth } from "@/hooks/useAuth"
 
+const getAvatarIndexFromName = (avatarName: Avatar): number => {
+  return AVATARS_ARRAY.indexOf(avatarName)
+}
+
+const getAvatarNameFromIndex = (index: number): Avatar => {
+  return AVATARS_ARRAY[index] ?? CoreConstants.AVATARS.BEE
+}
+
 const USERNAME_KEY = "username"
 const AVATAR_KEY = "Avatar-index"
 
@@ -62,16 +70,8 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
   const [avatarIndex, setAvatarIndex] = useState<number>(-1)
   const [playerId, setPlayerId] = useState<string>("")
 
-  const getAvatarIndexFromName = (avatarName: Avatar): number => {
-    return AVATARS_ARRAY.findIndex((avatar) => avatar === avatarName)
-  }
-
-  const getAvatarNameFromIndex = (index: number): Avatar => {
-    return AVATARS_ARRAY[index] ?? CoreConstants.AVATARS.BEE
-  }
-
   useEffect(() => {
-    if (typeof window === "undefined" || authLoading) return
+    if (globalThis === undefined || authLoading) return
 
     let initialName = ""
     let initialAvatarIndex = -1
@@ -100,12 +100,12 @@ const PlayerProvider = ({ children }: PropsWithChildren) => {
 
     // Only update if values have actually changed to avoid infinite loops
     setName((currentName) => {
-      return initialName !== currentName ? initialName : currentName
+      return initialName === currentName ? currentName : initialName
     })
     setAvatarIndex((currentIndex) => {
-      return initialAvatarIndex !== currentIndex
-        ? initialAvatarIndex
-        : currentIndex
+      return initialAvatarIndex === currentIndex
+        ? currentIndex
+        : initialAvatarIndex
     })
   }, [
     authLoading,

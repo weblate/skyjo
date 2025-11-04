@@ -200,8 +200,8 @@ const HostView = ({
   const [showModal, setShowModal] = useState(false)
 
   const handleStartClick = () => {
-    if (!hasMinPlayers) setShowModal(true)
-    else onStartCountdown()
+    if (hasMinPlayers) onStartCountdown()
+    else setShowModal(true)
   }
 
   if (countdown !== null) {

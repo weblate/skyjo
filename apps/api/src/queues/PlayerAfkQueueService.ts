@@ -1,5 +1,11 @@
-import type { Game, Player } from "@skymo/core"
-import { Bot, type BotAction } from "@skymo/core"
+import {
+  Bot,
+  type BotAction,
+  Constants as CoreConstants,
+  type Game,
+  type Player,
+  type RoundPhase,
+} from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import type { Job } from "bullmq"
@@ -199,24 +205,8 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
 
     try {
       game.setOperationManager(GameOperationManager.getInstance())
-      if (
-        !game.isPlaying() ||
-        (!game.isRoundMain() &&
-          !game.isRoundRevealCards() &&
-          !game.isRoundLastLap())
-      ) {
-        Logger.debug(
-          `Game ${gameCode} is not in playing state or not in valid round, skipping AFK job`,
-          {
-            gameCode,
-            playerId,
-            jobId: job.id,
-            isPlaying: game.isPlaying(),
-            isRoundMain: game.isRoundMain(),
-            isRoundRevealCards: game.isRoundRevealCards(),
-            isRoundLastLap: game.isRoundLastLap(),
-          },
-        )
+
+      if (!this.isValidGameState(game, playerId, job.id)) {
         return
       }
 
@@ -230,134 +220,205 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
         return
       }
 
-      // Reveal phase: use Redis lock to prevent concurrent reveals
       if (game.isRoundRevealCards()) {
-        if (player.hasRevealedCardCount) {
-          Logger.debug(
-            `Player ${playerId} already revealed required cards in game ${gameCode}`,
-            {
-              gameCode,
-              playerId,
-              playerName: player.name,
-              revealedCount: player.hasRevealedCardCount,
-              requiredCount: game.settings.initialTurnedCount,
-            },
-          )
-          return
-        }
-
-        Logger.info(
-          `Player ${playerId} needs to reveal cards, acquiring lock for game ${gameCode}`,
-          {
-            gameCode,
-            playerId,
-            jobId: job.id,
-          },
-        )
-
-        const lockToken = await this.acquireLockWithPolling(gameCode, 10000)
-        try {
-          // Re-fetch game after acquiring lock to get latest state
-          const freshGame = await this.redis.getGameSafe(gameCode)
-          if (!freshGame) {
-            Logger.warn(`Game ${gameCode} disappeared after lock acquisition`, {
-              gameCode,
-              playerId,
-              jobId: job.id,
-            })
-            return
-          }
-
-          freshGame.setOperationManager(GameOperationManager.getInstance())
-          const freshPlayer = freshGame.getPlayerById(playerId)
-          if (!freshPlayer) {
-            Logger.warn(`Player ${playerId} not found after lock acquisition`, {
-              gameCode,
-              playerId,
-              jobId: job.id,
-            })
-            return
-          }
-
-          // Check again if player still needs to reveal
-          if (freshPlayer.hasRevealedCardCount) {
-            Logger.debug(
-              `Player ${playerId} already revealed (checked after lock)`,
-              {
-                gameCode,
-                playerId,
-                jobId: job.id,
-              },
-            )
-            return
-          }
-
-          const disconnect = await this.increaseAfkCount(freshGame, freshPlayer)
-          if (!disconnect) {
-            await this.performAfkReveal(freshGame, freshPlayer)
-          }
-        } finally {
-          await this.releaseLock(gameCode, lockToken)
-        }
+        await this.handleRevealPhase(game, playerId, job.id)
         return
       }
 
-      // Main phase: no lock needed, only current player can act
-      const currentPlayer = game.getCurrentPlayer()
-      if (currentPlayer?.id !== playerId) {
-        Logger.debug(
-          `Player ${playerId} is not current player, skipping AFK action`,
-          {
-            gameCode,
-            playerId,
-            currentPlayerId: currentPlayer?.id,
-            jobId: job.id,
-          },
-        )
-        return
-      }
-
-      Logger.info(
-        `Player ${playerId} is current player, performing AFK action`,
-        {
-          gameCode,
-          playerId,
-          jobId: job.id,
-        },
-      )
-
-      const disconnect = await this.increaseAfkCount(game, player)
-      if (!disconnect) {
-        await this.performAfkMove(game)
-      }
+      await this.handleMainPhase(game, playerId, job.id)
     } catch (error) {
-      Logger.error(
-        `Error processing AFK job for player ${playerId} in game ${gameCode}`,
-        {
-          gameCode,
-          playerId,
-          jobId: job.id,
-          error: error instanceof Error ? error.message : String(error),
-          errorStack: error instanceof Error ? error.stack : undefined,
-        },
-      )
-
-      if (
-        error instanceof CError &&
-        error.code === ErrorConstants.ERROR.PLAYER_NOT_FOUND
-      ) {
-        return
-      }
-
-      await job.moveToFailed(
-        error instanceof Error ? error : new Error(String(error)),
-        job?.token ?? "failed",
-      )
-      throw error
+      await this.handleJobError(error, job, gameCode, playerId)
     }
   }
 
   //#region private methods
+
+  private isValidGameState(
+    game: Game,
+    playerId: string,
+    jobId: string | undefined,
+  ): boolean {
+    const allowedRoundPhases: RoundPhase[] = [
+      CoreConstants.ROUND_PHASE.MAIN,
+      CoreConstants.ROUND_PHASE.REVEAL_CARDS,
+      CoreConstants.ROUND_PHASE.LAST_LAP,
+    ]
+    if (!game.isPlaying() || !allowedRoundPhases.includes(game.roundPhase)) {
+      Logger.debug(
+        `Game ${game.code} is not in playing state or not in valid round, skipping AFK job`,
+        {
+          gameCode: game.code,
+          playerId,
+          jobId,
+          isPlaying: game.isPlaying(),
+          isRoundMain: game.isRoundMain(),
+          isRoundRevealCards: game.isRoundRevealCards(),
+          isRoundLastLap: game.isRoundLastLap(),
+        },
+      )
+      return false
+    }
+    return true
+  }
+
+  private async handleRevealPhase(
+    game: Game,
+    playerId: string,
+    jobId: string | undefined,
+  ): Promise<void> {
+    game.setOperationManager(GameOperationManager.getInstance())
+    const player = game.getPlayerById(playerId)
+
+    if (!player) {
+      Logger.warn(`Player ${playerId} not found in game ${game.code}`, {
+        gameCode: game.code,
+        playerId,
+        jobId,
+      })
+      return
+    }
+
+    if (player.hasRevealedCardCount) {
+      Logger.debug(
+        `Player ${playerId} already revealed required cards in game ${game.code}`,
+        {
+          gameCode: game.code,
+          playerId,
+          playerName: player.name,
+          revealedCount: player.hasRevealedCardCount,
+          requiredCount: game.settings.initialTurnedCount,
+        },
+      )
+      return
+    }
+
+    Logger.info(
+      `Player ${playerId} needs to reveal cards, acquiring lock for game ${game.code}`,
+      {
+        gameCode: game.code,
+        playerId,
+        jobId,
+      },
+    )
+
+    const lockToken = await this.acquireLockWithPolling(game.code, 10000)
+    try {
+      const freshGame = await this.redis.getGameSafe(game.code)
+      if (!freshGame) {
+        Logger.warn(`Game ${game.code} disappeared after lock acquisition`, {
+          gameCode: game.code,
+          playerId,
+          jobId,
+        })
+        return
+      }
+
+      freshGame.setOperationManager(GameOperationManager.getInstance())
+      const freshPlayer = freshGame.getPlayerById(playerId)
+      if (!freshPlayer) {
+        Logger.warn(`Player ${playerId} not found after lock acquisition`, {
+          gameCode: game.code,
+          playerId,
+          jobId,
+        })
+        return
+      }
+
+      if (freshPlayer.hasRevealedCardCount) {
+        Logger.debug(
+          `Player ${playerId} already revealed (checked after lock)`,
+          {
+            gameCode: game.code,
+            playerId,
+            jobId,
+          },
+        )
+        return
+      }
+
+      const hasBeenDisconnected = await this.increaseAfkCount(
+        freshGame,
+        freshPlayer,
+      )
+      if (!hasBeenDisconnected) {
+        await this.performAfkReveal(freshGame, freshPlayer)
+      }
+    } finally {
+      await this.releaseLock(game.code, lockToken)
+    }
+  }
+
+  private async handleMainPhase(
+    game: Game,
+    playerId: string,
+    jobId: string | undefined,
+  ): Promise<void> {
+    const currentPlayer = game.getCurrentPlayer()
+    if (currentPlayer?.id !== playerId) {
+      Logger.debug(
+        `Player ${playerId} is not current player, skipping AFK action`,
+        {
+          gameCode: game.code,
+          playerId,
+          currentPlayerId: currentPlayer?.id,
+          jobId,
+        },
+      )
+      return
+    }
+
+    Logger.info(`Player ${playerId} is current player, performing AFK action`, {
+      gameCode: game.code,
+      playerId,
+      jobId,
+    })
+
+    const player = game.getPlayerById(playerId)
+    if (!player) {
+      Logger.warn(`Player ${playerId} not found in game ${game.code}`, {
+        gameCode: game.code,
+        playerId,
+        jobId,
+      })
+      return
+    }
+
+    const disconnect = await this.increaseAfkCount(game, player)
+    if (!disconnect) {
+      await this.performAfkMove(game)
+    }
+  }
+
+  private async handleJobError(
+    error: unknown,
+    job: Job<PlayerAfkJobData>,
+    gameCode: string,
+    playerId: string,
+  ): Promise<void> {
+    Logger.error(
+      `Error processing AFK job for player ${playerId} in game ${gameCode}`,
+      {
+        gameCode,
+        playerId,
+        jobId: job.id,
+        error: error instanceof Error ? error.message : String(error),
+        errorStack: error instanceof Error ? error.stack : undefined,
+      },
+    )
+
+    if (
+      error instanceof CError &&
+      error.code === ErrorConstants.ERROR.PLAYER_NOT_FOUND
+    ) {
+      return
+    }
+
+    await job.moveToFailed(
+      error instanceof Error ? error : new Error(String(error)),
+      job?.token ?? "failed",
+    )
+    throw error
+  }
 
   private getJobId(
     gameCode: string,
@@ -639,13 +700,10 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
         }
 
         default: {
-          Logger.warn(
-            `Unknown bot action type: ${(action as BotAction).type}`,
-            {
-              gameCode: game.code,
-              playerId: currentPlayer.id,
-            },
-          )
+          Logger.warn(`Unknown bot action type: ${action.type}`, {
+            gameCode: game.code,
+            playerId: currentPlayer.id,
+          })
         }
       }
     }

@@ -17,7 +17,6 @@ export class GameService extends BaseService {
     clientStateVersion: number | null,
     firstTime: boolean = false,
   ) {
-    // TODO add trycatch and send error get if game not found to redirect the client to the homepage with a toast to explain the error
     // Leave the checkStateVersion check if client really needs to get the game
     const isUpToDate = await this.checkStateVersion(
       socket,
@@ -269,7 +268,6 @@ export class GameService extends BaseService {
       })
     }
 
-    // TODO remove this condition in 1.36.0 if game sync works and this error never happens in last versions
     if (!game.isPlaying() || (!game.isRoundMain() && !game.isRoundLastLap())) {
       this.socketManager.sendGameToSocket(socket.id, game)
       throw new CError(
@@ -300,7 +298,6 @@ export class GameService extends BaseService {
       })
     }
 
-    // TODO remove this condition in 1.36.0 if game sync works and this error never happens in last versions
     if (!game.checkTurn(player.id)) {
       this.socketManager.sendGameToSocket(socket.id, game)
       throw new CError(
@@ -318,7 +315,6 @@ export class GameService extends BaseService {
       )
     }
 
-    // TODO remove this condition in 1.36.0 if game sync works and this error never happens in last versions
     if (allowedStates.length > 0 && !allowedStates.includes(game.turnStatus)) {
       this.socketManager.sendGameToSocket(socket.id, game)
       throw new CError(

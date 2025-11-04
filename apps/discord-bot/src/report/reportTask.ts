@@ -87,7 +87,7 @@ function createReportEmbed(reportData: ReportJobData): EmbedBuilder {
   ]
 
   // Add comment field only if comment is provided and not empty
-  if (reportData.comment && reportData.comment.trim()) {
+  if (reportData?.comment?.trim()) {
     fields.push({
       name: "💬 Additional Context",
       value: reportData.comment,

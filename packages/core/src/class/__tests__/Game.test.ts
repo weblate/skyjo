@@ -1107,7 +1107,10 @@ describe("Game", () => {
         .spyOn(player, "turnAllCards")
         .mockImplementation(() => {
           operationOrder.push("turnAllCards")
-          player.cards.flat().forEach((card) => card.turnVisible())
+
+          for (const card of player.cards.flat()) {
+            card.turnVisible()
+          }
         })
 
       // Helper function to handle column 0 card discarding
@@ -1121,7 +1124,9 @@ describe("Game", () => {
           if (
             column0Cards.every((card) => card.value === 5 && card.isVisible)
           ) {
-            column0Cards.forEach((card) => game.discardCard(card.value))
+            for (const card of column0Cards) {
+              game.discardCard(card.value)
+            }
           }
         }
       }
@@ -1355,20 +1360,20 @@ describe("Game", () => {
   describe("resetGame", () => {
     it("should reset the round of the game", () => {
       game.roundNumber = 10
-      game.players.forEach((player) => {
+      for (const player of game.players) {
         player.scores = [10, 20]
         player.score = 30
         player.wantsReplay = true
-      })
+      }
 
       game["resetGame"]()
 
       expect(game.roundNumber).toBe(1)
-      game.players.forEach((player) => {
+      for (const player of game.players) {
         expect(player.scores).toStrictEqual([])
         expect(player.score).toBe(0)
         expect(player.wantsReplay).toBeFalsy()
-      })
+      }
     })
   })
 

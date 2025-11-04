@@ -171,7 +171,7 @@ export class GameStorageTask {
     const playersWithRanks: PlayerWithRank[] = []
 
     // 1. Assign ranks to connected players (with tie handling)
-    sortedConnectedPlayers.forEach((player) => {
+    for (const player of sortedConnectedPlayers) {
       let rank = 1
       // Count how many connected players have a better (lower) score
       for (const otherPlayer of sortedConnectedPlayers) {
@@ -180,19 +180,19 @@ export class GameStorageTask {
         }
       }
       playersWithRanks.push({ ...player, rank })
-    })
+    }
 
     // 2. Assign ranks to forfeited players (sequential after connected)
     const baseRankForfeited = connectedPlayers.length
-    sortedForfeitedPlayers.forEach((player, index) => {
+    for (const [index, player] of sortedForfeitedPlayers.entries()) {
       const rank = baseRankForfeited + index + 1
       playersWithRanks.push({ ...player, rank })
-    })
+    }
 
     // 3. All disconnected players get worst rank (punitive)
-    disconnectedPlayers.forEach((player) => {
+    for (const player of disconnectedPlayers) {
       playersWithRanks.push({ ...player, rank: totalPlayers })
-    })
+    }
 
     return playersWithRanks
   }
@@ -211,7 +211,7 @@ export class GameStorageTask {
     if (hostPlayerIndex !== -1) {
       await tx
         .update(gameTable)
-        .set({ hostId: playerRecords[hostPlayerIndex]!.id })
+        .set({ hostId: playerRecords[hostPlayerIndex]?.id ?? null })
         .where(eq(gameTable.id, gameDbId))
     }
   }

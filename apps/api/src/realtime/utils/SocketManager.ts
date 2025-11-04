@@ -1,3 +1,4 @@
+import { Server as HttpServer } from "node:http"
 import { ENV } from "@env"
 import type { Game } from "@skymo/core"
 import { Logger } from "@skymo/logger"
@@ -7,7 +8,6 @@ import type {
 } from "@skymo/shared/types"
 import { createAdapter } from "@socket.io/redis-adapter"
 import dayjs from "dayjs"
-import { Server as HttpServer } from "http"
 import { createClient } from "redis"
 import { Server } from "socket.io"
 import customParser from "socket.io-msgpack-parser"

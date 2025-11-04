@@ -1,6 +1,7 @@
 "use client"
 
 import { zodResolver } from "@hookform/resolvers/zod"
+import { Avatar } from "@skymo/core"
 import { OnboardingError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import {
@@ -36,8 +37,8 @@ import { useAuth } from "@/hooks/useAuth"
 import { useRouter } from "@/i18n/routing"
 
 // Helper functions to convert between avatar name and index
-const getAvatarIndexFromName = (avatarName: string) => {
-  return AVATARS_ARRAY.findIndex((avatar) => avatar === avatarName)
+const getAvatarIndexFromName = (avatarName: Avatar) => {
+  return AVATARS_ARRAY.indexOf(avatarName)
 }
 
 const getAvatarNameFromIndex = (index: number) => {

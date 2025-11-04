@@ -41,13 +41,13 @@ export class BotAnalytics {
    */
   static getHiddenCardPositions(player: PlayerToJson): Position[] {
     const positions: Position[] = []
-    player.cards.forEach((column, col) => {
-      column.forEach((card, row) => {
+    for (const [col, column] of player.cards.entries()) {
+      for (const [row, card] of column.entries()) {
         if (!card.isVisible) {
           positions.push({ row, col })
         }
-      })
-    })
+      }
+    }
     return positions
   }
 
@@ -59,13 +59,13 @@ export class BotAnalytics {
    */
   static calculateVisibleScore(player: PlayerToJson): number {
     let score = 0
-    player.cards.forEach((column) => {
-      column.forEach((card) => {
+    for (const column of player.cards) {
+      for (const card of column) {
         if (card.isVisible && card.value !== undefined) {
           score += card.value
         }
-      })
-    })
+      }
+    }
     return score
   }
 
@@ -119,16 +119,16 @@ export class BotAnalytics {
 
     const opportunities: ColumnOpportunity[] = []
 
-    player.cards.forEach((column, colIndex) => {
+    for (const [colIndex, column] of player.cards.entries()) {
       // Count visible cards and their values
       const visibleCards = column.filter((card) => card.isVisible)
       const hiddenCards = column.filter((card) => !card.isVisible)
 
-      if (visibleCards.length === 0 || hiddenCards.length === 0) return
+      if (visibleCards.length === 0 || hiddenCards.length === 0) continue
 
       // Check if visible cards match
       const firstCard = visibleCards[0]
-      if (firstCard.value === undefined) return
+      if (firstCard.value === undefined) continue
       const firstValue = firstCard.value
       const allMatch = visibleCards.every(
         (card) => card.value !== undefined && card.value === firstValue,
@@ -137,11 +137,11 @@ export class BotAnalytics {
       if (allMatch && visibleCards.length >= 1) {
         // Map hidden card positions by finding their actual row indices
         const hiddenPositions: Position[] = []
-        column.forEach((card, row) => {
+        for (const [row, card] of column.entries()) {
           if (!card.isVisible) {
             hiddenPositions.push({ row, col: colIndex })
           }
-        })
+        }
 
         opportunities.push({
           colIndex,
@@ -150,7 +150,7 @@ export class BotAnalytics {
           hiddenPositions,
         })
       }
-    })
+    }
 
     return opportunities
   }
@@ -304,12 +304,12 @@ export class BotAnalytics {
       if (allMatch && visibleCards.length >= 1) {
         // Map hidden card positions
         const hiddenPositions: Position[] = []
-        player.cards.forEach((column, colIndex) => {
+        for (const [colIndex, column] of player.cards.entries()) {
           const card = column[rowIndex]
           if (!card.isVisible) {
             hiddenPositions.push({ row: rowIndex, col: colIndex })
           }
-        })
+        }
 
         opportunities.push({
           rowIndex,
@@ -344,7 +344,7 @@ export class BotAnalytics {
 
     // Check columns
     if (settings.removeIdenticalColumn) {
-      player.cards.forEach((column, colIndex) => {
+      for (const [colIndex, column] of player.cards.entries()) {
         const visible = column.filter(
           (c) => c.isVisible && c.value !== undefined,
         )
@@ -365,7 +365,7 @@ export class BotAnalytics {
             }
           }
         }
-      })
+      }
     }
 
     // Check rows

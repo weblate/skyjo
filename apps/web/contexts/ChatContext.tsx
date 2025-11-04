@@ -213,11 +213,11 @@ const ChatProvider = ({ children }: PropsWithChildren) => {
         t("argument-required", { command: "/unmute" }),
         CoreConstants.SYSTEM_MESSAGE_TYPE.WARN_SYSTEM_MESSAGE,
       )
-    } else if (!mutedPlayers.includes(name)) {
-      addSystemMessage(t("player-not-muted", { name }))
-    } else {
+    } else if (mutedPlayers.includes(name)) {
       setMutedPlayers((prev) => prev.filter((user) => user !== name))
       addSystemMessage(t("player-unmuted", { name }))
+    } else {
+      addSystemMessage(t("player-not-muted", { name }))
     }
   }
 

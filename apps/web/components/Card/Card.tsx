@@ -130,7 +130,7 @@ const valueMap: Record<string, CardVisualType> = {
   "12": "high",
 }
 const getCardVisualType = (value?: CardValue): CardVisualType => {
-  if (typeof value === "undefined" || value === "back") return "not-visible"
+  if (value === undefined || value === "back") return "not-visible"
   if (typeof value === "string") return value
 
   return valueMap[value.toString()] ?? "not-visible"

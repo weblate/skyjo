@@ -40,8 +40,8 @@ ENV NEXT_PUBLIC_GITHUB_URL=${NEXT_PUBLIC_GITHUB_URL}
 ENV NEXT_PUBLIC_RELEASE_NOTES_URL=${NEXT_PUBLIC_RELEASE_NOTES_URL}
 ENV NEXT_PUBLIC_WEBLATE_URL=${NEXT_PUBLIC_WEBLATE_URL}
 
-RUN apk add --no-cache libc6-compat
-RUN npm install -g pnpm@10.12.4
+RUN apk add --no-cache libc6-compat && \
+    npm install -g pnpm@10.12.4
 WORKDIR /app
 
 # Copy lockfile and package.json files

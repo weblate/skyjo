@@ -53,13 +53,13 @@ export default async function LoginLayout({
   const { locale } = await params
   const session = await verifySession()
 
-  // If user has a valid session, redirect based on onboarding status
+  // If user has a valid session and has completed onboarding, redirect to home. Otherwise, redirect to onboarding.
   if (session) {
-    if (!session.onboardingCompleted) {
-      redirect({ href: "/onboard", locale })
+    if (session.onboardingCompleted) {
+      redirect({ href: "/", locale })
       return null
     } else {
-      redirect({ href: "/", locale })
+      redirect({ href: "/onboard", locale })
       return null
     }
   }

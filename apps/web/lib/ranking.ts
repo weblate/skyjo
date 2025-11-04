@@ -43,14 +43,14 @@ export function calculatePlayerRanks(
   })
 
   const baseRankForfeited = connectedPlayers.length
-  sortedForfeitedPlayers.forEach((player, index) => {
+  for (const [index, player] of sortedForfeitedPlayers.entries()) {
     const rank = baseRankForfeited + index + 1
     playersWithRanks.push({ ...player, rank })
-  })
+  }
 
-  disconnectedPlayers.forEach((player) => {
+  for (const player of disconnectedPlayers) {
     playersWithRanks.push({ ...player, rank: totalPlayers })
-  })
+  }
 
   return playersWithRanks.reverse()
 }

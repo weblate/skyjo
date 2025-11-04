@@ -8,6 +8,11 @@ import { type Avatar, type ConnectionStatus, Constants } from "../constants.js"
 import { Card } from "./Card.js"
 import { Settings } from "./Settings.js"
 
+const DEFAULT_PLAYER: CreatePlayer = {
+  name: "Ano",
+  avatar: Constants.AVATARS.BEE,
+}
+
 interface PlayerInterface {
   cards: Card[][]
   scores: PlayerScore[]
@@ -68,18 +73,18 @@ export class Player implements PlayerInterface {
   hasRevealedCardCount: boolean = false
 
   constructor(
-    playerToCreate: CreatePlayer = {
-      name: "",
-      avatar: Constants.AVATARS.BEE,
-    },
+    {
+      name = DEFAULT_PLAYER.name,
+      avatar = DEFAULT_PLAYER.avatar,
+    }: CreatePlayer = DEFAULT_PLAYER,
     socketId: string = "",
     userId?: number,
     username?: string | null,
     guestId?: string,
   ) {
-    this.name = playerToCreate.name
+    this.name = name
     this.socketId = socketId
-    this.avatar = playerToCreate.avatar
+    this.avatar = avatar
     this.userId = userId
     this.username = username ?? undefined
     this.guestId = guestId
@@ -179,7 +184,8 @@ export class Player implements PlayerInterface {
     if (!this.cards[0] || this.cards[0].length <= 1) return []
 
     const cardsToDiscard: Card[] = []
-    this.cards.forEach((column, index) => {
+
+    for (const [index, column] of this.cards.entries()) {
       const allCardsAreTheSameAndVisible = column.every(
         (card) => card.value === column[0].value && card.isVisible,
       )
@@ -187,7 +193,7 @@ export class Player implements PlayerInterface {
       if (allCardsAreTheSameAndVisible) {
         cardsToDiscard.push(...this.removeColumn(index))
       }
-    })
+    }
 
     return cardsToDiscard
   }
@@ -198,9 +204,9 @@ export class Player implements PlayerInterface {
     const cardsToDiscard: Card[] = []
 
     for (let rowIndex = 0; rowIndex < this.cards[0].length; rowIndex++) {
-      const row = this.cards
-        .map((column) => column.slice(rowIndex, rowIndex + 1))
-        .flat()
+      const row = this.cards.flatMap((column) =>
+        column.slice(rowIndex, rowIndex + 1),
+      )
 
       const allCardsAreTheSameAndVisible = row.every(
         (card) => card.value === row[0].value && card.isVisible,
@@ -217,19 +223,19 @@ export class Player implements PlayerInterface {
   currentScoreArray() {
     const currentScore: number[] = []
 
-    this.cards.flat().forEach((card) => {
+    for (const card of this.cards.flat()) {
       if (card.isVisible) currentScore.push(card.value)
-    })
+    }
 
     return currentScore
   }
 
   turnAllCards() {
-    this.cards.forEach((column) => {
-      column.forEach((card) => {
+    for (const column of this.cards) {
+      for (const card of column) {
         card.turnVisible()
-      })
-    })
+      }
+    }
   }
 
   recalculateScore() {
@@ -247,11 +253,11 @@ export class Player implements PlayerInterface {
       return
     }
 
-    this.cards.forEach((column) => {
-      column.forEach((card) => {
+    for (const column of this.cards) {
+      for (const card of column) {
         finalScore += card.value
-      })
-    })
+      }
+    }
 
     this.scores.push(finalScore)
 

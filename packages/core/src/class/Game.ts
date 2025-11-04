@@ -596,9 +596,9 @@ export class Game implements GameInterface {
 
     // Place shuffled connected players back into their connected positions
     // Disconnected players remain in their original positions
-    connectedIndices.forEach((index, i) => {
+    for (const [i, index] of connectedIndices.entries()) {
       this.players[index] = playersToShuffle[i]
-    })
+    }
   }
 
   private shufflePile(pile: number[], times = 3): number[] {
@@ -618,22 +618,22 @@ export class Game implements GameInterface {
   }
 
   private initializeCardPiles() {
-    const defaultCards = [
-      ...Array(5).fill(-2),
-      ...Array(10).fill(-1),
-      ...Array(15).fill(0),
-      ...Array(10).fill(1),
-      ...Array(10).fill(2),
-      ...Array(10).fill(3),
-      ...Array(10).fill(4),
-      ...Array(10).fill(5),
-      ...Array(10).fill(6),
-      ...Array(10).fill(7),
-      ...Array(10).fill(8),
-      ...Array(10).fill(9),
-      ...Array(10).fill(10),
-      ...Array(10).fill(11),
-      ...Array(10).fill(12),
+    const defaultCards: number[] = [
+      ...new Array(5).fill(-2),
+      ...new Array(10).fill(-1),
+      ...new Array(15).fill(0),
+      ...new Array(10).fill(1),
+      ...new Array(10).fill(2),
+      ...new Array(10).fill(3),
+      ...new Array(10).fill(4),
+      ...new Array(10).fill(5),
+      ...new Array(10).fill(6),
+      ...new Array(10).fill(7),
+      ...new Array(10).fill(8),
+      ...new Array(10).fill(9),
+      ...new Array(10).fill(10),
+      ...new Array(10).fill(11),
+      ...new Array(10).fill(12),
     ]
 
     this.drawPile = this.shufflePile(defaultCards)
@@ -641,16 +641,18 @@ export class Game implements GameInterface {
   }
 
   private resetGamePlayers() {
-    this.getConnectedPlayers().forEach((player) => {
+    const connectedPlayers = this.getConnectedPlayers()
+    for (const player of connectedPlayers) {
       player.resetGame()
-    })
+    }
   }
 
   private givePlayersCards() {
-    this.getConnectedPlayers().forEach((player) => {
+    const connectedPlayers = this.getConnectedPlayers()
+    for (const player of connectedPlayers) {
       const cards = this.drawPile.splice(0, 12)
       player.setCards(cards, this.settings)
-    })
+    }
   }
 
   private async initializeRound() {
@@ -684,7 +686,10 @@ export class Game implements GameInterface {
   private resetPlayers() {
     this.removeDisconnectedPlayers()
 
-    this.getConnectedPlayers().forEach((player) => player.reset())
+    const connectedPlayers = this.getConnectedPlayers()
+    for (const player of connectedPlayers) {
+      player.reset()
+    }
   }
 
   private async resetGame() {
@@ -774,9 +779,9 @@ export class Game implements GameInterface {
     }
 
     // Clear turnStartTime from all players as reveal phase ends
-    connectedPlayers.forEach((player) => {
+    for (const player of connectedPlayers) {
       player.turnStartTime = null
-    })
+    }
 
     this.roundPhase = Constants.ROUND_PHASE.MAIN
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
@@ -798,7 +803,9 @@ export class Game implements GameInterface {
     }
 
     if (cardsToDiscard.length > 0) {
-      cardsToDiscard.forEach((card) => this.discardSelectedCard(card.value))
+      for (const card of cardsToDiscard) {
+        this.discardSelectedCard(card.value)
+      }
 
       this.checkCardsToDiscard(player, maxDepth - 1)
     }
@@ -958,11 +965,11 @@ export class Game implements GameInterface {
   }
 
   private async endRound() {
-    this.players.forEach((player) => {
+    for (const player of this.players) {
       player.turnAllCards()
       this.checkCardsToDiscard(player)
       player.finalRoundScore()
-    })
+    }
 
     this.checkFirstPlayerPenalty()
 

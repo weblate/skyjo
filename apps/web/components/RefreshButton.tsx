@@ -11,7 +11,7 @@ export default function RefreshButton({
   children,
 }: Readonly<RefreshButtonProps>) {
   const handleRefresh = () => {
-    window.location.reload()
+    globalThis.location.reload()
   }
 
   return (

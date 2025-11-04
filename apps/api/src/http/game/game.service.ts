@@ -113,7 +113,6 @@ export async function kickPlayer(
       data: [player.id, player.name],
     })
 
-    // TODO REFACTOR THIS. THIS IS A COPY OF THE REALTIME KICK SERVICE + BASE SERVICE
     const operationManager = new GameStateTracker(game)
 
     await game.disconnectPlayer(player)

@@ -139,12 +139,12 @@ export class SimulationRunner {
     // Create bots: all bots use strategic logic except the last one which uses forceFinish
     // to prevent deadlocks. This ensures fair competition while guaranteeing game completion.
     const botMap = new Map<string, Bot>()
-    players.forEach((player, index) => {
+    for (const [index, player] of players.entries()) {
       // Last bot (highest index) uses forceFinish to break deadlocks
       // All other bots use strategic logic for fair competition
       const isLastBot = index === players.length - 1
       botMap.set(player.id, new Bot({ forceFinish: isLastBot }))
-    })
+    }
 
     // Start game
     game.start()
@@ -180,9 +180,11 @@ export class SimulationRunner {
     const winnerId = Object.entries(ranks).find(([_, rank]) => rank === 1)?.[0]
 
     if (!winnerId) {
+      const playerNamesAndScores = gameJson.players.map(
+        (p) => `${p.name} (${p.score})`,
+      )
       throw new Error(
-        `No winner found. Game code: ${game.code}, ` +
-          `Players: ${gameJson.players.map((p) => `${p.name} (${p.score})`).join(", ")}`,
+        `No winner found. Game code: ${game.code}, Players: ${playerNamesAndScores.join(", ")}`,
       )
     }
 
@@ -329,7 +331,7 @@ export class SimulationRunner {
     while (actionCount < maxActionsPerTurn) {
       // Check if turn/round ended
       const currentPlayer = game.getCurrentPlayer()
-      if (!currentPlayer || currentPlayer.id !== playerId) {
+      if (currentPlayer?.id !== playerId) {
         // Turn advanced to next player
         break
       }
@@ -386,7 +388,7 @@ export class SimulationRunner {
 
           case "turn":
             await game.turnCard({
-              player: game.getCurrentPlayer()!,
+              player: game.getCurrentPlayer(),
               column: action.position.col,
               row: action.position.row,
               wasAfk: false,
@@ -467,9 +469,9 @@ export class SimulationRunner {
       allRoundScores.reduce((sum, s) => sum + s, 0) / allRoundScores.length
 
     // Calculate median score
-    const sortedScores = [...results.map((r) => r.botFinalScore)].sort(
-      (a, b) => a - b,
-    )
+    const sortedScores = results
+      .map((r) => r.botFinalScore)
+      .sort((a, b) => a - b)
     const medianScore =
       sortedScores.length % 2 === 0
         ? (sortedScores[sortedScores.length / 2 - 1] +

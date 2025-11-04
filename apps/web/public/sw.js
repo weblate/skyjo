@@ -1,4 +1,4 @@
-self.addEventListener("push", function (event) {
+globalThis.addEventListener("push", function (event) {
   if (event.data) {
     const data = event.data.json()
     const options = {
@@ -11,11 +11,11 @@ self.addEventListener("push", function (event) {
         primaryKey: "2",
       },
     }
-    event.waitUntil(self.registration.showNotification(data.title, options))
+    event.waitUntil(globalThis.registration.showNotification(data.title, options))
   }
 })
 
-self.addEventListener("notificationclick", function (event) {
+globalThis.addEventListener("notificationclick", function (event) {
   console.log("Notification click received.")
   event.notification.close()
   event.waitUntil(clients.openWindow("<https://www.skyjo.online>"))
