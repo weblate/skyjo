@@ -35,15 +35,16 @@ const compareBasicFields = (
   let gameChanges: GameUpdate = {}
 
   const keys = Object.keys(oldState) as Array<keyof GameToJson>
-  keys.forEach((key) => {
-    if (key === "settings" || key === "players") return
+
+  for (const key of keys) {
+    if (key === "settings" || key === "players") continue
     else if (!isDeepStrictEqual(oldState[key], newState[key])) {
       gameChanges = {
         ...gameChanges,
         [key]: newState[key],
       }
     }
-  })
+  }
 
   const gameChangesKeys = Object.keys(gameChanges)
 
@@ -63,7 +64,7 @@ const compareSettings = (
   let settingsChanges: Partial<SettingsToJson> = {}
 
   const keys = Object.keys(oldSettings) as Array<keyof SettingsToJson>
-  keys.forEach((key) => {
+  for (const key of keys) {
     if (
       newSettings[key] !== undefined &&
       oldSettings[key] !== newSettings[key]
@@ -73,7 +74,7 @@ const compareSettings = (
         [key]: newSettings[key],
       }
     }
-  })
+  }
 
   if (Object.keys(settingsChanges).length > 0) {
     return settingsChanges
@@ -101,7 +102,7 @@ const createPlayerOperations = (
   if (samePlayerCount && samePlayerSet && differentOrder) {
     ops.reorderPlayers = newPlayerIds
     // Still check for individual player updates
-    oldState.players.forEach((oldPlayer) => {
+    for (const oldPlayer of oldState.players) {
       const newPlayer = newState.players.find((p) => p.id === oldPlayer.id)
       if (newPlayer) {
         const playerChanges = comparePlayer(oldPlayer, newPlayer)
@@ -110,15 +111,15 @@ const createPlayerOperations = (
           ops.updatePlayers.push(playerChanges)
         }
       }
-    })
+    }
   } else {
     // Handle normal add/remove/update operations
-    oldState.players.forEach((oldPlayer) => {
+    for (const oldPlayer of oldState.players) {
       const newPlayer = newState.players.find((p) => p.id === oldPlayer.id)
       if (!newPlayer) {
         ops.removePlayers ??= []
         ops.removePlayers.push(oldPlayer.id)
-        return
+        continue
       }
       const playerChanges = comparePlayer(oldPlayer, newPlayer)
 
@@ -126,7 +127,7 @@ const createPlayerOperations = (
         ops.updatePlayers ??= []
         ops.updatePlayers.push(playerChanges)
       }
-    })
+    }
 
     const newPlayers = newState.players.slice(oldState.players.length)
     for (const newPlayer of newPlayers) {

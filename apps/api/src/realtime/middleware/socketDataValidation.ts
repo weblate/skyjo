@@ -2,7 +2,6 @@ import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type {
   AuthenticatedGameSocket,
   GameSocket,
-  SocketData,
 } from "@/realtime/types/gameSocket.js"
 
 /**
@@ -31,5 +30,5 @@ export function validateSocketData(
  * Uses type assertion to bypass TypeScript constraints
  */
 export function clearSocketData(socket: GameSocket): void {
-  ;(socket as GameSocket & { data: SocketData | null }).data = null
+  socket.data = null
 }

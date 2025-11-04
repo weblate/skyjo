@@ -32,7 +32,7 @@ export function calculatePlayerRanks(
 
   const playersWithRanks: PlayerWithRank[] = []
 
-  sortedConnectedPlayers.forEach((player) => {
+  for (const player of sortedConnectedPlayers) {
     let rank = 1
     for (const otherPlayer of sortedConnectedPlayers) {
       if (otherPlayer.score < player.score) {
@@ -40,7 +40,7 @@ export function calculatePlayerRanks(
       }
     }
     playersWithRanks.push({ ...player, rank })
-  })
+  }
 
   const baseRankForfeited = connectedPlayers.length
   for (const [index, player] of sortedForfeitedPlayers.entries()) {

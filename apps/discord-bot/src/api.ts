@@ -44,7 +44,7 @@ export class ApiClient {
       const response = await fetch(`${this.baseUrl}/games/${gameCode}/status`)
 
       if (!response.ok) {
-        throw new Error(`Failed to check game status, ${response}`)
+        throw new Error(`Failed to check game status`)
       }
 
       const data = (await response.json()) as {

@@ -60,6 +60,7 @@ const createMockPlayer = (overrides?: Partial<PlayerToJson>): PlayerToJson => ({
   forfeited: false,
   forfeitedAt: null,
   hasRevealedCardCount: false,
+  timeout: 0,
   ...overrides,
 })
 

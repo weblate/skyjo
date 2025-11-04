@@ -1449,9 +1449,9 @@ describe("GameService", () => {
       await service.onReplay(socket, game.stateVersion)
 
       expect(service["socketManager"].sendToRoom).toHaveBeenCalledOnce()
-      game.players.forEach((player) => {
+      for (const player of game.players) {
         expect(player.wantsReplay).toBeFalsy()
-      })
+      }
       expect(game.isInLobby()).toBeTruthy()
     })
   })

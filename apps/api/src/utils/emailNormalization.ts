@@ -110,7 +110,7 @@ function normalizeGmailLocalPart(localPart: string): string {
 
   // Remove all dots from Gmail local part
   // Gmail ignores dots in the local part, so user.test@gmail.com = usertest@gmail.com
-  localPart = localPart.replaceAll(/\./g, "")
+  localPart = localPart.replaceAll(".", "")
 
   return localPart
 }
