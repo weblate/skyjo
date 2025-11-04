@@ -1,6 +1,6 @@
 services:
   web:
-    image: ${WEB_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-maxentr}/web:${IMAGE_TAG:-trunk}}
+    image: ${WEB_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-maxentr}/web:${IMAGE_TAG:-trunk-production}}
     pull_policy: always
     ports:
       - "3000:3000"

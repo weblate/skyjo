@@ -75,60 +75,72 @@ jobs:
       packages: write
     strategy:
       matrix:
-        app:
+        include:
+          # Non-web apps (build once)
           - name: api
             package: '@skymo/api'
             changed: ${{ needs.detect-changes.outputs.api }}
             force: ${{ inputs.force_build_api }}
-          - name: web
-            package: '@skymo/web'
-            changed: ${{ needs.detect-changes.outputs.web }}
-            force: ${{ inputs.force_build_web }}
+            environment: production
           - name: workers
             package: '@skymo/workers'
             changed: ${{ needs.detect-changes.outputs.workers }}
             force: ${{ inputs.force_build_workers }}
+            environment: production
           - name: discord-bot
             package: '@skymo/discord-bot'
             changed: ${{ needs.detect-changes.outputs.discord-bot }}
             force: ${{ inputs.force_build_discord_bot }}
+            environment: production
+          # Web app (build twice - once per environment)
+          - name: web
+            package: '@skymo/web'
+            changed: ${{ needs.detect-changes.outputs.web }}
+            force: ${{ inputs.force_build_web }}
+            environment: production
+          - name: web
+            package: '@skymo/web'
+            changed: ${{ needs.detect-changes.outputs.web }}
+            force: ${{ inputs.force_build_web }}
+            environment: dev
+    environment: ${{ matrix.environment }}
     steps:
       - name: Skip if no changes and not forced
-        if: matrix.app.changed != 'true' && matrix.app.force != true
+        if: matrix.changed != 'true' && matrix.force != true
         run: |
-          echo "No changes detected for ${{ matrix.app.name }} and not forced, skipping..."
+          echo "No changes detected for ${{ matrix.name }} and not forced, skipping..."
           exit 0
 
       - name: Checkout
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         uses: actions/checkout@v4
 
       - name: Setup Node.js
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         uses: actions/setup-node@v4
         with:
           node-version: 24.3.0
 
       - name: Setup pnpm
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         uses: pnpm/action-setup@v4
         with:
           version: 10.12.4
 
       - name: Install dependencies
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         run: pnpm install --frozen-lockfile
 
       - name: Run tests
-        if: matrix.app.changed == 'true' || matrix.app.force == true
-        run: pnpm test --filter ${{ matrix.app.package }} -- --run
+        if: matrix.changed == 'true' || matrix.force == true
+        run: pnpm test --filter ${{ matrix.package }} -- --run
 
       - name: Set up Docker Buildx
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         uses: docker/setup-buildx-action@v3
 
       - name: Log in to GitHub Container Registry
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         uses: docker/login-action@v3
         with:
           registry: ${{ env.REGISTRY }}
@@ -136,30 +148,41 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Extract metadata
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         id: meta
         uses: docker/metadata-action@v5
         with:
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/${{ matrix.app.name }}
+          images: ${{ env.REGISTRY }}/${{ env.IMAGE_PREFIX }}/${{ matrix.name }}
           tags: |
-            type=raw,value=trunk
-            type=sha,prefix=trunk-,format=short
+            type=raw,value=${{ matrix.environment && format('trunk-{0}', matrix.environment) || 'trunk' }}
+            type=sha,prefix=${{ matrix.environment && format('trunk-{0}-', matrix.environment) || 'trunk-' }},format=short
 
       - name: Build and push Docker image
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         uses: docker/build-push-action@v6
         with:
           context: .
-          file: ./apps/${{ matrix.app.name }}/Dockerfile
+          file: ./apps/${{ matrix.name }}/Dockerfile
           push: true
           platforms: linux/arm64
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
+          cache-from: type=gha${{ matrix.environment && format(',scope={0}-{1}', matrix.name, matrix.environment) || '' }}
+          cache-to: type=gha,mode=max${{ matrix.environment && format(',scope={0}-{1}', matrix.name, matrix.environment) || '' }}
           build-args: |
-            PROJECT=${{ matrix.app.package }}
+            PROJECT=${{ matrix.package }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_ENVIRONMENT={0}', vars.NEXT_PUBLIC_ENVIRONMENT) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_SITE_URL={0}', vars.NEXT_PUBLIC_SITE_URL) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_API_URL={0}', vars.NEXT_PUBLIC_API_URL) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_POSTHOG_KEY={0}', vars.NEXT_PUBLIC_POSTHOG_KEY) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_POSTHOG_HOST={0}', vars.NEXT_PUBLIC_POSTHOG_HOST) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_CONTACT_EMAIL={0}', vars.NEXT_PUBLIC_CONTACT_EMAIL) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_DISCORD_URL={0}', vars.NEXT_PUBLIC_DISCORD_URL) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_STATUS_URL={0}', vars.NEXT_PUBLIC_STATUS_URL) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_GITHUB_URL={0}', vars.NEXT_PUBLIC_GITHUB_URL) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_RELEASE_NOTES_URL={0}', vars.NEXT_PUBLIC_RELEASE_NOTES_URL) || '' }}
+            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_WEBLATE_URL={0}', vars.NEXT_PUBLIC_WEBLATE_URL) || '' }}
 
       - name: Image digest
-        if: matrix.app.changed == 'true' || matrix.app.force == true
+        if: matrix.changed == 'true' || matrix.force == true
         run: echo "Built and pushed ${{ steps.meta.outputs.tags }}"

@@ -1,6 +1,6 @@
 services:
   dev-web:
-    image: ${DEV_WEB_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-skymo}/web:${DEV_IMAGE_TAG:-trunk}}
+    image: ${DEV_WEB_IMAGE:-ghcr.io/${GITHUB_REPOSITORY_OWNER:-maxentr}/web:${DEV_IMAGE_TAG:-trunk-preprod}}
     pull_policy: always
     ports:
       - "2000:3000"
