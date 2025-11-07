@@ -4,10 +4,10 @@ on:
   workflow_dispatch:
     inputs:
       image_tag:
-        description: 'Image tag to deploy (default: trunk)'
+        description: 'Image tag to deploy (e.g. trunk-dev-latest or trunk-dev-abc123 for specific commit)'
         required: false
         type: string
-        default: 'trunk'
+        default: 'trunk-dev-latest'
       deploy_api:
         description: 'Deploy API'
         required: false
@@ -59,7 +59,7 @@ jobs:
     runs-on: ubuntu-latest
     needs: test
     env:
-      DEV_IMAGE_TAG: ${{ inputs.image_tag || 'trunk' }}
+      DEV_IMAGE_TAG: ${{ inputs.image_tag }}
       GITHUB_REPOSITORY_OWNER: ${{ github.repository_owner }}
     steps:
       - name: Deploy to VPS
