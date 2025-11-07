@@ -15,7 +15,7 @@ const getSortedPlayers = (
   players: PlayerToJson[],
   playerRanks: Record<string, number | string>,
 ) => {
-  const sortedPlayers = players.toSorted((a, b) => {
+  const sortedPlayers = players.sort((a, b) => {
     const aRank = playerRanks[a.id]
     const bRank = playerRanks[b.id]
     if (aRank === "-" && bRank !== "-") return 1
