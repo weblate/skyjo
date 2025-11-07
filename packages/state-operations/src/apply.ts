@@ -18,7 +18,8 @@ export const applyStateOperations = (
   game: GameToJson,
   operations: GameOperation,
 ): GameToJson => {
-  const gameUpdated = game
+  // Create a deep copy to ensure immutability
+  const gameUpdated = structuredClone(game)
 
   const keys = Object.keys(operations) as (keyof GameOperation)[]
   keys.forEach((key) => {
@@ -28,12 +29,11 @@ export const applyStateOperations = (
     actions[key](gameUpdated, data)
   })
 
-  // clean up undefined cards
-  gameUpdated.players.forEach((player) => {
-    player.cards = player.cards.map((row) =>
-      row.filter((card) => card !== undefined),
-    )
-  })
+  // clean up undefined cards - create new arrays to ensure immutability
+  gameUpdated.players = gameUpdated.players.map((player) => ({
+    ...player,
+    cards: player.cards.map((row) => row.filter((card) => card !== undefined)),
+  }))
 
   return gameUpdated
 }
@@ -43,19 +43,33 @@ const updateGameBasicFields = (game: GameToJson, data: GameUpdate) => {
 }
 
 const updateSettings = (game: GameToJson, data: Partial<SettingsToJson>) => {
-  Object.assign(game.settings, data)
+  // Create new settings object to ensure React detects change
+  game.settings = { ...game.settings, ...data }
 }
 
 const addPlayers = (game: GameToJson, players: PlayerToJson[]) => {
-  game.players.push(...players)
+  // Create new players array to ensure React detects change
+  game.players = [...game.players, ...players]
 }
 
 const updatePlayers = (game: GameToJson, operations: PlayerUpdate[]) => {
-  operations.forEach(({ id, ...rest }) => {
-    const playerIndex = game.players.findIndex((p) => p.id === id)
-    if (playerIndex === -1) return
+  // Create new players array with new player objects to ensure React detects changes
+  game.players = game.players.map((player) => {
+    const update = operations.find((op) => op.id === player.id)
+    if (!update) return player
 
-    game.players[playerIndex] = Object.assign(game.players[playerIndex], rest)
+    const { id: _id, ...rest } = update
+
+    // If cards are being updated, ensure deep clone of nested arrays
+    if (rest.cards) {
+      return {
+        ...player,
+        ...rest,
+        cards: rest.cards.map((column) => column.map((card) => ({ ...card }))),
+      }
+    }
+
+    return { ...player, ...rest }
   })
 }
 

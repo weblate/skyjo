@@ -60,6 +60,7 @@ const createMockPlayer = (overrides?: Partial<PlayerToJson>): PlayerToJson => ({
   forfeited: false,
   forfeitedAt: null,
   hasRevealedCardCount: false,
+  timeout: 0,
   ...overrides,
 })
 
@@ -380,7 +381,7 @@ describe("applyStateOperations", () => {
 
       const result = applyStateOperations(game, operations)
 
-      expect(result).toBe(game) // Should return the same object
+      expect(result).toStrictEqual(game) // Should return the same object
     })
 
     it("should apply operations with undefined/null values gracefully", () => {
@@ -396,12 +397,12 @@ describe("applyStateOperations", () => {
 
       const result = applyStateOperations(game, operations)
 
-      expect(result).toBe(game) // Should return the same object
+      expect(result).toStrictEqual(game) // Should return the same object
     })
   })
 
   describe("mutability", () => {
-    it("should mutate the original game object", () => {
+    it("should not mutate the original game object", () => {
       const game = createMockGameState({ status: "WAITING" })
       const operations: GameOperation = {
         game: { status: "PLAYING" },
@@ -409,8 +410,9 @@ describe("applyStateOperations", () => {
 
       const result = applyStateOperations(game, operations)
 
-      expect(result).toBe(game) // Same reference
-      expect(game.status).toBe("PLAYING") // Original object is mutated
+      expect(result).toStrictEqual({ ...game, status: "PLAYING" }) // Same reference
+      expect(result.status).toBe("PLAYING") // New object is mutated
+      expect(game.status).toBe("WAITING") // Original object is not mutated
     })
   })
 })

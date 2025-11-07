@@ -1,5 +1,6 @@
 import {
   Constants as CoreConstants,
+  type Game,
   type PlayPickCard,
   type PlayReplaceCard,
   type PlayRevealCard,
@@ -18,13 +19,14 @@ export class GameService extends BaseService {
     firstTime: boolean = false,
   ) {
     // Leave the checkStateVersion check if client really needs to get the game
-    const isUpToDate = await this.checkStateVersion(
+    const game = await this.checkStateVersion(
       socket,
       clientStateVersion,
       firstTime,
     )
 
     // If the client state version is the same as the game state version, send an empty game:fix event to the client to explain that the game is up to date
+    const isUpToDate = clientStateVersion === game.stateVersion
     if (isUpToDate) {
       this.socketManager.sendToSocket(socket, {
         event: "game:fix",
@@ -40,16 +42,12 @@ export class GameService extends BaseService {
   ) {
     const { column, row } = turnData
 
-    await this.checkStateVersion(
+    const game = await this.checkStateVersion(
       socket,
       clientStateVersion,
       false,
       true, // Enable non-blocking mode
     )
-
-    const gameCode = socket.data.gameCode
-
-    const game = await this.getGame(gameCode)
 
     if (game.processingAfk) {
       throw new CError(`Game is processing AFK.`, {
@@ -82,9 +80,9 @@ export class GameService extends BaseService {
     { pile }: PlayPickCard,
     clientStateVersion: number,
   ) {
-    await this.checkStateVersion(socket, clientStateVersion)
+    const game = await this.checkStateVersion(socket, clientStateVersion)
 
-    const { game } = await this.checkPlayAuthorization(socket, [
+    await this.checkPlayAuthorization(game, socket, [
       CoreConstants.TURN_STATUS.CHOOSE_A_PILE,
     ])
     const stateManager = new GameStateTracker(game)
@@ -100,9 +98,9 @@ export class GameService extends BaseService {
     { column, row }: PlayReplaceCard,
     clientStateVersion: number,
   ) {
-    await this.checkStateVersion(socket, clientStateVersion)
+    const game = await this.checkStateVersion(socket, clientStateVersion)
 
-    const { game } = await this.checkPlayAuthorization(socket, [
+    await this.checkPlayAuthorization(game, socket, [
       CoreConstants.TURN_STATUS.REPLACE_A_CARD,
       CoreConstants.TURN_STATUS.THROW_OR_REPLACE,
     ])
@@ -117,9 +115,9 @@ export class GameService extends BaseService {
     socket: AuthenticatedGameSocket,
     clientStateVersion: number,
   ) {
-    await this.checkStateVersion(socket, clientStateVersion)
+    const game = await this.checkStateVersion(socket, clientStateVersion)
 
-    const { game } = await this.checkPlayAuthorization(socket, [
+    await this.checkPlayAuthorization(game, socket, [
       CoreConstants.TURN_STATUS.THROW_OR_REPLACE,
     ])
     const stateManager = new GameStateTracker(game)
@@ -144,9 +142,9 @@ export class GameService extends BaseService {
     { column, row }: PlayTurnCard,
     clientStateVersion: number,
   ) {
-    await this.checkStateVersion(socket, clientStateVersion)
+    const game = await this.checkStateVersion(socket, clientStateVersion)
 
-    const { game, player } = await this.checkPlayAuthorization(socket, [
+    const { player } = await this.checkPlayAuthorization(game, socket, [
       CoreConstants.TURN_STATUS.TURN_A_CARD,
     ])
     const stateManager = new GameStateTracker(game)
@@ -157,9 +155,8 @@ export class GameService extends BaseService {
   }
 
   async onReplay(socket: AuthenticatedGameSocket, clientStateVersion: number) {
-    await this.checkStateVersion(socket, clientStateVersion)
+    const game = await this.checkStateVersion(socket, clientStateVersion)
 
-    const game = await this.getGame(socket.data.gameCode)
     if (!game.isFinished() && !game.isStopped()) return
 
     const stateManager = new GameStateTracker(game)
@@ -189,7 +186,7 @@ export class GameService extends BaseService {
     if (clientStateVersion === null) {
       this.socketManager.sendGameToSocket(socket.id, game)
 
-      if (firstTime) return
+      if (firstTime) return game
 
       if (!allowNonBlocking) {
         throw new CError(
@@ -203,10 +200,11 @@ export class GameService extends BaseService {
               gameCode: game.code,
               playerId: socket.data.playerId,
             },
+            shouldLog: false,
           },
         )
       }
-      return false
+      return game
     }
 
     if (clientStateVersion > game.stateVersion) {
@@ -225,6 +223,7 @@ export class GameService extends BaseService {
               gameCode: game.code,
               playerId: socket.data.playerId,
             },
+            shouldLog: false,
           },
         )
       }
@@ -247,20 +246,20 @@ export class GameService extends BaseService {
               gameCode: game.code,
               playerId: socket.data.playerId,
             },
+            shouldLog: false,
           },
         )
       }
     }
 
-    return clientStateVersion === game.stateVersion
+    return game
   }
 
   private async checkPlayAuthorization(
+    game: Game,
     socket: AuthenticatedGameSocket,
     allowedStates: TurnStatus[],
   ) {
-    const game = await this.getGame(socket.data.gameCode)
-
     if (game.processingAfk) {
       throw new CError(`Game is processing AFK.`, {
         code: ErrorConstants.ERROR.NOT_ALLOWED,
@@ -304,13 +303,6 @@ export class GameService extends BaseService {
         `Player try to play but it's not his turn. This should not happen since the game sync was normally checked before. Sent game to the player to fix the issue.`,
         {
           code: ErrorConstants.ERROR.NOT_ALLOWED,
-          level: "error",
-          meta: {
-            game: game.serialize(),
-            socketId: socket.id,
-            gameCode: game.code,
-            playerId: socket.data.playerId,
-          },
         },
       )
     }

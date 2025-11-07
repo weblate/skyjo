@@ -151,6 +151,20 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
       // Job already completed or removed is not an error condition
       const errorMessage =
         error instanceof Error ? error.message : String(error)
+
+      const errorDetails =
+        error instanceof Error
+          ? {
+              message: error.message,
+              name: error.name,
+              stack: error.stack,
+            }
+          : {
+              type: typeof error,
+              value: error,
+              stringified: JSON.stringify(error, null, 2),
+            }
+
       if (
         errorMessage.includes("Missing key") ||
         errorMessage.includes("Job not found") ||
@@ -162,13 +176,14 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
             gameCode,
             playerId,
             jobId,
+            errorDetails,
           },
         )
       } else {
         Logger.warn(
           `Failed to cancel AFK timer for player ${playerId} in game ${gameCode}`,
           {
-            error,
+            errorDetails,
             gameCode,
             playerId,
             jobId,
