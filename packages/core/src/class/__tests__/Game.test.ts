@@ -2533,7 +2533,7 @@ describe("Game", () => {
     })
 
     describe("startNewGame", () => {
-      it("should reset game state and return to lobby", async () => {
+      it("should reset game state and return to lobby and not allow host to change settings again if game is public", async () => {
         const mockOperationManager = {
           cancelPlayerAfkTimer: vi.fn(),
           cancelRevealCardsAfkTimer: vi.fn(),
@@ -2558,6 +2558,48 @@ describe("Game", () => {
         game.stateVersion = 10
         game.turn = 1
         game.settings.isConfirmed = true
+
+        await game["startNewGame"]()
+
+        expect(mockOperationManager.cancelPlayerAfkTimer).toHaveBeenCalledTimes(
+          2,
+        )
+        // cancelRevealCardsAfkTimer should be called for each player (2 times)
+        expect(
+          mockOperationManager.cancelRevealCardsAfkTimer,
+        ).toHaveBeenCalledTimes(2)
+        expect(game.status).toBe(Constants.GAME_STATUS.LOBBY)
+        expect(game.stateVersion).toBe(0)
+        expect(game.turn).toBe(0)
+        expect(game.settings.isConfirmed).toBe(true)
+      })
+
+      it("should reset game state and return to lobby and allow host to change settings again if game is private", async () => {
+        const mockOperationManager = {
+          cancelPlayerAfkTimer: vi.fn(),
+          cancelRevealCardsAfkTimer: vi.fn(),
+          startRevealCardsAfkTimer: vi.fn(),
+          removeGame: vi.fn(),
+          updateGame: vi.fn(),
+          startPlayerAfkTimer: vi.fn(),
+          getSocket: vi.fn(),
+          kickSocket: vi.fn(),
+          delayNewRound: vi.fn(),
+        }
+
+        // Access the private operationManager through type assertion
+        ;(game as any).operationManager = mockOperationManager
+
+        // Mock the initializeRound method to avoid calling the full game initialization
+        vi.spyOn(game as any, "initializeRound").mockImplementation(() =>
+          Promise.resolve(),
+        )
+
+        game.status = Constants.GAME_STATUS.FINISHED
+        game.stateVersion = 10
+        game.turn = 1
+        game.settings.isConfirmed = true
+        game.settings.private = true
 
         await game["startNewGame"]()
 

@@ -1045,8 +1045,8 @@ export class Game implements GameInterface {
     this.updatedAt = new Date()
     this.turn = 0
 
-    // allow host to change settings again
-    this.settings.isConfirmed = false
+    // allow host to change settings again if game is private
+    this.settings.isConfirmed = !this.settings.private
   }
 
   //#endregion
