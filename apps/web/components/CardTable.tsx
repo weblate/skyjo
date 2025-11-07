@@ -103,9 +103,7 @@ const CardTable = ({
                 }
                 size={size}
                 disabled={cardDisabled || !canBeSelected}
-                showFlipAnimation={
-                  canRevealCards || canTurnCard || canReplaceCard
-                }
+                showFlipAnimation={canRevealCards || canTurnCard}
                 showExitAnimation={
                   roundPhase.isRevealCards ||
                   roundPhase.isMain ||
