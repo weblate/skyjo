@@ -9,6 +9,7 @@ import posthog from "posthog-js"
 import { useEffect } from "react"
 import { toast } from "sonner"
 import { usePathname, useRouter } from "@/i18n/routing"
+import { identifyUser, resetIdentification } from "@/lib/posthog"
 
 interface AuthenticatedUser {
   id: number
@@ -41,6 +42,9 @@ export const useAuth = () => {
           const error = await jsonError<LogoutError>(response)
           toast.error(tErrors(error))
         }
+
+        // Reset PostHog identification on logout
+        resetIdentification()
 
         router.push("/")
         queryClient.setQueryData(["authenticated-user"], null)
@@ -101,6 +105,13 @@ export const useAuth = () => {
     staleTime: 30 * 60 * 1000, // 30 minutes
     gcTime: 30 * 60 * 1000, // 30 minutes
   })
+
+  // Identify authenticated user in PostHog when user state changes
+  useEffect(() => {
+    if (user?.id) {
+      identifyUser(user.id)
+    }
+  }, [user?.id])
 
   useEffect(() => {
     if (!user) return
