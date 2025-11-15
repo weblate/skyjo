@@ -1,9 +1,12 @@
+import { NextConfig } from "next"
 import createNextIntlPlugin from "next-intl/plugin"
 
 const withNextIntl = createNextIntlPlugin()
 
-/** @type {import('next').NextConfig} */
-const nextConfig = {
+const nextConfig: NextConfig = {
+  typescript: {
+    tsconfigPath: "tsconfig.build.json",
+  },
   headers: async () => {
     return [
       {
@@ -61,7 +64,6 @@ const nextConfig = {
   },
 
   serverExternalPackages: [
-    "import-in-the-middle",
     "@opentelemetry/auto-instrumentations-node",
     "@opentelemetry/instrumentation",
   ],

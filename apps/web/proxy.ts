@@ -5,7 +5,7 @@ import { routing } from "@/i18n/routing"
 
 const nextIntlMiddleware = createNextIntlMiddleware(routing)
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   // Create guestId cookie if it doesn't exist
   const response = nextIntlMiddleware(request)
 
