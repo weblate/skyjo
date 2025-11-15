@@ -1,4 +1,4 @@
-import { beforeEach, describe, expect, it } from "vitest"
+import { beforeEach, describe, expect, it, vi } from "vitest"
 import { DefaultGameOperationManager } from "../GameOperationManager.js"
 
 describe("DefaultGameOperationManager", () => {
@@ -36,8 +36,60 @@ describe("DefaultGameOperationManager", () => {
     expect(manager.getSocket()).toBeUndefined()
   })
 
-  it("should implement kickSocket method", async () => {
-    await expect(manager.kickSocket()).resolves.toBeUndefined()
+  describe("kickSocket", () => {
+    it("should handle socket with valid data", async () => {
+      const mockSocket = {
+        data: { gameCode: "test123" },
+        id: "socket-id-1",
+        rooms: new Set(["socket-id-1", "test123"]),
+        leave: () => {},
+        emit: () => {},
+      }
+      await expect(
+        manager.kickSocket(mockSocket as any),
+      ).resolves.toBeUndefined()
+    })
+
+    it("should handle socket with null data gracefully", async () => {
+      const mockLeave = vi.fn()
+      const mockSocket = {
+        data: null,
+        id: "socket-id-1",
+        rooms: new Set(["socket-id-1", "test123", "chat-room"]),
+        leave: mockLeave,
+        emit: () => {},
+      }
+      await expect(
+        manager.kickSocket(mockSocket as any),
+      ).resolves.toBeUndefined()
+    })
+
+    it("should handle socket with undefined gameCode", async () => {
+      const mockLeave = vi.fn()
+      const mockSocket = {
+        data: { gameCode: undefined },
+        id: "socket-id-1",
+        rooms: new Set(["socket-id-1", "test123"]),
+        leave: mockLeave,
+        emit: () => {},
+      }
+      await expect(
+        manager.kickSocket(mockSocket as any),
+      ).resolves.toBeUndefined()
+    })
+
+    it("should handle socket with empty rooms", async () => {
+      const mockSocket = {
+        data: null,
+        id: "socket-id-1",
+        rooms: new Set(["socket-id-1"]),
+        leave: () => {},
+        emit: () => {},
+      }
+      await expect(
+        manager.kickSocket(mockSocket as any),
+      ).resolves.toBeUndefined()
+    })
   })
 
   it("should implement delayNewRound method", async () => {

@@ -1,7 +1,7 @@
-import {
+import type {
   Game,
-  type GameOperationManagerInterface,
-  type GameRedisDb,
+  GameOperationManagerInterface,
+  GameRedisDb,
 } from "@skymo/core"
 import type { Socket } from "socket.io"
 import { GameStorageQueueService } from "@/queues/GameStorageQueueService.js"
@@ -48,6 +48,18 @@ export class GameOperationManager implements GameOperationManagerInterface {
   }
 
   async kickSocket(socket: Socket): Promise<void> {
+    // Guard against already-cleared socket data (e.g., from AFK jobs racing with manual disconnects)
+    if (!socket.data?.gameCode) {
+      // Socket already disconnected/cleaned up, just leave all rooms
+      for (const room of socket.rooms) {
+        // Leave all rooms except the socket ID itself
+        if (room !== socket.id) {
+          socket.leave(room)
+        }
+      }
+      return
+    }
+
     socket.leave(socket.data.gameCode)
     socket.emit("leave:success", {
       gameCode: socket.data.gameCode,
