@@ -4,6 +4,11 @@ posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
   api_host: "/ulysse",
   ui_host: "https://eu.posthog.com",
   defaults: "2025-11-30",
-  capture_exceptions: true, // This enables capturing exceptions using Error Tracking, set to false if you don't want this
+  capture_exceptions: true,
+  autocapture: {
+    dom_event_allowlist: [], // Disable click tracking (milestone-focused approach)
+  },
+  capture_pageview: true, // Enable pageviews (essential for funnels)
+  capture_pageleave: true, // Track session duration
   debug: process.env.NODE_ENV === "development",
 })
