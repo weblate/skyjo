@@ -7,6 +7,7 @@ IMPORTANT: You MUST strive for elegant, minimal solutions that eliminate complex
 ## Common Development Commands
 
 ### Build Commands
+
 ```bash
 # Build all packages and apps
 pnpm build
@@ -21,6 +22,7 @@ pnpm turbo run build
 ```
 
 ### Development Commands
+
 ```bash
 # Start all development servers
 pnpm dev
@@ -37,6 +39,7 @@ docker compose -f compose.dev.yml up -d  # for development
 ```
 
 ### Linting and Formatting
+
 ```bash
 # Run Biome check and format
 pnpm biome:check
@@ -50,6 +53,7 @@ pnpm turbo run biome:check
 ```
 
 ### Testing Commands
+
 ```bash
 # Run all tests
 pnpm test
@@ -70,6 +74,7 @@ pnpm test --filter @skymo/api src/realtime/game/__tests__/game.service.test.ts
 ```
 
 ### Database Commands
+
 ```bash
 # Generate database migrations
 pnpm db:generate
@@ -85,11 +90,13 @@ pnpm turbo run db:migrate
 ## High-Level Architecture
 
 ### Monorepo Structure
+
 This is a TypeScript monorepo using pnpm workspaces and Turborepo for build orchestration. The project implements a real-time multiplayer Skyjo card game with the following architecture:
 
 ### Applications (`apps/`)
 
 #### API Server (`apps/api/`)
+
 - **Framework**: Hono (lightweight web framework) + Socket.IO for real-time communication
 - **Key Responsibilities**:
   - HTTP REST endpoints for authentication, user management, and game statistics
@@ -100,6 +107,7 @@ This is a TypeScript monorepo using pnpm workspaces and Turborepo for build orch
 - **Authentication**: Session-based with OAuth support (Google, Facebook)
 
 #### Web Client (`apps/web/`)
+
 - **Framework**: Next.js 15 with App Router
 - **Key Features**:
   - Server-side rendering with React Server Components
@@ -109,17 +117,20 @@ This is a TypeScript monorepo using pnpm workspaces and Turborepo for build orch
 - **State Management**: React Context for game state, settings, and authentication
 
 #### Background Workers (`apps/workers/`)
+
 - **Purpose**: Async task processing
 - **Tasks**: Email notifications, game data persistence, account deletion, database cleanup
 - **Queue System**: BullMQ with Redis backend
 
 #### Discord Bot (`apps/discord-bot/`)
+
 - **Purpose**: Discord integration for game reports and moderation
 - **Features**: Report handling, user verification
 
 ### Core Packages (`packages/`)
 
 #### Core Game Logic (`packages/core/`)
+
 - **Purpose**: Pure game logic implementation
 - **Key Classes**:
   - `Game`: Main game state and rules engine
@@ -129,18 +140,36 @@ This is a TypeScript monorepo using pnpm workspaces and Turborepo for build orch
 - **Design Pattern**: Domain-driven design with immutable operations
 
 #### State Operations (`packages/state-operations/`)
+
 - **Purpose**: Deterministic state transformations
 - **Pattern**: Command pattern with operation creation and application
 - **Benefits**: Enables undo/redo, replay, and state synchronization
 
 #### Database (`packages/database/`)
+
 - **ORM**: Drizzle ORM with PostgreSQL
 - **Schema**: Users, games, statistics, reports, feedback
 - **Migrations**: Version-controlled schema migrations
 
 #### Shared Types (`packages/shared/`)
+
 - **Purpose**: Shared TypeScript types and Zod validation schemas
 - **Contents**: API contracts, WebSocket events, validation rules
+
+#### Logger (`packages/logger/`)
+
+- **Purpose**: Logging utility
+- **Contents**: Logging utility for the project
+
+#### Error (`packages/error/`)
+
+- **Purpose**: Error handling utility
+- **Contents**: Error handling utility for the project
+
+#### Transactional (packages/transactional/)
+
+- **Purpose**: Transactional emails
+- **Contents**: Transactional emails for the project
 
 ### Data Flow Architecture
 
@@ -192,11 +221,12 @@ This architecture ensures scalability, maintainability, and real-time performanc
 - When you are following a file plan, please update it at the end to your current progression
 
 ## Default game rules
+
 1. Game Objective
-The goal of Skymo game is to have the lowest score at the end of the game. The game is played over multiple rounds. The game ends when at least one player reaches 100 or more points. The player with the fewest total points at that time wins.
+   The goal of Skymo game is to have the lowest score at the end of the game. The game is played over multiple rounds. The game ends when at least one player reaches 100 or more points. The player with the fewest total points at that time wins.
 
 1. The Deck
-The deck consists of 150 cards with the following values and quantities:
+   The deck consists of 150 cards with the following values and quantities:
 
 -2: 5 cards
 
@@ -207,7 +237,7 @@ The deck consists of 150 cards with the following values and quantities:
 1 to 12: 10 cards of each value (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
 
 3. Round Setup
-Each player is dealt 12 cards face-down.
+   Each player is dealt 12 cards face-down.
 
 Players arrange their 12 cards in a 3x4 grid (3 rows, 4 columns) in front of them.
 
@@ -218,7 +248,7 @@ The top card of the draw pile is flipped face-up to start the discard pile.
 Before the first turn, each player must turn any two of their 12 cards face-up.
 
 4. Gameplay: A Player's Turn
-On your turn, you must choose one of two options. After your action, play passes to the next player clockwise.
+   On your turn, you must choose one of two options. After your action, play passes to the next player clockwise.
 
 Option 1: Take from the Discard Pile
 Take the top card of the discard pile (which is face-up).
@@ -245,7 +275,7 @@ B) Discard the card: You do not want the card. Place it face-up on the discard p
 Your turn ends.
 
 5. Special Rule: Clearing a Column
-If a player has three identical-valued cards in a single vertical column, that entire column is immediately discarded.
+   If a player has three identical-valued cards in a single vertical column, that entire column is immediately discarded.
 
 The three cards are placed on the discard pile.
 
@@ -254,7 +284,7 @@ This space in the grid is now empty and cannot be filled for the rest of the rou
 This rule can be triggered at any point during a turn (e.g., after exchanging a card or after flipping a card in Option 2B). If triggered by an exchange, the exchanged card goes to the discard pile first, followed by the three identical cards from the column.
 
 6. End of a Round
-A round ends when one player has all 12 of their cards face-up at the end of their turn.
+   A round ends when one player has all 12 of their cards face-up at the end of their turn.
 
 This player has finished and takes no more actions.
 
@@ -265,7 +295,7 @@ After their final turn, any remaining face-down cards are turned face-up.
 The round is now over, and scoring begins.
 
 7. Scoring
-Players sum the values of all cards in their grid (or fewer, if columns were cleared).
+   Players sum the values of all cards in their grid (or fewer, if columns were cleared).
 
 This round score (which can be positive or negative) is added to their total game score.
 
@@ -280,6 +310,6 @@ Important: This doubling penalty only applies if their round score is positive. 
 Example: Player A finishes the round and has 10 points. Player B has 24 points. Player C also has 10 points. Because Player A (who finished) is not strictly lower than Player C, Player A's score is doubled to 20. Player C's score remains 10.
 
 8. End of the Game
-After scoring a round, if any player's cumulative total score is 100 points or more, the game ends.
+   After scoring a round, if any player's cumulative total score is 100 points or more, the game ends.
 
 The player with the lowest overall score is the winner.
