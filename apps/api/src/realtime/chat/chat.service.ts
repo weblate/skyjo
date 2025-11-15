@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto"
 import { Constants as CoreConstants } from "@skymo/core"
 import { CError, Constants as ErrorConstants } from "@skymo/error"
 import type { UserChatMessage } from "@skymo/shared/types"
@@ -28,7 +29,7 @@ export class ChatService extends BaseService {
     const playerCanChat = await canChat(player)
     if (!playerCanChat) {
       socket.volatile.emit("message:system", {
-        id: crypto.randomUUID(),
+        id: randomUUID(),
         message: "You are currently restricted from chatting.",
         type: "system",
       })
@@ -38,7 +39,7 @@ export class ChatService extends BaseService {
     game.updatedAt = new Date()
 
     const newMessage: UserChatMessage = {
-      id: crypto.randomUUID(),
+      id: randomUUID(),
       name: player.name,
       message,
       type: CoreConstants.USER_MESSAGE_TYPE,

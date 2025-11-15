@@ -1,8 +1,8 @@
+import { randomUUID } from "node:crypto"
 import { ENV } from "@env"
 import { GUEST_ID_COOKIE_NAME } from "@skymo/shared/constants"
 import type { Context } from "hono"
 import { getCookie, setCookie } from "hono/cookie"
-import { v4 as uuidv4 } from "uuid"
 
 /**
  * Gets the guest ID from the cookie or creates a new one if it doesn't exist.
@@ -15,7 +15,7 @@ export function getOrCreateGuestId(c: Context): string {
     return existingGuestId
   }
 
-  const newGuestId = uuidv4()
+  const newGuestId = randomUUID()
   setCookie(c, GUEST_ID_COOKIE_NAME, newGuestId, {
     path: "/",
     httpOnly: true,

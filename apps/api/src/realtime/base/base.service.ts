@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto"
 import {
   Constants as CoreConstants,
   type Game,
@@ -104,7 +105,7 @@ export abstract class BaseService {
     serverMessageType: ServerMessageType,
   ) {
     const message: ServerChatMessage = {
-      id: crypto.randomUUID(),
+      id: randomUUID(),
       name: playerName,
       message: serverMessageType,
       type: serverMessageType,

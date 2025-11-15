@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto"
 import {
   Card,
   type ConnectionStatus,
@@ -45,7 +46,7 @@ describe("PlayerService", () => {
       // Set socket data for a player that doesn't exist in the game
       socket.data = {
         gameCode: game.code,
-        playerId: crypto.randomUUID(),
+        playerId: randomUUID(),
       }
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -205,7 +206,7 @@ describe("PlayerService", () => {
     it("should do nothing if game not found", async () => {
       socket.data = {
         gameCode: TEST_UNKNOWN_GAME_ID,
-        playerId: crypto.randomUUID(),
+        playerId: randomUUID(),
       }
 
       service["redis"].getGame = vi.fn(() =>
@@ -230,7 +231,7 @@ describe("PlayerService", () => {
       })
       game.addPlayer(opponent)
 
-      socket.data = { gameCode: game.code, playerId: crypto.randomUUID() }
+      socket.data = { gameCode: game.code, playerId: randomUUID() }
 
       const opponent2 = new Player(
         { name: "opponent2", avatar: CoreConstants.AVATARS.TURTLE },
@@ -708,7 +709,7 @@ describe("PlayerService", () => {
       game.addPlayer(player)
       socket.data = {
         gameCode: game.code,
-        playerId: crypto.randomUUID(),
+        playerId: randomUUID(),
       }
 
       await game.start()

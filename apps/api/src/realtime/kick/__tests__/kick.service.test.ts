@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto"
 import {
   Constants as CoreConstants,
   Game,
@@ -55,6 +56,7 @@ describe("KickService", () => {
           )
         }
         kickVotes.set(gameCode, kickVote)
+        return Promise.resolve()
       }),
       addVote: vi.fn((gameCode: string, playerId: string, vote: boolean) => {
         const kickVote = kickVotes.get(gameCode)
@@ -73,6 +75,7 @@ describe("KickService", () => {
       }),
       deleteKickVote: vi.fn((gameCode: string) => {
         kickVotes.delete(gameCode)
+        return Promise.resolve()
       }),
       updateKickVote: vi.fn(),
     }
@@ -138,7 +141,7 @@ describe("KickService", () => {
 
     it("should throw if the targeted player is not in the game", async () => {
       await expect(
-        service.onInitiateKickVote(socket, crypto.randomUUID()),
+        service.onInitiateKickVote(socket, randomUUID()),
       ).toThrowCErrorWithCode(ErrorConstants.ERROR.PLAYER_NOT_FOUND)
     })
 
