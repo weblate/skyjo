@@ -180,7 +180,6 @@ jobs:
             ${{ matrix.name == 'web' && format('NEXT_PUBLIC_SITE_URL={0}', vars.NEXT_PUBLIC_SITE_URL) || '' }}
             ${{ matrix.name == 'web' && format('NEXT_PUBLIC_API_URL={0}', vars.NEXT_PUBLIC_API_URL) || '' }}
             ${{ matrix.name == 'web' && format('NEXT_PUBLIC_POSTHOG_KEY={0}', vars.NEXT_PUBLIC_POSTHOG_KEY) || '' }}
-            ${{ matrix.name == 'web' && format('NEXT_PUBLIC_POSTHOG_HOST={0}', vars.NEXT_PUBLIC_POSTHOG_HOST) || '' }}
             ${{ matrix.name == 'web' && format('NEXT_PUBLIC_CONTACT_EMAIL={0}', vars.NEXT_PUBLIC_CONTACT_EMAIL) || '' }}
             ${{ matrix.name == 'web' && format('NEXT_PUBLIC_DISCORD_URL={0}', vars.NEXT_PUBLIC_DISCORD_URL) || '' }}
             ${{ matrix.name == 'web' && format('NEXT_PUBLIC_STATUS_URL={0}', vars.NEXT_PUBLIC_STATUS_URL) || '' }}
