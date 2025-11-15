@@ -47,7 +47,7 @@ export const createMockGame = (
   status: CoreConstants.GAME_STATUS.LOBBY,
   hostId: "player1",
   players: [createMockPlayer("player1"), createMockPlayer("player2")],
-  turn: 0,
+  currentPlayerId: "player1",
   settings: {
     isConfirmed: false,
     private: false,

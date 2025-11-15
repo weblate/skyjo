@@ -175,28 +175,28 @@ describe("isCurrentUserTurn", () => {
     const game = createMockGame({
       status: CoreConstants.GAME_STATUS.PLAYING,
       roundPhase: CoreConstants.ROUND_PHASE.MAIN,
-      turn: 0,
+      currentPlayerId: "player1",
     })
     const player = game.players[0]
     expect(isCurrentUserTurn(game, player)).toBe(true)
   })
 
-  it("should handle invalid turn index gracefully", () => {
+  it("should handle invalid player ID gracefully", () => {
     const game = createMockGame({
       status: CoreConstants.GAME_STATUS.PLAYING,
       roundPhase: CoreConstants.ROUND_PHASE.MAIN,
-      turn: 3, // Only 2 players exist (index 0 and 1)
+      currentPlayerId: "nonexistent-player",
       players: [createMockPlayer("player1"), createMockPlayer("player2")],
     })
     const player = game.players[0]
     expect(isCurrentUserTurn(game, player)).toBe(false)
   })
 
-  it("should handle negative turn index", () => {
+  it("should handle empty current player ID", () => {
     const game = createMockGame({
       status: CoreConstants.GAME_STATUS.PLAYING,
       roundPhase: CoreConstants.ROUND_PHASE.MAIN,
-      turn: -1,
+      currentPlayerId: "",
     })
     const player = game.players[0]
     expect(isCurrentUserTurn(game, player)).toBe(false)
@@ -206,7 +206,7 @@ describe("isCurrentUserTurn", () => {
     const game = createMockGame({
       status: CoreConstants.GAME_STATUS.PLAYING,
       roundPhase: CoreConstants.ROUND_PHASE.MAIN,
-      turn: 1,
+      currentPlayerId: "player2",
     })
     const player = game.players[0]
     expect(isCurrentUserTurn(game, player)).toBe(false)
@@ -276,14 +276,14 @@ describe("isCurrentUserTurn", () => {
 
 describe("getCurrentWhoHasToPlay", () => {
   it("should return the current player", () => {
-    const game = createMockGame({ turn: 0 })
+    const game = createMockGame({ currentPlayerId: "player1" })
     const result = getCurrentWhoHasToPlay(game)
     expect(result).toEqual(game.players[0])
   })
 
   it("should return undefined when current player is not connected", () => {
     const game = createMockGame({
-      turn: 1,
+      currentPlayerId: "player2",
       players: [
         createMockPlayer("player1"),
         createMockPlayer(
@@ -296,23 +296,23 @@ describe("getCurrentWhoHasToPlay", () => {
     expect(result).toBeUndefined()
   })
 
-  it("should handle invalid turn index", () => {
-    const game = createMockGame({ turn: 5 })
+  it("should handle invalid player ID", () => {
+    const game = createMockGame({ currentPlayerId: "nonexistent-player" })
     const result = getCurrentWhoHasToPlay(game)
     expect(result).toBeUndefined()
   })
 
-  it("should handle turn index equal to players length", () => {
+  it("should handle current player ID not in players list", () => {
     const game = createMockGame({
-      turn: 2, // Equal to players.length
+      currentPlayerId: "player3",
       players: [createMockPlayer("player1"), createMockPlayer("player2")],
     })
     const result = getCurrentWhoHasToPlay(game)
     expect(result).toBeUndefined()
   })
 
-  it("should handle negative turn index", () => {
-    const game = createMockGame({ turn: -1 })
+  it("should handle empty current player ID", () => {
+    const game = createMockGame({ currentPlayerId: "" })
     const result = getCurrentWhoHasToPlay(game)
     expect(result).toBeUndefined()
   })

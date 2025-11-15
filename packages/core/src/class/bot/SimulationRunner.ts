@@ -283,7 +283,7 @@ export class SimulationRunner {
       if (!currentPlayer) {
         throw new Error(
           `No current player found during active phase. ` +
-            `Turn: ${game.turn}, Players: ${game.players.length}, ` +
+            `CurrentPlayerId: ${game.currentPlayerId}, Players: ${game.players.length}, ` +
             `Round phase: ${game.roundPhase}, ` +
             `Game code: ${game.code}`,
         )
@@ -386,15 +386,19 @@ export class SimulationRunner {
             }
             break
 
-          case "turn":
+          case "turn": {
+            const currentPlayer = game.getCurrentPlayer()
+            if (!currentPlayer)
+              throw new Error("No current player for turn action")
             await game.turnCard({
-              player: game.getCurrentPlayer(),
+              player: currentPlayer,
               column: action.position.col,
               row: action.position.row,
               wasAfk: false,
             })
             // turnCard() calls finishTurn() internally, turn will advance
             break
+          }
 
           case "reveal":
             throw new Error(

@@ -74,7 +74,7 @@ describe("Game", () => {
         hostId: player.id,
         isFull: false,
         status: Constants.GAME_STATUS.LOBBY,
-        turn: 0,
+        currentPlayerId: player.id,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
         roundPhase: Constants.ROUND_PHASE.REVEAL_CARDS,
@@ -116,7 +116,7 @@ describe("Game", () => {
       expect(game.id).toBe(gameDb.id)
       expect(game.code).toBe(gameDb.code)
       expect(game.status).toBe(gameDb.status)
-      expect(game.turn).toBe(gameDb.turn)
+      expect(game.currentPlayerId).toBe(gameDb.currentPlayerId)
       expect(game.hostId).toBe(gameDb.hostId)
       expect(structuredClone(game.settings)).toStrictEqual(gameDb.settings)
     })
@@ -128,7 +128,7 @@ describe("Game", () => {
         isFull: false,
         code: "code",
         status: Constants.GAME_STATUS.LOBBY,
-        turn: 0,
+        currentPlayerId: player.id,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
         roundPhase: Constants.ROUND_PHASE.REVEAL_CARDS,
@@ -198,7 +198,7 @@ describe("Game", () => {
       expect(game.id).toBe(gameDb.id)
       expect(game.code).toBe(gameDb.code)
       expect(game.status).toBe(gameDb.status)
-      expect(game.turn).toBe(gameDb.turn)
+      expect(game.currentPlayerId).toBe(gameDb.currentPlayerId)
       expect(game.hostId).toBe(gameDb.hostId)
       expect(structuredClone(game.settings)).toStrictEqual(gameDb.settings)
       expect(game.players.length).toBe(1)
@@ -232,6 +232,7 @@ describe("Game", () => {
 
   describe("getCurrentPlayer", () => {
     it("should get the current player", () => {
+      game.currentPlayerId = game.players[0].id
       expect(game.getCurrentPlayer()).toBe(game.players[0])
     })
   })
@@ -471,6 +472,7 @@ describe("Game", () => {
 
   describe("checkTurn", () => {
     it("should check if it's player turn", () => {
+      game.currentPlayerId = player.id
       expect(game.checkTurn(player.id)).toBeTruthy()
       expect(game.checkTurn(opponent.id)).toBeFalsy()
     })
@@ -508,6 +510,23 @@ describe("Game", () => {
 
       expect(game.isPlaying()).toBeTruthy()
       expect(game.isRoundMain()).toBeTruthy()
+    })
+
+    it("should handle case when selectFirstPlayerRandomly returns undefined", async () => {
+      game.settings.initialTurnedCount = 0
+      // Mock selectFirstPlayerRandomly to return undefined
+      const selectFirstPlayerRandomlySpy = vi
+        .spyOn(game as any, "selectFirstPlayerRandomly")
+        .mockReturnValue(undefined)
+
+      // When selectFirstPlayerRandomly returns undefined, setCurrentPlayerAndStartTurn
+      // will not set currentPlayerId, so finishTurn will throw an error
+      // This tests the edge case where there are no connected players
+      await expect(game.start()).rejects.toThrow(
+        "No current player found for finishTurn",
+      )
+
+      expect(selectFirstPlayerRandomlySpy).toHaveBeenCalled()
     })
   })
 
@@ -914,7 +933,7 @@ describe("Game", () => {
       await game.start()
 
       const oldCardValue = player.cards[0][0].value
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.selectedCardValue = 10
 
       game.replaceCard({
@@ -936,10 +955,11 @@ describe("Game", () => {
   describe("turnCard", () => {
     it("should turn card", async () => {
       await game.start()
+      game.currentPlayerId = player.id // Set current player for the test
       const card = player.cards[0][0]
       expect(card.isVisible).toBeFalsy()
 
-      game.turnCard({
+      await game.turnCard({
         player,
         column: 0,
         row: 0,
@@ -956,7 +976,7 @@ describe("Game", () => {
     it("should finish turn without afk", async () => {
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       // act like a replace
       game.turnStatus = Constants.TURN_STATUS.REPLACE_A_CARD
       game.lastTurnStatus = Constants.LAST_TURN_STATUS.REPLACE
@@ -968,7 +988,7 @@ describe("Game", () => {
       expect(operationManager.cancelPlayerAfkTimer).toHaveBeenCalledTimes(2)
       expect(operationManager.updateGame).toHaveBeenCalledTimes(0)
       expect(player.consecutiveAfkCount).toBe(0)
-      expect(game.turn).toBe(1)
+      expect(game.currentPlayerId).toBe(game.players[1].id)
       expect(game.turnStatus).toBe<TurnStatus>(
         Constants.TURN_STATUS.CHOOSE_A_PILE,
       )
@@ -982,7 +1002,7 @@ describe("Game", () => {
     it("should finish turn with afk", async () => {
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       // act like a replace does by afk function
       player.consecutiveAfkCount = 1
       player.afkCount = 1
@@ -996,7 +1016,7 @@ describe("Game", () => {
       expect(operationManager.cancelPlayerAfkTimer).toHaveBeenCalledTimes(2)
       expect(operationManager.updateGame).toHaveBeenCalledTimes(0)
       expect(player.consecutiveAfkCount).toBe(1)
-      expect(game.turn).toBe(1)
+      expect(game.currentPlayerId).toBe(game.players[1].id)
       expect(game.turnStatus).toBe<TurnStatus>(
         Constants.TURN_STATUS.CHOOSE_A_PILE,
       )
@@ -1010,7 +1030,7 @@ describe("Game", () => {
     it("should finish turn in last lap phase and end round when all players have played", async () => {
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       // Set up last lap scenario
       game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
@@ -1044,13 +1064,13 @@ describe("Game", () => {
       expect(endRoundSpy).toHaveBeenCalled()
 
       // Verify turn is passed to next player
-      expect(game.turn).toBe(1)
+      expect(game.currentPlayerId).toBe(game.players[1].id)
     })
 
     it("should finish turn in last lap phase but not end round when not all players have played", async () => {
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       // Set up last lap scenario
       game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
@@ -1081,14 +1101,14 @@ describe("Game", () => {
       expect(endRoundSpy).not.toHaveBeenCalled()
 
       // Verify turn is passed to next player
-      expect(game.turn).toBe(1)
+      expect(game.currentPlayerId).toBe(game.players[1].id)
     })
 
     it("should finish turn in last lap, show all player cards and discard matching cards", async () => {
       game.settings.initialTurnedCount = 0
       game.settings.removeIdenticalColumn = true
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
       player.hasPlayedLastTurn = false
       opponent.hasPlayedLastTurn = true
@@ -1390,7 +1410,7 @@ describe("Game", () => {
         selectedCardValue: null,
         lastDiscardCardValue: game["discardPile"][["_discardPile"].length - 1],
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
-        turn: 0,
+        currentPlayerId: game.currentPlayerId,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         settings: game.settings.toJson(),
         stateVersion: game.stateVersion,
@@ -1416,7 +1436,7 @@ describe("Game", () => {
         selectedCardValue: game.selectedCardValue,
         roundNumber: game.roundNumber,
         roundPhase: game.roundPhase,
-        turn: game.turn,
+        currentPlayerId: game.currentPlayerId,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
         bannedUserIds: game.bannedUserIds,
@@ -1819,17 +1839,17 @@ describe("Game", () => {
     })
   })
 
-  describe("getNextTurn", () => {
-    it("should return the next turn index", () => {
-      game.turn = 0
+  describe("getNextPlayerId", () => {
+    it("should return the next player ID", () => {
+      game.currentPlayerId = game.players[0].id
 
-      const result = game["getNextTurn"]()
+      const result = game["getNextPlayerId"]()
 
-      expect(result).toBe(1)
+      expect(result).toBe(game.players[1].id)
     })
 
     it("should skip disconnected players", () => {
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
       const thirdPlayer = new Player(
         { name: "player3", avatar: Constants.AVATARS.TURTLE },
@@ -1837,17 +1857,62 @@ describe("Game", () => {
       )
       game.addPlayer(thirdPlayer)
 
-      const result = game["getNextTurn"]()
+      const result = game["getNextPlayerId"]()
 
-      expect(result).toBe(2)
+      expect(result).toBe(game.players[2].id)
     })
 
     it("should wrap around to the beginning of the player list", () => {
-      game.turn = 1
+      game.currentPlayerId = game.players[1].id
 
-      const result = game["getNextTurn"]()
+      const result = game["getNextPlayerId"]()
 
-      expect(result).toBe(0)
+      expect(result).toBe(game.players[0].id)
+    })
+
+    it("should return random player when current player is not found", () => {
+      // Set currentPlayerId to a non-existent player ID
+      game.currentPlayerId = "non-existent-id"
+
+      const result = game["getNextPlayerId"]()
+
+      // Should return one of the existing players' IDs
+      expect(game.players.map((p) => p.id)).toContain(result)
+    })
+
+    it("should return random player when all players are disconnected and current player not found", () => {
+      // Set all players to disconnected
+      for (const p of game.players) {
+        p.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      }
+      // Set currentPlayerId to a non-existent player ID
+      game.currentPlayerId = "non-existent-id"
+
+      const result = game["getNextPlayerId"]()
+
+      // When current player not found, it returns a random player (connection status not checked in this branch)
+      expect(game.players.map((p) => p.id)).toContain(result)
+    })
+
+    it("should throw error when players array is empty and current player not found", () => {
+      game.players = []
+      game.currentPlayerId = "non-existent-id"
+
+      // When players array is empty, accessing this.players[0] will be undefined, and undefined.id throws
+      expect(() => game["getNextPlayerId"]()).toThrow()
+    })
+
+    it("should return next player when all players are disconnected and loop back to start", () => {
+      // Set up: current player exists, but all players (including current) are disconnected
+      game.currentPlayerId = player.id
+      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      const result = game["getNextPlayerId"]()
+
+      // When all players are disconnected, the loop breaks and returns the next player's ID
+      // Since we start from (currentIndex + 1), it will be opponent's ID
+      expect(result).toBe(opponent.id)
     })
   })
 
@@ -2026,364 +2091,20 @@ describe("Game", () => {
 
   describe("startRoundAfterInitialReveal", () => {
     it("should set round phase to MAIN and set the first player to start", async () => {
-      const setFirstPlayerToStartSpy = vi
-        .spyOn(game as any, "setFirstPlayerToStart")
-        .mockResolvedValue(undefined)
+      const selectFirstPlayerByScoreSpy = vi.spyOn(
+        game as any,
+        "selectFirstPlayerByScore",
+      )
+      const setCurrentPlayerAndStartTurnSpy = vi.spyOn(
+        game as any,
+        "setCurrentPlayerAndStartTurn",
+      )
 
       await game["startRoundAfterInitialReveal"]()
 
       expect(game.roundPhase).toBe(Constants.ROUND_PHASE.MAIN)
-      expect(setFirstPlayerToStartSpy).toHaveBeenCalled()
-    })
-  })
-
-  describe("setFirstPlayerToStart", () => {
-    beforeEach(() => {
-      vi.spyOn(
-        game["operationManager"],
-        "startPlayerAfkTimer",
-      ).mockResolvedValue()
-    })
-
-    it("should set the player with the highest score as the first player", async () => {
-      // Setup players with different scores
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
-
-      // Mock currentScoreArray to return different scores
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([1, 2, 3]) // Sum: 6
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 4, 5]) // Sum: 12
-
-      await game["setFirstPlayerToStart"]()
-
-      // Player2 has higher score, so should be first
-      expect(game.turn).toBe(1)
-    })
-
-    it("should handle tie by choosing player with highest card", async () => {
-      // Setup players with tied scores but different max values
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
-
-      // Mock currentScoreArray to return tied scores but different max values
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([2, 3, 4]) // Sum: 9, Max: 4
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
-
-      await game["setFirstPlayerToStart"]()
-
-      // Player1 has higher max card, so should be first
-      expect(game.turn).toBe(0)
-    })
-
-    it("should handle complete tie by randomizing", async () => {
-      // Setup players with identical scores
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
-
-      // Mock currentScoreArray to return identical scores
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
-
-      // Mock Math.random to return a predictable value
-      const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0.1) // Will select first player
-
-      await game["setFirstPlayerToStart"]()
-
-      // Should select player based on random value
-      expect(game.turn).toBe(0)
-      expect(randomSpy).toHaveBeenCalled()
-
-      // Reset and test with different random value
-      randomSpy.mockReset()
-      randomSpy.mockReturnValue(0.6) // Will select second player
-
-      await game["setFirstPlayerToStart"]()
-
-      // Should select player based on random value
-      expect(game.turn).toBe(1)
-    })
-
-    it("should skip disconnected players", async () => {
-      // Setup players with one disconnected
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      player1.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
-
-      game.players = [player1, player2]
-
-      // Mock currentScoreArray for the connected player
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([1, 2, 3])
-
-      await game["setFirstPlayerToStart"]()
-
-      // Should skip disconnected player and select player2
-      expect(game.turn).toBe(1)
-    })
-
-    it("should handle case when no players have scores", async () => {
-      // Setup players with no scores
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-
-      game.players = [player1]
-
-      // Mock currentScoreArray to return empty array
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([])
-
-      await game["setFirstPlayerToStart"]()
-
-      // Should default to first player
-      expect(game.turn).toBe(0)
-    })
-
-    it("should correctly handle player order without doubling first player", async () => {
-      // This test verifies the bug fix: the reduce should not process first player twice
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
-
-      // Player1 has HIGHER score, Player2 has LOWER score
-      // Player1 should be selected to go first
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([10, 8]) // Sum: 18
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([5, 4]) // Sum: 9
-
-      await game["setFirstPlayerToStart"]()
-
-      // Player1 (index 0) should be first because 18 > 9
-      expect(game.turn).toBe(0)
-    })
-
-    it("should handle multiple players and select highest score", async () => {
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-      const player3 = new Player(
-        { name: "Player3", avatar: Constants.AVATARS.BEE },
-        "socket3",
-      )
-      const player4 = new Player(
-        { name: "Player4", avatar: Constants.AVATARS.BEE },
-        "socket4",
-      )
-
-      game.players = [player1, player2, player3, player4]
-
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 2]) // Sum: 5
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([8, 1]) // Sum: 9
-      vi.spyOn(player3, "currentScoreArray").mockReturnValue([12, 5]) // Sum: 17 (highest)
-      vi.spyOn(player4, "currentScoreArray").mockReturnValue([6, 4]) // Sum: 10
-
-      await game["setFirstPlayerToStart"]()
-
-      // Player3 (index 2) should be first because sum is 17
-      expect(game.turn).toBe(2)
-    })
-
-    it("should handle negative scores correctly", async () => {
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
-
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([-2, -1, 0]) // Sum: -3
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([-1, 1, 2]) // Sum: 2 (higher)
-
-      await game["setFirstPlayerToStart"]()
-
-      // Player2 should be first because 2 > -3
-      expect(game.turn).toBe(1)
-    })
-
-    it("should handle all negative scores correctly", async () => {
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
-
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([-2, -1]) // Sum: -3 (higher)
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([-5, -4]) // Sum: -9
-
-      await game["setFirstPlayerToStart"]()
-
-      // Player1 should be first because -3 > -9
-      expect(game.turn).toBe(0)
-    })
-
-    it("should handle mixed disconnected players in middle", async () => {
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-      const player3 = new Player(
-        { name: "Player3", avatar: Constants.AVATARS.BEE },
-        "socket3",
-      )
-
-      player2.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
-
-      game.players = [player1, player2, player3]
-
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 2]) // Sum: 5
-      vi.spyOn(player3, "currentScoreArray").mockReturnValue([8, 9]) // Sum: 17
-
-      await game["setFirstPlayerToStart"]()
-
-      // Player3 (index 2) should be first, skipping disconnected player2
-      expect(game.turn).toBe(2)
-    })
-
-    it("should consistently select highest score over many iterations", async () => {
-      // Stress test: run 1000 iterations to ensure deterministic behavior
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
-
-      // Player2 has higher score
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([5, 3]) // Sum: 8
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([10, 8]) // Sum: 18
-
-      const results: number[] = []
-
-      // Run 1000 iterations
-      for (let i = 0; i < 1000; i++) {
-        await game["setFirstPlayerToStart"]()
-        results.push(game.turn)
-      }
-
-      // All iterations should select player2 (index 1) because they have higher score
-      expect(results.every((turn) => turn === 1)).toBe(true)
-    })
-
-    it("should handle edge case with single player", async () => {
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-
-      game.players = [player1]
-
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([5, 3, 2])
-
-      await game["setFirstPlayerToStart"]()
-
-      expect(game.turn).toBe(0)
-    })
-
-    it("should handle zero scores correctly", async () => {
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-
-      game.players = [player1, player2]
-
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([0, 0, 0]) // Sum: 0
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([1, -1, 0]) // Sum: 0
-
-      await game["setFirstPlayerToStart"]()
-
-      // Tied at 0, should check max card
-      // Both have max of 0 for player1, max of 1 for player2
-      expect(game.turn).toBe(1) // player2 has higher max card (1 > 0)
-    })
-
-    it("should verify first player is not compared against themselves", async () => {
-      // This verifies the fix - without initial value, first player shouldn't be in both a and b
-      const player1 = new Player(
-        { name: "Player1", avatar: Constants.AVATARS.BEE },
-        "socket1",
-      )
-      const player2 = new Player(
-        { name: "Player2", avatar: Constants.AVATARS.BEE },
-        "socket2",
-      )
-      const player3 = new Player(
-        { name: "Player3", avatar: Constants.AVATARS.BEE },
-        "socket3",
-      )
-
-      game.players = [player1, player2, player3]
-
-      vi.spyOn(player1, "currentScoreArray").mockReturnValue([1, 1]) // Sum: 2
-      vi.spyOn(player2, "currentScoreArray").mockReturnValue([5, 5]) // Sum: 10 (highest)
-      vi.spyOn(player3, "currentScoreArray").mockReturnValue([3, 3]) // Sum: 6
-
-      await game["setFirstPlayerToStart"]()
-
-      // Player2 should always be selected with highest score
-      expect(game.turn).toBe(1)
+      expect(selectFirstPlayerByScoreSpy).toHaveBeenCalled()
+      expect(setCurrentPlayerAndStartTurnSpy).toHaveBeenCalled()
     })
 
     it("should prevent race condition when called multiple times", async () => {
@@ -2416,11 +2137,599 @@ describe("Game", () => {
       expect(game.roundPhase).toBe(Constants.ROUND_PHASE.MAIN)
 
       // Player2 should be selected (highest score)
-      expect(game.turn).toBe(1)
+      expect(game.currentPlayerId).toBe(game.players[1].id)
 
       // Calling again should do nothing (already in MAIN phase)
       await game["startRoundAfterInitialReveal"]()
-      expect(game.turn).toBe(1) // Should not change
+      expect(game.currentPlayerId).toBe(game.players[1].id) // Should not change
+    })
+  })
+
+  describe("selectFirstPlayerRandomly", () => {
+    it("should return a random connected player", () => {
+      const selectedPlayer = game["selectFirstPlayerRandomly"]()
+
+      // Should return one of the connected players
+      expect(selectedPlayer).toBeDefined()
+      expect(game.getConnectedPlayers()).toContain(selectedPlayer)
+    })
+
+    it("should return undefined when no connected players exist", () => {
+      // Set all players to disconnected
+      for (const p of game.players) {
+        p.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      }
+
+      const selectedPlayer = game["selectFirstPlayerRandomly"]()
+
+      expect(selectedPlayer).toBeUndefined()
+    })
+
+    it("should return undefined when players array is empty", () => {
+      game.players = []
+
+      const selectedPlayer = game["selectFirstPlayerRandomly"]()
+
+      expect(selectedPlayer).toBeUndefined()
+    })
+  })
+
+  describe("selectFirstPlayerByScore", () => {
+    it("should return the player with the highest score", () => {
+      // Setup players with different scores
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Mock currentScoreArray to return different scores
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([1, 2, 3]) // Sum: 6
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 4, 5]) // Sum: 12
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Player2 has higher score, so should be selected
+      expect(selectedPlayer).toBe(game.players[1])
+    })
+
+    it("should handle tie by choosing player with highest card", () => {
+      // Setup players with tied scores but different max values
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Mock currentScoreArray to return tied scores but different max values
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([2, 3, 4]) // Sum: 9, Max: 4
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Player1 has higher max card, so should be selected
+      expect(selectedPlayer).toBe(game.players[0])
+    })
+
+    it("should handle complete tie by randomizing", () => {
+      // Setup players with identical scores
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Mock currentScoreArray to return identical scores
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([3, 3, 3]) // Sum: 9, Max: 3
+
+      // Mock Math.random to return a predictable value
+      const randomSpy = vi.spyOn(Math, "random").mockReturnValue(0.1) // Will select first player
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Should select player based on random value
+      expect(selectedPlayer).toBe(game.players[0])
+      expect(randomSpy).toHaveBeenCalled()
+
+      // Reset and test with different random value
+      randomSpy.mockReset()
+      randomSpy.mockReturnValue(0.6) // Will select second player
+
+      const selectedPlayer2 = game["selectFirstPlayerByScore"]()
+
+      // Should select player based on random value
+      expect(selectedPlayer2).toBe(game.players[1])
+    })
+
+    it("should skip disconnected players", () => {
+      // Setup players with one disconnected
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      player1.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      game.players = [player1, player2]
+
+      // Mock currentScoreArray for the connected player
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([1, 2, 3])
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Should skip disconnected player and select player2
+      expect(selectedPlayer).toBe(game.players[1])
+    })
+
+    it("should handle case when no players have scores", () => {
+      // Setup players with no scores
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+
+      game.players = [player1]
+
+      // Mock currentScoreArray to return empty array
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([])
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Should default to first player
+      expect(selectedPlayer).toBe(game.players[0])
+    })
+
+    it("should correctly handle player order without doubling first player", () => {
+      // This test verifies the bug fix: the reduce should not process first player twice
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Player1 has HIGHER score, Player2 has LOWER score
+      // Player1 should be selected to go first
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([10, 8]) // Sum: 18
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([5, 4]) // Sum: 9
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Player1 (index 0) should be selected because 18 > 9
+      expect(selectedPlayer).toBe(game.players[0])
+    })
+
+    it("should handle multiple players and select highest score", () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+      const player3 = new Player(
+        { name: "Player3", avatar: Constants.AVATARS.BEE },
+        "socket3",
+      )
+      const player4 = new Player(
+        { name: "Player4", avatar: Constants.AVATARS.BEE },
+        "socket4",
+      )
+
+      game.players = [player1, player2, player3, player4]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 2]) // Sum: 5
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([8, 1]) // Sum: 9
+      vi.spyOn(player3, "currentScoreArray").mockReturnValue([12, 5]) // Sum: 17 (highest)
+      vi.spyOn(player4, "currentScoreArray").mockReturnValue([6, 4]) // Sum: 10
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Player3 (index 2) should be selected because sum is 17
+      expect(selectedPlayer).toBe(game.players[2])
+    })
+
+    it("should handle negative scores correctly", () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([-2, -1, 0]) // Sum: -3
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([-1, 1, 2]) // Sum: 2 (higher)
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Player2 should be selected because 2 > -3
+      expect(selectedPlayer).toBe(game.players[1])
+    })
+
+    it("should handle all negative scores correctly", () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([-2, -1]) // Sum: -3 (higher)
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([-5, -4]) // Sum: -9
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Player1 should be selected because -3 > -9
+      expect(selectedPlayer).toBe(game.players[0])
+    })
+
+    it("should handle mixed disconnected players in middle", () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+      const player3 = new Player(
+        { name: "Player3", avatar: Constants.AVATARS.BEE },
+        "socket3",
+      )
+
+      player2.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      game.players = [player1, player2, player3]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 2]) // Sum: 5
+      vi.spyOn(player3, "currentScoreArray").mockReturnValue([8, 9]) // Sum: 17
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Player3 (index 2) should be selected, skipping disconnected player2
+      expect(selectedPlayer).toBe(game.players[2])
+    })
+
+    it("should consistently select highest score over many iterations", () => {
+      // Stress test: run 1000 iterations to ensure deterministic behavior
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Player2 has higher score
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([5, 3]) // Sum: 8
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([10, 8]) // Sum: 18
+
+      const results: (Player | undefined)[] = []
+
+      // Run 1000 iterations
+      for (let i = 0; i < 1000; i++) {
+        const selectedPlayer = game["selectFirstPlayerByScore"]()
+        results.push(selectedPlayer)
+      }
+
+      // All iterations should select player2 because they have higher score
+      expect(results.every((player) => player === game.players[1])).toBe(true)
+    })
+
+    it("should handle edge case with single player", () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+
+      game.players = [player1]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([5, 3, 2])
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      expect(selectedPlayer).toBe(game.players[0])
+    })
+
+    it("should handle zero scores correctly", () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([0, 0, 0]) // Sum: 0
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([1, -1, 0]) // Sum: 0
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Tied at 0, should check max card
+      // Both have max of 0 for player1, max of 1 for player2
+      expect(selectedPlayer).toBe(game.players[1]) // player2 has higher max card (1 > 0)
+    })
+
+    it("should verify first player is not compared against themselves", () => {
+      // This verifies the fix - without initial value, first player shouldn't be in both a and b
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+      const player3 = new Player(
+        { name: "Player3", avatar: Constants.AVATARS.BEE },
+        "socket3",
+      )
+
+      game.players = [player1, player2, player3]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([1, 1]) // Sum: 2
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([5, 5]) // Sum: 10 (highest)
+      vi.spyOn(player3, "currentScoreArray").mockReturnValue([3, 3]) // Sum: 6
+
+      const selectedPlayer = game["selectFirstPlayerByScore"]()
+
+      // Player2 should always be selected with highest score
+      expect(selectedPlayer).toBe(game.players[1])
+    })
+  })
+
+  describe("setCurrentPlayerAndStartTurn", () => {
+    beforeEach(() => {
+      vi.spyOn(
+        game["operationManager"],
+        "startPlayerAfkTimer",
+      ).mockResolvedValue()
+    })
+
+    it("should set current player and start turn", async () => {
+      const testPlayer = new Player(
+        { name: "TestPlayer", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      game.players = [testPlayer]
+
+      await game["setCurrentPlayerAndStartTurn"](testPlayer)
+
+      expect(game.currentPlayerId).toBe(testPlayer.id)
+      expect(testPlayer.turnStartTime).not.toBeNull()
+      expect(operationManager.startPlayerAfkTimer).toHaveBeenCalledWith(
+        game,
+        testPlayer.id,
+      )
+    })
+
+    it("should not start turn when skipStartTurn is true", async () => {
+      const testPlayer = new Player(
+        { name: "TestPlayer", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      game.players = [testPlayer]
+
+      await game["setCurrentPlayerAndStartTurn"](testPlayer, true)
+
+      expect(game.currentPlayerId).toBe(testPlayer.id)
+      expect(testPlayer.turnStartTime).toBeNull()
+      expect(operationManager.startPlayerAfkTimer).not.toHaveBeenCalled()
+    })
+
+    it("should handle undefined player gracefully", async () => {
+      await game["setCurrentPlayerAndStartTurn"](undefined)
+
+      // Should not throw and should not change currentPlayerId
+      expect(operationManager.startPlayerAfkTimer).not.toHaveBeenCalled()
+    })
+
+    it("should handle case when player is set but getCurrentPlayer returns null", async () => {
+      // Create a player that's not in the game's players array
+      const testPlayer = new Player(
+        { name: "TestPlayer", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      // Don't add to game.players, so getCurrentPlayer will return null
+
+      await game["setCurrentPlayerAndStartTurn"](testPlayer)
+
+      // Should set currentPlayerId but not start turn since getCurrentPlayer returns null
+      expect(game.currentPlayerId).toBe(testPlayer.id)
+      expect(operationManager.startPlayerAfkTimer).not.toHaveBeenCalled()
+    })
+  })
+
+  describe("nextTurn", () => {
+    it("should throw error when no current player exists", async () => {
+      game.currentPlayerId = "non-existent-id"
+
+      await expect(game["nextTurn"]()).rejects.toThrow(
+        "No current player found for nextTurn",
+      )
+    })
+
+    it("should handle case when getNextPlayerId returns empty string", async () => {
+      // Set up scenario where getNextPlayerId returns empty string
+      game.currentPlayerId = player.id
+      // Make all other players disconnected
+      opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      // Mock getNextPlayerId to return empty string
+      vi.spyOn(game as any, "getNextPlayerId").mockReturnValue("")
+
+      await game["nextTurn"]()
+
+      // Should set currentPlayerId to empty string
+      expect(game.currentPlayerId).toBe("")
+      expect(game.turnStatus).toBe(Constants.TURN_STATUS.CHOOSE_A_PILE)
+    })
+
+    it("should set first player to finish when player finishes", async () => {
+      game.currentPlayerId = player.id
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+      game.firstToFinishPlayerId = null
+
+      // Mock player has finished
+      vi.spyOn(game as any, "hasPlayerFinished").mockReturnValue(true)
+      vi.spyOn(game as any, "shouldSetFirstPlayerToFinish").mockReturnValue(
+        true,
+      )
+      const setFirstPlayerToFinishSpy = vi.spyOn(
+        game as any,
+        "setFirstPlayerToFinish",
+      )
+
+      await game["nextTurn"]()
+
+      expect(setFirstPlayerToFinishSpy).toHaveBeenCalledWith(player)
+    })
+
+    it("should not set first player to finish when shouldSetFirstPlayerToFinish returns false", async () => {
+      game.currentPlayerId = player.id
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+
+      vi.spyOn(game as any, "shouldSetFirstPlayerToFinish").mockReturnValue(
+        false,
+      )
+      const setFirstPlayerToFinishSpy = vi.spyOn(
+        game as any,
+        "setFirstPlayerToFinish",
+      )
+
+      await game["nextTurn"]()
+
+      expect(setFirstPlayerToFinishSpy).not.toHaveBeenCalled()
+    })
+
+    it("should end round when in last lap and shouldEndRound returns true", async () => {
+      game.currentPlayerId = player.id
+      game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
+      player.hasPlayedLastTurn = false
+      opponent.hasPlayedLastTurn = true
+
+      vi.spyOn(game as any, "shouldEndRound").mockReturnValue(true)
+      const endRoundSpy = vi
+        .spyOn(game as any, "endRound")
+        .mockResolvedValue(undefined)
+
+      await game["nextTurn"]()
+
+      expect(endRoundSpy).toHaveBeenCalled()
+      expect(player.hasPlayedLastTurn).toBe(true)
+    })
+
+    it("should not end round when in last lap but shouldEndRound returns false", async () => {
+      game.currentPlayerId = player.id
+      game.roundPhase = Constants.ROUND_PHASE.LAST_LAP
+      player.hasPlayedLastTurn = false
+      opponent.hasPlayedLastTurn = false
+
+      vi.spyOn(game as any, "shouldEndRound").mockReturnValue(false)
+      const endRoundSpy = vi
+        .spyOn(game as any, "endRound")
+        .mockResolvedValue(undefined)
+
+      await game["nextTurn"]()
+
+      expect(endRoundSpy).not.toHaveBeenCalled()
+      expect(player.hasPlayedLastTurn).toBe(true)
+    })
+  })
+
+  describe("finishTurn edge cases", () => {
+    it("should handle case when nextTurn results in no current player", async () => {
+      game.settings.initialTurnedCount = 0
+      await game.start()
+      game.currentPlayerId = player.id
+      game.turnStatus = Constants.TURN_STATUS.REPLACE_A_CARD
+      game.lastTurnStatus = Constants.LAST_TURN_STATUS.REPLACE
+      game.selectedCardValue = null
+
+      // Mock getNextPlayerId to return empty string (no next player)
+      vi.spyOn(game as any, "getNextPlayerId").mockReturnValue("")
+
+      await game.finishTurn({ wasAfk: false })
+
+      // Should handle gracefully - currentPlayerId is empty, no new player to start turn
+      expect(game.currentPlayerId).toBe("")
+      expect(operationManager.startPlayerAfkTimer).toHaveBeenCalledTimes(1) // Only from initial start
+    })
+
+    it("should delay new round when shouldStartNewRound returns true", async () => {
+      game.settings.initialTurnedCount = 0
+      await game.start()
+      game.currentPlayerId = player.id
+      game.turnStatus = Constants.TURN_STATUS.REPLACE_A_CARD
+      game.lastTurnStatus = Constants.LAST_TURN_STATUS.REPLACE
+      game.selectedCardValue = null
+      game.roundPhase = Constants.ROUND_PHASE.OVER
+
+      vi.spyOn(game as any, "shouldStartNewRound").mockReturnValue(true)
+      const delayNewRoundSpy = vi
+        .spyOn(operationManager, "delayNewRound")
+        .mockResolvedValue()
+
+      await game.finishTurn({ wasAfk: false })
+
+      expect(delayNewRoundSpy).toHaveBeenCalled()
+      expect(operationManager.startPlayerAfkTimer).toHaveBeenCalledTimes(1) // Only from initial start, not from finishTurn
+    })
+
+    it("should not start new round when shouldStartNewRound returns false", async () => {
+      game.settings.initialTurnedCount = 0
+      await game.start()
+      game.currentPlayerId = player.id
+      game.turnStatus = Constants.TURN_STATUS.REPLACE_A_CARD
+      game.lastTurnStatus = Constants.LAST_TURN_STATUS.REPLACE
+      game.selectedCardValue = null
+      game.roundPhase = Constants.ROUND_PHASE.MAIN
+
+      vi.spyOn(game as any, "shouldStartNewRound").mockReturnValue(false)
+      const delayNewRoundSpy = vi.spyOn(operationManager, "delayNewRound")
+
+      await game.finishTurn({ wasAfk: false })
+
+      expect(delayNewRoundSpy).not.toHaveBeenCalled()
+      expect(operationManager.startPlayerAfkTimer).toHaveBeenCalledTimes(2) // From initial start and from finishTurn
     })
   })
 
@@ -2810,7 +3119,7 @@ describe("Game", () => {
 
         game.status = Constants.GAME_STATUS.FINISHED
         game.stateVersion = 10
-        game.turn = 1
+        game.currentPlayerId = game.players[1].id
         game.settings.isConfirmed = true
 
         await game["startNewGame"]()
@@ -2824,7 +3133,7 @@ describe("Game", () => {
         ).toHaveBeenCalledTimes(2)
         expect(game.status).toBe(Constants.GAME_STATUS.LOBBY)
         expect(game.stateVersion).toBe(0)
-        expect(game.turn).toBe(0)
+        expect(game.currentPlayerId).toBe(game.players[0].id)
         expect(game.settings.isConfirmed).toBe(true)
       })
 
@@ -2851,7 +3160,7 @@ describe("Game", () => {
 
         game.status = Constants.GAME_STATUS.FINISHED
         game.stateVersion = 10
-        game.turn = 1
+        game.currentPlayerId = game.players[1].id
         game.settings.isConfirmed = true
         game.settings.private = true
 
@@ -2866,7 +3175,7 @@ describe("Game", () => {
         ).toHaveBeenCalledTimes(2)
         expect(game.status).toBe(Constants.GAME_STATUS.LOBBY)
         expect(game.stateVersion).toBe(0)
-        expect(game.turn).toBe(0)
+        expect(game.currentPlayerId).toBe(game.players[0].id)
         expect(game.settings.isConfirmed).toBe(false)
       })
     })

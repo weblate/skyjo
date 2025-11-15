@@ -12,7 +12,7 @@ export interface GameToJson {
   status: GameStatus
   hostId: string
   players: PlayerToJson[]
-  turn: number
+  currentPlayerId: string
   settings: SettingsToJson
   selectedCardValue: number | null
   roundPhase: RoundPhase
@@ -30,7 +30,7 @@ export interface GameRedisDb {
   isFull: boolean
   status: GameStatus
   players: PlayerRedisDb[]
-  turn: number
+  currentPlayerId: string
   discardPile: number[]
   drawPile: number[]
   settings: SettingsRedisDb

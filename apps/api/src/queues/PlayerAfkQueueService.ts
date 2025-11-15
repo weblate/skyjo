@@ -447,6 +447,12 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     const stateManager = new GameStateTracker(game)
 
     const initialPlayer = game.getCurrentPlayer()
+    if (!initialPlayer) {
+      throw new Error(
+        `No current player found for AFK move in game ${game.code}`,
+      )
+    }
+
     const initialPlayerId = initialPlayer.id
     Logger.info(
       `Performing AFK move for player ${initialPlayer.id} (${initialPlayer.name}) in game ${game.code}`,
@@ -464,6 +470,11 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
 
       while (moveCount < maxMoves) {
         const currentPlayer = game.getCurrentPlayer()
+        if (!currentPlayer) {
+          throw new Error(
+            `No current player found during AFK move in game ${game.code}`,
+          )
+        }
 
         if (currentPlayer.id !== initialPlayerId) {
           Logger.debug(

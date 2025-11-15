@@ -50,7 +50,7 @@ const OpponentsMobileView = () => {
     }
 
     setNewSelectedOpponentIndex()
-  }, [switchToPlayerWhoIsPlaying, game.turn, game.players])
+  }, [switchToPlayerWhoIsPlaying, game.currentPlayerId, game.players])
 
   useEffect(() => {
     if (gameStatus.isPlaying) {

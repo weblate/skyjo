@@ -9,6 +9,7 @@ import { AnimatePresence, m } from "motion/react"
 import { useEffect, useRef, useState } from "react"
 import { useGame } from "@/contexts/GameContext"
 import { useSettings } from "@/contexts/SettingsContext"
+import { getCurrentWhoHasToPlay } from "@/lib/game"
 import { cn } from "@/lib/utils"
 
 const turnTimerTextVariants = cva("text-sm", {
@@ -31,7 +32,7 @@ const TurnTimer = ({ className, turnStartTime }: TurnTimerProps) => {
   } = useSettings()
   const intervalRef = useRef<NodeJS.Timeout | null>(null)
 
-  const currentPlayer = game.players[game.turn]
+  const currentPlayer = getCurrentWhoHasToPlay(game)
   const turnTime =
     currentPlayer?.timeout ?? CoreConstants.TURN_TIMEOUT.CONNECTED
 

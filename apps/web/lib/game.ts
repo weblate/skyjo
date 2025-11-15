@@ -82,15 +82,13 @@ export const isCurrentUserTurn = (game?: GameToJson, player?: PlayerToJson) => {
     return false
   }
 
-  return game.players[game.turn]?.id === player.id
+  return game.currentPlayerId === player.id
 }
 
 export const getCurrentWhoHasToPlay = (game: GameToJson) => {
   const players = getConnectedPlayers(game.players)
 
-  const currentPlayer = game.players?.[game.turn]
-
-  return players.find((player) => player.id === currentPlayer?.id)
+  return players.find((player) => player.id === game.currentPlayerId)
 }
 
 export const getNextPlayerIndex = (

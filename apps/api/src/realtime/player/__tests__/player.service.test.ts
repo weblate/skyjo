@@ -798,7 +798,7 @@ describe("PlayerService", () => {
       await game.start()
 
       // Set player as current player
-      game.turn = 1
+      game.currentPlayerId = game.players[1].id
 
       player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
 
@@ -850,7 +850,7 @@ describe("PlayerService", () => {
       await game.start()
 
       // Set opponent as current player (not the recovering player)
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       player.connectionStatus = CoreConstants.CONNECTION_STATUS.LOST
 

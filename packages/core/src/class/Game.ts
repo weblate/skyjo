@@ -20,7 +20,7 @@ interface GameInterface {
   code: string
   status: GameStatus
   players: Player[]
-  turn: number
+  currentPlayerId: string
   hostId: string
   settings: Settings
 
@@ -52,7 +52,7 @@ export class Game implements GameInterface {
   settings: Settings
   status: GameStatus = Constants.GAME_STATUS.LOBBY
   players: Player[] = []
-  turn: number = 0
+  currentPlayerId: string = ""
   discardPile: number[] = []
   drawPile: number[] = []
 
@@ -89,7 +89,7 @@ export class Game implements GameInterface {
     this.id = game.id
     this.code = game.code
     this.status = game.status
-    this.turn = game.turn
+    this.currentPlayerId = game.currentPlayerId
     this.discardPile = game.discardPile
     this.drawPile = game.drawPile
 
@@ -129,7 +129,7 @@ export class Game implements GameInterface {
   }
 
   getCurrentPlayer() {
-    return this.players[this.turn]
+    return this.players.find((p) => p.id === this.currentPlayerId)
   }
 
   getPlayerById(playerId: string) {
@@ -296,7 +296,7 @@ export class Game implements GameInterface {
   //#endregion
 
   checkTurn(playerId: string) {
-    return this.players[this.turn].id === playerId
+    return this.currentPlayerId === playerId
   }
 
   hasMinPlayersConnected() {
@@ -408,6 +408,9 @@ export class Game implements GameInterface {
     wasAfk?: boolean
   }) {
     const player = this.getCurrentPlayer()
+    if (!player) {
+      throw new Error("No current player found for replaceCard")
+    }
 
     const oldCardValue = player.cards[column][row].value
     player.replaceCard(column, row, this.selectedCardValue!)
@@ -437,6 +440,10 @@ export class Game implements GameInterface {
 
   async finishTurn({ wasAfk = false }: { wasAfk?: boolean }) {
     const currentPlayer = this.getCurrentPlayer()
+    if (!currentPlayer) {
+      throw new Error("No current player found for finishTurn")
+    }
+
     currentPlayer.turnStartTime = null
     await this.operationManager.cancelPlayerAfkTimer(
       this.code,
@@ -483,7 +490,7 @@ export class Game implements GameInterface {
       hostId: this.hostId,
       status: this.status,
       players: this.players.map((player) => player.toJson()),
-      turn: this.turn,
+      currentPlayerId: this.currentPlayerId,
       selectedCardValue: this.selectedCardValue,
       roundPhase: this.roundPhase,
       turnStatus: this.turnStatus,
@@ -532,7 +539,7 @@ export class Game implements GameInterface {
           })),
         ),
       })),
-      turn: this.turn,
+      currentPlayerId: this.currentPlayerId,
       discardPile: this.discardPile,
       drawPile: this.drawPile,
       settings: {
@@ -670,6 +677,10 @@ export class Game implements GameInterface {
 
     if (this.settings.initialTurnedCount === 0) {
       this.roundPhase = Constants.ROUND_PHASE.MAIN
+      // Randomly select first player when no initial cards to turn
+      // Skip starting the turn since finishTurn will immediately move to the next player
+      const randomPlayer = this.selectFirstPlayerRandomly()
+      await this.setCurrentPlayerAndStartTurn(randomPlayer, true)
       await this.finishTurn({ wasAfk: false })
     } else {
       this.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
@@ -712,7 +723,7 @@ export class Game implements GameInterface {
     this.discardPile = [lastCardOfDiscardPile]
   }
 
-  private async setFirstPlayerToStart() {
+  private selectFirstPlayerByScore(): Player | undefined {
     const playersScore = this.players.map((player, i) => {
       if (player.connectionStatus === Constants.CONNECTION_STATUS.DISCONNECTED)
         return undefined
@@ -749,10 +760,27 @@ export class Game implements GameInterface {
       return aSum > bSum ? a : b
     })
 
-    this.turn = playerToStart?.index ?? 0
+    return playerToStart ? this.players[playerToStart.index] : this.players[0]
+  }
+
+  private selectFirstPlayerRandomly(): Player | undefined {
+    const connectedPlayers = this.getConnectedPlayers()
+    if (connectedPlayers.length === 0) return undefined
+
+    const randomIndex = Math.floor(Math.random() * connectedPlayers.length)
+    return connectedPlayers[randomIndex]
+  }
+
+  private async setCurrentPlayerAndStartTurn(
+    player: Player | undefined,
+    skipStartTurn = false,
+  ) {
+    if (!player) return
+
+    this.currentPlayerId = player.id
     const currentPlayer = this.getCurrentPlayer()
 
-    if (currentPlayer) {
+    if (currentPlayer && !skipStartTurn) {
       currentPlayer.startTurn()
 
       await this.operationManager.startPlayerAfkTimer(this, currentPlayer.id)
@@ -790,7 +818,8 @@ export class Game implements GameInterface {
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
     this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
 
-    await this.setFirstPlayerToStart()
+    const selectedPlayer = this.selectFirstPlayerByScore()
+    await this.setCurrentPlayerAndStartTurn(selectedPlayer)
   }
 
   private checkCardsToDiscard(player: Player, maxDepth = 10) {
@@ -829,22 +858,37 @@ export class Game implements GameInterface {
     this.roundPhase = Constants.ROUND_PHASE.LAST_LAP
   }
 
-  private getNextTurn() {
-    let nextTurn = (this.turn + 1) % this.players.length
+  private getNextPlayerId(): string {
+    // Find current player index
+    const currentIndex = this.players.findIndex(
+      (p) => p.id === this.currentPlayerId,
+    )
 
-    const startTurn = nextTurn
+    // If current player not found, randomize the first player
+    if (currentIndex === -1) {
+      const randomPlayer =
+        this.players[Math.floor(Math.random() * this.players.length)] ??
+        this.players[0]
 
-    while (
-      this.players[nextTurn].connectionStatus ===
-      Constants.CONNECTION_STATUS.DISCONNECTED
-    ) {
-      nextTurn = (nextTurn + 1) % this.players.length
-
-      // If we've checked all players and looped back to where we started, break
-      if (nextTurn === startTurn) break
+      return randomPlayer.id
     }
 
-    return nextTurn
+    // Find next connected player
+    let nextIndex = (currentIndex + 1) % this.players.length
+    const startIndex = nextIndex
+
+    // Loop through players to find next connected one
+    while (
+      this.players[nextIndex].connectionStatus ===
+      Constants.CONNECTION_STATUS.DISCONNECTED
+    ) {
+      nextIndex = (nextIndex + 1) % this.players.length
+
+      // If we've checked all players and looped back to where we started, break
+      if (nextIndex === startIndex) break
+    }
+
+    return this.players[nextIndex]?.id ?? ""
   }
 
   private removeDisconnectedPlayers() {
@@ -983,6 +1027,9 @@ export class Game implements GameInterface {
 
   private async nextTurn() {
     const currentPlayer = this.getCurrentPlayer()
+    if (!currentPlayer) {
+      throw new Error("No current player found for nextTurn")
+    }
 
     this.checkCardsToDiscard(currentPlayer)
 
@@ -1000,7 +1047,7 @@ export class Game implements GameInterface {
     }
 
     this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
-    this.turn = this.getNextTurn()
+    this.currentPlayerId = this.getNextPlayerId()
   }
 
   private shouldStartNewRound() {
@@ -1046,7 +1093,7 @@ export class Game implements GameInterface {
     this.stateVersion = 0
     this.createdAt = new Date()
     this.updatedAt = new Date()
-    this.turn = 0
+    this.currentPlayerId = this.players[0]?.id ?? ""
 
     // allow host to change settings again if game is private
     this.settings.isConfirmed = !this.settings.private

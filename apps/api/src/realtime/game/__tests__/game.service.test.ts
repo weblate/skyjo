@@ -412,7 +412,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -509,7 +509,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 1
+      game.currentPlayerId = game.players[1].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -545,7 +545,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.turnStatus = CoreConstants.TURN_STATUS.REPLACE_A_CARD
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -582,7 +582,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -615,7 +615,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -651,7 +651,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -746,7 +746,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 1
+      game.currentPlayerId = game.players[1].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -782,7 +782,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.turnStatus = CoreConstants.TURN_STATUS.CHOOSE_A_PILE
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -820,7 +820,7 @@ describe("GameService", () => {
       game.addPlayer(opponent)
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.selectedCardValue = 0
       game.turnStatus = CoreConstants.TURN_STATUS.REPLACE_A_CARD
 
@@ -834,7 +834,7 @@ describe("GameService", () => {
 
       expect(service["socketManager"].sendToRoom).toHaveBeenCalledTimes(1)
       expect(game.selectedCardValue).toBeNull()
-      expect(game.turn).toBe(1)
+      expect(game.currentPlayerId).toBe(game.players[1].id)
       expect(game.turnStatus).toBe<TurnStatus>(
         CoreConstants.TURN_STATUS.CHOOSE_A_PILE,
       )
@@ -863,7 +863,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -961,7 +961,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 1
+      game.currentPlayerId = game.players[1].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -997,7 +997,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.turnStatus = CoreConstants.TURN_STATUS.CHOOSE_A_PILE
       game.selectedCardValue = 0
 
@@ -1035,7 +1035,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.turnStatus = CoreConstants.TURN_STATUS.THROW_OR_REPLACE
       game.selectedCardValue = 0
 
@@ -1044,7 +1044,7 @@ describe("GameService", () => {
       await service.onDiscardCard(socket, game.stateVersion)
 
       expect(game.selectedCardValue).toBeNull()
-      expect(game.turn).toBe(0)
+      expect(game.currentPlayerId).toBe(game.players[0].id)
       expect(game.turnStatus).toBe<TurnStatus>(
         CoreConstants.TURN_STATUS.TURN_A_CARD,
       )
@@ -1073,7 +1073,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -1169,7 +1169,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 1
+      game.currentPlayerId = game.players[1].id
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
 
@@ -1205,7 +1205,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.turnStatus = CoreConstants.TURN_STATUS.REPLACE_A_CARD
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -1243,7 +1243,7 @@ describe("GameService", () => {
 
       game.settings.initialTurnedCount = 0
       await game.start()
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.turnStatus = CoreConstants.TURN_STATUS.TURN_A_CARD
 
       service["redis"].getGame = vi.fn(() => Promise.resolve(game))
@@ -1251,7 +1251,7 @@ describe("GameService", () => {
       await service.onTurnCard(socket, { column: 0, row: 2 }, game.stateVersion)
 
       expect(player.cards[0][2].isVisible).toBeTruthy()
-      expect(game.turn).toBe(1)
+      expect(game.currentPlayerId).toBe(game.players[1].id)
       expect(game.turnStatus).toBe<TurnStatus>(
         CoreConstants.TURN_STATUS.CHOOSE_A_PILE,
       )
@@ -1288,7 +1288,7 @@ describe("GameService", () => {
         [new Card(1, true), new Card(1, true)],
       ]
 
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.roundNumber = 1
       game.firstToFinishPlayerId = opponent.id
       opponent.hasPlayedLastTurn = true
@@ -1347,7 +1347,7 @@ describe("GameService", () => {
         [new Card(1, true), new Card(1, true)],
       ]
 
-      game.turn = 0
+      game.currentPlayerId = game.players[0].id
       game.roundNumber = 1
       game.firstToFinishPlayerId = opponent.id
       opponent.connectionStatus = CoreConstants.CONNECTION_STATUS.DISCONNECTED
