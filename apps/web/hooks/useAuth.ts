@@ -1,11 +1,11 @@
 "use client"
 
-import { captureException } from "@sentry/nextjs"
 import { Avatar } from "@skymo/core"
 import { LogoutError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
+import posthog from "posthog-js"
 import { useEffect } from "react"
 import { toast } from "sonner"
 import { usePathname, useRouter } from "@/i18n/routing"
@@ -87,15 +87,11 @@ export const useAuth = () => {
           username: result.user.username ?? undefined,
         }
       } catch (error) {
-        captureException(error, {
-          tags: {
-            section: "auth",
-            action: "session_verification",
-          },
-          extra: {
-            pathname,
-            apiUrl: process.env.NEXT_PUBLIC_API_URL,
-          },
+        posthog.captureException(error, {
+          section: "auth",
+          action: "session_verification",
+          pathname,
+          apiUrl: process.env.NEXT_PUBLIC_API_URL,
         })
         return null
       }

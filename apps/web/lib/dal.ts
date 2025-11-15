@@ -1,12 +1,12 @@
 import "server-only"
 
-import { captureException } from "@sentry/nextjs"
 import { Avatar } from "@skymo/core"
 import { SESSION_COOKIE_NAME } from "@skymo/shared/constants"
 import type { VerifyError } from "@skymo/shared/types"
 import { jsonError } from "@skymo/shared/utils"
 import { cookies } from "next/headers"
 import { redirect } from "next/navigation"
+import posthog from "posthog-js"
 
 export interface SessionData {
   id: number
@@ -46,19 +46,15 @@ export const verifySession = async (): Promise<SessionData | null> => {
       })
 
       if (response.status >= 500) {
-        captureException(
+        posthog.captureException(
           new Error(`Session verification server error: ${response.status}`),
           {
-            tags: {
-              section: "auth",
-              action: "server_session_verification",
-            },
-            extra: {
-              status: response.status,
-              statusText: response.statusText,
-              error,
-              url,
-            },
+            section: "auth",
+            action: "server_session_verification",
+            status: response.status,
+            statusText: response.statusText,
+            error,
+            url,
           },
         )
       }
@@ -73,14 +69,11 @@ export const verifySession = async (): Promise<SessionData | null> => {
     return data.user
   } catch (error) {
     console.error("verifySession: Network error", error)
-    captureException(error, {
-      tags: {
-        section: "auth",
-        action: "server_session_verification_network_error",
-      },
-      extra: {
-        url: `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`,
-      },
+    posthog.captureException(error, {
+      section: "auth",
+      action: "server_session_verification_network_error",
+
+      url: `${process.env.NEXT_PUBLIC_API_URL}/auth/verify`,
     })
     return null
   }
