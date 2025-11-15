@@ -74,7 +74,8 @@ export const getOpponents = (
 export const isCurrentUserTurn = (game?: GameToJson, player?: PlayerToJson) => {
   if (!player || !game) return false
   if (isRoundRevealCards(game.roundPhase) && isGamePlaying(game.status)) {
-    return true
+    // During reveal phase, only return true if player hasn't revealed their cards yet
+    return !player.hasRevealedCardCount
   }
 
   if (!isGamePlaying(game.status) || isRoundOver(game.roundPhase)) {

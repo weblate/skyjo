@@ -69,10 +69,13 @@ export class GameService extends BaseService {
       })
     }
 
+    // Save version before modification for optimistic locking
+    const expectedVersion = game.stateVersion
+
     const stateManager = new GameStateTracker(game)
     await game.revealCard({ player, column, row })
 
-    await this.updateAndSendGame(game, stateManager)
+    await this.updateAndSendGame(game, stateManager, expectedVersion)
   }
 
   async onPickCard(
@@ -85,12 +88,16 @@ export class GameService extends BaseService {
     await this.checkPlayAuthorization(game, socket, [
       CoreConstants.TURN_STATUS.CHOOSE_A_PILE,
     ])
+
+    // Save version before modification for optimistic locking
+    const expectedVersion = game.stateVersion
+
     const stateManager = new GameStateTracker(game)
 
     if (pile === "draw") game.drawCard()
     else game.pickFromDiscard()
 
-    await this.updateAndSendGame(game, stateManager)
+    await this.updateAndSendGame(game, stateManager, expectedVersion)
   }
 
   async onReplaceCard(
@@ -104,11 +111,15 @@ export class GameService extends BaseService {
       CoreConstants.TURN_STATUS.REPLACE_A_CARD,
       CoreConstants.TURN_STATUS.THROW_OR_REPLACE,
     ])
+
+    // Save version before modification for optimistic locking
+    const expectedVersion = game.stateVersion
+
     const stateManager = new GameStateTracker(game)
 
     await game.replaceCard({ column, row })
 
-    await this.updateAndSendGame(game, stateManager)
+    await this.updateAndSendGame(game, stateManager, expectedVersion)
   }
 
   async onDiscardCard(
@@ -120,6 +131,10 @@ export class GameService extends BaseService {
     await this.checkPlayAuthorization(game, socket, [
       CoreConstants.TURN_STATUS.THROW_OR_REPLACE,
     ])
+
+    // Save version before modification for optimistic locking
+    const expectedVersion = game.stateVersion
+
     const stateManager = new GameStateTracker(game)
 
     if (game.selectedCardValue === null) {
@@ -134,7 +149,7 @@ export class GameService extends BaseService {
 
     game.discardCard(game.selectedCardValue)
 
-    await this.updateAndSendGame(game, stateManager)
+    await this.updateAndSendGame(game, stateManager, expectedVersion)
   }
 
   async onTurnCard(
@@ -147,11 +162,15 @@ export class GameService extends BaseService {
     const { player } = await this.checkPlayAuthorization(game, socket, [
       CoreConstants.TURN_STATUS.TURN_A_CARD,
     ])
+
+    // Save version before modification for optimistic locking
+    const expectedVersion = game.stateVersion
+
     const stateManager = new GameStateTracker(game)
 
     await game.turnCard({ player, column, row })
 
-    await this.updateAndSendGame(game, stateManager)
+    await this.updateAndSendGame(game, stateManager, expectedVersion)
   }
 
   async onReplay(socket: AuthenticatedGameSocket, clientStateVersion: number) {
@@ -159,11 +178,14 @@ export class GameService extends BaseService {
 
     if (!game.isFinished() && !game.isStopped()) return
 
+    // Save version before modification for optimistic locking
+    const expectedVersion = game.stateVersion
+
     const stateManager = new GameStateTracker(game)
 
     await game.togglePlayerReplay(socket.data.playerId)
 
-    await this.updateAndSendGame(game, stateManager)
+    await this.updateAndSendGame(game, stateManager, expectedVersion)
   }
 
   //#region private methods

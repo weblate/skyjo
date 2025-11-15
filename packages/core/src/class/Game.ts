@@ -747,7 +747,7 @@ export class Game implements GameInterface {
       }
 
       return aSum > bSum ? a : b
-    }, playersScore[0])
+    })
 
     this.turn = playerToStart?.index ?? 0
     const currentPlayer = this.getCurrentPlayer()
@@ -766,6 +766,9 @@ export class Game implements GameInterface {
   }
 
   private async startRoundAfterInitialReveal() {
+    // Guard against concurrent calls - only proceed if still in REVEAL_CARDS phase
+    if (!this.isRoundRevealCards()) return
+
     // Cancel individual AFK timers for any players who haven't completed yet
     // (players who completed already had their timers cancelled in revealCard)
     const connectedPlayers = this.getConnectedPlayers()

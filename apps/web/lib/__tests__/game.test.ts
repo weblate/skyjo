@@ -247,7 +247,7 @@ describe("isCurrentUserTurn", () => {
       roundPhase: CoreConstants.ROUND_PHASE.REVEAL_CARDS,
       players: [player],
     })
-    expect(isCurrentUserTurn(game, player)).toBe(true)
+    expect(isCurrentUserTurn(game, player)).toBe(false)
   })
 
   it("should return false when game is not playing", () => {

@@ -2168,6 +2168,260 @@ describe("Game", () => {
       // Should default to first player
       expect(game.turn).toBe(0)
     })
+
+    it("should correctly handle player order without doubling first player", async () => {
+      // This test verifies the bug fix: the reduce should not process first player twice
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Player1 has HIGHER score, Player2 has LOWER score
+      // Player1 should be selected to go first
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([10, 8]) // Sum: 18
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([5, 4]) // Sum: 9
+
+      await game["setFirstPlayerToStart"]()
+
+      // Player1 (index 0) should be first because 18 > 9
+      expect(game.turn).toBe(0)
+    })
+
+    it("should handle multiple players and select highest score", async () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+      const player3 = new Player(
+        { name: "Player3", avatar: Constants.AVATARS.BEE },
+        "socket3",
+      )
+      const player4 = new Player(
+        { name: "Player4", avatar: Constants.AVATARS.BEE },
+        "socket4",
+      )
+
+      game.players = [player1, player2, player3, player4]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 2]) // Sum: 5
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([8, 1]) // Sum: 9
+      vi.spyOn(player3, "currentScoreArray").mockReturnValue([12, 5]) // Sum: 17 (highest)
+      vi.spyOn(player4, "currentScoreArray").mockReturnValue([6, 4]) // Sum: 10
+
+      await game["setFirstPlayerToStart"]()
+
+      // Player3 (index 2) should be first because sum is 17
+      expect(game.turn).toBe(2)
+    })
+
+    it("should handle negative scores correctly", async () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([-2, -1, 0]) // Sum: -3
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([-1, 1, 2]) // Sum: 2 (higher)
+
+      await game["setFirstPlayerToStart"]()
+
+      // Player2 should be first because 2 > -3
+      expect(game.turn).toBe(1)
+    })
+
+    it("should handle all negative scores correctly", async () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([-2, -1]) // Sum: -3 (higher)
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([-5, -4]) // Sum: -9
+
+      await game["setFirstPlayerToStart"]()
+
+      // Player1 should be first because -3 > -9
+      expect(game.turn).toBe(0)
+    })
+
+    it("should handle mixed disconnected players in middle", async () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+      const player3 = new Player(
+        { name: "Player3", avatar: Constants.AVATARS.BEE },
+        "socket3",
+      )
+
+      player2.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      game.players = [player1, player2, player3]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([3, 2]) // Sum: 5
+      vi.spyOn(player3, "currentScoreArray").mockReturnValue([8, 9]) // Sum: 17
+
+      await game["setFirstPlayerToStart"]()
+
+      // Player3 (index 2) should be first, skipping disconnected player2
+      expect(game.turn).toBe(2)
+    })
+
+    it("should consistently select highest score over many iterations", async () => {
+      // Stress test: run 1000 iterations to ensure deterministic behavior
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      // Player2 has higher score
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([5, 3]) // Sum: 8
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([10, 8]) // Sum: 18
+
+      const results: number[] = []
+
+      // Run 1000 iterations
+      for (let i = 0; i < 1000; i++) {
+        await game["setFirstPlayerToStart"]()
+        results.push(game.turn)
+      }
+
+      // All iterations should select player2 (index 1) because they have higher score
+      expect(results.every((turn) => turn === 1)).toBe(true)
+    })
+
+    it("should handle edge case with single player", async () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+
+      game.players = [player1]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([5, 3, 2])
+
+      await game["setFirstPlayerToStart"]()
+
+      expect(game.turn).toBe(0)
+    })
+
+    it("should handle zero scores correctly", async () => {
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([0, 0, 0]) // Sum: 0
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([1, -1, 0]) // Sum: 0
+
+      await game["setFirstPlayerToStart"]()
+
+      // Tied at 0, should check max card
+      // Both have max of 0 for player1, max of 1 for player2
+      expect(game.turn).toBe(1) // player2 has higher max card (1 > 0)
+    })
+
+    it("should verify first player is not compared against themselves", async () => {
+      // This verifies the fix - without initial value, first player shouldn't be in both a and b
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+      const player3 = new Player(
+        { name: "Player3", avatar: Constants.AVATARS.BEE },
+        "socket3",
+      )
+
+      game.players = [player1, player2, player3]
+
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([1, 1]) // Sum: 2
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([5, 5]) // Sum: 10 (highest)
+      vi.spyOn(player3, "currentScoreArray").mockReturnValue([3, 3]) // Sum: 6
+
+      await game["setFirstPlayerToStart"]()
+
+      // Player2 should always be selected with highest score
+      expect(game.turn).toBe(1)
+    })
+
+    it("should prevent race condition when called multiple times", async () => {
+      // Simulate the race condition where startRoundAfterInitialReveal is called multiple times
+      const player1 = new Player(
+        { name: "Player1", avatar: Constants.AVATARS.BEE },
+        "socket1",
+      )
+      const player2 = new Player(
+        { name: "Player2", avatar: Constants.AVATARS.BEE },
+        "socket2",
+      )
+
+      game.players = [player1, player2]
+      game.roundPhase = Constants.ROUND_PHASE.REVEAL_CARDS
+      game.status = Constants.GAME_STATUS.PLAYING
+
+      // Set up scores - player2 should win
+      vi.spyOn(player1, "currentScoreArray").mockReturnValue([5, 3]) // Sum: 8
+      vi.spyOn(player2, "currentScoreArray").mockReturnValue([10, 8]) // Sum: 18
+
+      // Call startRoundAfterInitialReveal multiple times concurrently (simulating race condition)
+      await Promise.all([
+        game["startRoundAfterInitialReveal"](),
+        game["startRoundAfterInitialReveal"](),
+        game["startRoundAfterInitialReveal"](),
+      ])
+
+      // Should still be in MAIN phase (not called multiple times)
+      expect(game.roundPhase).toBe(Constants.ROUND_PHASE.MAIN)
+
+      // Player2 should be selected (highest score)
+      expect(game.turn).toBe(1)
+
+      // Calling again should do nothing (already in MAIN phase)
+      await game["startRoundAfterInitialReveal"]()
+      expect(game.turn).toBe(1) // Should not change
+    })
   })
 
   describe("disconnectPlayer", () => {

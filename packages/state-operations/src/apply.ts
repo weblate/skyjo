@@ -21,13 +21,23 @@ export const applyStateOperations = (
   // Create a deep copy to ensure immutability
   const gameUpdated = structuredClone(game)
 
-  const keys = Object.keys(operations) as (keyof GameOperation)[]
-  keys.forEach((key) => {
+  // Apply operations in a specific order to ensure consistency
+  // Game-level changes must be applied before player updates to avoid race conditions
+  const orderedKeys: (keyof GameOperation)[] = [
+    "game",
+    "settings",
+    "addPlayers",
+    "reorderPlayers",
+    "updatePlayers",
+    "removePlayers",
+  ]
+
+  for (const key of orderedKeys) {
     const data = operations[key]
-    if (!data) return
+    if (!data) continue
 
     actions[key](gameUpdated, data)
-  })
+  }
 
   // clean up undefined cards - create new arrays to ensure immutability
   gameUpdated.players = gameUpdated.players.map((player) => ({
