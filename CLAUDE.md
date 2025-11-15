@@ -190,3 +190,96 @@ This architecture ensures scalability, maintainability, and real-time performanc
 - do not build every time
 - Never remove or add package like this. use pnpm remove and pnpm add
 - When you are following a file plan, please update it at the end to your current progression
+
+## Default game rules
+1. Game Objective
+The goal of Skymo game is to have the lowest score at the end of the game. The game is played over multiple rounds. The game ends when at least one player reaches 100 or more points. The player with the fewest total points at that time wins.
+
+1. The Deck
+The deck consists of 150 cards with the following values and quantities:
+
+-2: 5 cards
+
+-1: 10 cards
+
+0: 15 cards
+
+1 to 12: 10 cards of each value (1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)
+
+3. Round Setup
+Each player is dealt 12 cards face-down.
+
+Players arrange their 12 cards in a 3x4 grid (3 rows, 4 columns) in front of them.
+
+The remaining cards form the draw pile (face-down).
+
+The top card of the draw pile is flipped face-up to start the discard pile.
+
+Before the first turn, each player must turn any two of their 12 cards face-up.
+
+4. Gameplay: A Player's Turn
+On your turn, you must choose one of two options. After your action, play passes to the next player clockwise.
+
+Option 1: Take from the Discard Pile
+Take the top card of the discard pile (which is face-up).
+
+You must exchange this card with one of your 12 cards (either a face-up or a face-down card).
+
+Place the new card face-up in your grid.
+
+Place your exchanged card face-up on top of the discard pile.
+
+Note: You cannot look at a face-down card before deciding to exchange it.
+
+Option 2: Take from the Draw Pile
+Take the top card of the draw pile (face-down).
+
+Look at it secretly.
+
+Decide:
+
+A) Keep the card: You exchange it for one of your 12 cards (face-up or face-down). Place the new card face-up in your grid. Place your exchanged card (from your grid) face-up on the discard pile.
+
+B) Discard the card: You do not want the card. Place it face-up on the discard pile. You must then turn one of your remaining face-down cards face-up.
+
+Your turn ends.
+
+5. Special Rule: Clearing a Column
+If a player has three identical-valued cards in a single vertical column, that entire column is immediately discarded.
+
+The three cards are placed on the discard pile.
+
+This space in the grid is now empty and cannot be filled for the rest of the round.
+
+This rule can be triggered at any point during a turn (e.g., after exchanging a card or after flipping a card in Option 2B). If triggered by an exchange, the exchanged card goes to the discard pile first, followed by the three identical cards from the column.
+
+6. End of a Round
+A round ends when one player has all 12 of their cards face-up at the end of their turn.
+
+This player has finished and takes no more actions.
+
+All other players get one final turn.
+
+After their final turn, any remaining face-down cards are turned face-up.
+
+The round is now over, and scoring begins.
+
+7. Scoring
+Players sum the values of all cards in their grid (or fewer, if columns were cleared).
+
+This round score (which can be positive or negative) is added to their total game score.
+
+Scoring Penalty (The "Skymo" Rule):
+
+This penalty applies only to the player who triggered the end of the round (the first player to reveal all their cards).
+
+If this player does not have the strictly lowest score of the round (i.e., another player has an equal or lower score), their round score is doubled.
+
+Important: This doubling penalty only applies if their round score is positive. Negative scores are never doubled.
+
+Example: Player A finishes the round and has 10 points. Player B has 24 points. Player C also has 10 points. Because Player A (who finished) is not strictly lower than Player C, Player A's score is doubled to 20. Player C's score remains 10.
+
+8. End of the Game
+After scoring a round, if any player's cumulative total score is 100 points or more, the game ends.
+
+The player with the lowest overall score is the winner.
