@@ -2,22 +2,28 @@ import { z } from "zod"
 
 export const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]),
-  APP_NAME: z.string({ message: "APP_NAME must be set in .env file" }),
+  APP_NAME: z.string({
+    error: "APP_NAME must be set in .env file",
+  }),
 
-  REDIS_URL: z.string({ message: "REDIS_URL must be set in .env file" }),
-  POSTGRES_URL: z.string({ message: "POSTGRES_URL must be set in .env file" }),
+  REDIS_URL: z.string({
+    error: "REDIS_URL must be set in .env file",
+  }),
+  POSTGRES_URL: z.string({
+    error: "POSTGRES_URL must be set in .env file",
+  }),
 
   DISCORD_BOT_TOKEN: z.string({
-    message: "DISCORD_BOT_TOKEN must be set in .env file",
+    error: "DISCORD_BOT_TOKEN must be set in .env file",
   }),
   DISCORD_REPORT_CHANNEL_ID: z.string({
-    message: "DISCORD_REPORT_CHANNEL_ID must be set in .env file",
+    error: "DISCORD_REPORT_CHANNEL_ID must be set in .env file",
   }),
   API_BASE_URL: z.string({
-    message: "API_BASE_URL must be set in .env file",
+    error: "API_BASE_URL must be set in .env file",
   }),
   API_SESSION_ID: z.string({
-    message: "API_SESSION_ID must be set in .env file",
+    error: "API_SESSION_ID must be set in .env file",
   }),
 })
 

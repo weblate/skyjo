@@ -5,10 +5,16 @@ config()
 
 export const envSchema = z.object({
   NODE_ENV: z.enum(["development", "production", "test"]),
-  APP_NAME: z.string({ message: "APP_NAME must be set in .env file" }),
+  APP_NAME: z.string({
+    error: "APP_NAME must be set in .env file",
+  }),
 
-  SEQ_URL: z.string({ message: "SEQ_URL must be set in .env file" }),
-  SEQ_API_KEY: z.string({ message: "SEQ_API_KEY must be set in .env file" }),
+  SEQ_URL: z.string({
+    error: "SEQ_URL must be set in .env file",
+  }),
+  SEQ_API_KEY: z.string({
+    error: "SEQ_API_KEY must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

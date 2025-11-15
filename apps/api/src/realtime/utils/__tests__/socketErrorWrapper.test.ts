@@ -1,7 +1,7 @@
 import { CError } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import { ZodError, ZodIssueCode } from "zod"
+import z, { ZodError, ZodIssueCode } from "zod"
 import { socketErrorWrapper } from "../socketErrorWrapper.js"
 
 // Mock the Logger
@@ -75,23 +75,17 @@ describe("socketErrorWrapper", () => {
   })
 
   it("should log ZodError using Logger.warn for each error", async () => {
-    const error = new ZodError([
-      {
-        code: ZodIssueCode.invalid_type,
-        expected: "string",
-        received: "number",
-        path: ["name"],
-        message: "Expected string, received number",
-      },
-      {
-        code: ZodIssueCode.invalid_string,
-        validation: "email",
-        path: ["email"],
-        message: "Invalid email",
-      },
-    ])
+    const schema = z.object({
+      name: z.string(),
+      email: z.string().email(),
+    })
 
-    const handler = vi.fn().mockRejectedValue(error)
+    const handler = vi.fn(async () => {
+      schema.parse({
+        name: 123,
+        email: "invalid-email",
+      })
+    })
     const wrappedHandler = socketErrorWrapper(handler)
 
     await wrappedHandler("arg1", "arg2")
@@ -102,12 +96,12 @@ describe("socketErrorWrapper", () => {
     expect(Logger.warn).toHaveBeenNthCalledWith(
       1,
       "Unexpected error (ZodError instance)",
-      { error: error.errors[0] },
+      { error: expect.stringContaining("expected string") },
     )
     expect(Logger.warn).toHaveBeenNthCalledWith(
       2,
       "Unexpected error (ZodError instance)",
-      { error: error.errors[1] },
+      { error: expect.stringContaining("Invalid email") },
     )
     expect(Logger.error).not.toHaveBeenCalled()
   })

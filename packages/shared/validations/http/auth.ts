@@ -11,7 +11,7 @@ export const loginSchema = z.object({
 export type LoginUser = z.infer<typeof loginSchema>
 
 export const forgotPasswordSchema = z.object({
-  email: z.string().email("email-invalid"),
+  email: z.email("email-invalid"),
 })
 export type ForgotPassword = z.infer<typeof forgotPasswordSchema>
 
@@ -22,27 +22,27 @@ export const resetPasswordSchema = z
     confirmPassword: passwordSchema,
   })
   .refine((data) => data.password === data.confirmPassword, {
-    message: "passwords-dont-match",
     path: ["confirmPassword"],
+    error: "passwords-dont-match",
   })
 export type ResetPassword = z.infer<typeof resetPasswordSchema>
 
 export const sendVerificationEmailSchema = z.object({
-  email: z.string().email("email-invalid"),
-  locale: z.enum(locales).default("en"),
+  email: z.email("email-invalid"),
+  locale: z.enum(locales).prefault("en"),
 })
 export type SendVerificationEmail = z.infer<typeof sendVerificationEmailSchema>
 
 export const tryVerificationEmailSchema = z.object({
   pin: z.string().length(6, "pin-invalid-length"),
-  email: z.string().email("email-invalid"),
-  locale: z.enum(locales).default("en"),
+  email: z.email("email-invalid"),
+  locale: z.enum(locales).prefault("en"),
   name: z
     .string()
     .min(1)
     .transform((val) => val.slice(0, 20).replace(/ /g, "_"))
     .optional(),
-  avatar: z.nativeEnum(Constants.AVATARS).optional(),
+  avatar: z.enum(Constants.AVATARS).optional(),
   settings: userSettingsSchema.optional(),
 })
 export type TryVerificationEmail = z.infer<typeof tryVerificationEmailSchema>

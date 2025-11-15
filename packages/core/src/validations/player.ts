@@ -6,7 +6,7 @@ export const createPlayer = z.object({
     .string()
     .min(1)
     .transform((val) => val.slice(0, 20).trim()),
-  avatar: z.nativeEnum(Constants.AVATARS),
+  avatar: z.enum(Constants.AVATARS),
 })
 
 export type CreatePlayer = z.infer<typeof createPlayer>

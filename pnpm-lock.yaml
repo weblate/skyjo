@@ -28,7 +28,7 @@ importers:
         version: 1.19.6(hono@4.10.6)
       '@hono/zod-validator':
         specifier: ^0.7.4
-        version: 0.7.4(hono@4.10.6)(zod@3.25.74)
+        version: 0.7.4(hono@4.10.6)(zod@4.1.12)
       '@oslojs/crypto':
         specifier: ^1.0.1
         version: 1.0.1
@@ -93,8 +93,8 @@ importers:
         specifier: ^3.0.2
         version: 3.0.2
       zod:
-        specifier: ^3.25.74
-        version: 3.25.74
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@skymo/worker-types':
         specifier: workspace:*
@@ -170,8 +170,8 @@ importers:
         specifier: ^5.9.0
         version: 5.9.0
       zod:
-        specifier: ^3.25.74
-        version: 3.25.74
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@skymo/worker-types':
         specifier: workspace:*
@@ -324,8 +324,8 @@ importers:
         specifier: ^1.1.2
         version: 1.1.2(@types/react-dom@19.2.3(@types/react@19.2.5))(@types/react@19.2.5)(react-dom@19.2.0(react@19.2.0))(react@19.2.0)
       zod:
-        specifier: ^3.25.74
-        version: 3.25.74
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@hookform/resolvers':
         specifier: ^5.2.2
@@ -463,8 +463,8 @@ importers:
         specifier: workspace:*
         version: link:../error
       zod:
-        specifier: ^3.25.74
-        version: 3.25.74
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@skymo/ts-config':
         specifier: workspace:*
@@ -556,8 +556,8 @@ importers:
         specifier: ^3.18.3
         version: 3.18.3
       zod:
-        specifier: ^3.25.74
-        version: 3.25.74
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@skymo/ts-config':
         specifier: workspace:*
@@ -581,8 +581,8 @@ importers:
         specifier: workspace:*
         version: link:../state-operations
       zod:
-        specifier: ^3.25.74
-        version: 3.25.74
+        specifier: ^4.1.12
+        version: 4.1.12
     devDependencies:
       '@skymo/ts-config':
         specifier: workspace:*
@@ -5421,9 +5421,6 @@ packages:
     resolution: {integrity: sha512-GQHQqAopRhwU8Kt1DDM8NjibDXHC8eoh1erhGAJPEyveY9qqVeXvVikNKrDz69sHowPMorbPUrH/mx8c50eiBQ==}
     engines: {node: '>=18'}
 
-  zod@3.25.74:
-    resolution: {integrity: sha512-J8poo92VuhKjNknViHRAIuuN6li/EwFbAC8OedzI8uxpEPGiXHGQu9wemIAioIpqgfB4SySaJhdk0mH5Y4ICBg==}
-
   zod@4.1.12:
     resolution: {integrity: sha512-JInaHOamG8pt5+Ey8kGmdcAcg3OL9reK8ltczgHTAwNhMys/6ThXHityHxVV2p3fkw/c+MAvBHFVYHFZDmjMCQ==}
 
@@ -6298,10 +6295,10 @@ snapshots:
     dependencies:
       hono: 4.10.6
 
-  '@hono/zod-validator@0.7.4(hono@4.10.6)(zod@3.25.74)':
+  '@hono/zod-validator@0.7.4(hono@4.10.6)(zod@4.1.12)':
     dependencies:
       hono: 4.10.6
-      zod: 3.25.74
+      zod: 4.1.12
 
   '@hookform/resolvers@5.2.2(react-hook-form@7.66.0(react@19.2.0))':
     dependencies:
@@ -7944,7 +7941,7 @@ snapshots:
       magicast: 0.3.5
       test-exclude: 7.0.1
       tinyrainbow: 2.0.0
-      vitest: 3.2.4(@types/node@24.0.10)(@vitest/ui@3.2.4)(happy-dom@18.0.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.20.6)(yaml@2.8.0)
+      vitest: 3.2.4(@types/node@24.10.1)(@vitest/ui@3.2.4)(happy-dom@18.0.1)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.43.1)(tsx@4.20.6)(yaml@2.8.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -10264,7 +10261,5 @@ snapshots:
     optional: true
 
   yoctocolors@2.1.1: {}
-
-  zod@3.25.74: {}
 
   zod@4.1.12: {}

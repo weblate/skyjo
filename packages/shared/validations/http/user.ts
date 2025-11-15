@@ -18,7 +18,7 @@ export const onboardingSchema = z.object({
     .min(3, "username-min-characters")
     .max(20, "username-max-characters")
     .regex(/^\w+$/, "username-invalid-format"),
-  avatar: z.nativeEnum(Constants.AVATARS),
+  avatar: z.enum(Constants.AVATARS),
   password: z.string().optional(),
 })
 export type Onboarding = z.infer<typeof onboardingSchema>
@@ -61,12 +61,12 @@ export const updateUsernameSchema = z.object({
 export type UpdateUsername = z.infer<typeof updateUsernameSchema>
 
 export const updateEmailSchema = z.object({
-  email: z.string().email("email-invalid"),
+  email: z.email("email-invalid"),
 })
 export type UpdateEmail = z.infer<typeof updateEmailSchema>
 
 export const updateAvatarSchema = z.object({
-  avatar: z.nativeEnum(Constants.AVATARS),
+  avatar: z.enum(Constants.AVATARS),
 })
 export type UpdateAvatar = z.infer<typeof updateAvatarSchema>
 
@@ -77,15 +77,15 @@ export const updatePasswordSchema = z
     confirmPassword: passwordSchema,
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
-    message: "passwords-dont-match",
     path: ["confirmPassword"],
+    error: "passwords-dont-match",
   })
 export type UpdatePassword = z.infer<typeof updatePasswordSchema>
 
 export const deleteAccountSchema = z.object({
   password: z.string().min(1, "password-required"),
   confirmation: z.literal("DELETE", {
-    errorMap: () => ({ message: "delete-account-confirmation-required" }),
+    error: () => "delete-account-confirmation-required",
   }),
 })
 export type DeleteAccount = z.infer<typeof deleteAccountSchema>

@@ -2,7 +2,6 @@ import { Constants as CoreConstants } from "@skymo/core"
 import { z } from "zod"
 
 export const updateMaxPlayersSchema = z
-  .number()
   .int()
   .min(CoreConstants.DEFAULT_GAME_SETTINGS.MIN_PLAYERS, "min-players-invalid")
   .max(CoreConstants.DEFAULT_GAME_SETTINGS.MAX_PLAYERS, "max-players-invalid")
@@ -12,9 +11,8 @@ export type UpdateMaxPlayers = z.input<typeof updateMaxPlayersSchema>
 export const updateGameSettingsSchema = z.object({
   removeIdenticalColumn: z.boolean().optional(),
   removeIdenticalRow: z.boolean().optional(),
-  initialTurnedCount: z.number().int().min(0).optional(),
+  initialTurnedCount: z.int().min(0).optional(),
   cardPerRow: z
-    .number()
     .int()
     .min(1, "card-per-row-min-invalid")
     .max(
@@ -23,7 +21,6 @@ export const updateGameSettingsSchema = z.object({
     )
     .optional(),
   cardPerColumn: z
-    .number()
     .int()
     .min(1, "card-per-column-min-invalid")
     .max(
@@ -32,30 +29,25 @@ export const updateGameSettingsSchema = z.object({
     )
     .optional(),
   scoreToEndGame: z
-    .number()
     .int()
     .min(1, "score-to-end-game-min-invalid")
     .max(10000000, "score-to-end-game-max-invalid")
     .optional(),
   firstPlayerMultiplierPenalty: z
-    .number()
     .int()
     .min(1, "first-player-multiplier-penalty-min-invalid")
     .max(10000000, "first-player-multiplier-penalty-max-invalid")
     .optional(),
   firstPlayerFlatPenalty: z
-    .number()
     .int()
     .min(0, "first-player-flat-penalty-min-invalid")
     .max(10000000, "first-player-flat-penalty-max-invalid")
     .optional(),
   firstPlayerPenaltyType: z
-    .nativeEnum(CoreConstants.FIRST_PLAYER_PENALTY_TYPE)
+    .enum(CoreConstants.FIRST_PLAYER_PENALTY_TYPE)
     .optional(),
   showCurrentScore: z.boolean().optional(),
-  playerRearrangement: z
-    .nativeEnum(CoreConstants.PLAYER_REARRANGEMENT)
-    .optional(),
+  playerRearrangement: z.enum(CoreConstants.PLAYER_REARRANGEMENT).optional(),
 })
 
 export type UpdateGameSettings = z.input<typeof updateGameSettingsSchema>

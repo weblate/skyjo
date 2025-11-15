@@ -1,6 +1,6 @@
 import { CError } from "@skymo/error"
 import { Logger } from "@skymo/logger"
-import { ZodError } from "zod"
+import z, { ZodError } from "zod"
 
 export function socketErrorWrapper(
   // biome-ignore lint/suspicious/noExplicitAny: any is required for a callback with a dynamic number of arguments
@@ -16,10 +16,18 @@ export function socketErrorWrapper(
           Logger.cError(error)
         }
       } else if (error instanceof ZodError) {
-        const errors = error.errors
+        const { formErrors, fieldErrors } = z.flattenError(error)
 
-        for (const error of errors) {
+        for (const error of formErrors) {
           Logger.warn("Unexpected error (ZodError instance)", { error })
+        }
+
+        const fieldErrorArrays = Object.values(fieldErrors) as string[][]
+
+        for (const fieldErrorArray of fieldErrorArrays) {
+          for (const error of fieldErrorArray) {
+            Logger.warn("Unexpected error (ZodError instance)", { error })
+          }
         }
       } else if (error instanceof Error) {
         Logger.error("Unexpected error (Error instance)", { error })

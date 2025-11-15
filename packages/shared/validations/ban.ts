@@ -1,6 +1,6 @@
 import { z } from "zod"
 
 export const banPlayerSchema = z.object({
-  targetId: z.string().uuid(),
+  targetId: z.uuid(),
 })
 export type BanPlayer = z.infer<typeof banPlayerSchema>

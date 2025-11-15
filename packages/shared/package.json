@@ -25,7 +25,7 @@
     "@skymo/core": "workspace:*",
     "@skymo/error": "workspace:*",
     "@skymo/state-operations": "workspace:*",
-    "zod": "^3.25.74"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@skymo/ts-config": "workspace:*",

@@ -37,7 +37,7 @@
     "sha2": "link:@oslojs/crypto/sha2",
     "socket.io": "^4.8.1",
     "socket.io-msgpack-parser": "^3.0.2",
-    "zod": "^3.25.74"
+    "zod": "^4.1.12"
   },
   "devDependencies": {
     "@skymo/worker-types": "workspace:*",
