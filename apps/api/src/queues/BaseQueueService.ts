@@ -114,8 +114,8 @@ export abstract class BaseQueueService<T> {
     })
 
     this.queue.on("removed", (job) => {
-      Logger.debug(`Job ${job.id} removed from queue ${this.queueName}`, {
-        jobId: job.id,
+      Logger.debug(`Job ${job} removed from queue ${this.queueName}`, {
+        jobId: job,
         queueName: this.queueName,
       })
     })

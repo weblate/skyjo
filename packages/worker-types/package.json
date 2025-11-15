@@ -16,7 +16,7 @@
     "@skymo/database": "workspace:*",
     "@skymo/ts-config": "workspace:*",
     "@skymo/transactional": "workspace:*",
-    "typescript": "^5.8.3",
-    "@types/react": "19.1.8"
+    "typescript": "^5.9.3",
+    "@types/react": "19.2.5"
   }
 }

@@ -3,7 +3,7 @@
 
 @custom-variant dark (&:where(.dark, .dark *));
 
-@plugin 'tailwind-scrollbar';
+@plugin "tailwind-scrollbar";
 
 @utility container {
   margin-inline: auto;

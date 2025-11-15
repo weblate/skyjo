@@ -16,14 +16,14 @@
   "dependencies": {
     "@skymo/core": "workspace:*",
     "@skymo/shared": "workspace:*",
-    "drizzle-orm": "^0.44.2",
+    "drizzle-orm": "^0.44.7",
     "pg": "^8.16.3"
   },
   "devDependencies": {
     "@skymo/ts-config": "workspace:*",
-    "@types/node": "^24.0.10",
-    "@types/pg": "^8.15.4",
-    "drizzle-kit": "^0.31.4",
-    "typescript": "^5.8.3"
+    "@types/node": "^24.10.1",
+    "@types/pg": "^8.15.6",
+    "drizzle-kit": "^0.31.7",
+    "typescript": "^5.9.3"
   }
 }

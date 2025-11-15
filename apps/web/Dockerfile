@@ -39,7 +39,7 @@ ENV NEXT_PUBLIC_RELEASE_NOTES_URL=${NEXT_PUBLIC_RELEASE_NOTES_URL}
 ENV NEXT_PUBLIC_WEBLATE_URL=${NEXT_PUBLIC_WEBLATE_URL}
 
 RUN apk add --no-cache libc6-compat && \
-    npm install -g pnpm@10.12.4 --ignore-scripts
+    npm install -g pnpm@10.22.0 --ignore-scripts
 WORKDIR /app
 
 # Copy lockfile and package.json files
