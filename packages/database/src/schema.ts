@@ -54,6 +54,7 @@ export const userTable = pgTable(
     onboardingCompleted: boolean("onboarding_completed")
       .notNull()
       .default(false),
+    analyticsConsent: boolean("analytics_consent").notNull().default(true),
 
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()

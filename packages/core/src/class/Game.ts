@@ -33,9 +33,16 @@ interface GameInterface {
   bannedUserIds: number[]
   bannedGuestIds: string[]
 
+  gameStartedAt: Date | null
+  roundStartedAt: Date | null
+
   stateVersion: number
   createdAt: Date
   updatedAt: Date
+
+  getGameDuration(): number
+  getRoundDuration(): number
+  getRoundWinner(roundIndex?: number): Player | null
 }
 
 export interface GameConstructorParams {
@@ -65,6 +72,9 @@ export class Game implements GameInterface {
 
   bannedUserIds: number[] = []
   bannedGuestIds: string[] = []
+
+  gameStartedAt: Date | null = null
+  roundStartedAt: Date | null = null
 
   processingAfk: boolean = false
 
@@ -103,6 +113,9 @@ export class Game implements GameInterface {
 
     this.bannedUserIds = game.bannedUserIds || []
     this.bannedGuestIds = game.bannedGuestIds || []
+
+    this.gameStartedAt = game.gameStartedAt || null
+    this.roundStartedAt = game.roundStartedAt || null
 
     this.stateVersion = game.stateVersion
     this.processingAfk = game.processingAfk
@@ -147,6 +160,55 @@ export class Game implements GameInterface {
   hasUserAlreadyJoined(userId?: number) {
     if (!userId) return false
     return this.getPlayerByUserId(userId) !== undefined
+  }
+
+  getRoundWinner(roundIndex?: number): Player | null {
+    const scoreIndex = roundIndex ?? this.roundNumber - 1
+    const connectedPlayers = this.getConnectedPlayers()
+
+    if (connectedPlayers.length === 0) return null
+
+    const winner = connectedPlayers.reduce(
+      (lowest, player) => {
+        const playerScore = player.scores[scoreIndex]
+        const lowestScore = lowest?.scores[scoreIndex]
+
+        // Handle "-" (disconnected player) scores
+        if (playerScore === "-") return lowest
+        if (!lowest || lowestScore === "-") return player
+
+        // Extract numeric values from score objects or direct numbers
+        const currentScore =
+          typeof playerScore === "object" ? playerScore.score : playerScore
+        const lowestScoreValue =
+          typeof lowestScore === "object"
+            ? lowestScore.score
+            : (lowestScore ?? Number.POSITIVE_INFINITY)
+
+        return currentScore < lowestScoreValue ? player : lowest
+      },
+      null as Player | null,
+    )
+
+    return winner
+  }
+
+  /**
+   * Get game duration in milliseconds since game started
+   * Returns 0 if game hasn't started yet
+   */
+  getGameDuration(): number {
+    if (!this.gameStartedAt) return 0
+    return Date.now() - this.gameStartedAt.getTime()
+  }
+
+  /**
+   * Get current round duration in milliseconds
+   * Returns 0 if no round is active
+   */
+  getRoundDuration(): number {
+    if (!this.roundStartedAt) return 0
+    return Date.now() - this.roundStartedAt.getTime()
   }
 
   addPlayer(player: Player) {
@@ -567,6 +629,8 @@ export class Game implements GameInterface {
       firstToFinishPlayerId: this.firstToFinishPlayerId,
       bannedUserIds: this.bannedUserIds,
       bannedGuestIds: this.bannedGuestIds,
+      gameStartedAt: this.gameStartedAt,
+      roundStartedAt: this.roundStartedAt,
       stateVersion: this.stateVersion,
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
@@ -668,6 +732,9 @@ export class Game implements GameInterface {
     this.turnStatus = Constants.TURN_STATUS.CHOOSE_A_PILE
     this.lastTurnStatus = Constants.LAST_TURN_STATUS.TURN
     this.status = Constants.GAME_STATUS.PLAYING
+
+    this.roundStartedAt = new Date()
+
     this.initializeCardPiles()
     this.resetGamePlayers()
 
@@ -706,6 +773,8 @@ export class Game implements GameInterface {
   private async resetGame() {
     this.roundNumber = 1
     this.resetPlayers()
+
+    this.gameStartedAt = new Date()
 
     if (
       this.settings.playerRearrangement ===

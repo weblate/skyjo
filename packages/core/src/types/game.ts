@@ -42,6 +42,8 @@ export interface GameRedisDb {
   firstToFinishPlayerId: string | null
   bannedUserIds?: number[]
   bannedGuestIds?: string[]
+  gameStartedAt: Date | null
+  roundStartedAt: Date | null
   stateVersion: number
   createdAt: Date
   updatedAt: Date

@@ -9,6 +9,10 @@ import type {
   GameSocket,
 } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
+import {
+  trackAnalyticsGameAbandoned,
+  trackAnalyticsPlayerLeft,
+} from "@/services/analytics/game.analytics.js"
 
 export class PlayerService extends BaseService {
   private readonly countdownQueue = GameStartCountdownQueueService.getInstance()
@@ -44,6 +48,13 @@ export class PlayerService extends BaseService {
 
       const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
       await this.sendServerMessage(game.code, player.name, messageType)
+
+      trackAnalyticsPlayerLeft(game, player, "disconnect")
+
+      const remainingPlayers = game.getConnectedPlayers().length
+      if (remainingPlayers === 0 && game.roundNumber > 0) {
+        trackAnalyticsGameAbandoned(game, 0, "all_players_left")
+      }
     }
 
     await this.updateAndSendGame(game, stateManager)
@@ -83,10 +94,23 @@ export class PlayerService extends BaseService {
       const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
       await this.sendServerMessage(game.code, player.name, messageType)
 
+      trackAnalyticsPlayerLeft(game, player, "voluntary")
+
+      const remainingPlayers = game.getConnectedPlayers().length
+      if (remainingPlayers === 0 && game.roundNumber > 0) {
+        trackAnalyticsGameAbandoned(game, 0, "all_players_left")
+      } else if (
+        game.isHost(player.id) &&
+        remainingPlayers > 0 &&
+        game.roundNumber > 0
+      ) {
+        trackAnalyticsGameAbandoned(game, remainingPlayers, "host_left")
+      }
+
       await this.updateAndSendGame(game, stateManager)
 
       // Clean up empty games that are finished or stopped
-      const hasNoConnectedPlayers = game.getConnectedPlayers().length === 0
+      const hasNoConnectedPlayers = remainingPlayers === 0
       if (hasNoConnectedPlayers && !game.isPlaying()) {
         await this.redis.removeGame(game.code)
       }

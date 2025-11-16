@@ -8,23 +8,26 @@ import { ContextMenu, ContextMenuTrigger } from "@/components/ui/context-menu"
 import { useGame } from "@/contexts/GameContext"
 import { cn } from "@/lib/utils"
 
-const chatMessageClasses = cva("text-sm text-wrap break-words hyphens-auto", {
-  variants: {
-    type: {
-      message: "text-black dark:text-dark-font",
-      "player-joined": " text-green-600 ",
-      "player-reconnect": " text-green-600 ",
-      "player-left": " text-red-600 ",
-      "player-forfeited": " text-orange-500 ",
-      "host-transferred": " text-blue-500 ",
-      wizz: " text-purple-600",
-      "system-message": " text-blue-500 ",
-      "success-system-message": " text-green-600 ",
-      "warn-system-message": " text-orange-500 ",
-      "error-system-message": " text-red-600 ",
+const chatMessageClasses = cva(
+  "text-sm text-wrap wrap-break-words hyphens-auto",
+  {
+    variants: {
+      type: {
+        message: "text-black dark:text-dark-font",
+        "player-joined": " text-green-600 ",
+        "player-reconnect": " text-green-600 ",
+        "player-left": " text-red-600 ",
+        "player-forfeited": " text-orange-500 ",
+        "host-transferred": " text-blue-500 ",
+        wizz: " text-purple-600",
+        "system-message": " text-blue-500 ",
+        "success-system-message": " text-green-600 ",
+        "warn-system-message": " text-orange-500 ",
+        "error-system-message": " text-red-600 ",
+      },
     },
   },
-})
+)
 type ChatMessageProps = Readonly<ChatMessage> & {
   name?: string
   className?: ClassValue

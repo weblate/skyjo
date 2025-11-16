@@ -144,7 +144,7 @@ const LoginPage = ({ locale }: LoginPageProps) => {
           </form>
         </Form>
 
-        <div className="mt-6 text-center text-sm break-words">
+        <div className="mt-6 text-center text-sm wrap-break-words">
           <span className="text-gray-600">{t("signup.description")} </span>
           <Link href="/signup" className="text-blue-600 hover:text-blue-800">
             {t("signup.link")}

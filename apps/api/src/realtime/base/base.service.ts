@@ -14,6 +14,7 @@ import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
 import { KickVoteRepository } from "@/redis/kickVote.repository.js"
 import { MessageRepository } from "@/redis/message.repository.js"
+import { trackAnalyticsGameJoined } from "@/services/analytics/game.analytics.js"
 import type {
   AuthenticatedGameSocket,
   GameSocket,
@@ -97,6 +98,8 @@ export abstract class BaseService {
     await this.sendServerMessage(game.code, player.name, messageType)
 
     await this.redis.updateGame(game)
+
+    trackAnalyticsGameJoined(game, player, reconnection)
   }
 
   async sendServerMessage(

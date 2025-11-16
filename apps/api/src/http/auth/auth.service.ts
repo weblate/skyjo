@@ -25,6 +25,7 @@ import {
   type GoogleUser,
   validateGoogleAuthorizationCode,
 } from "@/http/auth/lib/google.js"
+import type { AuthContextVariables } from "@/http/middlewares/auth.middleware.js"
 import {
   createSession,
   createSessionId,
@@ -35,6 +36,7 @@ import {
   sendVerifyPin,
   verifyPin,
 } from "@/http/userVerification/userVerification.service.js"
+import { posthog } from "@/services/posthog.service.js"
 import { isEmailValid } from "@/utils/disposableEmail.js"
 import { normalizeEmail } from "@/utils/emailNormalization.js"
 import { mailerQueue } from "@/utils/mailer.js"
@@ -54,6 +56,15 @@ export async function sendVerificationEmail(data: SendVerificationEmail) {
   }
 
   await sendVerifyPin(normalizedEmail, locale)
+
+  const emailDomain = normalizedEmail.split("@")[1]
+  posthog.capture({
+    distinctId: `anonymous_${emailDomain}`,
+    event: "Auth: OTP Sent",
+    properties: {
+      email_domain: emailDomain,
+    },
+  })
 }
 
 export async function tryVerificationEmail(
@@ -76,9 +87,26 @@ export async function tryVerificationEmail(
   if (existingUser.length > 0) {
     // User exists - log them in
     const user = existingUser[0]
+
+    posthog.captureWithConsent({
+      distinctId: `user_${user.id}`,
+      event: "Auth: Email Verified",
+      analyticsConsent: user.analyticsConsent,
+    })
+
     const token = generateSessionToken()
     const session = await createSession(token, user.id)
     setSessionTokenCookie(c, token, session.expiresAt)
+
+    posthog.captureWithConsent({
+      distinctId: `user_${user.id}`,
+      event: "Auth: Login Succeeded",
+      properties: {
+        provider: "email",
+      },
+      analyticsConsent: user.analyticsConsent,
+    })
+
     return { user, isNewUser: false }
   }
 
@@ -94,6 +122,34 @@ export async function tryVerificationEmail(
   const token = generateSessionToken()
   const session = await createSession(token, user.id)
   setSessionTokenCookie(c, token, session.expiresAt)
+
+  // New users default to analyticsConsent = true
+  posthog.captureWithConsent({
+    distinctId: `user_${user.id}`,
+    event: "Auth: Email Verified",
+    analyticsConsent: user.analyticsConsent,
+  })
+
+  posthog.identify({
+    distinctId: `user_${user.id}`,
+    properties: {
+      avatar: user.avatar,
+      role: user.role,
+      is_authenticated: true,
+      auth_provider: "email",
+      onboarding_completed: false,
+      created_at: user.createdAt,
+    },
+  })
+
+  posthog.captureWithConsent({
+    distinctId: `user_${user.id}`,
+    event: "Auth: Signup Completed",
+    properties: {
+      provider: "email",
+    },
+    analyticsConsent: user.analyticsConsent,
+  })
 
   return { user, isNewUser: true }
 }
@@ -118,6 +174,15 @@ export async function login(c: Context, data: LoginUser) {
     .limit(1)
 
   if (user.length === 0 || !user[0].password) {
+    posthog.capture({
+      distinctId: `anonymous_${normalizedLogin}`,
+      event: "Auth: Login Failed",
+      properties: {
+        reason: "account_not_found",
+        provider: "email",
+      },
+    })
+
     throw new HTTPException(401, {
       message: "login-invalid-credentials",
     })
@@ -125,6 +190,15 @@ export async function login(c: Context, data: LoginUser) {
 
   const isValidPassword = await verifyPassword(user[0].password, password)
   if (!isValidPassword) {
+    posthog.capture({
+      distinctId: `anonymous_${normalizedLogin}`,
+      event: "Auth: Login Failed",
+      properties: {
+        reason: "invalid_credentials",
+        provider: "email",
+      },
+    })
+
     throw new HTTPException(401, {
       message: "login-invalid-credentials",
     })
@@ -133,6 +207,15 @@ export async function login(c: Context, data: LoginUser) {
   const token = generateSessionToken()
   const session = await createSession(token, user[0].id)
   setSessionTokenCookie(c, token, session.expiresAt)
+
+  posthog.captureWithConsent({
+    distinctId: `user_${user[0].id}`,
+    event: "Auth: Login Succeeded",
+    properties: {
+      provider: "email",
+    },
+    analyticsConsent: user[0].analyticsConsent,
+  })
 }
 
 export async function loginGoogle(
@@ -167,6 +250,15 @@ export async function loginGoogle(
       .update(userTable)
       .set({ googleId })
       .where(eq(userTable.id, user.id))
+
+    posthog.captureWithConsent({
+      distinctId: `user_${user.id}`,
+      event: "Auth: Login Succeeded",
+      properties: {
+        provider: "google",
+      },
+      analyticsConsent: user.analyticsConsent,
+    })
   } else if (!user) {
     const username = await createUsername(name?.split(" ")[0] ?? "unnamed")
     const newUser = await createUser({
@@ -178,6 +270,35 @@ export async function loginGoogle(
     })
 
     userId = newUser.id
+
+    posthog.identify({
+      distinctId: `user_${userId}`,
+      properties: {
+        role: newUser.role,
+        is_authenticated: true,
+        auth_provider: "google",
+        onboarding_completed: false,
+        created_at: newUser.createdAt,
+      },
+    })
+
+    posthog.captureWithConsent({
+      distinctId: `user_${userId}`,
+      event: "Auth: Signup Completed",
+      properties: {
+        provider: "google",
+      },
+      analyticsConsent: newUser.analyticsConsent,
+    })
+  } else {
+    posthog.captureWithConsent({
+      distinctId: `user_${user.id}`,
+      event: "Auth: Login Succeeded",
+      properties: {
+        provider: "google",
+      },
+      analyticsConsent: user.analyticsConsent,
+    })
   }
 
   const token = generateSessionToken()
@@ -185,7 +306,7 @@ export async function loginGoogle(
   setSessionTokenCookie(c, token, session.expiresAt)
 }
 
-export async function logout(c: Context) {
+export async function logout(c: Context<AuthContextVariables>) {
   const sessionToken = getCookie(c, SESSION_COOKIE_NAME)
   if (!sessionToken) return
 
@@ -197,6 +318,12 @@ export async function logout(c: Context) {
 
   try {
     await db.delete(sessionTable).where(eq(sessionTable.id, sessionId))
+
+    const user = c.get("user")
+    posthog.capture({
+      distinctId: `user_${user.id}`,
+      event: "Auth: Logout",
+    })
   } catch (error) {
     Logger.error("Logout error - failed to delete session from DB:", {
       error,
@@ -292,6 +419,24 @@ export async function completeOnboarding(userId: number, data: Onboarding) {
       onboardingCompleted: userTable.onboardingCompleted,
       role: userTable.role,
     })
+
+  posthog.capture({
+    distinctId: `user_${userId}`,
+    event: "Onboarding: Completed",
+    properties: {
+      has_password: !!data.password,
+      avatar: data.avatar,
+    },
+  })
+
+  posthog.identify({
+    distinctId: `user_${userId}`,
+    properties: {
+      avatar: data.avatar,
+      has_password: !!data.password,
+      onboarding_completed: true,
+    },
+  })
 
   return updatedUser
 }

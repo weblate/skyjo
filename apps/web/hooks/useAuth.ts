@@ -9,9 +9,9 @@ import posthog from "posthog-js"
 import { useEffect } from "react"
 import { toast } from "sonner"
 import { usePathname, useRouter } from "@/i18n/routing"
-import { identifyUser, resetIdentification } from "@/lib/posthog"
+import { aliasUser, identifyUser, resetIdentification } from "@/lib/posthog"
 
-interface AuthenticatedUser {
+export interface AuthenticatedUser {
   id: number
   email?: string
   name?: string
@@ -19,6 +19,7 @@ interface AuthenticatedUser {
   avatar?: Avatar
   hasOAuth?: boolean
   onboardingCompleted?: boolean
+  analyticsConsent?: boolean
   role?: string
 }
 
@@ -106,10 +107,11 @@ export const useAuth = () => {
     gcTime: 30 * 60 * 1000, // 30 minutes
   })
 
-  // Identify authenticated user in PostHog when user state changes
   useEffect(() => {
-    if (user?.id) {
-      identifyUser(user.id)
+    if (user) {
+      aliasUser(user)
+
+      identifyUser(user)
     }
   }, [user?.id])
 

@@ -115,3 +115,10 @@ export const updateUserSettingsSchema = z.object({
   settings: userSettingsSchema.partial(),
 })
 export type UpdateUserSettings = z.infer<typeof updateUserSettingsSchema>
+
+export const updateAnalyticsConsentSchema = z.object({
+  analyticsConsent: z.boolean(),
+})
+export type UpdateAnalyticsConsent = z.infer<
+  typeof updateAnalyticsConsentSchema
+>

@@ -14,6 +14,7 @@ import { DEFAULT_GAME_SETTINGS, type Locales } from "@skymo/shared/constants"
 import { normalizeUsername } from "@skymo/shared/utils"
 import type {
   GameHistoryQuery,
+  UpdateAnalyticsConsent,
   UpdateAvatar,
   UpdateEmail,
   UpdateName,
@@ -29,6 +30,7 @@ import { db } from "@/db/index.js"
 import { requestPasswordReset } from "@/http/auth/auth.service.js"
 import { hashPassword, verifyPassword } from "@/http/auth/lib/password.js"
 import { invalidateUserSessions } from "@/http/session/session.service.js"
+import { posthog } from "@/services/posthog.service.js"
 import { accountDeletionQueue } from "@/utils/accountDeletion.js"
 import { normalizeEmail } from "@/utils/emailNormalization.js"
 import { mailerQueue } from "@/utils/mailer.js"
@@ -100,6 +102,7 @@ export async function createUser({
       settings: userTable.settings,
       avatar: userTable.avatar,
       onboardingCompleted: userTable.onboardingCompleted,
+      analyticsConsent: userTable.analyticsConsent,
       role: userTable.role,
       createdAt: userTable.createdAt,
       updatedAt: userTable.updatedAt,
@@ -591,6 +594,37 @@ export async function updateAvatar(userId: number, { avatar }: UpdateAvatar) {
   return updatedUser
 }
 
+export async function updateAnalyticsConsent(
+  userId: number,
+  { analyticsConsent }: UpdateAnalyticsConsent,
+) {
+  // Get previous consent value
+  const [user] = await db
+    .select({
+      analyticsConsent: userTable.analyticsConsent,
+    })
+    .from(userTable)
+    .where(eq(userTable.id, userId))
+    .limit(1)
+
+  await db
+    .update(userTable)
+    .set({
+      analyticsConsent,
+      updatedAt: new Date(),
+    })
+    .where(eq(userTable.id, userId))
+
+  // Only track if user is opting IN (consenting)
+  // If they're opting out, we shouldn't track
+  if (analyticsConsent === true && user?.analyticsConsent !== true) {
+    posthog.capture({
+      distinctId: `user_${userId}`,
+      event: "Settings: Analytics Opted In",
+    })
+  }
+}
+
 export async function scheduleAccountDeletion(userId: number) {
   const [userData] = await db
     .select({
@@ -749,6 +783,7 @@ export async function updateUserSettings(
   const [user] = await db
     .select({
       settings: userTable.settings,
+      analyticsConsent: userTable.analyticsConsent,
     })
     .from(userTable)
     .where(eq(userTable.id, userId))
@@ -772,6 +807,24 @@ export async function updateUserSettings(
     .returning({
       settings: userTable.settings,
     })
+
+  // Track which settings were changed
+  const changedSettings = Object.keys(data.settings).filter(
+    (key) =>
+      currentSettings[key as keyof UserSettings] !==
+      data.settings[key as keyof UserSettings],
+  )
+
+  if (changedSettings.length > 0) {
+    posthog.captureWithConsent({
+      distinctId: `user_${userId}`,
+      event: "Settings: Updated",
+      properties: {
+        changed_settings: changedSettings,
+      },
+      analyticsConsent: user.analyticsConsent,
+    })
+  }
 
   return updatedUser?.settings as UserSettings
 }

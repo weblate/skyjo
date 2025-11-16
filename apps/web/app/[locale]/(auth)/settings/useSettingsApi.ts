@@ -157,6 +157,34 @@ export function useSettingsApi() {
     }
   }
 
+  const updateAnalyticsConsent = async (analyticsConsent: boolean) => {
+    setLoading("analytics")
+    try {
+      const response = await fetch(
+        `${process.env.NEXT_PUBLIC_API_URL}/users/me/analytics-consent`,
+        {
+          method: "PATCH",
+          credentials: "include",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ analyticsConsent }),
+        },
+      )
+
+      if (!response.ok) {
+        throw new Error("Failed to update analytics consent")
+      }
+
+      await refetch()
+      toast.success(t("messages.save-success"))
+    } catch {
+      toast.error(t("messages.save-error"))
+    } finally {
+      setLoading(null)
+    }
+  }
+
   return {
     loading,
     updateProfile,
@@ -164,5 +192,6 @@ export function useSettingsApi() {
     updateEmail,
     updatePassword,
     deleteAccount,
+    updateAnalyticsConsent,
   }
 }

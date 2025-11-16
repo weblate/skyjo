@@ -476,6 +476,9 @@
         "terms-link": "Terms of Service",
         "and": "and",
         "privacy-link": "Privacy Policy"
+      },
+      "analytics-disclosure": {
+        "text": "We collect anonymous usage data to improve Skymo. You can opt out anytime in your account settings."
       }
     },
     "Login": {
@@ -725,6 +728,11 @@
           },
           "last-sync": "Last sync: {date}",
           "sync-now": "Sync now"
+        },
+        "analytics": {
+          "label": "Analytics",
+          "description": "Help us improve Skymo by sharing anonymous usage data. We use this data to understand how players use the app and make it better. No personal information is collected or shared with third parties.",
+          "toggle-label": "Share anonymous usage data"
         }
       },
       "delete-account": {
@@ -1146,6 +1154,11 @@
           "offline": "Offline",
           "error": "Sync failed",
           "lastSync": "Last sync: {date}"
+        },
+        "analytics": {
+          "label": "Analytics",
+          "description": "Help us improve Skymo by sharing anonymous usage data. We use this data to understand how players use the app and make it better. No personal information is collected.",
+          "toggle-label": "Share anonymous usage data"
         }
       }
     },

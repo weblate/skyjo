@@ -8,6 +8,7 @@ import type {
   GameSocket,
 } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
+import { trackAnalyticsGameCreated } from "@/services/analytics/game.analytics.js"
 
 export class LobbyService extends BaseService {
   private readonly countdownQueue = GameStartCountdownQueueService.getInstance()
@@ -282,6 +283,8 @@ export class LobbyService extends BaseService {
     })
 
     await this.redis.createGame(game)
+
+    trackAnalyticsGameCreated(game, player)
 
     return { player, game }
   }
