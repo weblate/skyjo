@@ -1,7 +1,7 @@
 import { CError } from "@skymo/error"
 import { Logger } from "@skymo/logger"
 import { beforeEach, describe, expect, it, vi } from "vitest"
-import z, { ZodError, ZodIssueCode } from "zod"
+import z from "zod"
 import { socketErrorWrapper } from "../socketErrorWrapper.js"
 
 // Mock the Logger

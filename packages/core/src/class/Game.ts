@@ -758,7 +758,7 @@ export class Game implements GameInterface {
       }
 
       return aSum > bSum ? a : b
-    })
+    }, undefined)
 
     return playerToStart ? this.players[playerToStart.index] : this.players[0]
   }

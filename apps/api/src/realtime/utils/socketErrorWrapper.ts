@@ -22,7 +22,7 @@ export function socketErrorWrapper(
           Logger.warn("Unexpected error (ZodError instance)", { error })
         }
 
-        const fieldErrorArrays = Object.values(fieldErrors) as string[][]
+        const fieldErrorArrays = Object.values<string[]>(fieldErrors)
 
         for (const fieldErrorArray of fieldErrorArrays) {
           for (const error of fieldErrorArray) {
