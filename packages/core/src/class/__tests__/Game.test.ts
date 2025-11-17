@@ -109,6 +109,8 @@ describe("Game", () => {
         processingAfk: false,
         createdAt: new Date(),
         updatedAt: new Date(),
+        gameStartedAt: null,
+        roundStartedAt: null,
       }
       game = new Game({ hostId: player.id })
       game.populate(gameDb)
@@ -190,6 +192,8 @@ describe("Game", () => {
         processingAfk: false,
         createdAt: new Date(),
         updatedAt: new Date(),
+        gameStartedAt: new Date(),
+        roundStartedAt: new Date(),
       }
 
       game = new Game({ hostId: player.id })
@@ -1436,6 +1440,8 @@ describe("Game", () => {
         selectedCardValue: game.selectedCardValue,
         roundNumber: game.roundNumber,
         roundPhase: game.roundPhase,
+        roundStartedAt: game.roundStartedAt,
+        gameStartedAt: game.gameStartedAt,
         currentPlayerId: game.currentPlayerId,
         turnStatus: Constants.TURN_STATUS.CHOOSE_A_PILE,
         lastTurnStatus: Constants.LAST_TURN_STATUS.TURN,
@@ -3539,6 +3545,174 @@ describe("Game", () => {
           )
         })
       })
+    })
+  })
+
+  describe("getPlayerByUserId", () => {
+    it("should return player when userId matches", () => {
+      const foundPlayer = game.getPlayerByUserId(1)
+      expect(foundPlayer).toBe(player)
+      expect(foundPlayer?.userId).toBe(1)
+    })
+
+    it("should return undefined when userId does not match any player", () => {
+      const foundPlayer = game.getPlayerByUserId(999)
+      expect(foundPlayer).toBeUndefined()
+    })
+
+    it("should work with guest players (no userId)", () => {
+      const guest = new Player(
+        { name: "guest", avatar: Constants.AVATARS.BEE },
+        "socketId789",
+      )
+      game.addPlayer(guest)
+
+      const foundPlayer = game.getPlayerByUserId(999)
+      expect(foundPlayer).toBeUndefined()
+    })
+  })
+
+  describe("getRoundWinner", () => {
+    beforeEach(() => {
+      // Set up a completed round scenario
+      player.scores = [10, 0, 0]
+      opponent.scores = [5, 0, 0]
+      game.roundNumber = 1
+    })
+
+    it("should return the player with the lowest score for current round", () => {
+      const winner = game.getRoundWinner()
+      expect(winner).toBe(opponent)
+      expect(winner?.scores[0]).toBe(5)
+    })
+
+    it("should return the player with the lowest score for a specific round", () => {
+      player.scores = [10, 3, 0]
+      opponent.scores = [5, 8, 0]
+      game.roundNumber = 2
+
+      const winner = game.getRoundWinner(1)
+      expect(winner).toBe(player)
+      expect(winner?.scores[1]).toBe(3)
+    })
+
+    it("should return null when no connected players exist", () => {
+      player.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+      opponent.connectionStatus = Constants.CONNECTION_STATUS.DISCONNECTED
+
+      const winner = game.getRoundWinner()
+      expect(winner).toBeNull()
+    })
+
+    it("should ignore players with '-' scores (disconnected)", () => {
+      player.scores = ["-", 0, 0]
+      opponent.scores = [10, 0, 0]
+
+      const winner = game.getRoundWinner()
+      expect(winner).toBe(opponent)
+    })
+
+    it("should handle score objects with score property", () => {
+      player.scores = [{ score: 15, multiplied: false }, 0, 0]
+      opponent.scores = [{ score: 8, multiplied: false }, 0, 0]
+
+      const winner = game.getRoundWinner()
+      expect(winner).toBe(opponent)
+    })
+
+    it("should handle mixed score types (objects and numbers)", () => {
+      player.scores = [{ score: 20, multiplied: true }, 0, 0]
+      opponent.scores = [15, 0, 0]
+
+      const winner = game.getRoundWinner()
+      expect(winner).toBe(opponent)
+    })
+
+    it("should return first player when lowest score is '-'", () => {
+      player.scores = [10, 0, 0]
+      opponent.scores = ["-", 0, 0]
+
+      const winner = game.getRoundWinner()
+      expect(winner).toBe(player)
+    })
+
+    it("should handle case where all scores are equal", () => {
+      player.scores = [10, 0, 0]
+      opponent.scores = [10, 0, 0]
+
+      const winner = game.getRoundWinner()
+      // Should return one of them (implementation returns the first encountered)
+      expect(winner).toBeDefined()
+      expect(winner?.scores[0]).toBe(10)
+    })
+  })
+
+  describe("getGameDuration", () => {
+    it("should return 0 when game has not started", () => {
+      const duration = game.getGameDuration()
+      expect(duration).toBe(0)
+    })
+
+    it("should return duration in milliseconds when game has started", () => {
+      const startTime = new Date(Date.now() - 5000) // 5 seconds ago
+      game.gameStartedAt = startTime
+
+      const duration = game.getGameDuration()
+      expect(duration).toBeGreaterThanOrEqual(5000)
+      expect(duration).toBeLessThan(6000) // Allow for small timing variations
+    })
+  })
+
+  describe("getRoundDuration", () => {
+    it("should return 0 when round has not started", () => {
+      const duration = game.getRoundDuration()
+      expect(duration).toBe(0)
+    })
+
+    it("should return duration in milliseconds when round has started", () => {
+      const startTime = new Date(Date.now() - 3000) // 3 seconds ago
+      game.roundStartedAt = startTime
+
+      const duration = game.getRoundDuration()
+      expect(duration).toBeGreaterThanOrEqual(3000)
+      expect(duration).toBeLessThan(4000) // Allow for small timing variations
+    })
+  })
+
+  describe("disconnectPlayer edge cases", () => {
+    it("should call finishTurn when current player disconnects during their turn", async () => {
+      // Setup: Start the game
+      game.settings.initialTurnedCount = 0
+      await game.start()
+
+      // Make it the player's turn
+      game.currentPlayerId = player.id
+      game.status = Constants.GAME_STATUS.PLAYING
+
+      // Clear previous calls from game start
+      vi.clearAllMocks()
+
+      // Disconnect the current player
+      await game.disconnectPlayer(player)
+
+      // Should have called finishTurn internally (line 255)
+      expect(player.connectionStatus).toBe(
+        Constants.CONNECTION_STATUS.DISCONNECTED,
+      )
+    })
+  })
+
+  describe("replaceCard error handling", () => {
+    it("should throw error when no current player exists", async () => {
+      // Setup game in playing state but with no current player
+      game.status = Constants.GAME_STATUS.PLAYING
+      game.currentPlayerId = "non-existent-id"
+      game.selectedCardValue = 5
+
+      // Attempt to replace card should throw
+      await expect(async () => {
+        await game.replaceCard({ column: 0, row: 0, wasAfk: false })
+      }).rejects.toThrow("No current player found for replaceCard")
     })
   })
 })

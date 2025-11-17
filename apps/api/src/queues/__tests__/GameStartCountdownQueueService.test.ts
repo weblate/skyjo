@@ -70,6 +70,10 @@ vi.mock("@skymo/logger", () => ({
   },
 }))
 
+vi.mock("@/services/analytics/game.analytics.js", () => ({
+  trackAnalyticsGameStarted: vi.fn().mockResolvedValue(undefined),
+}))
+
 // Mock environment
 vi.mock("@env", () => ({
   ENV: {
@@ -93,8 +97,30 @@ describe("GameStartCountdownQueueService", () => {
     // Mock game
     mockGame = {
       code: "test-game",
+      hostId: "host-123",
       start: vi.fn().mockResolvedValue(undefined),
       setOperationManager: vi.fn(),
+      getPlayerById: vi.fn().mockReturnValue({
+        id: "host-123",
+        name: "Test Player",
+        userId: 1,
+      }),
+      getConnectedPlayers: vi.fn().mockReturnValue([
+        {
+          id: "host-123",
+          name: "Test Player",
+          userId: 1,
+        },
+        {
+          id: "player-456",
+          name: "Guest Player",
+          userId: undefined,
+        },
+      ]),
+      settings: {
+        private: false,
+        maxPlayers: 8,
+      },
     } as unknown as Game
 
     // Mock job
