@@ -80,7 +80,6 @@ export class ReportService extends BaseService {
       gameContext,
     })
 
-    // Track analytics
     trackAnalyticsPlayerReported(player, target, report.reason)
   }
 

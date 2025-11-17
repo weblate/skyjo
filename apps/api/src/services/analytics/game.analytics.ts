@@ -1,3 +1,4 @@
+import { randomUUID } from "node:crypto"
 import {
   Constants as CoreConstants,
   type Game,
@@ -5,16 +6,79 @@ import {
   type Player,
   type PlayerRedisDb,
 } from "@skymo/core"
+import { userTable } from "@skymo/database/schema"
+import { eq } from "drizzle-orm"
+import { db } from "@/db/index.js"
 import { posthog } from "@/services/posthog.service.js"
 
 /**
  * Get distinct ID for a player (user, guest, or anonymous)
  */
-function getPlayerDistinctId(player: Player | null | undefined): string {
-  if (!player) return "anonymous"
-  if (player.userId) return `user_${player.userId}`
-  if (player.guestId) return `guest_${player.guestId}`
-  return "anonymous"
+async function getPlayerDistinctId(player: Player | null | undefined) {
+  const analyticsConsent = await getPlayerAnalyticsConsent(player)
+
+  let distinctId: string
+  if (analyticsConsent === false) {
+    // User opted out - use random anonymous ID (not linkable to user)
+    // This allows game statistics while respecting user privacy
+    const timestamp = Date.now()
+    const random = randomUUID()
+    distinctId = `anonymous_${timestamp}_${random}`
+  } else if (player?.userId) {
+    // Authenticated user with consent
+    distinctId = `user_${player.userId}`
+  } else if (player?.guestId) {
+    // Guest player
+    distinctId = `guest_${player.guestId}`
+  } else {
+    // Fallback for truly anonymous events
+    distinctId = "anonymous"
+  }
+
+  return distinctId
+}
+
+/**
+ * Get analytics consent for a player
+ * - Authenticated users: fetch from database
+ * - Guests/anonymous: return undefined (will use regular capture)
+ */
+async function getPlayerAnalyticsConsent(
+  player: Player | null | undefined,
+): Promise<boolean | undefined> {
+  if (!player?.userId) {
+    // Guests and anonymous players - no consent check needed
+    return undefined
+  }
+
+  // Fetch consent from database for authenticated users
+  const [user] = await db
+    .select({ analyticsConsent: userTable.analyticsConsent })
+    .from(userTable)
+    .where(eq(userTable.id, player.userId))
+    .limit(1)
+
+  return user?.analyticsConsent
+}
+
+/**
+ * Capture analytics event with consent check for authenticated users
+ * - Opted-in authenticated users: tracked with user_${userId}
+ * - Opted-out authenticated users: tracked with random anonymous ID (not linkable)
+ * - Guests: tracked with guest_${guestId}
+ */
+async function captureGameEvent({
+  player,
+  event,
+  properties = {},
+}: {
+  player: Player | null | undefined
+  event: string
+  properties?: Record<string, unknown>
+}) {
+  const distinctId = await getPlayerDistinctId(player)
+
+  posthog.capture({ distinctId, event, properties })
 }
 
 /**
@@ -51,14 +115,12 @@ function getGameProperties(game: Game) {
 /**
  * Track when a game is created
  */
-export function trackAnalyticsGameCreated(
+export async function trackAnalyticsGameCreated(
   game: Game,
   creatorPlayer: Player | null | undefined,
 ) {
-  const distinctId = getPlayerDistinctId(creatorPlayer)
-
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player: creatorPlayer,
     event: "Game: Created",
     properties: {
       game_code: game.code,
@@ -71,16 +133,15 @@ export function trackAnalyticsGameCreated(
 /**
  * Track when a player joins a game
  */
-export function trackAnalyticsGameJoined(
+export async function trackAnalyticsGameJoined(
   game: Game,
   player: Player,
   isReconnect = false,
 ) {
-  const distinctId = getPlayerDistinctId(player)
   const playerCounts = getPlayerCounts(game)
 
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player,
     event: isReconnect ? "Game: Rejoined" : "Game: Joined",
     properties: {
       game_code: game.code,
@@ -93,12 +154,11 @@ export function trackAnalyticsGameJoined(
 /**
  * Track when a game starts
  */
-export function trackAnalyticsGameStarted(game: Game) {
+export async function trackAnalyticsGameStarted(game: Game) {
   const host = game.getPlayerById(game.hostId)
-  const distinctId = getPlayerDistinctId(host)
 
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player: host,
     event: "Game: Started",
     properties: getGameProperties(game),
   })
@@ -107,12 +167,11 @@ export function trackAnalyticsGameStarted(game: Game) {
 /**
  * Track when a round starts
  */
-export function trackAnalyticsRoundStarted(game: Game) {
+export async function trackAnalyticsRoundStarted(game: Game) {
   const host = game.getPlayerById(game.hostId)
-  const distinctId = getPlayerDistinctId(host)
 
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player: host,
     event: "Game: Round Started",
     properties: {
       ...getGameProperties(game),
@@ -124,16 +183,15 @@ export function trackAnalyticsRoundStarted(game: Game) {
 /**
  * Track when a round ends
  */
-export function trackAnalyticsRoundEnded(
+export async function trackAnalyticsRoundEnded(
   game: Game,
   roundWinner: Player | null | undefined,
 ) {
   const host = game.getPlayerById(game.hostId)
-  const distinctId = getPlayerDistinctId(host)
   const roundDuration = game.getRoundDuration()
 
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player: host,
     event: "Game: Round Ended",
     properties: {
       ...getGameProperties(game),
@@ -151,12 +209,11 @@ export function trackAnalyticsRoundEnded(
 /**
  * Track when a game ends (for GameRedisDb)
  */
-export function trackAnalyticsGameEndedFromRedis(
+export async function trackAnalyticsGameEndedFromRedis(
   game: GameRedisDb,
   gameWinner: PlayerRedisDb | null | undefined,
 ) {
   const host = game.players.find((p) => p.id === game.hostId)
-  const distinctId = getPlayerDistinctId(host as Player | null | undefined)
 
   const gameDuration = game.gameStartedAt
     ? Date.now() - new Date(game.gameStartedAt).getTime()
@@ -168,8 +225,8 @@ export function trackAnalyticsGameEndedFromRedis(
   const authenticatedPlayers = connectedPlayers.filter((p) => p.userId).length
   const guestPlayers = connectedPlayers.length - authenticatedPlayers
 
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player: host as Player | null | undefined,
     event: "Game: Ended",
     properties: {
       game_code: game.code,
@@ -192,16 +249,15 @@ export function trackAnalyticsGameEndedFromRedis(
 /**
  * Track when a player leaves a game
  */
-export function trackAnalyticsPlayerLeft(
+export async function trackAnalyticsPlayerLeft(
   game: Game,
   player: Player,
   reason: "disconnect" | "kick" | "voluntary",
 ) {
-  const distinctId = getPlayerDistinctId(player)
   const playerCounts = getPlayerCounts(game)
 
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player,
     event: "Game: Player Left",
     properties: {
       game_code: game.code,
@@ -216,17 +272,16 @@ export function trackAnalyticsPlayerLeft(
 /**
  * Track game abandonment - game ended with players leaving mid-game
  */
-export function trackAnalyticsGameAbandoned(
+export async function trackAnalyticsGameAbandoned(
   game: Game,
   remainingPlayerCount: number,
   reason: "all_players_left" | "host_left" | "insufficient_players",
 ) {
   const host = game.getPlayerById(game.hostId)
-  const distinctId = getPlayerDistinctId(host)
   const gameDuration = game.getGameDuration()
 
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player: host,
     event: "Game: Abandoned",
     properties: {
       game_code: game.code,
@@ -241,15 +296,13 @@ export function trackAnalyticsGameAbandoned(
 /**
  * Track when a chat message is sent
  */
-export function trackAnalyticsChatMessage(
+export async function trackAnalyticsChatMessage(
   game: Game,
   player: Player,
   messageLength: number,
 ) {
-  const distinctId = getPlayerDistinctId(player)
-
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player,
     event: "Chat: Message Sent",
     properties: {
       game_code: game.code,
@@ -262,15 +315,13 @@ export function trackAnalyticsChatMessage(
 /**
  * Track when a player is reported
  */
-export function trackAnalyticsPlayerReported(
+export async function trackAnalyticsPlayerReported(
   reporter: Player,
   reportedPlayer: Player,
   reason: string,
 ) {
-  const distinctId = getPlayerDistinctId(reporter)
-
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player: reporter,
     event: "Player: Reported",
     properties: {
       reported_player_type: reportedPlayer.userId ? "authenticated" : "guest",
@@ -282,15 +333,13 @@ export function trackAnalyticsPlayerReported(
 /**
  * Track when a kick vote is initiated
  */
-export function trackAnalyticsKickVoteInitiated(
+export async function trackAnalyticsKickVoteInitiated(
   game: Game,
   initiator: Player,
   target: Player,
 ) {
-  const distinctId = getPlayerDistinctId(initiator)
-
-  posthog.capture({
-    distinctId,
+  await captureGameEvent({
+    player: initiator,
     event: "Game: Kick Vote Initiated",
     properties: {
       game_code: game.code,

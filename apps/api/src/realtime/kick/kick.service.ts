@@ -172,7 +172,6 @@ export class KickService extends BaseService {
         target.id,
       )
 
-      // Track analytics
       trackAnalyticsKickVoteInitiated(game, initiator, target)
 
       await this.checkKickVoteStatus(game)
