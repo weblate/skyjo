@@ -440,7 +440,7 @@ export class PlayerAfkQueueService extends BaseAfkQueueService<PlayerAfkJobData>
     playerId: string,
     timerType: "reveal" | "turn",
   ): string {
-    return `game:${gameCode}:player:${playerId}:${timerType}`
+    return `game-${gameCode}-player-${playerId}-${timerType}`
   }
 
   private async performAfkMove(game: Game) {

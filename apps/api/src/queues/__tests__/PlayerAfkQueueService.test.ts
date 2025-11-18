@@ -270,14 +270,14 @@ describe("PlayerAfkQueueService", () => {
       await playerAfkQueueService.startTimer(mockGame, "player-123", "turn")
 
       expect(queueAddSpy).toHaveBeenCalledWith(
-        "game:test-game:player:player-123:turn",
+        "game-test-game-player-player-123-turn",
         {
           gameCode: "test-game",
           playerId: "player-123",
         },
         expect.objectContaining({
           delay: expect.any(Number),
-          jobId: "game:test-game:player:player-123:turn",
+          jobId: "game-test-game-player-player-123-turn",
           removeOnComplete: true,
         }),
       )
@@ -294,7 +294,7 @@ describe("PlayerAfkQueueService", () => {
       await playerAfkQueueService.cancelTimer("test-game", "player-123", "turn")
 
       expect(getJobSpy).toHaveBeenCalledWith(
-        "game:test-game:player:player-123:turn",
+        "game-test-game-player-player-123-turn",
       )
       expect(mockJob.remove).toHaveBeenCalled()
     })
