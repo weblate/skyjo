@@ -6,7 +6,7 @@ import {
 } from "@skymo/shared/constants"
 import dayjs from "dayjs"
 import { useTranslations } from "next-intl"
-import { Dispatch, SetStateAction } from "react"
+import { Dispatch, SetStateAction, useEffect, useState } from "react"
 import {
   Dialog,
   DialogContent,
@@ -20,7 +20,9 @@ import { Slider } from "@/components/ui/slider"
 import { Switch } from "@/components/ui/switch"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { useSettings } from "@/contexts/SettingsContext"
+import { useAuth } from "@/hooks/useAuth"
 import { useSettingsSync } from "@/hooks/useSettingsSync"
+import { isOptedOut, optInToAnalytics, optOutOfAnalytics } from "@/lib/posthog"
 
 interface SettingsDialogProps {
   open: boolean
@@ -272,6 +274,61 @@ const AccountSettings = () => {
     disableSettingsSync,
     isOnline,
   } = useSettingsSync()
+  const { user, refetch } = useAuth()
+  const [analyticsConsent, setAnalyticsConsent] = useState<boolean>(true)
+  const [isUpdatingAnalytics, setIsUpdatingAnalytics] = useState(false)
+
+  // Initialize analytics consent state
+  useEffect(() => {
+    if (user) {
+      // For authenticated users, use the database value
+      setAnalyticsConsent(user.analyticsConsent ?? true)
+    } else {
+      // For guest users, use localStorage
+      setAnalyticsConsent(!isOptedOut())
+    }
+  }, [user])
+
+  const handleAnalyticsToggle = async (checked: boolean) => {
+    setIsUpdatingAnalytics(true)
+    try {
+      if (checked) {
+        optInToAnalytics()
+      } else {
+        optOutOfAnalytics()
+      }
+
+      // For authenticated users, also update database
+      if (user) {
+        const response = await fetch(
+          `${process.env.NEXT_PUBLIC_API_URL}/users/me/analytics-consent`,
+          {
+            method: "PATCH",
+            credentials: "include",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ analyticsConsent: checked }),
+          },
+        )
+
+        if (!response.ok) {
+          throw new Error("Failed to update analytics consent")
+        }
+
+        // Refetch user data to update cache so Settings page shows correct value
+        await refetch()
+      }
+
+      setAnalyticsConsent(checked)
+    } catch (error) {
+      console.error("Failed to update analytics consent:", error)
+      // Revert the change on error
+      setAnalyticsConsent(!checked)
+    } finally {
+      setIsUpdatingAnalytics(false)
+    }
+  }
 
   return (
     <div className="px-6 flex flex-col gap-6">
@@ -318,6 +375,24 @@ const AccountSettings = () => {
             })}
           </p>
         )}
+      </div>
+
+      <div className="flex flex-col gap-2">
+        <Label htmlFor="analytics-consent">{t("analytics.label")}</Label>
+        <p className="text-sm text-gray-700 dark:text-dark-font/80">
+          {t("analytics.description")}
+        </p>
+        <div className="flex items-center gap-2">
+          <Switch
+            id="analytics-consent"
+            checked={analyticsConsent}
+            onCheckedChange={handleAnalyticsToggle}
+            disabled={isUpdatingAnalytics}
+          />
+          <Label htmlFor="analytics-consent" className="cursor-pointer">
+            {t("analytics.toggle-label")}
+          </Label>
+        </div>
       </div>
     </div>
   )

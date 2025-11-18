@@ -94,6 +94,7 @@ const authRouter = new Hono<AuthContextVariables>()
             hasOAuth: !!(user.googleId ?? user.facebookId),
             email: user.email,
             onboardingCompleted: user.onboardingCompleted,
+            analyticsConsent: user.analyticsConsent,
             role: user.role,
           },
         },

@@ -5,6 +5,7 @@ import type { UserChatMessage } from "@skymo/shared/types"
 import { canChat } from "@/http/penalty/penalty.service.js"
 import { BaseService } from "@/realtime/base/base.service.js"
 import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
+import { trackAnalyticsChatMessage } from "@/services/analytics/game.analytics.js"
 
 export class ChatService extends BaseService {
   async onMessage(
@@ -46,6 +47,8 @@ export class ChatService extends BaseService {
     }
 
     await this.messageRepository.storeMessage(game.code, newMessage)
+
+    trackAnalyticsChatMessage(game, player, message.length)
 
     socket.to(game.code).volatile.emit("message", newMessage)
     socket.volatile.emit("message", newMessage)

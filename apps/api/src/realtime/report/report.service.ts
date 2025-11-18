@@ -7,6 +7,7 @@ import { db } from "@/db/index.js"
 import { DiscordQueueService } from "@/queues/DiscordQueueService.js"
 import { BaseService } from "@/realtime/base/base.service.js"
 import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
+import { trackAnalyticsPlayerReported } from "@/services/analytics/game.analytics.js"
 
 export class ReportService extends BaseService {
   private readonly discordQueue = DiscordQueueService.getInstance()
@@ -78,6 +79,8 @@ export class ReportService extends BaseService {
       isPrivateGame: game.settings.private,
       gameContext,
     })
+
+    trackAnalyticsPlayerReported(player, target, report.reason)
   }
 
   private async captureGameContext(game: Game) {

@@ -3,10 +3,16 @@ import type {
   GameOperationManagerInterface,
   GameRedisDb,
 } from "@skymo/core"
+import { Constants as CoreConstants } from "@skymo/core"
 import type { Socket } from "socket.io"
 import { GameStorageQueueService } from "@/queues/GameStorageQueueService.js"
 import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
+import {
+  trackAnalyticsGameEndedFromRedis,
+  trackAnalyticsRoundEnded,
+  trackAnalyticsRoundStarted,
+} from "@/services/analytics/game.analytics.js"
 import { PlayerAfkQueueService } from "../../queues/PlayerAfkQueueService.js"
 import { GameStateTracker } from "./GameStateTracker.js"
 
@@ -99,8 +105,20 @@ export class GameOperationManager implements GameOperationManagerInterface {
   ): Promise<void> {
     setTimeout(async () => {
       const stateManager = new GameStateTracker(game)
+      const previousRoundNumber = game.roundNumber
+
+      // Track round end before transitioning
+      if (game.roundPhase === CoreConstants.ROUND_PHASE.OVER) {
+        const roundWinner = game.getRoundWinner()
+        trackAnalyticsRoundEnded(game, roundWinner)
+      }
 
       await callback()
+
+      // Track new round start if round number increased
+      if (game.roundNumber > previousRoundNumber) {
+        trackAnalyticsRoundStarted(game)
+      }
 
       const operations = stateManager.getChanges()
       if (!operations) return
@@ -119,6 +137,21 @@ export class GameOperationManager implements GameOperationManagerInterface {
     const hasAuthenticatedPlayer = game.players.some(
       (player) => player.userId !== null && player.userId !== undefined,
     )
+
+    // Track game completion analytics
+    if (game.status === CoreConstants.GAME_STATUS.FINISHED) {
+      // Find the winner (player with lowest score)
+      const connectedPlayers = game.players.filter(
+        (p) => p.connectionStatus === CoreConstants.CONNECTION_STATUS.CONNECTED,
+      )
+      const winner = connectedPlayers.reduce((lowest, player) =>
+        player.score < (lowest?.score ?? Number.POSITIVE_INFINITY)
+          ? player
+          : lowest,
+      )
+
+      trackAnalyticsGameEndedFromRedis(game, winner || null)
+    }
 
     // In the future, we will add game XP to players queues here by getting all authenticated players and check if they won the game, etc.
 

@@ -22,6 +22,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
+import { Switch } from "@/components/ui/switch"
 import { UsernameInput } from "@/components/ui/username-input"
 import { useAuth } from "@/hooks/useAuth"
 import { useSettingsApi } from "../useSettingsApi"
@@ -30,7 +31,8 @@ import { DeleteAccount } from "./DeleteAccount"
 export function SettingsAccount() {
   const tAccount = useTranslations("pages.SettingsAccount")
   const { user } = useAuth()
-  const { loading, updateUsername, updateEmail } = useSettingsApi()
+  const { loading, updateUsername, updateEmail, updateAnalyticsConsent } =
+    useSettingsApi()
 
   const usernameForm = useForm<UpdateUsername>({
     resolver: zodResolver(updateUsernameSchema),
@@ -153,6 +155,28 @@ export function SettingsAccount() {
           </Button>
         </form>
       </Form>
+
+      <Separator />
+
+      <div className="space-y-4">
+        <div className="space-y-1">
+          <Label>{tAccount("fields.analytics.label")}</Label>
+          <p className="text-sm text-gray-600 dark:text-dark-font">
+            {tAccount("fields.analytics.description")}
+          </p>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Switch
+            id="analytics-consent"
+            checked={user.analyticsConsent ?? true}
+            onCheckedChange={(checked) => updateAnalyticsConsent(checked)}
+            disabled={loading === "analytics"}
+          />
+          <Label htmlFor="analytics-consent" className="cursor-pointer">
+            {tAccount("fields.analytics.toggle-label")}
+          </Label>
+        </div>
+      </div>
 
       <Separator />
       <DeleteAccount />

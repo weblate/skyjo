@@ -5,6 +5,7 @@ import { GameOperationManager } from "@/realtime/utils/GameOperationManager.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
 import { SocketManager } from "@/realtime/utils/SocketManager.js"
 import { GameRepository } from "@/redis/game.repository.js"
+import { trackAnalyticsGameStarted } from "@/services/analytics/game.analytics.js"
 import { BaseQueueService } from "./BaseQueueService.js"
 
 export interface GameStartCountdownJobData {
@@ -118,6 +119,8 @@ export class GameStartCountdownQueueService extends BaseQueueService<GameStartCo
           data: [operations],
         })
       }
+
+      trackAnalyticsGameStarted(game)
 
       Logger.info(`Game ${gameCode} started after countdown`, {
         gameCode,

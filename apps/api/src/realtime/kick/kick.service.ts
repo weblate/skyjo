@@ -5,6 +5,10 @@ import { BaseService } from "@/realtime/base/base.service.js"
 import { clearSocketData } from "@/realtime/middleware/socketDataValidation.js"
 import type { AuthenticatedGameSocket } from "@/realtime/types/gameSocket.js"
 import { GameStateTracker } from "@/realtime/utils/GameStateTracker.js"
+import {
+  trackAnalyticsKickVoteInitiated,
+  trackAnalyticsPlayerLeft,
+} from "@/services/analytics/game.analytics.js"
 
 export class KickService extends BaseService {
   async onInitiateKickVote(socket: AuthenticatedGameSocket, targetId: string) {
@@ -168,6 +172,8 @@ export class KickService extends BaseService {
         target.id,
       )
 
+      trackAnalyticsKickVoteInitiated(game, initiator, target)
+
       await this.checkKickVoteStatus(game)
     } catch (error) {
       if (
@@ -256,6 +262,8 @@ export class KickService extends BaseService {
     })
 
     await game.disconnectPlayer(playerToKick)
+
+    trackAnalyticsPlayerLeft(game, playerToKick, "kick")
 
     // Clean up kicked player's socket
     const targetSocket = this.socketManager.getSocket(playerToKick.socketId)

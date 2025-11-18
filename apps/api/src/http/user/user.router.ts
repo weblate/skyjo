@@ -1,5 +1,6 @@
 import { zValidator } from "@hono/zod-validator"
 import {
+  updateAnalyticsConsentSchema,
   updateAvatarSchema,
   updateEmailSchema,
   updateNameSchema,
@@ -23,6 +24,7 @@ import {
   getUserStats,
   revertEmail,
   scheduleAccountDeletion,
+  updateAnalyticsConsent,
   updateAvatar,
   updateEmail,
   updateName,
@@ -79,6 +81,11 @@ const getUserSettingsRateLimiter = new RateLimiterMemory({
 const updateUserSettingsRateLimiter = new RateLimiterMemory({
   keyPrefix: "update-user-settings",
   points: 20,
+  duration: 60,
+})
+const updateAnalyticsConsentRateLimiter = new RateLimiterMemory({
+  keyPrefix: "update-analytics-consent",
+  points: 10,
   duration: 60,
 })
 
@@ -203,6 +210,18 @@ export const userRouter = new Hono<AuthContextVariables>()
       const data = c.req.valid("json")
       const user = c.get("user")
       await updateAvatar(user.id, data)
+      return c.json({}, 200)
+    },
+  )
+  .patch(
+    "/me/analytics-consent",
+    authMiddleware(),
+    zValidator("json", updateAnalyticsConsentSchema),
+    createRateLimiterMiddleware(updateAnalyticsConsentRateLimiter),
+    async (c) => {
+      const data = c.req.valid("json")
+      const user = c.get("user")
+      await updateAnalyticsConsent(user.id, data)
       return c.json({}, 200)
     },
   )

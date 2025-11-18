@@ -77,6 +77,9 @@ importers:
       nodemailer:
         specifier: ^7.0.10
         version: 7.0.10
+      posthog-node:
+        specifier: ^5.11.2
+        version: 5.11.2
       rate-limiter-flexible:
         specifier: ^8.2.1
         version: 8.2.1

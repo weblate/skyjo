@@ -12,6 +12,7 @@ import {
 } from "@skymo/shared/validations"
 import { useMutation, useQueryClient } from "@tanstack/react-query"
 import { useTranslations } from "next-intl"
+import posthog from "posthog-js"
 import { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
 import { toast } from "sonner"
@@ -84,6 +85,9 @@ const OnboardingPage = () => {
       form.setValue("name", user.name ?? "")
       form.setValue("username", user.username ?? "")
       form.setValue("avatar", user.avatar ?? "bee")
+
+      // Track onboarding started
+      posthog.capture("Onboarding: Started")
     }
     setIsLoading(false)
   }, [user, form])
