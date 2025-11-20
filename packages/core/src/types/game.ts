@@ -42,10 +42,10 @@ export interface GameRedisDb {
   firstToFinishPlayerId: string | null
   bannedUserIds?: number[]
   bannedGuestIds?: string[]
-  gameStartedAt: Date | null
-  roundStartedAt: Date | null
+  gameStartedAt: Date | string | null
+  roundStartedAt: Date | string | null
   stateVersion: number
-  createdAt: Date
-  updatedAt: Date
+  createdAt: Date | string
+  updatedAt: Date | string
   processingAfk: boolean
 }

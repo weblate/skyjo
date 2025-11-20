@@ -114,13 +114,17 @@ export class Game implements GameInterface {
     this.bannedUserIds = game.bannedUserIds || []
     this.bannedGuestIds = game.bannedGuestIds || []
 
-    this.gameStartedAt = game.gameStartedAt || null
-    this.roundStartedAt = game.roundStartedAt || null
+    this.gameStartedAt = game.gameStartedAt
+      ? new Date(game.gameStartedAt)
+      : null
+    this.roundStartedAt = game.roundStartedAt
+      ? new Date(game.roundStartedAt)
+      : null
 
     this.stateVersion = game.stateVersion
     this.processingAfk = game.processingAfk
-    this.createdAt = game.createdAt
-    this.updatedAt = game.updatedAt
+    this.createdAt = new Date(game.createdAt)
+    this.updatedAt = new Date(game.updatedAt)
 
     this.players = game.players.map((player) => new Player().populate(player))
 
