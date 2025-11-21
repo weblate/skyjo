@@ -313,6 +313,11 @@
           "disabled": "Poistettu käytöstä",
           "lastSync": "Viimeisin synkronointi: {date}",
           "error": "Synkronointi epäonnistui"
+        },
+        "analytics": {
+          "label": "Analytiikka",
+          "description": "Auta meitä parantamaan Skymoa jakamalla anonyymejä käyttötietoja. Käytämme näitä tietoja ymmärtääksemme, miten pelaajat käyttävät sovellusta, ja tehdäksemme siitä paremman. Henkilökohtaisia tietoja ei kerätä.",
+          "toggle-label": "Jaa anonyymejä käyttötietoja"
         }
       },
       "title": "Asetukset"
@@ -995,6 +1000,9 @@
       "already-have-account": {
         "description": "Onko sinulla jo tili?",
         "link": "Kirjaudu sisään"
+      },
+      "analytics-disclosure": {
+        "text": "Keräämme anonyymiä käyttötietoa parantaaksemme Skyjoa. Voit poistua käytöstä milloin tahansa tiliasetuksissasi."
       }
     },
     "Login": {
@@ -1243,6 +1251,11 @@
           "description": "Synkronoi asetuksesi kaikille laitteillesi, kun olet kirjautuneena.",
           "sync-now": "Synkronoi nyt",
           "label": "Asetusten synkronointi"
+        },
+        "analytics": {
+          "label": "Analytiikka",
+          "description": "Auta meitä parantamaan Skyjoa jakamalla anonyymejä käyttötietoja. Käytämme näitä tietoja ymmärtääksemme, miten pelaajat käyttävät sovellusta, ja parantaaksemme sitä. Henkilökohtaisia tietoja ei kerätä eikä jaeta kolmansien osapuolten kanssa.",
+          "toggle-label": "Jaa anonyymejä käyttötietoja"
         }
       },
       "delete-account": {
