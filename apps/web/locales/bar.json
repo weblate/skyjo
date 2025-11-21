@@ -358,6 +358,9 @@
         "text": "Wennst weidafährst, stimmst uns zu",
         "and": "und",
         "privacy-link": "Datenschutzrichtlinien"
+      },
+      "analytics-disclosure": {
+        "text": "Mir sammlan unanamierte Nutzugsdaten, damit ma Skymo vabessan kennan. Du konnst di jederzeit in deina Kontoeistellunga abmldon."
       }
     },
     "Login": {
@@ -607,6 +610,11 @@
           },
           "last-sync": "Letzte Synchronisierung: {date}",
           "sync-now": "Gleich synchronisiere"
+        },
+        "analytics": {
+          "label": "Analytik",
+          "description": "Helf uns, Skymo zum Bessern zum macha, indem ma anonyme Nutzungsdaten teiln. Mia nutzn de Daten, um z'vaschdeh, wia Spila d'App nutzn und s'bessa z'machn. Koa persönlicha Datn wead gsamlt oda mid Drittan gteilt.",
+          "toggle-label": "Anonyme Nutzungsdaten teila"
         }
       },
       "delete-account": {
@@ -1196,6 +1204,11 @@
           "offline": "Offline",
           "error": "Synchronisation hod ned klappt",
           "lastSync": "Letzte Synchronisierung: {date}"
+        },
+        "analytics": {
+          "label": "Analytik",
+          "description": "Helfa uns, Skyjo zum Besseren zum mocha, indem'd anonyme Nutzungsdaten teilst. Mia nutzn de Daten, um z'vastenga, wia d'Leid de App nutzn und um's bessa z'mocha. Koa persönliche Informationa werd'n g'sammelt.",
+          "toggle-label": "Anonyme Nutzungsdaten tein"
         }
       }
     },
