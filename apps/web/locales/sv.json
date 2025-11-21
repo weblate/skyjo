@@ -358,6 +358,9 @@
         "terms-link": "Användarvillkor",
         "and": "och",
         "privacy-link": "Integritetspolicy"
+      },
+      "analytics-disclosure": {
+        "text": "Vi samlar in anonym användningsdata för att förbättra Skyjo. Du kan välja bort detta när som helst i dina kontoinställningar."
       }
     },
     "Login": {
@@ -607,6 +610,11 @@
           },
           "last-sync": "Senaste synkronisering: {date}",
           "sync-now": "Synkronisera nu"
+        },
+        "analytics": {
+          "label": "Analys",
+          "description": "Hjälp oss att förbättra Skymo genom att dela anonym användningsdata. Vi använder dessa data för att förstå hur spelare använder appen och göra den bättre. Ingen personlig information samlas in eller delas med tredje part.",
+          "toggle-label": "Dela anonymiserad användningsdata"
         }
       },
       "delete-account": {
@@ -964,6 +972,11 @@
           "offline": "Offline",
           "error": "Synkronisering misslyckades",
           "lastSync": "Senaste synkronisering: {date}"
+        },
+        "analytics": {
+          "label": "Analys",
+          "description": "Hjälp oss att förbättra Skymo genom att dela anonym användningsdata. Vi använder denna data för att förstå hur spelare använder appen och göra den bättre. Ingen personlig information samlas in.",
+          "toggle-label": "Dela anonymiserad användardata"
         }
       }
     },
