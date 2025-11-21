@@ -358,6 +358,9 @@
         "terms-link": "Nutzigsbedingige",
         "and": "und",
         "privacy-link": "Datuaschutzbestimmige"
+      },
+      "analytics-disclosure": {
+        "text": "Mir sammle anonymi Nutzigsdate, zum Skymo z'verbessere. Du chasch dich jederzeit i dim Kontoschtellige abmelde."
       }
     },
     "Login": {
@@ -607,6 +610,11 @@
           "last-sync": "Letzti Synchronisation: {date}",
           "sync-now": "Jetzt synchronisiere",
           "enable-sync": "Sync-Einstellungen aktiviere"
+        },
+        "analytics": {
+          "label": "Analytike",
+          "description": "Holp üs, Skymo z'verbessere, indem Si anonymi User-Date teile. Mir bruuche die Date, zum verstah, wie d'Spieler d'App bruuche, und z'mache, dass sie besser wird. Keini persönleche Informatione wärde gsammelet oder mit Drittbitter teilt.",
+          "toggle-label": "Anonimi Nutzungsdaate deile"
         }
       },
       "delete-account": {
@@ -1059,7 +1067,12 @@
           "error": "Sync fehlgeschlage",
           "lastSync": "Letzti Synchronisation: {date}"
         },
-        "title": "Konto"
+        "title": "Konto",
+        "analytics": {
+          "label": "Analytik",
+          "description": "Helft üs, Skymo z'verbessere, indem ihr anonymi Nutzigsdate teilet. Mir bruched die Date, zum verstoh, wie d'Spieler d'App bruched und sie besser mache. Kei persönlichi Informatione werded gsammelet.",
+          "toggle-label": "Anonymi Nutzigsdatä teile"
+        }
       }
     },
     "Avatar": {
