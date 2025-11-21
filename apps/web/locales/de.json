@@ -363,6 +363,9 @@
         "and": "und",
         "text": "Indem du fortfährst, stimmst du unseren",
         "privacy-link": "Datenschutzrichtlinie"
+      },
+      "analytics-disclosure": {
+        "text": "Wir sammeln anonyme Nutzungsdaten, um Skyjo zu verbessern. Sie können sich jederzeit in Ihren Kontoeinstellungen abmelden."
       }
     },
     "Login": {
@@ -612,6 +615,11 @@
           },
           "last-sync": "Letzte Synchronisierung: {date}",
           "sync-now": "Jetzt synchronisieren"
+        },
+        "analytics": {
+          "label": "Analytik",
+          "description": "Helfen Sie uns, Skyjo zu verbessern, indem Sie anonyme Nutzungsdaten teilen. Wir verwenden diese Daten, um zu verstehen, wie Spieler die App nutzen, und um sie zu verbessern. Es werden keine persönlichen Informationen gesammelt oder an Dritte weitergegeben.",
+          "toggle-label": "Anonyme Nutzungsdaten teilen"
         }
       },
       "delete-account": {
@@ -982,6 +990,11 @@
           "offline": "Offline",
           "error": "Synchronisierung fehlgeschlagen",
           "lastSync": "Letzte Synchronisierung: {date}"
+        },
+        "analytics": {
+          "label": "Analysen",
+          "description": "Hilf uns, Skymo zu verbessern, indem du anonyme Nutzungsdaten teilst. Wir verwenden diese Daten, um zu verstehen, wie Spieler die App nutzen, und um sie zu verbessern. Es werden keine persönlichen Informationen gesammelt.",
+          "toggle-label": "Anonyme Nutzungsdaten teilen"
         }
       }
     },
