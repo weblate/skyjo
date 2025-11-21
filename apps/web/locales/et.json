@@ -363,6 +363,9 @@
         "terms-link": "Kasutustingimused",
         "and": "ja",
         "privacy-link": "Privaatsuspoliitika"
+      },
+      "analytics-disclosure": {
+        "text": "Me kogume anonüümseid kasutusandmeid Skyjo parandamiseks. Saate igal ajal loobuda oma konto seadetes."
       }
     },
     "Login": {
@@ -612,6 +615,11 @@
           },
           "last-sync": "Viimane sünkroonimine: {date}",
           "sync-now": "Sünkroniseeri kohe"
+        },
+        "analytics": {
+          "label": "Analüütika",
+          "description": "Aidake meil Skymot paremaks muuta, jagades anonüümseid kasutusandmeid. Kasutame neid andmeid, et mõista, kuidas mängijad rakendust kasutavad, ja muuta see paremaks. Isiklikku teavet ei koguta ega jagata kolmandate osapooltega.",
+          "toggle-label": "Jaga anonüümset kasutusandmeid"
         }
       },
       "delete-account": {
@@ -1008,6 +1016,11 @@
           "offline": "Võrguühenduseta",
           "error": "Sünkroonimine ebaõnnestus",
           "lastSync": "Viimane sünkroonimine: {date}"
+        },
+        "analytics": {
+          "label": "Analüüsid",
+          "description": "Aidake meil Skymot täiustada anonüümsete kasutusandmete jagamisega. Kasutame neid andmeid, et mõista, kuidas mängijad rakendust kasutavad ja seda paremaks muuta. Isiklikke andmeid ei koguta.",
+          "toggle-label": "Jaga anonüümseid kasutusandmeid"
         }
       }
     },
