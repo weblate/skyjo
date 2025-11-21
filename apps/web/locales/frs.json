@@ -363,6 +363,9 @@
         "terms-link": "Bedriifsregels",
         "and": "un",
         "privacy-link": "Privacybeleid"
+      },
+      "analytics-disclosure": {
+        "text": "Wy sammelje anonyme gebrûksgegevens om Skymo te ferbetterjen. Jo kinne jo op elk momint ôfmelde yn jo akkountynstellingen."
       }
     },
     "Login": {
@@ -612,6 +615,11 @@
           },
           "last-sync": "Letzte Synchronisation: {date}",
           "sync-now": "Nu synchroniseren"
+        },
+        "analytics": {
+          "label": "Analytics",
+          "description": "Helje ús Skymo ferbetterjen troch anonyme gebrûksgegevens te dielen. Wy brûke dizze gegevens om te begripen hoe spilers de app brûke en dy better te meitsjen. Gjin persoanlike ynformaasje wurdt sammele of dield mei tredden.",
+          "toggle-label": "Diel anonyme brûkersdata"
         }
       },
       "delete-account": {
@@ -935,6 +943,11 @@
           "offline": "Offline",
           "error": "Sync fehlet",
           "lastSync": "Letzte Synchronisation: {date}"
+        },
+        "analytics": {
+          "label": "Analytics",
+          "description": "Help ús Skymo ferbetterje troch anonyme brûkersynformaasje te dielen. Wy brûke dizze data om te begripen hoe't spilers de app brûke en it better te meitsjen. Der wurdt gjin persoanlike ynformaasje sammele.",
+          "toggle-label": "Diel anonyme gebrûksgegevens"
         }
       }
     },
