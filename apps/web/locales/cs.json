@@ -363,6 +363,9 @@
         "terms-link": "Podmínky služby",
         "and": "a",
         "privacy-link": "Zásady ochrany osobních údajů"
+      },
+      "analytics-disclosure": {
+        "text": "Shromažďujeme anonymní data o používání pro zlepšení Skyjo. Kdykoli se můžete odhlásit v nastavení svého účtu."
       }
     },
     "Login": {
@@ -612,6 +615,11 @@
           },
           "last-sync": "Poslední synchronizace: {date}",
           "sync-now": "Synchronizovat nyní"
+        },
+        "analytics": {
+          "label": "Analytika",
+          "description": "Pomozte nám vylepšit Skymo sdílením anonymních dat o používání. Tato data používáme k pochopení toho, jak hráči aplikaci používají, a k jejímu vylepšení. Nejsou shromažďovány ani sdíleny žádné osobní údaje s třetími stranami.",
+          "toggle-label": "Sdílet anonymní data o používání"
         }
       },
       "delete-account": {
@@ -989,6 +997,11 @@
           "offline": "Offline",
           "error": "Synchronizace selhala",
           "lastSync": "Poslední synchronizace: {date}"
+        },
+        "analytics": {
+          "label": "Analytika",
+          "description": "Pomozte nám vylepšit Skymo sdílením anonymních dat o používání. Tato data používáme k pochopení toho, jak hráči aplikaci používají, a k jejímu vylepšení. Neshromažďujeme žádné osobní informace.",
+          "toggle-label": "Sdílet anonymní data o používání"
         }
       }
     },
