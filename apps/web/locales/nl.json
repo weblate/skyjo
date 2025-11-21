@@ -363,6 +363,9 @@
         "terms-link": "Servicevoorwaarden",
         "and": "en",
         "privacy-link": "Privacybeleid"
+      },
+      "analytics-disclosure": {
+        "text": "We verzamelen anonieme gebruiksgegevens om Skymo te verbeteren. Je kunt je op elk moment afmelden in je accountinstellingen."
       }
     },
     "Login": {
@@ -612,6 +615,11 @@
           },
           "last-sync": "Laatste synchronisatie: {date}",
           "sync-now": "Nu synchroniseren"
+        },
+        "analytics": {
+          "label": "Analytics",
+          "description": "Help ons Skymo te verbeteren door anonieme gebruiksdata te delen. We gebruiken deze data om te begrijpen hoe spelers de app gebruiken en deze beter te maken. Er wordt geen persoonlijke informatie verzameld of gedeeld met derden.",
+          "toggle-label": "Anonieme gebruiksgegevens delen"
         }
       },
       "delete-account": {
@@ -1116,6 +1124,11 @@
           "offline": "Offline",
           "error": "Synchronisatie mislukt",
           "lastSync": "Laatste synchronisatie: {date}"
+        },
+        "analytics": {
+          "label": "Analytiek",
+          "description": "Help ons Skymo te verbeteren door anonieme gebruiksgegevens te delen. We gebruiken deze gegevens om te begrijpen hoe spelers de app gebruiken en deze beter te maken. Er worden geen persoonlijke gegevens verzameld.",
+          "toggle-label": "Anonieme gebruiksgegevens delen"
         }
       }
     },
