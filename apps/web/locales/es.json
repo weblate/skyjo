@@ -363,6 +363,9 @@
         "terms-link": "Términos de Servicio",
         "and": "y",
         "privacy-link": "Política de privacidad"
+      },
+      "analytics-disclosure": {
+        "text": "Recopilamos datos de uso anónimos para mejorar Skymo. Puedes desactivarlo en cualquier momento en la configuración de tu cuenta."
       }
     },
     "Login": {
@@ -612,6 +615,11 @@
           },
           "last-sync": "Última sincronización: {date}",
           "sync-now": "Sincronizar ahora"
+        },
+        "analytics": {
+          "label": "Analíticas",
+          "description": "Ayúdanos a mejorar Skymo compartiendo datos de uso anónimos. Usamos estos datos para entender cómo los jugadores usan la aplicación y mejorarla. No se recopila ni se comparte información personal con terceros.",
+          "toggle-label": "Compartir datos de uso anónimos"
         }
       },
       "delete-account": {
@@ -984,6 +992,11 @@
           "offline": "Desconectado",
           "error": "Error de sincronización",
           "lastSync": "Última sincronización: {date}"
+        },
+        "analytics": {
+          "label": "Analítica",
+          "description": "Ayúdanos a mejorar Skymo compartiendo datos de uso anónimos. Utilizamos estos datos para comprender cómo los jugadores usan la aplicación y mejorarla. No se recopila información personal.",
+          "toggle-label": "Compartir datos anónimos de uso"
         }
       }
     },
