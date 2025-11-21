@@ -363,6 +363,9 @@
         "terms-link": "Termenoù Servij",
         "and": "ha",
         "privacy-link": "Politikerezh prevezded"
+      },
+      "analytics-disclosure": {
+        "text": "Hollomp a reomp roadennoù implij didrouz evit gwellaat Skymo. Gallout a ra an den en em denañ efrom en e ziell kontoù."
       }
     },
     "Login": {
@@ -612,6 +615,11 @@
           "disable-sync": "Diaktiñ synk an arloadurioù",
           "last-sync": "Diwezhañ sync: {date}",
           "sync-now": "Sink bremañ"
+        },
+        "analytics": {
+          "label": "Talvoudouriezh",
+          "description": "Trugarez deomp da wellout a-walc'h Skymo dre reiñ deomp mont da-gaout data implij divonut. Implijomp an data-se evit kompren penaos e vez implijet an aplikadur gant an dud hag evit e wellout a-walc'h. N'eus keloù personel ebet dastumet pe roet da drede strollad.",
+          "toggle-label": "Rannañ roadennoù implij dizanv"
         }
       },
       "delete-account": {
@@ -910,6 +918,11 @@
           "offline": "Di-linenn",
           "error": "N'eo ket deuet a-benn an endroadur",
           "lastSync": "Diwezhañ sync: {date}"
+        },
+        "analytics": {
+          "label": "Analis",
+          "description": "Treiñ a reomp Skymo dre ar c'helennadennoù implij divizet war an amzer. Implijout a reomp an data-mañ evit kompren penaos e implij an dud an aplikasion hag evit gwellaat anezan. N'eo ket dastummet ditour personel.",
+          "toggle-label": "Rannañ data implijian anannimid"
         }
       }
     },
