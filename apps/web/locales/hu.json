@@ -351,6 +351,11 @@
           "offline": "Offline",
           "error": "Szinkronizálás sikertelen",
           "lastSync": "Utolsó szinkronizálás: {date}"
+        },
+        "analytics": {
+          "label": "Elemzések",
+          "description": "Segíts nekünk a Skymo fejlesztésében az anonim használati adatok megosztásával. Ezeket az adatokat arra használjuk, hogy megértsük, hogyan használják a játékosok az alkalmazást, és jobbá tegyük azt. Személyes információ nem kerül begyűjtésre.",
+          "toggle-label": "Anonim használati adatok megosztása"
         }
       }
     },
@@ -995,6 +1000,9 @@
         "terms-link": "Felhasználási feltételek",
         "and": "és",
         "privacy-link": "Adatvédelmi irányelvek"
+      },
+      "analytics-disclosure": {
+        "text": "Névtelen használati adatokat gyűjtünk a Skymo fejlesztéséhez. Ezt bármikor letilthatod a fiókbeállításaidban."
       }
     },
     "Login": {
@@ -1244,6 +1252,11 @@
           },
           "last-sync": "Utolsó szinkronizálás: {date}",
           "sync-now": "Szinkronizálás most"
+        },
+        "analytics": {
+          "label": "Statisztika",
+          "description": "Segítsen nekünk a Skymo fejlesztésében az anonim használati adatok megosztásával. Ezeket az adatokat arra használjuk, hogy megértsük, hogyan használják a játékosok az alkalmazást, és hogyan javíthatnánk azt. Semmilyen személyes információt nem gyűjtünk, és nem osztunk meg harmadik féllel.",
+          "toggle-label": "Anonim használati adatok megosztása"
         }
       },
       "delete-account": {
