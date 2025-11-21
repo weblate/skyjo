@@ -186,6 +186,11 @@
           "offline": "Offline",
           "error": "Sync fehlslahn",
           "lastSync": "Letzte Synchronisation: {date}"
+        },
+        "analytics": {
+          "label": "Analyse",
+          "description": "Helft uns, Skyjo to verbettern, indem ihr anonyme Nutzungsdaten teiltt. Wir bruuchen deese Daten, um to verstiehn, wie Spellers de App bruuchen, un de so to verbettern. Keen persönlich Kennteken warrt sammelt.",
+          "toggle-label": "Anonyme Nutzungsdaten deelen"
         }
       }
     },
@@ -881,6 +886,9 @@
         "terms-link": "Dienstleistungsbedingungen",
         "and": "un",
         "privacy-link": "Privacy-Politik"
+      },
+      "analytics-disclosure": {
+        "text": "Wi sammelt anonyme bruukerdaaten, üs fiin tu beeter Skymo. Du kennst di alletieds in dien Bruukerinstellungen utkieken."
       }
     },
     "Login": {
@@ -1130,6 +1138,11 @@
           },
           "last-sync": "Letzte Synchronisation: {date}",
           "sync-now": "Nu synchroniseern"
+        },
+        "analytics": {
+          "label": "Analytik",
+          "description": "Holp uns, Skymo to beter to maken, dörch anonyme Bruukdaden to delen. Wi bruukt disse Daden, üm to verstahn, wo Spelers de App bruukt un se beter to maken. Keen persönlich Informatschonen warrt sammelt oder an drüdde Partien wiedergeven.",
+          "toggle-label": "Anonyme Nutzungsdaten deelen"
         }
       },
       "delete-account": {
