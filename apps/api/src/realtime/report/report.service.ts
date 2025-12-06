@@ -80,7 +80,7 @@ export class ReportService extends BaseService {
       gameContext,
     })
 
-    trackAnalyticsPlayerReported(player, target, report.reason)
+    await trackAnalyticsPlayerReported(player, target, report.reason)
   }
 
   private async captureGameContext(game: Game) {

@@ -49,11 +49,11 @@ export class PlayerService extends BaseService {
       const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
       await this.sendServerMessage(game.code, player.name, messageType)
 
-      trackAnalyticsPlayerLeft(game, player, "disconnect")
+      await trackAnalyticsPlayerLeft(game, player, "disconnect")
 
       const remainingPlayers = game.getConnectedPlayers().length
       if (remainingPlayers === 0 && game.roundNumber > 0) {
-        trackAnalyticsGameAbandoned(game, 0, "all_players_left")
+        await trackAnalyticsGameAbandoned(game, 0, "all_players_left")
       }
     }
 
@@ -94,17 +94,17 @@ export class PlayerService extends BaseService {
       const messageType = CoreConstants.SERVER_MESSAGE_TYPE.PLAYER_LEFT
       await this.sendServerMessage(game.code, player.name, messageType)
 
-      trackAnalyticsPlayerLeft(game, player, "voluntary")
+      await trackAnalyticsPlayerLeft(game, player, "voluntary")
 
       const remainingPlayers = game.getConnectedPlayers().length
       if (remainingPlayers === 0 && game.roundNumber > 0) {
-        trackAnalyticsGameAbandoned(game, 0, "all_players_left")
+        await trackAnalyticsGameAbandoned(game, 0, "all_players_left")
       } else if (
         game.isHost(player.id) &&
         remainingPlayers > 0 &&
         game.roundNumber > 0
       ) {
-        trackAnalyticsGameAbandoned(game, remainingPlayers, "host_left")
+        await trackAnalyticsGameAbandoned(game, remainingPlayers, "host_left")
       }
 
       await this.updateAndSendGame(game, stateManager)

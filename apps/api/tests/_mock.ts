@@ -145,3 +145,19 @@ export const mockGameStateTracker = (game: Game) => {
     },
   }
 }
+
+export const mockAnalytics = () => {
+  vi.mock("@/services/analytics/game.analytics.js", () => ({
+    trackAnalyticsGameCreated: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsGameJoined: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsGameStarted: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsRoundStarted: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsRoundEnded: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsGameEndedFromRedis: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsPlayerLeft: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsGameAbandoned: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsChatMessage: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsPlayerReported: vi.fn().mockResolvedValue(undefined),
+    trackAnalyticsKickVoteInitiated: vi.fn().mockResolvedValue(undefined),
+  }))
+}

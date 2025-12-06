@@ -1,5 +1,6 @@
 import { vi } from "vitest"
 import "@skymo/error/test/expect-extend"
+import { mockAnalytics } from "@tests/_mock.js"
 
 // Mock the database connection
 vi.mock("@/db/index.ts", () => {
@@ -11,7 +12,9 @@ vi.mock("@/db/index.ts", () => {
     })),
     select: vi.fn(() => ({
       from: vi.fn(() => ({
-        where: vi.fn(() => Promise.resolve([])),
+        where: vi.fn(() => ({
+          limit: vi.fn(() => Promise.resolve([])),
+        })),
       })),
     })),
     update: vi.fn(() => ({
@@ -114,6 +117,9 @@ vi.mock("@/redis/message.repository.js", () => {
     })),
   }
 })
+
+// Mock analytics to prevent database calls and external service interactions
+mockAnalytics()
 
 vi.spyOn(process, "env", "get").mockReturnValue({
   NODE_ENV: "test",

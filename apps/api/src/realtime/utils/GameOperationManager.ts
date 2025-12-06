@@ -110,14 +110,14 @@ export class GameOperationManager implements GameOperationManagerInterface {
       // Track round end before transitioning
       if (game.roundPhase === CoreConstants.ROUND_PHASE.OVER) {
         const roundWinner = game.getRoundWinner()
-        trackAnalyticsRoundEnded(game, roundWinner)
+        await trackAnalyticsRoundEnded(game, roundWinner)
       }
 
       await callback()
 
       // Track new round start if round number increased
       if (game.roundNumber > previousRoundNumber) {
-        trackAnalyticsRoundStarted(game)
+        await trackAnalyticsRoundStarted(game)
       }
 
       const operations = stateManager.getChanges()
@@ -150,7 +150,7 @@ export class GameOperationManager implements GameOperationManagerInterface {
           : lowest,
       )
 
-      trackAnalyticsGameEndedFromRedis(game, winner || null)
+      await trackAnalyticsGameEndedFromRedis(game, winner || null)
     }
 
     // In the future, we will add game XP to players queues here by getting all authenticated players and check if they won the game, etc.

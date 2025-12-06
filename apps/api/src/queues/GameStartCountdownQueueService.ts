@@ -120,7 +120,7 @@ export class GameStartCountdownQueueService extends BaseQueueService<GameStartCo
         })
       }
 
-      trackAnalyticsGameStarted(game)
+      await trackAnalyticsGameStarted(game)
 
       Logger.info(`Game ${gameCode} started after countdown`, {
         gameCode,

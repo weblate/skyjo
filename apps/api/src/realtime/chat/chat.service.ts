@@ -48,7 +48,7 @@ export class ChatService extends BaseService {
 
     await this.messageRepository.storeMessage(game.code, newMessage)
 
-    trackAnalyticsChatMessage(game, player, message.length)
+    await trackAnalyticsChatMessage(game, player, message.length)
 
     socket.to(game.code).volatile.emit("message", newMessage)
     socket.volatile.emit("message", newMessage)

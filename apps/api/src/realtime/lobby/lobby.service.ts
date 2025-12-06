@@ -284,7 +284,7 @@ export class LobbyService extends BaseService {
 
     await this.redis.createGame(game)
 
-    trackAnalyticsGameCreated(game, player)
+    await trackAnalyticsGameCreated(game, player)
 
     return { player, game }
   }

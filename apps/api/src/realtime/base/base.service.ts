@@ -99,7 +99,7 @@ export abstract class BaseService {
 
     await this.redis.updateGame(game)
 
-    trackAnalyticsGameJoined(game, player, reconnection)
+    await trackAnalyticsGameJoined(game, player, reconnection)
   }
 
   async sendServerMessage(

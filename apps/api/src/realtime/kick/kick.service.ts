@@ -172,7 +172,7 @@ export class KickService extends BaseService {
         target.id,
       )
 
-      trackAnalyticsKickVoteInitiated(game, initiator, target)
+      await trackAnalyticsKickVoteInitiated(game, initiator, target)
 
       await this.checkKickVoteStatus(game)
     } catch (error) {
@@ -263,7 +263,7 @@ export class KickService extends BaseService {
 
     await game.disconnectPlayer(playerToKick)
 
-    trackAnalyticsPlayerLeft(game, playerToKick, "kick")
+    await trackAnalyticsPlayerLeft(game, playerToKick, "kick")
 
     // Clean up kicked player's socket
     const targetSocket = this.socketManager.getSocket(playerToKick.socketId)
