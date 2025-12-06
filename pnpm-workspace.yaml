@@ -5,6 +5,7 @@ packages:
 
 onlyBuiltDependencies:
   - '@biomejs/biome'
+  - '@swc/core'
   - '@tailwindcss/oxide'
   - argon2
   - bufferutil
