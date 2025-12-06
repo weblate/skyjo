@@ -244,22 +244,7 @@ export async function loginGoogle(
     .limit(1)
   let userId = user?.id
 
-  // If the user exists and has a different googleId, set the googleId
-  if (user && user.googleId !== googleId) {
-    await db
-      .update(userTable)
-      .set({ googleId })
-      .where(eq(userTable.id, user.id))
-
-    posthog.captureWithConsent({
-      distinctId: `user_${user.id}`,
-      event: "Auth: Login Succeeded",
-      properties: {
-        provider: "google",
-      },
-      analyticsConsent: user.analyticsConsent,
-    })
-  } else if (!user) {
+  if (!user) {
     const username = await createUsername(name?.split(" ")[0] ?? "unnamed")
     const newUser = await createUser({
       email: normalizedEmail,
@@ -290,16 +275,23 @@ export async function loginGoogle(
       },
       analyticsConsent: newUser.analyticsConsent,
     })
-  } else {
-    posthog.captureWithConsent({
-      distinctId: `user_${user.id}`,
-      event: "Auth: Login Succeeded",
-      properties: {
-        provider: "google",
-      },
-      analyticsConsent: user.analyticsConsent,
-    })
   }
+  // If the user exists and has a different googleId, set the googleId
+  else if (user.googleId !== googleId) {
+    await db
+      .update(userTable)
+      .set({ googleId })
+      .where(eq(userTable.id, user.id))
+  }
+
+  posthog.captureWithConsent({
+    distinctId: `user_${user.id}`,
+    event: "Auth: Login Succeeded",
+    properties: {
+      provider: "google",
+    },
+    analyticsConsent: user.analyticsConsent,
+  })
 
   const token = generateSessionToken()
   const session = await createSession(token, userId)

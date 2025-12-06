@@ -13,7 +13,7 @@ const hasOptedOut = (): boolean => {
 
 // Get guestId for initial identification (before auth)
 // Only use if guest hasn't opted out
-const guestId = !hasOptedOut() ? Cookies.get(GUEST_ID_COOKIE_NAME) : undefined
+const guestId = hasOptedOut() ? undefined : Cookies.get(GUEST_ID_COOKIE_NAME)
 
 posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY!, {
   api_host: "/ulysse",

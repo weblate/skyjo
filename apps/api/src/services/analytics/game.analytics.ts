@@ -14,7 +14,9 @@ import { posthog } from "@/services/posthog.service.js"
 /**
  * Get distinct ID for a player (user, guest, or anonymous)
  */
-async function getPlayerDistinctId(player: Player | null | undefined) {
+async function getPlayerDistinctId(
+  player: Player | PlayerRedisDb | null | undefined,
+) {
   const analyticsConsent = await getPlayerAnalyticsConsent(player)
 
   let distinctId: string
@@ -44,7 +46,7 @@ async function getPlayerDistinctId(player: Player | null | undefined) {
  * - Guests/anonymous: return undefined (will use regular capture)
  */
 async function getPlayerAnalyticsConsent(
-  player: Player | null | undefined,
+  player: Player | PlayerRedisDb | null | undefined,
 ): Promise<boolean | undefined> {
   if (!player?.userId) {
     // Guests and anonymous players - no consent check needed
@@ -61,6 +63,18 @@ async function getPlayerAnalyticsConsent(
   return user?.analyticsConsent
 }
 
+function getWinnerType(
+  player: Player | PlayerRedisDb | null | undefined,
+): "authenticated" | "guest" | "unknown" {
+  if (player?.userId) {
+    return "authenticated"
+  } else if (player?.guestId) {
+    return "guest"
+  }
+
+  return "unknown"
+}
+
 /**
  * Capture analytics event with consent check for authenticated users
  * - Opted-in authenticated users: tracked with user_${userId}
@@ -72,7 +86,7 @@ async function captureGameEvent({
   event,
   properties = {},
 }: {
-  player: Player | null | undefined
+  player: Player | PlayerRedisDb | null | undefined
   event: string
   properties?: Record<string, unknown>
 }) {
@@ -197,11 +211,7 @@ export async function trackAnalyticsRoundEnded(
       ...getGameProperties(game),
       round_number: game.roundNumber,
       round_duration_ms: roundDuration,
-      winner_type: roundWinner?.userId
-        ? "authenticated"
-        : roundWinner?.guestId
-          ? "guest"
-          : "unknown",
+      winner_type: getWinnerType(roundWinner),
     },
   })
 }
@@ -226,7 +236,7 @@ export async function trackAnalyticsGameEndedFromRedis(
   const guestPlayers = connectedPlayers.length - authenticatedPlayers
 
   await captureGameEvent({
-    player: host as Player | null | undefined,
+    player: host,
     event: "Game: Ended",
     properties: {
       game_code: game.code,
@@ -237,11 +247,7 @@ export async function trackAnalyticsGameEndedFromRedis(
       max_players: game.settings.maxPlayers,
       total_rounds: game.roundNumber,
       game_duration_ms: gameDuration,
-      winner_type: gameWinner?.userId
-        ? "authenticated"
-        : gameWinner?.guestId
-          ? "guest"
-          : "unknown",
+      winner_type: getWinnerType(gameWinner),
     },
   })
 }
