@@ -11,12 +11,11 @@ import { eq } from "drizzle-orm"
 import { db } from "@/db/index.js"
 import { posthog } from "@/services/posthog.service.js"
 
+type AnalyticsPlayer = Player | PlayerRedisDb | null | undefined
 /**
  * Get distinct ID for a player (user, guest, or anonymous)
  */
-async function getPlayerDistinctId(
-  player: Player | PlayerRedisDb | null | undefined,
-) {
+async function getPlayerDistinctId(player: AnalyticsPlayer) {
   const analyticsConsent = await getPlayerAnalyticsConsent(player)
 
   let distinctId: string
@@ -46,7 +45,7 @@ async function getPlayerDistinctId(
  * - Guests/anonymous: return undefined (will use regular capture)
  */
 async function getPlayerAnalyticsConsent(
-  player: Player | PlayerRedisDb | null | undefined,
+  player: AnalyticsPlayer,
 ): Promise<boolean | undefined> {
   if (!player?.userId) {
     // Guests and anonymous players - no consent check needed
@@ -64,7 +63,7 @@ async function getPlayerAnalyticsConsent(
 }
 
 function getWinnerType(
-  player: Player | PlayerRedisDb | null | undefined,
+  player: AnalyticsPlayer,
 ): "authenticated" | "guest" | "unknown" {
   if (player?.userId) {
     return "authenticated"
@@ -86,7 +85,7 @@ async function captureGameEvent({
   event,
   properties = {},
 }: {
-  player: Player | PlayerRedisDb | null | undefined
+  player: AnalyticsPlayer
   event: string
   properties?: Record<string, unknown>
 }) {
@@ -131,7 +130,7 @@ function getGameProperties(game: Game) {
  */
 export async function trackAnalyticsGameCreated(
   game: Game,
-  creatorPlayer: Player | null | undefined,
+  creatorPlayer: Player,
 ) {
   await captureGameEvent({
     player: creatorPlayer,
