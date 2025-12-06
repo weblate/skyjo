@@ -1,6 +1,6 @@
 ARG PROJECT=@skymo/web
 
-FROM node:24.3-alpine AS base
+FROM node:24.11.1-alpine AS base
 
 # Pruner stage - extract only needed files
 FROM base AS pruner
@@ -57,7 +57,7 @@ COPY --from=pruner /app/out/full/ .
 RUN pnpm turbo build --filter=${PROJECT}
 
 # Runtime stage - minimal final image
-FROM node:24.3-alpine AS runner
+FROM node:24.11.1-alpine AS runner
 WORKDIR /app
 
 RUN apk add --no-cache libc6-compat && \
