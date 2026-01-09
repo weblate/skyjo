@@ -10,7 +10,7 @@
       "explanation": {
         "title": "Petra eo Skyjo?",
         "button": "Lenn ar reolennoù",
-        "content": "Skyjo a zo ur c'hoari kartoù hag ur c'hoari taol dispar, gant c'hoarierien e pep lec'h r bed. Graet eo bet evit un niver a c'hoarierien etre 2 hag 8, ha pep hini a resev 12 kartenn kuzhet. Pal pennañ ar c'hoari eo merkañ an nebeutañ a boentoù posupl. Echuet eo ar bartienn ur wech m'eo tizhet 100 poent. Simpl hag aes da gompren eo reolennoù ar c'hoari, ar pezh a lak anezhañ da vezañ ur c'hoari a zere evit an nozvezhioù etre mignoned pe gant ho familh. AN dud sot gant ar c'hoari a vo laouen o c'houzout eo posupl c'hoari enlinenn bremañ!"
+        "content": "Skyjo a zo ur c'hoari kartoù hag ur c'hoari taol dispar, gant c'hoarierien e pep lec'h er bed. Graet eo bet evit un niver a c'hoarierien etre 2 hag 8, ha pep hini a resev 12 kartenn kuzhet. Pal pennañ ar c'hoari eo merkañ an nebeutañ a boentoù posupl. Echuet eo ar bartienn ur wech m'eo tizhet 100 poent. Simpl hag aes da gompren eo reolennoù ar c'hoari, ar pezh a lak anezhañ da vezañ ur c'hoari a zere evit an nozvezhioù etre mignoned pe gant ho familh. AN dud sot gant ar c'hoari a vo laouen o c'houzout eo posupl c'hoari enlinenn bremañ!"
       },
       "faq": {
         "title": "Foar ar goulennoù (FAG)",
@@ -24,7 +24,7 @@
         },
         "how-to-play": {
           "title": "Penaos c'hoari Skyjo?",
-          "content": "Evit c'hoari Skyjo, dasparzhit 12 kartenn da bep c'hoarier, dremm kuzhet. Ar pel eo kaout an nebeutañ a boentoù en ur dreiñ hag en ur eskemm kartoù. Bep tro, pigosit ur gartenn adalek ar pigos pe ar c'hartoù skoet, ha dibabit eskemm anezhi gant unan eus ho kartoù hewel. Ar c'hartoù niverennet a ouzhpenn poentoù, ar c'hartoù ispisial o deus galloudoù. Echuet eo ar c'hoari p'en deus unan eus ar c'hoarierien troet holl e gartoù. Ar c'hoarier gant an nebeutañ a boentoù a c'hounez. C'hallit mont da lenn <rules>ar reolennoù</rules> evit kaout muioc'h a ditouroù."
+          "content": "Evit c'hoari Skyjo, dasparzhit 12 kartenn da bep c'hoarier, dremm kuzhet. Ar pel eo kaout an nebeutañ a boentoù en ur dreiñ hag en ur eskemm kartoù. Bep tro, pigosit ur gartenn adalek ar pigos pe ar c'hartoù skoet, ha dibabit eskemm anezhi gant unan eus ho kartoù hewel. Ar c'hartoù niverennet a ouzhpenn poentoù, ar c'hartoù ispisial o deus galloudoù. Echuet eo ar c'hoari p'en deus unan eus ar c'hoarierien troet holl e gartoù. Ar c'hoarier gant an nebeutañ a boentoù a c'hounez. Gallout a rit mont da lenn <rules>ar reolennoù</rules> evit kaout muioc'h a ditouroù."
         },
         "how-to-win": {
           "title": "Penaos gounit er Skyjo?",
@@ -542,7 +542,7 @@
     },
     "Settings": {
       "head": {
-        "title": "Kevredadenn | Skymo - Skyjo Kartenn C'hoari En-linenn",
+        "title": "Arventennoù ar gont | Skymo - C'hoari kartoù enlinenn Skyjo",
         "description": "Keren da gont war Skymo. Cheñch da anv diskouez, da anv implijer, da postel, da ger-tremen, ha da raktisoù kont."
       },
       "title": "Kevredadenn",
@@ -786,8 +786,8 @@
       }
     },
     "Reconnect": {
-      "title": "Oc'h adkengregiñ ouzh da c'hoari",
-      "description": "Mar plij gortoz e-pad ma adkavomp ouzh da c'hoari a-vremañ..."
+      "title": "Oc'h adkennaskañ ouzh ho c'hoariadenn",
+      "description": "Gortozit ur pennadig pa adkennaskomp ac'hanoc'h ouzh ho c'hoariadenn..."
     }
   },
   "components": {
@@ -880,7 +880,7 @@
       "mobile": {
         "title": "Ar ger-heñvel",
         "switch-to-player-who-is-playing": "Treiñ em-eeun d'ar c'hoarier a zo o c'hoari",
-        "show-preview-opponents-cards": "Diskouez un rakweled eus kartenn an eneppartizien er roll eneppartizien"
+        "show-preview-opponents-cards": "Diskouez ur rakwel eus kartoù an enebourien e roll an enebourien"
       },
       "gameplay": {
         "title": "C'hoariadeg",
@@ -1349,7 +1349,7 @@
       "wizz-sent": "Kaset ho peus ur wizz da {targetName}!",
       "wizz-self": "Wizzet hoc'h bet gant {initiatorName}!",
       "wizz-other": "{initiatorName} en/he deus wizzet {targetName}!",
-      "welcome": "Bez'it gentan hag anavezet mat er chat. Mar dle, gallit mudat pe kas un den-c'hoarier dre {isMobile, select, true {tapout} other {klikañ}} war unan eus o c'henavooù pe warzo.",
+      "welcome": "Bezit jentil ha doujus er flapva. Ma vez ezhomm e c'hallit mudiñ pe danevelliñ ur c'hoarier en ur {isMobile, select, true {stokañ} other {glikañ}} war ur gemennadenn pe warnañ.",
       "host-transferred": "Perzh an ostiz a zo bet kaset da {name}",
       "player-forfeited": "{name} en deus dilezet ar c'hoari"
     },
@@ -1390,9 +1390,9 @@
       }
     },
     "skymo": {
-      "turn-cards": "Treiñ {number} kartenn{number, plural, =1 {} other {où}}",
+      "turn-cards": "Treiñ {number} a gartennoù",
       "waiting": "O c'hortoz c'hoarierien",
-      "waiting-opponents-to-turn-cards": "O c'hortoz an enebour{nbOpponents, plural, =1 {} all {ed}} da dreiñ {number} kartenn{number, plural, =1 {} all {où}}",
+      "waiting-opponents-to-turn-cards": "O c'hortoz an enebour{nbOpponents, plural, =1 {} all {ien}} da dreiñ {number} a gartennoù",
       "turn": {
         "chooseAPile": "Dibab ur bern",
         "throwOrReplace": "Erlec'hiañ pe dilezel",
@@ -1491,7 +1491,7 @@
     "reset-password-error": "N'hon eus bet tu da adlakaat da ger-tremen. Klask a-nevez, mar plij.",
     "oauth-restart-process": "Kement-ha-kement ez eas a-dreuz e-pad an authentification. Klask en-dro da en enrollañ, mar plij.",
     "oauth-id-token-missing": "N'hon eus bet digemeret tamm token-ID digant an aozer aotreañ. Provañ a-nevez, mar plij.",
-    "oauth-account-creation-failed": "N'hon-eus bet evit krouiñ ur c'hont anavezet gant titouroù da pourchaser. Klask a-nevez, mar plij.",
+    "oauth-account-creation-failed": "N'hon-eus ket gallet krouiñ ur gont gant titouroù ho pourvezer. Klaskit en-dro, mar plij.",
     "oauth-login-initiation-failed": "N'hon boa ket gallet kregiñ gant an ouzhpennañ. Klask a-nevez war-lerc'h un nebeud mareoù.",
     "verify-session-error": "N'hon eus bet mod ebet da wiriañ da ziladenn. Mont kuit ha distro da-barzh, mar plij.",
     "signup-error": "N'hon eus bet tu ebet da grouiñ da gontoñ evit poent. Klask a-nevez war-lerc'h, mar plij.",
@@ -1499,7 +1499,7 @@
     "login-invalid-credentials": "N'eo ket mat an e-bost pe an ger-tremen a-grenit. Provit adarre.",
     "logout-error": "An urreur dic'hortoz zo c'hoarvezet pa 'z oc'h o vont kuit.",
     "check-username-error": "N'hon eus bet tu da wiriañ ha diskuiñ eo an anv implijer. Klask a-nevez, mar plij.",
-    "unknown-auth-error": "Ur fazi autentikasion dianavezet en deus c'hoarvezet. Klask a-nevez, mar plij.",
+    "unknown-auth-error": "Ur fazi dilesa dianavezet a zo c'hoarvezet. Klaskit en-dro, mar plij.",
     "creation-failed": "N'hon eus bet tu da grouiñ an implijer evit poent. Klask a-nevez, mar plij.",
     "get-user-error": "N'hon eus bet tu ebet da adkavout ho profil implijer. Klaskit en-dro diwezhatoc'h, mar plij.",
     "get-user-games-error": "N'hon eus bet mod ebet da gargañ c'hoarioù an implijer. Adlañs ar bajenn, mar plij.",
@@ -1508,7 +1508,7 @@
     "username-same-as-current": "An anv-implijer-mañ eo hoc'h anv dija.",
     "email-taken": "D'hel koulz an chomlec'h postel-mañ zo implijet c'hoazh. Mar plij, implij unan all.",
     "email-same-as-current": "Setu eo da chomlec'h postel.",
-    "invalid-current-password": "An ger-tremen anavezet hoc'h eus eo disevouret.",
+    "invalid-current-password": "Direizh eo ar ger-tremen ho peus lakaet.",
     "update-name-error": "N'hon eus ket gallet hiziviskañ da anv. Klask a-nevez, mar plij.",
     "update-username-error": "N'hon eus bet tu da hizivikañ da anv-implijer. Klask a-nevez, mar plij.",
     "update-email-error": "N'hon eus bet tu da hizivikañ da chomlec'h postel. Klask a-nevez, mar plij.",
@@ -1523,7 +1523,7 @@
     "forbidden": "N'eus ket a aotre da dizhagnout an danvez-mañ.",
     "not-found": "N'eus ket bet kavet an danvez a glaskez.",
     "too-many-requests": "Kemeret ez eus beteg an arc'hwelioù. Chom a reoc'h ur paouez ha klask a reoc'h adarre.",
-    "ip-not-found": "N'hon-eus bet anavezet da chomlec'h IP. Kontrollañ dit da genstokadenn, mar plij.",
+    "ip-not-found": "N'hon eus ket gallet adanavezout ho chomlec'h IP. Gwiriekait ho kennask, mar plij.",
     "invalid-request": "Daou c'houlenn a oa dister. Kontrollañ an titouroù a reont hag adarre klask.",
     "send-feedback-error": "N'hon eus bet tu da gas da dra. Klask a-nevez, mar plij.",
     "send-pin-error": "N'hon eus bet tu da gas ur PIN kadarnaat da'z postel. Klask a-nevez, mar plij.",
@@ -1549,29 +1549,29 @@
     "card-per-row-max-invalid": "Ar c'hartennoù dre rummad a rank bezañ 3 d'ar muiañ",
     "card-per-column-min-invalid": "Ar c'hartenenn dre golonenn a rank bezañ ur memes 1",
     "card-per-column-max-invalid": "Ar c'hartennoù dre golonenn a rank bezañ 4 d'ar muiañ",
-    "score-to-end-game-min-invalid": "Ar skor evit fin ar c'hoari a rank bezañ 1 d'an nebeutañ",
-    "score-to-end-game-max-invalid": "Al lore evit fin ar c'hoari a rank bezañ nebeutoc'h eget 10000000",
-    "first-player-flat-penalty-min-invalid": "Ar c'hwitell digenvez kentañ evit an c'hoarier kentañ a rank bezañ d'an nebeutañ 0",
-    "first-player-flat-penalty-max-invalid": "Ar c'hwitell digresk kentañ evit an c'hoarier kentañ ne c'hell ket bezañ ouzhpenn 10000000",
-    "first-player-multiplier-penalty-min-invalid": "Ar c'hastiz a liester kentañ c'hoarier a rank bezañ da nebeutañ 1",
-    "first-player-multiplier-penalty-max-invalid": "Ar c'hastiz liesteradur ar c'hentañ c'hoarier a rank bezañ nebeutoc'h eget 10000000",
-    "comment-max-characters": "Ar c'homment ne c'hall ket bezañ ouzhpenn 500 merkad",
-    "password-min-characters": "eo ret d'ar ger-tremen da vihanañ 10 lizherenn",
-    "password-lowercase-required": "Koulz lavaret, un lizherenn vihan zo ret en deus da vezañ en deus an tremen-ger",
-    "password-uppercase-required": "a rank bezañ ennañ un lizherenn vras d'an nebeutañ",
-    "password-number-required": "Emañ an ger-tremen a-drugarez d'ur niverenn",
-    "password-special-char-required": "Emañ ar ger-tremen ret dezhañ un arouezenn arbennik da nebeutañ",
+    "score-to-end-game-min-invalid": "Ar gont evit echuiñ ar c'hoariadenn a rank bezañ 1 d'an nebeutañ",
+    "score-to-end-game-max-invalid": "Ar gont evit echuiñ ar c'hoariadenn a rank bezañ 10000000 d'ar muiañ",
+    "first-player-flat-penalty-min-invalid": "Kastiz digemm ar c'hoarier kentañ a rank bezañ 0 d'an nebeutañ",
+    "first-player-flat-penalty-max-invalid": "Kastiz digemm ar c'hoarier kentañ a rank bezañ izeloc'h eget 10000000",
+    "first-player-multiplier-penalty-min-invalid": "Kastiz lieskementer ar c'hoari kentañ a rank bezañ 1 d'an nebeutañ",
+    "first-player-multiplier-penalty-max-invalid": "Kastiz lieskementer ar c'hoarier kentañ a rank bezañ nebeutoc'h eget 10000000",
+    "comment-max-characters": "An evezhiadenn n'hall ket bezañ hiroc'h eget 500 arouezenn",
+    "password-min-characters": "Ar ger-tremen a rank enderc'hel 10 arouezenn d'an nebeutañ",
+    "password-lowercase-required": "Ar ger-tremen a rank enderc'hel ul lizherenn vihan d'an nebeutañ",
+    "password-uppercase-required": "Ar ger-tremen a rank enderc'hel ur bennlizherenn d'an nebeutañ",
+    "password-number-required": "Ar ger-tremen a rank enderc'hel un niverenn d'an nebeutañ",
+    "password-special-char-required": "Ar ger-tremen a rank enderc'hel un arouezenn ispisial d'an nebeutañ",
     "passwords-dont-match": "Ne glot ket ar gerioù-tremen",
-    "delete-account-confirmation-required": "Trugarez da skrivañ DELETE evit kadarnaat",
-    "current-password-required": "Ret eo lakaat an alc'hwez a-vremañ",
+    "delete-account-confirmation-required": "Skrivit DILEMEL evit kadarnaat",
+    "current-password-required": "Goulennet eo ar ger-tremen bremanel",
     "email-invalid": "Chomlec'h postel direizh",
-    "token-required": "Token zo ret",
-    "email-already-sent": "Kinniget eo bet un e-bost dija er 5 munutenn ziwezhañ. Chetil da voutel pe klikit war \"Goulenn kod nevez\" evit kas unan all",
-    "email-already-exists": "Ar chomlec'h postel-mañ zo implijet dija war ur c'hont unan all. Mar plij implij unan all.",
-    "username-creation-failed": "N'hon eus bet tu ebet da grouiñ da anv-implijer. Klask a-nevez, mar plij.",
-    "account-deletion-already-scheduled": "Da var ouzh da gontoñ eo bet prientet da vezañ dilamet. Mar plij gortoz e brosezadur.",
-    "account-deletion-schedule-failed": "N'hon eus bet tu ebet da glokañ dilezadenn da gontoù. Klask a-nevez, mar plij.",
-    "user-creation-failed": "N'hon eus bet tu da grouiñ da gont. Klask a-nevez, mar plij.",
+    "token-required": "Goulennet eo ar jedouer",
+    "email-already-sent": "Kaset ez eus bet ur postel er 5 munutenn diwezhañ dija. Gwiriekait ho poest degemer pe klikit war \"Goulenn ur c'hod nevez\" evit kas unan nevez",
+    "email-already-exists": "Implijet eo ar chomlec'h-mañ, gant ur gont all dija. Implijit unan all mar plij.",
+    "username-creation-failed": "N'haller ket krouiñ hoc'h anv implijer. Klaskit en-dro, mar plij.",
+    "account-deletion-already-scheduled": "Raktreset eo bet dilemel ho kont endeo. Gortozit betek ma vefe graet.",
+    "account-deletion-schedule-failed": "N'haller ket raktresañ dilemel ho kont. Klaskit en-dro, mar plij.",
+    "user-creation-failed": "N'haller ket krouiñ ho kont. Klaskit en-dro, mar plij.",
     "disposable-email-not-allowed": "N'eo ket aotreet ar soken-post dispennus pe daeshour. Mar plij, implij ur chomlec'h post-skrid padus."
   }
 }
