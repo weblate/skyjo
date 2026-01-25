@@ -9,6 +9,7 @@ import { feedbackRouter } from "@/http/feedback/feedback.router.js"
 import { gameRouter } from "@/http/game/game.router.js"
 import { penaltyRouter } from "@/http/penalty/penalty.router.js"
 import { userRouter } from "@/http/user/user.router.js"
+import { waitlistRouter } from "@/http/waitlist/waitlist.router.js"
 
 const httpApp = new Hono()
 
@@ -33,6 +34,7 @@ const httpApp = new Hono()
   .route("/feedbacks", feedbackRouter)
   .route("/users", userRouter)
   .route("/penalties", penaltyRouter)
+  .route("/waitlist", waitlistRouter)
   .onError((error, c) => {
     if (error instanceof HTTPException) {
       handleHttpException(error)

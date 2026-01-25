@@ -138,4 +138,7 @@ vi.spyOn(process, "env", "get").mockReturnValue({
   GOOGLE_REDIRECT_URI: "test-google-redirect-uri",
   WEBSITE_URL: "http://test:3000",
   TEMP_MAIL_API_KEY: "test-temp-mail-api-key",
+  RESEND_API_KEY: "test-resend-api-key",
+  RESEND_AUDIENCE_ID: "test-resend-audience-id",
+  RESEND_MOBILE_TOPIC_ID: "test-resend-mobile-topic-id",
 })

@@ -1,6 +1,7 @@
 import Image from "next/image"
 import { getTranslations } from "next-intl/server"
 import { RulesButton } from "@/app/[locale]/(socket)/(with-reconnection-redirect)/RulesButton"
+import Banner from "@/components/Banner"
 import Footer from "@/components/Footer"
 import MovingArrow from "@/components/MovingArrow"
 import Navbar from "@/components/Navbar"
@@ -32,7 +33,7 @@ const IndexServerPage = async (props: IndexServerPageProps) => {
   return (
     <div className="bg-body dark:bg-dark-body flex flex-col">
       <div className="relative h-dvh flex flex-col">
-        {/* <Banner /> */}
+        <Banner />
         <Navbar />
         <div className="flex flex-col grow items-center justify-between p-6">
           <div className="flex flex-col grow w-full items-center justify-center">

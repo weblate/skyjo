@@ -50,6 +50,16 @@ export const envSchema = z.object({
 
   POSTHOG_API_KEY: z.string().optional(),
   POSTHOG_HOST: z.string().optional(),
+
+  RESEND_API_KEY: z.string({
+    error: "RESEND_API_KEY must be set in .env file",
+  }),
+  RESEND_AUDIENCE_ID: z.string({
+    error: "RESEND_AUDIENCE_ID must be set in .env file",
+  }),
+  RESEND_MOBILE_TOPIC_ID: z.string({
+    error: "RESEND_MOBILE_TOPIC_ID must be set in .env file",
+  }),
 })
 
 const parsedEnv = envSchema.safeParse(process.env)

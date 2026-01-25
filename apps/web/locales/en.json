@@ -422,6 +422,47 @@
         "backHome": "Back Home"
       }
     },
+    "MobileWaitlist": {
+      "head": {
+        "title": "Mobile App Coming Soon | Skymo - Skyjo Online",
+        "description": "Be the first to know when Skymo launches on iOS and Android. Sign up for the waitlist and get notified when the mobile app is ready.",
+        "keywords": "Skymo,Skyjo,mobile app,iOS,Android,waitlist,coming soon,Skyjo mobile,card game app"
+      },
+      "title": "Skymo is coming to mobile!",
+      "subtitle": "Be the first to know when the app launches",
+      "benefits": {
+        "performance": {
+          "title": "Lightning Fast",
+          "description": "Native app with zero lag. Smooth animations and instant responses for the best gaming experience."
+        },
+        "stay-connected": {
+          "title": "Stay in the Game",
+          "description": "Switch apps without disconnecting. Return exactly where you left off - no more lost games from notifications or calls."
+        },
+        "touch": {
+          "title": "Designed for Touch",
+          "description": "Completely revamped mobile experience with intuitive gestures and controls. Built for phones, not adapted from web."
+        }
+      },
+      "form": {
+        "firstName": {
+          "label": "First name (optional)",
+          "placeholder": "Your first name"
+        },
+        "email": {
+          "label": "Email address",
+          "placeholder": "you@example.com"
+        },
+        "submit": "Notify me",
+        "privacy-note": "We'll only email you when the app launches."
+      },
+      "success": {
+        "title": "You're on the list!",
+        "description": "We'll email you as soon as the app is ready.",
+        "discord-cta": "Want more updates? Join our Discord for the latest news and beta access!",
+        "discord-button": "Join Discord"
+      }
+    },
     "Rules": {
       "head": {
         "title": "How to play Skymo | Skyjo Card Game Online",
@@ -792,7 +833,7 @@
   },
   "components": {
     "Banner": {
-      "title": "I need  <gform>your feedback</gform>  to shape the future of Skymo!"
+      "title": "The mobile app is coming! Your bathroom breaks are about to get way longer... 🚽 <link>Notify me!</link>"
     },
     "Navbar": {
       "links": {
@@ -1572,6 +1613,7 @@
     "username-creation-failed": "We couldn't create your username. Please try again.",
     "account-deletion-already-scheduled": "Your account deletion has already been scheduled. Please wait for it to be processed.",
     "account-deletion-schedule-failed": "We couldn't schedule your account deletion. Please try again.",
-    "user-creation-failed": "We couldn't create your account. Please try again."
+    "user-creation-failed": "We couldn't create your account. Please try again.",
+    "waitlist-subscription-failed": "We couldn't add you to the waitlist. Please try again."
   }
 }

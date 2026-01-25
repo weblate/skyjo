@@ -422,6 +422,47 @@
         "backHome": "Retour à l'Accueil"
       }
     },
+    "MobileWaitlist": {
+      "head": {
+        "title": "Application Mobile Bientôt Disponible | Skymo - Skyjo en Ligne",
+        "description": "Soyez le premier informé du lancement de Skymo sur iOS et Android. Inscrivez-vous à la liste d'attente et recevez une notification dès que l'application sera prête.",
+        "keywords": "Skymo,Skyjo,application mobile,iOS,Android,liste d'attente,bientôt disponible,Skyjo mobile,jeu de cartes"
+      },
+      "title": "Skymo arrive sur mobile !",
+      "subtitle": "Soyez le premier informé du lancement",
+      "benefits": {
+        "performance": {
+          "title": "Ultra Rapide",
+          "description": "Application native sans latence. Animations fluides et réponses instantanées pour la meilleure expérience de jeu."
+        },
+        "stay-connected": {
+          "title": "Restez dans la Partie",
+          "description": "Changez d'application sans vous déconnecter. Reprenez exactement où vous en étiez - plus de parties perdues à cause de notifications ou d'appels."
+        },
+        "touch": {
+          "title": "Conçu pour le Tactile",
+          "description": "Expérience mobile entièrement repensée avec des gestes et contrôles intuitifs. Créé pour les téléphones, pas adapté du web."
+        }
+      },
+      "form": {
+        "firstName": {
+          "label": "Prénom (optionnel)",
+          "placeholder": "Votre prénom"
+        },
+        "email": {
+          "label": "Adresse email",
+          "placeholder": "vous@exemple.com"
+        },
+        "submit": "Me notifier",
+        "privacy-note": "Nous vous enverrons un email uniquement lors du lancement de l'application."
+      },
+      "success": {
+        "title": "Vous êtes sur la liste !",
+        "description": "Nous vous enverrons un email dès que l'application sera prête.",
+        "discord-cta": "Vous voulez plus de nouvelles ? Rejoignez notre Discord pour les dernières actualités et l'accès à la bêta !",
+        "discord-button": "Rejoindre Discord"
+      }
+    },
     "Rules": {
       "head": {
         "title": "Règles de Skymo | Comment Jouer au Skyjo - Guide Rapide",
@@ -792,7 +833,7 @@
   },
   "components": {
     "Banner": {
-      "title": "J'ai besoin de <gform>votre avis</gform> pour construire l'avenir de Skymo !"
+      "title": "L'appli mobile arrive ! Enfin une excuse pour s'éterniser aux toilettes... 🚽 <link>Me prévenir de la sortie !</link>"
     },
     "Navbar": {
       "links": {
@@ -1572,6 +1613,7 @@
     "username-creation-failed": "Impossible de créer ton nom d'utilisateur. Veuillez réessayer.",
     "account-deletion-already-scheduled": "La suppression de ton compte a déjà été planifiée. Merci de patienter pendant son traitement.",
     "account-deletion-schedule-failed": "Nous n'avons pas pu planifier la suppression de ton compte. Veuillez réessayer.",
-    "user-creation-failed": "Impossible de créer ton compte. Veuillez réessayer."
+    "user-creation-failed": "Impossible de créer ton compte. Veuillez réessayer.",
+    "waitlist-subscription-failed": "Nous n'avons pas pu vous ajouter à la liste d'attente. Veuillez réessayer."
   }
 }

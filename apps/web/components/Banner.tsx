@@ -7,11 +7,10 @@ interface BannerProps {
   className?: ClassValue
 }
 
-const GFormLink = (chunks: React.ReactNode) => (
+const WaitlistLink = (chunks: React.ReactNode) => (
   <Link
-    href="https://forms.gle/CM9PV9H24KMFqDrXA"
-    target="_blank"
-    className="underline underline-offset-2 text-blue-500 font-semibold"
+    href="/mobile-waitlist"
+    className="underline underline-offset-2 text-blue-600"
   >
     {chunks}
   </Link>
@@ -21,16 +20,17 @@ const Banner = ({ className }: BannerProps) => {
   const t = useTranslations("components.Banner")
 
   return (
-    <div
+    <Link
       className={cn(
-        "px-6 py-2 bg-white dark:bg-dark-body text-black dark:text-dark-font border-b-2 border-black dark:border-dark-border flex flex-row items-center sm:justify-center gap-1",
+        "px-6 py-2 bg-white dark:bg-dark-body text-black dark:text-dark-font border-b-2 border-black dark:border-dark-border flex flex-col md:flex-row items-center sm:justify-center gap-1 text-center",
         className,
       )}
+      href="/mobile-waitlist"
     >
       {t.rich("title", {
-        gform: GFormLink,
+        link: WaitlistLink,
       })}
-    </div>
+    </Link>
   )
 }
 
