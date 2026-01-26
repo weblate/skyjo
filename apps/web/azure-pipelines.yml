@@ -1,0 +1,156 @@
+# Azure Pipelines CI/CD for Skymo Web
+# Triggers on trunk push when Web or its dependencies change
+
+trigger:
+  branches:
+    include:
+      - trunk
+  paths:
+    include:
+      - apps/web/**
+      - packages/core/**
+      - packages/error/**
+      - packages/shared/**
+      - packages/state-operations/**
+    exclude:
+      - "**/*.md"
+
+pr: none
+
+parameters:
+  - name: environment
+    displayName: "Environment"
+    type: string
+    default: "prod"
+    values:
+      - prod
+      - dev
+
+variables:
+  - group: skymo-${{ parameters.environment }}
+  - name: nodeVersion
+    value: "24.13.0"
+  - name: pnpmVersion
+    value: "10.22.0"
+
+stages:
+  # Stage 1: Test
+  - stage: Test
+    displayName: "Test Web"
+    jobs:
+      - job: TestWithCoverage
+        displayName: "Run Tests with Coverage"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "1"
+            displayName: "Checkout code (shallow)"
+
+          - task: UseNode@1
+            displayName: "Setup Node.js"
+            inputs:
+              version: $(nodeVersion)
+
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: "Setup pnpm"
+
+          - script: pnpm install --frozen-lockfile
+            displayName: "Install dependencies"
+
+          - script: |
+              pnpm --filter "@skymo/web..." test:coverage -- --run --reporter=default --reporter=junit --outputFile.junit=test-results.xml
+            displayName: "Run tests with coverage"
+            continueOnError: false
+
+          - task: PublishTestResults@2
+            displayName: "Publish test results"
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/test-results.xml"
+              failTaskOnFailedTests: true
+              testRunTitle: "Web Tests"
+
+          - task: PublishCodeCoverageResults@2
+            displayName: "Publish code coverage (Web)"
+            condition: succeededOrFailed()
+            inputs:
+              summaryFileLocation: "apps/web/coverage/coverage-final.json"
+              failIfCoverageEmpty: false
+
+          - task: PublishCodeCoverageResults@2
+            displayName: "Publish code coverage (Core)"
+            condition: succeededOrFailed()
+            inputs:
+              summaryFileLocation: "packages/core/coverage/coverage-final.json"
+              failIfCoverageEmpty: false
+
+          - task: PublishCodeCoverageResults@2
+            displayName: "Publish code coverage (State Operations)"
+            condition: succeededOrFailed()
+            inputs:
+              summaryFileLocation: "packages/state-operations/coverage/coverage-final.json"
+              failIfCoverageEmpty: false
+
+  # Stage 2: Build Docker image
+  - stage: Build
+    displayName: "Build Docker Image"
+    dependsOn: Test
+    jobs:
+      - job: BuildDocker
+        displayName: "Build Web"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "1"
+            displayName: "Checkout code (shallow)"
+
+          - script: |
+              docker version
+              docker buildx version
+            displayName: "Display Docker info"
+
+          - script: |
+              docker buildx create --name builder --use
+              docker buildx inspect --bootstrap
+            displayName: "Setup BuildKit"
+
+          - script: |
+              docker buildx build \
+                --file ./apps/web/Dockerfile \
+                --build-arg PROJECT=@skymo/web \
+                --build-arg NEXT_PUBLIC_ENVIRONMENT=$(NEXT_PUBLIC_ENVIRONMENT) \
+                --build-arg NEXT_PUBLIC_SITE_URL=$(NEXT_PUBLIC_SITE_URL) \
+                --build-arg NEXT_PUBLIC_API_URL=$(NEXT_PUBLIC_API_URL) \
+                --build-arg NEXT_PUBLIC_POSTHOG_KEY=$(NEXT_PUBLIC_POSTHOG_KEY) \
+                --build-arg NEXT_PUBLIC_CONTACT_EMAIL=$(NEXT_PUBLIC_CONTACT_EMAIL) \
+                --build-arg NEXT_PUBLIC_DISCORD_URL=$(NEXT_PUBLIC_DISCORD_URL) \
+                --build-arg NEXT_PUBLIC_STATUS_URL=$(NEXT_PUBLIC_STATUS_URL) \
+                --build-arg NEXT_PUBLIC_GITHUB_URL=$(NEXT_PUBLIC_GITHUB_URL) \
+                --build-arg NEXT_PUBLIC_RELEASE_NOTES_URL=$(NEXT_PUBLIC_RELEASE_NOTES_URL) \
+                --build-arg NEXT_PUBLIC_WEBLATE_URL=$(NEXT_PUBLIC_WEBLATE_URL) \
+                --label "org.opencontainers.image.source=https://github.com/maxentr/skymo" \
+                --label "org.opencontainers.image.revision=$(Build.SourceVersion)" \
+                --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                --tag skymo/web:${{ parameters.environment }}-$(Build.BuildId) \
+                --tag skymo/web:$(Build.SourceVersion) \
+                --load \
+                .
+            displayName: "Build Docker image"
+
+          - script: |
+              mkdir -p $(Build.ArtifactStagingDirectory)/docker-images
+              docker save skymo/web:${{ parameters.environment }}-$(Build.BuildId) | gzip > $(Build.ArtifactStagingDirectory)/docker-images/web-${{ parameters.environment }}-$(Build.BuildId).tar.gz
+              ls -lh $(Build.ArtifactStagingDirectory)/docker-images/
+            displayName: "Export Docker image as tar.gz"
+
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Docker image artifact"
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/docker-images/web-${{ parameters.environment }}-$(Build.BuildId).tar.gz"
+              artifact: "web-image-${{ parameters.environment }}"
+              publishLocation: "pipeline"
