@@ -76,6 +76,6 @@ stages:
       # Discord Bot
       - template: ../jobs/docker-build-job.yml
         parameters:
-          appName: "discord-bot"
+          appName: "discordBot"
           packageName: "@skymo/discord-bot"
           environment: ${{ parameters.environment }}
