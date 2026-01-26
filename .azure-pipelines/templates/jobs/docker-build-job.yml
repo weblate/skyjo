@@ -1,0 +1,118 @@
+# Reusable job template for building Docker images and exporting as tar.gz
+# Usage:
+#   - template: templates/jobs/docker-build-job.yml
+#     parameters:
+#       appName: 'api'
+#       packageName: '@skymo/api'
+#       environment: 'prod'
+
+parameters:
+  - name: appName
+    type: string
+  - name: packageName
+    type: string
+  - name: environment
+    type: string
+    default: 'prod'
+  # Web-specific build args (only used when appName is 'web')
+  - name: nextPublicEnvironment
+    type: string
+    default: ''
+  - name: nextPublicSiteUrl
+    type: string
+    default: ''
+  - name: nextPublicApiUrl
+    type: string
+    default: ''
+  - name: nextPublicPosthogKey
+    type: string
+    default: ''
+  - name: nextPublicContactEmail
+    type: string
+    default: ''
+  - name: nextPublicDiscordUrl
+    type: string
+    default: ''
+  - name: nextPublicStatusUrl
+    type: string
+    default: ''
+  - name: nextPublicGithubUrl
+    type: string
+    default: ''
+  - name: nextPublicReleaseNotesUrl
+    type: string
+    default: ''
+  - name: nextPublicWeblateUrl
+    type: string
+    default: ''
+
+jobs:
+  - job: Build_${{ parameters.appName }}
+    displayName: 'Build ${{ parameters.appName }}'
+    pool:
+      vmImage: 'ubuntu-latest'
+    steps:
+      - checkout: self
+        fetchDepth: 1
+        displayName: 'Checkout code (shallow)'
+
+      - script: |
+          docker version
+          docker buildx version
+        displayName: 'Display Docker info'
+
+      - script: |
+          docker buildx create --name builder --use
+          docker buildx inspect --bootstrap
+        displayName: 'Setup BuildKit'
+
+      # Build Docker image
+      - ${{ if eq(parameters.appName, 'web') }}:
+        - script: |
+            docker buildx build \
+              --file ./apps/${{ parameters.appName }}/Dockerfile \
+              --build-arg PROJECT=${{ parameters.packageName }} \
+              --build-arg NEXT_PUBLIC_ENVIRONMENT=${{ parameters.nextPublicEnvironment }} \
+              --build-arg NEXT_PUBLIC_SITE_URL=${{ parameters.nextPublicSiteUrl }} \
+              --build-arg NEXT_PUBLIC_API_URL=${{ parameters.nextPublicApiUrl }} \
+              --build-arg NEXT_PUBLIC_POSTHOG_KEY=${{ parameters.nextPublicPosthogKey }} \
+              --build-arg NEXT_PUBLIC_CONTACT_EMAIL=${{ parameters.nextPublicContactEmail }} \
+              --build-arg NEXT_PUBLIC_DISCORD_URL=${{ parameters.nextPublicDiscordUrl }} \
+              --build-arg NEXT_PUBLIC_STATUS_URL=${{ parameters.nextPublicStatusUrl }} \
+              --build-arg NEXT_PUBLIC_GITHUB_URL=${{ parameters.nextPublicGithubUrl }} \
+              --build-arg NEXT_PUBLIC_RELEASE_NOTES_URL=${{ parameters.nextPublicReleaseNotesUrl }} \
+              --build-arg NEXT_PUBLIC_WEBLATE_URL=${{ parameters.nextPublicWeblateUrl }} \
+              --label "org.opencontainers.image.source=https://github.com/maxentr/skymo" \
+              --label "org.opencontainers.image.revision=$(Build.SourceVersion)" \
+              --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+              --tag skymo/${{ parameters.appName }}:${{ parameters.environment }}-$(Build.BuildId) \
+              --tag skymo/${{ parameters.appName }}:$(Build.SourceVersion) \
+              --load \
+              .
+          displayName: 'Build Docker image (web)'
+
+      - ${{ if ne(parameters.appName, 'web') }}:
+        - script: |
+            docker buildx build \
+              --file ./apps/${{ parameters.appName }}/Dockerfile \
+              --label "org.opencontainers.image.source=https://github.com/maxentr/skymo" \
+              --label "org.opencontainers.image.revision=$(Build.SourceVersion)" \
+              --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+              --tag skymo/${{ parameters.appName }}:${{ parameters.environment }}-$(Build.BuildId) \
+              --tag skymo/${{ parameters.appName }}:$(Build.SourceVersion) \
+              --load \
+              .
+          displayName: 'Build Docker image'
+
+      - script: |
+          mkdir -p $(Build.ArtifactStagingDirectory)/docker-images
+          docker save skymo/${{ parameters.appName }}:${{ parameters.environment }}-$(Build.BuildId) | gzip > $(Build.ArtifactStagingDirectory)/docker-images/${{ parameters.appName }}-${{ parameters.environment }}-$(Build.BuildId).tar.gz
+          ls -lh $(Build.ArtifactStagingDirectory)/docker-images/
+        displayName: 'Export Docker image as tar.gz'
+
+      - task: PublishPipelineArtifact@1
+        displayName: 'Publish Docker image artifact'
+        inputs:
+          targetPath: '$(Build.ArtifactStagingDirectory)/docker-images/${{ parameters.appName }}-${{ parameters.environment }}-$(Build.BuildId).tar.gz'
+          artifact: '${{ parameters.appName }}-image-${{ parameters.environment }}'
+          publishLocation: 'pipeline'

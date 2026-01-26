@@ -1,0 +1,39 @@
+parameters:
+  - name: nodeVersion
+    type: string
+  - name: pnpmVersion
+    type: string
+
+steps:
+  - task: NodeTool@0
+    displayName: "Install Node.js ${{ parameters.nodeVersion }}"
+    inputs:
+      versionSpec: "${{ parameters.nodeVersion }}"
+
+  - script: |
+      corepack enable
+      corepack prepare pnpm@${{ parameters.pnpmVersion }} --activate
+    displayName: "Install pnpm ${{ parameters.pnpmVersion }}"
+
+  - script: |
+      echo "##vso[task.setvariable variable=PNPM_STORE_PATH]$(pnpm store path --silent)"
+    displayName: "Get pnpm store path"
+
+  - task: Cache@2
+    displayName: "Cache pnpm store"
+    inputs:
+      key: 'pnpm | "$(Agent.OS)" | pnpm-lock.yaml'
+      restoreKeys: |
+        pnpm | "$(Agent.OS)"
+      path: $(PNPM_STORE_PATH)
+
+  - task: Cache@2
+    displayName: "Cache Turbo"
+    inputs:
+      key: 'turbo | "$(Agent.OS)" | pnpm-lock.yaml'
+      restoreKeys: |
+        turbo | "$(Agent.OS)"
+      path: .turbo
+
+  - script: pnpm install --frozen-lockfile --ignore-scripts
+    displayName: "Install dependencies"

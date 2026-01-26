@@ -1,0 +1,81 @@
+parameters:
+  - name: environment
+    type: string
+    default: "prod"
+  - name: dependsOn
+    type: object
+    default: []
+  # Web build args from variable groups
+  - name: nextPublicEnvironment
+    type: string
+    default: ""
+  - name: nextPublicSiteUrl
+    type: string
+    default: ""
+  - name: nextPublicApiUrl
+    type: string
+    default: ""
+  - name: nextPublicPosthogKey
+    type: string
+    default: ""
+  - name: nextPublicContactEmail
+    type: string
+    default: ""
+  - name: nextPublicDiscordUrl
+    type: string
+    default: ""
+  - name: nextPublicStatusUrl
+    type: string
+    default: ""
+  - name: nextPublicGithubUrl
+    type: string
+    default: ""
+  - name: nextPublicReleaseNotesUrl
+    type: string
+    default: ""
+  - name: nextPublicWeblateUrl
+    type: string
+    default: ""
+
+stages:
+  - stage: Build
+    displayName: "Build Docker Images"
+    dependsOn: ${{ parameters.dependsOn }}
+    jobs:
+      # API
+      - template: ../jobs/docker-build-job.yml
+        parameters:
+          appName: "api"
+          packageName: "@skymo/api"
+          environment: ${{ parameters.environment }}
+
+      # Web (with NEXT_PUBLIC_* build args)
+      - template: ../jobs/docker-build-job.yml
+        parameters:
+          appName: "web"
+          packageName: "@skymo/web"
+          environment: ${{ parameters.environment }}
+          nextPublicEnvironment: ${{ parameters.nextPublicEnvironment }}
+          nextPublicSiteUrl: ${{ parameters.nextPublicSiteUrl }}
+          nextPublicApiUrl: ${{ parameters.nextPublicApiUrl }}
+          nextPublicPosthogKey: ${{ parameters.nextPublicPosthogKey }}
+          nextPublicContactEmail: ${{ parameters.nextPublicContactEmail }}
+          nextPublicDiscordUrl: ${{ parameters.nextPublicDiscordUrl }}
+          nextPublicStatusUrl: ${{ parameters.nextPublicStatusUrl }}
+          nextPublicGithubUrl: ${{ parameters.nextPublicGithubUrl }}
+          nextPublicReleaseNotesUrl: ${{ parameters.nextPublicReleaseNotesUrl }}
+          nextPublicWeblateUrl: ${{ parameters.nextPublicWeblateUrl }}
+
+      # Workers
+      - template: ../jobs/docker-build-job.yml
+        parameters:
+          appName: "workers"
+          packageName: "@skymo/workers"
+          environment: ${{ parameters.environment }}
+
+      # Discord Bot
+      - template: ../jobs/docker-build-job.yml
+        parameters:
+          appName: "discord-bot"
+          packageName: "@skymo/discord-bot"
+          environment: ${{ parameters.environment }}

@@ -1,0 +1,53 @@
+# Azure Pipelines CI/CD for Skymo
+# Triggers on trunk push, runs tests with coverage, builds Docker images as pipeline artifacts
+
+trigger:
+  branches:
+    include:
+      - trunk
+  paths:
+    exclude:
+      - "*.md"
+      - "docs/**"
+      - ".github/**"
+      - "LICENSE"
+      - ".gitignore"
+
+pr: none
+
+parameters:
+  - name: environment
+    displayName: "Environment"
+    type: string
+    default: "prod"
+    values:
+      - prod
+      - dev
+
+variables:
+  - group: skymo-${{ parameters.environment }}
+
+stages:
+  # Stage 1: Test with coverage
+  - template: templates/stages/test-stage.yml
+    parameters:
+      nodeVersion: "24.13.0"
+      pnpmVersion: "10.22.0"
+
+  # Stage 2: Build Docker images (depends on Test passing)
+  - template: templates/stages/build-stage.yml
+    parameters:
+      environment: ${{ parameters.environment }}
+      dependsOn:
+        - Test
+      # Pass NEXT_PUBLIC_* variables from variable groups to web build
+      nextPublicEnvironment: $(NEXT_PUBLIC_ENVIRONMENT)
+      nextPublicSiteUrl: $(NEXT_PUBLIC_SITE_URL)
+      nextPublicApiUrl: $(NEXT_PUBLIC_API_URL)
+      nextPublicPosthogKey: $(NEXT_PUBLIC_POSTHOG_KEY)
+      nextPublicContactEmail: $(NEXT_PUBLIC_CONTACT_EMAIL)
+      nextPublicDiscordUrl: $(NEXT_PUBLIC_DISCORD_URL)
+      nextPublicStatusUrl: $(NEXT_PUBLIC_STATUS_URL)
+      nextPublicGithubUrl: $(NEXT_PUBLIC_GITHUB_URL)
+      nextPublicReleaseNotesUrl: $(NEXT_PUBLIC_RELEASE_NOTES_URL)
+      nextPublicWeblateUrl: $(NEXT_PUBLIC_WEBLATE_URL)
