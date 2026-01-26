@@ -6,16 +6,16 @@
   "type": "module",
   "scripts": {
     "dev": "tsx --watch src/index.ts",
-    "build": "tsc --build",
-    "prod": "tsx dist/src/index.js",
+    "build": "tsup",
+    "prod": "node dist/index.js",
     "biome:check": "pnpm biome check --write .",
     "test": "vitest",
     "test:coverage": "vitest run --coverage",
     "test:ui": "vitest --ui --coverage.enabled=true"
   },
   "dependencies": {
-    "@skymo/database": "workspace:*",
     "@skymo/core": "workspace:*",
+    "@skymo/database": "workspace:*",
     "@skymo/error": "workspace:*",
     "@skymo/logger": "workspace:*",
     "@skymo/transactional": "workspace:*",
@@ -32,10 +32,11 @@
     "@skymo/worker-types": "workspace:*",
     "@types/node": "^24.10.1",
     "@types/react": "^19.2.5",
-    "tsx": "^4.20.6",
-    "typescript": "^5.9.3",
     "@vitest/coverage-istanbul": "^4.0.9",
     "@vitest/ui": "^4.0.9",
+    "tsup": "^8.5.1",
+    "tsx": "^4.20.6",
+    "typescript": "^5.9.3",
     "vite-tsconfig-paths": "^5.1.4",
     "vitest": "^4.0.9"
   }

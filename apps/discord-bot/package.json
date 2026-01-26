@@ -5,17 +5,17 @@
   "main": "dist/index.js",
   "type": "module",
   "scripts": {
-    "build": "tsc && pnpx tsc-alias",
+    "build": "tsup",
     "dev": "tsx watch --env-file=.env src/index.ts",
-    "start": "tsx dist/src/index.js",
+    "start": "node dist/index.js",
     "biome:check": "biome check . --write"
   },
   "dependencies": {
     "@skymo/core": "workspace:*",
     "@skymo/database": "workspace:*",
     "@skymo/logger": "workspace:*",
-    "@skymo/ts-config": "workspace:*",
     "@skymo/shared": "workspace:*",
+    "@skymo/ts-config": "workspace:*",
     "bullmq": "^5.63.2",
     "dayjs": "^1.11.19",
     "discord.js": "^14.24.2",
@@ -26,6 +26,7 @@
   "devDependencies": {
     "@skymo/worker-types": "workspace:*",
     "@types/node": "^24.10.1",
+    "tsup": "^8.5.1",
     "tsx": "^4.20.6",
     "typescript": "^5.9.3"
   }

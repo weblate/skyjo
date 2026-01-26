@@ -28,9 +28,6 @@ RUN npm install -g pnpm@10.22.0 --ignore-scripts && \
 # Copy the full pruned source
 COPY --from=deps /app/out/full/ .
 
-# Install tsx globally for production runtime
-RUN npm install -g tsx --ignore-scripts
-
 # Build the project (only if needed for packages)
 RUN pnpm turbo build --filter=@skymo/workers
 
@@ -41,7 +38,7 @@ WORKDIR /app
 # Install only runtime essentials and create non-root user
 RUN apk update && \
     apk add --no-cache libc6-compat && \
-    npm install -g pnpm@10.22.0 --ignore-scripts tsx && \
+    npm install -g pnpm@10.22.0 --ignore-scripts && \
     rm -rf /var/cache/apk/* && \
     addgroup --system --gid 1001 nodejs && \
     adduser --system --uid 1001 nodejs
@@ -55,7 +52,7 @@ ENV NODE_ENV=production
 # Switch to non-root user
 USER nodejs
 
-# Start the workers using tsx
+# Start the workers
 WORKDIR /app/apps/workers
 
-CMD ["npm", "run", "prod"]
+CMD ["node", "dist/index.js"]
