@@ -1,0 +1,168 @@
+trigger: none
+pr: none
+
+parameters:
+  - name: environment
+    displayName: "Environment"
+    type: string
+    default: "prod"
+    values:
+      - prod
+      - dev
+  - name: imageTag
+    displayName: "Image tag to deploy (e.g. prod-latest, prod-123, dev-latest)"
+    type: string
+    default: "prod-latest"
+  - name: deployApi
+    displayName: "Deploy API"
+    type: string
+    default: "true"
+    values:
+      - "true"
+      - "false"
+  - name: deployWeb
+    displayName: "Deploy Web"
+    type: string
+    default: "true"
+    values:
+      - "true"
+      - "false"
+  - name: deployWorkers
+    displayName: "Deploy Workers"
+    type: string
+    default: "true"
+    values:
+      - "true"
+      - "false"
+  - name: deployDiscordBot
+    displayName: "Deploy Discord Bot"
+    type: string
+    default: "true"
+    values:
+      - "true"
+      - "false"
+
+variables:
+  - group: skymo-${{ parameters.environment }}
+  - name: nodeVersion
+    value: "24.13.0"
+  - name: pnpmVersion
+    value: "10.22.0"
+
+stages:
+  - stage: Test
+    displayName: "Test"
+    jobs:
+      - job: Test
+        displayName: "Run All Tests"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "1"
+            displayName: "Checkout code (shallow)"
+
+          - task: UseNode@1
+            displayName: "Setup Node.js"
+            inputs:
+              version: $(nodeVersion)
+
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: "Setup pnpm"
+
+          - script: pnpm install --frozen-lockfile
+            displayName: "Install dependencies"
+
+          - script: pnpm build
+            displayName: "Build all packages"
+
+          - script: pnpm test -- --run
+            displayName: "Run tests"
+
+  - stage: Deploy
+    displayName: "Deploy to VPS (${{ parameters.environment }})"
+    dependsOn: Test
+    condition: succeeded()
+    jobs:
+      - job: Deploy
+        displayName: "Deploy to VPS"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - task: SSH@0
+            displayName: "Deploy via SSH"
+            inputs:
+              sshEndpoint: "vps-ssh"
+              runOptions: "inline"
+              inline: |
+                export NVM_DIR=~/.nvm
+                source ~/.nvm/nvm.sh
+
+                # Navigate to correct directory based on environment
+                if [ "${{ parameters.environment }}" = "dev" ]; then
+                  cd ~/dev/skymo
+                else
+                  cd ~/skymo
+                fi
+
+                git pull
+
+                # Login to Docker Hub
+                echo "$(DOCKERHUB_TOKEN)" | docker login -u maxentr --password-stdin
+
+                # Set image tag
+                export IMAGE_TAG="${{ parameters.imageTag }}"
+                echo "Deploying with IMAGE_TAG: ${IMAGE_TAG}"
+
+                # Build services list based on parameters
+                SERVICES=""
+                if [ "${{ parameters.deployApi }}" = "true" ]; then
+                  if [ "${{ parameters.environment }}" = "dev" ]; then
+                    SERVICES="$SERVICES dev-api"
+                  else
+                    SERVICES="$SERVICES api"
+                  fi
+                fi
+                if [ "${{ parameters.deployWeb }}" = "true" ]; then
+                  if [ "${{ parameters.environment }}" = "dev" ]; then
+                    SERVICES="$SERVICES dev-web"
+                  else
+                    SERVICES="$SERVICES web"
+                  fi
+                fi
+                if [ "${{ parameters.deployWorkers }}" = "true" ]; then
+                  if [ "${{ parameters.environment }}" = "dev" ]; then
+                    SERVICES="$SERVICES dev-workers"
+                  else
+                    SERVICES="$SERVICES workers"
+                  fi
+                fi
+                if [ "${{ parameters.deployDiscordBot }}" = "true" ]; then
+                  if [ "${{ parameters.environment }}" = "dev" ]; then
+                    SERVICES="$SERVICES dev-discord-bot"
+                  else
+                    SERVICES="$SERVICES discord-bot"
+                  fi
+                fi
+
+                echo "Services to deploy: $SERVICES"
+
+                # Pull and deploy using correct compose file
+                if [ "${{ parameters.environment }}" = "dev" ]; then
+                  docker compose -f compose.dev.yml pull $SERVICES
+                else
+                  docker compose pull $SERVICES
+                fi
+
+                # Run database migrations
+                pnpm i
+                pnpm db:migrate
+
+                # Restart services
+                if [ "${{ parameters.environment }}" = "dev" ]; then
+                  docker compose -f compose.dev.yml up -d $SERVICES
+                else
+                  docker compose up -d $SERVICES
+                fi
