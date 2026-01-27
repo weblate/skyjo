@@ -1,0 +1,327 @@
+trigger:
+  branches:
+    include:
+      - trunk
+  paths:
+    include:
+      - apps/**
+    exclude:
+      - "**/*.md"
+
+pr: none
+
+parameters:
+  - name: environment
+    displayName: "Environment"
+    type: string
+    default: "prod"
+    values:
+      - prod
+      - dev
+
+variables:
+  - group: skymo-${{ parameters.environment }}
+  - name: nodeVersion
+    value: "24.13.0"
+  - name: pnpmVersion
+    value: "10.22.0"
+
+stages:
+  # Stage 1: Test all apps
+  - stage: Test
+    displayName: "Test"
+    jobs:
+      - job: Test
+        displayName: "Run All Tests"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "1"
+            displayName: "Checkout code (shallow)"
+
+          - task: UseNode@1
+            displayName: "Setup Node.js"
+            inputs:
+              version: $(nodeVersion)
+
+          - script: |
+              corepack enable
+              corepack prepare pnpm@$(pnpmVersion) --activate
+            displayName: "Setup pnpm"
+
+          - script: pnpm install --frozen-lockfile
+            displayName: "Install dependencies"
+
+          - script: pnpm build
+            displayName: "Build all packages"
+
+          - script: pnpm test:coverage -- --run --reporter=default --reporter=junit --outputFile=test-results.xml
+            displayName: "Run tests with coverage"
+
+          - task: PublishTestResults@2
+            displayName: "Publish test results"
+            condition: succeededOrFailed()
+            inputs:
+              testResultsFormat: "JUnit"
+              testResultsFiles: "**/test-results.xml"
+              failTaskOnFailedTests: true
+              testRunTitle: "Skymo Tests"
+
+  # Stage 2: Detect changes and build affected apps
+  - stage: Build
+    displayName: "Build"
+    dependsOn: Test
+    jobs:
+      # Job to detect which apps need to be built
+      - job: DetectChanges
+        displayName: "Detect Changed Apps"
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "2"
+            displayName: "Checkout code (shallow with parent)"
+
+          - script: |
+              echo "Detecting changed files..."
+              CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git diff --name-only HEAD)
+              echo "Changed files:"
+              echo "$CHANGED_FILES"
+
+              # API dependencies: apps/api, packages/core, packages/database, packages/error, packages/logger, packages/shared, packages/state-operations
+              if echo "$CHANGED_FILES" | grep -qE '^(apps/api/|packages/(core|database|error|logger|shared|state-operations)/)'; then
+                echo "##vso[task.setvariable variable=buildApi;isOutput=true]true"
+                echo "API will be built"
+              else
+                echo "##vso[task.setvariable variable=buildApi;isOutput=true]false"
+                echo "API skipped (no relevant changes)"
+              fi
+
+              # Web dependencies: apps/web, packages/core, packages/error, packages/shared, packages/state-operations
+              if echo "$CHANGED_FILES" | grep -qE '^(apps/web/|packages/(core|error|shared|state-operations)/)'; then
+                echo "##vso[task.setvariable variable=buildWeb;isOutput=true]true"
+                echo "Web will be built"
+              else
+                echo "##vso[task.setvariable variable=buildWeb;isOutput=true]false"
+                echo "Web skipped (no relevant changes)"
+              fi
+
+              # Workers dependencies: apps/workers, packages/core, packages/database, packages/error, packages/logger, packages/transactional
+              if echo "$CHANGED_FILES" | grep -qE '^(apps/workers/|packages/(core|database|error|logger|transactional)/)'; then
+                echo "##vso[task.setvariable variable=buildWorkers;isOutput=true]true"
+                echo "Workers will be built"
+              else
+                echo "##vso[task.setvariable variable=buildWorkers;isOutput=true]false"
+                echo "Workers skipped (no relevant changes)"
+              fi
+
+              # Discord Bot dependencies: apps/discord-bot, packages/core, packages/database, packages/logger, packages/shared
+              if echo "$CHANGED_FILES" | grep -qE '^(apps/discord-bot/|packages/(core|database|logger|shared)/)'; then
+                echo "##vso[task.setvariable variable=buildDiscordBot;isOutput=true]true"
+                echo "Discord Bot will be built"
+              else
+                echo "##vso[task.setvariable variable=buildDiscordBot;isOutput=true]false"
+                echo "Discord Bot skipped (no relevant changes)"
+              fi
+            name: changes
+            displayName: "Detect changed paths"
+
+      # Build API
+      - job: BuildAPI
+        displayName: "Build API"
+        dependsOn: DetectChanges
+        condition: eq(dependencies.DetectChanges.outputs['changes.buildApi'], 'true')
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "1"
+            displayName: "Checkout code (shallow)"
+
+          - script: |
+              docker version
+              docker buildx version
+            displayName: "Display Docker info"
+
+          - script: |
+              docker buildx create --name builder --use
+              docker buildx inspect --bootstrap
+            displayName: "Setup BuildKit"
+
+          - script: |
+              docker buildx build \
+                --file ./apps/api/Dockerfile \
+                --label "org.opencontainers.image.source=https://github.com/maxentr/skymo" \
+                --label "org.opencontainers.image.revision=$(Build.SourceVersion)" \
+                --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                --tag skymo/api:${{ parameters.environment }}-$(Build.BuildId) \
+                --tag skymo/api:$(Build.SourceVersion) \
+                --load \
+                .
+            displayName: "Build Docker image"
+
+          - script: |
+              mkdir -p $(Build.ArtifactStagingDirectory)/docker-images
+              docker save skymo/api:${{ parameters.environment }}-$(Build.BuildId) | gzip > $(Build.ArtifactStagingDirectory)/docker-images/api-${{ parameters.environment }}-$(Build.BuildId).tar.gz
+              ls -lh $(Build.ArtifactStagingDirectory)/docker-images/
+            displayName: "Export Docker image as tar.gz"
+
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Docker image artifact"
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/docker-images/api-${{ parameters.environment }}-$(Build.BuildId).tar.gz"
+              artifact: "api-image-${{ parameters.environment }}"
+              publishLocation: "pipeline"
+
+      # Build Web
+      - job: BuildWeb
+        displayName: "Build Web"
+        dependsOn: DetectChanges
+        condition: eq(dependencies.DetectChanges.outputs['changes.buildWeb'], 'true')
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "1"
+            displayName: "Checkout code (shallow)"
+
+          - script: |
+              docker version
+              docker buildx version
+            displayName: "Display Docker info"
+
+          - script: |
+              docker buildx create --name builder --use
+              docker buildx inspect --bootstrap
+            displayName: "Setup BuildKit"
+
+          - script: |
+              docker buildx build \
+                --file ./apps/web/Dockerfile \
+                --build-arg PROJECT=@skymo/web \
+                --build-arg NEXT_PUBLIC_ENVIRONMENT=$(NEXT_PUBLIC_ENVIRONMENT) \
+                --build-arg NEXT_PUBLIC_SITE_URL=$(NEXT_PUBLIC_SITE_URL) \
+                --build-arg NEXT_PUBLIC_API_URL=$(NEXT_PUBLIC_API_URL) \
+                --build-arg NEXT_PUBLIC_POSTHOG_KEY=$(NEXT_PUBLIC_POSTHOG_KEY) \
+                --build-arg NEXT_PUBLIC_CONTACT_EMAIL=$(NEXT_PUBLIC_CONTACT_EMAIL) \
+                --build-arg NEXT_PUBLIC_DISCORD_URL=$(NEXT_PUBLIC_DISCORD_URL) \
+                --build-arg NEXT_PUBLIC_STATUS_URL=$(NEXT_PUBLIC_STATUS_URL) \
+                --build-arg NEXT_PUBLIC_GITHUB_URL=$(NEXT_PUBLIC_GITHUB_URL) \
+                --build-arg NEXT_PUBLIC_RELEASE_NOTES_URL=$(NEXT_PUBLIC_RELEASE_NOTES_URL) \
+                --build-arg NEXT_PUBLIC_WEBLATE_URL=$(NEXT_PUBLIC_WEBLATE_URL) \
+                --label "org.opencontainers.image.source=https://github.com/maxentr/skymo" \
+                --label "org.opencontainers.image.revision=$(Build.SourceVersion)" \
+                --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                --tag skymo/web:${{ parameters.environment }}-$(Build.BuildId) \
+                --tag skymo/web:$(Build.SourceVersion) \
+                --load \
+                .
+            displayName: "Build Docker image"
+
+          - script: |
+              mkdir -p $(Build.ArtifactStagingDirectory)/docker-images
+              docker save skymo/web:${{ parameters.environment }}-$(Build.BuildId) | gzip > $(Build.ArtifactStagingDirectory)/docker-images/web-${{ parameters.environment }}-$(Build.BuildId).tar.gz
+              ls -lh $(Build.ArtifactStagingDirectory)/docker-images/
+            displayName: "Export Docker image as tar.gz"
+
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Docker image artifact"
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/docker-images/web-${{ parameters.environment }}-$(Build.BuildId).tar.gz"
+              artifact: "web-image-${{ parameters.environment }}"
+              publishLocation: "pipeline"
+
+      # Build Workers
+      - job: BuildWorkers
+        displayName: "Build Workers"
+        dependsOn: DetectChanges
+        condition: eq(dependencies.DetectChanges.outputs['changes.buildWorkers'], 'true')
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "1"
+            displayName: "Checkout code (shallow)"
+
+          - script: |
+              docker version
+              docker buildx version
+            displayName: "Display Docker info"
+
+          - script: |
+              docker buildx create --name builder --use
+              docker buildx inspect --bootstrap
+            displayName: "Setup BuildKit"
+
+          - script: |
+              docker buildx build \
+                --file ./apps/workers/Dockerfile \
+                --label "org.opencontainers.image.source=https://github.com/maxentr/skymo" \
+                --label "org.opencontainers.image.revision=$(Build.SourceVersion)" \
+                --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                --tag skymo/workers:${{ parameters.environment }}-$(Build.BuildId) \
+                --tag skymo/workers:$(Build.SourceVersion) \
+                --load \
+                .
+            displayName: "Build Docker image"
+
+          - script: |
+              mkdir -p $(Build.ArtifactStagingDirectory)/docker-images
+              docker save skymo/workers:${{ parameters.environment }}-$(Build.BuildId) | gzip > $(Build.ArtifactStagingDirectory)/docker-images/workers-${{ parameters.environment }}-$(Build.BuildId).tar.gz
+              ls -lh $(Build.ArtifactStagingDirectory)/docker-images/
+            displayName: "Export Docker image as tar.gz"
+
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Docker image artifact"
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/docker-images/workers-${{ parameters.environment }}-$(Build.BuildId).tar.gz"
+              artifact: "workers-image-${{ parameters.environment }}"
+              publishLocation: "pipeline"
+
+      # Build Discord Bot
+      - job: BuildDiscordBot
+        displayName: "Build Discord Bot"
+        dependsOn: DetectChanges
+        condition: eq(dependencies.DetectChanges.outputs['changes.buildDiscordBot'], 'true')
+        pool:
+          vmImage: "ubuntu-latest"
+        steps:
+          - checkout: self
+            fetchDepth: "1"
+            displayName: "Checkout code (shallow)"
+
+          - script: |
+              docker version
+              docker buildx version
+            displayName: "Display Docker info"
+
+          - script: |
+              docker buildx create --name builder --use
+              docker buildx inspect --bootstrap
+            displayName: "Setup BuildKit"
+
+          - script: |
+              docker buildx build \
+                --file ./apps/discord-bot/Dockerfile \
+                --label "org.opencontainers.image.source=https://github.com/maxentr/skymo" \
+                --label "org.opencontainers.image.revision=$(Build.SourceVersion)" \
+                --label "org.opencontainers.image.created=$(date -u +%Y-%m-%dT%H:%M:%SZ)" \
+                --tag skymo/discord-bot:${{ parameters.environment }}-$(Build.BuildId) \
+                --tag skymo/discord-bot:$(Build.SourceVersion) \
+                --load \
+                .
+            displayName: "Build Docker image"
+
+          - script: |
+              mkdir -p $(Build.ArtifactStagingDirectory)/docker-images
+              docker save skymo/discord-bot:${{ parameters.environment }}-$(Build.BuildId) | gzip > $(Build.ArtifactStagingDirectory)/docker-images/discord-bot-${{ parameters.environment }}-$(Build.BuildId).tar.gz
+              ls -lh $(Build.ArtifactStagingDirectory)/docker-images/
+            displayName: "Export Docker image as tar.gz"
+
+          - task: PublishPipelineArtifact@1
+            displayName: "Publish Docker image artifact"
+            inputs:
+              targetPath: "$(Build.ArtifactStagingDirectory)/docker-images/discord-bot-${{ parameters.environment }}-$(Build.BuildId).tar.gz"
+              artifact: "discord-bot-image-${{ parameters.environment }}"
+              publishLocation: "pipeline"
