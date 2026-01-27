@@ -1,13 +1,4 @@
-trigger:
-  branches:
-    include:
-      - trunk
-  paths:
-    include:
-      - apps/**
-    exclude:
-      - "**/*.md"
-
+trigger: none
 pr: none
 
 parameters:
@@ -18,6 +9,22 @@ parameters:
     values:
       - prod
       - dev
+  - name: buildApi
+    displayName: "Build API"
+    type: boolean
+    default: true
+  - name: buildWeb
+    displayName: "Build Web"
+    type: boolean
+    default: true
+  - name: buildWorkers
+    displayName: "Build Workers"
+    type: boolean
+    default: true
+  - name: buildDiscordBot
+    displayName: "Build Discord Bot"
+    type: boolean
+    default: true
 
 variables:
   - group: skymo-${{ parameters.environment }}
@@ -75,65 +82,10 @@ stages:
     displayName: "Build"
     dependsOn: Test
     jobs:
-      # Job to detect which apps need to be built
-      - job: DetectChanges
-        displayName: "Detect Changed Apps"
-        pool:
-          vmImage: "ubuntu-latest"
-        steps:
-          - checkout: self
-            fetchDepth: "2"
-            displayName: "Checkout code (shallow with parent)"
-
-          - script: |
-              echo "Detecting changed files..."
-              CHANGED_FILES=$(git diff --name-only HEAD~1 HEAD 2>/dev/null || git diff --name-only HEAD)
-              echo "Changed files:"
-              echo "$CHANGED_FILES"
-
-              # API dependencies: apps/api, packages/core, packages/database, packages/error, packages/logger, packages/shared, packages/state-operations
-              if echo "$CHANGED_FILES" | grep -qE '^(apps/api/|packages/(core|database|error|logger|shared|state-operations)/)'; then
-                echo "##vso[task.setvariable variable=buildApi;isOutput=true]true"
-                echo "API will be built"
-              else
-                echo "##vso[task.setvariable variable=buildApi;isOutput=true]false"
-                echo "API skipped (no relevant changes)"
-              fi
-
-              # Web dependencies: apps/web, packages/core, packages/error, packages/shared, packages/state-operations
-              if echo "$CHANGED_FILES" | grep -qE '^(apps/web/|packages/(core|error|shared|state-operations)/)'; then
-                echo "##vso[task.setvariable variable=buildWeb;isOutput=true]true"
-                echo "Web will be built"
-              else
-                echo "##vso[task.setvariable variable=buildWeb;isOutput=true]false"
-                echo "Web skipped (no relevant changes)"
-              fi
-
-              # Workers dependencies: apps/workers, packages/core, packages/database, packages/error, packages/logger, packages/transactional
-              if echo "$CHANGED_FILES" | grep -qE '^(apps/workers/|packages/(core|database|error|logger|transactional)/)'; then
-                echo "##vso[task.setvariable variable=buildWorkers;isOutput=true]true"
-                echo "Workers will be built"
-              else
-                echo "##vso[task.setvariable variable=buildWorkers;isOutput=true]false"
-                echo "Workers skipped (no relevant changes)"
-              fi
-
-              # Discord Bot dependencies: apps/discord-bot, packages/core, packages/database, packages/logger, packages/shared
-              if echo "$CHANGED_FILES" | grep -qE '^(apps/discord-bot/|packages/(core|database|logger|shared)/)'; then
-                echo "##vso[task.setvariable variable=buildDiscordBot;isOutput=true]true"
-                echo "Discord Bot will be built"
-              else
-                echo "##vso[task.setvariable variable=buildDiscordBot;isOutput=true]false"
-                echo "Discord Bot skipped (no relevant changes)"
-              fi
-            name: changes
-            displayName: "Detect changed paths"
-
       # Build API
       - job: BuildAPI
         displayName: "Build API"
-        dependsOn: DetectChanges
-        condition: eq(dependencies.DetectChanges.outputs['changes.buildApi'], 'true')
+        condition: ${{ parameters.buildApi }}
         pool:
           vmImage: "ubuntu-latest"
         steps:
@@ -156,8 +108,7 @@ stages:
       # Build Web
       - job: BuildWeb
         displayName: "Build Web"
-        dependsOn: DetectChanges
-        condition: eq(dependencies.DetectChanges.outputs['changes.buildWeb'], 'true')
+        condition: ${{ parameters.buildWeb }}
         pool:
           vmImage: "ubuntu-latest"
         steps:
@@ -202,8 +153,7 @@ stages:
       # Build Workers
       - job: BuildWorkers
         displayName: "Build Workers"
-        dependsOn: DetectChanges
-        condition: eq(dependencies.DetectChanges.outputs['changes.buildWorkers'], 'true')
+        condition: ${{ parameters.buildWorkers }}
         pool:
           vmImage: "ubuntu-latest"
         steps:
@@ -226,8 +176,7 @@ stages:
       # Build Discord Bot
       - job: BuildDiscordBot
         displayName: "Build Discord Bot"
-        dependsOn: DetectChanges
-        condition: eq(dependencies.DetectChanges.outputs['changes.buildDiscordBot'], 'true')
+        condition: ${{ parameters.buildDiscordBot }}
         pool:
           vmImage: "ubuntu-latest"
         steps:
