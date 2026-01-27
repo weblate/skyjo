@@ -59,6 +59,9 @@ stages:
           - script: pnpm install --frozen-lockfile
             displayName: "Install dependencies"
 
+          - script: pnpm --filter "@skymo/api^..." build
+            displayName: "Build dependencies"
+
           - script: |
               pnpm --filter "@skymo/api..." test:coverage -- --run --reporter=default --reporter=junit --outputFile.junit=test-results.xml
             displayName: "Run tests with coverage"
