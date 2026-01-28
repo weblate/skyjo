@@ -140,38 +140,30 @@ stages:
             displayName: "Checkout code (shallow)"
 
           - task: Docker@2
-            displayName: "Build Web image"
+            displayName: "Docker Login"
             inputs:
               containerRegistry: "dockerhub"
-              repository: $(dockerRepository)
-              command: "build"
-              Dockerfile: "./apps/web/Dockerfile"
-              arguments: >-
-                --build-arg PROJECT=@skymo/web
-                --build-arg NEXT_PUBLIC_ENVIRONMENT=$(NEXT_PUBLIC_ENVIRONMENT)
-                --build-arg NEXT_PUBLIC_SITE_URL=$(NEXT_PUBLIC_SITE_URL)
-                --build-arg NEXT_PUBLIC_API_URL=$(NEXT_PUBLIC_API_URL)
-                --build-arg NEXT_PUBLIC_POSTHOG_KEY=$(NEXT_PUBLIC_POSTHOG_KEY)
-                --build-arg NEXT_PUBLIC_CONTACT_EMAIL=$(NEXT_PUBLIC_CONTACT_EMAIL)
-                --build-arg NEXT_PUBLIC_DISCORD_URL=$(NEXT_PUBLIC_DISCORD_URL)
-                --build-arg NEXT_PUBLIC_STATUS_URL=$(NEXT_PUBLIC_STATUS_URL)
-                --build-arg NEXT_PUBLIC_GITHUB_URL=$(NEXT_PUBLIC_GITHUB_URL)
-                --build-arg NEXT_PUBLIC_RELEASE_NOTES_URL=$(NEXT_PUBLIC_RELEASE_NOTES_URL)
-                --build-arg NEXT_PUBLIC_WEBLATE_URL=$(NEXT_PUBLIC_WEBLATE_URL)
-                .
-              tags: |
-                web-${{ parameters.environment }}-$(Build.BuildNumber)
-                web-${{ parameters.environment }}-latest
+              command: "login"
 
-          - task: Docker@2
-            displayName: "Push Web image"
-            inputs:
-              containerRegistry: "dockerhub"
-              repository: $(dockerRepository)
-              command: "push"
-              tags: |
-                web-${{ parameters.environment }}-$(Build.BuildNumber)
-                web-${{ parameters.environment }}-latest
+          - script: |
+              docker buildx build \
+                --build-arg PROJECT=@skymo/web \
+                --build-arg "NEXT_PUBLIC_ENVIRONMENT=$(NEXT_PUBLIC_ENVIRONMENT)" \
+                --build-arg "NEXT_PUBLIC_SITE_URL=$(NEXT_PUBLIC_SITE_URL)" \
+                --build-arg "NEXT_PUBLIC_API_URL=$(NEXT_PUBLIC_API_URL)" \
+                --build-arg "NEXT_PUBLIC_POSTHOG_KEY=$(NEXT_PUBLIC_POSTHOG_KEY)" \
+                --build-arg "NEXT_PUBLIC_CONTACT_EMAIL=$(NEXT_PUBLIC_CONTACT_EMAIL)" \
+                --build-arg "NEXT_PUBLIC_DISCORD_URL=$(NEXT_PUBLIC_DISCORD_URL)" \
+                --build-arg "NEXT_PUBLIC_STATUS_URL=$(NEXT_PUBLIC_STATUS_URL)" \
+                --build-arg "NEXT_PUBLIC_GITHUB_URL=$(NEXT_PUBLIC_GITHUB_URL)" \
+                --build-arg "NEXT_PUBLIC_RELEASE_NOTES_URL=$(NEXT_PUBLIC_RELEASE_NOTES_URL)" \
+                --build-arg "NEXT_PUBLIC_WEBLATE_URL=$(NEXT_PUBLIC_WEBLATE_URL)" \
+                -t $(dockerRepository):web-${{ parameters.environment }}-$(Build.BuildNumber) \
+                -t $(dockerRepository):web-${{ parameters.environment }}-latest \
+                -f ./apps/web/Dockerfile \
+                --push \
+                .
+            displayName: "Build and push Web image"
 
       # Build Workers
       - job: BuildWorkers
