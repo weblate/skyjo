@@ -101,7 +101,7 @@ stages:
   - stage: Build
     displayName: "Build"
     dependsOn: Test
-    condition: succeeded()
+    condition: or(succeeded(), eq('${{ parameters.skipTest }}', 'true'))
     jobs:
       # Build API
       - job: BuildAPI
