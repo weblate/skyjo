@@ -6,11 +6,14 @@
   "type": "module",
   "scripts": {
     "dev": "email dev --port 3002",
-    "build": "tsc",
+    "build": "tsup",
     "biome:check": "pnpm biome check --write ."
   },
   "exports": {
-    ".": "./dist/src/index.js"
+    ".": {
+      "types": "./src/index.ts",
+      "import": "./dist/index.js"
+    }
   },
   "dependencies": {
     "@formatjs/intl": "^3.1.8",
@@ -27,6 +30,7 @@
     "@types/react": "19.2.5",
     "@types/react-dom": "19.2.3",
     "react-email": "^5.0.4",
+    "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   }
 }
