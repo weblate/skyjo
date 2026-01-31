@@ -4,6 +4,16 @@ import { FooterFeedbackLink } from "@/components/FooterFeedbackLink"
 import { FooterRulesLink } from "@/components/FooterRulesLink"
 import { Link } from "@/i18n/routing"
 
+const AvatarLink = (chunk: React.ReactNode) => (
+  <a
+    href={process.env.NEXT_PUBLIC_AVATAR_CREDIT_URL ?? ""}
+    target="_blank"
+    className="text-blue-600 hover:text-blue-700 underline underline-offset-2"
+  >
+    {chunk}
+  </a>
+)
+
 const Footer = () => {
   const t = useTranslations("components.Footer")
 
@@ -101,7 +111,7 @@ const Footer = () => {
           {t("disclaimer.responsible-content")}
         </p>
         <p className="text-center text-black dark:text-dark-font text-sm">
-          {t("attribution.avatars")}
+          {t.rich("attribution.avatars", { link: AvatarLink })}
         </p>
       </div>
     </footer>

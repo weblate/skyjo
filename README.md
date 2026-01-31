@@ -1,17 +1,17 @@
 <p align="center">
-  <a href="https://www.skyjo.online">
+  <a href="https://skymo.online">
     <picture>
-      <img alt="Skymo logo"  width="64" src="https://www.skyjo.online/android-chrome-192x192.png">
+      <img alt="Skymo logo"  width="64" src="https://skymo.online/android-chrome-192x192.png">
     </picture>
   </a>
 </p>
 
 # Skymo
 
-This repository contains the code of [Skymo](https://www.skymo.online), a Skyjo like online game.
+This repository contains the code of [Skymo](https://skymo.online), a Skyjo like online game.
 
 <p>
-  <img alt="Uptime" src="https://uptime.skyjo.online/api/badge/4/status">
+  <img alt="Uptime" src="https://uptime.skymo.online/api/badge/4/status">
   <img alt="Sonar Quality Gate (branch)" src="https://img.shields.io/sonar/quality_gate/maxentr_skymo/trunk?server=https%3A%2F%2Fsonarcloud.io">
   <img alt="Sonar Tech Debt (branch)" src="https://img.shields.io/sonar/tech_debt/maxentr_skymo/trunk?server=https%3A%2F%2Fsonarcloud.io">
   <img alt="Weblate project translated" src="https://img.shields.io/weblate/progress/skymo">
@@ -34,7 +34,7 @@ This repository contains the code of [Skymo](https://www.skymo.online), a Skyjo 
 
 ## What is Skyjo?
 
-Skyjo is an engaging card game that combines strategy, luck, and quick thinking. For more information, visit [rules](https://www.skyjo.online/rules).
+Skyjo is an engaging card game that combines strategy, luck, and quick thinking. For more information, visit [rules](https://skymo.online/rules).
 
 ## Project Structure
 
@@ -44,15 +44,20 @@ This project is set up as a monorepo using [Turborepo](https://turbo.build/repo)
 
 - **api**: The game server built with [Hono](https://hono.dev/) and [Socket.IO](https://socket.io/)
 - **web**: The web client built with [Next.js](https://nextjs.org/) and [shadcn/ui](https://ui.shadcn.com/)
+- **discord-bot**: The Discord bot built with [Discord.js](https://discord.js.org/)
+- **workers**: The background workers built with [BullMQ](https://bullmq.io/)
 
 ### Packages
 
-- **cache**: Manages game caching using [Redis](https://redis.io/)
 - **config**: Centralized configuration files for the project
 - **core**: Core game logic
+- **database**: Manages the PostgreSQL database schema using Drizzle ORM, including migrations and seed scripts
 - **error**: Custom error handling classes
 - **logger**: Custom logger implemented with [Winston](https://github.com/winstonjs/winston) for logging in [Seq](https://datalust.co/seq)
 - **shared**: Common types, utility functions, and [Zod](https://zod.dev/) schemas shared across applications
+- **state-operations**: Pure functions for creating and applying game state changes, ensuring deterministic behavior
+- **transactional**: Transactional emails for the project
+- **worker-types**: Types for the background workers
 
 ## Installation guide
 

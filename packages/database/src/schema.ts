@@ -33,6 +33,8 @@ export const avatarEnum = pgEnum("avatar", [
   "whale",
   "owl",
   "cat",
+  "panda",
+  "hedgehog",
 ])
 
 export const roleEnum = pgEnum("role", ["USER", "ADMIN"])

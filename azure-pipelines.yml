@@ -1,6 +1,8 @@
 trigger: none
 pr: none
 
+name: $(Date:yyyyMMdd).$(Rev:r)
+
 parameters:
   - name: environment
     displayName: "Environment"
@@ -9,22 +11,41 @@ parameters:
     values:
       - prod
       - dev
+  - name: skipTest
+    displayName: "Skip Test Stage"
+    type: string
+    default: "false"
+    values:
+      - "true"
+      - "false"
   - name: buildApi
     displayName: "Build API"
-    type: boolean
-    default: true
+    type: string
+    default: "true"
+    values:
+      - "true"
+      - "false"
   - name: buildWeb
     displayName: "Build Web"
-    type: boolean
-    default: true
+    type: string
+    default: "true"
+    values:
+      - "true"
+      - "false"
   - name: buildWorkers
     displayName: "Build Workers"
-    type: boolean
-    default: true
+    type: string
+    default: "true"
+    values:
+      - "true"
+      - "false"
   - name: buildDiscordBot
     displayName: "Build Discord Bot"
-    type: boolean
-    default: true
+    type: string
+    default: "true"
+    values:
+      - "true"
+      - "false"
 
 variables:
   - group: skymo-${{ parameters.environment }}
@@ -39,6 +60,7 @@ stages:
   # Stage 1: Test all apps
   - stage: Test
     displayName: "Test"
+    condition: eq('${{ parameters.skipTest }}', 'false')
     jobs:
       - job: Test
         displayName: "Run All Tests"
@@ -77,15 +99,16 @@ stages:
               failTaskOnFailedTests: true
               testRunTitle: "Skymo Tests"
 
-  # Stage 2: Detect changes and build affected apps
+  # Stage 2: Build selected apps
   - stage: Build
     displayName: "Build"
     dependsOn: Test
+    condition: or(succeeded(), eq('${{ parameters.skipTest }}', 'true'))
     jobs:
       # Build API
       - job: BuildAPI
         displayName: "Build API"
-        condition: ${{ parameters.buildApi }}
+        condition: eq('${{ parameters.buildApi }}', 'true')
         pool:
           vmImage: "ubuntu-latest"
         steps:
@@ -102,13 +125,13 @@ stages:
               Dockerfile: "./apps/api/Dockerfile"
               buildContext: "."
               tags: |
-                api-${{ parameters.environment }}-$(Build.BuildId)
+                api-${{ parameters.environment }}-$(Build.BuildNumber)
                 api-${{ parameters.environment }}-latest
 
       # Build Web
       - job: BuildWeb
         displayName: "Build Web"
-        condition: ${{ parameters.buildWeb }}
+        condition: eq('${{ parameters.buildWeb }}', 'true')
         pool:
           vmImage: "ubuntu-latest"
         steps:
@@ -117,43 +140,35 @@ stages:
             displayName: "Checkout code (shallow)"
 
           - task: Docker@2
-            displayName: "Build Web image"
+            displayName: "Docker Login"
             inputs:
               containerRegistry: "dockerhub"
-              repository: $(dockerRepository)
-              command: "build"
-              Dockerfile: "./apps/web/Dockerfile"
-              buildContext: "."
-              arguments: |
-                --build-arg PROJECT=@skymo/web
-                --build-arg NEXT_PUBLIC_ENVIRONMENT=$(NEXT_PUBLIC_ENVIRONMENT)
-                --build-arg NEXT_PUBLIC_SITE_URL=$(NEXT_PUBLIC_SITE_URL)
-                --build-arg NEXT_PUBLIC_API_URL=$(NEXT_PUBLIC_API_URL)
-                --build-arg NEXT_PUBLIC_POSTHOG_KEY=$(NEXT_PUBLIC_POSTHOG_KEY)
-                --build-arg NEXT_PUBLIC_CONTACT_EMAIL=$(NEXT_PUBLIC_CONTACT_EMAIL)
-                --build-arg NEXT_PUBLIC_DISCORD_URL=$(NEXT_PUBLIC_DISCORD_URL)
-                --build-arg NEXT_PUBLIC_STATUS_URL=$(NEXT_PUBLIC_STATUS_URL)
-                --build-arg NEXT_PUBLIC_GITHUB_URL=$(NEXT_PUBLIC_GITHUB_URL)
-                --build-arg NEXT_PUBLIC_RELEASE_NOTES_URL=$(NEXT_PUBLIC_RELEASE_NOTES_URL)
-                --build-arg NEXT_PUBLIC_WEBLATE_URL=$(NEXT_PUBLIC_WEBLATE_URL)
-              tags: |
-                web-${{ parameters.environment }}-$(Build.BuildId)
-                web-${{ parameters.environment }}-latest
+              command: "login"
 
-          - task: Docker@2
-            displayName: "Push Web image"
-            inputs:
-              containerRegistry: "dockerhub"
-              repository: $(dockerRepository)
-              command: "push"
-              tags: |
-                web-${{ parameters.environment }}-$(Build.BuildId)
-                web-${{ parameters.environment }}-latest
+          - script: |
+              docker buildx build \
+                --build-arg PROJECT=@skymo/web \
+                --build-arg "NEXT_PUBLIC_ENVIRONMENT=$(NEXT_PUBLIC_ENVIRONMENT)" \
+                --build-arg "NEXT_PUBLIC_SITE_URL=$(NEXT_PUBLIC_SITE_URL)" \
+                --build-arg "NEXT_PUBLIC_API_URL=$(NEXT_PUBLIC_API_URL)" \
+                --build-arg "NEXT_PUBLIC_POSTHOG_KEY=$(NEXT_PUBLIC_POSTHOG_KEY)" \
+                --build-arg "NEXT_PUBLIC_CONTACT_EMAIL=$(NEXT_PUBLIC_CONTACT_EMAIL)" \
+                --build-arg "NEXT_PUBLIC_DISCORD_URL=$(NEXT_PUBLIC_DISCORD_URL)" \
+                --build-arg "NEXT_PUBLIC_STATUS_URL=$(NEXT_PUBLIC_STATUS_URL)" \
+                --build-arg "NEXT_PUBLIC_GITHUB_URL=$(NEXT_PUBLIC_GITHUB_URL)" \
+                --build-arg "NEXT_PUBLIC_RELEASE_NOTES_URL=$(NEXT_PUBLIC_RELEASE_NOTES_URL)" \
+                --build-arg "NEXT_PUBLIC_WEBLATE_URL=$(NEXT_PUBLIC_WEBLATE_URL)" \
+                -t $(dockerRepository):web-${{ parameters.environment }}-$(Build.BuildNumber) \
+                -t $(dockerRepository):web-${{ parameters.environment }}-latest \
+                -f ./apps/web/Dockerfile \
+                --push \
+                .
+            displayName: "Build and push Web image"
 
       # Build Workers
       - job: BuildWorkers
         displayName: "Build Workers"
-        condition: ${{ parameters.buildWorkers }}
+        condition: eq('${{ parameters.buildWorkers }}', 'true')
         pool:
           vmImage: "ubuntu-latest"
         steps:
@@ -170,13 +185,13 @@ stages:
               Dockerfile: "./apps/workers/Dockerfile"
               buildContext: "."
               tags: |
-                workers-${{ parameters.environment }}-$(Build.BuildId)
+                workers-${{ parameters.environment }}-$(Build.BuildNumber)
                 workers-${{ parameters.environment }}-latest
 
       # Build Discord Bot
       - job: BuildDiscordBot
         displayName: "Build Discord Bot"
-        condition: ${{ parameters.buildDiscordBot }}
+        condition: eq('${{ parameters.buildDiscordBot }}', 'true')
         pool:
           vmImage: "ubuntu-latest"
         steps:
@@ -193,6 +208,6 @@ stages:
               Dockerfile: "./apps/discord-bot/Dockerfile"
               buildContext: "."
               tags: |
-                discord-bot-${{ parameters.environment }}-$(Build.BuildId)
+                discord-bot-${{ parameters.environment }}-$(Build.BuildNumber)
                 discord-bot-${{ parameters.environment }}-latest
 

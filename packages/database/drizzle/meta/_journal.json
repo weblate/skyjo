@@ -141,6 +141,13 @@
       "when": 1763294280257,
       "tag": "0019_sparkling_vindicator",
       "breakpoints": true
+    },
+    {
+      "idx": 20,
+      "version": "7",
+      "when": 1769852924305,
+      "tag": "0020_thick_lord_hawal",
+      "breakpoints": true
     }
   ]
 }
