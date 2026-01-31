@@ -91,8 +91,8 @@ export function AvatarSelector({
                 <Image
                   src={`/avatars/${avatar}.svg`}
                   unoptimized
-                  width={32}
-                  height={32}
+                  width={40}
+                  height={40}
                   alt={tAvatar(avatar)}
                   className={avatarVariants({ avatar })}
                 />

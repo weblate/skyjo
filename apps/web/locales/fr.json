@@ -931,7 +931,7 @@
         "responsible-content": "Le propriétaire de ce site n'est pas responsable du contenu généré par les utilisateurs (pseudonymes, messages)"
       },
       "attribution": {
-        "avatars": "Avatars créés par Freepik - Flaticon"
+        "avatars": "Avatars créés par <link>Morgane Gosse - Yuna Illustrations</link>"
       }
     },
     "GameLobbyButtons": {
@@ -1398,6 +1398,8 @@
       "dog": "chien",
       "eagle": "aigle",
       "elephant": "éléphant",
+      "panda": "panda",
+      "hedgehog": "hérisson",
       "fox": "renard",
       "frog": "grenouille",
       "jellyfish": "méduse",
